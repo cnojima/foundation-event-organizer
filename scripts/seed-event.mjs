@@ -6,6 +6,9 @@
 //
 // Re-runnable: any prior seed users (email ending in @seed.shadowfront.local) and
 // their signups for the target event are wiped before fresh data is generated.
+//
+// Multi-guild note: seed users are inserted as members of the target event's guild,
+// so they show up correctly in admin views (which filter by guild_id).
 
 import Database from "better-sqlite3";
 import { randomBytes } from "node:crypto";
@@ -140,7 +143,7 @@ function main() {
   }
 
   const insertUser = db.prepare(
-    "INSERT INTO users (id, name, email, image, is_admin) VALUES (?, ?, ?, NULL, 0)"
+    "INSERT INTO users (id, name, email, image, guild_id, guild_role) VALUES (?, ?, ?, NULL, ?, 'member')"
   );
   const insertSignup = db.prepare(`
     INSERT INTO signups (
@@ -161,7 +164,7 @@ function main() {
       const signupId = genId();
       const name = pickName(nameIdx++);
       const email = `${userId.slice(0, 12)}${SEED_EMAIL_DOMAIN}`;
-      insertUser.run(userId, name, email);
+      insertUser.run(userId, name, email, event.guild_id);
 
       const squad1Pref = squad === 1 ? 1 : 2;
       const squad2Pref = squad === 1 ? 2 : 1;

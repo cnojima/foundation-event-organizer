@@ -3,11 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+type Visibility =
+  | "always"
+  | "signedInWithGuild"
+  | "guildAdmin"
+  | "superAdmin"
+  | "guildless";
+
 type NavItem = {
   label: string;
   href: string;
   icon: React.ReactNode;
-  adminOnly?: boolean;
+  visibility: Visibility;
 };
 
 const ICONS = {
@@ -33,25 +40,21 @@ const ICONS = {
       <path d="M13 12.5c2.5.3 4.5 2 5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   ),
-  teams: (
+  members: (
+    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+      <circle cx="10" cy="7" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3.5 17c.7-3.4 3-5.5 6.5-5.5s5.8 2.1 6.5 5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  ),
+  invites: (
+    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+      <rect x="2.5" y="5" width="15" height="11" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3 6l7 5 7-5" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+    </svg>
+  ),
+  shield: (
     <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
       <path d="M10 2 L17 5v5c0 4-3 7-7 8-4-1-7-4-7-8V5l7-3Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  ),
-  registrations: (
-    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
-      <rect x="3.5" y="2.5" width="13" height="15" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M6.5 7h7M6.5 10h7M6.5 13h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  ),
-  matches: (
-    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
-      <path d="M3 3l6 6M3 17l6-6M11 9l6-6M11 11l6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  ),
-  communications: (
-    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
-      <path d="M3 4.5h14v9.5l-3-2H4.5L3 13.5v-9Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
     </svg>
   ),
   settings: (
@@ -68,19 +71,42 @@ const ICONS = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Manage Events", href: "/admin", icon: ICONS.dashboard, adminOnly: true },
-  { label: "Events", href: "/", icon: ICONS.events },
-  { label: "Players", href: "/admin/players", icon: ICONS.players, adminOnly: true },
-  { label: "Teams", href: "/admin/teams", icon: ICONS.teams, adminOnly: true },
-  { label: "Registrations", href: "/admin/registrations", icon: ICONS.registrations, adminOnly: true },
-  { label: "Matches", href: "/admin/matches", icon: ICONS.matches, adminOnly: true },
-  { label: "Communications", href: "/admin/communications", icon: ICONS.communications, adminOnly: true },
-  { label: "Settings", href: "/admin/settings", icon: ICONS.settings, adminOnly: true },
+  { label: "Manage Events", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin" },
+  { label: "Events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
+  { label: "Players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
+  { label: "Members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },
+  { label: "Invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin" },
+  { label: "Settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin" },
+  { label: "Super Admin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
+  { label: "Browse Guilds", href: "/guilds", icon: ICONS.events, visibility: "guildless" },
+  { label: "Create Guild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless" },
 ];
 
-export function SidebarNav({ isAdmin }: { isAdmin: boolean }) {
+type SidebarNavProps = {
+  signedIn: boolean;
+  guildRole: "admin" | "member" | null;
+  isSuperAdmin: boolean;
+  hasGuild: boolean;
+};
+
+function isVisible(item: NavItem, p: SidebarNavProps): boolean {
+  switch (item.visibility) {
+    case "always":
+      return true;
+    case "signedInWithGuild":
+      return p.signedIn && p.hasGuild;
+    case "guildAdmin":
+      return p.signedIn && (p.guildRole === "admin" || p.isSuperAdmin);
+    case "superAdmin":
+      return p.signedIn && p.isSuperAdmin;
+    case "guildless":
+      return p.signedIn && !p.hasGuild;
+  }
+}
+
+export function SidebarNav(props: SidebarNavProps) {
   const pathname = usePathname();
-  const items = NAV_ITEMS.filter((item) => isAdmin || !item.adminOnly);
+  const items = NAV_ITEMS.filter((item) => isVisible(item, props));
 
   return (
     <nav className="flex flex-col gap-1">

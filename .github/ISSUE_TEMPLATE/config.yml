@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Browse existing issues
+    url: https://github.com/cnojima/foundation-event-organizer/issues
+    about: See if your bug or suggestion has already been reported.

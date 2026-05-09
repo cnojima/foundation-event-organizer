@@ -1,7 +1,19 @@
 import { BrandMark } from "./brand-mark";
 import { SidebarNav } from "./sidebar-nav";
 
-export function Sidebar({ isAdmin }: { isAdmin: boolean }) {
+type SidebarProps = {
+  signedIn: boolean;
+  guildRole: "admin" | "member" | null;
+  isSuperAdmin: boolean;
+  guildName: string | null;
+};
+
+export function Sidebar({
+  signedIn,
+  guildRole,
+  isSuperAdmin,
+  guildName,
+}: SidebarProps) {
   return (
     <aside className="hidden lg:flex w-64 shrink-0 flex-col border-r border-gray-200 bg-white">
       <div className="flex items-center gap-3 px-5 py-6 border-b border-gray-200">
@@ -13,18 +25,25 @@ export function Sidebar({ isAdmin }: { isAdmin: boolean }) {
       </div>
 
       <div className="px-3 py-4 flex-1">
-        <SidebarNav isAdmin={isAdmin} />
+        <SidebarNav
+          signedIn={signedIn}
+          guildRole={guildRole}
+          isSuperAdmin={isSuperAdmin}
+          hasGuild={!!guildName}
+        />
       </div>
 
-      <div className="m-4 rounded-lg border border-violet-200 bg-violet-50/60 p-4 text-center">
-        <div className="text-xs font-bold tracking-wider text-violet-900">SHADOWFRONT</div>
-        <div className="text-[10px] font-medium tracking-[0.2em] text-violet-600">GLOBAL ASSAULT</div>
-        <div className="my-3 flex justify-center">
-          <BrandMark size={48} />
+      {guildName && (
+        <div className="m-4 rounded-lg border border-violet-200 bg-violet-50/60 p-4 text-center">
+          <div className="text-[10px] font-medium tracking-[0.2em] text-violet-600">GUILD</div>
+          <div className="text-sm font-bold tracking-wider text-violet-900 mt-1">
+            {guildName.toUpperCase()}
+          </div>
+          <div className="my-3 flex justify-center">
+            <BrandMark size={48} />
+          </div>
         </div>
-        <div className="text-[11px] font-semibold text-gray-800">NOV 15 — DEC 6, 2025</div>
-        <div className="text-[10px] tracking-wider text-gray-500 mt-0.5">UTC EVENT WINDOW</div>
-      </div>
+      )}
     </aside>
   );
 }

@@ -1,34 +1,36 @@
 import { db } from "@/db";
 import { events } from "@/db/schema";
-import { desc, isNull } from "drizzle-orm";
+import { and, desc, eq, isNull } from "drizzle-orm";
 import Link from "next/link";
-import { CalendarDownloadLink } from "@/components/calendar-download-link";
+import { auth } from "@/auth";
+import { requireAnyGuildPage } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
 
 export default async function Home() {
-  const allEvents = await db
+  const session = await auth();
+  const membership = requireAnyGuildPage(session);
+
+  const guildEvents = await db
     .select()
     .from(events)
-    .where(isNull(events.deletedAt))
+    .where(
+      and(eq(events.guildId, membership.guildId!), isNull(events.deletedAt))
+    )
     .orderBy(desc(events.createdAt));
 
   const now = new Date().toISOString();
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="mb-6 flex items-end justify-between gap-4">
+      <div className="mb-6">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">Events</h1>
-        <CalendarDownloadLink
-          href="/api/events/recurring/ics"
-          label="Weekly Saturday 18:00 UTC"
-        />
       </div>
 
-      {allEvents.length === 0 ? (
+      {guildEvents.length === 0 ? (
         <p className="text-gray-500">No events yet.</p>
       ) : (
         <div className="space-y-3">
-          {allEvents.map((event) => {
+          {guildEvents.map((event) => {
             const isOpen =
               (!event.signupOpens || event.signupOpens <= now) &&
               (!event.signupCloses || event.signupCloses > now);

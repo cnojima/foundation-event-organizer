@@ -3,7 +3,8 @@ import Google from "next-auth/providers/google";
 import Discord from "next-auth/providers/discord";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db } from "@/db";
-import { users, accounts, sessions, verificationTokens } from "@/db/schema";
+import { users, accounts, sessions, verificationTokens, guilds } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
@@ -27,11 +28,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     authorized({ auth }) {
       return !!auth;
     },
-    session({ session, user }) {
+    async session({ session, user }) {
       if (session.user) {
-        session.user.id = user.id;
-        session.user.inGameName =
-          (user as { inGameName?: string | null }).inGameName ?? null;
+        const u = user as typeof users.$inferSelect;
+        session.user.id = u.id;
+        session.user.inGameName = u.inGameName ?? null;
+        session.user.guildId = u.guildId ?? null;
+        session.user.guildRole = u.guildRole ?? null;
+        session.user.isSuperAdmin = u.isSuperAdmin === true;
+        if (u.guildId) {
+          const guild = await db.query.guilds.findFirst({
+            where: eq(guilds.id, u.guildId),
+            columns: { slug: true },
+          });
+          session.user.guildSlug = guild?.slug ?? null;
+        } else {
+          session.user.guildSlug = null;
+        }
       }
       return session;
     },

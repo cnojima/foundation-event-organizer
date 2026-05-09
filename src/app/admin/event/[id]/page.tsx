@@ -1,13 +1,14 @@
 import { db } from "@/db";
-import { events, signups, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { events, signups, users, guilds } from "@/db/schema";
+import { and, eq, isNull } from "drizzle-orm";
 import { auth } from "@/auth";
-import { isAdmin } from "@/lib/admin";
-import { redirect, notFound } from "next/navigation";
+import { requireGuildAdminPage } from "@/lib/rbac";
+import { notFound, redirect } from "next/navigation";
 import { AdminSignupRow } from "@/components/admin-signup-row";
 import { computeStanding, WAITLIST_ROLE } from "@/lib/waitlist";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { DeleteEventButton } from "@/components/delete-event-button";
+import { EditEventDatesForm } from "@/components/edit-event-dates-form";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
 
@@ -17,8 +18,7 @@ export default async function AdminEventPage({
   params: Promise<{ id: string }>;
 }) {
   const session = await auth();
-  if (!session?.user?.id) redirect("/api/auth/signin");
-  if (!(await isAdmin(session.user.id))) redirect("/");
+  const membership = requireGuildAdminPage(session);
 
   const { id } = await params;
   const event = await db.query.events.findFirst({
@@ -27,6 +27,20 @@ export default async function AdminEventPage({
 
   if (!event) return notFound();
 
+  // Authorization: guild admin of event's guild, or super-admin.
+  if (
+    !membership.isSuperAdmin &&
+    !(membership.guildRole === "admin" && membership.guildId === event.guildId)
+  ) {
+    redirect("/");
+  }
+
+  const isImpersonating =
+    membership.isSuperAdmin && event.guildId !== membership.guildId;
+  const actingGuild = isImpersonating
+    ? await db.query.guilds.findFirst({ where: eq(guilds.id, event.guildId) })
+    : null;
+
   const isMatch = event.kind === "match";
 
   const eventSignups = isMatch
@@ -34,7 +48,7 @@ export default async function AdminEventPage({
         .select({ signup: signups, user: users })
         .from(signups)
         .leftJoin(users, eq(signups.userId, users.id))
-        .where(eq(signups.eventId, id))
+        .where(and(eq(signups.eventId, id), isNull(signups.deletedAt)))
     : [];
 
   const squad1Signups = eventSignups.filter(
@@ -58,6 +72,11 @@ export default async function AdminEventPage({
 
   return (
     <main className="max-w-6xl mx-auto p-6">
+      {actingGuild && (
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+          Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
+        </div>
+      )}
       <div className="mb-2 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-bold">{event.name}</h1>
@@ -87,7 +106,7 @@ export default async function AdminEventPage({
           attendance reports.
         </div>
       )}
-      <div className="mb-6 flex items-center gap-3 text-gray-500">
+      <div className="mb-3 flex flex-wrap items-center gap-3 text-gray-500">
         <span>
           {event.gameTime ? (
             <>
@@ -98,12 +117,33 @@ export default async function AdminEventPage({
             "No time set"
           )}
         </span>
+        {isMatch && event.signupOpens && (
+          <span className="text-xs">
+            Signup opens <DateTime iso={event.signupOpens} />
+          </span>
+        )}
+        {isMatch && event.signupCloses && (
+          <span className="text-xs">
+            Signup closes <DateTime iso={event.signupCloses} />
+          </span>
+        )}
         {!isMatch && (
           <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600">
             Simple Event
           </span>
         )}
       </div>
+      {!event.deletedAt && (
+        <div className="mb-6">
+          <EditEventDatesForm
+            eventId={event.id}
+            kind={isMatch ? "match" : "simple"}
+            gameTime={event.gameTime}
+            signupOpens={event.signupOpens}
+            signupCloses={event.signupCloses}
+          />
+        </div>
+      )}
 
       {event.description && (
         <p className="mb-6 text-sm text-gray-700">{event.description}</p>

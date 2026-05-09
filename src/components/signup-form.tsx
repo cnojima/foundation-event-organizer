@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FieldHelp } from "@/components/field-help";
 
 interface Event {
   id: string;
@@ -102,9 +103,11 @@ export function SignupForm({
             {event.squad2Name}
           </label>
         </div>
-        <p className="text-sm text-gray-500 mt-1">
-          Second choice: {secondChoice === "squad1" ? event.squad1Name : event.squad2Name}
-        </p>
+        <FieldHelp>
+          Pick the squad you most want to play on. If your first choice is
+          full, admins will try to place you on your second choice ({" "}
+          {secondChoice === "squad1" ? event.squad1Name : event.squad2Name}).
+        </FieldHelp>
       </div>
 
       <div>
@@ -116,6 +119,10 @@ export function SignupForm({
           />
           <span>Willing to be a backup player if main roster is full</span>
         </label>
+        <FieldHelp>
+          Backups fill in if a main-roster player drops. Uncheck if you only
+          want to play if you get a starting slot.
+        </FieldHelp>
       </div>
 
       <div>
@@ -129,6 +136,10 @@ export function SignupForm({
             Request a leadership position ({event.leadershipSlots} per squad)
           </span>
         </label>
+        <FieldHelp>
+          Leaders coordinate their squad during the match. Admins choose who
+          gets the role from the requests.
+        </FieldHelp>
         {requestLeadership && (
           <textarea
             className="mt-2 w-full border rounded-md p-2 text-sm"

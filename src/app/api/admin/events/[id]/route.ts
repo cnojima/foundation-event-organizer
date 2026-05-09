@@ -1,20 +1,63 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { isAdmin } from "@/lib/admin";
+import { canManageEvent } from "@/lib/rbac";
 import { db } from "@/db";
 import { events } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
+
+const DATE_FIELDS = ["gameTime", "signupOpens", "signupCloses"] as const;
+type DateField = (typeof DATE_FIELDS)[number];
+
+function parseDateInput(value: unknown): string | null | undefined {
+  if (value === undefined) return undefined;
+  if (value === null || value === "") return null;
+  if (typeof value !== "string") return undefined;
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return undefined;
+  return d.toISOString();
+}
+
+export async function PATCH(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const session = await auth();
+  const guard = await canManageEvent(session, id);
+  if (!guard.ok) return guard.response;
+
+  const body = await req.json().catch(() => ({}));
+  const updates: Partial<Record<DateField, string | null>> = {};
+  for (const field of DATE_FIELDS) {
+    if (field in body) {
+      const parsed = parseDateInput(body[field]);
+      if (parsed === undefined) {
+        return NextResponse.json(
+          { error: `Invalid ${field}` },
+          { status: 400 }
+        );
+      }
+      updates[field] = parsed;
+    }
+  }
+
+  if (Object.keys(updates).length === 0) {
+    return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
+  }
+
+  await db.update(events).set(updates).where(eq(events.id, id));
+  return NextResponse.json({ success: true });
+}
 
 export async function DELETE(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const session = await auth();
-  if (!session?.user?.id || !(await isAdmin(session.user.id))) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
-
   const { id } = await params;
+  const session = await auth();
+  const guard = await canManageEvent(session, id);
+  if (!guard.ok) return guard.response;
+
   const result = await db
     .update(events)
     .set({ deletedAt: new Date().toISOString() })

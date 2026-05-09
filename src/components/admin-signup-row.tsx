@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { InfoTip } from "@/components/info-tip";
 
 interface Signup {
   id: string;
@@ -59,54 +60,62 @@ export function AdminSignupRow({
         <div className="flex items-center gap-2">
           <span className="font-medium">{userName}</span>
           {signup.requestLeadership && (
-            <span className="text-xs bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded">
-              Leader
-            </span>
+            <InfoTip content="This player asked to be considered for a leader role.">
+              <span className="text-xs bg-yellow-100 text-yellow-800 px-1.5 py-0.5 rounded">
+                Leader
+              </span>
+            </InfoTip>
           )}
         </div>
       </div>
-      <select
-        value={role}
-        onChange={(e) => {
-          const next = e.target.value;
-          setRole(next);
-          save({ assignedRole: next === "" ? null : next }, true);
-        }}
-        disabled={saving}
-        className="text-sm border rounded px-2 py-1 bg-white"
-      >
-        {ROLE_OPTIONS.map((opt) => (
-          <option key={opt.value} value={opt.value}>
-            {opt.label}
-          </option>
-        ))}
-      </select>
-      <label className="flex items-center gap-1 text-sm">
-        <input
-          type="checkbox"
-          checked={attended}
+      <InfoTip content="Assign this player a role. Unassigned = on the roster but not yet placed. Waitlist = no slot available.">
+        <select
+          value={role}
           onChange={(e) => {
-            setAttended(e.target.checked);
-            save({ attended: e.target.checked });
+            const next = e.target.value;
+            setRole(next);
+            save({ assignedRole: next === "" ? null : next }, true);
           }}
-        />
-        Attended
-      </label>
-      <div className="flex items-center gap-1">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <button
-            key={star}
-            onClick={() => {
-              setRating(star);
-              save({ rating: star });
+          disabled={saving}
+          className="text-sm border rounded px-2 py-1 bg-white"
+        >
+          {ROLE_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+      </InfoTip>
+      <InfoTip content="Mark whether this player showed up for the match.">
+        <label className="flex items-center gap-1 text-sm">
+          <input
+            type="checkbox"
+            checked={attended}
+            onChange={(e) => {
+              setAttended(e.target.checked);
+              save({ attended: e.target.checked });
             }}
-            className={`text-lg ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
-            disabled={saving}
-          >
-            ★
-          </button>
-        ))}
-      </div>
+          />
+          Attended
+        </label>
+      </InfoTip>
+      <InfoTip content="Optional 1-5 rating used for future roster decisions. Click again on a star to change.">
+        <div className="flex items-center gap-1">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <button
+              key={star}
+              onClick={() => {
+                setRating(star);
+                save({ rating: star });
+              }}
+              className={`text-lg ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
+              disabled={saving}
+            >
+              ★
+            </button>
+          ))}
+        </div>
+      </InfoTip>
     </div>
   );
 }

@@ -8,6 +8,10 @@ declare module "next-auth" {
       email?: string | null;
       image?: string | null;
       inGameName?: string | null;
+      guildId?: string | null;
+      guildSlug?: string | null;
+      guildRole?: "admin" | "member" | null;
+      isSuperAdmin?: boolean;
     };
   }
 }

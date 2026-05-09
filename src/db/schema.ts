@@ -1,4 +1,10 @@
-import { sqliteTable, text, integer, primaryKey } from "drizzle-orm/sqlite-core";
+import {
+  sqliteTable,
+  text,
+  integer,
+  primaryKey,
+  type AnySQLiteColumn,
+} from "drizzle-orm/sqlite-core";
 
 // Auth.js required tables
 export const users = sqliteTable("users", {
@@ -9,8 +15,14 @@ export const users = sqliteTable("users", {
   email: text("email").unique(),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
-  isAdmin: integer("is_admin", { mode: "boolean" }).default(false),
   inGameName: text("in_game_name"),
+  // Site-wide super-admin (replaces the old is_admin flag). Bootstrap manually via Drizzle Studio.
+  isSuperAdmin: integer("is_super_admin", { mode: "boolean" }).notNull().default(false),
+  // One guild per user. Both columns null when the user has not joined a guild yet.
+  guildId: text("guild_id").references((): AnySQLiteColumn => guilds.id, {
+    onDelete: "set null",
+  }),
+  guildRole: text("guild_role", { enum: ["admin", "member"] }),
 });
 
 export const accounts = sqliteTable(
@@ -59,8 +71,44 @@ export const verificationTokens = sqliteTable(
 
 // Application tables
 
+export const guilds = sqliteTable("guilds", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description"),
+  isPublic: integer("is_public", { mode: "boolean" }).notNull().default(true),
+  createdByUserId: text("created_by_user_id")
+    .notNull()
+    .references((): AnySQLiteColumn => users.id),
+  createdAt: text("created_at").notNull(),
+  deletedAt: text("deleted_at"),
+});
+
+export const guildInvites = sqliteTable("guild_invites", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  guildId: text("guild_id")
+    .notNull()
+    .references(() => guilds.id, { onDelete: "cascade" }),
+  code: text("code").notNull().unique(),
+  createdByUserId: text("created_by_user_id")
+    .notNull()
+    .references(() => users.id),
+  expiresAt: text("expires_at"),
+  maxUses: integer("max_uses"),
+  usesCount: integer("uses_count").notNull().default(0),
+  revokedAt: text("revoked_at"),
+  createdAt: text("created_at").notNull(),
+});
+
 export const events = sqliteTable("events", {
   id: text("id").primaryKey(),
+  guildId: text("guild_id")
+    .notNull()
+    .references(() => guilds.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description"),
   gameTime: text("game_time"), // ISO datetime string
@@ -102,4 +150,7 @@ export const signups = sqliteTable("signups", {
   assignedSquad: integer("assigned_squad"), // 1 or 2
   assignedRole: text("assigned_role"), // "player", "backup", "leader"
   createdAt: text("created_at").notNull(),
+  // Soft-delete on guild leave/kick. Reads filter `deletedAt IS NULL`; admin
+  // attendance reports may opt-in to include soft-deleted rows for history.
+  deletedAt: text("deleted_at"),
 });

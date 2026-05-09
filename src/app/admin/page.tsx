@@ -1,33 +1,58 @@
 import { db } from "@/db";
-import { events } from "@/db/schema";
-import { desc } from "drizzle-orm";
+import { events, guilds } from "@/db/schema";
+import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { auth } from "@/auth";
-import { isAdmin } from "@/lib/admin";
-import { redirect } from "next/navigation";
+import { requireGuildAdminPage, resolveAdminGuildId } from "@/lib/rbac";
 import { CreateEventForm } from "@/components/create-event-form";
 import { DateTime } from "@/components/date-time";
 
-export default async function AdminPage() {
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ guildId?: string }>;
+}) {
   const session = await auth();
-  if (!session?.user?.id) redirect("/api/auth/signin");
-  if (!(await isAdmin(session.user.id))) redirect("/");
+  const membership = requireGuildAdminPage(session);
+  const { guildId: requestedGuildId } = await searchParams;
+  const targetGuildId = await resolveAdminGuildId(membership, requestedGuildId);
+  if (!targetGuildId) {
+    return (
+      <main className="max-w-4xl mx-auto p-6">
+        <p className="text-red-600">Guild not found.</p>
+      </main>
+    );
+  }
+
+  const actingGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, targetGuildId),
+  });
 
   const allEvents = await db
     .select()
     .from(events)
+    .where(eq(events.guildId, targetGuildId))
     .orderBy(desc(events.createdAt));
 
   const activeEvents = allEvents.filter((e) => !e.deletedAt);
   const deletedEvents = allEvents.filter((e) => e.deletedAt);
+  const isImpersonating =
+    membership.isSuperAdmin && targetGuildId !== membership.guildId;
 
   return (
     <main className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
+      {isImpersonating && actingGuild && (
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+          Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
+        </div>
+      )}
+      <h1 className="text-3xl font-bold mb-6">
+        {actingGuild ? `${actingGuild.name} — Admin` : "Admin Panel"}
+      </h1>
 
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-4">Create Event</h2>
-        <CreateEventForm />
+        <CreateEventForm guildIdOverride={isImpersonating ? targetGuildId : undefined} />
       </section>
 
       <section className="mb-8">
@@ -39,7 +64,9 @@ export default async function AdminPage() {
             {activeEvents.map((event) => (
               <Link
                 key={event.id}
-                href={`/admin/event/${event.id}`}
+                href={`/admin/event/${event.id}${
+                  isImpersonating ? `?guildId=${targetGuildId}` : ""
+                }`}
                 className="block border rounded-lg p-4 hover:border-blue-500"
               >
                 <div className="flex justify-between">
@@ -66,7 +93,9 @@ export default async function AdminPage() {
             {deletedEvents.map((event) => (
               <Link
                 key={event.id}
-                href={`/admin/event/${event.id}`}
+                href={`/admin/event/${event.id}${
+                  isImpersonating ? `?guildId=${targetGuildId}` : ""
+                }`}
                 className="block rounded-lg border border-gray-200 p-4 opacity-60 hover:opacity-100 hover:border-gray-400"
               >
                 <div className="flex items-center justify-between">
@@ -90,3 +119,4 @@ export default async function AdminPage() {
     </main>
   );
 }
+

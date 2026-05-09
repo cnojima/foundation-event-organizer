@@ -1,6 +1,5 @@
-import { db } from "@/db";
-import { events } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { auth } from "@/auth";
+import { canViewEvent } from "@/lib/rbac";
 import { buildICS, icsResponse, slugify } from "@/lib/ics";
 
 export async function GET(
@@ -8,8 +7,12 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const event = await db.query.events.findFirst({ where: eq(events.id, id) });
-  if (!event || event.deletedAt) {
+  const session = await auth();
+  const guard = await canViewEvent(session, id);
+  if (!guard.ok) return guard.response;
+  const { event } = guard.value;
+
+  if (event.deletedAt) {
     return new Response("Event not found", { status: 404 });
   }
   if (!event.gameTime) {

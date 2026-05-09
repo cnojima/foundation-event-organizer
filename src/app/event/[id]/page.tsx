@@ -1,10 +1,11 @@
 import { db } from "@/db";
 import { events, signups, users } from "@/db/schema";
-import { eq, and, asc } from "drizzle-orm";
+import { eq, and, asc, isNull } from "drizzle-orm";
 import { auth } from "@/auth";
-import { notFound } from "next/navigation";
-import { SignInButton } from "@/components/auth-buttons";
+import { requireAnyGuildPage } from "@/lib/rbac";
+import { notFound, redirect } from "next/navigation";
 import { SignupForm } from "@/components/signup-form";
+import { InfoTip } from "@/components/info-tip";
 import { getEventStanding, WAITLIST_ROLE } from "@/lib/waitlist";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { UserAvatar } from "@/components/user-avatar";
@@ -49,15 +50,23 @@ export default async function EventPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
+  const session = await auth();
+  const membership = requireAnyGuildPage(session);
+
   const event = await db.query.events.findFirst({
     where: eq(events.id, id),
   });
 
   if (!event || event.deletedAt) return notFound();
 
+  // Members-only: super-admins may view any guild's event; everyone else must
+  // be in the event's guild.
+  if (!membership.isSuperAdmin && membership.guildId !== event.guildId) {
+    redirect("/");
+  }
+
   const isMatch = event.kind === "match";
 
-  const session = await auth();
   const now = new Date().toISOString();
   const isOpen =
     (!event.signupOpens || event.signupOpens <= now) &&
@@ -70,7 +79,7 @@ export default async function EventPage({
         .select({ signup: signups, user: users })
         .from(signups)
         .leftJoin(users, eq(signups.userId, users.id))
-        .where(eq(signups.eventId, event.id))
+        .where(and(eq(signups.eventId, event.id), isNull(signups.deletedAt)))
         .orderBy(asc(signups.createdAt))
     : [];
 
@@ -79,16 +88,17 @@ export default async function EventPage({
   const waitlist = eventSignups.filter((s) => bucketSquad(s) === "waitlist");
 
   let existingSignup = null;
-  if (isMatch && session?.user?.id) {
+  if (isMatch) {
     existingSignup = await db.query.signups.findFirst({
       where: and(
         eq(signups.eventId, event.id),
-        eq(signups.userId, session.user.id)
+        eq(signups.userId, membership.userId),
+        isNull(signups.deletedAt)
       ),
     });
   }
   const isWaitlisted = existingSignup?.assignedRole === WAITLIST_ROLE;
-  const currentUserId = session?.user?.id ?? null;
+  const currentUserId = membership.userId;
 
   return (
     <main className="max-w-5xl mx-auto p-6">
@@ -165,11 +175,6 @@ export default async function EventPage({
           {!isOpen ? (
             <div className="bg-gray-100 rounded-lg p-4 text-center text-gray-600">
               Signups are currently closed for this event.
-            </div>
-          ) : !session?.user ? (
-            <div className="bg-blue-50 rounded-lg p-4 text-center">
-              <p className="mb-3">Sign in to register for this event.</p>
-              <SignInButton />
             </div>
           ) : existingSignup ? (
             isWaitlisted ? (
@@ -381,12 +386,7 @@ function SignupListItem({
           {index}
         </span>
       )}
-      <UserAvatar
-        size="size-6"
-        name={displayName(user)}
-        email={user?.email}
-        image={user?.image}
-      />
+      <UserAvatar size="size-6" name={displayName(user)} />
       <span className="flex-1 truncate text-sm text-gray-900">
         {displayName(user)}
         {isCurrentUser && (
@@ -408,22 +408,40 @@ function RoleBadge({
   requestLeadership: boolean | null;
 }) {
   if (role === "leader") {
-    return <Pill className="border-amber-200 bg-amber-50 text-amber-700">Leader</Pill>;
+    return (
+      <InfoTip content="Leads the squad during the match. Assigned by an admin from leadership requests.">
+        <Pill className="border-amber-200 bg-amber-50 text-amber-700">Leader</Pill>
+      </InfoTip>
+    );
   }
   if (role === "backup") {
-    return <Pill className="border-sky-200 bg-sky-50 text-sky-700">Backup</Pill>;
+    return (
+      <InfoTip content="On the backup roster. Plays only if a starting-roster player drops.">
+        <Pill className="border-sky-200 bg-sky-50 text-sky-700">Backup</Pill>
+      </InfoTip>
+    );
   }
   if (role === "waitlist") {
-    return <Pill className="border-orange-200 bg-orange-50 text-orange-700">Waitlist</Pill>;
+    return (
+      <InfoTip content="All squad and backup slots were full when this player signed up. Promoted to player/backup only if a slot opens.">
+        <Pill className="border-orange-200 bg-orange-50 text-orange-700">Waitlist</Pill>
+      </InfoTip>
+    );
   }
   if (role === "player") {
-    return <Pill className="border-emerald-200 bg-emerald-50 text-emerald-700">Player</Pill>;
+    return (
+      <InfoTip content="On the starting roster for the squad.">
+        <Pill className="border-emerald-200 bg-emerald-50 text-emerald-700">Player</Pill>
+      </InfoTip>
+    );
   }
   if (requestLeadership) {
     return (
-      <Pill className="border-amber-200 bg-amber-50/60 text-amber-700">
-        Wants Leader
-      </Pill>
+      <InfoTip content="This player has requested a leadership role. Admins assign leaders from these requests.">
+        <Pill className="border-amber-200 bg-amber-50/60 text-amber-700">
+          Wants Leader
+        </Pill>
+      </InfoTip>
     );
   }
   return null;

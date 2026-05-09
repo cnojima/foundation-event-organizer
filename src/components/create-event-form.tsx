@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FieldHelp } from "@/components/field-help";
 
 type EventKind = "match" | "simple";
 
-export function CreateEventForm() {
+export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string } = {}) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
   const [kind, setKind] = useState<EventKind>("match");
@@ -15,12 +16,13 @@ export function CreateEventForm() {
     setSubmitting(true);
 
     const form = new FormData(e.currentTarget);
-    const baseBody = {
+    const baseBody: Record<string, unknown> = {
       kind,
       name: form.get("name"),
       description: form.get("description"),
       gameTime: form.get("gameTime") || null,
     };
+    if (guildIdOverride) baseBody.guildId = guildIdOverride;
     const body =
       kind === "match"
         ? {
@@ -79,6 +81,7 @@ export function CreateEventForm() {
             required
             className="w-full border rounded px-3 py-2"
           />
+          <FieldHelp>Shown to players in the event list and roster.</FieldHelp>
         </div>
         <div>
           <label className="block text-sm font-medium mb-1">
@@ -89,12 +92,18 @@ export function CreateEventForm() {
             type="datetime-local"
             className="w-full border rounded px-3 py-2"
           />
+          <FieldHelp>
+            {kind === "simple"
+              ? "When the event starts. Used for the calendar download."
+              : "When the match begins. Used for the calendar download."}
+          </FieldHelp>
         </div>
       </div>
 
       <div>
         <label className="block text-sm font-medium mb-1">Description</label>
         <textarea name="description" rows={2} className="w-full border rounded px-3 py-2" />
+        <FieldHelp>Optional. Plain text shown on the event page.</FieldHelp>
       </div>
 
       {kind === "match" && (
@@ -107,6 +116,9 @@ export function CreateEventForm() {
                 type="datetime-local"
                 className="w-full border rounded px-3 py-2"
               />
+              <FieldHelp>
+                When players can start signing up. Leave blank to open immediately.
+              </FieldHelp>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Signup Closes</label>
@@ -115,6 +127,10 @@ export function CreateEventForm() {
                 type="datetime-local"
                 className="w-full border rounded px-3 py-2"
               />
+              <FieldHelp>
+                When the signup form locks. Existing signups can still be edited
+                by admins. Leave blank for no deadline.
+              </FieldHelp>
             </div>
           </div>
 
@@ -126,6 +142,7 @@ export function CreateEventForm() {
                 defaultValue="Squad 1"
                 className="w-full border rounded px-3 py-2"
               />
+              <FieldHelp>Display name for the first squad.</FieldHelp>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Squad 2 Name</label>
@@ -134,6 +151,7 @@ export function CreateEventForm() {
                 defaultValue="Squad 2"
                 className="w-full border rounded px-3 py-2"
               />
+              <FieldHelp>Display name for the second squad.</FieldHelp>
             </div>
           </div>
 
@@ -146,6 +164,9 @@ export function CreateEventForm() {
                 defaultValue={20}
                 className="w-full border rounded px-3 py-2"
               />
+              <FieldHelp>
+                Main roster size per squad. Includes leaders.
+              </FieldHelp>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Max Backups</label>
@@ -155,6 +176,10 @@ export function CreateEventForm() {
                 defaultValue={10}
                 className="w-full border rounded px-3 py-2"
               />
+              <FieldHelp>
+                Backup slots per squad. Once main + backup are full, new
+                signups go to the waitlist.
+              </FieldHelp>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Leadership Slots</label>
@@ -164,6 +189,10 @@ export function CreateEventForm() {
                 defaultValue={3}
                 className="w-full border rounded px-3 py-2"
               />
+              <FieldHelp>
+                How many leader spots each squad has. Players request a leader
+                role; admins assign it.
+              </FieldHelp>
             </div>
           </div>
         </>

@@ -28,15 +28,18 @@ export async function TopBar() {
 
       {user ? (
         <div className="flex items-center gap-3">
-          <UserAvatar
-            name={displayName(user)}
-            email={user.email}
-            image={user.image}
-            size="size-9"
-          />
+          <UserAvatar name={displayName(user)} size="size-9" />
           <div className="leading-tight">
             <div className="text-sm font-semibold text-gray-900">{displayName(user)}</div>
-            <div className="text-xs text-gray-500">{user.email ?? "Event Lead"}</div>
+            <div className="text-xs text-gray-500">
+              {user.isSuperAdmin
+                ? "Super-admin"
+                : user.guildRole === "admin"
+                  ? "Guild admin"
+                  : user.guildRole === "member"
+                    ? "Member"
+                    : "No guild"}
+            </div>
           </div>
           <SignOutButton />
         </div>

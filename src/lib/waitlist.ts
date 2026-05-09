@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { events, signups } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 
 export const WAITLIST_ROLE = "waitlist";
 
@@ -28,7 +28,7 @@ export async function getEventStanding(
   const eventSignups = await db
     .select({ assignedRole: signups.assignedRole })
     .from(signups)
-    .where(eq(signups.eventId, eventId));
+    .where(and(eq(signups.eventId, eventId), isNull(signups.deletedAt)));
   return computeStanding(event, eventSignups);
 }
 

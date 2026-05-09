@@ -4,8 +4,11 @@ import "./globals.css";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/top-bar";
 import { Footer } from "@/components/layout/footer";
+import { AlphaBanner } from "@/components/layout/alpha-banner";
 import { auth } from "@/auth";
-import { isAdmin } from "@/lib/admin";
+import { db } from "@/db";
+import { guilds } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import { InGameNameDialog } from "@/components/in-game-name-dialog";
 
 const geistSans = Geist({
@@ -29,8 +32,29 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  const userIsAdmin = session?.user?.id ? await isAdmin(session.user.id) : false;
   const needsInGameName = !!session?.user && !session.user.inGameName;
+
+  let guildName: string | null = null;
+  if (session?.user?.guildId) {
+    const guild = await db.query.guilds.findFirst({
+      where: eq(guilds.id, session.user.guildId),
+      columns: { name: true },
+    });
+    guildName = guild?.name ?? null;
+  }
+
+  const sidebarProps = {
+    signedIn: !!session?.user?.id,
+    guildRole: session?.user?.guildRole ?? null,
+    isSuperAdmin: session?.user?.isSuperAdmin === true,
+    guildName,
+  };
+
+  const feedbackUser = {
+    inGameName: session?.user?.inGameName ?? null,
+    guildName,
+    guildSlug: session?.user?.guildSlug ?? null,
+  };
 
   return (
     <html
@@ -39,16 +63,15 @@ export default async function RootLayout({
     >
       <body className="min-h-full bg-white text-gray-900">
         <div className="flex min-h-screen">
-          <Sidebar isAdmin={userIsAdmin} />
+          <Sidebar {...sidebarProps} />
           <div className="flex min-w-0 flex-1 flex-col">
+            <AlphaBanner />
             <TopBar />
             <main className="flex-1 px-6 py-6">{children}</main>
-            <Footer />
+            <Footer user={feedbackUser} />
           </div>
         </div>
-        {needsInGameName && (
-          <InGameNameDialog suggested={session?.user?.name ?? undefined} />
-        )}
+        {needsInGameName && <InGameNameDialog />}
       </body>
     </html>
   );

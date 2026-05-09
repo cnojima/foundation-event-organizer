@@ -1,21 +1,30 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { isAdmin } from "@/lib/admin";
+import { requireGuildAdminApi, resolveAdminGuildId } from "@/lib/rbac";
 import { db } from "@/db";
 import { events } from "@/db/schema";
 import { generateId } from "@/lib/ids";
 
 export async function POST(req: Request) {
   const session = await auth();
-  if (!session?.user?.id || !(await isAdmin(session.user.id))) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-  }
+  const guard = requireGuildAdminApi(session);
+  if (!guard.ok) return guard.response;
+  const membership = guard.value;
 
   const body = await req.json();
+
+  // Super-admins may target a different guild via body.guildId; regular guild
+  // admins are pinned to their own guild.
+  const targetGuildId = await resolveAdminGuildId(membership, body.guildId);
+  if (!targetGuildId) {
+    return NextResponse.json({ error: "Guild not found" }, { status: 404 });
+  }
+
   const kind: "match" | "simple" = body.kind === "simple" ? "simple" : "match";
 
   const event = {
     id: generateId(),
+    guildId: targetGuildId,
     name: body.name,
     description: body.description || null,
     gameTime: body.gameTime ? new Date(body.gameTime).toISOString() : null,

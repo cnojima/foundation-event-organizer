@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { isAdmin } from "@/lib/admin";
+import { canManageEvent } from "@/lib/rbac";
 import { db } from "@/db";
 import { signups } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function PATCH(req: Request) {
   const session = await auth();
-  if (!session?.user?.id || !(await isAdmin(session.user.id))) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const body = await req.json();
@@ -18,7 +18,14 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: "Missing signup id" }, { status: 400 });
   }
 
-  // Only allow updating admin-controlled fields
+  const signup = await db.query.signups.findFirst({ where: eq(signups.id, id) });
+  if (!signup) {
+    return NextResponse.json({ error: "Signup not found" }, { status: 404 });
+  }
+
+  const guard = await canManageEvent(session, signup.eventId);
+  if (!guard.ok) return guard.response;
+
   const allowedFields: Record<string, unknown> = {};
   if ("attended" in updates) allowedFields.attended = updates.attended;
   if ("rating" in updates) allowedFields.rating = updates.rating;
