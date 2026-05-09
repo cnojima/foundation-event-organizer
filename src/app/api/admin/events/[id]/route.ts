@@ -4,6 +4,7 @@ import { canManageEvent } from "@/lib/rbac";
 import { db } from "@/db";
 import { events } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
+import { clearNotifications } from "@/lib/notifications";
 
 const DATE_FIELDS = ["gameTime", "signupOpens", "signupCloses"] as const;
 type DateField = (typeof DATE_FIELDS)[number];
@@ -43,6 +44,13 @@ export async function PATCH(
 
   if (Object.keys(updates).length === 0) {
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
+  }
+
+  // If gameTime is moving to a different value, clear notification rows so
+  // reminders fire fresh against the new time. We compare against the loaded
+  // event to avoid clearing on identity-noop PATCHes.
+  if ("gameTime" in updates && updates.gameTime !== guard.value.event.gameTime) {
+    clearNotifications(id);
   }
 
   await db.update(events).set(updates).where(eq(events.id, id));

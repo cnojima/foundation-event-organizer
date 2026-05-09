@@ -84,6 +84,13 @@ export const guilds = sqliteTable("guilds", {
     .references((): AnySQLiteColumn => users.id),
   createdAt: text("created_at").notNull(),
   deletedAt: text("deleted_at"),
+  // Discord channel the bot posts event reminders into. Null = notifications disabled.
+  // The bot must be added to the server containing this channel via the install URL.
+  discordChannelId: text("discord_channel_id"),
+  // Auto-populated by the bot the first time it sends to this guild's channel
+  // (or when the admin clicks "Test integration"). Used to map slash-command
+  // interactions back to the app guild.
+  discordGuildId: text("discord_guild_id"),
 });
 
 export const guildInvites = sqliteTable("guild_invites", {
@@ -125,6 +132,23 @@ export const events = sqliteTable("events", {
   createdAt: text("created_at").notNull(),
   deletedAt: text("deleted_at"), // ISO datetime; null = active. Soft-deleted events are kept for attendance reports.
 });
+
+// Tracks which notification kinds have been sent for each event. Composite
+// PK (eventId, kind) makes the bot poll loop idempotent — duplicate inserts
+// fail and are caught.
+export const eventNotifications = sqliteTable(
+  "event_notifications",
+  {
+    eventId: text("event_id")
+      .notNull()
+      .references(() => events.id, { onDelete: "cascade" }),
+    kind: text("kind", { enum: ["day", "hour", "twenty_min"] }).notNull(),
+    sentAt: text("sent_at").notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.eventId, t.kind] }),
+  })
+);
 
 export const signups = sqliteTable("signups", {
   id: text("id").primaryKey(),
