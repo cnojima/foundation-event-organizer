@@ -18,6 +18,8 @@ export function CreateGuildForm() {
   const [name, setName] = useState("");
   const [slug, setSlug] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
+  const [tag, setTag] = useState("");
+  const [serverNumber, setServerNumber] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -37,6 +39,8 @@ export function CreateGuildForm() {
       body: JSON.stringify({
         name,
         slug,
+        tag: tag.trim(),
+        serverNumber: serverNumber === "" ? null : Number(serverNumber),
         description: form.get("description") || null,
         isPublic: form.get("isPublic") === "on",
       }),
@@ -79,6 +83,40 @@ export function CreateGuildForm() {
           URL-safe ID. 3-40 chars: a-z, 0-9, hyphens. Permanent — can&apos;t be
           changed after creation.
         </FieldHelp>
+      </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Server # *</label>
+          <input
+            required
+            type="number"
+            min={1001}
+            max={9999}
+            step={1}
+            value={serverNumber}
+            onChange={(e) => setServerNumber(e.target.value)}
+            placeholder="e.g. 1234"
+            className="w-full border rounded px-3 py-2 font-mono"
+          />
+          <FieldHelp>Game-server number (1001-9999).</FieldHelp>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Guild Tag *</label>
+          <input
+            required
+            type="text"
+            minLength={2}
+            maxLength={4}
+            value={tag}
+            onChange={(e) => setTag(e.target.value)}
+            placeholder="e.g. SHFT"
+            className="w-full border rounded px-3 py-2 font-mono uppercase"
+          />
+          <FieldHelp>
+            2-4 characters. Prepended to every member&apos;s name as{" "}
+            <code>[TAG] name</code>.
+          </FieldHelp>
+        </div>
       </div>
       <div>
         <label className="block text-sm font-medium mb-1">Description</label>

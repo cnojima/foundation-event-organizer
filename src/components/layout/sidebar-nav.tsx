@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 type Visibility =
@@ -135,8 +135,30 @@ function isVisible(item: NavItem, p: SidebarNavProps): boolean {
   }
 }
 
+// Admin routes that participate in the super-admin "Acting as guild X" mode.
+// When the URL has `?guildId=...`, these links should preserve it so the
+// super-admin's navigation stays inside the impersonated guild instead of
+// snapping back to their own. /admin/help is static and intentionally excluded.
+const IMPERSONATION_AWARE_PREFIXES = [
+  "/admin",
+  "/admin/event",
+  "/admin/players",
+  "/admin/members",
+  "/admin/invites",
+  "/admin/settings",
+];
+
+function preservesImpersonation(href: string): boolean {
+  if (href === "/admin/help") return false;
+  return IMPERSONATION_AWARE_PREFIXES.some(
+    (prefix) => href === prefix || href.startsWith(`${prefix}/`)
+  );
+}
+
 export function SidebarNav(props: SidebarNavProps) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const impersonatingGuildId = searchParams.get("guildId");
   const t = useTranslations("nav");
   const items = NAV_ITEMS.filter((item) => isVisible(item, props));
 
@@ -147,10 +169,14 @@ export function SidebarNav(props: SidebarNavProps) {
           item.href === "/"
             ? pathname === "/"
             : pathname === item.href || pathname.startsWith(`${item.href}/`);
+        const href =
+          impersonatingGuildId && preservesImpersonation(item.href)
+            ? `${item.href}?guildId=${impersonatingGuildId}`
+            : item.href;
         return (
           <Link
             key={item.href}
-            href={item.href}
+            href={href}
             className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
               active
                 ? "bg-violet-50 text-violet-700"
