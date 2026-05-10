@@ -3,7 +3,13 @@ import { SignInButton, SignOutButton } from "@/components/auth-buttons";
 import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
 
-export async function TopBar({ leftSlot }: { leftSlot?: React.ReactNode }) {
+export async function TopBar({
+  leftSlot,
+  guildTag,
+}: {
+  leftSlot?: React.ReactNode;
+  guildTag?: string | null;
+}) {
   const session = await auth();
   const user = session?.user;
 
@@ -30,9 +36,9 @@ export async function TopBar({ leftSlot }: { leftSlot?: React.ReactNode }) {
 
       {user ? (
         <div className="flex items-center gap-3">
-          <UserAvatar name={displayName(user)} image={user.image} size="size-9" />
+          <UserAvatar name={displayName(user, guildTag)} image={user.image} size="size-9" />
           <div className="hidden leading-tight sm:block">
-            <div className="text-sm font-semibold text-gray-900">{displayName(user)}</div>
+            <div className="text-sm font-semibold text-gray-900">{displayName(user, guildTag)}</div>
             <div className="text-xs text-gray-500">
               {user.isSuperAdmin
                 ? "Super-admin"

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 type Visibility =
   | "always"
+  | "signedIn"
   | "signedInWithGuild"
   | "guildAdmin"
   | "superAdmin"
@@ -92,7 +93,9 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Super Admin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
   { label: "Browse Guilds", href: "/guilds", icon: ICONS.events, visibility: "guildless" },
   { label: "Create Guild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless" },
+  { label: "Admin Help", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin" },
   { label: "Help", href: "/help", icon: ICONS.help, visibility: "always" },
+  { label: "My Account", href: "/me", icon: ICONS.settings, visibility: "signedIn" },
 ];
 
 type SidebarNavProps = {
@@ -106,6 +109,8 @@ function isVisible(item: NavItem, p: SidebarNavProps): boolean {
   switch (item.visibility) {
     case "always":
       return true;
+    case "signedIn":
+      return p.signedIn;
     case "signedInWithGuild":
       return p.signedIn && p.hasGuild;
     case "guildAdmin":

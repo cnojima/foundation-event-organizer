@@ -15,6 +15,7 @@ export default async function SuperAdminUsersPage() {
     .select({
       user: users,
       guildName: guilds.name,
+      guildTag: guilds.tag,
     })
     .from(users)
     .leftJoin(guilds, eq(users.guildId, guilds.id))
@@ -30,16 +31,16 @@ export default async function SuperAdminUsersPage() {
       </p>
 
       <div className="space-y-2">
-        {rows.map(({ user: u, guildName }) => (
+        {rows.map(({ user: u, guildName, guildTag }) => (
           <div
             key={u.id}
             className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3"
           >
             <div className="flex items-center gap-3">
-              <UserAvatar name={displayName(u)} image={u.image} />
+              <UserAvatar name={displayName(u, guildTag)} image={u.image} />
               <div className="leading-tight">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-gray-900">{displayName(u)}</span>
+                  <span className="font-semibold text-gray-900">{displayName(u, guildTag)}</span>
                   {u.isSuperAdmin && (
                     <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700">
                       Super

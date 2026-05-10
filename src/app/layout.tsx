@@ -36,12 +36,14 @@ export default async function RootLayout({
   const needsInGameName = !!session?.user && !session.user.inGameName;
 
   let guildName: string | null = null;
+  let guildTag: string | null = null;
   if (session?.user?.guildId) {
     const guild = await db.query.guilds.findFirst({
       where: eq(guilds.id, session.user.guildId),
-      columns: { name: true },
+      columns: { name: true, tag: true },
     });
     guildName = guild?.name ?? null;
+    guildTag = guild?.tag ?? null;
   }
 
   const sidebarProps = {
@@ -67,7 +69,7 @@ export default async function RootLayout({
           <Sidebar {...sidebarProps} />
           <div className="flex min-w-0 flex-1 flex-col">
             <AlphaBanner />
-            <TopBar leftSlot={<MobileNav {...sidebarProps} />} />
+            <TopBar leftSlot={<MobileNav {...sidebarProps} />} guildTag={guildTag} />
             <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
             <Footer user={feedbackUser} />
           </div>

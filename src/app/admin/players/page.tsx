@@ -156,6 +156,7 @@ export default async function PlayersPage({
                 signups={userSignups}
                 isImpersonating={isImpersonating}
                 guildIdQuery={isImpersonating ? targetGuildId : undefined}
+                guildTag={actingGuild?.tag ?? null}
               />
             );
           })}
@@ -178,21 +179,23 @@ function PlayerCard({
   user,
   signups: userSignups,
   guildIdQuery,
+  guildTag,
 }: {
   user: typeof users.$inferSelect;
   signups: SignupWithEvent[];
   isImpersonating: boolean;
   guildIdQuery?: string;
+  guildTag: string | null;
 }) {
   const linkSuffix = guildIdQuery ? `?guildId=${guildIdQuery}` : "";
   return (
     <div className="rounded-lg border border-gray-200 bg-white">
       <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <UserAvatar name={displayName(user)} image={user.image} />
+          <UserAvatar name={displayName(user, guildTag)} image={user.image} />
           <div className="leading-tight">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-900">{displayName(user)}</span>
+              <span className="font-semibold text-gray-900">{displayName(user, guildTag)}</span>
               {user.guildRole === "admin" && (
                 <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700">
                   Admin

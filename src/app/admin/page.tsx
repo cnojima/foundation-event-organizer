@@ -4,8 +4,8 @@ import { desc, eq } from "drizzle-orm";
 import Link from "next/link";
 import { auth } from "@/auth";
 import { requireGuildAdminPage, resolveAdminGuildId } from "@/lib/rbac";
-import { CreateEventForm } from "@/components/create-event-form";
 import { DateTime } from "@/components/date-time";
+import { effectiveStartIso, squadTimes } from "@/lib/event-times";
 
 export default async function AdminPage({
   searchParams,
@@ -34,10 +34,24 @@ export default async function AdminPage({
     .where(eq(events.guildId, targetGuildId))
     .orderBy(desc(events.createdAt));
 
-  const activeEvents = allEvents.filter((e) => !e.deletedAt);
-  const deletedEvents = allEvents.filter((e) => e.deletedAt);
   const isImpersonating =
     membership.isSuperAdmin && targetGuildId !== membership.guildId;
+  const guildSuffix = isImpersonating ? `?guildId=${targetGuildId}` : "";
+
+  // Active events split by upcoming vs past based on the earliest scheduled
+  // start time; events with no time set fall into "upcoming" so admins can
+  // schedule them.
+  const nowIso = new Date().toISOString();
+  const active = allEvents.filter((e) => !e.deletedAt);
+  const upcoming = active.filter((e) => {
+    const start = effectiveStartIso(e);
+    return !start || start >= nowIso;
+  });
+  const past = active.filter((e) => {
+    const start = effectiveStartIso(e);
+    return !!start && start < nowIso;
+  });
+  const deletedEvents = allEvents.filter((e) => e.deletedAt);
 
   return (
     <main className="max-w-4xl mx-auto p-6">
@@ -46,56 +60,48 @@ export default async function AdminPage({
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
-      <h1 className="text-3xl font-bold mb-6">
-        {actingGuild ? `${actingGuild.name} — Admin` : "Admin Panel"}
-      </h1>
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+          {actingGuild ? `${actingGuild.name} — Manage Events` : "Manage Events"}
+        </h1>
+        <Link
+          href={`/admin/event/new${guildSuffix}`}
+          className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700"
+        >
+          + New event
+        </Link>
+      </div>
 
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-4">Create Event</h2>
-        <CreateEventForm guildIdOverride={isImpersonating ? targetGuildId : undefined} />
-      </section>
+      <EventSection
+        title="Upcoming"
+        rows={upcoming}
+        emptyMessage="No upcoming events. Click '+ New event' to create one."
+        guildSuffix={guildSuffix}
+      />
 
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-4">Events</h2>
-        {activeEvents.length === 0 ? (
-          <p className="text-gray-500">No events yet.</p>
-        ) : (
-          <div className="space-y-3">
-            {activeEvents.map((event) => (
-              <Link
-                key={event.id}
-                href={`/admin/event/${event.id}${
-                  isImpersonating ? `?guildId=${targetGuildId}` : ""
-                }`}
-                className="block border rounded-lg p-4 hover:border-blue-500"
-              >
-                <div className="flex justify-between">
-                  <span className="font-medium">{event.name}</span>
-                  <span className="text-sm text-gray-500">
-                    <DateTime iso={event.createdAt} mode="date" />
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
-        )}
-      </section>
+      {past.length > 0 && (
+        <EventSection
+          title="Past"
+          rows={past}
+          emptyMessage=""
+          guildSuffix={guildSuffix}
+          muted
+        />
+      )}
 
       {deletedEvents.length > 0 && (
-        <section>
-          <h2 className="text-xl font-semibold mb-4 text-gray-600">
+        <section className="mt-8">
+          <h2 className="mb-3 text-lg font-semibold text-gray-600">
             Deleted ({deletedEvents.length})
           </h2>
           <p className="mb-3 text-sm text-gray-500">
             Kept for attendance reports. Click to view.
           </p>
-          <div className="space-y-3">
+          <div className="space-y-2">
             {deletedEvents.map((event) => (
               <Link
                 key={event.id}
-                href={`/admin/event/${event.id}${
-                  isImpersonating ? `?guildId=${targetGuildId}` : ""
-                }`}
+                href={`/admin/event/${event.id}${guildSuffix}`}
                 className="block rounded-lg border border-gray-200 p-4 opacity-60 hover:opacity-100 hover:border-gray-400"
               >
                 <div className="flex items-center justify-between">
@@ -120,3 +126,105 @@ export default async function AdminPage({
   );
 }
 
+type EventRow = typeof events.$inferSelect;
+
+function EventSection({
+  title,
+  rows,
+  emptyMessage,
+  guildSuffix,
+  muted = false,
+}: {
+  title: string;
+  rows: EventRow[];
+  emptyMessage: string;
+  guildSuffix: string;
+  muted?: boolean;
+}) {
+  return (
+    <section className="mb-8">
+      <h2
+        className={`mb-3 text-lg font-semibold ${muted ? "text-gray-500" : "text-gray-900"}`}
+      >
+        {title}
+      </h2>
+      {rows.length === 0 ? (
+        emptyMessage ? <p className="text-sm text-gray-500">{emptyMessage}</p> : null
+      ) : (
+        <div className="space-y-2">
+          {rows.map((event) => (
+            <Link
+              key={event.id}
+              href={`/admin/event/${event.id}${guildSuffix}`}
+              className={`block rounded-lg border bg-white p-4 transition-colors ${
+                muted
+                  ? "border-gray-200 opacity-70 hover:opacity-100 hover:border-gray-300"
+                  : "border-gray-200 hover:border-violet-400"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-gray-900">
+                      {event.name}
+                    </span>
+                    <KindBadge kind={event.kind} />
+                  </div>
+                  <EventTimesLine event={event} />
+                </div>
+                <span className="shrink-0 text-xs text-gray-400">
+                  Created <DateTime iso={event.createdAt} mode="date" />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function KindBadge({ kind }: { kind: "match" | "simple" }) {
+  const styles =
+    kind === "match"
+      ? "border-violet-200 bg-violet-50 text-violet-700"
+      : "border-gray-200 bg-gray-50 text-gray-600";
+  return (
+    <span
+      className={`rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${styles}`}
+    >
+      {kind}
+    </span>
+  );
+}
+
+function EventTimesLine({ event }: { event: EventRow }) {
+  if (event.kind === "simple") {
+    return (
+      <p className="mt-1 text-xs text-gray-500">
+        {event.gameTime ? (
+          <>
+            Starts: <DateTime iso={event.gameTime} showUTC={false} />
+          </>
+        ) : (
+          <span className="font-mono text-gray-400">No time set</span>
+        )}
+      </p>
+    );
+  }
+  const squads = squadTimes(event);
+  return (
+    <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500">
+      {squads.map((s) => (
+        <span key={s.name}>
+          {s.name}:{" "}
+          {s.startsAt ? (
+            <DateTime iso={s.startsAt} showUTC={false} />
+          ) : (
+            <span className="font-mono text-gray-400">TBD</span>
+          )}
+        </span>
+      ))}
+    </div>
+  );
+}

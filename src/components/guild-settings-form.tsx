@@ -10,12 +10,16 @@ export function GuildSettingsForm({
   defaultDescription,
   defaultIsPublic,
   defaultDiscordChannelId,
+  defaultServerNumber,
+  defaultTag,
 }: {
   guildId: string;
   defaultName: string;
   defaultDescription: string;
   defaultIsPublic: boolean;
   defaultDiscordChannelId: string;
+  defaultServerNumber: string;
+  defaultTag: string;
 }) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
@@ -35,6 +39,8 @@ export function GuildSettingsForm({
     setError(null);
     setSubmitting(true);
     const form = new FormData(e.currentTarget);
+    const serverNumberRaw = String(form.get("serverNumber") ?? "").trim();
+    const tagRaw = String(form.get("tag") ?? "").trim();
     const res = await fetch(`/api/guilds/${guildId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -43,6 +49,8 @@ export function GuildSettingsForm({
         description: form.get("description") || null,
         isPublic: form.get("isPublic") === "on",
         discordChannelId: channelId.trim() || null,
+        serverNumber: serverNumberRaw === "" ? null : Number(serverNumberRaw),
+        tag: tagRaw === "" ? null : tagRaw,
       }),
     });
     if (res.ok) {
@@ -103,6 +111,41 @@ export function GuildSettingsForm({
           When on, signed-in users can find this guild on /guilds and join with
           one click. When off, you can only invite members via invite link.
         </FieldHelp>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4">
+        <div>
+          <label className="block text-sm font-medium mb-1">Server #</label>
+          <input
+            name="serverNumber"
+            type="number"
+            min={1001}
+            max={9999}
+            step={1}
+            defaultValue={defaultServerNumber}
+            placeholder="e.g. 1234"
+            className="w-full border rounded px-3 py-2 font-mono"
+          />
+          <FieldHelp>
+            Game-server number (1001-9999). Optional. Shown for ops reference.
+          </FieldHelp>
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">Guild Tag</label>
+          <input
+            name="tag"
+            type="text"
+            minLength={2}
+            maxLength={4}
+            defaultValue={defaultTag}
+            placeholder="e.g. SHFT"
+            className="w-full border rounded px-3 py-2 font-mono uppercase"
+          />
+          <FieldHelp>
+            2-4 characters. When set, prepended to every member&apos;s
+            displayed name as <code>[TAG] name</code>.
+          </FieldHelp>
+        </div>
       </div>
 
       <div className="border-t border-gray-100 pt-4">

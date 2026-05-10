@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
+import { countGuildAdmins } from "@/lib/rbac";
 
 const MAX_NAME_LENGTH = 32;
 
@@ -40,4 +41,55 @@ export async function PATCH(req: Request) {
     .where(eq(users.id, session.user.id));
 
   return NextResponse.json({ success: true, inGameName });
+}
+
+// Hard-deletes the current user's account. FK cascades remove their signups,
+// accounts (OAuth links), and sessions. Same last-admin guard as guild leave —
+// you can't orphan a guild by deleting yourself if you're the only admin.
+export async function DELETE() {
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  const userId = session.user.id;
+
+  const me = await db.query.users.findFirst({ where: eq(users.id, userId) });
+  if (!me) {
+    return NextResponse.json({ error: "Account not found" }, { status: 404 });
+  }
+
+  if (me.guildRole === "admin" && me.guildId) {
+    const admins = await countGuildAdmins(me.guildId);
+    if (admins <= 1) {
+      return NextResponse.json(
+        {
+          error:
+            "You're the only admin of your guild. Promote someone else first, or have a super-admin take over.",
+        },
+        { status: 409 }
+      );
+    }
+  }
+
+  // The last super-admin can't delete themselves either — keeps the platform
+  // operable. Mirrors the rule in PATCH /api/super-admin/users/[id].
+  if (me.isSuperAdmin === true) {
+    const remaining = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(users)
+      .where(and(eq(users.isSuperAdmin, true)))
+      .get();
+    if (Number(remaining?.count ?? 0) <= 1) {
+      return NextResponse.json(
+        {
+          error:
+            "You're the last super-admin. Promote someone else to super-admin before deleting your account.",
+        },
+        { status: 409 }
+      );
+    }
+  }
+
+  await db.delete(users).where(eq(users.id, userId));
+  return NextResponse.json({ success: true });
 }

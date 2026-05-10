@@ -47,6 +47,8 @@ export default async function GuildSettingsPage({
         defaultDescription={guild.description ?? ""}
         defaultIsPublic={guild.isPublic}
         defaultDiscordChannelId={guild.discordChannelId ?? ""}
+        defaultServerNumber={guild.serverNumber != null ? String(guild.serverNumber) : ""}
+        defaultTag={guild.tag ?? ""}
       />
 
       {!isImpersonating && (

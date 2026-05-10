@@ -56,11 +56,11 @@ export default async function MembersPage({
             className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3"
           >
             <div className="flex items-center gap-3">
-              <UserAvatar name={displayName(m)} image={m.image} />
+              <UserAvatar name={displayName(m, actingGuild?.tag)} image={m.image} />
               <div className="leading-tight">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-gray-900">
-                    {displayName(m)}
+                    {displayName(m, actingGuild?.tag)}
                   </span>
                   {m.guildRole === "admin" && (
                     <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700">

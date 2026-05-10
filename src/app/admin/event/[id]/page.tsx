@@ -37,9 +37,11 @@ export default async function AdminEventPage({
 
   const isImpersonating =
     membership.isSuperAdmin && event.guildId !== membership.guildId;
-  const actingGuild = isImpersonating
-    ? await db.query.guilds.findFirst({ where: eq(guilds.id, event.guildId) })
-    : null;
+  const eventGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, event.guildId),
+  });
+  const actingGuild = isImpersonating ? eventGuild : null;
+  const guildTag = eventGuild?.tag ?? null;
 
   const isMatch = event.kind === "match";
 
@@ -51,13 +53,24 @@ export default async function AdminEventPage({
         .where(and(eq(signups.eventId, id), isNull(signups.deletedAt)))
     : [];
 
+  // Effective squad placement: admin's explicit assignment wins; fall back
+  // to first-choice preference. This way "Move to Bravo" actually relocates
+  // the player in the UI on the next render.
+  function effectiveSquad(s: typeof eventSignups[number]["signup"]): 1 | 2 | null {
+    if (s.assignedSquad === 1 || s.assignedSquad === 2) {
+      return s.assignedSquad as 1 | 2;
+    }
+    if (s.squad1Preference === 1) return 1;
+    if (s.squad2Preference === 1) return 2;
+    return null;
+  }
   const squad1Signups = eventSignups.filter(
     (s) =>
-      s.signup.assignedRole !== WAITLIST_ROLE && s.signup.squad1Preference === 1
+      s.signup.assignedRole !== WAITLIST_ROLE && effectiveSquad(s.signup) === 1
   );
   const squad2Signups = eventSignups.filter(
     (s) =>
-      s.signup.assignedRole !== WAITLIST_ROLE && s.signup.squad2Preference === 1
+      s.signup.assignedRole !== WAITLIST_ROLE && effectiveSquad(s.signup) === 2
   );
   const leadershipRequests = eventSignups.filter(
     (s) => s.signup.requestLeadership
@@ -176,22 +189,22 @@ export default async function AdminEventPage({
 
       {isMatch && (
         <>
-          <div className="grid grid-cols-4 gap-4 mb-6 text-center">
-            <div className="border rounded-lg p-3">
+          <div className="mb-6 grid grid-cols-2 gap-3 text-center sm:grid-cols-4 sm:gap-4">
+            <div className="rounded-lg border p-3">
               <div className="text-2xl font-bold">
                 {standing.taken} / {standing.capacity}
               </div>
               <div className="text-sm text-gray-500">Slots Filled</div>
             </div>
-            <div className="border rounded-lg p-3">
+            <div className="rounded-lg border p-3">
               <div className="text-2xl font-bold">{leadershipRequests.length}</div>
               <div className="text-sm text-gray-500">Leadership Requests</div>
             </div>
-            <div className="border rounded-lg p-3">
+            <div className="rounded-lg border p-3">
               <div className="text-2xl font-bold">{waitlistSignups.length}</div>
               <div className="text-sm text-gray-500">Waitlist</div>
             </div>
-            <div className="border rounded-lg p-3">
+            <div className="rounded-lg border p-3">
               <div className="text-2xl font-bold">
                 {eventSignups.filter((s) => s.signup.attended).length}
               </div>
@@ -199,18 +212,20 @@ export default async function AdminEventPage({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <section>
               <h2 className="text-lg font-semibold mb-3">
-                {event.squad1Name} — First Choice ({squad1Signups.length})
+                {event.squad1Name} ({squad1Signups.length})
               </h2>
               <div className="space-y-2">
                 {squad1Signups.map(({ signup, user }) => (
                   <AdminSignupRow
                     key={signup.id}
                     signup={signup}
-                    userName={displayName(user)}
+                    userName={displayName(user, guildTag)}
                     userImage={user?.image || undefined}
+                    squad1Name={event.squad1Name}
+                    squad2Name={event.squad2Name}
                   />
                 ))}
               </div>
@@ -218,15 +233,17 @@ export default async function AdminEventPage({
 
             <section>
               <h2 className="text-lg font-semibold mb-3">
-                {event.squad2Name} — First Choice ({squad2Signups.length})
+                {event.squad2Name} ({squad2Signups.length})
               </h2>
               <div className="space-y-2">
                 {squad2Signups.map(({ signup, user }) => (
                   <AdminSignupRow
                     key={signup.id}
                     signup={signup}
-                    userName={displayName(user)}
+                    userName={displayName(user, guildTag)}
                     userImage={user?.image || undefined}
+                    squad1Name={event.squad1Name}
+                    squad2Name={event.squad2Name}
                   />
                 ))}
               </div>
@@ -254,8 +271,10 @@ export default async function AdminEventPage({
                     <div className="flex-1">
                       <AdminSignupRow
                         signup={signup}
-                        userName={displayName(user)}
+                        userName={displayName(user, guildTag)}
                         userImage={user?.image || undefined}
+                        squad1Name={event.squad1Name}
+                        squad2Name={event.squad2Name}
                       />
                     </div>
                   </div>

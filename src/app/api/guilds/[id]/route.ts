@@ -34,6 +34,34 @@ export async function PATCH(
       );
     }
   }
+  if ("serverNumber" in body) {
+    const raw = body.serverNumber;
+    if (raw === null || raw === "") {
+      updates.serverNumber = null;
+    } else {
+      const n = typeof raw === "number" ? raw : Number(raw);
+      if (!Number.isInteger(n) || n < 1001 || n > 9999) {
+        return NextResponse.json(
+          { error: "Server # must be an integer between 1001 and 9999." },
+          { status: 400 }
+        );
+      }
+      updates.serverNumber = n;
+    }
+  }
+  if ("tag" in body) {
+    const raw = body.tag;
+    if (raw === null || raw === "") {
+      updates.tag = null;
+    } else if (typeof raw === "string" && /^.{2,4}$/u.test(raw.trim())) {
+      updates.tag = raw.trim();
+    } else {
+      return NextResponse.json(
+        { error: "Guild Tag must be 2-4 characters." },
+        { status: 400 }
+      );
+    }
+  }
 
   if (Object.keys(updates).length === 0) {
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });

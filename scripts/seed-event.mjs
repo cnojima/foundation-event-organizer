@@ -64,7 +64,10 @@ function bucketSquad(s) {
 }
 
 function main() {
-  const dbPath = path.join(repoRoot(), "data", "app.db");
+  // Honor DATABASE_PATH so the script works inside the Fly container (where
+  // the DB is mounted at /data/app.db, not <cwd>/data/app.db).
+  const dbPath =
+    process.env.DATABASE_PATH ?? path.join(repoRoot(), "data", "app.db");
   const db = new Database(dbPath);
 
   const argEventId = process.argv[2];
@@ -76,23 +79,25 @@ function main() {
     console.error(argEventId ? `Event ${argEventId} not found.` : "No events in DB.");
     process.exit(1);
   }
+  if (event.kind !== "match") {
+    console.error(
+      `Event ${event.id} is a "${event.kind}" event — only "match" events have signups to seed.`
+    );
+    process.exit(1);
+  }
 
   console.log(`Seeding event: ${event.name} (${event.id})`);
   const squadCap = event.max_players + event.max_backups; // 30 default
   const totalSquadCap = squadCap * 2;
   console.log(`  capacity: ${totalSquadCap} (${squadCap} per squad), waitlist target: ${WAITLIST_COUNT}`);
 
-  // Wipe prior seeds (signups + users) so the script is re-runnable.
-  const purgeUsers = db.prepare(
-    "DELETE FROM users WHERE email LIKE ?"
-  );
-  const purgeSeedSignups = db.prepare(
-    "DELETE FROM signups WHERE event_id = ? AND user_id IN (SELECT id FROM users WHERE email LIKE ?)"
-  );
-  // Order matters: drop signups first (FK cascade also handles this if we drop users, but be explicit).
-  purgeSeedSignups.run(event.id, `%${SEED_EMAIL_DOMAIN}`);
-  const purged = purgeUsers.run(`%${SEED_EMAIL_DOMAIN}`).changes;
-  if (purged > 0) console.log(`  purged ${purged} prior seed users`);
+  // Wipe prior seeds for *this guild only* so seeding event A in Guild X
+  // doesn't blow away seed users for Guild Y. FK cascade on users → signups
+  // takes care of the signups.
+  const purged = db
+    .prepare("DELETE FROM users WHERE email LIKE ? AND guild_id = ?")
+    .run(`%${SEED_EMAIL_DOMAIN}`, event.guild_id).changes;
+  if (purged > 0) console.log(`  purged ${purged} prior seed users in this guild`);
 
   const existingSignups = db
     .prepare("SELECT * FROM signups WHERE event_id = ?")
@@ -142,8 +147,11 @@ function main() {
     return;
   }
 
+  // Seed users need `in_game_name` set so they don't render as "Unknown" in
+  // admin views — the app intentionally hides the OAuth `name` column for
+  // PII reasons, so `displayName()` only uses in_game_name.
   const insertUser = db.prepare(
-    "INSERT INTO users (id, name, email, image, guild_id, guild_role) VALUES (?, ?, ?, NULL, ?, 'member')"
+    "INSERT INTO users (id, name, email, image, in_game_name, guild_id, guild_role) VALUES (?, ?, ?, NULL, ?, ?, 'member')"
   );
   const insertSignup = db.prepare(`
     INSERT INTO signups (
@@ -164,7 +172,7 @@ function main() {
       const signupId = genId();
       const name = pickName(nameIdx++);
       const email = `${userId.slice(0, 12)}${SEED_EMAIL_DOMAIN}`;
-      insertUser.run(userId, name, email, event.guild_id);
+      insertUser.run(userId, name, email, name, event.guild_id);
 
       const squad1Pref = squad === 1 ? 1 : 2;
       const squad2Pref = squad === 1 ? 2 : 1;

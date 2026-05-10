@@ -91,6 +91,11 @@ export const guilds = sqliteTable("guilds", {
   // (or when the admin clicks "Test integration"). Used to map slash-command
   // interactions back to the app guild.
   discordGuildId: text("discord_guild_id"),
+  // Game-server number (1001-9999). Optional; surfaced for ops display only.
+  serverNumber: integer("server_number"),
+  // Short 2-4 character guild tag. When set, prepended to every member's
+  // displayed name as "[<tag>] <name>".
+  tag: text("tag"),
 });
 
 export const guildInvites = sqliteTable("guild_invites", {

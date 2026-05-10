@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { events, signups, users } from "@/db/schema";
+import { events, guilds, signups, users } from "@/db/schema";
 import { eq, and, asc, isNull } from "drizzle-orm";
 import { auth } from "@/auth";
 import { requireAnyGuildPage } from "@/lib/rbac";
@@ -64,6 +64,12 @@ export default async function EventPage({
   if (!membership.isSuperAdmin && membership.guildId !== event.guildId) {
     redirect("/");
   }
+
+  const eventGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, event.guildId),
+    columns: { tag: true },
+  });
+  const guildTag = eventGuild?.tag ?? null;
 
   const isMatch = event.kind === "match";
 
@@ -225,6 +231,7 @@ export default async function EventPage({
               rows={squad1}
               event={event}
               currentUserId={currentUserId}
+              guildTag={guildTag}
             />
             <SquadRoster
               name={event.squad2Name}
@@ -232,6 +239,7 @@ export default async function EventPage({
               rows={squad2}
               event={event}
               currentUserId={currentUserId}
+              guildTag={guildTag}
             />
           </div>
         </section>
@@ -253,6 +261,7 @@ export default async function EventPage({
                   index={i + 1}
                   row={row}
                   isCurrentUser={row.user?.id === currentUserId}
+                  guildTag={guildTag}
                 />
               </li>
             ))}
@@ -269,12 +278,14 @@ function SquadRoster({
   rows,
   event,
   currentUserId,
+  guildTag,
 }: {
   name: string;
   squadNumber: SquadNumber;
   rows: SignupRow[];
   event: typeof events.$inferSelect;
   currentUserId: string | null;
+  guildTag: string | null;
 }) {
   const leaders = rows.filter((r) => r.signup.assignedRole === "leader");
   const backups = rows.filter((r) => r.signup.assignedRole === "backup");
@@ -309,16 +320,19 @@ function SquadRoster({
               title="Leaders"
               rows={leaders}
               currentUserId={currentUserId}
+              guildTag={guildTag}
             />
             <RosterSection
               title="Players"
               rows={players}
               currentUserId={currentUserId}
+              guildTag={guildTag}
             />
             <RosterSection
               title="Backups"
               rows={backups}
               currentUserId={currentUserId}
+              guildTag={guildTag}
             />
           </>
         )}
@@ -350,10 +364,12 @@ function RosterSection({
   title,
   rows,
   currentUserId,
+  guildTag,
 }: {
   title: string;
   rows: SignupRow[];
   currentUserId: string | null;
+  guildTag: string | null;
 }) {
   if (rows.length === 0) return null;
   return (
@@ -369,6 +385,7 @@ function RosterSection({
               row={row}
               isCurrentUser={row.user?.id === currentUserId}
               showRoleBadge={false}
+              guildTag={guildTag}
             />
           </li>
         ))}
@@ -382,11 +399,13 @@ function SignupListItem({
   index,
   isCurrentUser,
   showRoleBadge = true,
+  guildTag,
 }: {
   row: SignupRow;
   index?: number;
   isCurrentUser: boolean;
   showRoleBadge?: boolean;
+  guildTag: string | null;
 }) {
   const { signup, user } = row;
   return (
@@ -398,9 +417,9 @@ function SignupListItem({
           {index}
         </span>
       )}
-      <UserAvatar size="size-6" name={displayName(user)} image={user?.image} />
+      <UserAvatar size="size-6" name={displayName(user, guildTag)} image={user?.image} />
       <span className="flex-1 truncate text-sm text-gray-900">
-        {displayName(user)}
+        {displayName(user, guildTag)}
         {isCurrentUser && (
           <span className="ml-1 text-xs text-violet-600">(you)</span>
         )}
