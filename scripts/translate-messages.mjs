@@ -20,6 +20,10 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const messagesDir = path.join(repoRoot, "messages");
+// Source-text snapshots used to skip re-translating unchanged keys. Lives
+// outside messages/*.json because next-intl validates the loaded JSON tree
+// and rejects keys with "." (which our flattened snapshot keys contain).
+const cacheDir = path.join(messagesDir, ".translation-cache");
 
 // All locales except `en` (source). Keep in sync with src/i18n/config.ts.
 const TARGET_LOCALES = [
@@ -78,10 +82,20 @@ async function main() {
 async function translateLocale({ locale, en, apiKey, force }) {
   console.log(`\n=== ${locale} ===`);
   const outPath = path.join(messagesDir, `${locale}.json`);
+  const cachePath = path.join(cacheDir, `${locale}.json`);
   const existing = fs.existsSync(outPath)
     ? JSON.parse(fs.readFileSync(outPath, "utf8"))
     : {};
-  const prevEnSnapshot = existing._meta?.sourceSnapshot ?? {};
+
+  // Strip any legacy _meta block from earlier script versions — next-intl
+  // validates the loaded JSON tree and rejects keys containing ".", which
+  // our flattened snapshot uses. Never re-emit it.
+  if (existing._meta) delete existing._meta;
+
+  const cache = fs.existsSync(cachePath)
+    ? JSON.parse(fs.readFileSync(cachePath, "utf8"))
+    : {};
+  const prevEnSnapshot = cache.sourceSnapshot ?? {};
 
   // Flatten en.json + existing into key paths, decide which need translation.
   const flatEn = flatten(en);
@@ -89,7 +103,6 @@ async function translateLocale({ locale, en, apiKey, force }) {
   const toTranslate = [];
   const result = {};
   for (const [key, value] of Object.entries(flatEn)) {
-    if (key.startsWith("_meta.")) continue;
     const prevSource = prevEnSnapshot[key];
     const existingValue = flatExisting[key];
     if (!force && existingValue && prevSource === value) {
@@ -102,6 +115,10 @@ async function translateLocale({ locale, en, apiKey, force }) {
 
   if (toTranslate.length === 0) {
     console.log(`  up to date (${Object.keys(flatEn).length} keys)`);
+    // Still rewrite to scrub any lingering _meta block.
+    if (Object.keys(result).length > 0) {
+      fs.writeFileSync(outPath, JSON.stringify(unflatten(result), null, 2) + "\n");
+    }
     return;
   }
 
@@ -122,15 +139,23 @@ async function translateLocale({ locale, en, apiKey, force }) {
   }
 
   const merged = unflatten(result);
-  merged._meta = {
-    sourceLocale: "en",
-    targetLocale: locale,
-    translatedAt: new Date().toISOString(),
-    // Snapshot of the English source for diffing on the next run.
-    sourceSnapshot: flatEn,
-  };
   fs.writeFileSync(outPath, JSON.stringify(merged, null, 2) + "\n");
   console.log(`  wrote ${outPath}`);
+
+  fs.mkdirSync(cacheDir, { recursive: true });
+  fs.writeFileSync(
+    cachePath,
+    JSON.stringify(
+      {
+        sourceLocale: "en",
+        targetLocale: locale,
+        translatedAt: new Date().toISOString(),
+        sourceSnapshot: flatEn,
+      },
+      null,
+      2
+    ) + "\n"
+  );
 }
 
 async function callGoogleTranslate({ apiKey, texts, target }) {
@@ -169,10 +194,14 @@ function protectPlaceholders(text) {
 }
 
 function unprotectPlaceholders(text) {
-  return text.replace(
-    /<span translate="no">([\s\S]*?)<\/span>/g,
-    "$1"
-  );
+  // Google occasionally rewraps tokens or leaves empty wrapper spans behind.
+  // Run the substitution twice and then strip any remaining empty wrappers
+  // defensively — the regex is the same shape for filled and empty spans.
+  let out = text;
+  for (let i = 0; i < 2; i++) {
+    out = out.replace(/<span translate="no">([\s\S]*?)<\/span>/g, "$1");
+  }
+  return out;
 }
 
 function decodeHtmlEntities(s) {
