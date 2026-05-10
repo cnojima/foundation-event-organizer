@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Son süper yönetici sizsiniz. Hesabınızı silmeden önce başka birini süper yönetici yapın."
   },
   "ingameNameDialog": {
-    "title": "Oyun içi adınızı belirleyin.",
-    "explanation": "Etkinlik listelerinde ve kayıt formlarında bu şekilde görüneceksiniz. Bunu daha sonra profilinizden değiştirebilirsiniz.",
     "placeholder": "Örneğin NovaSpectre",
     "saving": "Tasarruf…",
     "save": "Kaydetmek",
-    "errorGeneric": "İsim kaydedilemedi."
+    "errorGeneric": "İsim kaydedilemedi.",
+    "title": "Hoş geldin",
+    "explanation": "Öncelikle dilinizi seçin, ardından etkinlik listelerinde nasıl görünmek istediğinizi belirleyin. Her ikisini de daha sonra Hesabım bölümünden değiştirebilirsiniz.",
+    "languageLabel": "Dil",
+    "nameLabel": "Oyun içi isim"
   },
   "localeSwitcher": {
     "label": "Dil",

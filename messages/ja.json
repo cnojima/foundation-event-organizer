@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "あなたは最後のスーパー管理者です。アカウントを削除する前に、他の人をスーパー管理者に昇格させてください。"
   },
   "ingameNameDialog": {
-    "title": "ゲーム内の名前を設定する",
-    "explanation": "イベント参加者名簿や登録画面には、このように表示されます。プロフィールから後から変更できます。",
     "placeholder": "例：ノヴァスペクター",
     "saving": "保存中…",
     "save": "保存",
-    "errorGeneric": "名前を保存できませんでした。"
+    "errorGeneric": "名前を保存できませんでした。",
+    "title": "いらっしゃいませ",
+    "explanation": "まず言語を選択し、次にイベント参加者名簿での表示方法を選択してください。どちらも後で「マイアカウント」で変更できます。",
+    "languageLabel": "言語",
+    "nameLabel": "ゲーム内名"
   },
   "localeSwitcher": {
     "label": "言語",

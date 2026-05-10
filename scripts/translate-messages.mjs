@@ -2,12 +2,14 @@
 // Cloud Translation v3.
 //
 // Usage:
-//   GOOGLE_TRANSLATE_API_KEY=... GOOGLE_PROJECT_ID=... \
-//     node scripts/translate-messages.mjs [--locales=fr,de] [--force]
+//   node scripts/translate-messages.mjs [--locales=fr,de] [--force]
+//
+// Reads GOOGLE_TRANSLATE_API_KEY from .env.local (Next.js-style) or the
+// process env. Process env wins so CI can override.
 //
 // By default skips strings that are unchanged from the previous run (compares
-// against the existing locale file's prior English source recorded in `_meta`).
-// Pass --force to re-translate every key.
+// against messages/.translation-cache/<locale>.json). Pass --force to
+// re-translate every key.
 //
 // ICU placeholders ({count}, {name}, etc.) and rich-text tags
 // (<feedbackLink>...</feedbackLink>) are wrapped in <span translate="no">
@@ -20,6 +22,33 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
 const messagesDir = path.join(repoRoot, "messages");
+
+loadDotEnvLocal();
+
+// Minimal .env.local loader — no dep on dotenv. Parses KEY=VALUE lines,
+// strips surrounding quotes, ignores comments/blank lines. Doesn't overwrite
+// existing process.env entries (explicit shell exports win).
+function loadDotEnvLocal() {
+  const envPath = path.join(repoRoot, ".env.local");
+  if (!fs.existsSync(envPath)) return;
+  const text = fs.readFileSync(envPath, "utf8");
+  for (const rawLine of text.split(/\r?\n/)) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+    const eq = line.indexOf("=");
+    if (eq < 0) continue;
+    const key = line.slice(0, eq).trim();
+    if (!key || key in process.env) continue;
+    let value = line.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    process.env[key] = value;
+  }
+}
 // Source-text snapshots used to skip re-translating unchanged keys. Lives
 // outside messages/*.json because next-intl validates the loaded JSON tree
 // and rejects keys with "." (which our flattened snapshot keys contain).

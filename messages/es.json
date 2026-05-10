@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Eres el último superadministrador. Nombra a otra persona como superadministrador antes de eliminar tu cuenta."
   },
   "ingameNameDialog": {
-    "title": "Establece tu nombre en el juego",
-    "explanation": "Así aparecerás en las listas de participantes y en los formularios de inscripción para eventos. Puedes modificarlo más adelante en tu perfil.",
     "placeholder": "p. ej. NovaSpectre",
     "saving": "Ahorro…",
     "save": "Ahorrar",
-    "errorGeneric": "No se pudo guardar el nombre."
+    "errorGeneric": "No se pudo guardar el nombre.",
+    "title": "Bienvenido",
+    "explanation": "Primero, selecciona tu idioma y luego elige cómo quieres aparecer en las listas de participantes de los eventos. Puedes cambiar ambos posteriormente en Mi cuenta.",
+    "languageLabel": "Idioma",
+    "nameLabel": "Nombre en el juego"
   },
   "localeSwitcher": {
     "label": "Idioma",

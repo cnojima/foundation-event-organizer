@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Jesteś ostatnim superadministratorem. Awansuj kogoś innego na superadministratora, zanim usuniesz swoje konto."
   },
   "ingameNameDialog": {
-    "title": "Ustaw swoją nazwę w grze",
-    "explanation": "Tak będziesz się wyświetlać na listach uczestników wydarzeń i w rejestracjach. Możesz to później zmienić w swoim profilu.",
     "placeholder": "np. NovaSpectre",
     "saving": "Oszczędność…",
     "save": "Ratować",
-    "errorGeneric": "Nie udało się zapisać nazwy."
+    "errorGeneric": "Nie udało się zapisać nazwy.",
+    "title": "Powitanie",
+    "explanation": "Najpierw wybierz swój język, a następnie określ, w jaki sposób chcesz się wyświetlać na listach wydarzeń. Możesz to później zmienić w Moim Koncie.",
+    "languageLabel": "Język",
+    "nameLabel": "Nazwa w grze"
   },
   "localeSwitcher": {
     "label": "Język",

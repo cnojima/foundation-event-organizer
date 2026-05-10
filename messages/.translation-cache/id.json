@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "id",
-  "translatedAt": "2026-05-10T20:34:20.405Z",
+  "translatedAt": "2026-05-10T22:35:59.568Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -319,8 +319,10 @@
     "errors.lastAdminLeave": "You're the only admin. Promote another member to admin before leaving.",
     "errors.lastAdminDelete": "You're the only admin of your guild. Promote someone else first, or have a super-admin take over.",
     "errors.lastSuperAdminDelete": "You're the last super-admin. Promote someone else to super-admin before deleting your account.",
-    "ingameNameDialog.title": "Set your in-game name",
-    "ingameNameDialog.explanation": "This is how you'll appear on event rosters and signups. You can change it later in your profile.",
+    "ingameNameDialog.title": "Welcome",
+    "ingameNameDialog.explanation": "Pick your language first, then choose how you'd like to appear on event rosters. You can change both later in My Account.",
+    "ingameNameDialog.languageLabel": "Language",
+    "ingameNameDialog.nameLabel": "In-game name",
     "ingameNameDialog.placeholder": "e.g. NovaSpectre",
     "ingameNameDialog.saving": "Saving…",
     "ingameNameDialog.save": "Save",

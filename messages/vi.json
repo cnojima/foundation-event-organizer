@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Bạn là người quản trị cấp cao cuối cùng. Hãy thăng chức cho người khác lên vị trí quản trị cấp cao trước khi xóa tài khoản của bạn."
   },
   "ingameNameDialog": {
-    "title": "Đặt tên trong game của bạn",
-    "explanation": "Đây là cách bạn sẽ hiển thị trên danh sách người tham gia sự kiện và khi đăng ký. Bạn có thể thay đổi thông tin này sau trong hồ sơ cá nhân của mình.",
     "placeholder": "ví dụ NovaSpectre",
     "saving": "Đang lưu…",
     "save": "Cứu",
-    "errorGeneric": "Không thể lưu tên."
+    "errorGeneric": "Không thể lưu tên.",
+    "title": "Chào mừng",
+    "explanation": "Trước tiên, hãy chọn ngôn ngữ của bạn, sau đó chọn cách bạn muốn hiển thị trên danh sách sự kiện. Bạn có thể thay đổi cả hai sau này trong mục Tài khoản của tôi.",
+    "languageLabel": "Ngôn ngữ",
+    "nameLabel": "Tên trong game"
   },
   "localeSwitcher": {
     "label": "Ngôn ngữ",

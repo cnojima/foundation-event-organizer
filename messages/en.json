@@ -362,8 +362,10 @@
     "lastSuperAdminDelete": "You're the last super-admin. Promote someone else to super-admin before deleting your account."
   },
   "ingameNameDialog": {
-    "title": "Set your in-game name",
-    "explanation": "This is how you'll appear on event rosters and signups. You can change it later in your profile.",
+    "title": "Welcome",
+    "explanation": "Pick your language first, then choose how you'd like to appear on event rosters. You can change both later in My Account.",
+    "languageLabel": "Language",
+    "nameLabel": "In-game name",
     "placeholder": "e.g. NovaSpectre",
     "saving": "Saving…",
     "save": "Save",

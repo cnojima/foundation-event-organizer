@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "你是最后一个超级管理员。在删除你的账号之前，请将其他人晋升为超级管理员。"
   },
   "ingameNameDialog": {
-    "title": "设置你的游戏内名称",
-    "explanation": "这就是您在活动名单和报名表中的显示方式。您可以稍后在个人资料中更改它。",
     "placeholder": "例如 NovaSpectre",
     "saving": "保存…",
     "save": "节省",
-    "errorGeneric": "无法保存名称。"
+    "errorGeneric": "无法保存名称。",
+    "title": "欢迎",
+    "explanation": "请先选择语言，然后选择您希望在赛事名单上的显示方式。您之后可以在“我的账户”中更改这两项设置。",
+    "languageLabel": "语言",
+    "nameLabel": "游戏内名称"
   },
   "localeSwitcher": {
     "label": "语言",

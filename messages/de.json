@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Du bist der letzte Super-Admin. Befördere jemand anderen zum Super-Admin, bevor du dein Konto löschst."
   },
   "ingameNameDialog": {
-    "title": "Lege deinen In-Game-Namen fest",
-    "explanation": "So werden Sie in Teilnehmerlisten und Anmeldeformularen angezeigt. Sie können dies später in Ihrem Profil ändern.",
     "placeholder": "z.B. NovaSpectre",
     "saving": "Speichern…",
     "save": "Speichern",
-    "errorGeneric": "Name konnte nicht gespeichert werden."
+    "errorGeneric": "Name konnte nicht gespeichert werden.",
+    "title": "Willkommen",
+    "explanation": "Wählen Sie zuerst Ihre Sprache und anschließend, wie Sie in den Teilnehmerlisten erscheinen möchten. Beides können Sie später in Ihrem Konto ändern.",
+    "languageLabel": "Sprache",
+    "nameLabel": "In-Game-Name"
   },
   "localeSwitcher": {
     "label": "Sprache",

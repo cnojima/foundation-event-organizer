@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Du är den sista superadministratören. Befordra någon annan till superadministratör innan du tar bort ditt konto."
   },
   "ingameNameDialog": {
-    "title": "Ange ditt namn i spelet",
-    "explanation": "Så här kommer du att visas i evenemangslistor och anmälningar. Du kan ändra det senare i din profil.",
     "placeholder": "t.ex. NovaSpectre",
     "saving": "Sparande…",
     "save": "Spara",
-    "errorGeneric": "Kunde inte spara namnet."
+    "errorGeneric": "Kunde inte spara namnet.",
+    "title": "Välkomna",
+    "explanation": "Välj ditt språk först och välj sedan hur du vill visas i evenemangslistorna. Du kan ändra båda senare i Mitt konto.",
+    "languageLabel": "Språk",
+    "nameLabel": "Namn i spelet"
   },
   "localeSwitcher": {
     "label": "Språk",

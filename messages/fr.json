@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Vous êtes le dernier super-administrateur. Veuillez nommer quelqu'un d'autre super-administrateur avant de supprimer votre compte."
   },
   "ingameNameDialog": {
-    "title": "Choisissez votre nom en jeu",
-    "explanation": "Voici comment vous apparaîtrez sur les listes de participants et les formulaires d'inscription aux événements. Vous pourrez le modifier ultérieurement dans votre profil.",
     "placeholder": "par exemple NovaSpectre",
     "saving": "Économie…",
     "save": "Sauvegarder",
-    "errorGeneric": "Impossible d'enregistrer le nom."
+    "errorGeneric": "Impossible d'enregistrer le nom.",
+    "title": "Accueillir",
+    "explanation": "Choisissez d'abord votre langue, puis la façon dont vous souhaitez apparaître dans les listes des participants. Vous pourrez modifier ces deux options ultérieurement dans Mon compte.",
+    "languageLabel": "Langue",
+    "nameLabel": "Nom en jeu"
   },
   "localeSwitcher": {
     "label": "Langue",

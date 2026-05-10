@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Anda adalah super-admin terakhir. Promosikan orang lain menjadi super-admin sebelum menghapus akun Anda."
   },
   "ingameNameDialog": {
-    "title": "Atur nama Anda di dalam game.",
-    "explanation": "Beginilah tampilan Anda pada daftar peserta dan pendaftaran acara. Anda dapat mengubahnya nanti di profil Anda.",
     "placeholder": "misalnya NovaSpectre",
     "saving": "Penghematan…",
     "save": "Menyimpan",
-    "errorGeneric": "Nama tidak dapat disimpan."
+    "errorGeneric": "Nama tidak dapat disimpan.",
+    "title": "Selamat datang",
+    "explanation": "Pilih bahasa Anda terlebih dahulu, lalu pilih bagaimana Anda ingin tampil di daftar peserta acara. Anda dapat mengubah keduanya nanti di Akun Saya.",
+    "languageLabel": "Bahasa",
+    "nameLabel": "Nama dalam game"
   },
   "localeSwitcher": {
     "label": "Bahasa",

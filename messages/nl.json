@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Jij bent de laatste superbeheerder. Benoem iemand anders tot superbeheerder voordat je je account verwijdert."
   },
   "ingameNameDialog": {
-    "title": "Stel je in-game naam in",
-    "explanation": "Zo verschijn je op deelnemerslijsten en inschrijfformulieren voor evenementen. Je kunt dit later in je profiel wijzigen.",
     "placeholder": "bijvoorbeeld NovaSpectre",
     "saving": "Besparing…",
     "save": "Redden",
-    "errorGeneric": "Naam kon niet worden opgeslagen."
+    "errorGeneric": "Naam kon niet worden opgeslagen.",
+    "title": "Welkom",
+    "explanation": "Kies eerst je taal en vervolgens hoe je op de deelnemerslijsten wilt verschijnen. Je kunt beide later wijzigen in Mijn Account.",
+    "languageLabel": "Taal",
+    "nameLabel": "In-game naam"
   },
   "localeSwitcher": {
     "label": "Taal",

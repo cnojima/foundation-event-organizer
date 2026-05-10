@@ -362,12 +362,14 @@
     "lastSuperAdminDelete": "Você é o último superadministrador. Promova outra pessoa a superadministrador antes de excluir sua conta."
   },
   "ingameNameDialog": {
-    "title": "Defina seu nome no jogo.",
-    "explanation": "É assim que você aparecerá nas listas de participantes e nas inscrições para os eventos. Você poderá alterar isso posteriormente no seu perfil.",
     "placeholder": "por exemplo NovaSpectre",
     "saving": "Salvando…",
     "save": "Salvar",
-    "errorGeneric": "Não foi possível salvar o nome."
+    "errorGeneric": "Não foi possível salvar o nome.",
+    "title": "Bem-vindo",
+    "explanation": "Primeiro, escolha o idioma e, em seguida, selecione como deseja aparecer nas listas de participantes do evento. Você poderá alterar ambas as opções posteriormente em Minha Conta.",
+    "languageLabel": "Linguagem",
+    "nameLabel": "Nome no jogo"
   },
   "localeSwitcher": {
     "label": "Linguagem",
