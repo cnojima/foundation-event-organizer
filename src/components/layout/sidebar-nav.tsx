@@ -8,6 +8,7 @@ type Visibility =
   | "always"
   | "signedIn"
   | "signedInWithGuild"
+  | "memberOnly"
   | "guildAdmin"
   | "superAdmin"
   | "guildless";
@@ -88,6 +89,7 @@ const ICONS = {
 const NAV_ITEMS: NavItem[] = [
   { labelKey: "manageEvents", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin" },
   { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
+  { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly" },
   { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
   { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },
   { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin" },
@@ -115,6 +117,15 @@ function isVisible(item: NavItem, p: SidebarNavProps): boolean {
       return p.signedIn;
     case "signedInWithGuild":
       return p.signedIn && p.hasGuild;
+    case "memberOnly":
+      // Plain guild members (and super-admins from another guild). Admins of
+      // the current guild see the richer /admin/members view instead.
+      return (
+        p.signedIn &&
+        p.hasGuild &&
+        p.guildRole !== "admin" &&
+        !p.isSuperAdmin
+      );
     case "guildAdmin":
       return p.signedIn && (p.guildRole === "admin" || p.isSuperAdmin);
     case "superAdmin":
