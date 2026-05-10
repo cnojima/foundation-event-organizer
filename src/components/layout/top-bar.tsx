@@ -3,12 +3,14 @@ import { SignInButton, SignOutButton } from "@/components/auth-buttons";
 import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
 
-export async function TopBar() {
+export async function TopBar({ leftSlot }: { leftSlot?: React.ReactNode }) {
   const session = await auth();
   const user = session?.user;
 
   return (
-    <header className="flex items-center justify-end gap-4 border-b border-gray-200 bg-white px-6 py-3">
+    <header className="flex items-center justify-between gap-4 border-b border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div className="flex items-center gap-2">{leftSlot}</div>
+      <div className="flex items-center gap-4">
       <button
         type="button"
         className="relative grid size-9 place-items-center rounded-full text-gray-500 hover:bg-gray-100"
@@ -29,7 +31,7 @@ export async function TopBar() {
       {user ? (
         <div className="flex items-center gap-3">
           <UserAvatar name={displayName(user)} size="size-9" />
-          <div className="leading-tight">
+          <div className="hidden leading-tight sm:block">
             <div className="text-sm font-semibold text-gray-900">{displayName(user)}</div>
             <div className="text-xs text-gray-500">
               {user.isSuperAdmin
@@ -46,6 +48,7 @@ export async function TopBar() {
       ) : (
         <SignInButton />
       )}
+      </div>
     </header>
   );
 }
