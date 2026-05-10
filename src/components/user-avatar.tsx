@@ -1,13 +1,23 @@
 type Props = {
   name?: string | null;
+  image?: string | null;
   /** Tailwind size class, e.g. "size-9", "size-10". Defaults to "size-10". */
   size?: string;
 };
 
-// Avatars are derived from the in-game name only. We deliberately do not
-// render OAuth-provided profile photos because they leak the user's external
-// identity (Google face photo, Discord avatar tied to handle).
-export function UserAvatar({ name, size = "size-10" }: Props) {
+// Renders the OAuth-provided profile photo if available, falling back to a
+// monogrammed circle from the user's in-game name.
+export function UserAvatar({ name, image, size = "size-10" }: Props) {
+  if (image) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={image}
+        alt=""
+        className={`${size} rounded-full object-cover ring-1 ring-gray-200`}
+      />
+    );
+  }
   const initial = (name ?? "?").trim().slice(0, 1).toUpperCase() || "?";
   return (
     <div

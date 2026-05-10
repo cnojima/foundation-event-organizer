@@ -4,6 +4,7 @@
 // Usage:
 //   node scripts/promote-super-admin.mjs <email>           # promote
 //   node scripts/promote-super-admin.mjs <email> --demote  # demote
+//   fly ssh console -C "node /app/scripts/promote-super-admin.mjs <email>"
 
 import Database from "better-sqlite3";
 import { fileURLToPath } from "node:url";

@@ -68,6 +68,18 @@ const ICONS = {
       />
     </svg>
   ),
+  help: (
+    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M7.5 7.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .8-1 1.4V12"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <circle cx="10" cy="14.5" r="0.75" fill="currentColor" />
+    </svg>
+  ),
 };
 
 const NAV_ITEMS: NavItem[] = [
@@ -80,6 +92,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "Super Admin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
   { label: "Browse Guilds", href: "/guilds", icon: ICONS.events, visibility: "guildless" },
   { label: "Create Guild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless" },
+  { label: "Help", href: "/help", icon: ICONS.help, visibility: "always" },
 ];
 
 type SidebarNavProps = {

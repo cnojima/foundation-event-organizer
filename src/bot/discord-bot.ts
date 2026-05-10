@@ -30,14 +30,34 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000;
 // same module into multiple chunks (instrumentation.ts and route handlers
 // can otherwise end up with separate module instances and therefore
 // separate `started`/`client` flags).
-type BotState = { client: Client | null; started: boolean };
+type BotState = {
+  client: Client | null;
+  started: boolean;
+  loginAt: string | null;
+  // Diagnostic counters updated on each poll cycle. Surfaced via /api/health
+  // for operator-side observability.
+  lastPollStartedAt: string | null;
+  lastPollDurationMs: number | null;
+  lastPollPendingCount: number | null;
+  lastPollSentCount: number | null;
+  lastPollFailedCount: number | null;
+};
 const STATE_KEY = Symbol.for("foundation.discord-bot.state");
 type GlobalWithBot = typeof globalThis & { [STATE_KEY]?: BotState };
 
 function getState(): BotState {
   const g = globalThis as GlobalWithBot;
   if (!g[STATE_KEY]) {
-    g[STATE_KEY] = { client: null, started: false };
+    g[STATE_KEY] = {
+      client: null,
+      started: false,
+      loginAt: null,
+      lastPollStartedAt: null,
+      lastPollDurationMs: null,
+      lastPollPendingCount: null,
+      lastPollSentCount: null,
+      lastPollFailedCount: null,
+    };
   }
   return g[STATE_KEY]!;
 }
@@ -94,7 +114,10 @@ export function startBot(): void {
   state.client = client;
 
   client.once("clientReady", () => {
-    console.log(`[bot] Logged in as ${client.user?.tag}`);
+    state.loginAt = new Date().toISOString();
+    console.log(
+      `[bot] logged in as ${client.user?.tag} pid=${process.pid} at=${state.loginAt}`
+    );
     void registerSlashCommands();
     void runOnce();
     setInterval(() => void runOnce(), POLL_INTERVAL_MS);
@@ -108,6 +131,23 @@ export function startBot(): void {
     }
   });
 
+  // Gateway lifecycle — silent gateway drops are the most common cause of
+  // "the bot looks alive but reminders stopped firing". Logging these makes
+  // disconnects diagnosable from `fly logs`.
+  client.on("shardDisconnect", (event, shardId) => {
+    console.warn(
+      `[bot] shard ${shardId} disconnected code=${event.code} reason=${event.reason || "(none)"}`
+    );
+  });
+  client.on("shardReconnecting", (shardId) => {
+    console.log(`[bot] shard ${shardId} reconnecting…`);
+  });
+  client.on("shardResume", (shardId, replayed) => {
+    console.log(`[bot] shard ${shardId} resumed (replayed ${replayed} events)`);
+  });
+  client.on("shardError", (err, shardId) => {
+    console.error(`[bot] shard ${shardId} error:`, err);
+  });
   client.on("error", (err) => {
     console.error("[bot] client error:", err);
   });
@@ -117,6 +157,45 @@ export function startBot(): void {
     state.started = false;
     state.client = null;
   });
+}
+
+// Read-only snapshot of bot state — exposed via /api/health.
+export function getBotStatus() {
+  const state = getState();
+  return {
+    started: state.started,
+    isReady: state.client?.isReady() === true,
+    user: state.client?.user?.tag ?? null,
+    loginAt: state.loginAt,
+    lastPollStartedAt: state.lastPollStartedAt,
+    lastPollDurationMs: state.lastPollDurationMs,
+    lastPollPendingCount: state.lastPollPendingCount,
+    lastPollSentCount: state.lastPollSentCount,
+    lastPollFailedCount: state.lastPollFailedCount,
+    nextPollExpectedAt: state.lastPollStartedAt
+      ? new Date(
+          new Date(state.lastPollStartedAt).getTime() + POLL_INTERVAL_MS
+        ).toISOString()
+      : null,
+  };
+}
+
+// Triggered by POST /api/admin/bot/poll-now. Returns metrics so the caller
+// can verify the path end-to-end without scrolling logs.
+export async function triggerPoll(): Promise<{
+  ok: boolean;
+  reason?: string;
+  metrics?: PollMetrics;
+}> {
+  const state = getState();
+  if (!state.started) {
+    return { ok: false, reason: "Bot is not started (DISCORD_BOT_TOKEN not set)." };
+  }
+  if (!state.client?.isReady()) {
+    return { ok: false, reason: "Bot is not connected to Discord yet." };
+  }
+  const metrics = await runOnce();
+  return { ok: true, metrics };
 }
 
 async function registerSlashCommands(): Promise<void> {
@@ -132,19 +211,46 @@ async function registerSlashCommands(): Promise<void> {
 
 // ---- Notification poller ----
 
-async function runOnce(): Promise<void> {
-  const { client } = getState();
-  if (!client?.isReady()) return;
+type PollMetrics = {
+  pending: number;
+  sent: number;
+  failed: number;
+  durationMs: number;
+};
+
+async function runOnce(): Promise<PollMetrics> {
+  const state = getState();
+  const startedAt = new Date();
+  const startedIso = startedAt.toISOString();
+  state.lastPollStartedAt = startedIso;
+
+  const noop = (reason: string): PollMetrics => {
+    const durationMs = Date.now() - startedAt.getTime();
+    state.lastPollDurationMs = durationMs;
+    state.lastPollPendingCount = 0;
+    state.lastPollSentCount = 0;
+    state.lastPollFailedCount = 0;
+    console.log(
+      `[bot] poll skipped reason=${reason} at=${startedIso} durationMs=${durationMs}`
+    );
+    return { pending: 0, sent: 0, failed: 0, durationMs };
+  };
+
+  const { client } = state;
+  if (!client?.isReady()) return noop("not-ready");
+
+  console.log(`[bot] poll start at=${startedIso}`);
 
   let pending: NotificationTarget[];
   try {
     pending = await findPending();
   } catch (err) {
     console.error("[bot] findPending failed:", err);
-    return;
+    return noop("findPending-error");
   }
-  if (pending.length === 0) return;
 
+  let sent = 0;
+  let failed = 0;
   for (const p of pending) {
     if (!recordSent(p.eventId, p.squadNumber, p.kind)) continue;
     try {
@@ -154,22 +260,35 @@ async function runOnce(): Promise<void> {
         console.warn(
           `[bot] channel ${p.channelId} for guild ${p.guildId} is not text-based; skipping`
         );
+        failed++;
         continue;
       }
       await (channel as TextChannel).send({
         content: buildMessage(p),
         allowedMentions: { parse: ["everyone"] },
       });
+      sent++;
       console.log(
         `[bot] notified event=${p.eventId} squad=${p.squadNumber} kind=${p.kind} channel=${p.channelId}`
       );
     } catch (err) {
+      failed++;
       console.error(
         `[bot] post failed event=${p.eventId} squad=${p.squadNumber} kind=${p.kind} channel=${p.channelId}:`,
         err
       );
     }
   }
+
+  const durationMs = Date.now() - startedAt.getTime();
+  state.lastPollDurationMs = durationMs;
+  state.lastPollPendingCount = pending.length;
+  state.lastPollSentCount = sent;
+  state.lastPollFailedCount = failed;
+  console.log(
+    `[bot] poll done in ${durationMs}ms — pending=${pending.length} sent=${sent} failed=${failed}`
+  );
+  return { pending: pending.length, sent, failed, durationMs };
 }
 
 async function persistDiscordGuildIdIfNeeded(
@@ -280,21 +399,35 @@ async function translateDiscordError(res: Response): Promise<string> {
 async function handleChatCommand(
   interaction: ChatInputCommandInteraction
 ): Promise<void> {
+  const startMs = Date.now();
+  const cmd = interaction.commandName;
+  const userId = interaction.user.id;
+
+  // Discord gives 3s to acknowledge an interaction. Defer immediately so DB
+  // queries (and any cold-start work) can run without blowing the budget.
+  // Handlers below use editReply() to fill in the response.
   try {
-    if (interaction.commandName === "upcoming") {
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral });
+  } catch (err) {
+    console.error(`[bot] deferReply failed for ${cmd} user=${userId}:`, err);
+    return;
+  }
+
+  try {
+    if (cmd === "upcoming") {
       await handleUpcoming(interaction);
-    } else if (interaction.commandName === "signup") {
+    } else if (cmd === "signup") {
       await handleSignup(interaction);
     }
+    console.log(
+      `[bot] command ${cmd} done user=${userId} in ${Date.now() - startMs}ms`
+    );
   } catch (err) {
-    console.error(`[bot] command error ${interaction.commandName}:`, err);
-    if (interaction.deferred || interaction.replied) {
-      await interaction.editReply("Something went wrong.").catch(() => {});
-    } else {
-      await interaction
-        .reply({ content: "Something went wrong.", flags: MessageFlags.Ephemeral })
-        .catch(() => {});
-    }
+    console.error(
+      `[bot] command error ${cmd} user=${userId} after ${Date.now() - startMs}ms:`,
+      err
+    );
+    await interaction.editReply("Something went wrong.").catch(() => {});
   }
 }
 
@@ -335,19 +468,13 @@ async function handleUpcoming(
 ): Promise<void> {
   const appGuildId = await resolveAppGuildId(interaction.guildId);
   if (!appGuildId) {
-    await interaction.reply({
-      content: notConfiguredMessage(),
-      flags: MessageFlags.Ephemeral,
-    });
+    await interaction.editReply(notConfiguredMessage());
     return;
   }
 
   const upcoming = await loadUpcomingEvents(appGuildId);
   if (upcoming.length === 0) {
-    await interaction.reply({
-      content: "No upcoming events.",
-      flags: MessageFlags.Ephemeral,
-    });
+    await interaction.editReply("No upcoming events.");
     return;
   }
 
@@ -359,10 +486,7 @@ async function handleUpcoming(
       return `• **${e.name}** — ${e.squad1Name}: ${s1} · ${e.squad2Name}: ${s2}`;
     })
     .join("\n");
-  await interaction.reply({
-    content: `**Upcoming events**\n${lines}`,
-    flags: MessageFlags.Ephemeral,
-  });
+  await interaction.editReply(`**Upcoming events**\n${lines}`);
 }
 
 async function handleSignup(
@@ -374,20 +498,15 @@ async function handleSignup(
 
   const appGuildId = await resolveAppGuildId(interaction.guildId);
   if (!appGuildId) {
-    await interaction.reply({
-      content: notConfiguredMessage(),
-      flags: MessageFlags.Ephemeral,
-    });
+    await interaction.editReply(notConfiguredMessage());
     return;
   }
 
   const appUser = await resolveAppUserFromDiscord(interaction.user.id);
   if (!appUser) {
-    await interaction.reply({
-      content:
-        "Connect your Discord account first by signing in to the website with Discord, then try `/signup` again.",
-      flags: MessageFlags.Ephemeral,
-    });
+    await interaction.editReply(
+      "Connect your Discord account first by signing in to the website with Discord, then try `/signup` again."
+    );
     return;
   }
 
@@ -409,19 +528,15 @@ async function handleSignup(
   });
 
   if (!result.ok) {
-    await interaction.reply({
-      content: `Couldn't sign you up: ${result.reason}`,
-      flags: MessageFlags.Ephemeral,
-    });
+    await interaction.editReply(`Couldn't sign you up: ${result.reason}`);
     return;
   }
 
-  await interaction.reply({
-    content: result.waitlisted
+  await interaction.editReply(
+    result.waitlisted
       ? "You're on the waitlist — squads were full when you signed up. You'll be promoted automatically if a slot opens."
-      : "You're signed up. See you on the field.",
-    flags: MessageFlags.Ephemeral,
-  });
+      : "You're signed up. See you on the field."
+  );
 }
 
 // ---- Helpers ----

@@ -189,7 +189,7 @@ function PlayerCard({
     <div className="rounded-lg border border-gray-200 bg-white">
       <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-gray-100">
         <div className="flex items-center gap-3">
-          <UserAvatar name={displayName(user)} />
+          <UserAvatar name={displayName(user)} image={user.image} />
           <div className="leading-tight">
             <div className="flex items-center gap-2">
               <span className="font-semibold text-gray-900">{displayName(user)}</span>

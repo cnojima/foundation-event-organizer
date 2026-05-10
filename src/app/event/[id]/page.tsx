@@ -398,7 +398,7 @@ function SignupListItem({
           {index}
         </span>
       )}
-      <UserAvatar size="size-6" name={displayName(user)} />
+      <UserAvatar size="size-6" name={displayName(user)} image={user?.image} />
       <span className="flex-1 truncate text-sm text-gray-900">
         {displayName(user)}
         {isCurrentUser && (

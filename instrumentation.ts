@@ -1,12 +1,14 @@
-// Next.js calls this once per server runtime on startup. We use it to
-// boot the Discord bot alongside the web server in the same process so it
-// shares the SQLite handle (same volume, no cross-machine coordination).
+// Next.js calls register() once per server runtime on startup. We use it to
+// install process-level handlers (so we capture *why* the process is going
+// away — Fly graceful shutdown, OOM, unhandled rejection, etc.) and to boot
+// the Discord bot in the same Node process as the web server.
 //
-// The bot only runs in the Node.js runtime (not Edge) and only when the
-// DISCORD_BOT_TOKEN env var is set. Calling startBot() multiple times is a
-// no-op.
+// Node-only logic lives in ./src/instrumentation-node.ts. We dynamic-import
+// it so Next's Edge-runtime static analyzer doesn't see any process.*
+// references.
+
 export async function register(): Promise<void> {
   if (process.env.NEXT_RUNTIME !== "nodejs") return;
-  const { startBot } = await import("@/bot/discord-bot");
-  startBot();
+  const { registerNode } = await import("@/instrumentation-node");
+  await registerNode();
 }
