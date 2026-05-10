@@ -231,11 +231,34 @@ function PlayerCard({
                       Deleted event
                     </span>
                   )}
-                  {event?.gameTime && (
-                    <div className="text-xs text-gray-500">
-                      <DateTime iso={event.gameTime} showUTC={false} />
-                    </div>
-                  )}
+                  {event && (() => {
+                    // Pick the timestamp most relevant to this signup: their
+                    // assigned squad's start time → first-choice squad → any
+                    // available time → nothing.
+                    const assigned =
+                      signup.assignedSquad === 1
+                        ? event.squad1StartsAt
+                        : signup.assignedSquad === 2
+                          ? event.squad2StartsAt
+                          : null;
+                    const firstChoice =
+                      signup.squad1Preference === 1
+                        ? event.squad1StartsAt
+                        : signup.squad2Preference === 1
+                          ? event.squad2StartsAt
+                          : null;
+                    const fallback =
+                      event.kind === "simple"
+                        ? event.gameTime
+                        : event.squad1StartsAt ?? event.squad2StartsAt;
+                    const iso = assigned ?? firstChoice ?? fallback;
+                    if (!iso) return null;
+                    return (
+                      <div className="text-xs text-gray-500">
+                        <DateTime iso={iso} showUTC={false} />
+                      </div>
+                    );
+                  })()}
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2">

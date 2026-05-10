@@ -118,7 +118,12 @@ export const events = sqliteTable("events", {
     .references(() => guilds.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description"),
+  // For "simple" events, the start time. Match events leave this null and
+  // use squad1StartsAt / squad2StartsAt instead so the two squads can play at
+  // different times. Reminders, ICS export, and listings branch on `kind`.
   gameTime: text("game_time"), // ISO datetime string
+  squad1StartsAt: text("squad1_starts_at"), // match only; nullable until scheduled
+  squad2StartsAt: text("squad2_starts_at"), // match only; nullable until scheduled
   signupOpens: text("signup_opens"), // ISO datetime string
   signupCloses: text("signup_closes"), // ISO datetime string
   // "match" — has two squads + signups + waitlist. "simple" — info-only event.
@@ -133,20 +138,22 @@ export const events = sqliteTable("events", {
   deletedAt: text("deleted_at"), // ISO datetime; null = active. Soft-deleted events are kept for attendance reports.
 });
 
-// Tracks which notification kinds have been sent for each event. Composite
-// PK (eventId, kind) makes the bot poll loop idempotent — duplicate inserts
-// fail and are caught.
+// Tracks which notification kinds have been sent. Composite PK
+// (eventId, squad, kind) makes the bot poll loop idempotent — duplicate
+// inserts fail and are caught. `squad` is 0 for simple events (one cycle per
+// event) and 1 or 2 for match events (independent cycles per squad).
 export const eventNotifications = sqliteTable(
   "event_notifications",
   {
     eventId: text("event_id")
       .notNull()
       .references(() => events.id, { onDelete: "cascade" }),
+    squad: integer("squad").notNull(),
     kind: text("kind", { enum: ["day", "hour", "twenty_min"] }).notNull(),
     sentAt: text("sent_at").notNull(),
   },
   (t) => ({
-    pk: primaryKey({ columns: [t.eventId, t.kind] }),
+    pk: primaryKey({ columns: [t.eventId, t.squad, t.kind] }),
   })
 );
 

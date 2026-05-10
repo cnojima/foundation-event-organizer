@@ -6,8 +6,22 @@ import { events } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { clearNotifications } from "@/lib/notifications";
 
-const DATE_FIELDS = ["gameTime", "signupOpens", "signupCloses"] as const;
+const DATE_FIELDS = [
+  "gameTime",
+  "signupOpens",
+  "signupCloses",
+  "squad1StartsAt",
+  "squad2StartsAt",
+] as const;
 type DateField = (typeof DATE_FIELDS)[number];
+
+// Any change to one of these triggers notification re-evaluation. Signup
+// window changes don't affect reminders, so they're excluded.
+const NOTIFICATION_TRIGGERS: DateField[] = [
+  "gameTime",
+  "squad1StartsAt",
+  "squad2StartsAt",
+];
 
 function parseDateInput(value: unknown): string | null | undefined {
   if (value === undefined) return undefined;
@@ -46,10 +60,12 @@ export async function PATCH(
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
   }
 
-  // If gameTime is moving to a different value, clear notification rows so
-  // reminders fire fresh against the new time. We compare against the loaded
-  // event to avoid clearing on identity-noop PATCHes.
-  if ("gameTime" in updates && updates.gameTime !== guard.value.event.gameTime) {
+  // Reset notification state if any of the start timestamps actually moved.
+  const event = guard.value.event;
+  const startTimeChanged = NOTIFICATION_TRIGGERS.some(
+    (f) => f in updates && updates[f] !== event[f]
+  );
+  if (startTimeChanged) {
     clearNotifications(id);
   }
 

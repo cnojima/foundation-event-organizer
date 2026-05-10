@@ -4,29 +4,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 
-type DateField = "gameTime" | "signupOpens" | "signupCloses";
+type DateField =
+  | "gameTime"
+  | "signupOpens"
+  | "signupCloses"
+  | "squad1StartsAt"
+  | "squad2StartsAt";
 
-const FIELDS: {
-  key: DateField;
-  label: string;
-  help: string;
-}[] = [
-  {
-    key: "gameTime",
-    label: "Game Time",
-    help: "When the match begins. Used for the calendar download.",
-  },
-  {
-    key: "signupOpens",
-    label: "Signup Opens",
-    help: "When players can start signing up. Leave blank to open immediately.",
-  },
-  {
-    key: "signupCloses",
-    label: "Signup Closes",
-    help: "When the signup form locks. Leave blank for no deadline.",
-  },
-];
+const FIELD_HELP: Record<DateField, string> = {
+  gameTime: "When the event starts. Used for the calendar download.",
+  signupOpens: "When players can start signing up. Leave blank to open immediately.",
+  signupCloses: "When the signup form locks. Leave blank for no deadline.",
+  squad1StartsAt: "When this squad plays. Leave blank if not scheduled yet.",
+  squad2StartsAt: "When this squad plays. Leave blank if not scheduled yet.",
+};
 
 // <input type="datetime-local"> wants "YYYY-MM-DDTHH:MM" in local time.
 function isoToLocalInput(iso: string | null): string {
@@ -42,15 +33,23 @@ function isoToLocalInput(iso: string | null): string {
 export function EditEventDatesForm({
   eventId,
   kind,
+  squad1Name,
+  squad2Name,
   gameTime,
   signupOpens,
   signupCloses,
+  squad1StartsAt,
+  squad2StartsAt,
 }: {
   eventId: string;
   kind: "match" | "simple";
+  squad1Name: string;
+  squad2Name: string;
   gameTime: string | null;
   signupOpens: string | null;
   signupCloses: string | null;
+  squad1StartsAt: string | null;
+  squad2StartsAt: string | null;
 }) {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
@@ -62,11 +61,22 @@ export function EditEventDatesForm({
     gameTime: isoToLocalInput(gameTime),
     signupOpens: isoToLocalInput(signupOpens),
     signupCloses: isoToLocalInput(signupCloses),
+    squad1StartsAt: isoToLocalInput(squad1StartsAt),
+    squad2StartsAt: isoToLocalInput(squad2StartsAt),
   };
   const [values, setValues] = useState(initial);
 
-  const visibleFields =
-    kind === "match" ? FIELDS : FIELDS.filter((f) => f.key === "gameTime");
+  // Per-kind field set. Match events show signup window + per-squad starts.
+  // Simple events show single Start Time only.
+  const fields: { key: DateField; label: string }[] =
+    kind === "match"
+      ? [
+          { key: "signupOpens", label: "Signup Opens" },
+          { key: "signupCloses", label: "Signup Closes" },
+          { key: "squad1StartsAt", label: `${squad1Name} Starts At` },
+          { key: "squad2StartsAt", label: `${squad2Name} Starts At` },
+        ]
+      : [{ key: "gameTime", label: "Start Time" }];
 
   function reset() {
     setValues(initial);
@@ -80,7 +90,7 @@ export function EditEventDatesForm({
     setSubmitting(true);
 
     const body: Record<string, string | null> = {};
-    for (const { key } of visibleFields) {
+    for (const { key } of fields) {
       const v = values[key];
       body[key] = v ? new Date(v).toISOString() : null;
     }
@@ -116,13 +126,20 @@ export function EditEventDatesForm({
     );
   }
 
+  const colsClass =
+    fields.length >= 4
+      ? "grid-cols-2"
+      : fields.length === 3
+        ? "grid-cols-3"
+        : "grid-cols-1";
+
   return (
     <form
       onSubmit={handleSubmit}
       className="rounded-lg border border-gray-200 bg-white p-4 space-y-3"
     >
-      <div className={`grid gap-3 ${visibleFields.length > 1 ? "grid-cols-3" : "grid-cols-1"}`}>
-        {visibleFields.map(({ key, label, help }) => (
+      <div className={`grid gap-3 ${colsClass}`}>
+        {fields.map(({ key, label }) => (
           <div key={key}>
             <label className="block text-xs font-medium text-gray-600 mb-1">
               {label}
@@ -135,7 +152,7 @@ export function EditEventDatesForm({
               }
               className="w-full border rounded px-2 py-1 text-sm"
             />
-            <FieldHelp>{help}</FieldHelp>
+            <FieldHelp>{FIELD_HELP[key]}</FieldHelp>
           </div>
         ))}
       </div>

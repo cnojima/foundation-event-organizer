@@ -5,6 +5,7 @@ import Link from "next/link";
 import { auth } from "@/auth";
 import { requireAnyGuildPage } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
+import { squadTimes } from "@/lib/event-times";
 
 export default async function Home() {
   const session = await auth();
@@ -47,10 +48,24 @@ export default async function Home() {
                     {event.description && (
                       <p className="mt-1 text-sm text-gray-600">{event.description}</p>
                     )}
-                    {event.gameTime && (
+                    {event.kind === "simple" && event.gameTime && (
                       <p className="mt-1 text-xs text-gray-500">
-                        Game: <DateTime iso={event.gameTime} showUTC={false} />
+                        Starts: <DateTime iso={event.gameTime} showUTC={false} />
                       </p>
+                    )}
+                    {event.kind === "match" && (
+                      <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500">
+                        {squadTimes(event).map((s) => (
+                          <span key={s.name}>
+                            {s.name}:{" "}
+                            {s.startsAt ? (
+                              <DateTime iso={s.startsAt} showUTC={false} />
+                            ) : (
+                              <span className="font-mono text-gray-400">TBD</span>
+                            )}
+                          </span>
+                        ))}
+                      </div>
                     )}
                   </div>
                   <span

@@ -22,14 +22,23 @@ export async function POST(req: Request) {
 
   const kind: "match" | "simple" = body.kind === "simple" ? "simple" : "match";
 
+  const toIso = (v: unknown): string | null => {
+    if (typeof v !== "string" || v === "") return null;
+    const d = new Date(v);
+    return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  };
+
   const event = {
     id: generateId(),
     guildId: targetGuildId,
     name: body.name,
     description: body.description || null,
-    gameTime: body.gameTime ? new Date(body.gameTime).toISOString() : null,
-    signupOpens: body.signupOpens ? new Date(body.signupOpens).toISOString() : null,
-    signupCloses: body.signupCloses ? new Date(body.signupCloses).toISOString() : null,
+    // Simple events use gameTime; match events use squad1/squad2 startsAt.
+    gameTime: kind === "simple" ? toIso(body.gameTime) : null,
+    squad1StartsAt: kind === "match" ? toIso(body.squad1StartsAt) : null,
+    squad2StartsAt: kind === "match" ? toIso(body.squad2StartsAt) : null,
+    signupOpens: toIso(body.signupOpens),
+    signupCloses: toIso(body.signupCloses),
     kind,
     squad1Name: body.squad1Name || "Squad 1",
     squad2Name: body.squad2Name || "Squad 2",

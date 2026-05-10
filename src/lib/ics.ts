@@ -12,25 +12,31 @@ export type IcsEvent = {
   rrule?: string;
 };
 
-export function buildICS(event: IcsEvent): string {
-  const end = event.end ?? new Date(event.start.getTime() + DEFAULT_DURATION_MS);
-  const lines = [
+export function buildICS(events: IcsEvent | IcsEvent[]): string {
+  const list = Array.isArray(events) ? events : [events];
+  const lines: string[] = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
     `PRODID:${PRODID}`,
     "CALSCALE:GREGORIAN",
     "METHOD:PUBLISH",
-    "BEGIN:VEVENT",
-    `UID:${event.uid}`,
-    `DTSTAMP:${formatUTC(new Date())}`,
-    `DTSTART:${formatUTC(event.start)}`,
-    `DTEND:${formatUTC(end)}`,
-    `SUMMARY:${escapeText(event.title)}`,
   ];
-  if (event.description) lines.push(`DESCRIPTION:${escapeText(event.description)}`);
-  if (event.location) lines.push(`LOCATION:${escapeText(event.location)}`);
-  if (event.rrule) lines.push(`RRULE:${event.rrule}`);
-  lines.push("END:VEVENT", "END:VCALENDAR");
+  for (const event of list) {
+    const end = event.end ?? new Date(event.start.getTime() + DEFAULT_DURATION_MS);
+    lines.push(
+      "BEGIN:VEVENT",
+      `UID:${event.uid}`,
+      `DTSTAMP:${formatUTC(new Date())}`,
+      `DTSTART:${formatUTC(event.start)}`,
+      `DTEND:${formatUTC(end)}`,
+      `SUMMARY:${escapeText(event.title)}`
+    );
+    if (event.description) lines.push(`DESCRIPTION:${escapeText(event.description)}`);
+    if (event.location) lines.push(`LOCATION:${escapeText(event.location)}`);
+    if (event.rrule) lines.push(`RRULE:${event.rrule}`);
+    lines.push("END:VEVENT");
+  }
+  lines.push("END:VCALENDAR");
   return lines.map(foldLine).join("\r\n") + "\r\n";
 }
 

@@ -20,13 +20,14 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
       kind,
       name: form.get("name"),
       description: form.get("description"),
-      gameTime: form.get("gameTime") || null,
     };
     if (guildIdOverride) baseBody.guildId = guildIdOverride;
     const body =
       kind === "match"
         ? {
             ...baseBody,
+            squad1StartsAt: form.get("squad1StartsAt") || null,
+            squad2StartsAt: form.get("squad2StartsAt") || null,
             signupOpens: form.get("signupOpens") || null,
             signupCloses: form.get("signupCloses") || null,
             squad1Name: form.get("squad1Name") || "Squad 1",
@@ -35,7 +36,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
             maxBackups: Number(form.get("maxBackups")) || 10,
             leadershipSlots: Number(form.get("leadershipSlots")) || 3,
           }
-        : baseBody;
+        : { ...baseBody, gameTime: form.get("gameTime") || null };
 
     const res = await fetch("/api/admin/events", {
       method: "POST",
@@ -73,7 +74,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className={kind === "simple" ? "grid grid-cols-2 gap-4" : ""}>
         <div>
           <label className="block text-sm font-medium mb-1">Event Name *</label>
           <input
@@ -83,21 +84,19 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
           />
           <FieldHelp>Shown to players in the event list and roster.</FieldHelp>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            {kind === "simple" ? "Start Time" : "Game Time"}
-          </label>
-          <input
-            name="gameTime"
-            type="datetime-local"
-            className="w-full border rounded px-3 py-2"
-          />
-          <FieldHelp>
-            {kind === "simple"
-              ? "When the event starts. Used for the calendar download."
-              : "When the match begins. Used for the calendar download."}
-          </FieldHelp>
-        </div>
+        {kind === "simple" && (
+          <div>
+            <label className="block text-sm font-medium mb-1">Start Time</label>
+            <input
+              name="gameTime"
+              type="datetime-local"
+              className="w-full border rounded px-3 py-2"
+            />
+            <FieldHelp>
+              When the event starts. Used for the calendar download.
+            </FieldHelp>
+          </div>
+        )}
       </div>
 
       <div>
@@ -145,6 +144,17 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <FieldHelp>Display name for the first squad.</FieldHelp>
             </div>
             <div>
+              <label className="block text-sm font-medium mb-1">Squad 1 Starts At</label>
+              <input
+                name="squad1StartsAt"
+                type="datetime-local"
+                className="w-full border rounded px-3 py-2"
+              />
+              <FieldHelp>
+                When Squad 1 plays. Optional — can be set later.
+              </FieldHelp>
+            </div>
+            <div>
               <label className="block text-sm font-medium mb-1">Squad 2 Name</label>
               <input
                 name="squad2Name"
@@ -152,6 +162,17 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
                 className="w-full border rounded px-3 py-2"
               />
               <FieldHelp>Display name for the second squad.</FieldHelp>
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1">Squad 2 Starts At</label>
+              <input
+                name="squad2StartsAt"
+                type="datetime-local"
+                className="w-full border rounded px-3 py-2"
+              />
+              <FieldHelp>
+                When Squad 2 plays. Optional — can be set later.
+              </FieldHelp>
             </div>
           </div>
 

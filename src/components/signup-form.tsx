@@ -8,7 +8,22 @@ interface Event {
   id: string;
   squad1Name: string;
   squad2Name: string;
+  squad1StartsAt: string | null;
+  squad2StartsAt: string | null;
   leadershipSlots: number;
+}
+
+function formatStart(iso: string | null): string {
+  if (!iso) return "TBD";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return "TBD";
+  return d.toLocaleString(undefined, {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
 }
 
 interface Signup {
@@ -81,7 +96,7 @@ export function SignupForm({
         <label className="block font-medium mb-2">
           Squad Preference (first choice)
         </label>
-        <div className="flex gap-4">
+        <div className="flex flex-col gap-2 sm:flex-row sm:gap-4">
           <label className="flex items-center gap-2">
             <input
               type="radio"
@@ -90,7 +105,12 @@ export function SignupForm({
               checked={firstChoice === "squad1"}
               onChange={() => setFirstChoice("squad1")}
             />
-            {event.squad1Name}
+            <span>
+              {event.squad1Name}
+              <span className="ml-2 text-xs text-gray-500">
+                — {formatStart(event.squad1StartsAt)}
+              </span>
+            </span>
           </label>
           <label className="flex items-center gap-2">
             <input
@@ -100,7 +120,12 @@ export function SignupForm({
               checked={firstChoice === "squad2"}
               onChange={() => setFirstChoice("squad2")}
             />
-            {event.squad2Name}
+            <span>
+              {event.squad2Name}
+              <span className="ml-2 text-xs text-gray-500">
+                — {formatStart(event.squad2StartsAt)}
+              </span>
+            </span>
           </label>
         </div>
         <FieldHelp>

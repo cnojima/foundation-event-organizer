@@ -104,7 +104,7 @@ export default async function EventPage({
     <main className="max-w-5xl mx-auto p-6">
       <div className="mb-2 flex items-start justify-between gap-4">
         <h1 className="text-3xl font-bold">{event.name}</h1>
-        {event.gameTime && (
+        {(event.gameTime || event.squad1StartsAt || event.squad2StartsAt) && (
           <CalendarDownloadLink href={`/api/events/${event.id}/ics`} />
         )}
       </div>
@@ -113,13 +113,31 @@ export default async function EventPage({
       )}
 
       <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-        {event.gameTime && (
+        {!isMatch && event.gameTime && (
           <div>
-            <span className="font-medium">
-              {isMatch ? "Game Time:" : "Start Time:"}
-            </span>{" "}
+            <span className="font-medium">Start Time:</span>{" "}
             <DateTime iso={event.gameTime} />
           </div>
+        )}
+        {isMatch && (
+          <>
+            <div>
+              <span className="font-medium">{event.squad1Name}:</span>{" "}
+              {event.squad1StartsAt ? (
+                <DateTime iso={event.squad1StartsAt} />
+              ) : (
+                <span className="font-mono text-gray-400">TBD</span>
+              )}
+            </div>
+            <div>
+              <span className="font-medium">{event.squad2Name}:</span>{" "}
+              {event.squad2StartsAt ? (
+                <DateTime iso={event.squad2StartsAt} />
+              ) : (
+                <span className="font-mono text-gray-400">TBD</span>
+              )}
+            </div>
+          </>
         )}
         {isMatch && event.signupCloses && (
           <div>
@@ -128,16 +146,10 @@ export default async function EventPage({
           </div>
         )}
         {isMatch && (
-          <>
-            <div>
-              <span className="font-medium">Squads:</span> {event.squad1Name} &amp;{" "}
-              {event.squad2Name}
-            </div>
-            <div>
-              <span className="font-medium">Slots:</span> {event.maxPlayers} players
-              + {event.maxBackups} backups each
-            </div>
-          </>
+          <div>
+            <span className="font-medium">Slots:</span> {event.maxPlayers} players
+            + {event.maxBackups} backups each
+          </div>
         )}
       </div>
 

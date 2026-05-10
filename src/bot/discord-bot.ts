@@ -13,12 +13,12 @@ import {
 } from "discord.js";
 import { db } from "@/db";
 import { accounts, events, guilds, users } from "@/db/schema";
-import { and, asc, eq, gt, isNotNull, isNull } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import {
   buildMessage,
   findPending,
   recordSent,
-  type PendingNotification,
+  type NotificationTarget,
 } from "@/lib/notifications";
 import { createSignup } from "@/lib/signups";
 
@@ -136,7 +136,7 @@ async function runOnce(): Promise<void> {
   const { client } = getState();
   if (!client?.isReady()) return;
 
-  let pending: PendingNotification[];
+  let pending: NotificationTarget[];
   try {
     pending = await findPending();
   } catch (err) {
@@ -146,7 +146,7 @@ async function runOnce(): Promise<void> {
   if (pending.length === 0) return;
 
   for (const p of pending) {
-    if (!recordSent(p.eventId, p.kind)) continue;
+    if (!recordSent(p.eventId, p.squadNumber, p.kind)) continue;
     try {
       const channel = await client.channels.fetch(p.channelId);
       await persistDiscordGuildIdIfNeeded(p.guildId, channel);
@@ -161,11 +161,11 @@ async function runOnce(): Promise<void> {
         allowedMentions: { parse: ["everyone"] },
       });
       console.log(
-        `[bot] notified event=${p.eventId} kind=${p.kind} channel=${p.channelId}`
+        `[bot] notified event=${p.eventId} squad=${p.squadNumber} kind=${p.kind} channel=${p.channelId}`
       );
     } catch (err) {
       console.error(
-        `[bot] post failed event=${p.eventId} kind=${p.kind} channel=${p.channelId}:`,
+        `[bot] post failed event=${p.eventId} squad=${p.squadNumber} kind=${p.kind} channel=${p.channelId}:`,
         err
       );
     }
@@ -319,12 +319,15 @@ async function handleAutocomplete(
 
   await interaction.respond(
     matches.map((e) => ({
-      name: e.gameTime
-        ? `${e.name} — ${formatShort(e.gameTime)}`
-        : e.name,
+      name: truncateChoice(`${e.name} — ${formatShort(e.earliestStart)}`),
       value: e.id,
     }))
   );
+}
+
+// Discord caps slash command choice names at 100 characters.
+function truncateChoice(s: string): string {
+  return s.length <= 100 ? s : s.slice(0, 97) + "…";
 }
 
 async function handleUpcoming(
@@ -351,8 +354,9 @@ async function handleUpcoming(
   const lines = upcoming
     .slice(0, 10)
     .map((e) => {
-      const when = e.gameTime ? formatShort(e.gameTime) : "no time set";
-      return `• **${e.name}** — ${when}`;
+      const s1 = e.squad1StartsAt ? formatShort(e.squad1StartsAt) : "TBD";
+      const s2 = e.squad2StartsAt ? formatShort(e.squad2StartsAt) : "TBD";
+      return `• **${e.name}** — ${e.squad1Name}: ${s1} · ${e.squad2Name}: ${s2}`;
     })
     .join("\n");
   await interaction.reply({
@@ -461,21 +465,50 @@ async function resolveAppUserFromDiscord(
   };
 }
 
-async function loadUpcomingEvents(appGuildId: string) {
+type UpcomingMatchEvent = {
+  id: string;
+  name: string;
+  squad1Name: string;
+  squad2Name: string;
+  squad1StartsAt: string | null;
+  squad2StartsAt: string | null;
+  earliestStart: string;
+};
+
+// Returns match events for the guild whose earliest scheduled squad start is
+// in the future. Sorted by earliest start ascending. Used by /upcoming and
+// /signup autocomplete.
+async function loadUpcomingEvents(appGuildId: string): Promise<UpcomingMatchEvent[]> {
   const nowIso = new Date().toISOString();
-  return db
-    .select({ id: events.id, name: events.name, gameTime: events.gameTime })
+  const rows = await db
+    .select({
+      id: events.id,
+      name: events.name,
+      squad1Name: events.squad1Name,
+      squad2Name: events.squad2Name,
+      squad1StartsAt: events.squad1StartsAt,
+      squad2StartsAt: events.squad2StartsAt,
+    })
     .from(events)
     .where(
       and(
         eq(events.guildId, appGuildId),
         eq(events.kind, "match"),
-        isNull(events.deletedAt),
-        isNotNull(events.gameTime),
-        gt(events.gameTime, nowIso)
+        isNull(events.deletedAt)
       )
-    )
-    .orderBy(asc(events.gameTime));
+    );
+
+  const upcoming: UpcomingMatchEvent[] = [];
+  for (const r of rows) {
+    const futureStarts = [r.squad1StartsAt, r.squad2StartsAt].filter(
+      (v): v is string => !!v && v > nowIso
+    );
+    if (futureStarts.length === 0) continue;
+    const earliestStart = futureStarts.reduce((a, b) => (a < b ? a : b));
+    upcoming.push({ ...r, earliestStart });
+  }
+  upcoming.sort((a, b) => a.earliestStart.localeCompare(b.earliestStart));
+  return upcoming;
 }
 
 function formatShort(iso: string): string {

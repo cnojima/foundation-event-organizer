@@ -87,7 +87,7 @@ export default async function AdminEventPage({
           )}
         </div>
         <div className="flex items-center gap-2">
-          {event.gameTime && (
+          {(event.gameTime || event.squad1StartsAt || event.squad2StartsAt) && (
             <CalendarDownloadLink href={`/api/events/${event.id}/ics`} />
           )}
           {!event.deletedAt && (
@@ -106,17 +106,38 @@ export default async function AdminEventPage({
           attendance reports.
         </div>
       )}
-      <div className="mb-3 flex flex-wrap items-center gap-3 text-gray-500">
-        <span>
-          {event.gameTime ? (
-            <>
-              {isMatch ? "Game: " : "Starts: "}
-              <DateTime iso={event.gameTime} />
-            </>
-          ) : (
-            "No time set"
-          )}
-        </span>
+      <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500">
+        {!isMatch && (
+          <span>
+            {event.gameTime ? (
+              <>
+                Starts: <DateTime iso={event.gameTime} />
+              </>
+            ) : (
+              "No time set"
+            )}
+          </span>
+        )}
+        {isMatch && (
+          <>
+            <span>
+              {event.squad1Name}:{" "}
+              {event.squad1StartsAt ? (
+                <DateTime iso={event.squad1StartsAt} />
+              ) : (
+                <span className="font-mono text-gray-400">TBD</span>
+              )}
+            </span>
+            <span>
+              {event.squad2Name}:{" "}
+              {event.squad2StartsAt ? (
+                <DateTime iso={event.squad2StartsAt} />
+              ) : (
+                <span className="font-mono text-gray-400">TBD</span>
+              )}
+            </span>
+          </>
+        )}
         {isMatch && event.signupOpens && (
           <span className="text-xs">
             Signup opens <DateTime iso={event.signupOpens} />
@@ -138,9 +159,13 @@ export default async function AdminEventPage({
           <EditEventDatesForm
             eventId={event.id}
             kind={isMatch ? "match" : "simple"}
+            squad1Name={event.squad1Name}
+            squad2Name={event.squad2Name}
             gameTime={event.gameTime}
             signupOpens={event.signupOpens}
             signupCloses={event.signupCloses}
+            squad1StartsAt={event.squad1StartsAt}
+            squad2StartsAt={event.squad2StartsAt}
           />
         </div>
       )}
