@@ -4,9 +4,13 @@ import { db } from "@/db";
 import { users } from "@/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { countGuildAdmins } from "@/lib/rbac";
+import { isSupportedLocale, LOCALE_COOKIE } from "@/i18n/config";
 
 const MAX_NAME_LENGTH = 32;
 
+// PATCH /api/me — partial update of the current user's profile fields.
+// Currently supports `inGameName` (string) and `locale` (BCP-47 tag from the
+// supported list). Any field can be updated independently.
 export async function PATCH(req: Request) {
   const session = await auth();
   if (!session?.user?.id) {
@@ -14,33 +18,62 @@ export async function PATCH(req: Request) {
   }
 
   const body = await req.json().catch(() => ({}));
-  const raw = body.inGameName;
-  if (typeof raw !== "string") {
-    return NextResponse.json(
-      { error: "inGameName must be a string" },
-      { status: 400 }
-    );
-  }
-  const inGameName = raw.trim();
-  if (inGameName.length === 0) {
-    return NextResponse.json(
-      { error: "Name cannot be empty" },
-      { status: 400 }
-    );
-  }
-  if (inGameName.length > MAX_NAME_LENGTH) {
-    return NextResponse.json(
-      { error: `Name must be ${MAX_NAME_LENGTH} characters or fewer` },
-      { status: 400 }
-    );
+  const updates: Record<string, unknown> = {};
+  let cookieToSet: string | null = null;
+
+  if ("inGameName" in body) {
+    const raw = body.inGameName;
+    if (typeof raw !== "string") {
+      return NextResponse.json(
+        { error: "inGameName must be a string" },
+        { status: 400 }
+      );
+    }
+    const inGameName = raw.trim();
+    if (inGameName.length === 0) {
+      return NextResponse.json(
+        { error: "Name cannot be empty" },
+        { status: 400 }
+      );
+    }
+    if (inGameName.length > MAX_NAME_LENGTH) {
+      return NextResponse.json(
+        { error: `Name must be ${MAX_NAME_LENGTH} characters or fewer` },
+        { status: 400 }
+      );
+    }
+    updates.inGameName = inGameName;
   }
 
-  await db
-    .update(users)
-    .set({ inGameName })
-    .where(eq(users.id, session.user.id));
+  if ("locale" in body) {
+    if (!isSupportedLocale(body.locale)) {
+      return NextResponse.json(
+        { error: "Unsupported locale" },
+        { status: 400 }
+      );
+    }
+    updates.locale = body.locale;
+    cookieToSet = body.locale;
+  }
 
-  return NextResponse.json({ success: true, inGameName });
+  if (Object.keys(updates).length === 0) {
+    return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
+  }
+
+  await db.update(users).set(updates).where(eq(users.id, session.user.id));
+
+  const res = NextResponse.json({ success: true, ...updates });
+  if (cookieToSet) {
+    res.cookies.set({
+      name: LOCALE_COOKIE,
+      value: cookieToSet,
+      // 1 year — locale preference shouldn't expire mid-session.
+      maxAge: 60 * 60 * 24 * 365,
+      path: "/",
+      sameSite: "lax",
+    });
+  }
+  return res;
 }
 
 // Hard-deletes the current user's account. FK cascades remove their signups,

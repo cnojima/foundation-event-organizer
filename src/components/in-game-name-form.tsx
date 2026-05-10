@@ -2,12 +2,16 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { FieldHelp } from "@/components/field-help";
 
 const MAX_NAME_LENGTH = 32;
 
 export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
   const router = useRouter();
+  const t = useTranslations("myAccount");
+  const tCommon = useTranslations("common");
+  const tErrors = useTranslations("errors");
   const [value, setValue] = useState(defaultValue);
   const [submitting, setSubmitting] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
@@ -27,7 +31,7 @@ export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
       router.refresh();
     } else {
       const data = await res.json().catch(() => ({}));
-      setError(data?.error ?? "Failed");
+      setError(data?.error ?? tErrors("failed"));
     }
     setSubmitting(false);
   }
@@ -40,7 +44,7 @@ export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
       className="space-y-3 rounded-lg border bg-white p-4"
     >
       <div>
-        <label className="block text-sm font-medium mb-1">In-game name</label>
+        <label className="block text-sm font-medium mb-1">{t("inGameName")}</label>
         <input
           type="text"
           value={value}
@@ -49,10 +53,7 @@ export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
           required
           className="w-full border rounded px-3 py-2"
         />
-        <FieldHelp>
-          This is how you appear on rosters and signups. Up to{" "}
-          {MAX_NAME_LENGTH} characters.
-        </FieldHelp>
+        <FieldHelp>{t("inGameNameHelp", { max: MAX_NAME_LENGTH })}</FieldHelp>
       </div>
       {error && <p className="text-sm text-red-600">{error}</p>}
       <div className="flex items-center gap-3">
@@ -61,9 +62,9 @@ export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
           disabled={submitting || !dirty || !value.trim()}
           className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
         >
-          {submitting ? "Saving..." : "Save"}
+          {submitting ? tCommon("saving") : tCommon("save")}
         </button>
-        {savedAt && <span className="text-xs text-emerald-600">Saved.</span>}
+        {savedAt && <span className="text-xs text-emerald-600">{tCommon("saved")}</span>}
       </div>
     </form>
   );

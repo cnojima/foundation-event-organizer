@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/top-bar";
@@ -33,6 +35,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  const locale = await getLocale();
+  const messages = await getMessages();
   const needsInGameName = !!session?.user && !session.user.inGameName;
 
   let guildName: string | null = null;
@@ -61,20 +65,22 @@ export default async function RootLayout({
 
   return (
     <html
-      lang="en"
+      lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full bg-white text-gray-900">
-        <div className="flex min-h-screen">
-          <Sidebar {...sidebarProps} />
-          <div className="flex min-w-0 flex-1 flex-col">
-            <AlphaBanner />
-            <TopBar leftSlot={<MobileNav {...sidebarProps} />} guildTag={guildTag} />
-            <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
-            <Footer user={feedbackUser} />
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <div className="flex min-h-screen">
+            <Sidebar {...sidebarProps} />
+            <div className="flex min-w-0 flex-1 flex-col">
+              <AlphaBanner />
+              <TopBar leftSlot={<MobileNav {...sidebarProps} />} guildTag={guildTag} />
+              <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
+              <Footer user={feedbackUser} />
+            </div>
           </div>
-        </div>
-        {needsInGameName && <InGameNameDialog />}
+          {needsInGameName && <InGameNameDialog />}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { and, desc, eq, inArray, isNull } from "drizzle-orm";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireSignedInPage } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
@@ -50,6 +51,7 @@ export default async function Home() {
   }
 
   const now = new Date().toISOString();
+  const t = await getTranslations("events");
 
   // Only offer the bulk calendar export when at least one event actually has
   // a scheduled time — otherwise the .ics endpoint would 404.
@@ -62,17 +64,17 @@ export default async function Home() {
   return (
     <div className="mx-auto max-w-3xl">
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">Events</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">{t("title")}</h1>
         {hasAnyScheduled && (
           <CalendarDownloadLink
             href="/api/events/all/ics"
-            label="Add All to Calendar"
+            label={t("addAllToCalendar")}
           />
         )}
       </div>
 
       {guildEvents.length === 0 ? (
-        <p className="text-gray-500">No events yet.</p>
+        <p className="text-gray-500">{t("noEvents")}</p>
       ) : (
         <div className="space-y-3">
           {guildEvents.map((event) => {
@@ -105,7 +107,7 @@ export default async function Home() {
                     )}
                     {event.kind === "simple" && event.gameTime && (
                       <p className="mt-1 text-xs text-gray-500">
-                        Starts: <DateTime iso={event.gameTime} showUTC={false} />
+                        {t("starts")}: <DateTime iso={event.gameTime} showUTC={false} />
                       </p>
                     )}
                     {isMatch && (
@@ -116,7 +118,7 @@ export default async function Home() {
                             {s.startsAt ? (
                               <DateTime iso={s.startsAt} showUTC={false} />
                             ) : (
-                              <span className="font-mono text-gray-400">TBD</span>
+                              <span className="font-mono text-gray-400">{t("tbd")}</span>
                             )}
                           </span>
                         ))}
@@ -126,12 +128,12 @@ export default async function Home() {
                   <div className="flex shrink-0 items-center gap-2">
                     {isMatch && signedUp && (
                       <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">
-                        ✓ Signed up
+                        {t("signedUp")}
                       </span>
                     )}
                     {isMatch && !signedUp && isOpen && (
                       <span className="rounded border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700">
-                        Sign up
+                        {t("signUp")}
                       </span>
                     )}
                     <span
@@ -141,7 +143,7 @@ export default async function Home() {
                           : "bg-gray-100 text-gray-600"
                       }`}
                     >
-                      {isOpen ? "Open" : "Closed"}
+                      {isOpen ? t("open") : t("closed")}
                     </span>
                   </div>
                 </div>

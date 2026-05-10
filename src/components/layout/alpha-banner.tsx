@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { FEEDBACK_ISSUES_URL } from "@/lib/feedback";
 
 const STORAGE_KEY = "alphaBannerDismissed";
 
 export function AlphaBanner() {
+  const t = useTranslations("alphaBanner");
   const [hidden, setHidden] = useState(true);
 
   useEffect(() => {
@@ -23,25 +25,27 @@ export function AlphaBanner() {
   return (
     <div className="flex items-center justify-center gap-3 border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-900">
       <span className="rounded border border-amber-300 bg-amber-100 px-1.5 py-0.5 font-bold uppercase tracking-wider">
-        Alpha
+        {t("tag")}
       </span>
       <span>
-        Things may break. Found a bug or have a suggestion? Use the{" "}
-        <strong>Feedback</strong> link in the footer, or{" "}
-        <a
-          href={FEEDBACK_ISSUES_URL}
-          target="_blank"
-          rel="noreferrer"
-          className="font-semibold underline hover:text-amber-700"
-        >
-          open an issue on GitHub
-        </a>
-        .
+        {t.rich("message", {
+          feedbackLink: (chunks) => <strong>{chunks}</strong>,
+          githubLink: (chunks) => (
+            <a
+              href={FEEDBACK_ISSUES_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold underline hover:text-amber-700"
+            >
+              {chunks}
+            </a>
+          ),
+        })}
       </span>
       <button
         type="button"
         onClick={dismiss}
-        aria-label="Dismiss alpha notice"
+        aria-label={t("dismiss")}
         className="ml-2 rounded p-1 text-amber-700 hover:bg-amber-100"
       >
         <svg viewBox="0 0 14 14" className="size-3" aria-hidden>

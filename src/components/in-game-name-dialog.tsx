@@ -2,8 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export function InGameNameDialog({ suggested }: { suggested?: string }) {
+  const t = useTranslations("ingameNameDialog");
   const router = useRouter();
   const [name, setName] = useState(suggested ?? "");
   const [submitting, setSubmitting] = useState(false);
@@ -20,7 +22,7 @@ export function InGameNameDialog({ suggested }: { suggested?: string }) {
     });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
-      setError(body.error ?? "Couldn't save name.");
+      setError(body.error ?? t("errorGeneric"));
       setSubmitting(false);
       return;
     }
@@ -36,18 +38,15 @@ export function InGameNameDialog({ suggested }: { suggested?: string }) {
     >
       <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl">
         <h2 id="ign-title" className="text-lg font-bold text-gray-900">
-          Set your in-game name
+          {t("title")}
         </h2>
-        <p className="mt-1 text-sm text-gray-600">
-          This is how you&apos;ll appear on event rosters and signups. You can
-          change it later in your profile.
-        </p>
+        <p className="mt-1 text-sm text-gray-600">{t("explanation")}</p>
         <form onSubmit={handleSubmit} className="mt-4 space-y-3">
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="e.g. NovaSpectre"
+            placeholder={t("placeholder")}
             maxLength={32}
             required
             autoFocus
@@ -59,7 +58,7 @@ export function InGameNameDialog({ suggested }: { suggested?: string }) {
             disabled={submitting || !name.trim()}
             className="w-full rounded-md bg-violet-600 px-4 py-2 text-sm font-medium text-white hover:bg-violet-700 disabled:opacity-60"
           >
-            {submitting ? "Saving…" : "Save"}
+            {submitting ? t("saving") : t("save")}
           </button>
         </form>
       </div>

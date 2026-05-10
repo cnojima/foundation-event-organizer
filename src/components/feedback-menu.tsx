@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import {
   buildIssueUrl,
   FEEDBACK_ISSUES_URL,
@@ -9,6 +10,8 @@ import {
 } from "@/lib/feedback";
 
 export function FeedbackMenu({ user }: { user: FeedbackUserContext }) {
+  const tFooter = useTranslations("footer");
+  const tFeedback = useTranslations("feedback");
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
@@ -54,7 +57,7 @@ export function FeedbackMenu({ user }: { user: FeedbackUserContext }) {
         onClick={() => setOpen((v) => !v)}
         className="text-xs font-semibold tracking-wider text-gray-500 hover:text-gray-900"
       >
-        FEEDBACK
+        {tFooter("feedback")}
       </button>
       {open && (
         <div
@@ -62,13 +65,13 @@ export function FeedbackMenu({ user }: { user: FeedbackUserContext }) {
           className="absolute bottom-full right-0 z-50 mb-2 w-64 rounded-lg border border-gray-200 bg-white p-1 shadow-lg"
         >
           <MenuItem
-            title="Report a bug"
-            description="Something broke or behaves wrong"
+            title={tFeedback("reportBug")}
+            description={tFeedback("reportBugDescription")}
             onClick={() => openIssue("bug")}
           />
           <MenuItem
-            title="Suggest a feature"
-            description="An idea that would make this better"
+            title={tFeedback("suggestFeature")}
+            description={tFeedback("suggestFeatureDescription")}
             onClick={() => openIssue("suggestion")}
           />
           <a
@@ -78,9 +81,9 @@ export function FeedbackMenu({ user }: { user: FeedbackUserContext }) {
             className="block rounded-md px-3 py-2 text-sm hover:bg-gray-50"
             onClick={() => setOpen(false)}
           >
-            <div className="font-semibold text-gray-900">Browse all issues</div>
+            <div className="font-semibold text-gray-900">{tFeedback("browseAll")}</div>
             <div className="text-xs text-gray-500">
-              See what others have reported
+              {tFeedback("browseAllDescription")}
             </div>
           </a>
         </div>

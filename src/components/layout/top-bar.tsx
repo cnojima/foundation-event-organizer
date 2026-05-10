@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { getTranslations } from "next-intl/server";
 import { SignInButton, SignOutButton } from "@/components/auth-buttons";
 import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
@@ -12,6 +13,7 @@ export async function TopBar({
 }) {
   const session = await auth();
   const user = session?.user;
+  const t = await getTranslations("topBar");
 
   return (
     <header className="flex items-center justify-between gap-4 border-b border-gray-200 bg-white px-4 py-3 sm:px-6">
@@ -20,7 +22,7 @@ export async function TopBar({
       <button
         type="button"
         className="relative grid size-9 place-items-center rounded-full text-gray-500 hover:bg-gray-100"
-        aria-label="Notifications"
+        aria-label={t("notifications")}
       >
         <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
           <path
@@ -41,12 +43,12 @@ export async function TopBar({
             <div className="text-sm font-semibold text-gray-900">{displayName(user, guildTag)}</div>
             <div className="text-xs text-gray-500">
               {user.isSuperAdmin
-                ? "Super-admin"
+                ? t("roleSuperAdmin")
                 : user.guildRole === "admin"
-                  ? "Guild admin"
+                  ? t("roleGuildAdmin")
                   : user.guildRole === "member"
-                    ? "Member"
-                    : "No guild"}
+                    ? t("roleMember")
+                    : t("roleNoGuild")}
             </div>
           </div>
           <SignOutButton />

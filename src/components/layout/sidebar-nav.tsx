@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Visibility =
   | "always"
@@ -12,7 +13,8 @@ type Visibility =
   | "guildless";
 
 type NavItem = {
-  label: string;
+  /** Translation key under `nav.*`. */
+  labelKey: string;
   href: string;
   icon: React.ReactNode;
   visibility: Visibility;
@@ -84,18 +86,18 @@ const ICONS = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Manage Events", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin" },
-  { label: "Events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
-  { label: "Players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
-  { label: "Members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },
-  { label: "Invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin" },
-  { label: "Settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin" },
-  { label: "Super Admin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
-  { label: "Browse Guilds", href: "/guilds", icon: ICONS.events, visibility: "guildless" },
-  { label: "Create Guild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless" },
-  { label: "Admin Help", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin" },
-  { label: "Help", href: "/help", icon: ICONS.help, visibility: "always" },
-  { label: "My Account", href: "/me", icon: ICONS.settings, visibility: "signedIn" },
+  { labelKey: "manageEvents", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin" },
+  { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
+  { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
+  { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },
+  { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin" },
+  { labelKey: "settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin" },
+  { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
+  { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "guildless" },
+  { labelKey: "createGuild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless" },
+  { labelKey: "adminHelp", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin" },
+  { labelKey: "help", href: "/help", icon: ICONS.help, visibility: "always" },
+  { labelKey: "myAccount", href: "/me", icon: ICONS.settings, visibility: "signedIn" },
 ];
 
 type SidebarNavProps = {
@@ -124,6 +126,7 @@ function isVisible(item: NavItem, p: SidebarNavProps): boolean {
 
 export function SidebarNav(props: SidebarNavProps) {
   const pathname = usePathname();
+  const t = useTranslations("nav");
   const items = NAV_ITEMS.filter((item) => isVisible(item, props));
 
   return (
@@ -144,7 +147,7 @@ export function SidebarNav(props: SidebarNavProps) {
             }`}
           >
             <span className={active ? "text-violet-600" : "text-gray-400"}>{item.icon}</span>
-            <span className="uppercase">{item.label}</span>
+            <span className="uppercase">{t(item.labelKey)}</span>
           </Link>
         );
       })}

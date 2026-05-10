@@ -16,6 +16,9 @@ export const users = sqliteTable("users", {
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
   inGameName: text("in_game_name"),
+  // BCP-47 language tag (e.g., "en", "pt-BR", "zh-CN"). Null = use the
+  // browser's Accept-Language header to pick a supported locale.
+  locale: text("locale"),
   // Site-wide super-admin (replaces the old is_admin flag). Bootstrap manually via Drizzle Studio.
   isSuperAdmin: integer("is_super_admin", { mode: "boolean" }).notNull().default(false),
   // One guild per user. Both columns null when the user has not joined a guild yet.
