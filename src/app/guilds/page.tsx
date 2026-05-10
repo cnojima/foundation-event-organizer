@@ -16,7 +16,10 @@ export default async function GuildsPage() {
       name: guilds.name,
       slug: guilds.slug,
       description: guilds.description,
-      memberCount: sql<number>`(select count(*) from ${users} where ${users.guildId} = ${guilds.id})`,
+      // Hard-coded qualified names: Drizzle's sql template renders column
+      // references unqualified, so the subquery would compare users.guild_id
+      // to users.id and always return 0. See super-admin/page.tsx for context.
+      memberCount: sql<number>`(select count(*) from "users" where "users"."guild_id" = "guilds"."id")`,
     })
     .from(guilds)
     .where(and(eq(guilds.isPublic, true), isNull(guilds.deletedAt)))

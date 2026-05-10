@@ -19,7 +19,10 @@ export default async function SuperAdminPage() {
       isPublic: guilds.isPublic,
       createdAt: guilds.createdAt,
       deletedAt: guilds.deletedAt,
-      memberCount: sql<number>`(select count(*) from ${users} where ${users.guildId} = ${guilds.id})`,
+      // Hard-coded qualified names: Drizzle's sql template renders
+      // ${users.guildId} and ${guilds.id} as unqualified column refs, so the
+      // subquery would resolve both to columns of `users` and always return 0.
+      memberCount: sql<number>`(select count(*) from "users" where "users"."guild_id" = "guilds"."id")`,
     })
     .from(guilds)
     .orderBy(guilds.name);

@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+app.db*
 i18n-key.json
 
 # debug
