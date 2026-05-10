@@ -26,8 +26,21 @@ import { createSignup } from "@/lib/signups";
 // (smallest window is 25 min wide), large enough that DB pressure is trivial.
 const POLL_INTERVAL_MS = 5 * 60 * 1000;
 
-let client: Client | null = null;
-let started = false;
+// Bot state on globalThis so the singleton survives Next.js compiling the
+// same module into multiple chunks (instrumentation.ts and route handlers
+// can otherwise end up with separate module instances and therefore
+// separate `started`/`client` flags).
+type BotState = { client: Client | null; started: boolean };
+const STATE_KEY = Symbol.for("foundation.discord-bot.state");
+type GlobalWithBot = typeof globalThis & { [STATE_KEY]?: BotState };
+
+function getState(): BotState {
+  const g = globalThis as GlobalWithBot;
+  if (!g[STATE_KEY]) {
+    g[STATE_KEY] = { client: null, started: false };
+  }
+  return g[STATE_KEY]!;
+}
 
 const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
   {
@@ -68,18 +81,20 @@ const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
 ];
 
 export function startBot(): void {
-  if (started) return;
+  const state = getState();
+  if (state.started) return;
   const token = process.env.DISCORD_BOT_TOKEN;
   if (!token) {
     console.log("[bot] DISCORD_BOT_TOKEN not set — skipping bot startup.");
     return;
   }
-  started = true;
+  state.started = true;
 
-  client = new Client({ intents: [GatewayIntentBits.Guilds] });
+  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+  state.client = client;
 
   client.once("clientReady", () => {
-    console.log(`[bot] Logged in as ${client?.user?.tag}`);
+    console.log(`[bot] Logged in as ${client.user?.tag}`);
     void registerSlashCommands();
     void runOnce();
     setInterval(() => void runOnce(), POLL_INTERVAL_MS);
@@ -99,11 +114,13 @@ export function startBot(): void {
 
   void client.login(token).catch((err) => {
     console.error("[bot] login failed:", err);
-    started = false;
+    state.started = false;
+    state.client = null;
   });
 }
 
 async function registerSlashCommands(): Promise<void> {
+  const { client } = getState();
   if (!client?.application) return;
   try {
     await client.application.commands.set(SLASH_COMMANDS);
@@ -116,6 +133,7 @@ async function registerSlashCommands(): Promise<void> {
 // ---- Notification poller ----
 
 async function runOnce(): Promise<void> {
+  const { client } = getState();
   if (!client?.isReady()) return;
 
   let pending: PendingNotification[];
@@ -173,75 +191,88 @@ async function persistDiscordGuildIdIfNeeded(
 
 // ---- Test message API (called from /api/guilds/[id]/discord/test) ----
 
-type SendOptions = {
-  allowedMentions?: { parse: ("everyone" | "users" | "roles")[] };
-};
-
-async function sendChannelMessage(
-  channelId: string,
-  content: string,
-  options: SendOptions = {}
-): Promise<void> {
-  if (!client?.isReady()) {
-    throw new Error("Discord bot is not connected.");
-  }
-  const channel = await client.channels.fetch(channelId);
-  if (!channel || !channel.isTextBased() || !("send" in channel)) {
-    throw new Error("Channel is not text-based or not accessible to the bot.");
-  }
-  await (channel as TextChannel).send({
-    content,
-    allowedMentions: options.allowedMentions ?? { parse: [] },
-  });
-}
-
 export type TestResult = { ok: true } | { ok: false; reason: string };
 
+// Sends a one-off test message via Discord's REST API. Deliberately bypasses
+// the gateway client / bot module state so the route handler doesn't depend
+// on instrumentation having booted in the same Node module instance — only
+// requires DISCORD_BOT_TOKEN to be readable from process.env.
 export async function sendTestMessage(
   channelId: string,
   guildName: string,
   appGuildId?: string
 ): Promise<TestResult> {
-  if (!started || !client) {
+  const token = process.env.DISCORD_BOT_TOKEN;
+  if (!token) {
     return {
       ok: false,
       reason:
         "The Discord bot isn't running on this server (DISCORD_BOT_TOKEN not set).",
     };
   }
-  if (!client.isReady()) {
-    return {
-      ok: false,
-      reason: "The Discord bot is still connecting. Try again in a moment.",
-    };
-  }
-  try {
-    if (appGuildId) {
-      const channel = await client.channels.fetch(channelId);
-      await persistDiscordGuildIdIfNeeded(appGuildId, channel);
+
+  const content = `Test message from **Foundation Event Organizer** — guild **${guildName}**. Your Discord integration is working. Event reminders will be sent here.`;
+
+  // Post the message.
+  const postRes = await fetch(
+    `https://discord.com/api/v10/channels/${channelId}/messages`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bot ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        content,
+        allowed_mentions: { parse: [] },
+      }),
     }
-    await sendChannelMessage(
-      channelId,
-      `Test message from **Foundation Event Organizer** — guild **${guildName}**. Your Discord integration is working. Event reminders will be sent here.`
-    );
-    return { ok: true };
-  } catch (err) {
-    return { ok: false, reason: humanReadableError(err) };
+  );
+  if (!postRes.ok) {
+    return { ok: false, reason: await translateDiscordError(postRes) };
   }
+
+  // Auto-link Discord server ID by inspecting the channel.
+  if (appGuildId) {
+    try {
+      const chRes = await fetch(
+        `https://discord.com/api/v10/channels/${channelId}`,
+        { headers: { Authorization: `Bot ${token}` } }
+      );
+      if (chRes.ok) {
+        const ch = (await chRes.json()) as { guild_id?: string };
+        if (ch.guild_id) {
+          await db
+            .update(guilds)
+            .set({ discordGuildId: ch.guild_id })
+            .where(and(eq(guilds.id, appGuildId), isNull(guilds.discordGuildId)));
+        }
+      }
+    } catch (err) {
+      console.error("[bot] failed to persist discord_guild_id during test:", err);
+    }
+  }
+
+  return { ok: true };
 }
 
-function humanReadableError(err: unknown): string {
-  if (err instanceof Error) {
-    const e = err as Error & { code?: number; status?: number };
-    if (e.code === 50001)
-      return "Bot doesn't have access to that channel. Make sure it's been added to the server.";
-    if (e.code === 50013)
-      return "Bot is missing the Send Messages permission for that channel.";
-    if (e.code === 10003)
-      return "That channel ID doesn't exist (or the bot can't see it).";
-    return err.message;
+async function translateDiscordError(res: Response): Promise<string> {
+  let body: { code?: number; message?: string } | null = null;
+  try {
+    body = (await res.json()) as { code?: number; message?: string };
+  } catch {
+    /* ignore */
   }
-  return "Unknown error.";
+  const code = body?.code;
+  if (code === 50001)
+    return "Bot doesn't have access to that channel. Make sure it's been added to the server.";
+  if (code === 50013)
+    return "Bot is missing the Send Messages permission for that channel.";
+  if (code === 10003)
+    return "That channel ID doesn't exist (or the bot can't see it).";
+  if (res.status === 401)
+    return "DISCORD_BOT_TOKEN is invalid. Regenerate the token in the Discord developer portal.";
+  return body?.message ?? `Discord API returned ${res.status}.`;
 }
 
 // ---- Slash command handlers ----

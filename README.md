@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Foundation Event Organizer
 
-## Getting Started
+A multi-guild event signup site for squad-based games. Each guild runs its own events, members, and admins. Optional Discord integration posts `@everyone` reminders 1 day, 1 hour, and 20 minutes before each event, and exposes `/upcoming` and `/signup` slash commands.
 
-First, run the development server:
+This repo is the source for [foundation-event-organizer.fly.dev](https://foundation-event-organizer.fly.dev) (or wherever an operator has deployed it).
+
+---
+
+## Setting up Discord notifications for your guild
+
+This guide is for **guild admins** who want their Discord server to receive event reminders and slash commands.
+
+### Prerequisites
+
+Before you start, the **site operator** must have already deployed the app and configured the Discord bot. Ask them for:
+
+- The **bot install URL**. It looks like:
+  ```
+  https://discord.com/oauth2/authorize?client_id=<APPLICATION_ID>&scope=bot+applications.commands&permissions=2048
+  ```
+- (Optionally) the bot's display name, so you can recognize it in your server.
+
+If you're the site operator, see [CLAUDE.md](CLAUDE.md) → **Discord bot** for one-time setup (creating a Discord application, setting the `DISCORD_BOT_TOKEN` secret, etc.).
+
+### Step 1 — Add the bot to your Discord server
+
+1. Open the install URL in a browser.
+2. Pick the Discord server you want to use from the dropdown. **You must have "Manage Server" permission** in that server.
+3. Confirm the requested permissions. The bot needs:
+   - **Send Messages** — to post reminders.
+   - **Use Slash Commands** — automatically granted via the `applications.commands` scope.
+4. Click **Authorize**. The bot will appear in your server's member list.
+
+### Step 2 — Enable Developer Mode in Discord
+
+This unlocks the "Copy Channel ID" right-click option, which you'll need in the next step.
+
+1. Open Discord → **User Settings** (gear icon next to your name).
+2. Scroll to **Advanced** in the sidebar.
+3. Toggle **Developer Mode** on.
+
+You only need to do this once per device.
+
+### Step 3 — Copy your channel's ID
+
+Pick the channel where you want event reminders posted. **The bot must be able to see and send messages in that channel** — make sure your channel permissions allow the bot's role.
+
+1. Right-click the channel name in Discord's sidebar.
+2. Click **Copy Channel ID** at the bottom of the menu.
+
+You'll get a long number like `123456789012345678`.
+
+### Step 4 — Paste the channel ID into Guild Settings
+
+1. Sign in to the website.
+2. Open your guild's **Settings** page (sidebar → Settings).
+3. Paste the channel ID into **Discord channel ID**.
+4. Click **Test integration**.
+
+If everything is wired up, you'll see ✅ in the UI and a test message in your Discord channel:
+
+> Test message from **Foundation Event Organizer** — guild **<your guild>**. Your Discord integration is working. Event reminders will be sent here.
+
+The Test step also auto-links your Discord server to the app guild — this is what makes the slash commands work.
+
+5. Click **Save** to persist the channel ID.
+
+### What you get
+
+- **Reminders** before every match event with a `gameTime`:
+  - 24 hours before: "@everyone Big Match starts tomorrow."
+  - 1 hour before: "@everyone Big Match starts in 1 hour."
+  - 20 minutes before: "@everyone Big Match starts in 20 minutes."
+  - If you reschedule an event, reminders fire fresh against the new time.
+- **Slash commands** (work in any channel where the bot is present):
+  - `/upcoming` — shows the next several events for your guild.
+  - `/signup event:<event> squad:<1|2> [willing_backup]` — signs you up for a match. Requires you to have logged into the website with Discord at least once (so the bot can match your Discord ID to your account).
+
+### Troubleshooting
+
+| What you see | Likely cause | Fix |
+| --- | --- | --- |
+| **Bot doesn't have access to that channel** when testing | Bot isn't in the server, or channel-level permissions deny it | Re-invite via the install URL; check channel permissions for the bot's role |
+| **Bot is missing the Send Messages permission** | Channel permission overrides | In Discord: Channel → Edit Channel → Permissions → grant the bot's role Send Messages |
+| **That channel ID doesn't exist (or the bot can't see it)** | You copied the wrong ID, or pasted a server ID instead of a channel ID | Right-click the **channel** name (not the server name) → Copy Channel ID |
+| **The Discord bot is still connecting. Try again in a moment.** | Bot is restarting after a deploy | Wait ~10 seconds and click Test again |
+| **The Discord bot isn't running on this server (DISCORD_BOT_TOKEN not set).** | The site operator hasn't configured the bot at all | Contact the operator |
+| **`/upcoming` says "This Discord server isn't linked to a guild yet"** | You haven't run Test integration yet | Go to Guild Settings → Test integration. That auto-links the server. |
+| Slash commands don't appear in Discord | Global commands take up to ~1 hour to propagate the first time | Wait, or restart your Discord client (Ctrl/Cmd+R) |
+
+### Removing the integration
+
+- To stop notifications: clear the **Discord channel ID** field in Guild Settings → Save.
+- To remove the bot from your server: Discord → Server Settings → Integrations → click the bot → Remove.
+
+---
+
+## For operators / contributors
+
+See [CLAUDE.md](CLAUDE.md) for:
+
+- Project architecture (Next.js 16, SQLite + Drizzle, Auth.js, RBAC model).
+- Local dev setup (`npm run dev`, OAuth credentials, schema push, super-admin bootstrap).
+- Discord bot one-time setup (creating the Discord application, setting the `DISCORD_BOT_TOKEN` Fly secret).
+- Routes, API surface, and key design decisions.
+
+### Quick local dev
 
 ```bash
+cp .env.local.example .env.local   # fill in OAuth + AUTH_SECRET
+npx auth secret                    # generates AUTH_SECRET
+npm install
+npm run db:push                    # initialize SQLite
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To make yourself a super-admin after first sign-in:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+node scripts/promote-super-admin.mjs you@example.com
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Sign out and back in to refresh your session.
