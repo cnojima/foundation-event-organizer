@@ -23,7 +23,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Shadowfront Signup",
+  title: "FGF Event Organizer",
   description: "Squad signup and management",
 };
 

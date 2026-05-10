@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
+import { DatetimeLocalHint } from "@/components/datetime-local-hint";
 
 type DateField =
   | "gameTime"
@@ -150,8 +151,11 @@ export function EditEventDatesForm({
               onChange={(e) =>
                 setValues((v) => ({ ...v, [key]: e.target.value }))
               }
+              // 10-minute increments: picker shows :00, :10, :20, :30, :40, :50.
+              step={600}
               className="w-full border rounded px-2 py-1 text-sm"
             />
+            <DatetimeLocalHint value={values[key]} />
             <FieldHelp>{FIELD_HELP[key]}</FieldHelp>
           </div>
         ))}

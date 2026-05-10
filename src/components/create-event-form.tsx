@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
+import { DatetimeLocalField } from "@/components/datetime-local-field";
 
 type EventKind = "match" | "simple";
 
@@ -87,11 +88,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
         {kind === "simple" && (
           <div>
             <label className="block text-sm font-medium mb-1">Start Time</label>
-            <input
-              name="gameTime"
-              type="datetime-local"
-              className="w-full border rounded px-3 py-2"
-            />
+            <DatetimeLocalField name="gameTime" />
             <FieldHelp>
               When the event starts. Used for the calendar download.
             </FieldHelp>
@@ -110,22 +107,14 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Signup Opens</label>
-              <input
-                name="signupOpens"
-                type="datetime-local"
-                className="w-full border rounded px-3 py-2"
-              />
+              <DatetimeLocalField name="signupOpens" />
               <FieldHelp>
                 When players can start signing up. Leave blank to open immediately.
               </FieldHelp>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Signup Closes</label>
-              <input
-                name="signupCloses"
-                type="datetime-local"
-                className="w-full border rounded px-3 py-2"
-              />
+              <DatetimeLocalField name="signupCloses" />
               <FieldHelp>
                 When the signup form locks. Existing signups can still be edited
                 by admins. Leave blank for no deadline.
@@ -145,11 +134,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Squad 1 Starts At</label>
-              <input
-                name="squad1StartsAt"
-                type="datetime-local"
-                className="w-full border rounded px-3 py-2"
-              />
+              <DatetimeLocalField name="squad1StartsAt" />
               <FieldHelp>
                 When Squad 1 plays. Optional — can be set later.
               </FieldHelp>
@@ -165,11 +150,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Squad 2 Starts At</label>
-              <input
-                name="squad2StartsAt"
-                type="datetime-local"
-                className="w-full border rounded px-3 py-2"
-              />
+              <DatetimeLocalField name="squad2StartsAt" />
               <FieldHelp>
                 When Squad 2 plays. Optional — can be set later.
               </FieldHelp>

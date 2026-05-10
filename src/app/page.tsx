@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { requireSignedInPage } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
+import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { squadTimes } from "@/lib/event-times";
 
 export default async function Home() {
@@ -50,10 +51,24 @@ export default async function Home() {
 
   const now = new Date().toISOString();
 
+  // Only offer the bulk calendar export when at least one event actually has
+  // a scheduled time — otherwise the .ics endpoint would 404.
+  const hasAnyScheduled = guildEvents.some((e) =>
+    e.kind === "match"
+      ? !!e.squad1StartsAt || !!e.squad2StartsAt
+      : !!e.gameTime
+  );
+
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="mb-6">
+      <div className="mb-6 flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">Events</h1>
+        {hasAnyScheduled && (
+          <CalendarDownloadLink
+            href="/api/events/all/ics"
+            label="Add All to Calendar"
+          />
+        )}
       </div>
 
       {guildEvents.length === 0 ? (
