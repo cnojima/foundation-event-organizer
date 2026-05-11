@@ -18,6 +18,8 @@
   "nav": {
     "manageEvents": "Hantera händelser",
     "events": "Händelser",
+    "scrimHistory": "Scrim-historia",
+    "scrimmages": "Träningsmatcher",
     "players": "Spelare",
     "members": "Medlemmar",
     "invites": "Inbjudningar",
@@ -27,9 +29,7 @@
     "createGuild": "Skapa gille",
     "adminHelp": "Administratörshjälp",
     "help": "Hjälp",
-    "myAccount": "Mitt konto",
-    "scrimHistory": "Scrim-historia",
-    "scrimmages": "Träningsmatcher"
+    "myAccount": "Mitt konto"
   },
   "topBar": {
     "notifications": "Aviseringar",
@@ -376,5 +376,58 @@
   "localeSwitcher": {
     "label": "Språk",
     "ariaLabel": "Byt språk"
+  },
+  "playerHelp": {
+    "title": "Välkommen till Stiftelsens evenemangsorganisatör",
+    "subtitle": "Det är här din gille anmäler sig till evenemang — Shadowfront-matcher, träningsmatcher och allt annat som ledningen vill ha i kalendern.",
+    "sections": {
+      "gettingIn": "Att komma in",
+      "eventKinds": "Tre typer av händelser",
+      "signup": "Anmälan till en match",
+      "status": "Vad din status betyder",
+      "scrims": "Scrimmage-evenemang",
+      "reminders": "Påminnelser och kalender",
+      "closed": "Om anmälningarna är stängda"
+    },
+    "gettingIn": {
+      "step1": "Logga in med Google eller Discord på startsidan.",
+      "step2": "Gå med i ditt gille. De flesta går in via en inbjudningslänk från en gillesadministratör. Du kan också bläddra bland offentliga gilles på<discoveryLink> upptäcktssida</discoveryLink> .",
+      "step3": "När du väl är medlem i ett gille visar hemsidan gillets kommande evenemang.",
+      "note": "Du kan bara vara med i ett gille åt gången. För att flytta, lämna det nuvarande först."
+    },
+    "eventKinds": {
+      "match": "Matchevenemang (Shadowfront och liknande) — två trupper, var och en med sin egen starttid, ledarskapsplatser och en starttrupp plus reservspelare.",
+      "scrim": "Scrim-evenemang — en 1-mot-1-utmaning mellan din gille och en annan gille. En enda trupp, en starttid och en utsedd vinnare när det är över. Se avsnittet om Scrimmage-evenemang nedan.",
+      "simple": "Enkla evenemang — endast informationsposter i kalendern (ett möte, ett tillkännagivande, en visningsfest). Ingen anmälningsblankett; bara ett datum och detaljer."
+    },
+    "signup": {
+      "intro": "Öppna evenemanget från startsidan. Anmälningsformuläret har tre saker:",
+      "step1": "Trupppreferens (första val). Välj den trupp du helst vill spela i. Om ditt första val är fullt försöker administratörerna placera dig i den andra.",
+      "step2": "Villig att vara reserv. På som standard. Reservspelare fylls in när en startspelare faller. Avmarkera det här alternativet om du bara vill spela med en garanterad startplats.",
+      "step3": "Begär en ledarposition (valfritt). Ledare koordinerar truppen under matchen. Administratörer utser ledare utifrån förfrågningarna; du kan lämna en kort anteckning om varför du vill ha rollen.",
+      "submit": "Klicka på Registrera dig. Du kan komma tillbaka och ändra vilka som helst av dessa svar fram tills anmälningstiden stänger."
+    },
+    "status": {
+      "intro": "När du tittar på trupplistorna ser du en av dessa bredvid varje namn:",
+      "player": "Spelare — i startelvan.",
+      "backup": "Reserv — finns med på reservlaget; spelar bara om en starter faller.",
+      "leader": "Ledare — vald av en administratör för att leda truppen.",
+      "waitlist": "Väntelista — alla platser i truppen och reservlaget var fulla när du anmälde dig. Du blir automatiskt uppflyttad om någon faller.",
+      "wantsLeader": "Vill ha ledare — en spelare som begärt rollen; en administratör kommer att välja bland dessa."
+    },
+    "scrims": {
+      "intro": "En scrim är din gille mot en annan gille. Evenemangssidan fungerar på samma sätt som en matchning – registrera dig, välj reservvillighet, begär valfritt ledarskap – men med några skillnader som är värda att känna till:",
+      "oneSquad": "Endast en grupp. Det finns inget val mellan Grupp 1 och Grupp 2 — din gille ställt upp med en enda uppställning mot motståndaren.",
+      "opponent": "Motståndaren visas högst upp på evenemangssidan, tillsammans med vinstvillkoret som de två administratörerna kom överens om. Läs det före matchen – det är så vinnaren avgörs.",
+      "result": "Resultatchip. När matchen är avklarad och en administratör tillkännager resultatet ser du ett färgat chip på evenemangssidan: Vunnen, Förlorad, Oavgjord eller Ingen match (för förverkad match eller frånkoppling).",
+      "history": "Historik. Se din gilles kommande och tidigare träningar på<scrimsLink> scrim-historiksida</scrimsLink> W/L är från ditt gilles perspektiv.",
+      "note": "Endast din gilles administratör kan föreslå, acceptera eller avbryta en träningsmatch – du anmäler dig bara som vilken annan händelse som helst. Om en träningsmatch avbryts innan den äger rum, försvinner händelsen från din hemsida och din anmälan döljs (administratörer behåller fortfarande närvarohistoriken)."
+    },
+    "reminders": {
+      "bot": "Om din gille har Discord-boten konfigurerad, publicerar boten påminnelser 1 dag, 1 timme och 20 minuter före varje evenemang i din gilles valda kanal.",
+      "ics": "Varje evenemangssida har en nedladdningslänk för .ics för att lägga till evenemanget i din kalender.",
+      "slashCommands": "Discord-kommandon med snedstreck: /upcoming listar din gilles kommande evenemang, och /signup låter dig registrera dig utan att lämna Discord. Du måste logga in på webbplatsen med Discord minst en gång först, så att boten kan matcha ditt konto."
+    },
+    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
   }
 }

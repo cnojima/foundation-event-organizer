@@ -376,5 +376,58 @@
   "localeSwitcher": {
     "label": "Language",
     "ariaLabel": "Switch language"
+  },
+  "playerHelp": {
+    "title": "Welcome to Foundation Event Organizer",
+    "subtitle": "This is where your guild signs up for events — Shadowfront matches, scrims, and anything else the leadership wants on the calendar.",
+    "sections": {
+      "gettingIn": "Getting in",
+      "eventKinds": "Three kinds of events",
+      "signup": "Signing up for a match",
+      "status": "What your status means",
+      "scrims": "Scrimmage events",
+      "reminders": "Reminders and calendar",
+      "closed": "If signups are closed"
+    },
+    "gettingIn": {
+      "step1": "Sign in with Google or Discord on the home page.",
+      "step2": "Join your guild. Most people get in via an invite link from a guild admin. You can also browse public guilds at the <discoveryLink>discovery page</discoveryLink>.",
+      "step3": "Once you're in a guild, the home page shows that guild's upcoming events.",
+      "note": "You can only be in one guild at a time. To move, leave the current one first."
+    },
+    "eventKinds": {
+      "match": "Match events (Shadowfront and similar) — two squads, each with their own start time, leadership slots, and a starting roster plus backups.",
+      "scrim": "Scrim events — a 1-vs-1 challenge between your guild and another guild. Single squad, one start time, and a declared winner when it's over. See the Scrimmage events section below.",
+      "simple": "Simple events — info-only entries on the calendar (a meeting, an announcement, a watch party). No signup form; just a date and details."
+    },
+    "signup": {
+      "intro": "Open the event from the home page. The signup form has three things:",
+      "step1": "Squad preference (first choice). Pick the squad you most want to play on. If your first choice is full, admins try to place you on the other.",
+      "step2": "Willing to be a backup. On by default. Backups fill in when a starter drops. Uncheck this if you only want to play with a guaranteed starting slot.",
+      "step3": "Request a leadership position (optional). Leaders coordinate the squad during the match. Admins assign leaders from the requests; you can leave a short note about why you'd like the role.",
+      "submit": "Hit Sign Up. You can come back and change any of these answers up until signups close."
+    },
+    "status": {
+      "intro": "When you look at the squad rosters, you'll see one of these next to each name:",
+      "player": "Player — on the starting roster.",
+      "backup": "Backup — on the backup roster; plays only if a starter drops.",
+      "leader": "Leader — chosen by an admin to lead the squad.",
+      "waitlist": "Waitlist — all squad and backup slots were full when you signed up. You're promoted automatically if someone drops.",
+      "wantsLeader": "Wants Leader — a player who asked for the role; an admin will pick from these."
+    },
+    "scrims": {
+      "intro": "A scrim is your guild against another guild. The event page works the same as a match — sign up, pick backup willingness, optionally request leadership — but with a few differences worth knowing:",
+      "oneSquad": "One squad only. There's no Squad 1 vs Squad 2 pick — your guild fields a single lineup against the opponent.",
+      "opponent": "The opponent is shown at the top of the event page, along with the Condition of Win the two admins agreed on. Read it before the match — it's how the winner gets determined.",
+      "result": "Result chip. Once the match is done and an admin declares the result, you'll see a colored chip on the event page: Won, Lost, Draw, or No contest (for forfeits or disconnects).",
+      "history": "History. See your guild's upcoming and past scrims on the <scrimsLink>scrim history page</scrimsLink>. W/L is from your guild's perspective.",
+      "note": "Only your guild's admin can propose, accept, or cancel a scrim — you just sign up like any other event. If a scrim is cancelled before it happens, the event disappears from your home page and your signup is hidden (admins still keep the record for attendance history)."
+    },
+    "reminders": {
+      "bot": "If your guild has the Discord bot set up, the bot posts reminders 1 day, 1 hour, and 20 minutes before each event in your guild's chosen channel.",
+      "ics": "Every event page has a Download .ics link for adding the event to your calendar.",
+      "slashCommands": "Discord slash commands: /upcoming lists your guild's upcoming events, and /signup lets you sign up without leaving Discord. You have to sign in to the website with Discord at least once first, so the bot can match your account."
+    },
+    "closed": "The form turns into a \"Signups are closed\" message. Reach out to a guild admin if you need to be added late — they can adjust signups manually."
   }
 }

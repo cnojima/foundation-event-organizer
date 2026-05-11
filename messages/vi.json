@@ -18,6 +18,8 @@
   "nav": {
     "manageEvents": "Quản lý sự kiện",
     "events": "Sự kiện",
+    "scrimHistory": "Lịch sử trận đấu tập",
+    "scrimmages": "Trận đấu tập",
     "players": "Người chơi",
     "members": "Thành viên",
     "invites": "Lời mời",
@@ -27,9 +29,7 @@
     "createGuild": "Tạo Bang hội",
     "adminHelp": "Trợ giúp quản trị viên",
     "help": "Giúp đỡ",
-    "myAccount": "Tài khoản của tôi",
-    "scrimHistory": "Lịch sử trận đấu tập",
-    "scrimmages": "Trận đấu tập"
+    "myAccount": "Tài khoản của tôi"
   },
   "topBar": {
     "notifications": "Thông báo",
@@ -376,5 +376,58 @@
   "localeSwitcher": {
     "label": "Ngôn ngữ",
     "ariaLabel": "Chuyển đổi ngôn ngữ"
+  },
+  "playerHelp": {
+    "title": "Chào mừng đến với Tổ chức Sự kiện của Quỹ",
+    "subtitle": "Đây là nơi bang hội của bạn đăng ký tham gia các sự kiện — các trận đấu Shadowfront, các trận tập luyện và bất cứ sự kiện nào khác mà ban lãnh đạo muốn đưa vào lịch.",
+    "sections": {
+      "gettingIn": "Vào cửa",
+      "eventKinds": "Ba loại sự kiện",
+      "signup": "Đăng ký tham gia trận đấu",
+      "status": "Trạng thái của bạn có nghĩa là gì?",
+      "scrims": "Các sự kiện giao hữu",
+      "reminders": "Lời nhắc và lịch",
+      "closed": "Nếu việc đăng ký đã đóng"
+    },
+    "gettingIn": {
+      "step1": "Đăng nhập bằng tài khoản Google hoặc Discord trên trang chủ.",
+      "step2": "Hãy tham gia bang hội của bạn. Hầu hết mọi người tham gia thông qua liên kết mời từ quản trị viên bang hội. Bạn cũng có thể xem các bang hội công khai tại đây.<discoveryLink> trang khám phá</discoveryLink> .",
+      "step3": "Khi bạn đã tham gia một bang hội, trang chủ sẽ hiển thị các sự kiện sắp tới của bang hội đó.",
+      "note": "Bạn chỉ có thể tham gia một bang hội tại một thời điểm. Để chuyển sang bang hội khác, trước tiên hãy rời khỏi bang hội hiện tại."
+    },
+    "eventKinds": {
+      "match": "Các sự kiện đấu tập (Shadowfront và các sự kiện tương tự) — hai đội, mỗi đội có thời gian bắt đầu riêng, các vị trí lãnh đạo và đội hình xuất phát cộng với các cầu thủ dự bị.",
+      "scrim": "Sự kiện đấu tập — thử thách 1 đấu 1 giữa bang hội của bạn và một bang hội khác. Mỗi đội chỉ có một đội, một thời điểm bắt đầu duy nhất, và sẽ có người thắng cuộc khi kết thúc. Xem phần Sự kiện đấu tập bên dưới.",
+      "simple": "Các sự kiện đơn giản — chỉ là các mục thông tin trên lịch (một cuộc họp, một thông báo, một buổi xem chung). Không có mẫu đăng ký; chỉ cần ngày tháng và chi tiết."
+    },
+    "signup": {
+      "intro": "Mở sự kiện từ trang chủ. Biểu mẫu đăng ký có ba mục:",
+      "step1": "Ưu tiên đội (lựa chọn đầu tiên). Hãy chọn đội mà bạn muốn chơi nhất. Nếu đội bạn chọn đầu tiên đã đầy, quản trị viên sẽ cố gắng xếp bạn vào đội còn lại.",
+      "step2": "Sẵn sàng làm người dự bị. Mặc định bật. Người dự bị sẽ vào sân khi người chính thức rời sân. Bỏ chọn tùy chọn này nếu bạn chỉ muốn chơi với một vị trí chính thức được đảm bảo.",
+      "step3": "Đăng ký vị trí lãnh đạo (tùy chọn). Người lãnh đạo sẽ điều phối đội trong suốt trận đấu. Quản trị viên sẽ chỉ định người lãnh đạo từ các yêu cầu; bạn có thể để lại một ghi chú ngắn về lý do bạn muốn đảm nhận vai trò này.",
+      "submit": "Nhấn nút Đăng ký. Bạn có thể quay lại và thay đổi bất kỳ câu trả lời nào cho đến khi thời gian đăng ký kết thúc."
+    },
+    "status": {
+      "intro": "Khi xem danh sách đội hình, bạn sẽ thấy một trong những biểu tượng này bên cạnh mỗi tên:",
+      "player": "Cầu thủ — trong đội hình xuất phát.",
+      "backup": "Dự bị — nằm trong danh sách dự bị; chỉ vào sân nếu cầu thủ chính thức bị loại.",
+      "leader": "Trưởng nhóm — được quản trị viên lựa chọn để lãnh đạo nhóm.",
+      "waitlist": "Danh sách chờ — tất cả các vị trí trong đội hình chính và dự bị đều đã đầy khi bạn đăng ký. Bạn sẽ được thăng cấp tự động nếu có người rời đội.",
+      "wantsLeader": "Người muốn đảm nhận vai trò Trưởng nhóm — một người chơi đã yêu cầu vai trò này; quản trị viên sẽ chọn người phù hợp từ danh sách này."
+    },
+    "scrims": {
+      "intro": "Trận đấu tập là trận đấu giữa bang hội của bạn với một bang hội khác. Trang sự kiện hoạt động tương tự như một trận đấu thông thường — đăng ký, chọn người hỗ trợ, tùy chọn yêu cầu vai trò lãnh đạo — nhưng có một vài điểm khác biệt đáng lưu ý:",
+      "oneSquad": "Chỉ có một đội duy nhất. Không có lựa chọn Đội 1 đấu với Đội 2 — bang hội của bạn sẽ sử dụng một đội hình duy nhất để đối đầu với đối thủ.",
+      "opponent": "Đối thủ được hiển thị ở đầu trang sự kiện, cùng với Điều kiện Thắng cuộc mà hai quản trị viên đã thống nhất. Hãy đọc kỹ trước trận đấu — đó là cách xác định người thắng cuộc.",
+      "result": "Biểu tượng kết quả. Sau khi trận đấu kết thúc và quản trị viên công bố kết quả, bạn sẽ thấy một biểu tượng màu trên trang sự kiện: Thắng, Thua, Hòa hoặc Không có kết quả (trong trường hợp bỏ cuộc hoặc mất kết nối).",
+      "history": "Lịch sử. Xem các trận đấu tập sắp tới và đã diễn ra của bang hội bạn tại đây.<scrimsLink> trang lịch sử trận đấu tập</scrimsLink> Tỷ lệ thắng/thua được tính từ góc nhìn của bang hội bạn.",
+      "note": "Chỉ quản trị viên của bang hội bạn mới có thể đề xuất, chấp nhận hoặc hủy bỏ một trận đấu tập — bạn chỉ cần đăng ký như bất kỳ sự kiện nào khác. Nếu một trận đấu tập bị hủy trước khi diễn ra, sự kiện sẽ biến mất khỏi trang chủ của bạn và thông tin đăng ký của bạn sẽ bị ẩn (quản trị viên vẫn giữ lại hồ sơ để ghi lại lịch sử tham dự)."
+    },
+    "reminders": {
+      "bot": "Nếu bang hội của bạn đã thiết lập bot Discord, bot sẽ đăng lời nhắc 1 ngày, 1 giờ và 20 phút trước mỗi sự kiện trong kênh mà bang hội đã chọn.",
+      "ics": "Mỗi trang sự kiện đều có liên kết \"Tải xuống tệp .ics\" để thêm sự kiện vào lịch của bạn.",
+      "slashCommands": "Các lệnh slash trên Discord: /upcoming liệt kê các sự kiện sắp tới của bang hội bạn, và /signup cho phép bạn đăng ký mà không cần rời khỏi Discord. Bạn phải đăng nhập vào trang web bằng Discord ít nhất một lần trước, để bot có thể xác nhận tài khoản của bạn."
+    },
+    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
   }
 }

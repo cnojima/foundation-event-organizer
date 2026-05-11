@@ -134,8 +134,14 @@ async function translateLocale({ locale, en, apiKey, force }) {
   for (const [key, value] of Object.entries(flatEn)) {
     const prevSource = prevEnSnapshot[key];
     const existingValue = flatExisting[key];
-    if (!force && existingValue && prevSource === value) {
-      // Source unchanged since last run → keep existing translation.
+    // Re-translate if the source changed OR the existing translation has
+    // structurally broken tags (Google occasionally drops closing tags when
+    // restructuring sentences for non-English grammar).
+    const stale =
+      !existingValue ||
+      prevSource !== value ||
+      !hasMatchingTags(value, existingValue);
+    if (!force && !stale) {
       result[key] = existingValue;
     } else {
       toTranslate.push({ key, value });
@@ -154,6 +160,7 @@ async function translateLocale({ locale, en, apiKey, force }) {
   console.log(`  translating ${toTranslate.length} keys…`);
   const targetLang = GOOGLE_CODE_OVERRIDES[locale] ?? locale;
 
+  let droppedForBrokenTags = 0;
   for (let i = 0; i < toTranslate.length; i += MAX_BATCH_SIZE) {
     const batch = toTranslate.slice(i, i + MAX_BATCH_SIZE);
     const wrapped = batch.map((b) => protectPlaceholders(b.value));
@@ -163,8 +170,24 @@ async function translateLocale({ locale, en, apiKey, force }) {
       target: targetLang,
     });
     for (let j = 0; j < batch.length; j++) {
-      result[batch[j].key] = unprotectPlaceholders(translated[j]);
+      const out = unprotectPlaceholders(translated[j]);
+      // Validate the result has the same tag set as the source — Google
+      // sometimes drops closing tags when restructuring for the target
+      // language. Don't persist broken values: omit the key so the
+      // deep-merge fallback in src/i18n/request.ts uses the English
+      // source instead.
+      if (!hasMatchingTags(batch[j].value, out)) {
+        droppedForBrokenTags++;
+        console.warn(`  ! ${batch[j].key}: tag mismatch — falling back to English`);
+        continue;
+      }
+      result[batch[j].key] = out;
     }
+  }
+  if (droppedForBrokenTags > 0) {
+    console.warn(
+      `  dropped ${droppedForBrokenTags} translation(s) with broken tags (fallback to English)`
+    );
   }
 
   const merged = unflatten(result);
@@ -231,6 +254,32 @@ function unprotectPlaceholders(text) {
     out = out.replace(/<span translate="no">([\s\S]*?)<\/span>/g, "$1");
   }
   return out;
+}
+
+// Counts each tag name (opening vs closing tracked separately) so we can
+// detect when Google's translation dropped a tag.
+function countTags(text) {
+  const counts = {};
+  const re = /<\/?([a-zA-Z][a-zA-Z0-9]*)>/g;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const isClosing = m[0].startsWith("</");
+    const key = (isClosing ? "/" : "") + m[1];
+    counts[key] = (counts[key] || 0) + 1;
+  }
+  return counts;
+}
+
+// Returns true when the translated string has exactly the same set of
+// rich-text tags as the source. Tag *order* may differ (right-to-left
+// languages legitimately reorder), but every opening/closing tag in the
+// source must appear in the translation the same number of times.
+function hasMatchingTags(source, translation) {
+  const a = countTags(source);
+  const b = countTags(translation);
+  for (const k of Object.keys(a)) if (a[k] !== (b[k] || 0)) return false;
+  for (const k of Object.keys(b)) if (a[k] === undefined) return false;
+  return true;
 }
 
 function decodeHtmlEntities(s) {

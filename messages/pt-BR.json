@@ -18,6 +18,8 @@
   "nav": {
     "manageEvents": "Gerenciar eventos",
     "events": "Eventos",
+    "scrimHistory": "Histórico de treinos",
+    "scrimmages": "Treinos",
     "players": "Jogadores",
     "members": "Membros",
     "invites": "Convites",
@@ -27,9 +29,7 @@
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta",
-    "scrimHistory": "Histórico de treinos",
-    "scrimmages": "Treinos"
+    "myAccount": "Minha conta"
   },
   "topBar": {
     "notifications": "Notificações",
@@ -376,5 +376,58 @@
   "localeSwitcher": {
     "label": "Linguagem",
     "ariaLabel": "Alterar idioma"
+  },
+  "playerHelp": {
+    "title": "Bem-vindo(a) à Fundação Organizadora de Eventos",
+    "subtitle": "É aqui que sua guilda se inscreve para eventos — partidas de Shadowfront, treinos e qualquer outra coisa que a liderança queira incluir no calendário.",
+    "sections": {
+      "gettingIn": "Entrando",
+      "eventKinds": "Três tipos de eventos",
+      "signup": "Inscrição para uma partida",
+      "status": "O que significa o seu status",
+      "scrims": "Eventos de treino",
+      "reminders": "Lembretes e calendário",
+      "closed": "Se as inscrições estiverem encerradas"
+    },
+    "gettingIn": {
+      "step1": "Faça login com o Google ou o Discord na página inicial.",
+      "step2": "Junte-se à sua guilda. A maioria das pessoas entra por meio de um link de convite enviado por um administrador da guilda. Você também pode navegar pelas guildas públicas em [inserir URL aqui].<discoveryLink> página de descoberta</discoveryLink> .",
+      "step3": "Depois de entrar em uma guilda, a página inicial mostra os próximos eventos dessa guilda.",
+      "note": "Você só pode pertencer a uma guilda por vez. Para mudar de guilda, primeiro saia da atual."
+    },
+    "eventKinds": {
+      "match": "Eventos de partidas (Shadowfront e similares) — dois esquadrões, cada um com seu próprio horário de início, vagas de liderança e uma lista de titulares mais reservas.",
+      "scrim": "Eventos de Treino — um desafio 1 contra 1 entre sua guilda e outra guilda. Um único esquadrão, um único horário de início e um vencedor declarado ao final. Veja a seção de Eventos de Treino abaixo.",
+      "simple": "Eventos simples — entradas informativas no calendário (uma reunião, um anúncio, uma sessão de cinema online). Sem formulário de inscrição; apenas uma data e detalhes."
+    },
+    "signup": {
+      "intro": "Acesse o evento na página inicial. O formulário de inscrição contém três itens:",
+      "step1": "Preferência de equipe (primeira opção). Escolha a equipe na qual você mais deseja jogar. Se sua primeira opção estiver completa, os administradores tentarão colocá-lo na outra.",
+      "step2": "Disponível para ser reserva. Ativado por padrão. Os reservas entram na equipe quando um titular sai. Desmarque esta opção se você só quiser jogar com uma vaga garantida como titular.",
+      "step3": "Solicite uma posição de liderança (opcional). Os líderes coordenam a equipe durante a partida. Os administradores atribuem os líderes com base nas solicitações; você pode deixar uma breve nota explicando por que gostaria de ocupar a função.",
+      "submit": "Clique em Inscrever-se. Você poderá voltar e alterar qualquer uma dessas respostas até o encerramento das inscrições."
+    },
+    "status": {
+      "intro": "Ao consultar a lista de jogadores, você verá uma dessas opções ao lado de cada nome:",
+      "player": "Jogador — na equipe titular.",
+      "backup": "Reserva — integra a lista de reservas; joga apenas se um titular sair de campo.",
+      "leader": "Líder — escolhido por um administrador para liderar a equipe.",
+      "waitlist": "Lista de espera — todas as vagas na equipe principal e na reserva estavam preenchidas quando você se inscreveu. Você é promovido automaticamente se alguém desistir.",
+      "wantsLeader": "Líder Desejado — um jogador que solicitou a função; um administrador escolherá entre esses."
+    },
+    "scrims": {
+      "intro": "Um scrim é a sua guilda contra outra guilda. A página do evento funciona da mesma forma que uma partida — inscreva-se, escolha sua disponibilidade para apoio e, opcionalmente, solicite a liderança — mas com algumas diferenças importantes:",
+      "oneSquad": "Apenas um esquadrão. Não há escolha entre Esquadrão 1 e Esquadrão 2 — sua guilda coloca em campo uma única formação contra o oponente.",
+      "opponent": "O oponente é exibido no topo da página do evento, juntamente com as Condições de Vitória acordadas entre os dois administradores. Leia-as antes da partida — é assim que o vencedor será determinado.",
+      "result": "Ficha de resultado. Assim que a partida terminar e um administrador anunciar o resultado, você verá uma ficha colorida na página do evento: Vitória, Derrota, Empate ou Sem resultado (para desistências ou desconexões).",
+      "history": "Histórico. Veja os próximos e passados scrims da sua guilda no<scrimsLink> Página de histórico de scrims</scrimsLink> A taxa de vitórias/derrotas é calculada da perspectiva da sua guilda.",
+      "note": "Somente o administrador da sua guilda pode propor, aceitar ou cancelar um scrim — você se inscreve como em qualquer outro evento. Se um scrim for cancelado antes de acontecer, o evento desaparece da sua página inicial e sua inscrição fica oculta (os administradores ainda mantêm o registro para o histórico de presença)."
+    },
+    "reminders": {
+      "bot": "Se a sua guilda tiver o bot do Discord configurado, o bot publicará lembretes 1 dia, 1 hora e 20 minutos antes de cada evento no canal escolhido pela sua guilda.",
+      "ics": "Cada página de evento possui um link para baixar o arquivo .ics e adicioná-lo ao seu calendário.",
+      "slashCommands": "Comandos de barra do Discord: /upcoming lista os próximos eventos da sua guilda e /signup permite que você se inscreva sem sair do Discord. Você precisa fazer login no site com o Discord pelo menos uma vez para que o bot possa associar sua conta."
+    },
+    "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
   }
 }

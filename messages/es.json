@@ -18,6 +18,8 @@
   "nav": {
     "manageEvents": "Gestionar eventos",
     "events": "Eventos",
+    "scrimHistory": "Historia del scrim",
+    "scrimmages": "Partidos de práctica",
     "players": "Jugadores",
     "members": "Miembros",
     "invites": "Invitaciones",
@@ -27,9 +29,7 @@
     "createGuild": "Crear gremio",
     "adminHelp": "Ayuda administrativa",
     "help": "Ayuda",
-    "myAccount": "Mi cuenta",
-    "scrimHistory": "Historia del scrim",
-    "scrimmages": "Partidos de práctica"
+    "myAccount": "Mi cuenta"
   },
   "topBar": {
     "notifications": "Notificaciones",
@@ -376,5 +376,58 @@
   "localeSwitcher": {
     "label": "Idioma",
     "ariaLabel": "Cambiar idioma"
+  },
+  "playerHelp": {
+    "title": "Bienvenido al organizador de eventos de la Fundación",
+    "subtitle": "Aquí es donde tu gremio se inscribe en los eventos: partidas de Shadowfront, entrenamientos y cualquier otra cosa que la directiva quiera incluir en el calendario.",
+    "sections": {
+      "gettingIn": "Cómo entrar",
+      "eventKinds": "Tres tipos de eventos",
+      "signup": "Inscribirse para un partido",
+      "status": "Qué significa tu estado",
+      "scrims": "Eventos de entrenamiento",
+      "reminders": "Recordatorios y calendario",
+      "closed": "Si las inscripciones están cerradas"
+    },
+    "gettingIn": {
+      "step1": "Inicia sesión con Google o Discord en la página principal.",
+      "step2": "Únete a tu gremio. La mayoría de las personas entran a través de un enlace de invitación de un administrador del gremio. También puedes explorar los gremios públicos en el<discoveryLink> página de descubrimiento</discoveryLink> .",
+      "step3": "Una vez que te unes a un gremio, la página principal muestra los próximos eventos de ese gremio.",
+      "note": "Solo puedes pertenecer a un gremio a la vez. Para cambiar de gremio, primero debes abandonar el actual."
+    },
+    "eventKinds": {
+      "match": "Eventos de combate (Shadowfront y similares): dos escuadrones, cada uno con su propia hora de inicio, puestos de liderazgo y una plantilla titular más suplentes.",
+      "scrim": "Eventos de entrenamiento: un desafío 1 contra 1 entre tu gremio y otro. Un solo escuadrón, un único horario de inicio y un ganador declarado al finalizar. Consulta la sección de eventos de entrenamiento a continuación.",
+      "simple": "Eventos sencillos: entradas informativas en el calendario (una reunión, un anuncio, una sesión para ver un evento en grupo). No hay formulario de inscripción; solo la fecha y los detalles."
+    },
+    "signup": {
+      "intro": "Abre el evento desde la página principal. El formulario de registro tiene tres cosas:",
+      "step1": "Preferencia de equipo (primera opción). Elige el equipo en el que más quieras jugar. Si tu primera opción está completa, los administradores intentarán ubicarte en el otro.",
+      "step2": "Dispuesto a ser suplente. Activado por defecto. Los suplentes entran cuando un titular cae. Desmarca esta opción si solo quieres jugar con un puesto inicial garantizado.",
+      "step3": "Solicita un puesto de liderazgo (opcional). Los líderes coordinan al equipo durante el partido. Los administradores asignan los líderes según las solicitudes; puedes dejar una breve nota explicando por qué te gustaría el puesto.",
+      "submit": "Haz clic en Registrarse. Puedes volver y cambiar cualquiera de estas respuestas hasta que finalice el plazo de inscripción."
+    },
+    "status": {
+      "intro": "Cuando mires las listas de jugadores, verás uno de estos junto a cada nombre:",
+      "player": "Jugador — en la lista de titulares.",
+      "backup": "Suplente: forma parte de la lista de suplentes; juega solo si un titular cae lesionado.",
+      "leader": "Líder: elegido por un administrador para dirigir el equipo.",
+      "waitlist": "Lista de espera: todos los puestos del equipo y de reserva estaban completos cuando te registraste. Si alguien se da de baja, se te ascenderá automáticamente.",
+      "wantsLeader": "Busca Líder: un jugador que solicitó el rol; un administrador elegirá entre ellos."
+    },
+    "scrims": {
+      "intro": "Un scrim es un partido entre tu gremio y otro. La página del evento funciona igual que una partida: regístrate, elige a tus suplentes y, opcionalmente, solicita el liderazgo, pero con algunas diferencias que vale la pena conocer:",
+      "oneSquad": "Un solo equipo. No hay opción de elegir entre el Equipo 1 y el Equipo 2: tu gremio presenta una única alineación contra el oponente.",
+      "opponent": "El oponente aparece en la parte superior de la página del evento, junto con la condición de victoria acordada por los administradores. Léela antes del partido: así se determina el ganador.",
+      "result": "Ficha de resultado. Una vez finalizado el partido y declarado el resultado por un administrador, verás una ficha de color en la página del evento: Ganado, Perdido, Empate o Sin resultado (en caso de abandono o desconexión).",
+      "history": "Historial. Consulta los entrenamientos pasados y próximos de tu gremio en el<scrimsLink> página de historia de scrim</scrimsLink> . La relación victorias/derrotas se cuenta desde la perspectiva de tu gremio.",
+      "note": "Solo el administrador de tu clan puede proponer, aceptar o cancelar una partida de entrenamiento; tú solo tienes que inscribirte como en cualquier otro evento. Si una partida se cancela antes de que se celebre, el evento desaparece de tu página principal y tu inscripción se oculta (los administradores conservan el registro del historial de asistencia)."
+    },
+    "reminders": {
+      "bot": "Si tu gremio tiene configurado el bot de Discord, este publicará recordatorios 1 día, 1 hora y 20 minutos antes de cada evento en el canal elegido por tu gremio.",
+      "ics": "Cada página de evento tiene un enlace para descargar el archivo .ics y así poder añadir el evento a tu calendario.",
+      "slashCommands": "Comandos de barra de Discord: /upcoming muestra los próximos eventos de tu gremio, y /signup te permite registrarte sin salir de Discord. Debes iniciar sesión en el sitio web con Discord al menos una vez para que el bot pueda vincular tu cuenta."
+    },
+    "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente."
   }
 }
