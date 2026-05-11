@@ -429,5 +429,118 @@
       "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
     },
     "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
+  },
+  "adminHelp": {
+    "title": "Przewodnik administratora",
+    "subtitle": "Wszystko, czego administrator gildii potrzebuje do prowadzenia wydarzeń: tworzenia meczów, zarządzania graczami, podłączania Discorda i dbania o samą gildię. Wersja dla graczy znajduje się pod adresem<helpLink> /pomoc</helpLink> .",
+    "sections": {
+      "createMatch": "Utwórz wydarzenie meczowe",
+      "editEvent": "Edytuj szczegóły wydarzenia",
+      "managePlayers": "Zarządzaj graczami",
+      "waitlist": "Lista oczekujących",
+      "scrims": "Przeprowadź trening próbny",
+      "inviteBot": "Zaproś bota Discord",
+      "discordChannel": "Skonfiguruj kanał Discord",
+      "slashCommands": "Polecenia ukośnika Discord",
+      "manageGuild": "Zarządzaj swoją gildią",
+      "playersPage": "Strona graczy",
+      "troubleshooting": "Rzeczy, na które możesz się natknąć"
+    },
+    "createMatch": {
+      "step1": "Przejdź do sekcji Zarządzaj wydarzeniami na pasku bocznym i kliknij + Nowe wydarzenie.",
+      "step2": "Wybierz opcję „Dopasuj” jako typ wydarzenia. Wydarzenia „Dopasuj” składają się z dwóch drużyn z własnymi godzinami rozpoczęcia, miejscami liderów i zapasowym składem. (Wybierz opcję „Prosty” w przypadku wpisów zawierających tylko informacje, takich jak spotkania czy wspólne oglądanie – bez rejestracji, tylko wpis w kalendarzu).",
+      "step3": "Wpisz nazwę, opcjonalny opis i wpisz okno rejestracji (Rejestracja otwarta / Rejestracja zamknięta). Okno jest wspólne dla obu drużyn.",
+      "step4": "Ustaw pole „Oddział 1 startuje o” i „Oddział 2 startuje o”. Jedno lub oba pola można pozostawić puste — gracze widzą pole „TBD”, dopóki ich nie uzupełnisz. Przypomnienia dla każdego oddziału uruchamiają się niezależnie od jego godziny startu.",
+      "step5": "Wszystkie pola daty i godziny są wprowadzane w lokalnym czasie przeglądarki. Formularz wyświetla odpowiednik UTC pod każdym polem, aby uniknąć niejasności. Czasy są zapisywane w formacie UTC i wyświetlane w lokalnej strefie użytkownika.",
+      "step6": "Opcjonalnie: dostosuj nazwy drużyn, maksymalną liczbę graczy, maksymalną liczbę rezerwowych i liczbę miejsc przywódczych. Domyślnie 20/10/3 na drużynę (łącznie 60 miejsc).",
+      "step7": "Kliknij „Utwórz wydarzenie”. Zostaniesz przekierowany na stronę administratora wydarzenia."
+    },
+    "editEvent": {
+      "dates": "Daty: na stronie administratora wydarzenia kliknij Edytuj daty. Możesz zmienić okno rejestracji i godziny rozpoczęcia obu drużyn.",
+      "reschedule": "Zmiana harmonogramu ponownie uruchamia przypomnienia: zmiana godziny rozpoczęcia usuwa wpis „już wysłane” dla danej drużyny, więc bot Discorda będzie wysyłał nowe przypomnienia 24-godzinne, 1-godzinne i 20-minutowe na nowy czas. Zmiana o kilka minut również je usuwa, więc unikaj przesuwania, chyba że chcesz ponownie wysłać powiadomienie.",
+      "softDelete": "Miękkie usuwanie: przycisk Usuń wydarzenie ukrywa wydarzenie przed graczami, ale zachowuje dane dotyczące rejestracji w raportach dotyczących frekwencji. Usunięte wydarzenia są wyświetlane w osobnej sekcji „Usunięte” w Zarządzaniu wydarzeniami."
+    },
+    "managePlayers": {
+      "intro": "Strona administratora wydarzenia zawiera dwie kolumny drużyn i listę oczekujących poniżej. W każdej kolumnie drużyny każda rejestracja to wiersz z następującymi opcjami:",
+      "moveSquad": "Przycisk „Przenieś do drużyny N”: przenosi gracza do innej drużyny jednym kliknięciem. Aktualizuje przypisany skład; jeśli nowy skład różni się od jego pierwotnego wyboru, obok jego imienia pojawia się mała odznaka „PRZENIESIONY”, dzięki czemu pamiętasz, że nadpisałeś jego preferencję.",
+      "moveBackup": "Przycisk „Przenieś do listy rezerwowej/rezerwowej”: przełącza gracza między listą główną (zawodnik) a listą rezerwową (rezerwową). Działa w dowolnej kolumnie, w tym na liście oczekujących — przydatne do awansowania osoby z listy oczekujących bezpośrednio do listy rezerwowej.",
+      "roleDropdown": "Lista rozwijana ról (Nieprzypisane/Gracz/Rezerwowy/Lider/Lista oczekujących): bardziej szczegółowe zmiany ról. Użyj jej, aby awansować gracza proszącego o przywództwo na lidera lub przenieść kogoś na listę oczekujących.",
+      "attendedRating": "Pole wyboru „Uczestniczyłem” + ocena 1-5 gwiazdek: księgowość po wydarzeniu. Oba zapisują się automatycznie po przełączeniu. Używane do przyszłych decyzji dotyczących składu osobowego.",
+      "effectiveSquadNote": "Kolumny drużyn są grupowane według efektywnego składu: wygrywa przydział administracyjny, w przeciwnym razie preferowany jest pierwszy wybór. Zatem gracz, którego przenosisz, „Przenieś do drużyny 2” natychmiast pojawia się w kolumnie „Drużyna 2” po następnym renderowaniu.",
+      "leaderPillNote": "Żółta pigułka „Lider” obok imienia oznacza, że gracz poprosił o rolę lidera podczas rejestracji. Wybierz lidera spośród tych próśb, zmieniając jego rolę na „Lider”."
+    },
+    "waitlist": {
+      "intro": "Gdy wszystkie miejsca w drużynie i rezerwowych zostaną zajęte, nowi uczestnicy trafiają na listę oczekujących (przypisana rola = lista oczekujących). Sekcja listy oczekujących na dole strony administracyjnej wydarzenia wyświetla ich w kolejności zgłoszeń.",
+      "promote": "Aby awansować kogoś z listy oczekujących, zmień jego rolę z „Lista oczekujących” na „Gracz” lub „Rezerwowy” za pomocą listy rozwijanej — lub użyj opcji „Przenieś do rezerwowego” w standardowym przypadku. Pozycja w drużynie zależy od jego preferencji, chyba że wyraźnie go przeniesiesz."
+    },
+    "scrims": {
+      "intro": "Scrim to pojedynek gildii 1 na 1, negocjowany między dwoma administratorami gildii, z jedną drużyną po każdej stronie. Po zaakceptowaniu, obie gildie otrzymują dublowane wydarzenie, do którego mogą zapisać się ich członkowie. Po meczu jeden z administratorów ogłasza wynik.",
+      "serverNote": "Numer serwera jest wymagany. Obie gildie muszą mieć ustawiony ten sam numer serwera w Ustawieniach gildii — w przeciwnym razie nie pojawią się na rozwijanej liście przeciwników. Ustaw swój w<settingsLink> Ustawienia gildii</settingsLink> Pierwszy.",
+      "proposeHeading": "Zaproponuj scrim",
+      "proposeStep1": "Idź do<scrimmagesLink> tablica treningowa</scrimmagesLink> i kliknij + Zaproponuj scrim.",
+      "proposeStep2": "Wybierz przeciwnika (filtrowanego według tego samego numeru serwera), czas gry i lokalizację — jedną z kanonicznych map (Kruger, Cerno, Kanvo, Sphinx) lub dowolną lokalizację z dowolnym tekstem.",
+      "proposeStep3": "Wypełnij warunek zwycięstwa (wymagany). Jasno określ zasady – obie strony je widzą i są one powiązane z ogłoszonym wynikiem. Przykład: „Pierwsza drużyna, która zdobędzie 3 punkty” lub „Utrzymaj centralną fortecę przez 5 minut”.",
+      "proposeStep4": "Opcjonalna wiadomość dotycząca zasad panujących w domu, formatowania notatek itp. Kliknij Wyślij propozycję.",
+      "acceptDeclineHeading": "Akceptuj lub odrzucaj przychodzące propozycje",
+      "acceptDeclineIntro": "Oczekujące propozycje od innych gildii pojawiają się w sekcji „Propozycje przychodzące” w panelu scrim.",
+      "accept": "„Accept” tworzy dwa lustrzane wydarzenia (po jednym na gildię) w jednej transakcji. Wydarzenie każdej ze stron nosi nazwę „Scrim vs.<opponent> „, jako początek gry przyjmuje proponowany czas rozgrywki i akceptuje zapisy członków jak w przypadku normalnego meczu — z tą różnicą, że jest tylko jedna drużyna.",
+      "decline": "Odrzucenie zmienia status propozycji na odrzuconą bez tworzenia żadnych zdarzeń.",
+      "withdraw": "Wycofaj (tylko wysyłanie) powoduje anulowanie własnej oczekującej oferty przed udzieleniem odpowiedzi przez drugą stronę.",
+      "rosterHeading": "Utwórz listę uczestników wydarzenia treningowego",
+      "rosterBody": "Zdublowane wydarzenie znajduje się w Zarządzaj wydarzeniami z czerwoną plakietką SCRIM. Otwórz je, aby zobaczyć swój skład – pojedyncza drużyna, te same ustawienia administratora co w meczu (przeniesienie do rezerwy, rozwijana lista ról, obecność, ocena). Kolumny „Drużyna-2” i drugi czas rozpoczęcia są ukryte, ponieważ nie mają zastosowania.",
+      "cancelHeading": "Anuluj zaakceptowany scrim",
+      "cancelBody": "Każdy administrator gildii może anulować z poziomu pulpitu, gdy gildia znajduje się w Nadchodzących Scrimach i przed ogłoszeniem wyników. Anulowanie powoduje usunięcie obu zduplikowanych wydarzeń (zapisy są przechowywane w historii obecności) i zmienia status propozycji na anulowaną.",
+      "resultHeading": "Ogłoś wynik",
+      "resultIntro": "Otwórz wydarzenie scrim w sekcji Zarządzaj wydarzeniami. Formularz wyników zawiera cztery przyciski:",
+      "resultWonLost": "Wygraliśmy / Przegraliśmy — wynik Twojej gildii. Serwer przechowuje wynik bezwzględny (niezależny od perspektywy), więc przeciwna gildia automatycznie widzi odwrotny wynik W/L.",
+      "resultDrawNc": "Remis / Nierozstrzygnięcie — symetryczne wyniki. Nierozstrzygnięcie obejmuje walkowery, przerwania gry lub każdą sytuację, w której mecz nie został dokończony.",
+      "resultBody": "Opcjonalne notatki są widoczne dla członków obu gildii. Po zadeklarowaniu, wynik pojawia się jako znacznik na stronie wydarzenia, w panelu scrim oraz w historii scrimów graczy. Każdy z administratorów może zadeklarować zwycięstwo — pierwszy, który zgłosi zwycięstwo (brak interfejsu nadpisywania).",
+      "discordNotificationsHeading": "Powiadomienia Discord",
+      "discordNotificationsBody": "Jeśli gildia ma skonfigurowany kanał Discord (patrz poniżej), bot wysyła wiadomość w języku angielskim na kanały obu gildii w momencie zaproponowania/zaakceptowania/odrzucenia propozycji. Wiadomość zawiera nazwę przeciwnika, czas gry (wyświetlany w lokalnej strefie czasowej każdego widza), lokalizację i warunek wygranej.",
+      "discordNotificationsFallback": "Jeśli inna gildia ma skonfigurowany kanał, ale bot nie może się z nim połączyć (bot został wyrzucony, kanał został usunięty, identyfikator jest błędny), po zakończeniu akcji zobaczysz alert w przeglądarce z listą nazw gildii, których dotyczy problem. Gildie bez skonfigurowanego kanału pozostają nieaktywne — to celowe wyłączenie.",
+      "playerVisibilityHeading": "Widoczność gracza",
+      "playerVisibilityBody": "Gracze widzą wydarzenia treningowe na stronie głównej z czerwoną odznaką SCRIM, mogą się zapisywać jak na każdy mecz (wybrać tylko jedną drużynę) i mogą przeglądać wszystkie zaakceptowane treningi (nadchodzące i przeszłe wyniki) na stronie<scrimsLink> strona historii scrimów</scrimsLink> Odrzucone, wycofane i anulowane propozycje są niewidoczne dla graczy — widzą oni tylko mecze treningowe, które faktycznie się odbyły lub są zaplanowane."
+    },
+    "inviteBot": {
+      "intro": "Przypomnienia i polecenia ukośnika opierają się na bocie Discord, którego operator już wdrożył. Aby połączyć go z serwerem Discord:",
+      "step1Intro": "Uzyskaj adres URL instalacji od operatora witryny. Wygląda on następująco:",
+      "step1Note": "Część „permissions=133120” obejmuje „Wyślij wiadomości” i „Wspomnij wszystkich”. Oba są wymagane — bez opcji „Wspomnij wszystkich” tag @everyone w przypomnieniach jest wyświetlany jako zwykły tekst i nie pinguje nikogo.",
+      "step2": "Otwórz adres URL instalacji w przeglądarce. Wybierz serwer Discord, na którym chcesz umieścić bota. Potrzebujesz uprawnienia „Zarządzaj serwerem” na tym serwerze. Kliknij „Autoryzuj”.",
+      "step3": "Potwierdź, że bot pojawia się na liście członków Twojego serwera Discord. To wszystko — brak konieczności konfigurowania botów po stronie Discord."
+    },
+    "discordChannel": {
+      "intro": "Bot publikuje przypomnienia w jednym wybranym przez Ciebie kanale. Aby go skonfigurować:",
+      "step1": "Włącz tryb programisty w Discordzie: Ustawienia użytkownika → Zaawansowane → Tryb programisty. Jednorazowo na urządzenie. Odblokuje to opcję „Kopiuj identyfikator kanału” dostępną po kliknięciu prawym przyciskiem myszy.",
+      "step2": "Kliknij prawym przyciskiem myszy kanał, dla którego chcesz ustawić przypomnienia → Kopiuj identyfikator kanału. Otrzymasz długi numer, np. 123456789012345678. Upewnij się, że jest to kanał tekstowy i że rola bota obejmuje uprawnienia „Wyświetlanie kanału” i „Wysyłanie wiadomości”.",
+      "step3": "Na stronie internetowej przejdź do<settingsLink> Ustawienia gildii</settingsLink> i wklej identyfikator kanału do identyfikatora kanału Discord.",
+      "step4": "Kliknij „Testuj integrację”. Jeśli wszystko jest w porządku, zobaczysz potwierdzenie w interfejsie użytkownika i jednorazową wiadomość testową na kanale. Krok testowy automatycznie łączy również Twój serwer Discord z gildią aplikacji, więc polecenia ukośnikowe (/upcoming, /signup) działają.",
+      "step5": "Kliknij Zapisz, aby zapisać identyfikator kanału.",
+      "commonErrors": "Najczęstsze błędy po teście: „Bot nie ma dostępu do tego kanału” (ponownie zaproś bota za pomocą podanego powyżej adresu URL instalacji); „Bot nie ma uprawnienia do wysyłania wiadomości” (nadpisywanie uprawnień na poziomie kanału — poprawka w Discordzie); „Ten identyfikator kanału nie istnieje” (skopiowano identyfikator serwera, a nie identyfikator kanału)."
+    },
+    "slashCommands": {
+      "intro": "Gdy bot znajdzie się na serwerze i połączysz kanał poprzez integrację testową, Twoi członkowie będą mogli korzystać z:",
+      "upcoming": "/upcoming — wyświetla listę nadchodzących wydarzeń gildii wraz z godzinami rozpoczęcia obu drużyn. Odpowiedzi są ulotne (widoczne tylko dla użytkownika).",
+      "signup": "/wydarzenie rejestracyjne:<event> Squad:<1|2> — zapisuje użytkownika na wydarzenie. Pole wydarzenia ma funkcję autouzupełniania. Użytkownik musi zalogować się na stronie za pomocą Discorda przynajmniej raz, aby bot mógł dopasować jego identyfikator Discord do konta gildii — jeśli tego nie zrobi, bot wyświetli monit.",
+      "propagation": "Nowe polecenia globalnego ukośnika rozchodzą się po około godzinie od pierwszego uruchomienia bota. Później są natychmiastowe.",
+      "failHeading": "Jeśli autouzupełnianie /signup pokazuje „Nie udało się załadować opcji”",
+      "failIntro": "Zwykle oznacza to, że Discord zbuforował nieaktualną wersję schematu poleceń lub bot został dodany z brakującym zakresem. Spróbuj w kolejności:",
+      "failStep1": "Zweryfikuj zakresy i ponownie zaproś. Adres URL instalacji musi zawierać zarówno zakresy bota, jak i applications.commands. Jeśli bot został dodany za pośrednictwem starszego adresu URL, w którym brakowało zakresu applications.commands, zdarzenia autouzupełniania nie dotrą do niego. Ponownie zaproś, używając bieżącego adresu URL instalacji (Ustawienia gildii → Discord → Zaproś bota Discord Organizatora Wydarzenia).",
+      "failStep2Intro": "Wymuś wyczyszczenie buforowanych poleceń (tylko operator). Jeśli ponowne zaproszenie nie rozwiąże problemu, operator Twojej witryny może wyczyścić buforowaną listę poleceń Discorda, aby bot zarejestrował się ponownie przy następnym uruchomieniu:",
+      "failStep2Note": "Następnie uruchom ponownie bota (np. restart maszyny Fly Machine) — obsługa clientReady ponownie zarejestruje polecenia ze SLASH_COMMANDS przy następnym uruchomieniu."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Członkowie</membersLink> — lista wszystkich członków gildii. W każdym wierszu: Awansuj członka na administratora, Zdegraduj administratora na członka lub Wyrzuć członka. Ostatni administrator nie może zdegradować ani wyrzucić samego siebie — awansuj najpierw kogoś innego.",
+      "invites": "<invitesLink>Zaproszenia</invitesLink> — generuj linki z zaproszeniami. Każde zaproszenie może mieć opcjonalny termin ważności i limit maksymalnego wykorzystania (puste = nieograniczone). Kliknij adres URL, aby go skopiować. Użyj opcji „Unieważnij”, aby unieważnić zaproszenie. Każdy, kto kliknie prawidłowy link z zaproszeniem, automatycznie dołącza do gildii jako członek.",
+      "settings": "<settingsLink>Ustawienia gildii</settingsLink> — nazwa gildii, opis, przełącznik publicznego odkrywania, identyfikator kanału Discord. Nazwa gildii jest stała; wszystko inne można edytować. Wyłączenie opcji „Wyświetlany w publicznym odkrywaniu” oznacza, że nowi członkowie mogą dołączyć tylko za pośrednictwem linku z zaproszeniem.",
+      "leave": "Pozostaw gildię na dole Ustawień. Twoje wcześniejsze zapisy zostaną trwale usunięte (zachowane do raportów o obecności). Jeśli jesteś jedynym administratorem, musisz najpierw awansować kogoś innego."
+    },
+    "playersPage": {
+      "body": "<playersLink>Gracze</playersLink> Pokazuje każdemu członkowi gildii pełną historię zapisów: na które wydarzenia się zapisali, preferencje dotyczące drużyny, frekwencję, oceny i notatki dotyczące przywództwa. Przydatne przy wybieraniu liderów, tworzeniu list kandydatów lub reagowaniu na nieobecności."
+    },
+    "troubleshooting": {
+      "reminders": "Przypomnienia nie są uruchamiane. Sprawdź /api/health — jeśli bot.lastPollStartedAt jest opóźniony o ponad 5 minut w stosunku do aktualnego czasu, sonda jest zablokowana. Superadministratorzy mogą również wysłać żądanie POST do /api/admin/bot/poll-now, aby wymusić cykl sondowania.",
+      "rescheduled": "Wydarzenie zostało przełożone, a uczestnicy nie otrzymują ponownego powiadomienia. Sprawdź, czy godzina faktycznie uległa zmianie (porównaj z poprzednią wartością). Bot ponownie uruchamia tylko te typy, których okno czasowe jest nadal przed nowym czasem — jeśli nowy czas przypada za 30 minut, uruchomi się tylko przypomnienie 20-minutowe, a nie 24-godzinne.",
+      "movedSquad": "Gracz został przydzielony do niewłaściwego oddziału po tym, jak go przeniosłem. Odznaka PRZENIESIONY oznacza, że przydział różni się od preferencji. Aby przywrócić poprzednią pozycję, zmień jego rolę/oddział za pomocą menu rozwijanego lub użyj przycisku „Przenieś do oddziału N”, aby go ponownie przenieść."
+    }
   }
 }

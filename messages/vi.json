@@ -429,5 +429,118 @@
       "slashCommands": "Các lệnh slash trên Discord: /upcoming liệt kê các sự kiện sắp tới của bang hội bạn, và /signup cho phép bạn đăng ký mà không cần rời khỏi Discord. Bạn phải đăng nhập vào trang web bằng Discord ít nhất một lần trước, để bot có thể xác nhận tài khoản của bạn."
     },
     "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
+  },
+  "adminHelp": {
+    "title": "Hướng dẫn quản trị viên",
+    "subtitle": "Mọi thứ mà quản trị viên bang hội cần để tổ chức sự kiện: tạo trận đấu, quản lý người chơi, thiết lập Discord và quản lý bang hội. Phiên bản dành cho người chơi có tại đây:<helpLink> /giúp đỡ</helpLink> .",
+    "sections": {
+      "createMatch": "Tạo sự kiện trận đấu",
+      "editEvent": "Chỉnh sửa chi tiết sự kiện",
+      "managePlayers": "Quản lý người chơi",
+      "waitlist": "Danh sách chờ",
+      "scrims": "Chạy thử nghiệm",
+      "inviteBot": "Mời bot Discord",
+      "discordChannel": "Thiết lập kênh Discord",
+      "slashCommands": "Lệnh gạch chéo Discord",
+      "manageGuild": "Quản lý bang hội của bạn",
+      "playersPage": "Trang người chơi",
+      "troubleshooting": "Những điều bạn có thể gặp phải"
+    },
+    "createMatch": {
+      "step1": "Vào mục Quản lý sự kiện ở thanh bên và nhấp vào + Sự kiện mới.",
+      "step2": "Chọn Match cho loại sự kiện. Sự kiện Match có hai đội với thời gian bắt đầu riêng, vị trí lãnh đạo và danh sách dự bị. (Chọn Simple cho các mục chỉ mang tính thông tin như cuộc họp hoặc buổi xem chung – không cần đăng ký, chỉ là một mục trên lịch.)",
+      "step3": "Điền tên, mô tả (nếu có) và thời gian đăng ký (Mở đăng ký / Đóng đăng ký). Cả hai đội đều dùng chung cửa sổ đăng ký này.",
+      "step4": "Đặt thời gian bắt đầu cho Đội 1 và Đội 2. Có thể để trống một hoặc cả hai trường — người chơi sẽ thấy \"Chưa xác định\" cho đến khi bạn điền thông tin. Lời nhắc của mỗi đội sẽ được kích hoạt độc lập với thời gian bắt đầu của chính đội đó.",
+      "step5": "Tất cả các trường ngày giờ đều được nhập theo giờ địa phương của trình duyệt. Biểu mẫu hiển thị giá trị tương đương UTC bên dưới mỗi ô nhập liệu để tránh nhầm lẫn. Thời gian được lưu trữ dưới dạng UTC và hiển thị theo múi giờ địa phương của mỗi người xem.",
+      "step6": "Tùy chọn: tùy chỉnh tên đội, số lượng cầu thủ tối đa, số lượng cầu thủ dự bị tối đa và số vị trí lãnh đạo. Mặc định là 20 / 10 / 3 mỗi đội (tổng cộng 60 vị trí).",
+      "step7": "Nhấp vào Tạo sự kiện. Bạn sẽ được chuyển đến trang quản trị sự kiện."
+    },
+    "editEvent": {
+      "dates": "Ngày tháng: Trên trang quản trị sự kiện, hãy nhấp vào Chỉnh sửa ngày tháng. Bạn có thể thay đổi thời gian đăng ký và thời gian bắt đầu của cả hai đội.",
+      "reschedule": "Việc thay đổi lịch trình sẽ gửi lại lời nhắc: thay đổi bất kỳ thời gian bắt đầu nào sẽ xóa bản ghi \"đã gửi\" cho nhóm đó, vì vậy bot Discord sẽ gửi lại lời nhắc mới sau 24 giờ / 1 giờ / 20 phút theo thời gian mới. Điều chỉnh vài phút cũng sẽ xóa chúng, vì vậy hãy tránh điều chỉnh nhỏ trừ khi bạn muốn gửi lại thông báo.",
+      "softDelete": "Xóa mềm: nút Xóa sự kiện sẽ ẩn sự kiện khỏi người chơi nhưng vẫn giữ lại dữ liệu đăng ký để báo cáo điểm danh. Các sự kiện đã xóa sẽ hiển thị trong một mục \"Đã xóa\" riêng biệt trên trang Quản lý sự kiện."
+    },
+    "managePlayers": {
+      "intro": "Trang quản trị sự kiện hiển thị hai cột nhóm và danh sách chờ ở phía dưới. Trong mỗi cột nhóm, mỗi lượt đăng ký là một hàng với các nút điều khiển sau:",
+      "moveSquad": "Nút \"Chuyển sang Đội N\": chuyển người chơi sang đội khác chỉ bằng một cú nhấp chuột. Cập nhật đội được chỉ định; nếu đội mới khác với lựa chọn ưu tiên ban đầu của họ, một huy hiệu nhỏ \"ĐÃ CHUYỂN\" sẽ xuất hiện bên cạnh tên của họ để bạn nhớ rằng bạn đã ghi đè lên lựa chọn ưu tiên của họ.",
+      "moveBackup": "Nút \"Chuyển sang danh sách dự bị\": chuyển đổi người chơi giữa danh sách chính (người chơi) và danh sách dự bị (dự bị). Hoạt động ở bất kỳ cột nào, kể cả danh sách chờ — rất tiện lợi để đưa người chơi trong danh sách chờ trực tiếp vào danh sách dự bị.",
+      "roleDropdown": "Menu thả xuống Vai trò (Chưa được chỉ định / Người chơi / Dự bị / Trưởng nhóm / Danh sách chờ): thay đổi vai trò chi tiết hơn. Sử dụng chức năng này để thăng chức cho người chơi đang yêu cầu vai trò trưởng nhóm hoặc để đưa ai đó vào danh sách chờ.",
+      "attendedRating": "Ô chọn \"Đã tham dự\" + đánh giá 1-5 sao: ghi chép sau sự kiện. Cả hai đều tự động lưu khi được bật. Được sử dụng cho các quyết định về danh sách thành viên trong tương lai.",
+      "effectiveSquadNote": "Các cột đội hình được nhóm theo đội hình hiệu quả: chỉ định của quản trị viên sẽ được ưu tiên, nếu không thì là lựa chọn ưu tiên đầu tiên. Vì vậy, một cầu thủ bạn di chuyển bằng tùy chọn \"Di chuyển đến Đội hình 2\" sẽ ngay lập tức xuất hiện trong cột Đội hình 2 ở lần hiển thị tiếp theo.",
+      "leaderPillNote": "Biểu tượng viên thuốc màu vàng \"Lãnh đạo\" bên cạnh tên có nghĩa là người chơi đó đã yêu cầu vai trò lãnh đạo khi đăng ký. Hãy chọn người lãnh đạo từ những yêu cầu này bằng cách thay đổi vai trò của họ thành \"Lãnh đạo\"."
+    },
+    "waitlist": {
+      "intro": "Khi tất cả các vị trí trong đội hình chính và dự bị đã được lấp đầy, những người đăng ký mới sẽ được đưa vào danh sách chờ (vai trò được chỉ định = danh sách chờ). Phần danh sách chờ ở cuối trang quản trị sự kiện hiển thị họ theo thứ tự đăng ký.",
+      "promote": "Để đưa ai đó ra khỏi danh sách chờ, hãy thay đổi vai trò của họ từ Danh sách chờ thành Cầu thủ chính hoặc Dự bị thông qua menu thả xuống — hoặc sử dụng Chuyển sang Dự bị trong trường hợp thông thường. Vị trí trong đội hình của họ được xác định theo lựa chọn ưu tiên đầu tiên trừ khi bạn chủ động chuyển họ."
+    },
+    "scrims": {
+      "intro": "Trận đấu tập là một thử thách 1 đấu 1 giữa hai quản trị viên bang hội, mỗi bên cử một đội tham gia. Sau khi được chấp nhận, cả hai bang hội sẽ nhận được một sự kiện tương tự mà các thành viên của họ có thể đăng ký tham gia. Sau trận đấu, một trong hai quản trị viên sẽ công bố kết quả.",
+      "serverNote": "Số máy chủ là bắt buộc. Cả hai bang hội phải có cùng số máy chủ được thiết lập trong Cài đặt Bang hội — nếu không, chúng sẽ không xuất hiện trong danh sách đối thủ của nhau. Hãy thiết lập số máy chủ của bạn trong...<settingsLink> Cài đặt Bang hội</settingsLink> Đầu tiên.",
+      "proposeHeading": "Đề xuất một trận đấu tập.",
+      "proposeStep1": "Đi đến<scrimmagesLink> bảng điều khiển trận đấu tập</scrimmagesLink> và nhấp vào + Đề xuất trận đấu tập.",
+      "proposeStep2": "Chọn đối thủ (được lọc theo cùng số máy chủ với bạn), thời gian chơi và địa điểm — một trong các bản đồ tiêu chuẩn (Kruger, Cerno, Kanvo, Sphinx) hoặc một địa điểm tùy chỉnh do người chơi tự chọn.",
+      "proposeStep3": "Điền vào Điều kiện Thắng (bắt buộc). Nêu rõ luật chơi — cả hai bên đều thấy điều này và nó gắn liền với kết quả đã công bố. Ví dụ: \"Đội nào chiếm được 3 cứ điểm trước\" hoặc \"Giữ vững pháo đài trung tâm trong 5 phút\".",
+      "proposeStep4": "(Tùy chọn ghi chú nội quy nhà, định dạng ghi chú, v.v.). Nhấp vào Gửi đề xuất.",
+      "acceptDeclineHeading": "Chấp nhận hoặc từ chối đề xuất đến",
+      "acceptDeclineIntro": "Các đề xuất đang chờ xử lý từ các bang hội khác sẽ hiển thị trong mục Đề xuất đến trên bảng điều khiển trận đấu tập.",
+      "accept": "Accept tạo ra hai sự kiện đối xứng (một sự kiện cho mỗi bang hội) trong một giao dịch duy nhất. Sự kiện của mỗi bên được đặt tên là \"Scrim vs...\"<opponent> \", lấy thời gian thi đấu được đề xuất làm thời gian bắt đầu và chấp nhận đăng ký thành viên như một trận đấu bình thường — ngoại trừ chỉ có một đội duy nhất.\"",
+      "decline": "Lệnh Decline chuyển trạng thái đề xuất thành \"đã bị từ chối\" mà không tạo ra bất kỳ sự kiện nào.",
+      "withdraw": "Chức năng Rút lại (chỉ áp dụng cho đề xuất gửi đi) hủy bỏ đề xuất đang chờ xử lý của chính bạn trước khi bên kia phản hồi.",
+      "rosterHeading": "Lập danh sách tham gia sự kiện tập luyện",
+      "rosterBody": "Sự kiện được sao chép nằm trong mục Quản lý Sự kiện với biểu tượng SCRIM màu đỏ. Mở nó ra để xem danh sách thành viên — một đội duy nhất, các thao tác quản trị tương tự như một trận đấu (chuyển sang dự bị, menu thả xuống vai trò, tham dự, xếp hạng). Các cột Đội 2 và thời gian bắt đầu thứ hai bị ẩn vì chúng không áp dụng.",
+      "cancelHeading": "Hủy bỏ trận đấu tập đã được chấp nhận.",
+      "cancelBody": "Quản trị viên của bất kỳ bang hội nào cũng có thể Hủy từ bảng điều khiển khi sự kiện đang ở mục \"Các trận đấu sắp diễn ra\" và trước khi kết quả được công bố. Việc Hủy sẽ xóa tạm thời cả hai sự kiện trùng lặp (thông tin đăng ký vẫn được giữ lại để làm lịch sử tham dự) và chuyển trạng thái đề xuất thành \"Đã hủy\".",
+      "resultHeading": "Khai báo kết quả",
+      "resultIntro": "Mở sự kiện tập luyện trong mục Quản lý sự kiện. Biểu mẫu kết quả có bốn nút:",
+      "resultWonLost": "Chúng ta thắng / Chúng ta thua — kết quả của bang hội bạn. Máy chủ lưu trữ kết quả tuyệt đối (không phụ thuộc vào quan điểm), vì vậy bang hội đối phương sẽ tự động thấy kết quả ngược lại (thắng/thua).",
+      "resultDrawNc": "Hòa / Kết quả hòa — kết quả cân bằng. Kết quả hòa bao gồm trường hợp bỏ cuộc, mất kết nối hoặc bất kỳ tình huống nào mà trận đấu không hoàn thành.",
+      "resultBody": "Các ghi chú tùy chọn hiển thị cho cả thành viên của hai bang hội. Sau khi được công bố, kết quả sẽ hiển thị dưới dạng một biểu tượng trên trang sự kiện, bảng điều khiển trận đấu tập và lịch sử trận đấu tập của người chơi. Bất kỳ quản trị viên nào cũng có thể công bố — người gửi trước sẽ thắng (không có giao diện ghi đè).",
+      "discordNotificationsHeading": "Thông báo Discord",
+      "discordNotificationsBody": "Nếu một bang hội có cấu hình kênh Discord (xem bên dưới), bot sẽ đăng một tin nhắn tiếng Anh lên cả hai kênh của bang hội khi đề xuất/chấp nhận/từ chối. Tin nhắn bao gồm tên đối thủ, thời gian trận đấu (hiển thị theo múi giờ địa phương của mỗi người xem), địa điểm và điều kiện thắng.",
+      "discordNotificationsFallback": "Nếu máy chủ khác đã cấu hình kênh nhưng bot không thể truy cập được (bot bị đá khỏi máy chủ, kênh bị xóa, ID sai), bạn sẽ thấy một cảnh báo trên trình duyệt liệt kê tên các máy chủ bị ảnh hưởng sau khi hành động của bạn hoàn tất. Các máy chủ không cấu hình kênh nào sẽ im lặng — đó là sự lựa chọn không tham gia có chủ đích.",
+      "playerVisibilityHeading": "Khả năng hiển thị của người chơi",
+      "playerVisibilityBody": "Người chơi có thể thấy các sự kiện đấu tập trên trang chủ với huy hiệu SCRIM màu đỏ, có thể đăng ký như bất kỳ trận đấu nào khác (chỉ cần chọn một đội), và có thể xem tất cả các trận đấu tập đã được chấp nhận (sắp diễn ra + kết quả đã diễn ra) trên trang chủ.<scrimsLink> trang lịch sử trận đấu tập</scrimsLink> Các đề xuất bị từ chối, rút lại hoặc hủy bỏ sẽ được ẩn khỏi người chơi — họ chỉ thấy các trận đấu tập đã thực sự diễn ra hoặc đang được lên lịch."
+    },
+    "inviteBot": {
+      "intro": "Các lời nhắc và lệnh gạch chéo dựa trên một bot Discord mà người điều hành đã triển khai. Để kết nối nó với máy chủ Discord của bạn:",
+      "step1Intro": "Lấy URL cài đặt từ người quản trị trang web của bạn. URL đó có dạng như sau:",
+      "step1Note": "Phần permissions=133120 bao gồm quyền Gửi tin nhắn và Nhắc đến mọi người. Cả hai đều cần thiết — nếu không có quyền Nhắc đến mọi người, @everyone trong lời nhắc sẽ hiển thị dưới dạng văn bản thuần và không nhắc đến ai cả.",
+      "step2": "Mở URL cài đặt trong trình duyệt. Chọn máy chủ Discord mà bạn muốn cài đặt bot. Bạn cần quyền Quản lý máy chủ trong máy chủ đó. Nhấp vào Ủy quyền.",
+      "step3": "Hãy xác nhận rằng bot xuất hiện trong danh sách thành viên của máy chủ Discord của bạn. Vậy là xong — không cần cấu hình riêng cho từng bot ở phía Discord."
+    },
+    "discordChannel": {
+      "intro": "Bot sẽ đăng lời nhắc vào một kênh mà bạn chọn. Để cấu hình:",
+      "step1": "Kích hoạt Chế độ Nhà phát triển trong Discord: Cài đặt Người dùng → Nâng cao → Chế độ Nhà phát triển. Chỉ thực hiện một lần cho mỗi thiết bị. Thao tác này sẽ mở khóa tùy chọn \"Sao chép ID Kênh\" khi nhấp chuột phải.",
+      "step2": "Nhấp chuột phải vào kênh bạn muốn nhận lời nhắc → Sao chép ID kênh. Bạn sẽ nhận được một dãy số dài như 123456789012345678. Hãy đảm bảo đó là kênh văn bản và vai trò của bot có quyền Xem kênh và Gửi tin nhắn trong kênh đó.",
+      "step3": "Trên trang web, hãy truy cập vào...<settingsLink> Cài đặt Bang hội</settingsLink> và dán ID kênh vào ô ID kênh Discord.",
+      "step4": "Nhấp vào Kiểm tra tích hợp. Nếu mọi thứ đều ổn, bạn sẽ thấy thông báo xác nhận trên giao diện người dùng và một tin nhắn kiểm tra duy nhất trong kênh. Bước kiểm tra cũng tự động liên kết máy chủ Discord của bạn với máy chủ ứng dụng để các lệnh gạch chéo (/upcoming, /signup) hoạt động.",
+      "step5": "Nhấp vào Lưu để lưu lại ID kênh.",
+      "commonErrors": "Các lỗi thường gặp sau khi kiểm tra: \"Bot không có quyền truy cập vào kênh đó\" (mời lại bot thông qua URL cài đặt ở trên); \"Bot thiếu quyền Gửi tin nhắn\" (quyền cấp kênh bị ghi đè - khắc phục trong Discord); \"ID kênh đó không tồn tại\" (bạn đã sao chép ID máy chủ, không phải ID kênh)."
+    },
+    "slashCommands": {
+      "intro": "Sau khi bot được cài đặt trên máy chủ và bạn đã liên kết kênh thông qua tích hợp thử nghiệm, các thành viên của bạn có thể sử dụng:",
+      "upcoming": "/upcoming — liệt kê các sự kiện sắp tới của bang hội, bao gồm cả thời gian bắt đầu của các đội. Các phản hồi chỉ hiển thị trong thời gian ngắn (chỉ người dùng mới nhìn thấy).",
+      "signup": "/signup event:<event> squad:<1|2> — đăng ký người dùng tham gia sự kiện. Trường sự kiện có tính năng tự động điền. Người dùng phải đăng nhập vào trang web bằng Discord ít nhất một lần để bot có thể đối chiếu ID Discord của họ với tài khoản guild — bot sẽ nhắc họ nếu họ chưa đăng nhập.",
+      "propagation": "Các lệnh slash toàn cục mới cần khoảng 1 giờ để lan truyền lần đầu tiên sau khi bot được triển khai. Sau đó, chúng sẽ được thực thi ngay lập tức.",
+      "failHeading": "Nếu tính năng tự động điền của /signup hiển thị \"Không thể tải tùy chọn\"",
+      "failIntro": "Thường có nghĩa là Discord đã lưu trữ một phiên bản lỗi thời của lược đồ lệnh, hoặc bot được thêm vào mà thiếu phạm vi (scope). Hãy thử theo thứ tự sau:",
+      "failStep1": "Kiểm tra lại phạm vi và mời lại. URL cài đặt phải bao gồm cả phạm vi bot và applications.commands. Nếu bot được thêm qua URL cũ thiếu applications.commands, các sự kiện tự động hoàn thành sẽ không đến được bot. Hãy mời lại bằng URL cài đặt hiện tại (Cài đặt Bang hội → Discord → Mời Bot Discord Tổ chức Sự kiện).",
+      "failStep2Intro": "Buộc xóa các lệnh đã lưu trong bộ nhớ cache (chỉ người điều hành). Nếu việc mời lại không khắc phục được sự cố, người điều hành trang web của bạn có thể xóa danh sách lệnh đã lưu trong bộ nhớ cache của Discord để bot đăng ký lại từ đầu khi khởi động lần sau:",
+      "failStep2Note": "Sau đó khởi động lại bot (ví dụ: fly machine restart) — trình xử lý clientReady sẽ đăng ký lại các lệnh từ SLASH_COMMANDS khi khởi động lần tiếp theo."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Thành viên</membersLink> — Danh sách tất cả thành viên trong bang hội. Mỗi hàng: Thăng cấp thành viên lên quản trị viên, Hạ cấp quản trị viên xuống thành viên, hoặc Loại bỏ thành viên. Quản trị viên cuối cùng không thể tự hạ cấp hoặc loại bỏ chính mình — hãy thăng cấp cho người khác trước.",
+      "invites": "<invitesLink>Lời mời</invitesLink> — Tạo liên kết mời. Mỗi liên kết mời có thể có thời hạn sử dụng tùy chọn và giới hạn số lần sử dụng tối đa (để trống = không giới hạn). Nhấp vào URL để sao chép. Sử dụng chức năng Thu hồi để vô hiệu hóa một liên kết. Bất kỳ ai nhấp vào liên kết mời hợp lệ sẽ tự động gia nhập máy chủ với tư cách thành viên.",
+      "settings": "<settingsLink>Cài đặt Bang hội</settingsLink> — Tên guild, mô tả, tùy chọn hiển thị công khai, ID kênh Discord. Tên slug là cố định; mọi thứ khác đều có thể chỉnh sửa. Tắt tùy chọn \"Hiển thị công khai\" có nghĩa là thành viên mới chỉ có thể tham gia thông qua liên kết mời.",
+      "leave": "Hãy để máy chủ ở cuối phần Cài đặt. Các lần đăng ký trước đây của bạn sẽ được xóa tạm thời (chỉ giữ lại để báo cáo điểm danh). Nếu bạn là quản trị viên duy nhất, bạn cần phải thăng cấp cho người khác trước."
+    },
+    "playersPage": {
+      "body": "<playersLink>Người chơi</playersLink> Hiển thị đầy đủ lịch sử đăng ký của mọi thành viên bang hội: các sự kiện họ đã đăng ký, sở thích đội nhóm, điểm danh, xếp hạng và ghi chú về khả năng lãnh đạo. Hữu ích cho việc chọn người lãnh đạo, lập danh sách ứng viên hoặc theo dõi những người vắng mặt."
+    },
+    "troubleshooting": {
+      "reminders": "Chức năng nhắc nhở không hoạt động. Hãy kiểm tra /api/health — nếu bot.lastPollStartedAt cách thời gian hiện tại hơn khoảng 5 phút, trình thăm dò đang bị kẹt. Quản trị viên cấp cao cũng có thể gửi yêu cầu POST đến /api/admin/bot/poll-now để buộc thực hiện chu kỳ thăm dò.",
+      "rescheduled": "Sự kiện đã được dời lịch và mọi người không nhận được thông báo lại. Hãy xác nhận xem thời gian thực sự đã thay đổi chưa (so sánh với giá trị trước đó). Bot chỉ gửi lại các loại thông báo có khoảng thời gian vẫn còn phía trước thời gian mới — nếu thời gian mới của bạn là 30 phút nữa, chỉ có thông báo nhắc nhở 20 phút sẽ được gửi đi, chứ không phải thông báo 24 giờ.",
+      "movedSquad": "Một cầu thủ đã bị xếp vào đội sai sau khi tôi di chuyển họ. Biểu tượng \"ĐÃ DI CHUYỂN\" có nghĩa là việc phân công khác với lựa chọn của bạn. Để hoàn tác, hãy thay đổi vai trò/đội của họ thông qua menu thả xuống hoặc sử dụng nút \"Di chuyển đến Đội N\" để chuyển họ trở lại vị trí cũ."
+    }
   }
 }

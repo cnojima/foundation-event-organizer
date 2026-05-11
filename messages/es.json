@@ -429,5 +429,118 @@
       "slashCommands": "Comandos de barra de Discord: /upcoming muestra los próximos eventos de tu gremio, y /signup te permite registrarte sin salir de Discord. Debes iniciar sesión en el sitio web con Discord al menos una vez para que el bot pueda vincular tu cuenta."
     },
     "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente."
+  },
+  "adminHelp": {
+    "title": "Guía del administrador",
+    "subtitle": "Todo lo que un administrador de gremio necesita para organizar eventos: crear partidas, gestionar jugadores, configurar Discord y administrar el gremio en sí. La versión para jugadores de esto se encuentra en<helpLink> /ayuda</helpLink> .",
+    "sections": {
+      "createMatch": "Crear un evento de coincidencia",
+      "editEvent": "Editar detalles del evento",
+      "managePlayers": "Gestionar jugadores",
+      "waitlist": "La lista de espera",
+      "scrims": "Realiza una prueba",
+      "inviteBot": "Invita al bot de Discord",
+      "discordChannel": "Configura el canal de Discord",
+      "slashCommands": "Comandos de barra de Discord",
+      "manageGuild": "Gestiona tu gremio",
+      "playersPage": "Página de jugadores",
+      "troubleshooting": "Cosas con las que podrías encontrarte"
+    },
+    "createMatch": {
+      "step1": "Ve a Gestionar eventos en la barra lateral y haz clic en + Nuevo evento.",
+      "step2": "Selecciona \"Partido\" como tipo de evento. Los eventos de partido tienen dos equipos con sus propios horarios de inicio, puestos de liderazgo y una lista de reserva. (Selecciona \"Sencillo\" para entradas solo informativas, como reuniones o sesiones para ver partidos en grupo; no se requiere inscripción, solo se añade un evento al calendario).",
+      "step3": "Ingresa el nombre, la descripción opcional y el período de inscripción (Apertura de inscripciones / Cierre de inscripciones). Este período es compartido por ambos equipos.",
+      "step4": "Establece la hora de inicio del Escuadrón 1 y la del Escuadrón 2. Puedes dejar cualquiera de los dos campos en blanco; los jugadores verán \"Por determinar\" hasta que los completes. Los recordatorios de cada escuadrón se activan de forma independiente a partir de su hora de inicio.",
+      "step5": "Todos los campos de fecha y hora se introducen en la hora local del navegador. El formulario muestra el equivalente en UTC debajo de cada campo para evitar cualquier ambigüedad. Las horas se almacenan en UTC y se muestran en la zona horaria local de cada usuario.",
+      "step6": "Opcional: personaliza los nombres de los escuadrones, el número máximo de jugadores, el número máximo de suplentes y los puestos de liderazgo. Los valores predeterminados son 20 / 10 / 3 por escuadrón (60 puestos en total).",
+      "step7": "Haz clic en Crear evento. Accederás a la página de administración del evento."
+    },
+    "editEvent": {
+      "dates": "Fechas: en la página de administración del evento, haga clic en Editar fechas. Puede cambiar el período de inscripción y la hora de inicio de ambos equipos.",
+      "reschedule": "Reprogramar los recordatorios reenvía: cambiar la hora de inicio borra el registro de \"ya enviado\" para ese grupo, por lo que el bot de Discord enviará nuevos recordatorios cada 24 h / 1 h / 20 min con la nueva hora. Modificar la hora un par de minutos también los borra, así que evita cambiarla a menos que quieras volver a notificar.",
+      "softDelete": "Eliminación lógica: el botón Eliminar evento oculta el evento a los jugadores, pero conserva los datos de inscripción para los informes de asistencia. Los eventos eliminados aparecen en una sección aparte llamada \"Eliminados\" en Gestionar eventos."
+    },
+    "managePlayers": {
+      "intro": "La página de administración del evento muestra dos columnas de grupos y una lista de espera debajo. En cada columna de grupo, cada inscripción es una fila con estos controles:",
+      "moveSquad": "Botón \"Mover al escuadrón N\": mueve al jugador al otro escuadrón con un solo clic. Actualiza el escuadrón asignado; si el nuevo escuadrón difiere de su primera opción, aparece una pequeña insignia \"MOVIDO\" junto a su nombre para que recuerdes que has anulado su preferencia.",
+      "moveBackup": "Botón Mover a Reserva / Lista: cambia al jugador entre la lista principal (jugador) y la lista de reserva (reserva). Funciona en cualquier columna, incluida la lista de espera; útil para ascender directamente a un jugador en lista de espera a reserva.",
+      "roleDropdown": "Menú desplegable de roles (Sin asignar / Jugador / Reserva / Líder / Lista de espera): cambios de rol más precisos. Úsalo para ascender a líder a un jugador que solicita el liderazgo o para añadir a alguien a la lista de espera.",
+      "attendedRating": "Casilla de asistencia + calificación de 1 a 5 estrellas: registro posterior al evento. Ambas opciones se guardan automáticamente al activarlas. Se utilizan para futuras decisiones sobre la lista de participantes.",
+      "effectiveSquadNote": "Las columnas de escuadrones se agrupan por escuadrón efectivo: la asignación del administrador tiene prioridad; de lo contrario, se aplica la primera opción. Por lo tanto, un jugador que muevas con la opción \"Mover al Escuadrón 2\" aparecerá inmediatamente en la columna \"Escuadrón 2\" en la siguiente visualización.",
+      "leaderPillNote": "La etiqueta amarilla \"Líder\" junto a un nombre indica que ese jugador solicitó un rol de liderazgo al registrarse. Selecciona a los líderes entre estas solicitudes cambiando su rol a \"Líder\"."
+    },
+    "waitlist": {
+      "intro": "Cuando se ocupan todos los cupos de escuadrón y suplentes, los nuevos inscritos se agregan a la lista de espera (rol asignado = lista de espera). La sección de lista de espera en la parte inferior de la página de administración del evento los muestra en orden de inscripción.",
+      "promote": "Para ascender a alguien de la lista de espera, cambia su rol de Lista de espera a Jugador o Suplente mediante el menú desplegable; o usa la opción Mover a Suplente para el caso más común. Su ubicación en el equipo se basa en su primera opción, a menos que lo muevas explícitamente."
+    },
+    "scrims": {
+      "intro": "Un scrim es un desafío de gremio 1 contra 1 negociado entre los administradores de dos gremios, con un solo escuadrón por cada lado. Una vez aceptado, ambos gremios obtienen un evento espejo al que sus miembros pueden inscribirse. Después del encuentro, cualquiera de los administradores declara el resultado.",
+      "serverNote": "Se requiere el número de servidor. Ambos clanes deben tener el mismo número de servidor configurado en Configuración del clan; de lo contrario, no aparecerán en el menú desplegable de oponentes del otro. Configure el suyo en<settingsLink> Configuración del gremio</settingsLink> primero.",
+      "proposeHeading": "Proponer una simulación",
+      "proposeStep1": "Ve al<scrimmagesLink> panel de control de partidos de práctica</scrimmagesLink> y haga clic en + Proponer scrim.",
+      "proposeStep2": "Elige al oponente (filtrado al mismo número de servidor), la hora de la partida y la ubicación: uno de los mapas canónicos (Kruger, Cerno, Kanvo, Sphinx) o una ubicación personalizada de texto libre.",
+      "proposeStep3": "Rellena la condición de victoria (obligatorio). Indica las reglas con claridad: ambos equipos las verán y estarán vinculadas al resultado declarado. Ejemplo: «El primer equipo en conseguir 3 capturas» o «Mantener la fortaleza central durante 5 minutos».",
+      "proposeStep4": "Mensaje opcional para normas de la casa, notas de formato, etc. Haga clic en Enviar propuesta.",
+      "acceptDeclineHeading": "Aceptar o rechazar una propuesta recibida",
+      "acceptDeclineIntro": "Las propuestas pendientes de otros gremios aparecen en la sección de Propuestas entrantes del panel de control de scrim.",
+      "accept": "Accept crea dos eventos reflejados (uno por gremio) en una sola transacción. El evento de cada lado se llama \"Scrim vs<opponent> \", toma como punto de partida la hora de juego propuesta y acepta inscripciones de miembros como en un partido normal, excepto que solo hay un equipo.\"",
+      "decline": "Rechazar cambia el estado de la propuesta a rechazada sin generar ningún evento.",
+      "withdraw": "La opción Retirar (solo para envíos) cancela tu propia propuesta pendiente antes de que la otra parte responda.",
+      "rosterHeading": "Lista de participantes para el evento de entrenamiento",
+      "rosterBody": "El evento duplicado se encuentra en Gestionar eventos con una insignia roja de SCRIM. Ábrelo para ver tu lista de participantes: un solo equipo, con los mismos controles de administración que un partido (mover a reserva, menú desplegable de roles, asistentes, calificación). Las columnas del segundo equipo y la segunda hora de inicio están ocultas porque no son relevantes.",
+      "cancelHeading": "Cancelar una sesión de entrenamiento aceptada",
+      "cancelBody": "El administrador de cualquiera de los clanes puede cancelar desde el panel de control mientras esté en la sección de entrenamientos próximos y antes de que se declare un resultado. La cancelación elimina temporalmente ambos eventos duplicados (las inscripciones se conservan para el historial de asistencia) y cambia el estado de la propuesta a cancelada.",
+      "resultHeading": "Declarar el resultado",
+      "resultIntro": "Abra el evento scrim en Gestionar eventos. El formulario de resultados tiene cuatro botones:",
+      "resultWonLost": "Ganamos / Perdimos: el resultado de tu clan. El servidor almacena un resultado absoluto (sin perspectiva), por lo que el clan contrario ve automáticamente el resultado inverso (ganar/perder).",
+      "resultDrawNc": "Empate / Sin resultado: resultados simétricos. Sin resultado cubre abandonos, desconexiones o cualquier situación en la que el partido no se haya completado.",
+      "resultBody": "Las notas opcionales son visibles para los miembros de ambos clanes. Una vez declarado, el resultado aparece como una ficha en la página del evento, el panel de control de la partida de entrenamiento y el historial de partidas de entrenamiento de los jugadores. Cualquier administrador puede declarar; el primero en enviarlo gana (sin interfaz de usuario para sobrescribir).",
+      "discordNotificationsHeading": "notificaciones de Discord",
+      "discordNotificationsBody": "Si un clan tiene configurado un canal de Discord (ver más abajo), el bot publica un mensaje en inglés en los canales de ambos clanes al proponer, aceptar o rechazar una propuesta. El mensaje incluye el nombre del oponente, la hora de la partida (mostrada en la zona horaria local de cada espectador), la ubicación y las condiciones de victoria.",
+      "discordNotificationsFallback": "Si el otro clan tiene un canal configurado, pero el bot no puede acceder a él (bot expulsado, canal eliminado, ID incorrecto), verás una alerta en el navegador con los nombres de los clanes afectados una vez que finalice tu acción. Los clanes sin ningún canal configurado permanecen en silencio; se trata de una decisión de no mostrar ninguna alerta.",
+      "playerVisibilityHeading": "Visibilidad del jugador",
+      "playerVisibilityBody": "Los jugadores ven los eventos de entrenamiento en la página principal con una insignia roja de SCRIM, pueden registrarse como en cualquier partido (solo hay que elegir un equipo) y pueden explorar todos los entrenamientos aceptados (próximos + resultados pasados) en la página principal.<scrimsLink> página de historia de scrim</scrimsLink> Las propuestas rechazadas, retiradas o canceladas permanecen ocultas para los jugadores; ellos solo ven las partidas de entrenamiento que realmente se llevaron a cabo o que están programadas."
+    },
+    "inviteBot": {
+      "intro": "Los recordatorios y los comandos de barra diagonal dependen de un bot de Discord que el operador ya ha implementado. Para conectarlo a tu servidor de Discord:",
+      "step1Intro": "Obtén la URL de instalación de tu operador de sitio. Tiene este aspecto:",
+      "step1Note": "La parte permissions=133120 cubre Enviar mensajes y Mencionar a todos. Ambas son necesarias; sin Mencionar a todos, el @everyone en los recordatorios se muestra como texto sin formato y no notifica a nadie.",
+      "step2": "Abre la URL de instalación en un navegador. Selecciona el servidor de Discord donde quieres instalar el bot. Necesitas el permiso de \"Administrar servidor\" en ese servidor. Haz clic en \"Autorizar\".",
+      "step3": "Confirma que el bot aparece en la lista de miembros de tu servidor de Discord. Eso es todo; no se requiere ninguna configuración individual para cada bot en Discord."
+    },
+    "discordChannel": {
+      "intro": "El bot publica recordatorios en el canal que elijas. Para configurarlo:",
+      "step1": "Activa el modo desarrollador en Discord: Configuración de usuario → Avanzado → Modo desarrollador. Una sola vez por dispositivo. Esto desbloquea la opción \"Copiar ID de canal\" al hacer clic derecho.",
+      "step2": "Haz clic derecho en el canal donde quieres recibir recordatorios → Copiar ID del canal. Verás un número largo como 123456789012345678. Asegúrate de que sea un canal de texto y que el rol del bot tenga permisos para ver el canal y enviar mensajes.",
+      "step3": "En el sitio web, diríjase a<settingsLink> Configuración del gremio</settingsLink> y pega el ID del canal en el campo ID del canal de Discord.",
+      "step4": "Haz clic en «Probar integración». Si todo funciona correctamente, verás una confirmación en la interfaz de usuario y un mensaje de prueba único en el canal. El paso de prueba también vincula automáticamente tu servidor de Discord con el servidor de la aplicación para que funcionen los comandos de barra diagonal (/upcoming, /signup).",
+      "step5": "Haz clic en Guardar para conservar el ID del canal.",
+      "commonErrors": "Errores comunes después de la prueba: \"El bot no tiene acceso a ese canal\" (vuelva a invitar al bot a través de la URL de instalación anterior); \"Al bot le falta el permiso de Enviar mensajes\" (anulaciones de permisos a nivel de canal: solución en Discord); \"Ese ID de canal no existe\" (copió el ID del servidor, no el ID del canal)."
+    },
+    "slashCommands": {
+      "intro": "Una vez que el bot esté en el servidor y hayas vinculado el canal a través de la integración de prueba, tus miembros podrán usar:",
+      "upcoming": "/upcoming: muestra los próximos eventos del gremio con sus respectivas horas de inicio. Las respuestas son temporales (solo visibles para el usuario).",
+      "signup": "/evento de registro:<event> escuadrón:<1|2> — inscribe al usuario en un evento. El campo de evento tiene autocompletado. El usuario debe haber iniciado sesión en el sitio web con Discord al menos una vez para que el bot pueda vincular su ID de Discord con su cuenta de gremio; se le solicitará que lo haga si no lo ha hecho.",
+      "propagation": "Los nuevos comandos globales con barra diagonal tardan aproximadamente una hora en propagarse la primera vez que se implementa el bot. Después de eso, son instantáneos.",
+      "failHeading": "Si /signup autocomplete muestra \"Error al cargar las opciones\"",
+      "failIntro": "Normalmente significa que Discord almacenó en caché una versión obsoleta del esquema de comandos, o que el bot se agregó con un ámbito faltante. Inténtalo en orden:",
+      "failStep1": "Verifica los permisos y vuelve a invitar. La URL de instalación debe incluir los permisos `bot` y `applications.commands`. Si el bot se agregó mediante una URL antigua que no incluía `applications.commands`, los eventos de autocompletado no lo alcanzarán. Vuelve a invitar usando la URL de instalación actual (Configuración del servidor → Discord → Invitar al bot de Discord del organizador de eventos).",
+      "failStep2Intro": "Borrar los comandos almacenados en caché (solo para el operador). Si volver a invitar no soluciona el problema, el operador de tu sitio puede borrar la lista de comandos almacenados en caché de Discord para que el bot se registre de nuevo en el próximo inicio:",
+      "failStep2Note": "Luego, reinicie el bot (por ejemplo, reinicie la máquina de vuelo): el controlador clientReady vuelve a registrar los comandos de SLASH_COMMANDS en el siguiente arranque."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Miembros</membersLink> — Lista de todos los miembros del gremio. Por fila: Ascender a un miembro a administrador, degradar a un administrador a miembro o expulsar a un miembro. El último administrador no puede degradarse ni expulsarse a sí mismo; primero debe ascender a otra persona.",
+      "invites": "<invitesLink>Invitaciones</invitesLink> — Genera enlaces de invitación. Cada invitación puede tener una fecha de caducidad opcional y un límite de usos (en blanco = ilimitado). Haz clic en la URL para copiarla. Usa la opción Revocar para invalidarla. Cualquiera que acceda a un enlace de invitación válido se unirá automáticamente al gremio como miembro.",
+      "settings": "<settingsLink>Configuración del gremio</settingsLink> — Nombre del clan, descripción, opción de visibilidad pública, ID del canal de Discord. El slug es permanente; el resto es editable. Si desactivas la opción \"Mostrar en la visibilidad pública\", los nuevos miembros solo podrán unirse mediante un enlace de invitación.",
+      "leave": "Abandona el gremio en la parte inferior de Configuración. Tus registros anteriores se eliminan temporalmente (se conservan para los informes de asistencia). Si eres el único administrador, primero debes ascender a otra persona."
+    },
+    "playersPage": {
+      "body": "<playersLink>Jugadores</playersLink> Muestra el historial completo de inscripciones de cada miembro del gremio: eventos en los que se inscribieron, preferencias de escuadrón, asistencia, calificaciones y notas de liderazgo. Útil para seleccionar líderes, crear listas de candidatos o dar seguimiento a quienes no se presentaron."
+    },
+    "troubleshooting": {
+      "reminders": "Los recordatorios no se están activando. Comprueba /api/health: si bot.lastPollStartedAt tiene un retraso de más de 5 minutos con respecto a la hora actual, el proceso de sondeo está bloqueado. Los superadministradores también pueden enviar una solicitud POST a /api/admin/bot/poll-now para forzar un ciclo de sondeo.",
+      "rescheduled": "Se reprogramó un evento y las personas no están recibiendo nuevas notificaciones. Confirma que la hora haya cambiado (compárala con el valor anterior). El bot solo vuelve a enviar notificaciones a los tipos cuya ventana temporal aún está por delante de la nueva hora; si la nueva hora es dentro de 30 minutos, solo se enviará el recordatorio de 20 minutos, no el de 24 horas.",
+      "movedSquad": "Un jugador fue asignado al equipo equivocado después de que lo cambié de puesto. El distintivo \"MOVIDO\" indica que la asignación no coincide con la preferencia. Para revertir la asignación, cambia su rol o equipo mediante el menú desplegable o usa el botón \"Mover al equipo N\" para devolverlo a su puesto original."
+    }
   }
 }

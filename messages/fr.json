@@ -429,5 +429,118 @@
       "slashCommands": "Commandes Discord : /upcoming affiche la liste des événements à venir de votre guilde, et /signup vous permet de vous inscrire sans quitter Discord. Vous devez vous connecter au site web avec Discord au moins une fois au préalable afin que le bot puisse associer votre compte."
     },
     "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
+  },
+  "adminHelp": {
+    "title": "Guide de l'administrateur",
+    "subtitle": "Tout ce dont un administrateur de guilde a besoin pour organiser des événements : création de matchs, gestion des joueurs, configuration de Discord et administration de la guilde. La version destinée aux joueurs se trouve ici :<helpLink> /aide</helpLink> .",
+    "sections": {
+      "createMatch": "Créer un événement de match",
+      "editEvent": "Modifier les détails de l'événement",
+      "managePlayers": "Gérer les joueurs",
+      "waitlist": "La liste d'attente",
+      "scrims": "Organiser un scrim",
+      "inviteBot": "Inviter le bot Discord",
+      "discordChannel": "Configurer le canal Discord",
+      "slashCommands": "Commandes slash Discord",
+      "manageGuild": "Gérez votre guilde",
+      "playersPage": "page des joueurs",
+      "troubleshooting": "Voici ce que vous pourriez rencontrer"
+    },
+    "createMatch": {
+      "step1": "Dans la barre latérale, accédez à « Gérer les événements » et cliquez sur « + Nouvel événement ».",
+      "step2": "Choisissez « Match » comme type d'événement. Les matchs opposent deux équipes, chacune avec son propre horaire de début, ses responsables et une équipe de réserve. (Choisissez « Simple » pour les événements informatifs comme les réunions ou les visionnages collectifs : pas d'inscription, juste un événement à ajouter à votre calendrier.)",
+      "step3": "Renseignez le nom, la description facultative et la fenêtre d'inscription (Ouverture de l'inscription / Fermeture de l'inscription). Cette fenêtre est partagée par les deux équipes.",
+      "step4": "Définissez l'heure de début de l'escouade 1 et celle de l'escouade 2. Vous pouvez laisser l'un ou les deux champs vides ; les joueurs verront « À déterminer » jusqu'à ce que vous les remplissiez. Les rappels de chaque escouade sont envoyés indépendamment de son heure de début.",
+      "step5": "Tous les champs de date et d'heure sont saisis dans le fuseau horaire local de votre navigateur. Le formulaire affiche l'équivalent UTC sous chaque champ afin d'éviter toute ambiguïté. Les heures sont enregistrées en UTC et affichées dans le fuseau horaire de chaque utilisateur.",
+      "step6": "En option : personnalisez les noms des escouades, le nombre maximum de joueurs, le nombre maximum de remplaçants et le nombre d’emplacements de commandement. Les valeurs par défaut sont 20/10/3 par escouade (60 emplacements au total).",
+      "step7": "Cliquez sur « Créer un événement ». Vous accédez à la page d'administration de l'événement."
+    },
+    "editEvent": {
+      "dates": "Dates : sur la page d’administration de l’événement, cliquez sur « Modifier les dates ». Vous pouvez modifier la période d’inscription et les horaires de début des deux équipes.",
+      "reschedule": "La fonction « Reprogrammer » réinitialise les rappels : modifier l’heure de début efface l’enregistrement « déjà envoyé » pour cette escouade. Le bot Discord enverra donc de nouveaux rappels (24 h, 1 h ou 20 min) à la nouvelle heure. Un simple ajustement de quelques minutes suffit également à les effacer. Évitez donc de modifier l’heure à moins de vouloir relancer les rappels.",
+      "softDelete": "Suppression réversible : le bouton « Supprimer l’événement » masque l’événement aux joueurs, mais conserve les données d’inscription pour les rapports de présence. Les événements supprimés apparaissent dans une section « Supprimés » distincte, accessible via la gestion des événements."
+    },
+    "managePlayers": {
+      "intro": "La page d'administration de l'événement affiche deux colonnes d'équipes et une liste d'attente en dessous. Dans chaque colonne d'équipe, chaque inscription correspond à une ligne avec les commandes suivantes :",
+      "moveSquad": "Bouton « Transférer à l’équipe N » : déplace le joueur vers l’autre équipe en un clic. L’équipe assignée est mise à jour ; si la nouvelle équipe diffère de son premier choix, un petit badge « TRANSPORTÉ » apparaît à côté de son nom pour vous rappeler que vous avez modifié son choix.",
+      "moveBackup": "Bouton « Réserve » : permet de basculer entre l’effectif principal (joueur) et l’effectif de réserve (réserve). Fonctionne dans toutes les colonnes, y compris la liste d’attente ; pratique pour promouvoir directement un joueur en liste d’attente en réserve.",
+      "roleDropdown": "Menu déroulant Rôle (Non attribué / Joueur / Remplaçant / Chef / Liste d'attente) : modifications de rôle plus précises. Utilisez cette option pour promouvoir un joueur souhaitant devenir chef ou pour placer un joueur sur la liste d'attente.",
+      "attendedRating": "Case à cocher « Présent » + évaluation de 1 à 5 étoiles : suivi post-événement. Les deux options sont enregistrées automatiquement. Seront utilisées pour la gestion des effectifs.",
+      "effectiveSquadNote": "Les colonnes d'équipe sont regroupées par équipe effective : l'affectation de l'administrateur prévaut, sinon le premier choix est privilégié. Ainsi, un joueur déplacé vers l'équipe 2 apparaît immédiatement dans la colonne « Équipe 2 » lors du prochain rendu.",
+      "leaderPillNote": "La pilule jaune « Leader » à côté d'un nom indique que le joueur a demandé un rôle de leader lors de son inscription. Choisissez les leaders parmi ces demandes en modifiant leur rôle en « Leader »."
+    },
+    "waitlist": {
+      "intro": "Lorsque toutes les places disponibles dans l'équipe et chez les remplaçants sont prises, les nouveaux inscrits sont placés sur la liste d'attente (rôle attribué : liste d'attente). La section « Liste d'attente » en bas de la page d'administration de l'événement affiche les noms des inscrits par ordre d'inscription.",
+      "promote": "Pour promouvoir un joueur depuis la liste d'attente, modifiez son rôle de « Liste d'attente » à « Joueur » ou « Remplaçant » via le menu déroulant, ou utilisez l'option « Déplacer en Remplaçant » dans la plupart des cas. Son placement dans l'équipe dépendra de son premier choix, sauf si vous le déplacez explicitement."
+    },
+    "scrims": {
+      "intro": "Un scrim est un défi amical entre guildes (1 contre 1) négocié entre deux administrateurs de guilde, chaque guilde ne disposant que d'une seule équipe. Une fois accepté, un événement similaire est organisé pour les deux guildes, auquel leurs membres peuvent s'inscrire. À l'issue du match, l'un des administrateurs proclame le résultat.",
+      "serverNote": "Le numéro de serveur est obligatoire. Les deux guildes doivent avoir le même numéro de serveur configuré dans les paramètres de guilde ; sinon, elles n'apparaîtront pas dans la liste déroulante des adversaires de l'autre. Configurez le vôtre dans<settingsLink> Paramètres de guilde</settingsLink> d'abord.",
+      "proposeHeading": "Proposer un écran",
+      "proposeStep1": "Allez à<scrimmagesLink> tableau de bord des matchs d'entraînement</scrimmagesLink> et cliquez sur + Proposer un écran.",
+      "proposeStep2": "Choisissez l'adversaire (filtré selon votre numéro de serveur), l'heure de la partie et le lieu : soit l'une des cartes canoniques (Kruger, Cerno, Kanvo, Sphinx), soit un lieu personnalisé en texte libre.",
+      "proposeStep3": "Indiquez les conditions de victoire (obligatoires). Énoncez clairement les règles : les deux équipes en prendront connaissance et elles détermineront le résultat annoncé. Exemple : « Première équipe à capturer 3 points » ou « Conserver la forteresse centrale pendant 5 minutes ».",
+      "proposeStep4": "Message facultatif concernant le règlement intérieur, les notes de mise en forme, etc. Cliquez sur « Envoyer la proposition ».",
+      "acceptDeclineHeading": "Accepter ou refuser une proposition reçue",
+      "acceptDeclineIntro": "Les propositions en attente d'autres guildes apparaissent dans la section « Propositions entrantes » du tableau de bord des scrims.",
+      "accept": "Accept crée deux événements miroirs (un par guilde) en une seule transaction. L'événement de chaque côté est nommé « Scrim vs<opponent> \", prend l'heure de match proposée comme point de départ et accepte les inscriptions des membres comme pour un match normal — sauf qu'il n'y a qu'une seule équipe.",
+      "decline": "Le refus transforme la proposition en refusée sans créer d'événement.",
+      "withdraw": "Le retrait (envoi uniquement) annule votre propre proposition en cours avant que l'autre partie ne réponde.",
+      "rosterHeading": "Inscrivez-vous à l'événement scrim",
+      "rosterBody": "L'événement miroir se trouve dans la section « Gérer les événements » et est identifié par un badge rouge « SCRIM ». Ouvrez-le pour consulter votre effectif : une seule équipe, avec les mêmes options d'administration qu'un match (déplacer vers la réserve, liste déroulante des rôles, présence, évaluation). Les colonnes « Équipe 2 » et la deuxième heure de début sont masquées car elles ne s'appliquent pas.",
+      "cancelHeading": "Annuler un scrim accepté",
+      "cancelBody": "L'administrateur de chaque guilde peut annuler un événement depuis le tableau de bord tant qu'il figure dans la section « Matchs à venir » et avant la publication du résultat. L'annulation supprime définitivement les deux événements dupliqués (les inscriptions sont conservées pour l'historique de présence) et marque l'événement comme annulé.",
+      "resultHeading": "Annoncez le résultat",
+      "resultIntro": "Ouvrez l'événement scrim dans Gérer les événements. Le formulaire de résultats comporte quatre boutons :",
+      "resultWonLost": "Victoire / Défaite : résultat de votre guilde. Le serveur enregistre un résultat absolu (sans perspective), la guilde adverse voit donc automatiquement le résultat inverse (V/D).",
+      "resultDrawNc": "Match nul / Sans vainqueur — résultats symétriques. Un match nul couvre les forfaits, les déconnexions ou tout autre cas où la partie n'a pas été menée à son terme.",
+      "resultBody": "Les notes facultatives sont visibles par les membres des deux guildes. Une fois déclaré, le résultat s'affiche sous forme de jeton sur la page de l'événement, le tableau de bord des scrims et l'historique des scrims des joueurs. N'importe quel administrateur peut déclarer le résultat ; le premier à le faire remporte la victoire (l'interface utilisateur ne peut pas être modifiée).",
+      "discordNotificationsHeading": "notifications Discord",
+      "discordNotificationsBody": "Si une guilde possède un canal Discord configuré (voir ci-dessous), le bot publie un message en anglais sur les canaux des deux guildes lors de la proposition, de l'acceptation ou du refus d'une partie. Ce message inclut le nom de l'adversaire, l'heure de la partie (affichée dans le fuseau horaire local de chaque spectateur), le lieu et les conditions de victoire.",
+      "discordNotificationsFallback": "Si l'autre guilde possède un canal configuré mais que le bot ne peut pas y accéder (bot expulsé, canal supprimé, identifiant incorrect), une alerte s'affichera dans votre navigateur avec la liste des guildes concernées une fois votre action terminée. Les guildes sans canal configuré restent silencieuses : il s'agit d'un choix délibéré.",
+      "playerVisibilityHeading": "visibilité du joueur",
+      "playerVisibilityBody": "Les joueurs voient les événements scrim sur la page d'accueil avec un badge SCRIM rouge, peuvent s'inscrire comme pour n'importe quel match (une seule équipe à choisir) et peuvent consulter tous les scrims acceptés (à venir et résultats passés) sur le<scrimsLink> page d'historique des scrims</scrimsLink> Les propositions refusées, retirées et annulées sont cachées aux joueurs ; ils ne voient que les matchs d’entraînement qui ont réellement eu lieu ou qui sont programmés."
+    },
+    "inviteBot": {
+      "intro": "Les rappels et les commandes slash dépendent d'un bot Discord déjà déployé par l'opérateur. Pour le connecter à votre serveur Discord :",
+      "step1Intro": "Obtenez l'URL d'installation auprès de l'administrateur de votre site. Elle ressemble à ceci :",
+      "step1Note": "L'autorisation 133120 concerne l'envoi de messages et la mention de tous les utilisateurs. Ces deux autorisations sont requises : sans la mention de tous les utilisateurs, les mentions « @everyone » dans les rappels s'affichent en texte brut et n'envoient aucune notification.",
+      "step2": "Ouvrez l'URL d'installation dans un navigateur. Choisissez le serveur Discord sur lequel vous souhaitez installer le bot. Vous devez disposer de l'autorisation « Gérer le serveur » sur ce serveur. Cliquez sur « Autoriser ».",
+      "step3": "Vérifiez que le bot apparaît bien dans la liste des membres de votre serveur Discord. C'est tout ! Aucune configuration supplémentaire n'est nécessaire pour chaque bot côté Discord."
+    },
+    "discordChannel": {
+      "intro": "Le bot publie des rappels dans un canal de votre choix. Pour le configurer :",
+      "step1": "Activer le mode développeur sur Discord : Paramètres utilisateur → Avancé → Mode développeur. Une seule fois par appareil. Cela débloque l’option « Copier l’identifiant du canal » (accessible par clic droit).",
+      "step2": "Faites un clic droit sur le canal où vous souhaitez recevoir des rappels → Copier l'ID du canal. Vous obtiendrez un long numéro du type 123456789012345678. Assurez-vous qu'il s'agit d'un canal textuel et que le bot dispose des autorisations « Voir le canal » et « Envoyer des messages ».",
+      "step3": "Sur le site web, rendez-vous sur<settingsLink> Paramètres de guilde</settingsLink> et collez l'identifiant du canal dans le champ « Identifiant du canal Discord ».",
+      "step4": "Cliquez sur « Tester l'intégration ». Si tout se passe bien, une confirmation s'affichera dans l'interface et un message de test unique apparaîtra dans le canal. Cette étape de test lie automatiquement votre serveur Discord au groupe de l'application, permettant ainsi le fonctionnement des commandes slash (/upcoming, /signup).",
+      "step5": "Cliquez sur Enregistrer pour conserver l'identifiant de la chaîne.",
+      "commonErrors": "Erreurs courantes après le test : « Le bot n’a pas accès à ce canal » (réinvitez le bot via l’URL d’installation ci-dessus) ; « Le bot ne dispose pas de l’autorisation d’envoyer des messages » (les autorisations au niveau du canal sont prioritaires — corrigez le problème dans Discord) ; « Cet ID de canal n’existe pas » (vous avez copié l’ID du serveur, et non l’ID du canal)."
+    },
+    "slashCommands": {
+      "intro": "Une fois le bot installé sur le serveur et le canal lié via l'intégration de test, vos membres pourront utiliser :",
+      "upcoming": "La commande /upcoming liste les événements à venir de la guilde, avec les horaires de début des escouades. Les réponses sont éphémères (visibles uniquement par l'utilisateur).",
+      "signup": "/inscription à l'événement :<event> squad:<1|2> — inscrit l'utilisateur à un événement. Le champ « Événement » est doté de la saisie semi-automatique. L'utilisateur doit s'être connecté au site web avec Discord au moins une fois afin que le bot puisse associer son identifiant Discord à son compte de guilde ; un message l'invitera à le faire s'il ne l'a pas encore fait.",
+      "propagation": "Les nouvelles commandes slash globales peuvent mettre jusqu'à une heure environ à se propager la première fois après le déploiement du bot. Ensuite, elles sont instantanées.",
+      "failHeading": "Si la fonction d'autocomplétion de /signup affiche « Échec du chargement des options »",
+      "failIntro": "Cela signifie généralement que Discord a mis en cache une version obsolète du schéma de commandes, ou que le bot a été ajouté sans les autorisations nécessaires. Essayez dans l'ordre :",
+      "failStep1": "Vérifiez les autorisations et réinvitez. L'URL d'installation doit inclure les autorisations « bot » et « applications.commands ». Si le bot a été ajouté via une ancienne URL ne contenant pas « applications.commands », les événements de saisie automatique ne le prennent pas en charge. Réinvitez en utilisant l'URL d'installation actuelle (Paramètres de guilde → Discord → Inviter le bot Discord organisateur d'événements).",
+      "failStep2Intro": "Effacement forcé des commandes mises en cache (opérateur uniquement). Si la réinvitation ne résout pas le problème, l'administrateur de votre site peut effacer la liste des commandes mises en cache par Discord afin que le bot se réenregistre au prochain démarrage.",
+      "failStep2Note": "Redémarrez ensuite le bot (par exemple, fly machine restart) — le gestionnaire clientReady réenregistre les commandes de SLASH_COMMANDS au prochain démarrage."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Membres</membersLink> Liste de tous les membres de la guilde. Sur chaque ligne : promouvoir un membre au rang d’administrateur, rétrograder un administrateur au rang de membre, ou exclure un membre. Le dernier administrateur ne peut pas se rétrograder ou s’exclure lui-même ; il doit d’abord promouvoir quelqu’un d’autre.",
+      "invites": "<invitesLink>Invitations</invitesLink> Générez des liens d'invitation. Chaque invitation peut avoir une date d'expiration (facultative) et un nombre d'utilisations limité (vide = illimité). Cliquez sur l'URL pour la copier. Utilisez « Révoquer » pour invalider une invitation. Toute personne cliquant sur un lien d'invitation valide rejoint automatiquement la guilde en tant que membre.",
+      "settings": "<settingsLink>Paramètres de guilde</settingsLink> — Nom de la guilde, description, option de visibilité publique, ID du canal Discord. Le nom est permanent ; le reste est modifiable. Désactiver l’option « Visibilité publique » signifie que les nouveaux membres ne pourront rejoindre la guilde que par invitation.",
+      "leave": "Quittez le groupe en bas des Paramètres. Vos inscriptions précédentes sont supprimées temporairement (elles sont conservées pour les rapports de présence). Si vous êtes le seul administrateur, vous devez d'abord désigner un autre administrateur."
+    },
+    "playersPage": {
+      "body": "<playersLink>Joueurs</playersLink> Affiche l'historique complet des inscriptions de chaque membre de la guilde : événements auxquels ils se sont inscrits, préférences d'escouade, présence, évaluations et notes de direction. Utile pour choisir des chefs, établir des listes de candidats ou relancer les absents."
+    },
+    "troubleshooting": {
+      "reminders": "Les rappels ne sont pas déclenchés. Consultez /api/health : si bot.lastPollStartedAt a plus de 5 minutes de retard sur l’heure actuelle, le bot est bloqué. Les super-administrateurs peuvent également envoyer une requête POST à /api/admin/bot/poll-now pour forcer un nouveau cycle d’interrogation.",
+      "rescheduled": "Un événement a été reporté et les participants ne reçoivent pas de nouvelle notification. Veuillez vérifier que l'heure a bien été modifiée (comparez-la à l'heure précédente). Le bot ne relance que les notifications dont la période est encore antérieure à la nouvelle heure. Par exemple, si la nouvelle heure est dans 30 minutes, seul le rappel de 20 minutes sera envoyé, et non celui de 24 heures.",
+      "movedSquad": "Un joueur a été affecté à la mauvaise équipe après mon déplacement. L'indication « DÉPLACÉ » signifie que l'affectation diffère de vos préférences. Pour rétablir son affectation initiale, modifiez son rôle/équipe via le menu déroulant ou utilisez le bouton « Déplacer vers l'équipe N »."
+    }
   }
 }

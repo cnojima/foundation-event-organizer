@@ -429,5 +429,118 @@
       "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
     },
     "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
+  },
+  "adminHelp": {
+    "title": "Yönetici kılavuzu",
+    "subtitle": "Bir lonca yöneticisinin etkinlikleri yürütmek için ihtiyaç duyduğu her şey: maç oluşturma, oyuncuları yönetme, Discord'u entegre etme ve loncanın kendisini yönetme. Oyunculara yönelik sürümü ise şu adreste bulunuyor:<helpLink> /yardım</helpLink> .",
+    "sections": {
+      "createMatch": "Maç etkinliği oluşturun",
+      "editEvent": "Etkinlik ayrıntılarını düzenle",
+      "managePlayers": "Oyuncuları yönetin",
+      "waitlist": "Bekleme listesi",
+      "scrims": "Antrenman maçı yapın.",
+      "inviteBot": "Discord botunu davet et",
+      "discordChannel": "Discord kanalını kurun.",
+      "slashCommands": "Discord slash komutları",
+      "manageGuild": "Loncanızı yönetin",
+      "playersPage": "Oyuncular sayfası",
+      "troubleshooting": "Karşılaşabileceğiniz şeyler"
+    },
+    "createMatch": {
+      "step1": "Kenar çubuğundaki Etkinlikleri Yönet seçeneğine gidin ve + Yeni etkinlik seçeneğine tıklayın.",
+      "step2": "Etkinlik türü olarak \"Maç\"ı seçin. Maç etkinliklerinde kendi başlangıç saatleri, liderlik pozisyonları ve yedek kadroları olan iki takım bulunur. (Toplantılar veya izleme partileri gibi yalnızca bilgi amaçlı girişler için \"Basit\"i seçin - kayıt gerekmez, sadece takvim öğesi.)",
+      "step3": "Adı, isteğe bağlı açıklamayı ve kayıt penceresini (Kayıt Açılır / Kayıt Kapanır) doldurun. Bu pencere her iki takım tarafından da paylaşılır.",
+      "step4": "1. Takımın Başlangıç Saati ve 2. Takımın Başlangıç Saati'ni ayarlayın. Her ikisi de veya sadece biri boş bırakılabilir; oyuncular siz doldurana kadar \"Belirlenecek\" ifadesini görürler. Her takımın hatırlatıcıları, kendi başlangıç saatinden bağımsız olarak tetiklenir.",
+      "step5": "Tüm tarih ve saat alanları tarayıcınızın yerel saatinde girilir. Form, her girişin altında UTC karşılığını göstererek herhangi bir belirsizliği önler. Saatler UTC olarak saklanır ve her kullanıcının yerel saat diliminde görüntülenir.",
+      "step6": "İsteğe bağlı: takım isimlerini, maksimum oyuncu sayısını, maksimum yedek oyuncu sayısını ve liderlik slotlarını özelleştirin. Varsayılan değerler takım başına 20 / 10 / 3'tür (toplam 60 slot).",
+      "step7": "\"Etkinlik Oluştur\"a tıklayın. Etkinlik yönetim sayfasına yönlendirileceksiniz."
+    },
+    "editEvent": {
+      "dates": "Tarihler: Etkinlik yönetim sayfasında, Tarihleri düzenle'ye tıklayın. Kayıt dönemini ve her iki takımın başlangıç saatlerini değiştirebilirsiniz.",
+      "reschedule": "Yeniden planlama hatırlatıcıları yeniden tetikler: Başlangıç saatini değiştirmek, o ekip için \"zaten gönderilmiş\" kaydını siler, bu nedenle Discord botu yeni saate göre yeni 24 saat / 1 saat / 20 dakika hatırlatıcıları gönderir. Birkaç dakika değiştirmek de bunları siler, bu nedenle yeniden bildirim göndermek istemediğiniz sürece küçük değişiklikler yapmaktan kaçının.",
+      "softDelete": "Yumuşak silme: Etkinliği Sil düğmesi, etkinliği oyunculardan gizler ancak katılım raporları için kayıt verilerini saklar. Silinen etkinlikler, Etkinlikleri Yönet bölümünde ayrı bir \"Silinenler\" bölümünde görünür."
+    },
+    "managePlayers": {
+      "intro": "Etkinlik yönetim sayfasında iki takım sütunu ve altında bir bekleme listesi bulunur. Her takım sütununda, her kayıt şu kontrolleri içeren bir satır olarak gösterilir:",
+      "moveSquad": "N Takımına Geç düğmesi: oyuncuyu tek tıklamayla diğer takıma taşır. Atanan takımı günceller; yeni takım ilk tercihlerinden farklıysa, tercihlerini geçersiz kıldığınızı hatırlamanız için adlarının yanında küçük bir TAŞINDI rozeti görünür.",
+      "moveBackup": "Yedek/Kadroya Taşı düğmesi: oyuncuyu ana kadro (oyuncu) ve yedek kadro (yedek) arasında değiştirir. Bekleme listesi de dahil olmak üzere herhangi bir sütunda çalışır; bekleme listesindeki bir oyuncuyu doğrudan yedek kadroya yükseltmek için kullanışlıdır.",
+      "roleDropdown": "Rol açılır menüsü (Atanmamış / Oyuncu / Yedek / Lider / Bekleme Listesi): daha ayrıntılı rol değişiklikleri. Bunu, liderlik isteyen bir oyuncuyu liderliğe yükseltmek veya birini bekleme listesine almak için kullanın.",
+      "attendedRating": "Katılım onay kutusu + 1-5 yıldız derecelendirmesi: etkinlik sonrası kayıt tutma. Her ikisi de etkinleştirildiğinde otomatik olarak kaydedilir. Gelecekteki kadro kararları için kullanılır.",
+      "effectiveSquadNote": "Takım sütunları, etkin takıma göre gruplandırılır: yönetici ataması önceliklidir, aksi takdirde ilk tercih esas alınır. Bu nedenle, \"Takım 2'ye Taşı\" seçeneğiyle taşıdığınız bir oyuncu, bir sonraki render işleminde hemen Takım 2 sütununda görünür.",
+      "leaderPillNote": "Bir ismin yanında bulunan sarı \"Lider\" simgesi, o oyuncunun kayıt sırasında liderlik rolü talep ettiğini gösterir. Bu talepler arasından liderleri seçmek için rollerini \"Lider\" olarak değiştirin."
+    },
+    "waitlist": {
+      "intro": "Tüm kadro ve yedek kontenjanları dolduğunda, yeni kayıtlar bekleme listesine alınır (atanan rol = bekleme listesi). Etkinlik yönetim sayfasının altındaki bekleme listesi bölümü, onları kayıt sırasına göre gösterir.",
+      "promote": "Bekleme listesindeki birini kadroya almak için, açılır menüden rolünü Bekleme Listesi'nden Oyuncu veya Yedek olarak değiştirin veya yaygın durum için Yedek Oyuncuya Taşı seçeneğini kullanın. Kadrodaki yerleşimi, siz açıkça taşımadığınız sürece ilk tercihlerine göre belirlenir."
+    },
+    "scrims": {
+      "intro": "Scrim, iki lonca yöneticisi arasında kararlaştırılan, her iki tarafta tek bir takımın yer aldığı 1'e 1 lonca mücadelesidir. Kabul edildikten sonra, her iki lonca da üyelerinin kaydolabileceği aynı etkinliğe sahip olur. Maçtan sonra, yöneticilerden biri sonucu ilan eder.",
+      "serverNote": "Sunucu numarası zorunludur. Her iki loncanın da Lonca Ayarları'nda aynı Sunucu Numarasına sahip olması gerekir; aksi takdirde birbirlerinin rakip açılır menüsünde görünmezler. Sunucu numaranızı şu şekilde ayarlayın:<settingsLink> Lonca Ayarları</settingsLink> Birinci.",
+      "proposeHeading": "Bir perde önerin",
+      "proposeStep1": "Git<scrimmagesLink> antrenman maçları kontrol paneli</scrimmagesLink> ve + Perde öner seçeneğine tıklayın.",
+      "proposeStep2": "Rakibi (aynı sunucu numarasına sahip olanlar filtrelenmiş), oyun süresini ve konumu seçin; ister standart haritalardan birini (Kruger, Cerno, Kanvo, Sphinx) isterse serbest metinle özel bir konum belirleyin.",
+      "proposeStep3": "Kazanma Koşulunu doldurun (zorunlu). Kuralları açıkça belirtin — her iki taraf da bunu görür ve ilan edilen sonuçla bağlantılıdır. Örnek: \"3 ele geçiren ilk takım\" veya \"Merkez kaleyi 5 dakika boyunca elinde tutan takım\".",
+      "proposeStep4": "İsteğe bağlı mesaj; ev kuralları, format notları vb. için eklenebilir. \"Teklifi Gönder\"e tıklayın.",
+      "acceptDeclineHeading": "Gelen teklifi kabul et veya reddet",
+      "acceptDeclineIntro": "Diğer loncalardan gelen bekleyen teklifler, scrim kontrol panelinin Gelen teklifler bölümünde görünür.",
+      "accept": "Accept, tek bir işlemde iki adet birbirinin aynısı olay (her lonca için bir tane) oluşturur. Her iki tarafın olayı da \"Scrim vs\" olarak adlandırılır.<opponent> \", önerilen oyun süresini başlangıç noktası olarak alır ve normal bir maç gibi üye kayıtlarını kabul eder - tek fark, sadece bir takımın olmasıdır.",
+      "decline": "Reddetme seçeneği, herhangi bir olay yaratmadan teklifi \"reddedildi\" olarak değiştirir.",
+      "withdraw": "Geri çekme (sadece gidenler için) seçeneği, karşı taraf yanıt vermeden önce kendi bekleyen teklifinizi iptal eder.",
+      "rosterHeading": "Hazırlık maçının kadrosunu belirleyin.",
+      "rosterBody": "Yansıtılan etkinlik, Etkinlikleri Yönet bölümünde kırmızı bir SCRIM rozetiyle yer almaktadır. Kadronuzu görmek için açın — tek takım, maçla aynı yönetici kontrolleri (yedekliğe taşıma, rol açılır menüsü, katılım, puanlama). Takım-2 sütunları ve ikinci başlangıç saati gizlenmiştir çünkü bunlar geçerli değildir.",
+      "cancelHeading": "Kabul edilmiş bir antrenman maçını iptal edin",
+      "cancelBody": "Herhangi bir loncanın yöneticisi, sonuç açıklanmadan önce ve yaklaşan maçlar bölümündeyken kontrol panelinden iptal işlemini gerçekleştirebilir. İptal işlemi, her iki eşlenmiş etkinliği de geçici olarak siler (katılım geçmişi için kayıtlar saklanır) ve teklifi iptal edilmiş olarak değiştirir.",
+      "resultHeading": "Sonucu açıklayın.",
+      "resultIntro": "Etkinlikleri Yönet bölümünden scrim etkinliğini açın. Sonuç formunda dört düğme bulunur:",
+      "resultWonLost": "Kazandık / Kaybettik — loncanızın sonucu. Sunucu mutlak (perspektiften bağımsız) bir sonuç saklar, bu nedenle rakip lonca otomatik olarak tersini görür.",
+      "resultDrawNc": "Beraberlik / Sonuçsuz Maç — simetrik sonuçlar. Sonuçsuz maç, hükmen mağlubiyetleri, bağlantı kopmalarını veya maçın tamamlanmadığı herhangi bir senaryoyu kapsar.",
+      "resultBody": "İsteğe bağlı notlar, her iki loncanın üyeleri tarafından da görülebilir. Bildirildikten sonra sonuç, etkinlik sayfasında, scrim kontrol panelinde ve oyuncuların scrim geçmişinde bir çip olarak görünür. Her iki yönetici de bildirebilir; ilk gönderen kazanır (arayüzde üzerine yazma yok).",
+      "discordNotificationsHeading": "Discord bildirimleri",
+      "discordNotificationsBody": "Bir loncanın yapılandırılmış bir Discord kanalı varsa (aşağıya bakınız), bot teklif etme/kabul etme/reddetme durumlarında her iki loncanın kanallarına da İngilizce bir mesaj gönderir. Mesajda rakibin adı, oyun süresi (her izleyicinin yerel saat diliminde gösterilir), konum ve kazanma koşulu yer alır.",
+      "discordNotificationsFallback": "Diğer sunucunun yapılandırılmış bir kanalı varsa ancak bot bu kanala erişemiyorsa (bot atıldı, kanal silindi, yanlış kimlik), işleminiz tamamlandıktan sonra etkilenen sunucu adlarını listeleyen bir tarayıcı uyarısı göreceksiniz. Herhangi bir kanalı yapılandırılmamış sunucular sessiz kalır; bu kasıtlı bir devre dışı bırakma seçeneğidir.",
+      "playerVisibilityHeading": "Oyuncu görünürlüğü",
+      "playerVisibilityBody": "Oyuncular ana sayfada kırmızı bir SCRIM rozetiyle gösterilen antrenman maçlarını görebilir, herhangi bir maç gibi kayıt olabilir (sadece bir takım seçmek yeterli) ve kabul edilen tüm antrenman maçlarına (yaklaşan + geçmiş sonuçlar) göz atabilirler.<scrimsLink> scrim geçmişi sayfası</scrimsLink> Reddedilen, geri çekilen ve iptal edilen teklifler oyunculardan gizlenir; oyuncular yalnızca gerçekleşen veya planlanan antrenman maçlarını görürler."
+    },
+    "inviteBot": {
+      "intro": "Hatırlatmalar ve komut satırları, operatörün önceden kurduğu bir Discord botuna bağlıdır. Bunu Discord sunucunuza bağlamak için:",
+      "step1Intro": "Sitenizin operatöründen kurulum URL'sini alın. Şöyle bir şey:",
+      "step1Note": "permissions=133120 kısmı Mesaj Gönder ve Herkese Etiketle seçeneklerini kapsar. Her ikisi de gereklidir; Herkese Etiketle seçeneği olmadan hatırlatıcılardaki @everyone etiketi düz metin olarak görüntülenir ve kimseye bildirim göndermez.",
+      "step2": "Kurulum URL'sini bir tarayıcıda açın. Botun kurulmasını istediğiniz Discord sunucusunu seçin. Bu sunucuda \"Sunucuyu Yönet\" iznine sahip olmanız gerekiyor. \"Yetkilendir\"e tıklayın.",
+      "step3": "Botun Discord sunucunuzun üye listesinde göründüğünü doğrulayın. Hepsi bu kadar; Discord tarafında bot başına herhangi bir yapılandırma yapmanıza gerek yok."
+    },
+    "discordChannel": {
+      "intro": "Bot, seçtiğiniz bir kanala hatırlatma mesajları gönderir. Yapılandırmak için:",
+      "step1": "Discord'da Geliştirici Modunu Etkinleştirin: Kullanıcı Ayarları → Gelişmiş → Geliştirici Modu. Cihaz başına bir kez. Bu, \"Kanal Kimliğini Kopyala\" sağ tıklama seçeneğini etkinleştirir.",
+      "step2": "Hatırlatıcıların gönderilmesini istediğiniz kanala sağ tıklayın → Kanal Kimliğini Kopyala. 123456789012345678 gibi uzun bir sayı elde edeceksiniz. Bunun bir metin kanalı olduğundan ve botun rolünün orada Kanalı Görüntüle ve Mesaj Gönder izinlerine sahip olduğundan emin olun.",
+      "step3": "Web sitesinde şuraya gidin:<settingsLink> Lonca Ayarları</settingsLink> ve kanal kimliğini Discord kanal kimliği alanına yapıştırın.",
+      "step4": "\"Entegrasyonu Test Et\" seçeneğine tıklayın. Her şey yolunda ise, kullanıcı arayüzünde bir onay ve kanalda tek seferlik bir test mesajı göreceksiniz. Test adımı ayrıca Discord sunucunuzu uygulama sunucusuna otomatik olarak bağlar, böylece slash komutları (/upcoming, /signup) çalışır.",
+      "step5": "Kanal kimliğini kaydetmek için Kaydet'e tıklayın.",
+      "commonErrors": "Testten sonra sık karşılaşılan hatalar: \"Botun o kanala erişimi yok\" (yukarıdaki kurulum URL'si üzerinden botu yeniden davet edin); \"Botun Mesaj Gönderme izni eksik\" (kanal düzeyinde izin geçersiz kılmaları - Discord'da düzeltin); \"Bu kanal kimliği mevcut değil\" (kanal kimliğini değil, sunucu kimliğini kopyaladınız)."
+    },
+    "slashCommands": {
+      "intro": "Bot sunucuya yüklendikten ve Test entegrasyonu aracılığıyla kanalı bağladıktan sonra, üyeleriniz şunları kullanabilir:",
+      "upcoming": "/upcoming — loncanın yaklaşan etkinliklerini, takım başlangıç saatleriyle birlikte listeler. Yanıtlar geçicidir (yalnızca kullanıcı tarafından görülebilir).",
+      "signup": "/kayıt etkinliği:<event> ekip:<1|2> — kullanıcıyı bir etkinliğe kaydeder. Etkinlik alanında otomatik tamamlama özelliği bulunur. Botun Discord kimliğini lonca hesabıyla eşleştirebilmesi için kullanıcının en az bir kez Discord ile web sitesine giriş yapmış olması gerekir; giriş yapmamışlarsa uyarı verir.",
+      "propagation": "Yeni global slash komutlarının, botun devreye alınmasından sonra ilk kez yayılması yaklaşık 1 saat sürer. Ondan sonra ise anında yayılırlar.",
+      "failHeading": "Eğer /signup otomatik tamamlama \"Seçenekler yüklenemedi\" şeklinde bir mesaj gösteriyorsa",
+      "failIntro": "Genellikle Discord'un komut şemasının eski bir sürümünü önbelleğe aldığı veya botun eksik bir kapsamla eklendiği anlamına gelir. Sırasıyla deneyin:",
+      "failStep1": "Kapsamları doğrulayın ve yeniden davet edin. Kurulum URL'si hem bot hem de applications.commands kapsamlarını içermelidir. Bot, applications.commands'ı içermeyen eski bir URL üzerinden eklendiyse, otomatik tamamlama etkinlikleri ona ulaşamaz. Mevcut kurulum URL'sini kullanarak yeniden davet edin (Lonca Ayarları → Discord → Etkinlik Düzenleyici Discord Botunu Davet Et).",
+      "failStep2Intro": "Önbelleğe alınmış komutları zorla temizleyin (yalnızca operatör). Yeniden davet etme sorunu çözmezse, site operatörünüz Discord'un önbelleğe alınmış komut listesini silebilir, böylece bot bir sonraki başlatmada sıfırdan yeniden kaydedilir:",
+      "failStep2Note": "Ardından botu yeniden başlatın (örneğin fly machine restart) — clientReady işleyici, bir sonraki önyüklemede SLASH_COMMANDS'tan komutları yeniden kaydeder."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Üyeler</membersLink> — Loncadaki herkesin listesi. Her satır için: Bir üyeyi yönetici yap, bir yöneticiyi üyeye düşür veya bir üyeyi loncadan at. Son yönetici kendini yöneticilikten çıkaramaz veya loncadan atamaz; önce başka birini yönetici olarak ataması gerekir.",
+      "invites": "<invitesLink>Davetiyeler</invitesLink> — Davet bağlantıları oluşturun. Her davetin isteğe bağlı bir geçerlilik süresi ve maksimum kullanım sınırı olabilir (boş = sınırsız). Kopyalamak için URL'ye tıklayın. Birini geçersiz kılmak için İptal Et'i kullanın. Geçerli bir davet bağlantısına tıklayan herkes otomatik olarak loncaya üye olarak katılır.",
+      "settings": "<settingsLink>Lonca Ayarları</settingsLink> — Lonca adı, açıklama, herkese açık keşif seçeneği, Discord kanal kimliği. Slug kalıcıdır; diğer her şey düzenlenebilir. Herkese açık keşifte listelenme seçeneğini kapatmak, yeni üyelerin yalnızca davet bağlantısı aracılığıyla katılabileceği anlamına gelir.",
+      "leave": "Ayarlar'ın en altındaki loncadan ayrılın. Geçmiş kayıtlarınız geçici olarak silinecektir (katılım raporları için saklanacaktır). Tek yönetici sizseniz, önce başka birini atamanız gerekecektir."
+    },
+    "playersPage": {
+      "body": "<playersLink>Oyuncular</playersLink> Lonca üyelerinin her birinin kayıt geçmişini eksiksiz olarak gösterir: hangi etkinliklere kaydoldukları, takım tercihleri, katılım durumları, puanları ve liderlik notları. Lider seçmek, aday listeleri oluşturmak veya gelmeyenlerle iletişime geçmek için kullanışlıdır."
+    },
+    "troubleshooting": {
+      "reminders": "Hatırlatmalar tetiklenmiyor. /api/health adresini kontrol edin — eğer bot.lastPollStartedAt mevcut zamandan yaklaşık 5 dakikadan fazla gerideyse, yoklama işlemi takılı kalmıştır. Süper yöneticiler ayrıca bir yoklama döngüsünü zorlamak için /api/admin/bot/poll-now adresine POST isteği gönderebilirler.",
+      "rescheduled": "Bir etkinlik yeniden planlandı ve katılımcılara tekrar bildirim gönderilmiyor. Zamanın gerçekten değiştiğini doğrulayın (önceki değerle karşılaştırın). Bot yalnızca penceresi yeni zamandan daha ileride olan türleri yeniden tetikler; yeni zamanınız şu andan 30 dakika sonraysa, yalnızca 20 dakikalık hatırlatıcı tetiklenir, 24 saatlik olan değil.",
+      "movedSquad": "Oyuncuyu taşıdıktan sonra yanlış takıma atandı. \"TAŞINDI\" rozeti, atamanın tercihten farklı olduğunu gösterir. Geri almak için, açılır menüden rolünü/takımını değiştirin veya \"Takım N'ye Taşı\" düğmesini kullanarak eski haline getirin."
+    }
   }
 }

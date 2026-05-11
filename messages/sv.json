@@ -429,5 +429,118 @@
       "slashCommands": "Discord-kommandon med snedstreck: /upcoming listar din gilles kommande evenemang, och /signup låter dig registrera dig utan att lämna Discord. Du måste logga in på webbplatsen med Discord minst en gång först, så att boten kan matcha ditt konto."
     },
     "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
+  },
+  "adminHelp": {
+    "title": "Administratörsguide",
+    "subtitle": "Allt en gillesadministratör behöver för att driva evenemang: skapa matcher, hantera spelare, koppla upp Discord och sköta själva gillet. Den spelarvänliga versionen av detta finns på<helpLink> /hjälp</helpLink> .",
+    "sections": {
+      "createMatch": "Skapa ett matchevenemang",
+      "editEvent": "Redigera händelseinformation",
+      "managePlayers": "Hantera spelare",
+      "waitlist": "Väntelistan",
+      "scrims": "Kör ett scrim",
+      "inviteBot": "Bjud in Discord-boten",
+      "discordChannel": "Konfigurera Discord-kanalen",
+      "slashCommands": "Discord slash-kommandon",
+      "manageGuild": "Hantera ditt gille",
+      "playersPage": "Spelarsidan",
+      "troubleshooting": "Saker du kan stöta på"
+    },
+    "createMatch": {
+      "step1": "Gå till Hantera händelser i sidofältet och klicka på + Nytt evenemang.",
+      "step2": "Välj Match för evenemangstyp. Matchevenemang har två trupper med egna starttider, ledarskapsplatser och en reservtrupp. (Välj Enkel för informationsbaserade poster som möten eller visningsfester – inga anmälningar, bara ett kalenderobjekt.)",
+      "step3": "Fyll i namn, valfri beskrivning och anmälningsfönstret (Anmälan öppnas / Anmälan stängs). Fönstret delas av båda lagen.",
+      "step4": "Ställ in att Trupp 1 börjar vid och Trupp 2 börjar vid. Endera eller båda kan lämnas tomma — spelare ser \"TBD\" tills du fyller i dem. Varje trupps påminnelser utlöses oberoende av sin egen starttid.",
+      "step5": "Alla datum- och tidsfält anges i din webbläsares lokala tid. Formuläret visar UTC-motsvarigheten under varje inmatning så att det inte finns någon tvetydighet. Tiderna lagras som UTC och återges i varje tittares lokala zon.",
+      "step6": "Valfritt: anpassa truppnamn, max antal spelare, max antal reservspelare och ledarplatser. Standardvärdena är 20 / 10 / 3 per trupp (totalt 60 platser).",
+      "step7": "Klicka på Skapa evenemang. Du kommer till evenemangets administratörssida."
+    },
+    "editEvent": {
+      "dates": "Datum: på evenemangets administratörssida klickar du på Redigera datum. Du kan ändra anmälningsfönstret och båda truppernas starttider.",
+      "reschedule": "Omplanering av påminnelser för återutskick: om du ändrar en starttid rensas \"redan skickat\"-posten för den gruppen, så Discord-boten kommer att skicka nya 24-timmars / 1 tim / 20-minuters påminnelser mot den nya tiden. Att justera med ett par minuter rensar dem också, så undvik att nudga om du inte tänker meddela igen.",
+      "softDelete": "Mjuk radering: knappen Radera händelse döljer händelsen från spelarna men behåller anmälningsdata för närvarorapporter. Raderade händelser visas under ett separat avsnitt \"Borttaget\" i Hantera händelser."
+    },
+    "managePlayers": {
+      "intro": "Sidan för evenemangsadministration visar två gruppkolumner och en väntelista nedan. I varje gruppkolumn finns varje anmälan på en rad med dessa kontroller:",
+      "moveSquad": "Knappen Flytta till trupp N: flyttar spelaren till den andra truppen med ett klick. Uppdaterar den tilldelade truppen; om den nya truppen skiljer sig från deras förstahandsval visas en liten FLYTTAD-märke bredvid deras namn så att du kommer ihåg att du åsidosatte deras preferens.",
+      "moveBackup": "Knappen Flytta till reserv-/lag: växlar spelaren mellan huvudlagen (spelare) och reservlagen (reserv). Fungerar i vilken kolumn som helst, inklusive väntelistan – praktiskt för att flytta en väntelistan direkt till reservlagen.",
+      "roleDropdown": "Rollrullgardinsmeny (Ej tilldelad / Spelare / Reserv / Ledare / Väntelista): mer detaljerade rolländringar. Använd detta för att befordra en spelare som begärt ledarskap till ledare, eller för att flytta någon till väntelistan.",
+      "attendedRating": "Kryssruta för deltagande + 1–5 stjärnor: bokföring efter evenemanget. Båda sparas automatiskt när de är aktiverade. Används för framtida beslut om laguppställning.",
+      "effectiveSquadNote": "Truppenkolumnerna grupperas efter effektiv trupp: administratörstilldelning vinner, annars förstahandsval. Så en spelare du flyttar med Flytta till Trupp 2 visas omedelbart i Trupp 2-kolumnen på nästa rendering.",
+      "leaderPillNote": "Det gula pillret Ledare bredvid ett namn betyder att spelaren begärde en ledarroll vid registreringen. Välj ledare från dessa förfrågningar genom att ändra deras roll till Ledare."
+    },
+    "waitlist": {
+      "intro": "När alla platser i truppen och reservspelet är upptagna hamnar nya anmälningar på väntelistan (tilldelad roll = väntelista). Väntelisteavsnittet längst ner på evenemangets administratörssida visar dem i anmälningsordning.",
+      "promote": "För att flytta någon från väntelistan, ändra deras roll från väntelista till spelare eller reservspelare via rullgardinsmenyn – eller använd Flytta till reservspelare för det vanliga fallet. Deras truppplacering baseras på deras förstahandspreferens om du inte uttryckligen flyttar dem."
+    },
+    "scrims": {
+      "intro": "En scrim är en 1-mot-1-gillutmaning som förhandlas fram mellan två gillesadministratörer, med en enda trupp på varje sida. När de accepterats får båda gillena en speglad händelse som deras medlemmar kan anmäla sig till. Efter matchen tillkännager endera administratören resultatet.",
+      "serverNote": "Servernummer krävs. Båda gillen måste ha samma servernummer inställt i gillens inställningar — annars visas de inte i varandras motståndarlistor. Ange ditt i<settingsLink> Gillets inställningar</settingsLink> första.",
+      "proposeHeading": "Föreslå ett undersökningsprojekt",
+      "proposeStep1": "Gå till<scrimmagesLink> scrimmages-instrumentpanelen</scrimmagesLink> och klicka på + Föreslå skrivundersökning.",
+      "proposeStep2": "Välj motståndare (filtrerad till samma servernummer), speltid och plats — antingen en av de kanoniska kartorna (Kruger, Cerno, Kanvo, Sphinx) eller en anpassad plats i fritext.",
+      "proposeStep3": "Fyll i vinstvillkoret (obligatoriskt). Ange reglerna tydligt — båda sidor ser detta och det är kopplat till det deklarerade resultatet. Exempel: \"Första laget till 3 erövringar\" eller \"Håll den centrala fästningen i 5 minuter\".",
+      "proposeStep4": "Valfritt meddelande för husregler, formatanteckningar etc. Klicka på Skicka förslag.",
+      "acceptDeclineHeading": "Acceptera eller avböja ett inkommande förslag",
+      "acceptDeclineIntro": "Väntande förslag från andra gillen visas i avsnittet Inkommande förslag på scrim-instrumentpanelen.",
+      "accept": "Accept skapar två speglade händelser (en per gille) i en enda transaktion. Varje sidas händelse heter \"Scrim vs.<opponent> \", får den föreslagna speltiden som starttid och accepterar medlemsregistreringar som en vanlig match – förutom att det bara finns en trupp.",
+      "decline": "Avvisa gör att förslaget avvisas utan att några händelser skapas.",
+      "withdraw": "Dra tillbaka (endast utgående) avbryter ditt eget väntande förslag innan motparten svarar.",
+      "rosterHeading": "Spela in scrim-evenemanget",
+      "rosterBody": "Det speglade evenemanget finns under Hantera evenemang med ett rött SCRIM-märke. Öppna det för att se din laguppställning – en enda trupp, samma administratörskontroller som en match (flytta till reserv, roll-rullgardinsmeny, deltagande, betyg). Kolumnerna för trupp 2 och den andra starttiden är dolda eftersom de inte gäller.",
+      "cancelHeading": "Avbryt en godkänd undersökning",
+      "cancelBody": "Endera gillets administratör kan Avbryta från instrumentpanelen medan det är i Kommande övningar och innan ett resultat deklareras. Avbryt tar bort båda speglade händelserna mjukt (anmälningar sparas för närvarohistorik) och gör förslaget avbrutet.",
+      "resultHeading": "Förkunna resultatet",
+      "resultIntro": "Öppna scrim-händelsen under Hantera händelser. Resultatformuläret har fyra knappar:",
+      "resultWonLost": "Vi vann / Vi förlorade — ditt gilles resultat. Servern lagrar ett absolut (perspektivfritt) resultat, så det motsatta gillet ser det inversa V/F automatiskt.",
+      "resultDrawNc": "Oavgjort / Ingen match — symmetriska resultat. Ingen match täcker förverkande, frånkopplingar eller andra scenarier där matchen inte slutfördes.",
+      "resultBody": "Valfria anteckningar är synliga för båda gillenas medlemmar. När resultatet har deklarerats visas det som en bricka på evenemangssidan, i scrim-instrumentpanelen och i spelarnas scrim-historik. Endera administratören kan deklarera – den första att skicka in vinster (ingen överskrivning av användargränssnittet).",
+      "discordNotificationsHeading": "Discord-aviseringar",
+      "discordNotificationsBody": "Om ett gille har en Discord-kanal konfigurerad (se nedan), skickar boten ett engelskt meddelande till båda gillenas kanaler med förslag/accept/avböjning. Meddelandet inkluderar motståndarens namn, speltid (renderad i varje tittares lokala tidszon), plats och vinstvillkor.",
+      "discordNotificationsFallback": "Om det andra gillet har en konfigurerad kanal men boten inte kan nå den (bot sparkad, kanal borttagen, fel ID), kommer du att se en webbläsaravisering som listar de berörda gillenamnen efter att din åtgärd är klar. Gille utan någon konfigurerad kanal förblir tysta – det är ett avsiktligt avval.",
+      "playerVisibilityHeading": "Spelarens synlighet",
+      "playerVisibilityBody": "Spelare ser träningsmatcher på hemsidan med ett rött SCRIM-märke, kan anmäla sig som vilken match som helst (bara en trupp att välja) och kan bläddra bland alla accepterade träningsmatcher (kommande + tidigare resultat) på<scrimsLink> scrim-historiksida</scrimsLink> Avvisade, tillbakadragna och avbrutna förslag är dolda för spelare – de ser bara träningsmatcher som faktiskt har ägt rum eller är schemalagda."
+    },
+    "inviteBot": {
+      "intro": "Påminnelser och snedstreckkommandon är beroende av en Discord-bot som operatören redan har distribuerat. För att ansluta den till din Discord-server:",
+      "step1Intro": "Hämta installations-URL:en från din webbplatsoperatör. Den ser ut så här:",
+      "step1Note": "Delen permissions=133120 täcker Skicka meddelanden och Nämn alla. Båda krävs – utan Nämn alla renderas @everyone i påminnelser som vanlig text och pingar ingen.",
+      "step2": "Öppna installations-URL:en i en webbläsare. Välj den Discord-server där du vill att boten ska vara. Du behöver behörigheten \"Hantera server\" på den servern. Klicka på Auktorisera.",
+      "step3": "Bekräfta att boten visas i din Discord-servers medlemslista. Det var allt – ingen konfiguration per bot på Discord-sidan."
+    },
+    "discordChannel": {
+      "intro": "Boten publicerar påminnelser i en valfri kanal. Så här konfigurerar du den:",
+      "step1": "Aktivera utvecklarläge i Discord: Användarinställningar → Avancerat → Utvecklarläge. En gång per enhet. Detta låser upp högerklicksalternativet \"Kopiera kanal-ID\".",
+      "step2": "Högerklicka på den kanal du vill ha påminnelser i → Kopiera kanal-ID. Du får ett långt nummer som 123456789012345678. Se till att det är en textkanal och att botens roll har behörigheterna Visa kanal och Skicka meddelanden där.",
+      "step3": "På webbplatsen, gå till<settingsLink> Gillets inställningar</settingsLink> och klistra in kanal-ID:t i Discord-kanal-ID:t.",
+      "step4": "Klicka på Testa integration. Om allt är korrekt ser du en bekräftelse i användargränssnittet och ett engångstestmeddelande i kanalen. Teststeget länkar också automatiskt din Discord-server till app-gilden så att slash-kommandon (/upcoming, /signup) fungerar.",
+      "step5": "Klicka på Spara för att behålla kanal-ID:t.",
+      "commonErrors": "Vanliga fel efter testet: \"Boten har inte åtkomst till den kanalen\" (bjud in boten igen via installations-URL:en ovan); \"Boten saknar behörigheten att skicka meddelanden\" (behörigheter på kanalnivå åsidosätts – åtgärdas i Discord); \"Det kanal-ID:t finns inte\" (du kopierade server-ID:t, inte kanal-ID:t)."
+    },
+    "slashCommands": {
+      "intro": "När boten är på servern och du har länkat kanalen via testintegration kan dina medlemmar använda:",
+      "upcoming": "/kommande — listar gillets kommande evenemang med båda truppernas starttider. Svaren är kortlivade (endast synliga för användaren).",
+      "signup": "/registreringshändelse:<event> squad:<1|2> — registrerar användaren för ett evenemang. Evenemangsfältet har autokomplettering. Användaren måste ha loggat in på webbplatsen med Discord minst en gång så att boten kan matcha deras Discord-ID med deras gillekonto — den kommer att fråga dem om de inte har gjort det.",
+      "propagation": "Nya globala snedstreckkommandon tar upp till ungefär en timme att spridas första gången efter att boten har driftsatts. Därefter är de omedelbara.",
+      "failHeading": "Om /signup autofullständig visar \"Det gick inte att ladda alternativen\"",
+      "failIntro": "Vanligtvis betyder det att Discord cachade en föråldrad version av kommandoschemat, eller att boten lades till med ett saknat scope. Försök i ordning:",
+      "failStep1": "Verifiera omfång och bjud in igen. Installations-URL:en måste innehålla både bot- och applications.commands-omfång. Om boten lades till via en äldre URL som saknade applications.commands, når inte autokompletteringshändelser den. Bjud in igen med den aktuella installations-URL:en (Guildinställningar → Discord → Bjud in evenemangsorganisatörens Discord-bot).",
+      "failStep2Intro": "Tvinga bort cachade kommandon (endast operatör). Om det inte löser problemet att bjuda in igen kan din webbplatsoperatör rensa Discords cachade kommandolista så att boten registreras på nytt vid nästa uppstart:",
+      "failStep2Note": "Starta sedan om boten (t.ex. starta om maskinen) — clientReady-hanteraren registrerar om kommandon från SLASH_COMMANDS vid nästa uppstart."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Medlemmar</membersLink> — lista över alla i gillet. Per rad: Befordra en medlem till administratör, Degradera en administratör till medlem, eller Sparka ut en medlem. Den sista administratören kan inte degradera eller sparka ut sig själv — befordra någon annan först.",
+      "invites": "<invitesLink>Inbjudningar</invitesLink> — generera inbjudningslänkar. Varje inbjudan kan ha ett valfritt utgångsdatum och en maximal användningsgräns (tomt = obegränsat). Klicka på URL:en för att kopiera. Använd Återkalla för att ogiltigförklara en. Alla som klickar på en giltig inbjudningslänk går automatiskt med i gillet som medlem.",
+      "settings": "<settingsLink>Gillets inställningar</settingsLink> — gillets namn, beskrivning, växlingsknapp för offentlig upptäckt, Discord-kanal-ID. Sluggen är permanent; allt annat är redigerbart. Att stänga av Listad i offentlig upptäckt innebär att nya medlemmar bara kan gå med via inbjudningslänk.",
+      "leave": "Lämna gillet längst ner i Inställningar. Dina tidigare registreringar raderas automatiskt (sparas för närvarorapporter). Om du är den enda administratören måste du först befordra någon annan."
+    },
+    "playersPage": {
+      "body": "<playersLink>Spelare</playersLink> visar varje gillemedlem deras fullständiga anmälningshistorik: vilka evenemang de anmält sig till, grupppreferenser, närvaro, betyg och ledarskapsanteckningar. Användbart för att välja ledare, skapa kortlistor eller följa upp utebliven ankomst."
+    },
+    "troubleshooting": {
+      "reminders": "Påminnelser aktiveras inte. Kontrollera /api/health — om bot.lastPollStartedAt är mer än cirka 5 minuter efter aktuell tid har pollern fastnat. Superadministratörer kan också POSTA till /api/admin/bot/poll-now för att tvinga fram en pollcykel.",
+      "rescheduled": "Ett evenemang har omplanerats och personer får inte någon ny avisering. Bekräfta att tiden faktiskt har ändrats (jämför med det tidigare värdet). Boten utlöser bara om typer vars fönster fortfarande ligger före den nya tiden – om din nya tid är 30 minuter från nu kommer endast 20-minuterspåminnelsen att utlösas, inte 24-timmarspåminnelsen.",
+      "movedSquad": "En spelare blev tilldelad fel trupp efter att jag flyttade dem. FLYTTAD-märket betyder att tilldelningen skiljer sig från preferensen. För att återställa, ändra deras roll/trupp via rullgardinsmenyn eller använd knappen Flytta till trupp N för att återställa dem."
+    }
   }
 }

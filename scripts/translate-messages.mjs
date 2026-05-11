@@ -211,17 +211,24 @@ async function translateLocale({ locale, en, apiKey, force }) {
 }
 
 async function callGoogleTranslate({ apiKey, texts, target }) {
-  const params = new URLSearchParams({
-    key: apiKey,
-    target,
-    source: "en",
-    format: "html", // Lets us use <span translate="no"> to protect placeholders.
-  });
-  for (const text of texts) params.append("q", text);
-
+  // POST with a JSON body — putting `q` params in the URL query string
+  // works for small batches but blows past Google's URL length limit on
+  // larger ones (returns 411 Length Required when the encoded URL gets too
+  // long). The API key still lives in the query string per Google's
+  // recommendation.
   const res = await fetch(
-    `https://translation.googleapis.com/language/translate/v2?${params.toString()}`,
-    { method: "POST" }
+    `https://translation.googleapis.com/language/translate/v2?key=${encodeURIComponent(apiKey)}`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        q: texts,
+        target,
+        source: "en",
+        // Lets us use <span translate="no"> to protect placeholders.
+        format: "html",
+      }),
+    }
   );
   if (!res.ok) {
     const body = await res.text();

@@ -429,5 +429,118 @@
       "slashCommands": "Comandos de barra do Discord: /upcoming lista os próximos eventos da sua guilda e /signup permite que você se inscreva sem sair do Discord. Você precisa fazer login no site com o Discord pelo menos uma vez para que o bot possa associar sua conta."
     },
     "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
+  },
+  "adminHelp": {
+    "title": "Guia do administrador",
+    "subtitle": "Tudo o que um administrador de guilda precisa para organizar eventos: criar partidas, gerenciar jogadores, configurar o Discord e cuidar da própria guilda. A versão para jogadores está em<helpLink> /ajuda</helpLink> .",
+    "sections": {
+      "createMatch": "Criar um evento de correspondência",
+      "editEvent": "Editar detalhes do evento",
+      "managePlayers": "Gerenciar jogadores",
+      "waitlist": "A lista de espera",
+      "scrims": "Faça um treino",
+      "inviteBot": "Convide o bot do Discord",
+      "discordChannel": "Configure o canal do Discord",
+      "slashCommands": "comandos de barra do Discord",
+      "manageGuild": "Gerencie sua guilda",
+      "playersPage": "Página de jogadores",
+      "troubleshooting": "Coisas que você pode encontrar"
+    },
+    "createMatch": {
+      "step1": "Acesse \"Gerenciar eventos\" na barra lateral e clique em \"+ Novo evento\".",
+      "step2": "Selecione \"Partida\" para o tipo de evento. Eventos de partida têm duas equipes com seus próprios horários de início, vagas de liderança e uma lista de reservas. (Selecione \"Simples\" para eventos apenas informativos, como reuniões ou sessões de exibição — sem inscrições, apenas um item no calendário.)",
+      "step3": "Preencha o nome, a descrição (opcional) e o período de inscrição (Inscrições Abertas / Inscrições Fechadas). O período de inscrição é compartilhado por ambas as equipes.",
+      "step4": "Defina o horário de início do Esquadrão 1 e do Esquadrão 2. Um ou ambos podem ser deixados em branco — os jogadores verão \"A definir\" até que você os preencha. Os lembretes de cada esquadrão são acionados independentemente do seu próprio horário de início.",
+      "step5": "Todos os campos de data e hora são inseridos no horário local do seu navegador. O formulário exibe o equivalente em UTC abaixo de cada campo, para que não haja ambiguidade. Os horários são armazenados em UTC e exibidos no fuso horário local de cada usuário.",
+      "step6": "Opcional: personalize os nomes dos times, o número máximo de jogadores, o número máximo de reservas e as vagas de liderança. Os valores padrão são 20/10/3 por time (60 vagas no total).",
+      "step7": "Clique em Criar evento. Você será redirecionado para a página de administração do evento."
+    },
+    "editEvent": {
+      "dates": "Datas: na página de administração do evento, clique em Editar datas. Você pode alterar o período de inscrição e os horários de início de ambas as equipes.",
+      "reschedule": "Remarcar o horário de início aciona novamente os lembretes: alterar qualquer horário de início limpa o registro de \"já enviado\" para aquele esquadrão, então o bot do Discord enviará novos lembretes de 24h / 1h / 20 minutos para o novo horário. Ajustar o horário em alguns minutos também os limpa, então evite alterar o horário a menos que você queira notificar novamente.",
+      "softDelete": "Exclusão lógica: o botão \"Excluir evento\" oculta o evento dos jogadores, mas mantém os dados de inscrição para relatórios de presença. Os eventos excluídos aparecem em uma seção separada \"Excluídos\" em \"Gerenciar eventos\"."
+    },
+    "managePlayers": {
+      "intro": "A página de administração do evento exibe duas colunas de grupos e uma lista de espera abaixo. Em cada coluna de grupo, cada inscrição corresponde a uma linha com os seguintes controles:",
+      "moveSquad": "Botão \"Mover para o Esquadrão N\": move o jogador para o outro esquadrão com um clique. Atualiza o esquadrão atribuído; se o novo esquadrão for diferente da primeira opção escolhida, um pequeno indicador \"MOVIDO\" aparecerá ao lado do nome do jogador para que ele se lembre de que alterou a sua preferência.",
+      "moveBackup": "Botão Mover para Reserva/Elenco: alterna o jogador entre o elenco principal (jogador) e o elenco reserva (reserva). Funciona em qualquer coluna, incluindo a lista de espera — útil para promover um jogador da lista de espera diretamente para a lista de reserva.",
+      "roleDropdown": "Menu suspenso de função (Não atribuído / Jogador / Reserva / Líder / Lista de espera): alterações de função mais específicas. Use esta opção para promover um jogador que solicitou liderança a líder ou para colocar alguém na lista de espera.",
+      "attendedRating": "Caixa de seleção \"Presente\" + classificação de 1 a 5 estrelas: controle pós-evento. Ambas as opções são salvas automaticamente ao serem ativadas. Usado para decisões futuras sobre a escalação.",
+      "effectiveSquadNote": "As colunas do elenco são agrupadas por elenco efetivo: a atribuição do administrador prevalece, caso contrário, a preferência de primeira escolha é aplicada. Portanto, um jogador que você move com a opção \"Mover para o Elenco 2\" aparece imediatamente na coluna \"Elenco 2\" na próxima renderização.",
+      "leaderPillNote": "A pílula amarela \"Líder\" ao lado de um nome significa que esse jogador solicitou um cargo de liderança ao se cadastrar. Selecione os líderes dentre essas solicitações alterando o cargo deles para \"Líder\"."
+    },
+    "waitlist": {
+      "intro": "Quando todas as vagas da equipe e dos reservas forem preenchidas, as novas inscrições serão adicionadas à lista de espera (função atribuída = lista de espera). A seção da lista de espera na parte inferior da página de administração do evento mostra os inscritos em ordem de inscrição.",
+      "promote": "Para promover alguém da lista de espera, altere a função dessa pessoa de Lista de Espera para Jogador ou Reserva através do menu suspenso — ou use a opção Mover para Reserva para o caso mais comum. A posição dela no time será definida pela sua primeira escolha, a menos que você a mova explicitamente."
+    },
+    "scrims": {
+      "intro": "Um scrim é um desafio de guilda 1 contra 1 negociado entre dois administradores de guilda, com um único esquadrão de cada lado. Uma vez aceito, ambas as guildas recebem um evento espelhado para o qual seus membros podem se inscrever. Após a partida, um dos administradores declara o resultado.",
+      "serverNote": "O número do servidor é obrigatório. Ambas as guildas devem ter o mesmo número de servidor definido nas Configurações da Guilda; caso contrário, elas não aparecerão na lista suspensa de oponentes uma da outra. Defina o seu em<settingsLink> Configurações da Guilda</settingsLink> primeiro.",
+      "proposeHeading": "Proponha uma tela de proteção",
+      "proposeStep1": "Vá para o<scrimmagesLink> painel de treinos</scrimmagesLink> e clique em + Propor treino.",
+      "proposeStep2": "Escolha o oponente (filtrado para o mesmo número de servidor que o seu), o horário da partida e o local — um dos mapas canônicos (Kruger, Cerno, Kanvo, Sphinx) ou um local personalizado em texto livre.",
+      "proposeStep3": "Preencha a Condição de Vitória (obrigatório). Declare as regras claramente — ambas as equipes as veem e elas estão vinculadas ao resultado declarado. Exemplo: \"Primeira equipe a capturar 3 pontos\" ou \"Manter a fortaleza central por 5 minutos\".",
+      "proposeStep4": "Mensagem opcional para regras da casa, notas de formatação, etc. Clique em Enviar proposta.",
+      "acceptDeclineHeading": "Aceitar ou recusar uma proposta recebida",
+      "acceptDeclineIntro": "As propostas pendentes de outras guildas aparecem na seção \"Propostas recebidas\" do painel de controle do scrim.",
+      "accept": "O comando Accept cria dois eventos espelhados (um para cada guilda) em uma única transação. O evento de cada lado é nomeado \"Scrim vs<opponent> \", recebe o horário de início proposto para a partida e aceita inscrições de membros como uma partida normal — exceto que há apenas um time.\"",
+      "decline": "A opção \"Recusar\" reverte a proposta para \"Recusada\" sem gerar nenhum evento.",
+      "withdraw": "Retirar (somente para envio) cancela sua própria proposta pendente antes que a outra parte responda.",
+      "rosterHeading": "Inscreva a equipe no evento de treino.",
+      "rosterBody": "O evento espelhado fica em Gerenciar Eventos com um selo vermelho de SCRIM. Abra-o para ver sua lista de jogadores — um único esquadrão, com os mesmos controles de administrador de uma partida (mover para reserva, menu suspenso de função, presença, classificação). As colunas do Esquadrão 2 e o segundo horário de início estão ocultos porque não se aplicam.",
+      "cancelHeading": "Cancelar um scrim aceito",
+      "cancelBody": "O administrador de qualquer guilda pode cancelar o evento pelo painel de controle enquanto ele estiver em \"Próximos treinos\" e antes da divulgação do resultado. O cancelamento exclui temporariamente ambos os eventos espelhados (as inscrições são mantidas para o histórico de presença) e altera a proposta para cancelada.",
+      "resultHeading": "Declare o resultado",
+      "resultIntro": "Abra o evento de scrim em Gerenciar Eventos. O formulário de resultados possui quatro botões:",
+      "resultWonLost": "Ganhamos / Perdemos — o resultado da sua guilda. O servidor armazena um resultado absoluto (sem levar em conta a perspectiva), então a guilda adversária vê automaticamente o resultado inverso (ganha/perde).",
+      "resultDrawNc": "Empate / Sem resultado — resultados simétricos. Sem resultado abrange desistências, desconexões ou qualquer cenário em que a partida não foi concluída.",
+      "resultBody": "Notas opcionais são visíveis para os membros de ambas as guildas. Uma vez declarado, o resultado aparece como um marcador na página do evento, no painel de controle do scrim e no histórico de scrims dos jogadores. Qualquer administrador pode declarar — o primeiro a enviar vence (sem interface de sobrescrita).",
+      "discordNotificationsHeading": "Notificações do Discord",
+      "discordNotificationsBody": "Se uma guilda tiver um canal no Discord configurado (veja abaixo), o bot publica uma mensagem em inglês nos canais de ambas as guildas ao propor/aceitar/recusar. A mensagem inclui o nome do oponente, o horário da partida (exibido no fuso horário local de cada espectador), a localização e as condições de vitória.",
+      "discordNotificationsFallback": "Se a outra guilda tiver um canal configurado, mas o bot não conseguir acessá-lo (bot expulso, canal excluído, ID incorreto), você verá um alerta no navegador listando os nomes das guildas afetadas após a conclusão da sua ação. Guildas sem nenhum canal configurado permanecerão silenciosas — essa é uma opção intencional de exclusão.",
+      "playerVisibilityHeading": "Visibilidade do jogador",
+      "playerVisibilityBody": "Os jogadores visualizam os eventos de treino na página inicial com um selo vermelho \"SCRIM\", podem se inscrever como em qualquer partida (basta escolher um esquadrão) e podem navegar por todos os treinos aceitos (próximos e resultados anteriores) na página.<scrimsLink> Página de histórico de scrims</scrimsLink> Propostas recusadas, retiradas e canceladas ficam ocultas dos jogadores — eles só veem os treinos que de fato aconteceram ou estão agendados."
+    },
+    "inviteBot": {
+      "intro": "Lembretes e comandos de barra dependem de um bot do Discord que o operador já tenha implementado. Para integrá-lo ao seu servidor do Discord:",
+      "step1Intro": "Obtenha o URL de instalação com o administrador do seu site. Ele tem o seguinte formato:",
+      "step1Note": "A parte permissions=133120 abrange Send Messages (Enviar mensagens) e Mention Everyone (Mencionar todos). Ambas são necessárias — sem Mention Everyone, o @everyone nos lembretes é exibido como texto simples e não envia menções a ninguém.",
+      "step2": "Abra o URL de instalação em um navegador. Selecione o servidor do Discord no qual deseja instalar o bot. Você precisa da permissão \"Gerenciar servidor\" nesse servidor. Clique em \"Autorizar\".",
+      "step3": "Confirme se o bot aparece na lista de membros do seu servidor Discord. É só isso — nenhuma configuração individual para o bot no Discord."
+    },
+    "discordChannel": {
+      "intro": "O bot publica lembretes em um canal de sua escolha. Para configurá-lo:",
+      "step1": "Ative o Modo Desenvolvedor no Discord: Configurações do Usuário → Avançado → Modo Desenvolvedor. Uma vez por dispositivo. Isso desbloqueia a opção \"Copiar ID do Canal\" ao clicar com o botão direito do mouse.",
+      "step2": "Clique com o botão direito do mouse no canal em que deseja receber lembretes → Copiar ID do canal. Você obterá um número longo, como 123456789012345678. Certifique-se de que seja um canal de texto e que o bot tenha as permissões \"Visualizar canal\" e \"Enviar mensagens\" nesse canal.",
+      "step3": "No site, acesse<settingsLink> Configurações da Guilda</settingsLink> Cole o ID do canal no campo \"ID do canal do Discord\".",
+      "step4": "Clique em Testar integração. Se tudo estiver correto, você verá uma confirmação na interface do usuário e uma mensagem de teste única no canal. A etapa de teste também vincula automaticamente seu servidor do Discord ao diretório do aplicativo, para que os comandos de barra (/upcoming, /signup) funcionem.",
+      "step5": "Clique em Salvar para persistir o ID do canal.",
+      "commonErrors": "Erros comuns após o teste: \"O bot não tem acesso a esse canal\" (convide o bot novamente usando o URL de instalação acima); \"O bot não tem a permissão para enviar mensagens\" (substituições de permissões no nível do canal — correção no Discord); \"Esse ID do canal não existe\" (você copiou o ID do servidor, não o ID do canal)."
+    },
+    "slashCommands": {
+      "intro": "Assim que o bot estiver no servidor e você tiver vinculado o canal por meio da integração de teste, seus membros poderão usar:",
+      "upcoming": "/upcoming — lista os próximos eventos da guilda com os horários de início de ambos os esquadrões. As respostas são efêmeras (visíveis apenas para o usuário).",
+      "signup": "Evento /cadastro:<event> squad:<1|2> — inscreve o usuário em um evento. O campo do evento possui preenchimento automático. O usuário precisa ter feito login no site com o Discord pelo menos uma vez para que o bot possa associar seu ID do Discord à sua conta da guilda — ele solicitará que o usuário faça login caso ainda não tenha feito.",
+      "propagation": "Os novos comandos globais de barra levam até cerca de 1 hora para se propagarem pela primeira vez após a implantação do bot. Depois disso, são instantâneos.",
+      "failHeading": "Se o preenchimento automático de /signup exibir \"Falha ao carregar as opções\"",
+      "failIntro": "Geralmente significa que o Discord armazenou em cache uma versão desatualizada do esquema de comandos ou que o bot foi adicionado com um escopo ausente. Tente nesta ordem:",
+      "failStep1": "Verifique os escopos e convide novamente. O URL de instalação deve incluir os escopos `bot` e `applications.commands`. Se o bot foi adicionado por meio de um URL antigo que não incluía o escopo `applications.commands`, os eventos de autocompletar não serão exibidos. Convide novamente usando o URL de instalação atual (Configurações da Guilda → Discord → Convidar o Bot Organizador de Eventos do Discord).",
+      "failStep2Intro": "Forçar a limpeza de comandos em cache (somente para o operador). Se convidar novamente não resolver o problema, o operador do seu site pode limpar a lista de comandos em cache do Discord para que o bot se registre novamente na próxima inicialização:",
+      "failStep2Note": "Em seguida, reinicie o bot (por exemplo, reinicie a máquina de voo) — o manipulador clientReady registra novamente os comandos de SLASH_COMMANDS na próxima inicialização."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Membros</membersLink> — Lista de todos os membros da guilda. Por linha: Promover um membro a administrador, Rebaixar um administrador a membro ou Expulsar um membro. O último administrador não pode se rebaixar ou se expulsar — promova outra pessoa primeiro.",
+      "invites": "<invitesLink>Convites</invitesLink> — Gere links de convite. Cada convite pode ter um prazo de validade opcional e um limite máximo de uso (em branco = ilimitado). Clique no URL para copiar. Use Revogar para invalidar um convite. Qualquer pessoa que clicar em um link de convite válido entrará automaticamente na guilda como membro.",
+      "settings": "<settingsLink>Configurações da Guilda</settingsLink> — Nome da guilda, descrição, opção para exibir publicamente, ID do canal do Discord. O slug é permanente; todo o resto é editável. Desativar a opção \"Listado publicamente\" significa que novos membros só poderão entrar por meio de um link de convite.",
+      "leave": "Saia da guilda na parte inferior das Configurações. Seus cadastros anteriores são excluídos temporariamente (mantidos para fins de registro de presença). Se você for o único administrador, primeiro precisa promover outra pessoa."
+    },
+    "playersPage": {
+      "body": "<playersLink>Jogadores</playersLink> Mostra o histórico completo de inscrições de cada membro da guilda: eventos nos quais se inscreveram, preferências de esquadrão, frequência, avaliações e observações da liderança. Útil para escolher líderes, criar listas de candidatos ou entrar em contato com quem faltou a eventos."
+    },
+    "troubleshooting": {
+      "reminders": "Os lembretes não estão sendo disparados. Verifique /api/health — se bot.lastPollStartedAt estiver atrasado em mais de 5 minutos em relação ao horário atual, o coletor de dados está travado. Superadministradores também podem enviar uma requisição POST para /api/admin/bot/poll-now para forçar um novo ciclo de coleta de dados.",
+      "rescheduled": "Um evento foi remarcado e as pessoas não estão recebendo novas notificações. Confirme se o horário realmente mudou (compare com o valor anterior). O bot só envia novamente os lembretes cuja janela ainda está adiantada em relação ao novo horário — se o novo horário for daqui a 30 minutos, apenas o lembrete de 20 minutos será enviado, e não o de 24 horas.",
+      "movedSquad": "Um jogador foi alocado ao esquadrão errado depois que eu o movi. O indicador \"MOVIDO\" significa que a alocação difere da preferência. Para reverter, altere a função/esquadrão dele através do menu suspenso ou use o botão \"Mover para o Esquadrão N\" para trazê-lo de volta."
+    }
   }
 }

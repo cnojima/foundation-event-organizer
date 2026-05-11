@@ -429,5 +429,118 @@
       "slashCommands": "Comandi slash di Discord: /upcoming elenca gli eventi imminenti della tua gilda, mentre /signup ti permette di iscriverti senza uscire da Discord. Devi accedere al sito web tramite Discord almeno una volta, in modo che il bot possa associare il tuo account."
     },
     "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni."
+  },
+  "adminHelp": {
+    "title": "Guida per gli amministratori",
+    "subtitle": "Tutto ciò di cui un amministratore di gilda ha bisogno per gestire gli eventi: creare partite, gestire i giocatori, configurare Discord e occuparsi della gilda stessa. La versione rivolta ai giocatori si trova a<helpLink> /aiuto</helpLink> .",
+    "sections": {
+      "createMatch": "Crea un evento di partita",
+      "editEvent": "Modifica i dettagli dell'evento",
+      "managePlayers": "Gestisci i giocatori",
+      "waitlist": "La lista d'attesa",
+      "scrims": "Eseguire una simulazione di partita",
+      "inviteBot": "Invita il bot di Discord",
+      "discordChannel": "Configura il canale Discord",
+      "slashCommands": "Comandi slash di Discord",
+      "manageGuild": "Gestisci la tua gilda",
+      "playersPage": "Pagina dei giocatori",
+      "troubleshooting": "Cose in cui potresti imbatterti"
+    },
+    "createMatch": {
+      "step1": "Nella barra laterale, vai su Gestisci eventi e fai clic su + Nuovo evento.",
+      "step2": "Seleziona \"Partita\" come tipo di evento. Gli eventi \"Partita\" prevedono due squadre con orari di inizio, ruoli di leadership e una lista di riserva. (Seleziona \"Semplice\" per voci che richiedono solo informazioni, come riunioni o eventi di visione collettiva, senza iscrizioni, solo un elemento del calendario.)",
+      "step3": "Inserisci il nome, una descrizione facoltativa e la finestra di iscrizione (Iscrizioni aperte / Iscrizioni chiuse). La finestra è condivisa da entrambe le squadre.",
+      "step4": "Imposta l'orario di inizio della Squadra 1 e quello della Squadra 2. È possibile lasciare vuoti uno o entrambi i campi: i giocatori visualizzeranno \"Da definire\" finché non verranno compilati. I promemoria per ciascuna squadra vengono inviati indipendentemente dal rispettivo orario di inizio.",
+      "step5": "Tutti i campi data e ora vengono inseriti nell'ora locale del browser. Il modulo mostra l'equivalente UTC sotto ogni campo di input per evitare ambiguità. Gli orari vengono memorizzati in formato UTC e visualizzati nel fuso orario locale di ciascun utente.",
+      "step6": "Opzionale: personalizza i nomi delle squadre, il numero massimo di giocatori, il numero massimo di riserve e gli slot per i leader. Le impostazioni predefinite sono 20 / 10 / 3 per squadra (60 slot totali).",
+      "step7": "Fai clic su Crea evento. Verrai reindirizzato alla pagina di amministrazione dell'evento."
+    },
+    "editEvent": {
+      "dates": "Date: nella pagina di amministrazione dell'evento, clicca su Modifica date. Puoi modificare il periodo di iscrizione e gli orari di inizio per entrambe le squadre.",
+      "reschedule": "Riprogrammare i promemoria li riattiva: la modifica di qualsiasi orario di inizio cancella il record \"già inviato\" per quel gruppo, quindi il bot di Discord invierà nuovi promemoria 24 ore / 1 ora / 20 minuti per il nuovo orario. Anche una modifica di un paio di minuti li cancella, quindi evita di modificarli a meno che tu non voglia inviare nuovamente la notifica.",
+      "softDelete": "Eliminazione parziale: il pulsante Elimina evento nasconde l'evento ai giocatori, ma conserva i dati di iscrizione per i report di partecipazione. Gli eventi eliminati vengono visualizzati in una sezione separata \"Eliminati\" nella Gestione eventi."
+    },
+    "managePlayers": {
+      "intro": "La pagina di amministrazione dell'evento mostra due colonne per le squadre e una lista d'attesa sottostante. In ciascuna colonna, ogni iscrizione corrisponde a una riga con i seguenti controlli:",
+      "moveSquad": "Pulsante Sposta nella Squadra N: sposta il giocatore nell'altra squadra con un solo clic. Aggiorna la squadra assegnata; se la nuova squadra è diversa dalla sua prima scelta, accanto al nome del giocatore compare una piccola icona con la scritta SPOSTATO per ricordarti che hai ignorato la sua preferenza.",
+      "moveBackup": "Pulsante Sposta in Riserva / Roster: consente di alternare il giocatore tra il roster principale (giocatore) e il roster di riserva (riserva). Funziona in qualsiasi colonna, inclusa la lista d'attesa: utile per promuovere direttamente un giocatore in lista d'attesa al roster di riserva.",
+      "roleDropdown": "Menu a tendina Ruolo (Non assegnato / Giocatore / Riserva / Leader / Lista d'attesa): modifiche di ruolo più precise. Usalo per promuovere a leader un giocatore che ha richiesto il ruolo di leader, oppure per inserire qualcuno nella lista d'attesa.",
+      "attendedRating": "Casella di controllo \"Presente\" + valutazione da 1 a 5 stelle: contabilità post-evento. Entrambe salvano automaticamente quando vengono attivate o disattivate. Utili per le future decisioni relative alla lista dei partecipanti.",
+      "effectiveSquadNote": "Le colonne della squadra sono raggruppate in base alla squadra effettiva: l'assegnazione dell'amministratore ha la precedenza, altrimenti viene data la preferenza di prima scelta. Quindi un giocatore che sposti con \"Sposta nella Squadra 2\" appare immediatamente nella colonna \"Squadra 2\" al rendering successivo.",
+      "leaderPillNote": "La pillola gialla \"Leader\" accanto a un nome indica che quel giocatore ha richiesto un ruolo di leadership al momento dell'iscrizione. Seleziona i leader tra coloro che hanno fatto richiesta, cambiando il loro ruolo in \"Leader\"."
+    },
+    "waitlist": {
+      "intro": "Quando tutti i posti disponibili per la squadra e le riserve sono occupati, le nuove iscrizioni vengono inserite nella lista d'attesa (ruolo assegnato = lista d'attesa). La sezione della lista d'attesa in fondo alla pagina di amministrazione dell'evento le mostra in ordine di iscrizione.",
+      "promote": "Per promuovere un giocatore dalla lista d'attesa, cambia il suo ruolo da Lista d'attesa a Giocatore o Riserva tramite il menu a tendina, oppure usa Sposta in Riserva per il caso più comune. La sua posizione in squadra dipenderà dalla sua prima scelta, a meno che tu non lo sposti esplicitamente."
+    },
+    "scrims": {
+      "intro": "Una scrim è una sfida tra gilde 1 contro 1, negoziata tra due amministratori di gilda, con una sola squadra per parte. Una volta accettata, entrambe le gilde ottengono un evento speculare a cui i loro membri possono iscriversi. Dopo la partita, uno dei due amministratori dichiara il risultato.",
+      "serverNote": "Il numero del server è obbligatorio. Entrambe le gilde devono avere lo stesso numero di server impostato nelle Impostazioni gilda, altrimenti non appariranno nel menu a tendina degli avversari l'una dell'altra. Imposta il tuo in<settingsLink> Impostazioni della gilda</settingsLink> Primo.",
+      "proposeHeading": "Proponi uno scrim",
+      "proposeStep1": "Vai al<scrimmagesLink> dashboard delle partite di allenamento</scrimmagesLink> e fai clic su + Proponi scrim.",
+      "proposeStep2": "Scegli l'avversario (filtrato in base al tuo stesso server), l'orario della partita e la località: una delle mappe canoniche (Kruger, Cerno, Kanvo, Sphinx) oppure una località personalizzata a testo libero.",
+      "proposeStep3": "Inserisci la Condizione di Vittoria (obbligatoria). Indica chiaramente le regole: entrambe le squadre le vedranno e saranno collegate al risultato dichiarato. Esempio: \"La prima squadra che conquista 3 obiettivi\" o \"Mantenere la fortezza centrale per 5 minuti\".",
+      "proposeStep4": "Messaggio facoltativo per le regole della casa, note di formattazione, ecc. Fare clic su Invia proposta.",
+      "acceptDeclineHeading": "Accettare o rifiutare una proposta in arrivo",
+      "acceptDeclineIntro": "Le proposte in sospeso provenienti da altre gilde vengono visualizzate nella sezione \"Proposte in arrivo\" della dashboard di scrim.",
+      "accept": "Accept crea due eventi speculari (uno per gilda) in un'unica transazione. L'evento di ciascuna parte si chiama \"Scrim vs<opponent> \", ottiene l'orario di inizio proposto e accetta le iscrizioni dei membri come una normale partita, tranne per il fatto che c'è una sola squadra.",
+      "decline": "L'opzione \"Rifiuta\" trasforma la proposta in \"respinta\" senza generare alcun evento.",
+      "withdraw": "Ritira (solo in uscita) annulla la tua proposta in sospeso prima che l'altra parte risponda.",
+      "rosterHeading": "Elenco dei partecipanti all'evento scrim",
+      "rosterBody": "L'evento speculare si trova in Gestisci eventi ed è contrassegnato da un badge SCRIM rosso. Aprilo per visualizzare la tua lista giocatori: una sola squadra, con gli stessi controlli amministrativi di una partita (sposta in backup, menu a tendina dei ruoli, partecipanti, valutazione). Le colonne Squadra-2 e il secondo orario di inizio sono nascosti perché non pertinenti.",
+      "cancelHeading": "Annullare una sessione di allenamento accettata",
+      "cancelBody": "Entrambi gli amministratori della gilda possono annullare l'evento dalla dashboard mentre è ancora in fase di \"Prossimi allenamenti\" e prima che venga dichiarato un risultato. L'annullamento elimina entrambi gli eventi duplicati (le iscrizioni vengono mantenute per la cronologia delle presenze) e cambia lo stato della proposta in \"annullata\".",
+      "resultHeading": "Dichiarare il risultato",
+      "resultIntro": "Apri l'evento scrim in Gestisci eventi. Il modulo dei risultati ha quattro pulsanti:",
+      "resultWonLost": "Abbiamo vinto / Abbiamo perso: il risultato della tua gilda. Il server memorizza un risultato assoluto (indipendente dalla prospettiva), quindi la gilda avversaria vede automaticamente il risultato inverso di vittorie e sconfitte.",
+      "resultDrawNc": "Pareggio / Nessun risultato — esiti simmetrici. Il termine \"Nessun risultato\" si applica in caso di ritiro dell'avversario, disconnessioni o qualsiasi scenario in cui l'incontro non sia stato completato.",
+      "resultBody": "Le note opzionali sono visibili a entrambi i membri della gilda. Una volta dichiarato, il risultato viene visualizzato come un segnalino nella pagina dell'evento, nella dashboard degli scrim e nella cronologia degli scrim dei giocatori. Entrambi gli amministratori possono dichiarare il risultato: vince chi lo invia per primo (nessuna sovrascrittura dell'interfaccia utente).",
+      "discordNotificationsHeading": "Notifiche Discord",
+      "discordNotificationsBody": "Se una gilda ha un canale Discord configurato (vedi sotto), il bot pubblica un messaggio in inglese su entrambi i canali della gilda quando propone, accetta o rifiuta. Il messaggio include il nome dell'avversario, l'orario di gioco (visualizzato nel fuso orario locale di ciascun utente), la posizione e le condizioni di vittoria.",
+      "discordNotificationsFallback": "Se l'altra gilda ha un canale configurato ma il bot non riesce a raggiungerlo (bot espulso, canale eliminato, ID errato), al termine dell'azione verrà visualizzato un avviso nel browser con l'elenco dei nomi delle gilde interessate. Le gilde senza alcun canale configurato non visualizzeranno alcun avviso: si tratta di una scelta intenzionale di non essere visualizzate.",
+      "playerVisibilityHeading": "visibilità del venditore",
+      "playerVisibilityBody": "I giocatori vedono gli eventi scrim sulla home page con un badge SCRIM rosso, possono iscriversi come per qualsiasi partita (solo una squadra da scegliere) e possono sfogliare tutti gli scrim accettati (risultati futuri + passati) sulla home page.<scrimsLink> pagina della cronologia degli scrim</scrimsLink> Le proposte rifiutate, ritirate o annullate non sono visibili ai giocatori, che possono visualizzare solo gli allenamenti che si sono effettivamente svolti o che sono in programma."
+    },
+    "inviteBot": {
+      "intro": "Promemoria e comandi slash si basano su un bot Discord già implementato dall'operatore. Per collegarlo al tuo server Discord:",
+      "step1Intro": "Richiedi l'URL di installazione al gestore del tuo sito. Ha un aspetto simile a questo:",
+      "step1Note": "La parte permissions=133120 riguarda l'invio di messaggi e la menzione di tutti. Entrambe sono necessarie: senza la menzione di tutti, il tag @everyone nei promemoria viene visualizzato come testo normale e non menziona nessuno.",
+      "step2": "Apri l'URL di installazione in un browser. Seleziona il server Discord in cui desideri installare il bot. Devi disporre dell'autorizzazione \"Gestisci server\" su quel server. Fai clic su \"Autorizza\".",
+      "step3": "Verifica che il bot compaia nell'elenco dei membri del tuo server Discord. Tutto qui: non è necessaria alcuna configurazione specifica per ogni bot sul lato Discord."
+    },
+    "discordChannel": {
+      "intro": "Il bot pubblica promemoria in un canale a tua scelta. Per configurarlo:",
+      "step1": "Attiva la modalità sviluppatore su Discord: Impostazioni utente → Avanzate → Modalità sviluppatore. Questa operazione va eseguita una sola volta per dispositivo. Sblocca così l'opzione \"Copia ID canale\" accessibile tramite il tasto destro del mouse.",
+      "step2": "Fai clic con il pulsante destro del mouse sul canale in cui desideri ricevere i promemoria → Copia ID canale. Otterrai un lungo numero come 123456789012345678. Assicurati che si tratti di un canale di testo e che il ruolo del bot abbia le autorizzazioni Visualizza canale e Invia messaggi.",
+      "step3": "Sul sito web, vai a<settingsLink> Impostazioni della gilda</settingsLink> e incolla l'ID del canale in ID canale Discord.",
+      "step4": "Fai clic su \"Verifica integrazione\". Se tutto è a posto, vedrai una conferma nell'interfaccia utente e un messaggio di prova una tantum nel canale. Il passaggio di prova collega automaticamente anche il tuo server Discord alla gilda dell'app in modo che i comandi slash (/upcoming, /signup) funzionino.",
+      "step5": "Fai clic su Salva per memorizzare l'ID del canale.",
+      "commonErrors": "Errori comuni dopo il test: \"Il bot non ha accesso a quel canale\" (reinvita il bot tramite l'URL di installazione sopra); \"Al bot manca l'autorizzazione per inviare messaggi\" (le autorizzazioni a livello di canale hanno la precedenza: soluzione in Discord); \"L'ID di quel canale non esiste\" (hai copiato l'ID del server, non l'ID del canale)."
+    },
+    "slashCommands": {
+      "intro": "Una volta che il bot è sul server e hai collegato il canale tramite l'integrazione di prova, i tuoi membri possono usarlo:",
+      "upcoming": "/upcoming — elenca i prossimi eventi della gilda con gli orari di inizio per entrambe le squadre. Le risposte sono effimere (visibili solo all'utente).",
+      "signup": "/evento di registrazione:<event> squadra:<1|2> — iscrive l'utente a un evento. Il campo evento ha il completamento automatico. L'utente deve aver effettuato l'accesso al sito web con Discord almeno una volta affinché il bot possa associare il suo ID Discord al suo account di gilda; in caso contrario, gli verrà richiesto di farlo.",
+      "propagation": "I nuovi comandi slash globali impiegano fino a circa un'ora per propagarsi la prima volta dopo l'implementazione del bot. Successivamente, sono istantanei.",
+      "failHeading": "Se il completamento automatico di /signup mostra \"Caricamento delle opzioni non riuscito\"",
+      "failIntro": "Solitamente significa che Discord ha memorizzato nella cache una versione obsoleta dello schema dei comandi, oppure che il bot è stato aggiunto con un ambito mancante. Prova in quest'ordine:",
+      "failStep1": "Verifica gli ambiti e invia nuovamente l'invito. L'URL di installazione deve includere sia l'ambito bot che l'ambito applications.commands. Se il bot è stato aggiunto tramite un URL precedente a cui mancava applications.commands, gli eventi di completamento automatico non lo raggiungeranno. Invia nuovamente l'invito utilizzando l'URL di installazione corrente (Impostazioni gilda → Discord → Invita il bot Discord organizzatore eventi).",
+      "failStep2Intro": "Cancella forzatamente i comandi memorizzati nella cache (solo per l'operatore). Se il reinvito non risolve il problema, l'operatore del sito può cancellare l'elenco dei comandi memorizzati nella cache di Discord in modo che il bot si registri nuovamente da zero al successivo avvio:",
+      "failStep2Note": "Quindi riavvia il bot (ad esempio fly machine restart): il gestore clientReady registra nuovamente i comandi da SLASH_COMMANDS al successivo avvio."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Membri</membersLink> — Elenco di tutti i membri della gilda. Per riga: Promuovi un membro ad amministratore, Retrocedi un amministratore a membro, oppure Espelli un membro. L'ultimo amministratore non può retrocedere o espellere se stesso: promuovi prima qualcun altro.",
+      "invites": "<invitesLink>Inviti</invitesLink> — Genera link di invito. Ogni invito può avere una data di scadenza facoltativa e un limite massimo di utilizzi (vuoto = illimitato). Clicca sull'URL per copiarlo. Usa Revoca per invalidarlo. Chiunque clicchi su un link di invito valido si unirà automaticamente alla gilda come membro.",
+      "settings": "<settingsLink>Impostazioni della gilda</settingsLink> — Nome della gilda, descrizione, opzione di visibilità pubblica, ID del canale Discord. Lo slug è permanente; tutto il resto è modificabile. Disattivando l'opzione \"Visualizzazione pubblica\", i nuovi membri potranno unirsi solo tramite link di invito.",
+      "leave": "Abbandona la gilda in fondo alle Impostazioni. Le tue iscrizioni precedenti verranno eliminate temporaneamente (ma conservate per i report sulle presenze). Se sei l'unico amministratore, devi prima promuovere qualcun altro."
+    },
+    "playersPage": {
+      "body": "<playersLink>Giocatori</playersLink> Mostra ogni membro della gilda con la cronologia completa delle iscrizioni: eventi a cui si è iscritto, preferenze di squadra, presenze, valutazioni e note di leadership. Utile per scegliere i leader, creare liste di candidati o contattare chi non si è presentato."
+    },
+    "troubleshooting": {
+      "reminders": "I promemoria non vengono inviati. Controlla /api/health: se bot.lastPollStartedAt è indietro di oltre 5 minuti rispetto all'ora corrente, il poller è bloccato. I super-amministratori possono anche inviare una richiesta POST a /api/admin/bot/poll-now per forzare un ciclo di polling.",
+      "rescheduled": "Un evento è stato riprogrammato e le persone non stanno ricevendo una nuova notifica. Verifica che l'orario sia effettivamente cambiato (confrontalo con il valore precedente). Il bot invia nuovamente le notifiche solo ai tipi di promemoria il cui intervallo di tempo è ancora precedente al nuovo orario: se il nuovo orario è tra 30 minuti, verrà inviato solo il promemoria tra 20 minuti, non quello tra 24 ore.",
+      "movedSquad": "Un giocatore è stato assegnato alla squadra sbagliata dopo che l'ho spostato. Il badge SPOSTATO indica che l'assegnazione è diversa da quella preferita. Per ripristinare la posizione precedente, cambia il ruolo/la squadra tramite il menu a tendina oppure usa il pulsante Sposta in Squadra N per riportarlo alla posizione precedente."
+    }
   }
 }

@@ -429,5 +429,118 @@
       "slashCommands": "Discord-Befehle: /upcoming listet die anstehenden Events eurer Gilde auf, und /signup ermöglicht die Anmeldung direkt in Discord. Ihr müsst euch zuvor mindestens einmal mit Discord auf der Website anmelden, damit der Bot euer Konto zuordnen kann."
     },
     "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
+  },
+  "adminHelp": {
+    "title": "Administratorhandbuch",
+    "subtitle": "Alles, was ein Gildenadministrator für die Organisation von Events benötigt: Spielzusammenstellungen erstellen, Spieler verwalten, Discord einrichten und die Gilde selbst betreuen. Die Benutzeroberfläche für Spieler befindet sich unter [Link einfügen].<helpLink> /helfen</helpLink> Die",
+    "sections": {
+      "createMatch": "Erstelle ein Match-Ereignis",
+      "editEvent": "Ereignisdetails bearbeiten",
+      "managePlayers": "Spieler verwalten",
+      "waitlist": "Die Warteliste",
+      "scrims": "Führe ein Trainingsspiel durch.",
+      "inviteBot": "Lade den Discord-Bot ein",
+      "discordChannel": "Richte den Discord-Kanal ein",
+      "slashCommands": "Discord-Slash-Befehle",
+      "manageGuild": "Verwalte deine Gilde",
+      "playersPage": "Spielerseite",
+      "troubleshooting": "Dinge, denen Sie begegnen könnten"
+    },
+    "createMatch": {
+      "step1": "Gehen Sie in der Seitenleiste zu „Veranstaltungen verwalten“ und klicken Sie auf „+ Neue Veranstaltung“.",
+      "step2": "Wählen Sie „Match“ als Veranstaltungstyp. Match-Veranstaltungen bestehen aus zwei Teams mit jeweils eigener Startzeit, Führungspositionen und einem Ersatzkader. (Wählen Sie „Simple“ für reine Informationseinträge wie Besprechungen oder Public Viewings – keine Anmeldung erforderlich, nur ein Kalendereintrag.)",
+      "step3": "Geben Sie den Namen, optional eine Beschreibung und das Anmeldefenster (Anmeldung öffnet / Anmeldung schließt) ein. Das Fenster wird von beiden Teams gemeinsam genutzt.",
+      "step4": "Lege die Startzeit für Team 1 und Team 2 fest. Du kannst eines oder beide Felder leer lassen – die Spieler sehen „TBD“, bis du sie ausfüllst. Die Erinnerungen jedes Teams werden unabhängig von seiner jeweiligen Startzeit ausgelöst.",
+      "step5": "Alle Datums- und Zeitfelder werden in der lokalen Zeit Ihres Browsers eingegeben. Das Formular zeigt unterhalb jedes Eingabefelds die entsprechende UTC-Zeit an, um Missverständnisse auszuschließen. Die Zeiten werden als UTC gespeichert und in der jeweiligen Zeitzone des Betrachters angezeigt.",
+      "step6": "Optional: Mannschaftsnamen, maximale Spieleranzahl, maximale Ersatzspieleranzahl und Führungspositionen anpassen. Standardmäßig sind die Werte 20 / 10 / 3 pro Mannschaft (insgesamt 60 Positionen).",
+      "step7": "Klicken Sie auf „Veranstaltung erstellen“. Sie gelangen zur Veranstaltungsverwaltungsseite."
+    },
+    "editEvent": {
+      "dates": "Termine: Klicken Sie auf der Veranstaltungs-Adminseite auf „Termine bearbeiten“. Dort können Sie den Anmeldezeitraum und die Startzeiten beider Teams ändern.",
+      "reschedule": "Die Funktion „Neu planen“ löst erneut Erinnerungen aus: Jede Änderung der Startzeit löscht den Eintrag „Bereits gesendet“ für die betreffende Gruppe. Der Discord-Bot sendet dann neue Erinnerungen im Abstand von 24 Stunden, 1 Stunde oder 20 Minuten zur neuen Uhrzeit. Auch eine Änderung um wenige Minuten löscht die Erinnerungen. Vermeiden Sie daher unnötige Änderungen, es sei denn, Sie möchten erneut benachrichtigen.",
+      "softDelete": "Vorläufiges Löschen: Die Schaltfläche „Veranstaltung löschen“ blendet die Veranstaltung für die Spieler aus, die Anmeldedaten für die Anwesenheitsberichte bleiben jedoch erhalten. Gelöschte Veranstaltungen werden in einem separaten Bereich „Gelöscht“ unter „Veranstaltungen verwalten“ angezeigt."
+    },
+    "managePlayers": {
+      "intro": "Die Veranstaltungsverwaltungsseite zeigt zwei Gruppenspalten und darunter eine Warteliste. In jeder Gruppenspalte ist jede Anmeldung eine Zeile mit folgenden Steuerelementen:",
+      "moveSquad": "Mit der Schaltfläche „Zu Team N wechseln“ wird der Spieler mit einem Klick in das andere Team versetzt. Das zugewiesene Team wird aktualisiert. Falls das neue Team von der ursprünglichen Wahl abweicht, erscheint neben dem Namen des Spielers ein kleines „Verschoben“-Symbol, damit du dich daran erinnerst, dass du seine Präferenz überschrieben hast.",
+      "moveBackup": "Schaltfläche „Zur Ersatzliste wechseln“: Schaltet den Spieler zwischen Hauptkader (Spieler) und Ersatzkader (Ersatzspieler) um. Funktioniert in jeder Spalte, einschließlich der Warteliste – praktisch, um einen Wartelistenspieler direkt in die Ersatzliste zu befördern.",
+      "roleDropdown": "Rollenauswahl (Nicht zugewiesen / Spieler / Ersatzspieler / Anführer / Warteliste): Detailliertere Rollenänderungen. Verwenden Sie diese Option, um einen Spieler, der eine Führungsrolle beantragt hat, zum Anführer zu befördern oder jemanden auf die Warteliste zu setzen.",
+      "attendedRating": "Anwesenheits-Checkbox + 1-5-Sterne-Bewertung: Nachbereitung der Veranstaltung. Beide Einstellungen werden beim Aktivieren automatisch gespeichert. Wird für zukünftige Kaderplanungen verwendet.",
+      "effectiveSquadNote": "Die Spalten der Teams gruppieren sich nach dem effektiven Team: Die Zuweisung durch den Administrator hat Vorrang, ansonsten gilt die erste Wahl. Ein Spieler, den du mit „Zu Team 2 verschieben“ bewegst, erscheint also beim nächsten Rendern sofort in der Spalte „Team 2“.",
+      "leaderPillNote": "Die gelbe „Anführer“-Pille neben einem Namen bedeutet, dass der Spieler bei der Anmeldung eine Führungsrolle angefragt hat. Wähle aus diesen Anfragen Anführer aus, indem du ihre Rolle auf „Anführer“ änderst."
+    },
+    "waitlist": {
+      "intro": "Sobald alle Plätze im Kader und bei den Ersatzspielern belegt sind, landen neue Anmeldungen auf der Warteliste (zugewiesene Rolle = Warteliste). Die Warteliste wird im unteren Bereich der Veranstaltungs-Adminseite in der Reihenfolge der Anmeldung angezeigt.",
+      "promote": "Um einen Spieler von der Warteliste nach oben zu befördern, ändern Sie seine Rolle im Dropdown-Menü von „Warteliste“ auf „Spieler“ oder „Ersatzspieler“ – oder wählen Sie im Normalfall „Ersatzspieler“. Die Teamzugehörigkeit richtet sich nach der bevorzugten Position, sofern Sie den Spieler nicht explizit verschieben."
+    },
+    "scrims": {
+      "intro": "Ein Scrim ist eine 1-gegen-1-Herausforderung zwischen zwei Gildenadministratoren, bei der jede Seite mit einem Team antritt. Nach der Annahme erhalten beide Gilden ein spiegelbildliches Event, für das sich ihre Mitglieder anmelden können. Nach dem Spiel verkündet einer der Administratoren das Ergebnis.",
+      "serverNote": "Die Servernummer ist erforderlich. Beide Gilden müssen in den Gildeneinstellungen dieselbe Servernummer festgelegt haben – andernfalls erscheinen sie nicht in der Gegnerliste der jeweils anderen Gilde. Legen Sie Ihre Servernummer hier fest:<settingsLink> Gildeneinstellungen</settingsLink> Erste.",
+      "proposeHeading": "Schlagen Sie ein Gazevorschlagsmodell vor",
+      "proposeStep1": "Gehe zu<scrimmagesLink> Dashboard für Trainingsspiele</scrimmagesLink> und klicken Sie auf + Scrim vorschlagen.",
+      "proposeStep2": "Wähle den Gegner (gefiltert nach deiner Servernummer), die Spielzeit und den Ort – entweder eine der kanonischen Karten (Kruger, Cerno, Kanvo, Sphinx) oder einen frei wählbaren Ort.",
+      "proposeStep3": "Tragen Sie die Siegbedingungen ein (erforderlich). Formulieren Sie die Regeln klar und deutlich – beide Seiten sehen diese, und sie sind an das verkündete Ergebnis gebunden. Beispiel: „Das erste Team, das 3 Festungen erobert“ oder „Hält die zentrale Festung 5 Minuten lang“.",
+      "proposeStep4": "Optionale Nachricht für Hausregeln, Formathinweise usw. Klicken Sie auf „Vorschlag senden“.",
+      "acceptDeclineHeading": "Einen eingehenden Vorschlag annehmen oder ablehnen",
+      "acceptDeclineIntro": "Ausstehende Vorschläge anderer Gilden werden im Abschnitt „Eingehende Vorschläge“ des Scrim-Dashboards angezeigt.",
+      "accept": "Accept erzeugt in einer einzigen Transaktion zwei spiegelbildliche Ereignisse (eines pro Gilde). Das Ereignis jeder Seite trägt den Namen „Scrim vs“.<opponent> \", erhält die vorgeschlagene Spielzeit als Startzeitpunkt und akzeptiert Mitgliederanmeldungen wie bei einem normalen Spiel - nur dass es nur ein Team gibt.",
+      "decline": "Durch die Ablehnung wird der Vorschlag abgelehnt, ohne dass dadurch Ereignisse ausgelöst werden.",
+      "withdraw": "Mit „Zurückziehen“ (nur ausgehende Vorschläge) wird Ihr eigener, noch laufender Vorschlag storniert, bevor die Gegenseite antwortet.",
+      "rosterHeading": "Kader für das Scrim-Event",
+      "rosterBody": "Das gespiegelte Event befindet sich unter „Events verwalten“ und ist mit einem roten SCRIM-Symbol gekennzeichnet. Öffne es, um deine Teamliste zu sehen – ein einzelnes Team, dieselben Admin-Steuerelemente wie bei einem Spiel (zurück ins Backup verschieben, Rollenauswahl, Anwesenheit, Bewertung). Die Spalten „Team 2“ und die zweite Startzeit sind ausgeblendet, da sie nicht relevant sind.",
+      "cancelHeading": "Angenommenes Trainingsspiel abbrechen",
+      "cancelBody": "Jeder Gildenadministrator kann die Veranstaltung im Dashboard stornieren, solange sie unter „Anstehende Trainingsspiele“ angezeigt wird und bevor ein Ergebnis bekanntgegeben wird. Durch die Stornierung werden beide gespiegelten Veranstaltungen vorläufig gelöscht (Anmeldungen bleiben für die Anwesenheitshistorie erhalten) und der Status des Vorschlags auf „abgesagt“ gesetzt.",
+      "resultHeading": "Das Ergebnis verkünden",
+      "resultIntro": "Öffnen Sie das Scrim-Event unter „Events verwalten“. Das Ergebnisformular enthält vier Schaltflächen:",
+      "resultWonLost": "Wir haben gewonnen / Wir haben verloren – das Ergebnis eurer Gilde. Der Server speichert ein absolutes (perspektivenfreies) Ergebnis, sodass die gegnerische Gilde automatisch das umgekehrte Ergebnis (Sieg/Niederlage) sieht.",
+      "resultDrawNc": "Unentschieden / Kein Wettkampf – symmetrische Ergebnisse. Kein Wettkampf umfasst Spielabbrüche, Verbindungsabbrüche oder alle Szenarien, in denen das Spiel nicht beendet wurde.",
+      "resultBody": "Optionale Notizen sind für beide Gildenmitglieder sichtbar. Nach Bekanntgabe des Ergebnisses erscheint dieses als Symbol auf der Eventseite, im Scrim-Dashboard und in der Scrim-Historie der Spieler. Jeder Admin kann das Ergebnis bekanntgeben – derjenige, der zuerst Siege meldet, gewinnt (keine Überschreibung der Benutzeroberfläche).",
+      "discordNotificationsHeading": "Discord-Benachrichtigungen",
+      "discordNotificationsBody": "Wenn eine Gilde einen Discord-Kanal konfiguriert hat (siehe unten), postet der Bot bei jeder Spielanfrage (Annahme/Ablehnung) eine englische Nachricht in den Kanälen beider Gilden. Die Nachricht enthält den Namen des Gegners, die Spielzeit (in der jeweiligen Zeitzone des Zuschauers), den Ort und die Siegbedingungen.",
+      "discordNotificationsFallback": "Wenn die andere Gilde einen Kanal konfiguriert hat, der Bot diesen aber nicht erreichen kann (Bot gekickt, Kanal gelöscht, falsche ID), wird nach Abschluss deiner Aktion eine Browserbenachrichtigung mit den Namen der betroffenen Gilden angezeigt. Gilden ohne konfigurierten Kanal bleiben stumm – dies ist beabsichtigt.",
+      "playerVisibilityHeading": "Spielersichtbarkeit",
+      "playerVisibilityBody": "Spieler sehen Trainingsspiele auf der Startseite mit einem roten SCRIM-Symbol, können sich wie bei jedem anderen Spiel anmelden (nur ein Team zur Auswahl) und alle akzeptierten Trainingsspiele (anstehende und vergangene Ergebnisse) durchsuchen.<scrimsLink> Seite zur Geschichte des Scrims</scrimsLink> Abgelehnte, zurückgezogene und stornierte Vorschläge werden den Spielern nicht angezeigt – sie sehen nur Trainingsspiele, die tatsächlich stattgefunden haben oder geplant sind."
+    },
+    "inviteBot": {
+      "intro": "Erinnerungen und Slash-Befehle benötigen einen Discord-Bot, den der Betreiber bereits eingerichtet hat. So verbinden Sie ihn mit Ihrem Discord-Server:",
+      "step1Intro": "Die Installations-URL erhalten Sie von Ihrem Website-Betreiber. Sie sieht folgendermaßen aus:",
+      "step1Note": "Die Berechtigungseinstellung „133120“ umfasst die Funktionen „Nachrichten senden“ und „Jeden erwähnen“. Beide sind erforderlich – ohne „Jeden erwähnen“ wird die Erwähnung von „@Jeder“ in Erinnerungen als reiner Text dargestellt und niemand wird benachrichtigt.",
+      "step2": "Öffne die Installations-URL in einem Browser. Wähle den Discord-Server aus, auf dem der Bot installiert werden soll. Du benötigst die Berechtigung „Server verwalten“ auf diesem Server. Klicke auf „Autorisieren“.",
+      "step3": "Vergewissern Sie sich, dass der Bot in der Mitgliederliste Ihres Discord-Servers angezeigt wird. Das ist alles – keine weiteren Konfigurationen pro Bot auf Discord-Seite erforderlich."
+    },
+    "discordChannel": {
+      "intro": "Der Bot postet Erinnerungen in einem Kanal Ihrer Wahl. So konfigurieren Sie ihn:",
+      "step1": "Entwicklermodus in Discord aktivieren: Benutzereinstellungen → Erweitert → Entwicklermodus. Einmal pro Gerät. Dadurch wird die Option „Kanal-ID kopieren“ im Kontextmenü freigeschaltet.",
+      "step2": "Klicken Sie mit der rechten Maustaste auf den Kanal, in dem Sie Erinnerungen erhalten möchten, und wählen Sie „Kanal-ID kopieren“. Sie erhalten eine lange Nummer, z. B. 123456789012345678. Stellen Sie sicher, dass es sich um einen Textkanal handelt und dass die Bot-Rolle die Berechtigungen „Kanal anzeigen“ und „Nachrichten senden“ besitzt.",
+      "step3": "Gehen Sie auf der Website zu<settingsLink> Gildeneinstellungen</settingsLink> und füge die Kanal-ID in das Feld „Discord-Kanal-ID“ ein.",
+      "step4": "Klicken Sie auf „Integration testen“. Wenn alles korrekt ist, erhalten Sie eine Bestätigung in der Benutzeroberfläche und eine einmalige Testnachricht im Kanal. Der Test verknüpft außerdem automatisch Ihren Discord-Server mit der App-Gilde, sodass Slash-Befehle (z. B. /upcoming, /signup) funktionieren.",
+      "step5": "Klicken Sie auf Speichern, um die Kanal-ID zu speichern.",
+      "commonErrors": "Häufige Fehler nach dem Test: „Bot hat keinen Zugriff auf diesen Kanal“ (Bot über die oben genannte Installations-URL erneut einladen); „Bot fehlt die Berechtigung zum Senden von Nachrichten“ (Berechtigungsüberschreibungen auf Kanalebene – Behebung in Discord); „Diese Kanal-ID existiert nicht“ (Sie haben die Server-ID kopiert, nicht die Kanal-ID)."
+    },
+    "slashCommands": {
+      "intro": "Sobald der Bot auf dem Server installiert ist und Sie den Kanal über die Testintegration verknüpft haben, können Ihre Mitglieder Folgendes nutzen:",
+      "upcoming": "/upcoming — listet die anstehenden Gildenveranstaltungen mit den jeweiligen Startzeiten der Gruppen auf. Antworten sind temporär (nur für den Benutzer sichtbar).",
+      "signup": "/Anmeldeereignis:<event> squad:<1|2> – Meldet den Nutzer für ein Event an. Das Event-Feld verfügt über eine Autovervollständigung. Der Nutzer muss sich mindestens einmal mit Discord auf der Website angemeldet haben, damit der Bot seine Discord-ID seinem Gildenkonto zuordnen kann – andernfalls wird er dazu aufgefordert.",
+      "propagation": "Neue globale Slash-Befehle benötigen beim ersten Mal nach dem Einsatz des Bots bis zu etwa eine Stunde, um sich zu verbreiten. Danach erfolgen sie sofort.",
+      "failHeading": "Wenn die Autovervollständigung unter /signup \"Laden der Optionen fehlgeschlagen\" anzeigt",
+      "failIntro": "Das bedeutet in der Regel, dass Discord eine veraltete Version des Befehlsschemas zwischengespeichert hat oder der Bot mit einem fehlenden Berechtigungsbereich hinzugefügt wurde. Versuchen Sie Folgendes:",
+      "failStep1": "Überprüfen Sie die Berechtigungen und laden Sie den Bot erneut ein. Die Installations-URL muss sowohl die Berechtigung „bot“ als auch „applications.commands“ enthalten. Wurde der Bot über eine ältere URL hinzugefügt, der die Berechtigung „applications.commands“ fehlte, werden Autocomplete-Ereignisse nicht erreicht. Laden Sie den Bot erneut mit der aktuellen Installations-URL ein (Gildeneinstellungen → Discord → Event-Organisator-Discord-Bot einladen).",
+      "failStep2Intro": "Befehle im Cache löschen (nur für Betreiber). Falls eine erneute Einladung das Problem nicht behebt, kann Ihr Website-Betreiber die Befehlsliste von Discord im Cache löschen, sodass sich der Bot beim nächsten Start neu registriert.",
+      "failStep2Note": "Starten Sie dann den Bot neu (z. B. Fly Machine Restart) – der ClientReady-Handler registriert die Befehle aus SLASH_COMMANDS beim nächsten Start erneut."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Mitglieder</membersLink> — Liste aller Gildenmitglieder. Pro Zeile: Ein Mitglied zum Administrator befördern, einen Administrator zum Mitglied degradieren oder ein Mitglied ausschließen. Der letzte Administrator kann sich nicht selbst degradieren oder ausschließen – befördere zuerst jemand anderen.",
+      "invites": "<invitesLink>Einladungen</invitesLink> — Einladungslinks generieren. Jede Einladung kann optional ein Ablaufdatum und eine maximale Nutzung haben (leer = unbegrenzt). Klicke auf die URL, um sie zu kopieren. Verwende „Widerrufen“, um eine Einladung zu widerrufen. Jeder, der auf einen gültigen Einladungslink klickt, tritt der Gilde automatisch als Mitglied bei.",
+      "settings": "<settingsLink>Gildeneinstellungen</settingsLink> — Gildenname, Beschreibung, Option zur öffentlichen Sichtbarkeit, Discord-Kanal-ID. Der Slug ist permanent; alles andere ist bearbeitbar. Wenn die Option „Öffentlich sichtbar“ deaktiviert ist, können neue Mitglieder nur über einen Einladungslink beitreten.",
+      "leave": "Lassen Sie die Gilde unten in den Einstellungen. Ihre bisherigen Anmeldungen werden vorläufig gelöscht (für Anwesenheitslisten aufbewahrt). Falls Sie der einzige Administrator sind, müssen Sie zuerst jemand anderen befördern."
+    },
+    "playersPage": {
+      "body": "<playersLink>Spieler</playersLink> Zeigt jedes Gildenmitglied mit seiner vollständigen Anmeldehistorie: für welche Events es sich angemeldet hat, Squad-Präferenzen, Anwesenheit, Bewertungen und Führungsnotizen. Nützlich zur Auswahl von Anführern, zum Erstellen von Auswahllisten oder zum Nachfassen bei Nichterscheinen."
+    },
+    "troubleshooting": {
+      "reminders": "Erinnerungen werden nicht ausgelöst. Überprüfen Sie /api/health – wenn bot.lastPollStartedAt mehr als etwa 5 Minuten hinter der aktuellen Zeit liegt, hängt der Poller fest. Super-Admins können auch einen POST-Request an /api/admin/bot/poll-now senden, um einen neuen Polling-Zyklus zu erzwingen.",
+      "rescheduled": "Eine Veranstaltung wurde verschoben, und die Teilnehmer erhalten keine erneute Benachrichtigung. Bitte überprüfen Sie, ob sich die Uhrzeit tatsächlich geändert hat (vergleichen Sie sie mit dem vorherigen Wert). Der Bot sendet nur Benachrichtigungen erneut, deren Zeitfenster noch vor der neuen Uhrzeit liegt – wenn Ihre neue Uhrzeit beispielsweise 30 Minuten später ist, wird nur die 20-Minuten-Erinnerung gesendet, nicht die 24-Stunden-Erinnerung.",
+      "movedSquad": "Ein Spieler wurde nach meiner Verschiebung dem falschen Team zugewiesen. Das Symbol „VERSCHOBEN“ bedeutet, dass die Zuweisung nicht Ihrer Präferenz entspricht. Um dies rückgängig zu machen, ändern Sie seine Rolle/sein Team über das Dropdown-Menü oder verwenden Sie die Schaltfläche „Zu Team N verschieben“, um ihn zurückzuwechseln."
+    }
   }
 }

@@ -429,5 +429,118 @@
       "slashCommands": "Discord slash-commando's: /upcoming toont een lijst met aankomende evenementen van je gilde, en met /signup kun je je aanmelden zonder Discord te verlaten. Je moet je wel eerst minstens één keer aanmelden op de website met Discord, zodat de bot je account kan koppelen."
     },
     "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
+  },
+  "adminHelp": {
+    "title": "Beheerdershandleiding",
+    "subtitle": "Alles wat een gildebeheerder nodig heeft om evenementen te organiseren: wedstrijden aanmaken, spelers beheren, Discord instellen en het gilde zelf onderhouden. De versie voor spelers is te vinden op<helpLink> /hulp</helpLink> .",
+    "sections": {
+      "createMatch": "Maak een wedstrijdgebeurtenis aan",
+      "editEvent": "Evenementdetails bewerken",
+      "managePlayers": "Beheer spelers",
+      "waitlist": "De wachtlijst",
+      "scrims": "Speel een oefenwedstrijd.",
+      "inviteBot": "Nodig de Discord-bot uit",
+      "discordChannel": "Stel het Discord-kanaal in.",
+      "slashCommands": "Discord slash-commando's",
+      "manageGuild": "Beheer je gilde",
+      "playersPage": "Spelerspagina",
+      "troubleshooting": "Dingen die je mogelijk tegenkomt"
+    },
+    "createMatch": {
+      "step1": "Ga naar 'Evenementen beheren' in de zijbalk en klik op '+ Nieuw evenement'.",
+      "step2": "Kies 'Wedstrijd' als evenementtype. Wedstrijden hebben twee teams met eigen starttijden, leiderschapsposities en een reserveteam. (Kies 'Eenvoudig' voor informatieve items zoals vergaderingen of kijkfeesten — geen aanmeldingen, alleen een agendapunt.)",
+      "step3": "Vul de naam, een eventuele beschrijving en het aanmeldvenster in (Aanmelden opent / Aanmelden sluit). Het venster wordt door beide teams gedeeld.",
+      "step4": "Stel de starttijd voor Team 1 en Team 2 in. Je kunt een van beide of beide velden leeg laten — spelers zien \"Nog te bepalen\" totdat je ze invult. De herinneringen voor elk team worden onafhankelijk van de eigen starttijd geactiveerd.",
+      "step5": "Alle datum- en tijdvelden worden ingevoerd in de lokale tijd van uw browser. Het formulier toont de UTC-equivalent onder elk invoerveld, zodat er geen misverstanden kunnen ontstaan. Tijden worden opgeslagen als UTC en weergegeven in de lokale tijdzone van elke gebruiker.",
+      "step6": "Optioneel: pas de teamnamen, het maximale aantal spelers, het maximale aantal reserves en de leiderschapsposities aan. Standaard zijn 20 / 10 / 3 per team (60 posities in totaal).",
+      "step7": "Klik op Evenement aanmaken. Je komt terecht op de beheerderspagina van het evenement."
+    },
+    "editEvent": {
+      "dates": "Datums: klik op de evenementbeheerpagina op 'Datums bewerken'. Je kunt de aanmeldperiode en de starttijden van beide teams wijzigen.",
+      "reschedule": "Het verzetten van een herinnering zorgt ervoor dat herinneringen opnieuw worden verzonden: het wijzigen van de starttijd wist de \"reeds verzonden\" herinnering voor die groep, waardoor de Discord-bot nieuwe herinneringen verstuurt met een interval van 24 uur, 1 uur of 20 minuten voor de nieuwe tijd. Ook een kleine aanpassing van een paar minuten wist de herinneringen, dus verplaats ze niet zomaar, tenzij je een nieuwe herinnering wilt sturen.",
+      "softDelete": "Zachte verwijdering: met de knop 'Evenement verwijderen' wordt het evenement voor spelers verborgen, maar blijven de aanmeldingsgegevens behouden voor aanwezigheidsrapporten. Verwijderde evenementen verschijnen onder een aparte sectie 'Verwijderd' in 'Evenementen beheren'."
+    },
+    "managePlayers": {
+      "intro": "De evenementbeheerpagina toont twee kolommen voor teams en daaronder een wachtlijst. In elke teamkolom is elke aanmelding een rij met de volgende besturingselementen:",
+      "moveSquad": "De knop 'Verplaatsen naar team N' verplaatst de speler met één klik naar het andere team. Het toegewezen team wordt bijgewerkt; als het nieuwe team afwijkt van hun eerste voorkeur, verschijnt er een klein 'VERPLAATST'-icoontje naast hun naam, zodat je weet dat je hun voorkeur hebt overschreven.",
+      "moveBackup": "De knop 'Verplaatsen naar reserve/selectie': hiermee schakelt de speler tussen de hoofdselectie (speler) en de reserveselectie (reserve). Werkt in elke kolom, inclusief de wachtlijst — handig om een speler op de wachtlijst direct naar de reserveselectie te promoveren.",
+      "roleDropdown": "Keuzelijst met rollen (Niet toegewezen / Speler / Reserve / Leider / Wachtlijst): gedetailleerdere rolwijzigingen. Gebruik deze optie om een speler die om leiderschap vraagt, tot leider te promoveren of om iemand op de wachtlijst te plaatsen.",
+      "attendedRating": "Aanwezig-selectievakje + 1-5 sterrenbeoordeling: administratie na afloop van het evenement. Beide worden automatisch opgeslagen wanneer ingeschakeld. Gebruikt voor toekomstige teamopstellingen.",
+      "effectiveSquadNote": "De kolommen voor de teamindeling groeperen spelers op basis van hun daadwerkelijke team: toewijzing door de beheerder heeft voorrang, anders gaat het om de voorkeur van de eerste keus. Dus een speler die je verplaatst met 'Verplaatsen naar Team 2' verschijnt direct in de kolom 'Team 2' bij de volgende weergave.",
+      "leaderPillNote": "Het gele icoontje 'Leider' naast een naam betekent dat die speler bij de aanmelding om een leiderschapsrol heeft gevraagd. Kies leiders uit deze aanvragen door hun rol te wijzigen naar 'Leider'."
+    },
+    "waitlist": {
+      "intro": "Wanneer alle plaatsen in het team en de reserves bezet zijn, komen nieuwe aanmeldingen op de wachtlijst terecht (toegewezen rol = wachtlijst). In het wachtlijstgedeelte onderaan de evenementbeheerpagina worden ze in volgorde van aanmelding weergegeven.",
+      "promote": "Om iemand van de wachtlijst te halen, wijzig je zijn of haar rol van Wachtlijst naar Speler of Reserve via het keuzemenu — of gebruik 'Verplaatsen naar Reserve' in het meest voorkomende geval. De teamindeling wordt bepaald door de voorkeurspositie, tenzij je de speler expliciet verplaatst."
+    },
+    "scrims": {
+      "intro": "Een scrim is een 1-tegen-1 gilde-uitdaging die wordt overeengekomen tussen twee gildebeheerders, met één team aan elke kant. Zodra de uitdaging is geaccepteerd, krijgen beide gilden een vergelijkbaar evenement waar hun leden zich voor kunnen aanmelden. Na de wedstrijd maakt een van de beheerders de uitslag bekend.",
+      "serverNote": "Servernummer is vereist. Beide gilden moeten hetzelfde servernummer hebben ingesteld in de gilde-instellingen, anders verschijnen ze niet in elkaars tegenstanderlijst. Stel jouw servernummer in in de gilde-instellingen.<settingsLink> Gilde-instellingen</settingsLink> Eerst.",
+      "proposeHeading": "Stel een scherm voor",
+      "proposeStep1": "Ga naar de<scrimmagesLink> scrimmages dashboard</scrimmagesLink> en klik op + Scrim voorstellen.",
+      "proposeStep2": "Kies de tegenstander (gefilterd op hetzelfde servernummer als jij), de speeltijd en de locatie: een van de standaardkaarten (Kruger, Cerno, Kanvo, Sphinx) of een zelfgekozen locatie.",
+      "proposeStep3": "Vul de winstvoorwaarden in (verplicht). Vermeld de regels duidelijk – beide partijen zien dit en het is gekoppeld aan de uiteindelijke uitslag. Bijvoorbeeld: \"Eerste team dat 3 veroveringen behaalt\" of \"Houd het centrale fort 5 minuten vast.\"",
+      "proposeStep4": "Optioneel bericht voor huisregels, formatnotities, enz. Klik op 'Voorstel verzenden'.",
+      "acceptDeclineHeading": "Een binnenkomend voorstel accepteren of afwijzen",
+      "acceptDeclineIntro": "In de sectie 'Inkomende voorstellen' van het scrim-dashboard verschijnen lopende voorstellen van andere guilds.",
+      "accept": "Accept creëert twee gespiegelde evenementen (één per gilde) in één transactie. Het evenement van elke kant heet \"Scrim vs<opponent> \", krijgt de voorgestelde speeltijd als starttijd en accepteert aanmeldingen van leden zoals een normale wedstrijd — alleen is er maar één team.",
+      "decline": "Door 'Decline' wordt het voorstel afgewezen zonder dat er gebeurtenissen plaatsvinden.",
+      "withdraw": "Met 'Intrekken' (alleen uitgaand) annuleert u uw eigen lopende voorstel voordat de andere partij reageert.",
+      "rosterHeading": "Deelnemerslijst voor het oefenevenement",
+      "rosterBody": "Het gespiegelde evenement is te vinden onder 'Evenementen beheren' met een rode SCRIM-badge. Open het om je teamopstelling te bekijken: één team, dezelfde beheerdersopties als een wedstrijd (verplaatsen naar reserve, rolkeuzelijst, aanwezig, beoordeling). De kolommen voor Team 2 en de tweede starttijd zijn verborgen omdat ze niet van toepassing zijn.",
+      "cancelHeading": "Een geaccepteerde oefenwedstrijd annuleren",
+      "cancelBody": "De beheerder van een van beide guilds kan een evenement annuleren via het dashboard, zolang het nog in de lijst met aankomende scrims staat en voordat de uitslag bekend is. Annuleren verwijdert beide gekoppelde evenementen (aanmeldingen blijven behouden voor de aanwezigheidsgeschiedenis) en zet het voorstel op 'geannuleerd'.",
+      "resultHeading": "Maak het resultaat bekend",
+      "resultIntro": "Open het scrim-evenement onder 'Evenementen beheren'. Het resultaatformulier heeft vier knoppen:",
+      "resultWonLost": "We hebben gewonnen / We hebben verloren — de uitslag van jouw gilde. De server slaat een absolute (perspectiefloze) uitslag op, waardoor het andere gilde automatisch de omgekeerde W/L-uitslag ziet.",
+      "resultDrawNc": "Gelijkspel / Geen wedstrijd — symmetrische uitkomsten. Geen wedstrijd omvat opgave, verbroken verbinding of elk scenario waarin de wedstrijd niet is voltooid.",
+      "resultBody": "Optionele notities zijn zichtbaar voor leden van beide gilden. Zodra de uitslag is bekendgemaakt, verschijnt deze als een chip op de evenementpagina, het scrim-dashboard en in de scrim-geschiedenis van de spelers. Beide beheerders kunnen de uitslag bekendmaken — de eerste die indient wint (de gebruikersinterface kan deze niet overschrijven).",
+      "discordNotificationsHeading": "Discord-meldingen",
+      "discordNotificationsBody": "Als een gilde een Discord-kanaal heeft geconfigureerd (zie hieronder), plaatst de bot een Engelstalig bericht in de kanalen van beide gilden bij het voorstellen/accepteren/afwijzen van een duel. Het bericht bevat de naam van de tegenstander, de speeltijd (weergegeven in de lokale tijdzone van elke kijker), de locatie en de winstconditie.",
+      "discordNotificationsFallback": "Als de andere guild een kanaal heeft geconfigureerd, maar de bot er geen toegang toe heeft (bot verwijderd, kanaal gewist, verkeerde ID), verschijnt er na afloop van je actie een browsermelding met de namen van de betreffende guilds. Guilds zonder geconfigureerd kanaal blijven stil; dat is een bewuste uitsluiting.",
+      "playerVisibilityHeading": "Speler zichtbaarheid",
+      "playerVisibilityBody": "Spelers zien scrim-evenementen op de homepage met een rode SCRIM-badge, kunnen zich aanmelden zoals voor elke wedstrijd (slechts één team kiezen) en kunnen alle geaccepteerde scrims (aankomende + resultaten uit het verleden) bekijken op de homepage.<scrimsLink> geschiedenispagina van de scrim</scrimsLink> Afgewezen, ingetrokken en geannuleerde voorstellen worden voor spelers verborgen gehouden — zij zien alleen de oefenwedstrijden die daadwerkelijk hebben plaatsgevonden of gepland staan."
+    },
+    "inviteBot": {
+      "intro": "Herinneringen en slash-commando's zijn afhankelijk van een Discord-bot die de beheerder al heeft geïmplementeerd. Om deze te koppelen aan je Discord-server:",
+      "step1Intro": "Vraag de installatie-URL aan uw websitebeheerder. Deze ziet er als volgt uit:",
+      "step1Note": "Het gedeelte permissions=133120 heeft betrekking op 'Berichten verzenden' en 'Iedereen taggen'. Beide zijn vereist; zonder 'Iedereen taggen' wordt de @iedereen in herinneringen als platte tekst weergegeven en wordt niemand getagd.",
+      "step2": "Open de installatie-URL in een browser. Kies de Discord-server waar je de bot wilt installeren. Je hebt de machtiging 'Server beheren' nodig voor die server. Klik op 'Autoriseren'.",
+      "step3": "Controleer of de bot in de ledenlijst van je Discord-server verschijnt. Dat is alles — er is geen configuratie per bot nodig aan de Discord-kant."
+    },
+    "discordChannel": {
+      "intro": "De bot plaatst herinneringen in een kanaal naar keuze. Om dit te configureren:",
+      "step1": "Ontwikkelaarsmodus inschakelen in Discord: Gebruikersinstellingen → Geavanceerd → Ontwikkelaarsmodus. Eenmalig per apparaat. Hiermee wordt de rechtermuisklikoptie 'Kanaal-ID kopiëren' ontgrendeld.",
+      "step2": "Klik met de rechtermuisknop op het kanaal waar je herinneringen wilt ontvangen → Kanaal-ID kopiëren. Je krijgt een lang nummer te zien, zoals 123456789012345678. Zorg ervoor dat het een tekstkanaal is en dat de bot de rechten 'Kanaal bekijken' en 'Berichten verzenden' heeft.",
+      "step3": "Ga op de website naar<settingsLink> Gilde-instellingen</settingsLink> en plak de kanaal-ID in het veld 'Discord channel ID'.",
+      "step4": "Klik op Integratie testen. Als alles goed is, zie je een bevestiging in de gebruikersinterface en een eenmalig testbericht in het kanaal. De teststap koppelt je Discord-server automatisch aan de app-guild, zodat slash-opdrachten (/upcoming, /signup) werken.",
+      "step5": "Klik op Opslaan om de kanaal-ID te bewaren.",
+      "commonErrors": "Veelvoorkomende fouten na de test: \"De bot heeft geen toegang tot dat kanaal\" (nodig de bot opnieuw uit via de installatie-URL hierboven); \"De bot mist de machtiging 'Berichten verzenden'\" (machtigingen op kanaalniveau worden overschreven — los dit op in Discord); \"Dat kanaal-ID bestaat niet\" (je hebt het server-ID gekopieerd, niet het kanaal-ID)."
+    },
+    "slashCommands": {
+      "intro": "Zodra de bot op de server staat en je het kanaal via Testintegratie hebt gekoppeld, kunnen je leden gebruikmaken van:",
+      "upcoming": "/upcoming — toont een lijst met aankomende evenementen van de guild, inclusief de aanvangstijden van beide squads. Reacties zijn tijdelijk (alleen zichtbaar voor de gebruiker).",
+      "signup": "/aanmelden voor evenement:<event> squad:<1|2> — meldt de gebruiker aan voor een evenement. Het evenementveld heeft een automatische aanvulling. De gebruiker moet minstens één keer met Discord op de website zijn ingelogd, zodat de bot hun Discord-ID aan hun gildeaccount kan koppelen. Als dit nog niet is gebeurd, wordt de gebruiker hierom gevraagd.",
+      "propagation": "Nieuwe globale slash-commando's hebben tot ongeveer een uur nodig om zich de eerste keer na de implementatie van de bot te verspreiden. Daarna werken ze direct.",
+      "failHeading": "Als /signup autocomplete \"Loading options failed\" weergeeft,",
+      "failIntro": "Dit betekent meestal dat Discord een verouderde versie van het commandoschema in de cache heeft opgeslagen, of dat de bot is toegevoegd met een ontbrekende scope. Probeer het in deze volgorde:",
+      "failStep1": "Controleer de scopes en nodig de bot opnieuw uit. De installatie-URL moet zowel de scope 'bot' als 'applications.commands' bevatten. Als de bot is toegevoegd via een oudere URL waar 'applications.commands' ontbrak, bereiken autocomplete-events de bot niet. Nodig de bot opnieuw uit met de huidige installatie-URL (Gilde-instellingen → Discord → Evenementorganisator Discord-bot uitnodigen).",
+      "failStep2Intro": "Gooi de cache van de commando's geforceerd leeg (alleen voor beheerders). Als opnieuw uitnodigen het probleem niet oplost, kan de beheerder van uw site de cache van Discord wissen, zodat de bot zich bij de volgende opstart opnieuw registreert.",
+      "failStep2Note": "Start vervolgens de bot opnieuw op (bijvoorbeeld met Fly Machine Restart) — de clientReady-handler registreert de commando's opnieuw vanuit SLASH_COMMANDS bij de volgende opstart."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Leden</membersLink> — Lijst van alle leden van het gilde. Per rij: Een lid promoveren tot beheerder, een beheerder degraderen tot lid, of een lid verwijderen. De laatste beheerder kan zichzelf niet degraderen of verwijderen — promoveer eerst iemand anders.",
+      "invites": "<invitesLink>Uitnodigingen</invitesLink> — Genereer uitnodigingslinks. Elke uitnodiging kan een optionele vervaldatum en een maximum aantal keren dat deze gebruikt kan worden hebben (leeg = onbeperkt). Klik op de URL om deze te kopiëren. Gebruik 'Intrekken' om een uitnodiging ongeldig te maken. Iedereen die op een geldige uitnodigingslink klikt, wordt automatisch lid van de gilde.",
+      "settings": "<settingsLink>Gilde-instellingen</settingsLink> — gildenaam, beschrijving, optie voor openbaar zichtbaar, Discord-kanaal-ID. De slug is permanent; al het andere is bewerkbaar. Als je 'Vermeld in openbaar zichtbaar' uitschakelt, kunnen nieuwe leden alleen lid worden via een uitnodigingslink.",
+      "leave": "Verlaat de gilde onderaan in de instellingen. Je eerdere aanmeldingen worden tijdelijk verwijderd (bewaard voor aanwezigheidsrapporten). Als je de enige beheerder bent, moet je eerst iemand anders promoveren."
+    },
+    "playersPage": {
+      "body": "<playersLink>Spelers</playersLink> Toont elk gildelid met hun volledige aanmeldingsgeschiedenis: voor welke evenementen ze zich hebben aangemeld, teamvoorkeuren, aanwezigheid, beoordelingen en opmerkingen van leiders. Handig voor het kiezen van leiders, het samenstellen van kandidatenlijsten of het opvolgen van afwezigen."
+    },
+    "troubleshooting": {
+      "reminders": "De herinneringen worden niet verzonden. Controleer /api/health — als bot.lastPollStartedAt meer dan ongeveer 5 minuten achterloopt op de huidige tijd, zit de poller vast. Superbeheerders kunnen ook een POST-verzoek sturen naar /api/admin/bot/poll-now om een pollcyclus af te dwingen.",
+      "rescheduled": "Een evenement is verplaatst en mensen ontvangen geen nieuwe melding. Controleer of de tijd daadwerkelijk is gewijzigd (vergelijk met de vorige waarde). De bot verstuurt alleen herinneringen waarvan het tijdsvenster nog voor de nieuwe tijd ligt. Als de nieuwe tijd bijvoorbeeld over 30 minuten is, wordt alleen de herinnering van 20 minuten verstuurd, niet die van 24 uur.",
+      "movedSquad": "Een speler is aan het verkeerde team toegewezen nadat ik hem verplaatst had. De badge 'VERPLAATST' betekent dat de toewijzing afwijkt van de voorkeur. Om dit ongedaan te maken, wijzig je de rol/het team via het keuzemenu of gebruik je de knop 'Verplaatsen naar team N' om de speler terug te zetten."
+    }
   }
 }

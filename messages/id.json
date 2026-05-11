@@ -429,5 +429,118 @@
       "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
     },
     "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
+  },
+  "adminHelp": {
+    "title": "Panduan admin",
+    "subtitle": "Semua yang dibutuhkan admin guild untuk menjalankan event: membuat pertandingan, mengelola pemain, mengatur Discord, dan mengurus guild itu sendiri. Versi yang dapat diakses pemain ada di...<helpLink> /membantu</helpLink> .",
+    "sections": {
+      "createMatch": "Buat acara pertandingan",
+      "editEvent": "Edit detail acara",
+      "managePlayers": "Mengelola pemain",
+      "waitlist": "Daftar tunggu",
+      "scrims": "Lakukan latihan tanding",
+      "inviteBot": "Undang bot Discord",
+      "discordChannel": "Buat saluran Discord",
+      "slashCommands": "Perintah slash Discord",
+      "manageGuild": "Kelola guild Anda",
+      "playersPage": "Halaman pemain",
+      "troubleshooting": "Hal-hal yang mungkin Anda temui"
+    },
+    "createMatch": {
+      "step1": "Buka Kelola Acara di bilah sisi dan klik + Acara baru.",
+      "step2": "Pilih Pertandingan untuk jenis acara. Acara Pertandingan memiliki dua regu dengan waktu mulai, posisi kepemimpinan, dan daftar pemain cadangan masing-masing. (Pilih Sederhana untuk entri informasi saja seperti rapat atau acara nonton bareng — tidak perlu pendaftaran, hanya item kalender.)",
+      "step3": "Isi nama, deskripsi opsional, dan jendela pendaftaran (Pendaftaran Dibuka / Pendaftaran Ditutup). Jendela ini digunakan bersama oleh kedua tim.",
+      "step4": "Atur Waktu Mulai Regu 1 Pada dan Waktu Mulai Regu 2 Pada. Salah satu atau keduanya dapat dibiarkan kosong — pemain akan melihat \"TBD\" sampai Anda mengisinya. Pengingat setiap regu akan muncul secara independen dari waktu mulainya masing-masing.",
+      "step5": "Semua kolom tanggal dan waktu diisi dengan waktu lokal browser Anda. Formulir menampilkan nilai UTC di bawah setiap input agar tidak ada ambiguitas. Waktu disimpan sebagai UTC dan ditampilkan dalam zona waktu lokal masing-masing pengguna.",
+      "step6": "Opsional: sesuaikan nama skuad, jumlah pemain maksimal, jumlah pemain cadangan maksimal, dan slot kepemimpinan. Pengaturan default adalah 20 / 10 / 3 per skuad (total 60 slot).",
+      "step7": "Klik Buat Acara. Anda akan diarahkan ke halaman admin acara."
+    },
+    "editEvent": {
+      "dates": "Tanggal: di halaman admin acara, klik Edit tanggal. Anda dapat mengubah periode pendaftaran dan waktu mulai kedua regu.",
+      "reschedule": "Menjadwalkan ulang pengingat akan terkirim kembali: mengubah waktu mulai apa pun akan menghapus catatan \"sudah terkirim\" untuk grup tersebut, sehingga bot Discord akan mengirimkan pengingat 24 jam / 1 jam / 20 menit yang baru sesuai dengan waktu yang baru. Mengubah beberapa menit juga akan menghapusnya, jadi hindari mengubah waktu secara tiba-tiba kecuali Anda memang bermaksud untuk mengirimkan pemberitahuan ulang.",
+      "softDelete": "Penghapusan sementara: tombol Hapus Acara menyembunyikan acara dari pemain tetapi tetap menyimpan data pendaftaran untuk laporan kehadiran. Acara yang dihapus akan muncul di bagian \"Dihapus\" terpisah pada Kelola Acara."
+    },
+    "managePlayers": {
+      "intro": "Halaman admin acara menampilkan dua kolom regu dan daftar tunggu di bawahnya. Di setiap kolom regu, setiap pendaftaran berupa baris dengan kontrol berikut:",
+      "moveSquad": "Tombol Pindah ke Skuad N: memindahkan pemain ke skuad lain dalam satu klik. Memperbarui skuad yang ditugaskan; jika skuad baru berbeda dari pilihan pertama mereka, lencana kecil \"PINDAH\" muncul di sebelah nama mereka sehingga Anda ingat bahwa Anda telah mengganti pilihan mereka.",
+      "moveBackup": "Tombol Pindah ke Cadangan / Daftar Pemain: mengalihkan pemain antara daftar pemain utama (pemain) dan daftar pemain cadangan (cadangan). Berfungsi di kolom mana pun, termasuk daftar tunggu — berguna untuk mempromosikan pemain dalam daftar tunggu langsung menjadi cadangan.",
+      "roleDropdown": "Menu tarik-turun peran (Belum Ditugaskan / Pemain / Cadangan / Pemimpin / Daftar Tunggu): perubahan peran yang lebih detail. Gunakan ini untuk mempromosikan pemain yang meminta kepemimpinan menjadi pemimpin, atau untuk memasukkan seseorang ke dalam daftar tunggu.",
+      "attendedRating": "Kotak centang \"Hadir\" + peringkat bintang 1-5: pencatatan pasca-acara. Keduanya tersimpan otomatis saat diaktifkan. Digunakan untuk keputusan susunan pemain di masa mendatang.",
+      "effectiveSquadNote": "Kolom skuad dikelompokkan berdasarkan skuad efektif: penugasan admin yang diutamakan, jika tidak, preferensi pilihan pertama. Jadi, pemain yang Anda pindahkan dengan Pindahkan ke Skuad 2 akan langsung muncul di kolom Skuad 2 pada tampilan berikutnya.",
+      "leaderPillNote": "Pil kuning \"Pemimpin\" di sebelah nama berarti pemain tersebut meminta peran kepemimpinan saat mendaftar. Pilih pemimpin dari permintaan ini dengan mengubah peran mereka menjadi Pemimpin."
+    },
+    "waitlist": {
+      "intro": "Ketika semua slot tim utama dan cadangan terisi, pendaftar baru akan masuk ke daftar tunggu (peran yang diberikan = daftar tunggu). Bagian daftar tunggu di bagian bawah halaman admin acara menampilkan mereka sesuai urutan pendaftaran.",
+      "promote": "Untuk menaikkan seseorang dari daftar tunggu, ubah peran mereka dari Daftar Tunggu menjadi Pemain atau Cadangan melalui menu tarik-turun — atau gunakan Pindahkan ke Cadangan untuk kasus umum. Penempatan mereka dalam skuad berasal dari preferensi pilihan pertama mereka kecuali Anda secara eksplisit memindahkan mereka."
+    },
+    "scrims": {
+      "intro": "Scrim adalah tantangan 1 lawan 1 antar guild yang dinegosiasikan antara dua admin guild, dengan satu regu di setiap sisi. Setelah diterima, kedua guild mendapatkan acara serupa yang dapat diikuti oleh anggotanya. Setelah pertandingan, salah satu admin mengumumkan hasilnya.",
+      "serverNote": "Nomor server wajib diisi. Kedua guild harus memiliki Nomor Server yang sama yang diatur di Pengaturan Guild — jika tidak, mereka tidak akan muncul di daftar lawan satu sama lain. Atur milikmu di<settingsLink> Pengaturan Guild</settingsLink> Pertama.",
+      "proposeHeading": "Usulkan kain kasat mata",
+      "proposeStep1": "Pergi ke<scrimmagesLink> dasbor latihan tanding</scrimmagesLink> lalu klik + Usulkan scrim.",
+      "proposeStep2": "Pilih lawan (difilter ke Nomor Server yang sama dengan Anda), waktu permainan, dan lokasi — salah satu peta standar (Kruger, Cerno, Kanvo, Sphinx) atau lokasi kustom dengan teks bebas.",
+      "proposeStep3": "Isilah Syarat Kemenangan (wajib). Nyatakan aturan dengan jelas — kedua belah pihak melihat ini dan aturan ini terkait dengan hasil yang diumumkan. Contoh: \"Tim pertama yang mendapatkan 3 kali penguasaan\" atau \"Pertahankan benteng tengah selama 5 menit.\"",
+      "proposeStep4": "Pesan opsional untuk peraturan rumah, catatan format, dll. Klik Kirim proposal.",
+      "acceptDeclineHeading": "Menerima atau menolak proposal yang masuk.",
+      "acceptDeclineIntro": "Proposal yang tertunda dari guild lain akan muncul di bagian Proposal Masuk pada dasbor scrim.",
+      "accept": "Accept membuat dua event yang saling bercermin (satu per guild) dalam satu transaksi. Event masing-masing pihak diberi nama \"Scrim vs<opponent> \", mengambil waktu permainan yang diusulkan sebagai waktu mulainya, dan menerima pendaftaran anggota seperti pertandingan biasa — kecuali hanya ada satu regu.",
+      "decline": "Decline mengubah proposal menjadi ditolak tanpa menciptakan peristiwa apa pun.",
+      "withdraw": "Pembatalan (hanya untuk pengajuan keluar) membatalkan proposal Anda yang sedang diproses sebelum pihak lain memberikan tanggapan.",
+      "rosterHeading": "Susun daftar peserta acara latihan tanding.",
+      "rosterBody": "Acara yang dicerminkan berada di bawah Kelola Acara dengan lencana SCRIM berwarna merah. Buka untuk melihat daftar pemain Anda — satu regu, kontrol admin yang sama seperti pertandingan (pindahkan ke cadangan, menu tarik-turun peran, hadir, peringkat). Kolom Regu-2 dan waktu mulai kedua disembunyikan karena tidak berlaku.",
+      "cancelHeading": "Batalkan sesi latihan yang telah disetujui.",
+      "cancelBody": "Admin dari masing-masing guild dapat Membatalkan dari dasbor saat masih dalam tahap Scrim Mendatang dan sebelum hasil diumumkan. Pembatalan akan menghapus sementara kedua acara yang dicerminkan (pendaftaran tetap disimpan untuk riwayat kehadiran) dan mengubah proposal menjadi dibatalkan.",
+      "resultHeading": "Umumkan hasilnya",
+      "resultIntro": "Buka acara scrim di bawah Kelola Acara. Formulir hasil memiliki empat tombol:",
+      "resultWonLost": "Kami menang / Kami kalah — hasil pertandingan guild Anda. Server menyimpan hasil absolut (tanpa perspektif), sehingga guild lawan secara otomatis melihat hasil menang/kalah yang terbalik.",
+      "resultDrawNc": "Seri / Tidak ada pemenang — hasil simetris. Tidak ada pemenang mencakup pengunduran diri, pemutusan koneksi, atau skenario apa pun di mana pertandingan tidak selesai.",
+      "resultBody": "Catatan opsional dapat dilihat oleh anggota kedua guild. Setelah diumumkan, hasilnya akan muncul sebagai chip di halaman acara, dasbor scrim, dan riwayat scrim pemain. Kedua admin dapat mengumumkan hasilnya — siapa pun yang pertama mengirimkan pengumuman akan menang (tidak ada penimpaan UI).",
+      "discordNotificationsHeading": "Notifikasi Discord",
+      "discordNotificationsBody": "Jika sebuah guild memiliki saluran Discord yang telah dikonfigurasi (lihat di bawah), bot akan mengirimkan pesan berbahasa Inggris ke kedua saluran guild saat mengajukan/menerima/menolak. Pesan tersebut mencakup nama lawan, waktu permainan (ditampilkan dalam zona waktu lokal masing-masing penonton), lokasi, dan kondisi kemenangan.",
+      "discordNotificationsFallback": "Jika guild lain memiliki saluran yang dikonfigurasi tetapi bot tidak dapat mengaksesnya (bot dikeluarkan, saluran dihapus, ID salah), Anda akan melihat peringatan di browser yang mencantumkan nama guild yang terpengaruh setelah tindakan Anda selesai. Guild tanpa saluran yang dikonfigurasi akan tetap diam — ini adalah pilihan untuk tidak ikut serta.",
+      "playerVisibilityHeading": "Visibilitas pemain",
+      "playerVisibilityBody": "Pemain dapat melihat acara scrim di halaman utama dengan lencana SCRIM berwarna merah, dapat mendaftar seperti pertandingan biasa (hanya satu regu yang perlu dipilih), dan dapat menelusuri semua scrim yang diterima (mendatang + hasil sebelumnya) di halaman tersebut.<scrimsLink> halaman riwayat scrim</scrimsLink> Proposal yang ditolak, ditarik, dan dibatalkan disembunyikan dari para pemain — mereka hanya melihat sesi latihan yang benar-benar terjadi atau dijadwalkan."
+    },
+    "inviteBot": {
+      "intro": "Pengingat dan perintah slash bergantung pada bot Discord yang sudah diimplementasikan oleh operator. Untuk menghubungkannya ke server Discord Anda:",
+      "step1Intro": "Dapatkan URL instalasi dari operator situs Anda. URL-nya akan terlihat seperti ini:",
+      "step1Note": "Bagian permissions=133120 mencakup Kirim Pesan dan Sebutkan Semua Orang. Keduanya diperlukan — tanpa Sebutkan Semua Orang, @everyone di pengingat akan ditampilkan sebagai teks biasa dan tidak akan mengirimkan notifikasi kepada siapa pun.",
+      "step2": "Buka URL instalasi di browser. Pilih server Discord tempat Anda ingin memasang bot. Anda memerlukan izin Kelola Server di server tersebut. Klik Otorisasi.",
+      "step3": "Konfirmasikan bahwa bot muncul di daftar anggota server Discord Anda. Selesai — tidak perlu konfigurasi per-bot di sisi Discord."
+    },
+    "discordChannel": {
+      "intro": "Bot ini akan mengirimkan pengingat ke salah satu saluran pilihan Anda. Untuk mengkonfigurasinya:",
+      "step1": "Aktifkan Mode Pengembang di Discord: Pengaturan Pengguna → Lanjutan → Mode Pengembang. Hanya sekali per perangkat. Ini akan membuka opsi klik kanan \"Salin ID Saluran\".",
+      "step2": "Klik kanan saluran yang ingin Anda dapatkan pengingatnya → Salin ID Saluran. Anda akan mendapatkan nomor panjang seperti 123456789012345678. Pastikan itu adalah saluran teks dan peran bot memiliki izin Lihat Saluran dan Kirim Pesan di sana.",
+      "step3": "Di situs web, kunjungi<settingsLink> Pengaturan Guild</settingsLink> lalu tempelkan ID saluran ke kolom ID saluran Discord.",
+      "step4": "Klik Uji integrasi. Jika semuanya berjalan dengan benar, Anda akan melihat konfirmasi di UI dan pesan uji coba sekali saja di saluran. Langkah pengujian ini juga secara otomatis menautkan server Discord Anda ke guild aplikasi sehingga perintah slash (/upcoming, /signup) berfungsi.",
+      "step5": "Klik Simpan untuk menyimpan ID saluran.",
+      "commonErrors": "Kesalahan umum setelah pengujian: \"Bot tidak memiliki akses ke saluran tersebut\" (undang ulang bot melalui URL instalasi di atas); \"Bot tidak memiliki izin Kirim Pesan\" (izin tingkat saluran diganti — perbaikan di Discord); \"ID saluran tersebut tidak ada\" (Anda menyalin ID server, bukan ID saluran)."
+    },
+    "slashCommands": {
+      "intro": "Setelah bot berada di server dan Anda telah menautkan saluran melalui integrasi Uji, anggota Anda dapat menggunakan:",
+      "upcoming": "/upcoming — menampilkan acara mendatang guild beserta waktu mulai kedua regu. Balasan bersifat sementara (hanya terlihat oleh pengguna).",
+      "signup": "/acara pendaftaran:<event> squad:<1|2> — mendaftarkan pengguna untuk suatu acara. Kolom acara memiliki fitur pelengkapan otomatis. Pengguna harus sudah masuk ke situs web dengan Discord setidaknya sekali agar bot dapat mencocokkan ID Discord mereka dengan akun guild mereka — bot akan meminta mereka jika belum.",
+      "propagation": "Perintah slash global baru membutuhkan waktu hingga sekitar 1 jam untuk menyebar pertama kali setelah bot diimplementasikan. Setelah itu, penyebarannya instan.",
+      "failHeading": "Jika /signup autocomplete menampilkan \"Gagal memuat opsi\"",
+      "failIntro": "Biasanya ini berarti Discord menyimpan versi skema perintah yang sudah usang dalam cache, atau bot ditambahkan dengan cakupan yang hilang. Coba secara berurutan:",
+      "failStep1": "Verifikasi cakupan dan undang ulang. URL instalasi harus menyertakan cakupan bot dan applications.commands. Jika bot ditambahkan melalui URL lama yang tidak menyertakan applications.commands, peristiwa pelengkapan otomatis tidak akan sampai ke bot tersebut. Undang ulang menggunakan URL instalasi saat ini (Pengaturan Guild → Discord → Undang Bot Discord Penyelenggara Acara).",
+      "failStep2Intro": "Hapus paksa perintah yang tersimpan dalam cache (hanya operator). Jika mengundang ulang tidak memperbaikinya, operator situs Anda dapat menghapus daftar perintah yang tersimpan dalam cache Discord sehingga bot mendaftar ulang dari awal saat dijalankan berikutnya:",
+      "failStep2Note": "Kemudian mulai ulang bot (misalnya, fly machine restart) — handler clientReady akan mendaftarkan ulang perintah dari SLASH_COMMANDS pada saat booting berikutnya."
+    },
+    "manageGuild": {
+      "members": "<membersLink>Anggota</membersLink> — Daftar semua anggota guild. Per baris: Promosikan anggota menjadi admin, Turunkan peringkat admin menjadi anggota biasa, atau Keluarkan anggota. Admin terakhir tidak dapat menurunkan peringkat atau mengeluarkan dirinya sendiri — promosikan orang lain terlebih dahulu.",
+      "invites": "<invitesLink>Undangan</invitesLink> — Buat tautan undangan. Setiap undangan dapat memiliki masa berlaku opsional dan batasan penggunaan maksimum (kosong = tidak terbatas). Klik URL untuk menyalinnya. Gunakan tombol Batalkan untuk membatalkannya. Siapa pun yang mengklik tautan undangan yang valid akan otomatis bergabung dengan guild sebagai anggota.",
+      "settings": "<settingsLink>Pengaturan Guild</settingsLink> — nama guild, deskripsi, pengaktifan/penonaktifan tampilan publik, ID saluran Discord. Slug bersifat permanen; yang lainnya dapat diedit. Menonaktifkan tampilan \"Terdaftar dalam tampilan publik\" berarti anggota baru hanya dapat bergabung melalui tautan undangan.",
+      "leave": "Keluar dari guild di bagian bawah Pengaturan. Pendaftaran Anda sebelumnya akan dihapus sementara (disimpan untuk laporan kehadiran). Jika Anda satu-satunya admin, Anda harus mempromosikan orang lain terlebih dahulu."
+    },
+    "playersPage": {
+      "body": "<playersLink>Pemain</playersLink> Menampilkan setiap anggota guild beserta riwayat pendaftaran lengkap mereka: acara apa yang mereka ikuti, preferensi regu, kehadiran, peringkat, dan catatan kepemimpinan. Berguna untuk memilih pemimpin, membuat daftar kandidat, atau menindaklanjuti anggota yang tidak hadir."
+    },
+    "troubleshooting": {
+      "reminders": "Pengingat tidak berfungsi. Periksa /api/health — jika bot.lastPollStartedAt lebih dari sekitar 5 menit di belakang waktu saat ini, poller macet. Super-admin juga dapat melakukan POST ke /api/admin/bot/poll-now untuk memaksa siklus polling.",
+      "rescheduled": "Suatu acara dijadwal ulang dan orang-orang tidak mendapatkan pemberitahuan ulang. Konfirmasikan bahwa waktu benar-benar berubah (bandingkan dengan nilai sebelumnya). Bot hanya akan mengirimkan pengingat ulang untuk acara yang jendela waktunya masih lebih awal dari waktu baru — jika waktu baru Anda 30 menit dari sekarang, hanya pengingat 20 menit yang akan terkirim, bukan yang 24 jam.",
+      "movedSquad": "Seorang pemain salah masuk skuad setelah saya memindahkannya. Lencana DIPINDAHKAN berarti penugasan berbeda dari preferensi. Untuk mengembalikannya, ubah peran/skuad mereka melalui menu tarik-turun atau gunakan tombol Pindah ke Skuad N untuk mengembalikannya."
+    }
   }
 }
