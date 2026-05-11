@@ -13,7 +13,7 @@ import {
 } from "discord.js";
 import { db } from "@/db";
 import { accounts, events, guilds, users } from "@/db/schema";
-import { and, eq, isNull } from "drizzle-orm";
+import { and, eq, inArray, isNull } from "drizzle-orm";
 import {
   buildMessage,
   findPending,
@@ -70,7 +70,7 @@ const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
   },
   {
     name: "signup",
-    description: "Sign up for an upcoming match event",
+    description: "Sign up for an upcoming match or scrim event",
     type: ApplicationCommandType.ChatInput,
     options: [
       {
@@ -82,9 +82,9 @@ const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
       },
       {
         name: "squad",
-        description: "Your first-choice squad (1 or 2)",
+        description: "Your first-choice squad (match events only — ignored for scrims)",
         type: ApplicationCommandOptionType.Integer,
-        required: true,
+        required: false,
         choices: [
           { name: "Squad 1", value: 1 },
           { name: "Squad 2", value: 2 },
@@ -377,7 +377,11 @@ export async function sendTestMessage(
 
 // ---- Scrim lifecycle notifications ----
 
-export type ScrimNotifyAction = "proposed" | "accepted" | "declined";
+export type ScrimNotifyAction =
+  | "proposed"
+  | "accepted"
+  | "declined"
+  | "cancelled";
 
 type ScrimNotificationInput = {
   proposingGuildId: string;
@@ -386,6 +390,14 @@ type ScrimNotificationInput = {
   proposedGameTime: string;
   location: string;
   winCondition: string;
+  // Public-facing app origin (e.g. https://foundation-event-organizer.fly.dev).
+  // Used to render call-to-action links. Optional — messages just omit links
+  // if not provided.
+  appBaseUrl?: string;
+  // For action="accepted": the per-guild mirrored event ids. Each guild's
+  // post links to its own event so members can jump straight to sign up.
+  proposingEventId?: string;
+  opposingEventId?: string;
 };
 
 // Names of guilds that have a configured Discord channel but where the
@@ -417,15 +429,6 @@ export async function sendScrimNotification(
   ]);
   if (!proposing || !opposing) return { failedGuildNames: [] };
 
-  const content = buildScrimMessage({
-    action: input.action,
-    proposingName: proposing.name,
-    opposingName: opposing.name,
-    proposedGameTime: input.proposedGameTime,
-    location: input.location,
-    winCondition: input.winCondition,
-  });
-
   const targets = [proposing, opposing].filter(
     (g): g is typeof g & { discordChannelId: string } => !!g.discordChannelId
   );
@@ -441,8 +444,28 @@ export async function sendScrimNotification(
     return { failedGuildNames: targets.map((g) => g.name) };
   }
 
+  // Message is composed per-guild so the accept notification can link each
+  // side to its own mirrored event.
   const results = await Promise.all(
     targets.map(async (g) => {
+      const eventId =
+        g.id === input.proposingGuildId
+          ? input.proposingEventId
+          : input.opposingEventId;
+      const eventSignupUrl =
+        input.appBaseUrl && eventId
+          ? `${input.appBaseUrl}/event/${eventId}`
+          : null;
+      const content = buildScrimMessage({
+        action: input.action,
+        proposingName: proposing.name,
+        opposingName: opposing.name,
+        proposedGameTime: input.proposedGameTime,
+        location: input.location,
+        winCondition: input.winCondition,
+        appBaseUrl: input.appBaseUrl,
+        eventSignupUrl,
+      });
       const ok = await postScrimToChannel(
         token,
         g.discordChannelId,
@@ -502,26 +525,44 @@ function buildScrimMessage(args: {
   proposedGameTime: string;
   location: string;
   winCondition: string;
+  appBaseUrl?: string;
+  eventSignupUrl?: string | null;
 }): string {
   const when = discordTimestamp(args.proposedGameTime, "F");
   const relative = discordTimestamp(args.proposedGameTime, "R");
   const proposer = `**${args.proposingName}**`;
   const opposer = `**${args.opposingName}**`;
+  // Scrim management lives at /admin/scrimmages — there's no per-scrim
+  // detail page, but that dashboard surfaces incoming proposals where the
+  // opposing-side admin can accept or decline.
+  const scrimUrl = args.appBaseUrl ? `${args.appBaseUrl}/admin/scrimmages` : null;
   if (args.action === "proposed") {
+    const cta = scrimUrl
+      ? `Guild admins can accept or decline at <${scrimUrl}>`
+      : `${opposer} admins can accept or decline on the website.`;
     return [
       `**Scrim proposed** — ${proposer} has challenged ${opposer} to a scrim.`,
       `Time: ${when} (${relative})`,
       `Location: ${args.location}`,
       `Condition of Win: ${args.winCondition}`,
-      `${opposer} admins can accept or decline on the website.`,
+      cta,
     ].join("\n");
   }
   if (args.action === "accepted") {
-    return [
+    const lines = [
       `**Scrim accepted** — ${opposer} accepted ${proposer}'s scrim challenge.`,
       `Time: ${when} (${relative})`,
       `Location: ${args.location}`,
       `Condition of Win: ${args.winCondition}`,
+    ];
+    if (args.eventSignupUrl) {
+      lines.push(`Sign up at <${args.eventSignupUrl}>`);
+    }
+    return lines.join("\n");
+  }
+  if (args.action === "cancelled") {
+    return [
+      `**Scrim cancelled** — The scrim between ${proposer} and ${opposer} (scheduled for ${when}) has been cancelled.`,
     ].join("\n");
   }
   // declined
@@ -529,6 +570,86 @@ function buildScrimMessage(args: {
     `**Scrim declined** — ${opposer} declined ${proposer}'s scrim challenge.`,
     `Was proposed for ${when}.`,
   ].join("\n");
+}
+
+// ---- Event lifecycle notifications (match / simple) ----
+
+export type EventNotifyAction = "created" | "updated" | "cancelled";
+
+type EventNotificationInput = {
+  guildId: string;
+  eventId: string;
+  eventName: string;
+  action: EventNotifyAction;
+  // For non-cancellation messages we include a link so members can jump
+  // straight to the event page. Cancellation links would 404 (event is
+  // soft-deleted), so callers omit it.
+  eventUrl?: string;
+  // Match: pass per-squad start times. Simple: pass gameTime. Used to render
+  // the "Starts" line in the message body. Omit on cancellation.
+  gameTime?: string | null;
+  squad1Name?: string;
+  squad2Name?: string;
+  squad1StartsAt?: string | null;
+  squad2StartsAt?: string | null;
+};
+
+// Posts an event lifecycle message to the guild's configured Discord channel.
+// No-op if the guild has no channel set (intentional opt-out — not a warning
+// condition). Failures are logged. Never throws.
+export async function sendEventNotification(
+  input: EventNotificationInput
+): Promise<void> {
+  const token = process.env.DISCORD_BOT_TOKEN;
+  if (!token) return;
+
+  const guild = await db.query.guilds.findFirst({
+    where: and(eq(guilds.id, input.guildId), isNull(guilds.deletedAt)),
+  });
+  if (!guild?.discordChannelId) return;
+
+  const content = buildEventMessage(input);
+  await postScrimToChannel(token, guild.discordChannelId, content, guild.id);
+}
+
+function buildEventMessage(args: EventNotificationInput): string {
+  const headline =
+    args.action === "created"
+      ? `**New event: ${args.eventName}**`
+      : args.action === "updated"
+        ? `**Event updated: ${args.eventName}**`
+        : `**Event cancelled: ${args.eventName}**`;
+
+  const lines: string[] = [headline];
+
+  if (args.action !== "cancelled") {
+    if (args.gameTime) {
+      const when = discordTimestamp(args.gameTime, "F");
+      const relative = discordTimestamp(args.gameTime, "R");
+      lines.push(`Starts: ${when} (${relative})`);
+    }
+    if (args.squad1StartsAt || args.squad2StartsAt) {
+      const parts: string[] = [];
+      if (args.squad1StartsAt) {
+        parts.push(
+          `${args.squad1Name ?? "Squad 1"}: ${discordTimestamp(args.squad1StartsAt, "F")}`
+        );
+      }
+      if (args.squad2StartsAt) {
+        parts.push(
+          `${args.squad2Name ?? "Squad 2"}: ${discordTimestamp(args.squad2StartsAt, "F")}`
+        );
+      }
+      lines.push(parts.join(" · "));
+    }
+    if (args.eventUrl) {
+      // Angle brackets suppress Discord's auto-embed preview, keeping the
+      // message compact.
+      lines.push(`Sign up: <${args.eventUrl}>`);
+    }
+  }
+
+  return lines.join("\n");
 }
 
 // Discord timestamp tokens: <t:UNIX:STYLE> renders in each viewer's local
@@ -595,31 +716,77 @@ async function handleChatCommand(
   }
 }
 
+// Discord gives autocomplete 3 seconds total — no deferReply available. We
+// race the DB query against this budget so a slow disk degrades to "No
+// options" instead of "Loading options failed". Set conservatively below the
+// hard limit to leave room for the response round-trip.
+const AUTOCOMPLETE_BUDGET_MS = 2500;
+
 async function handleAutocomplete(
   interaction: AutocompleteInteraction
 ): Promise<void> {
-  if (interaction.commandName !== "signup") return;
-  const focused = interaction.options.getFocused(true);
-  if (focused.name !== "event") return;
-
-  const appGuildId = await resolveAppGuildId(interaction.guildId);
-  if (!appGuildId) {
-    await interaction.respond([]);
-    return;
-  }
-
-  const upcoming = await loadUpcomingEvents(appGuildId);
-  const query = focused.value.toLowerCase();
-  const matches = upcoming
-    .filter((e) => e.name.toLowerCase().includes(query))
-    .slice(0, 25);
-
-  await interaction.respond(
-    matches.map((e) => ({
-      name: truncateChoice(`${e.name} — ${formatShort(e.earliestStart)}`),
-      value: e.id,
-    }))
+  const startMs = Date.now();
+  console.log(
+    `[bot] autocomplete received cmd=${interaction.commandName} guild=${interaction.guildId}`
   );
+  try {
+    if (interaction.commandName !== "signup") return;
+    const focused = interaction.options.getFocused(true);
+    if (focused.name !== "event") return;
+
+    const appGuildId = await resolveAppGuildId(interaction.guildId);
+    if (!appGuildId) {
+      console.log(
+        `[bot] autocomplete: no app guild linked to discord guild ${interaction.guildId}`
+      );
+      await interaction.respond([]);
+      return;
+    }
+
+    // Race the load against Discord's budget. If the DB is slow (e.g. WAL
+    // recovery on cold start, disk I/O lag), we still respond within budget.
+    const upcoming = await Promise.race([
+      loadUpcomingEvents(appGuildId),
+      new Promise<"timeout">((resolve) =>
+        setTimeout(() => resolve("timeout"), AUTOCOMPLETE_BUDGET_MS)
+      ),
+    ]);
+    if (upcoming === "timeout") {
+      console.warn(
+        `[bot] autocomplete timed out after ${Date.now() - startMs}ms guild=${appGuildId}`
+      );
+      await interaction.respond([]);
+      return;
+    }
+
+    const query = focused.value.toLowerCase();
+    const matches = upcoming
+      .filter((e) => e.name.toLowerCase().includes(query))
+      .slice(0, 25);
+
+    await interaction.respond(
+      matches.map((e) => ({
+        name: truncateChoice(
+          `${e.kind === "scrim" ? "[Scrim] " : ""}${e.name} — ${formatShort(e.earliestStart)}`
+        ),
+        value: e.id,
+      }))
+    );
+    console.log(
+      `[bot] autocomplete done guild=${appGuildId} upcoming=${upcoming.length} matches=${matches.length} in ${Date.now() - startMs}ms`
+    );
+  } catch (err) {
+    // Unhandled exceptions here cause Discord's "Loading options failed"
+    // banner. Log the cause, then respond with an empty list so the user
+    // sees "No options" instead of a generic failure splash.
+    console.error(
+      `[bot] autocomplete error after ${Date.now() - startMs}ms guild=${interaction.guildId}:`,
+      err
+    );
+    if (!interaction.responded) {
+      await interaction.respond([]).catch(() => {});
+    }
+  }
 }
 
 // Discord caps slash command choice names at 100 characters.
@@ -645,6 +812,10 @@ async function handleUpcoming(
   const lines = upcoming
     .slice(0, 10)
     .map((e) => {
+      if (e.kind === "scrim") {
+        const when = e.gameTime ? formatShort(e.gameTime) : "TBD";
+        return `• **${e.name}** (scrim) — ${when}`;
+      }
       const s1 = e.squad1StartsAt ? formatShort(e.squad1StartsAt) : "TBD";
       const s2 = e.squad2StartsAt ? formatShort(e.squad2StartsAt) : "TBD";
       return `• **${e.name}** — ${e.squad1Name}: ${s1} · ${e.squad2Name}: ${s2}`;
@@ -657,7 +828,9 @@ async function handleSignup(
   interaction: ChatInputCommandInteraction
 ): Promise<void> {
   const eventId = interaction.options.getString("event", true);
-  const squad = interaction.options.getInteger("squad", true);
+  // Squad is now optional — defaults to Squad 1 if omitted, and is ignored
+  // entirely for scrim events (which have only one squad).
+  const squad = interaction.options.getInteger("squad", false) ?? 1;
   const willingBackup = interaction.options.getBoolean("willing_backup") ?? true;
 
   const appGuildId = await resolveAppGuildId(interaction.guildId);
@@ -674,6 +847,18 @@ async function handleSignup(
     return;
   }
 
+  // Look up the event so we know its kind. Scrims store no squad2 row, so
+  // we send squad1Preference=1, squad2Preference=null. Matches keep the
+  // user's pick.
+  const event = await db.query.events.findFirst({
+    where: eq(events.id, eventId),
+  });
+  if (!event) {
+    await interaction.editReply("Event not found.");
+    return;
+  }
+  const isScrim = event.kind === "scrim";
+
   const result = createSignup({
     membership: {
       userId: appUser.id,
@@ -683,8 +868,8 @@ async function handleSignup(
     input: {
       eventId,
       userId: appUser.id,
-      squad1Preference: squad === 1 ? 1 : 2,
-      squad2Preference: squad === 1 ? 2 : 1,
+      squad1Preference: isScrim ? 1 : squad === 1 ? 1 : 2,
+      squad2Preference: isScrim ? null : squad === 1 ? 2 : 1,
       willingBackup,
       requestLeadership: false,
       leadershipNote: null,
@@ -744,47 +929,63 @@ async function resolveAppUserFromDiscord(
   };
 }
 
-type UpcomingMatchEvent = {
+type UpcomingSignupEvent = {
   id: string;
   name: string;
+  kind: "match" | "scrim";
   squad1Name: string;
   squad2Name: string;
   squad1StartsAt: string | null;
   squad2StartsAt: string | null;
+  gameTime: string | null;
   earliestStart: string;
 };
 
-// Returns match events for the guild whose earliest scheduled squad start is
-// in the future. Sorted by earliest start ascending. Used by /upcoming and
-// /signup autocomplete.
-async function loadUpcomingEvents(appGuildId: string): Promise<UpcomingMatchEvent[]> {
+// Returns match + scrim events for the guild whose earliest scheduled start
+// is in the future. Sorted by earliest start ascending. Used by /upcoming
+// and /signup autocomplete. Simple events are excluded — they have no
+// signup form.
+async function loadUpcomingEvents(
+  appGuildId: string
+): Promise<UpcomingSignupEvent[]> {
   const nowIso = new Date().toISOString();
   const rows = await db
     .select({
       id: events.id,
       name: events.name,
+      kind: events.kind,
       squad1Name: events.squad1Name,
       squad2Name: events.squad2Name,
       squad1StartsAt: events.squad1StartsAt,
       squad2StartsAt: events.squad2StartsAt,
+      gameTime: events.gameTime,
     })
     .from(events)
     .where(
       and(
         eq(events.guildId, appGuildId),
-        eq(events.kind, "match"),
+        inArray(events.kind, ["match", "scrim"]),
         isNull(events.deletedAt)
       )
     );
 
-  const upcoming: UpcomingMatchEvent[] = [];
+  const upcoming: UpcomingSignupEvent[] = [];
   for (const r of rows) {
-    const futureStarts = [r.squad1StartsAt, r.squad2StartsAt].filter(
-      (v): v is string => !!v && v > nowIso
-    );
+    // Scrim events carry a single start in gameTime (matches set
+    // squad1StartsAt / squad2StartsAt). Consider all available timestamps so
+    // a missing one doesn't drop the event.
+    const futureStarts = [
+      r.squad1StartsAt,
+      r.squad2StartsAt,
+      r.gameTime,
+    ].filter((v): v is string => !!v && v > nowIso);
     if (futureStarts.length === 0) continue;
     const earliestStart = futureStarts.reduce((a, b) => (a < b ? a : b));
-    upcoming.push({ ...r, earliestStart });
+    upcoming.push({
+      ...r,
+      kind: r.kind as "match" | "scrim",
+      earliestStart,
+    });
   }
   upcoming.sort((a, b) => a.earliestStart.localeCompare(b.earliestStart));
   return upcoming;

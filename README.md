@@ -88,6 +88,21 @@ The Test step also auto-links your Discord server to the app guild — this is w
 | **The Discord bot isn't running on this server (DISCORD_BOT_TOKEN not set).** | The site operator hasn't configured the bot at all | Contact the operator |
 | **`/upcoming` says "This Discord server isn't linked to a guild yet"** | You haven't run Test integration yet | Go to Guild Settings → Test integration. That auto-links the server. |
 | Slash commands don't appear in Discord | Global commands take up to ~1 hour to propagate the first time | Wait, or restart your Discord client (Ctrl/Cmd+R) |
+| `/signup` autocomplete shows "Loading options failed" while `/upcoming` works | Discord cached an outdated command schema, or the bot was added without the `applications.commands` scope | Re-invite the bot via the install URL (must include both `bot` and `applications.commands` scopes). If it still fails, ask your site operator to force-clear the cached schema (see below). |
+
+#### Force-clear cached Discord commands (site operator)
+
+If a recent slash-command schema change (option made non-required, autocomplete toggled, new commands added) doesn't propagate after waiting, the operator can wipe Discord's cached command list so the bot re-registers fresh on next startup:
+
+```bash
+# wipe global commands so the bot re-registers fresh on next startup
+curl -X PUT -H "Authorization: Bot $DISCORD_BOT_TOKEN" \
+  -H "Content-Type: application/json" \
+  "https://discord.com/api/v10/applications/<APPLICATION_ID>/commands" \
+  -d '[]'
+```
+
+Then restart the bot (`fly machine restart -a <app-name>`) — the `clientReady` handler re-registers commands from `SLASH_COMMANDS` on next boot.
 
 ### Removing the integration
 

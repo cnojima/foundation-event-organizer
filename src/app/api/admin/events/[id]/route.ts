@@ -5,6 +5,8 @@ import { db } from "@/db";
 import { events } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { clearNotifications } from "@/lib/notifications";
+import { sendEventNotification } from "@/bot/discord-bot";
+import { appBaseUrlFromRequest } from "@/lib/url";
 
 const DATE_FIELDS = [
   "gameTime",
@@ -70,6 +72,25 @@ export async function PATCH(
   }
 
   await db.update(events).set(updates).where(eq(events.id, id));
+
+  // Only ping Discord on time changes — silent for signup-window tweaks.
+  // Scrim events have their own lifecycle messages via /api/scrimmages/*.
+  if (startTimeChanged && event.kind !== "scrim") {
+    const merged = { ...event, ...updates };
+    await sendEventNotification({
+      guildId: event.guildId,
+      eventId: event.id,
+      eventName: event.name,
+      action: "updated",
+      eventUrl: `${appBaseUrlFromRequest(req)}/event/${event.id}`,
+      gameTime: merged.gameTime,
+      squad1Name: event.squad1Name,
+      squad2Name: event.squad2Name,
+      squad1StartsAt: merged.squad1StartsAt,
+      squad2StartsAt: merged.squad2StartsAt,
+    });
+  }
+
   return NextResponse.json({ success: true });
 }
 
@@ -81,6 +102,7 @@ export async function DELETE(
   const session = await auth();
   const guard = await canManageEvent(session, id);
   if (!guard.ok) return guard.response;
+  const event = guard.value.event;
 
   const result = await db
     .update(events)
@@ -89,6 +111,17 @@ export async function DELETE(
     .returning({ id: events.id });
   if (result.length === 0) {
     return NextResponse.json({ error: "Event not found" }, { status: 404 });
+  }
+
+  // Scrim events use the scrim-cancel flow for their own notification; skip
+  // the generic event-cancelled message here to avoid double-posting.
+  if (event.kind !== "scrim") {
+    await sendEventNotification({
+      guildId: event.guildId,
+      eventId: event.id,
+      eventName: event.name,
+      action: "cancelled",
+    });
   }
 
   return NextResponse.json({ success: true });

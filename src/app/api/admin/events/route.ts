@@ -4,6 +4,8 @@ import { requireGuildAdminApi, resolveAdminGuildId } from "@/lib/rbac";
 import { db } from "@/db";
 import { events } from "@/db/schema";
 import { generateId } from "@/lib/ids";
+import { sendEventNotification } from "@/bot/discord-bot";
+import { appBaseUrlFromRequest } from "@/lib/url";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -50,6 +52,19 @@ export async function POST(req: Request) {
   };
 
   await db.insert(events).values(event);
+
+  await sendEventNotification({
+    guildId: targetGuildId,
+    eventId: event.id,
+    eventName: event.name,
+    action: "created",
+    eventUrl: `${appBaseUrlFromRequest(req)}/event/${event.id}`,
+    gameTime: event.gameTime,
+    squad1Name: event.squad1Name,
+    squad2Name: event.squad2Name,
+    squad1StartsAt: event.squad1StartsAt,
+    squad2StartsAt: event.squad2StartsAt,
+  });
 
   return NextResponse.json(event, { status: 201 });
 }

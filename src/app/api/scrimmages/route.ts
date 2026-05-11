@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { guilds, scrimProposals } from "@/db/schema";
 import { and, desc, eq, isNull, or } from "drizzle-orm";
 import { sendScrimNotification } from "@/bot/discord-bot";
+import { appBaseUrlFromRequest } from "@/lib/url";
 
 // POST /api/scrimmages — propose a scrim with another guild on the same server.
 // Body: { opposingGuildId, proposedGameTime, location, winCondition, message? }
@@ -97,6 +98,7 @@ export async function POST(req: Request) {
     proposedGameTime: start.toISOString(),
     location,
     winCondition,
+    appBaseUrl: appBaseUrlFromRequest(req),
   });
 
   return NextResponse.json({ id, notify }, { status: 201 });

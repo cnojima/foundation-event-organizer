@@ -402,6 +402,43 @@ export default async function AdminHelpPage() {
           New global slash commands take up to ~1 hour to propagate the first
           time after the bot deploys. After that, they&apos;re instant.
         </p>
+        <h3 className="mt-4 font-semibold">
+          If <code>/signup</code> autocomplete shows &ldquo;Loading options
+          failed&rdquo;
+        </h3>
+        <p className="text-sm">
+          Usually means Discord cached an outdated version of the command
+          schema, or the bot was added with a missing scope. Try in order:
+        </p>
+        <ol className="list-decimal space-y-2 pl-5 text-sm">
+          <li>
+            <strong>Verify scopes and re-invite.</strong> The install URL must
+            include both <code>bot</code> and{" "}
+            <code>applications.commands</code>. If the bot was added via an
+            older URL that was missing <code>applications.commands</code>,
+            autocomplete events don&apos;t reach it. Re-invite using the
+            current install URL (Guild Settings → Discord → Invite Event
+            Organizer Discord Bot).
+          </li>
+          <li>
+            <strong>Force-clear cached commands (operator only).</strong> If
+            re-inviting doesn&apos;t fix it, your site operator can wipe
+            Discord&apos;s cached command list so the bot re-registers fresh
+            on next startup:
+            <pre className="mt-2 overflow-x-auto rounded bg-gray-50 p-2 text-xs">
+{`# wipe global commands so the bot re-registers fresh on next startup
+curl -X PUT -H "Authorization: Bot $DISCORD_BOT_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  "https://discord.com/api/v10/applications/<APPLICATION_ID>/commands" \\
+  -d '[]'`}
+            </pre>
+            <p className="mt-2 text-xs text-gray-600">
+              Then restart the bot (e.g. <code>fly machine restart</code>) —
+              the <code>clientReady</code> handler re-registers commands from{" "}
+              <code>SLASH_COMMANDS</code> on next boot.
+            </p>
+          </li>
+        </ol>
       </CollapsibleSection>
 
       <CollapsibleSection id="manage-guild" title="Manage your guild">

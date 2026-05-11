@@ -4,6 +4,7 @@ import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
 import { events, scrimProposals } from "@/db/schema";
 import { and, eq, inArray, isNull } from "drizzle-orm";
+import { sendScrimNotification } from "@/bot/discord-bot";
 
 // POST /api/scrimmages/[id]/cancel — either guild's admin cancels an
 // accepted scrim before the result is declared. Soft-deletes both mirrored
@@ -62,5 +63,14 @@ export async function POST(
       .run();
   });
 
-  return NextResponse.json({ success: true });
+  const notify = await sendScrimNotification({
+    proposingGuildId: proposal.proposingGuildId,
+    opposingGuildId: proposal.opposingGuildId,
+    action: "cancelled",
+    proposedGameTime: proposal.proposedGameTime,
+    location: proposal.location,
+    winCondition: proposal.winCondition,
+  });
+
+  return NextResponse.json({ success: true, notify });
 }
