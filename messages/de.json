@@ -27,7 +27,9 @@
     "createGuild": "Gilde erstellen",
     "adminHelp": "Admin-Hilfe",
     "help": "Helfen",
-    "myAccount": "Mein Konto"
+    "myAccount": "Mein Konto",
+    "scrimHistory": "Scrim-Geschichte",
+    "scrimmages": "Trainingsspiele"
   },
   "topBar": {
     "notifications": "Benachrichtigungen",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Du bist der letzte Super-Admin. Befördere jemand anderen zum Super-Admin, bevor du dein Konto löschst."
   },
   "ingameNameDialog": {
-    "placeholder": "z.B. NovaSpectre",
-    "saving": "Speichern…",
-    "save": "Speichern",
-    "errorGeneric": "Name konnte nicht gespeichert werden.",
     "title": "Willkommen",
     "explanation": "Wählen Sie zuerst Ihre Sprache und anschließend, wie Sie in den Teilnehmerlisten erscheinen möchten. Beides können Sie später in Ihrem Konto ändern.",
     "languageLabel": "Sprache",
-    "nameLabel": "In-Game-Name"
+    "nameLabel": "In-Game-Name",
+    "placeholder": "z.B. NovaSpectre",
+    "saving": "Speichern…",
+    "save": "Speichern",
+    "errorGeneric": "Name konnte nicht gespeichert werden."
   },
   "localeSwitcher": {
     "label": "Sprache",

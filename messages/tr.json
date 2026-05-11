@@ -27,7 +27,9 @@
     "createGuild": "Lonca Oluştur",
     "adminHelp": "Yönetici Yardımı",
     "help": "Yardım",
-    "myAccount": "Hesabım"
+    "myAccount": "Hesabım",
+    "scrimHistory": "Perde Tarihi",
+    "scrimmages": "Antrenman maçları"
   },
   "topBar": {
     "notifications": "Bildirimler",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Son süper yönetici sizsiniz. Hesabınızı silmeden önce başka birini süper yönetici yapın."
   },
   "ingameNameDialog": {
-    "placeholder": "Örneğin NovaSpectre",
-    "saving": "Tasarruf…",
-    "save": "Kaydetmek",
-    "errorGeneric": "İsim kaydedilemedi.",
     "title": "Hoş geldin",
     "explanation": "Öncelikle dilinizi seçin, ardından etkinlik listelerinde nasıl görünmek istediğinizi belirleyin. Her ikisini de daha sonra Hesabım bölümünden değiştirebilirsiniz.",
     "languageLabel": "Dil",
-    "nameLabel": "Oyun içi isim"
+    "nameLabel": "Oyun içi isim",
+    "placeholder": "Örneğin NovaSpectre",
+    "saving": "Tasarruf…",
+    "save": "Kaydetmek",
+    "errorGeneric": "İsim kaydedilemedi."
   },
   "localeSwitcher": {
     "label": "Dil",

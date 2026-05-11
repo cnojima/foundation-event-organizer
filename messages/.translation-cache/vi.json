@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "vi",
-  "translatedAt": "2026-05-10T22:36:00.236Z",
+  "translatedAt": "2026-05-11T03:56:24.012Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -19,6 +19,8 @@
     "common.optional": "Optional",
     "nav.manageEvents": "Manage Events",
     "nav.events": "Events",
+    "nav.scrimHistory": "Scrim History",
+    "nav.scrimmages": "Scrimmages",
     "nav.players": "Players",
     "nav.members": "Members",
     "nav.invites": "Invites",

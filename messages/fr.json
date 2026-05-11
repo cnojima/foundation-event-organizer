@@ -27,7 +27,9 @@
     "createGuild": "Créer une guilde",
     "adminHelp": "Aide administrative",
     "help": "Aide",
-    "myAccount": "Mon compte"
+    "myAccount": "Mon compte",
+    "scrimHistory": "Histoire du Scrim",
+    "scrimmages": "Matchs d'entraînement"
   },
   "topBar": {
     "notifications": "Notifications",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Vous êtes le dernier super-administrateur. Veuillez nommer quelqu'un d'autre super-administrateur avant de supprimer votre compte."
   },
   "ingameNameDialog": {
-    "placeholder": "par exemple NovaSpectre",
-    "saving": "Économie…",
-    "save": "Sauvegarder",
-    "errorGeneric": "Impossible d'enregistrer le nom.",
     "title": "Accueillir",
     "explanation": "Choisissez d'abord votre langue, puis la façon dont vous souhaitez apparaître dans les listes des participants. Vous pourrez modifier ces deux options ultérieurement dans Mon compte.",
     "languageLabel": "Langue",
-    "nameLabel": "Nom en jeu"
+    "nameLabel": "Nom en jeu",
+    "placeholder": "par exemple NovaSpectre",
+    "saving": "Économie…",
+    "save": "Sauvegarder",
+    "errorGeneric": "Impossible d'enregistrer le nom."
   },
   "localeSwitcher": {
     "label": "Langue",

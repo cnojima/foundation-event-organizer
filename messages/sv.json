@@ -27,7 +27,9 @@
     "createGuild": "Skapa gille",
     "adminHelp": "Administratörshjälp",
     "help": "Hjälp",
-    "myAccount": "Mitt konto"
+    "myAccount": "Mitt konto",
+    "scrimHistory": "Scrim-historia",
+    "scrimmages": "Träningsmatcher"
   },
   "topBar": {
     "notifications": "Aviseringar",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Du är den sista superadministratören. Befordra någon annan till superadministratör innan du tar bort ditt konto."
   },
   "ingameNameDialog": {
-    "placeholder": "t.ex. NovaSpectre",
-    "saving": "Sparande…",
-    "save": "Spara",
-    "errorGeneric": "Kunde inte spara namnet.",
     "title": "Välkomna",
     "explanation": "Välj ditt språk först och välj sedan hur du vill visas i evenemangslistorna. Du kan ändra båda senare i Mitt konto.",
     "languageLabel": "Språk",
-    "nameLabel": "Namn i spelet"
+    "nameLabel": "Namn i spelet",
+    "placeholder": "t.ex. NovaSpectre",
+    "saving": "Sparande…",
+    "save": "Spara",
+    "errorGeneric": "Kunde inte spara namnet."
   },
   "localeSwitcher": {
     "label": "Språk",

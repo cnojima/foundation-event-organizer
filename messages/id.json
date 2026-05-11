@@ -27,7 +27,9 @@
     "createGuild": "Buat Persekutuan",
     "adminHelp": "Bantuan Admin",
     "help": "Membantu",
-    "myAccount": "Akun Saya"
+    "myAccount": "Akun Saya",
+    "scrimHistory": "Sejarah Scrim",
+    "scrimmages": "Latihan tanding"
   },
   "topBar": {
     "notifications": "Pemberitahuan",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Anda adalah super-admin terakhir. Promosikan orang lain menjadi super-admin sebelum menghapus akun Anda."
   },
   "ingameNameDialog": {
-    "placeholder": "misalnya NovaSpectre",
-    "saving": "Penghematan…",
-    "save": "Menyimpan",
-    "errorGeneric": "Nama tidak dapat disimpan.",
     "title": "Selamat datang",
     "explanation": "Pilih bahasa Anda terlebih dahulu, lalu pilih bagaimana Anda ingin tampil di daftar peserta acara. Anda dapat mengubah keduanya nanti di Akun Saya.",
     "languageLabel": "Bahasa",
-    "nameLabel": "Nama dalam game"
+    "nameLabel": "Nama dalam game",
+    "placeholder": "misalnya NovaSpectre",
+    "saving": "Penghematan…",
+    "save": "Menyimpan",
+    "errorGeneric": "Nama tidak dapat disimpan."
   },
   "localeSwitcher": {
     "label": "Bahasa",

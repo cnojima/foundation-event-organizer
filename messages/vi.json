@@ -27,7 +27,9 @@
     "createGuild": "Tạo Bang hội",
     "adminHelp": "Trợ giúp quản trị viên",
     "help": "Giúp đỡ",
-    "myAccount": "Tài khoản của tôi"
+    "myAccount": "Tài khoản của tôi",
+    "scrimHistory": "Lịch sử trận đấu tập",
+    "scrimmages": "Trận đấu tập"
   },
   "topBar": {
     "notifications": "Thông báo",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Bạn là người quản trị cấp cao cuối cùng. Hãy thăng chức cho người khác lên vị trí quản trị cấp cao trước khi xóa tài khoản của bạn."
   },
   "ingameNameDialog": {
-    "placeholder": "ví dụ NovaSpectre",
-    "saving": "Đang lưu…",
-    "save": "Cứu",
-    "errorGeneric": "Không thể lưu tên.",
     "title": "Chào mừng",
     "explanation": "Trước tiên, hãy chọn ngôn ngữ của bạn, sau đó chọn cách bạn muốn hiển thị trên danh sách sự kiện. Bạn có thể thay đổi cả hai sau này trong mục Tài khoản của tôi.",
     "languageLabel": "Ngôn ngữ",
-    "nameLabel": "Tên trong game"
+    "nameLabel": "Tên trong game",
+    "placeholder": "ví dụ NovaSpectre",
+    "saving": "Đang lưu…",
+    "save": "Cứu",
+    "errorGeneric": "Không thể lưu tên."
   },
   "localeSwitcher": {
     "label": "Ngôn ngữ",

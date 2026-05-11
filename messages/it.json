@@ -27,7 +27,9 @@
     "createGuild": "Crea gilda",
     "adminHelp": "Assistenza amministrativa",
     "help": "Aiuto",
-    "myAccount": "Il mio conto"
+    "myAccount": "Il mio conto",
+    "scrimHistory": "Storia di Scrim",
+    "scrimmages": "Scaramucce"
   },
   "topBar": {
     "notifications": "Notifiche",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Sei l'ultimo super-amministratore. Promuovi qualcun altro a super-amministratore prima di eliminare il tuo account."
   },
   "ingameNameDialog": {
-    "placeholder": "ad esempio NovaSpectre",
-    "saving": "Risparmio…",
-    "save": "Salva",
-    "errorGeneric": "Impossibile salvare il nome.",
     "title": "Benvenuto",
     "explanation": "Scegli prima la lingua, poi seleziona come desideri apparire negli elenchi dei partecipanti all'evento. Potrai modificare entrambe le impostazioni in seguito nella sezione Il mio account.",
     "languageLabel": "Lingua",
-    "nameLabel": "Nome nel gioco"
+    "nameLabel": "Nome nel gioco",
+    "placeholder": "ad esempio NovaSpectre",
+    "saving": "Risparmio…",
+    "save": "Salva",
+    "errorGeneric": "Impossibile salvare il nome."
   },
   "localeSwitcher": {
     "label": "Lingua",

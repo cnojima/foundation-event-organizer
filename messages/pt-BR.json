@@ -27,7 +27,9 @@
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta"
+    "myAccount": "Minha conta",
+    "scrimHistory": "Histórico de treinos",
+    "scrimmages": "Treinos"
   },
   "topBar": {
     "notifications": "Notificações",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Você é o último superadministrador. Promova outra pessoa a superadministrador antes de excluir sua conta."
   },
   "ingameNameDialog": {
-    "placeholder": "por exemplo NovaSpectre",
-    "saving": "Salvando…",
-    "save": "Salvar",
-    "errorGeneric": "Não foi possível salvar o nome.",
     "title": "Bem-vindo",
     "explanation": "Primeiro, escolha o idioma e, em seguida, selecione como deseja aparecer nas listas de participantes do evento. Você poderá alterar ambas as opções posteriormente em Minha Conta.",
     "languageLabel": "Linguagem",
-    "nameLabel": "Nome no jogo"
+    "nameLabel": "Nome no jogo",
+    "placeholder": "por exemplo NovaSpectre",
+    "saving": "Salvando…",
+    "save": "Salvar",
+    "errorGeneric": "Não foi possível salvar o nome."
   },
   "localeSwitcher": {
     "label": "Linguagem",

@@ -27,7 +27,9 @@
     "createGuild": "ギルドを作成する",
     "adminHelp": "管理者ヘルプ",
     "help": "ヘルプ",
-    "myAccount": "私のアカウント"
+    "myAccount": "私のアカウント",
+    "scrimHistory": "スクリムの歴史",
+    "scrimmages": "スクリメージ"
   },
   "topBar": {
     "notifications": "通知",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "あなたは最後のスーパー管理者です。アカウントを削除する前に、他の人をスーパー管理者に昇格させてください。"
   },
   "ingameNameDialog": {
-    "placeholder": "例：ノヴァスペクター",
-    "saving": "保存中…",
-    "save": "保存",
-    "errorGeneric": "名前を保存できませんでした。",
     "title": "いらっしゃいませ",
     "explanation": "まず言語を選択し、次にイベント参加者名簿での表示方法を選択してください。どちらも後で「マイアカウント」で変更できます。",
     "languageLabel": "言語",
-    "nameLabel": "ゲーム内名"
+    "nameLabel": "ゲーム内名",
+    "placeholder": "例：ノヴァスペクター",
+    "saving": "保存中…",
+    "save": "保存",
+    "errorGeneric": "名前を保存できませんでした。"
   },
   "localeSwitcher": {
     "label": "言語",

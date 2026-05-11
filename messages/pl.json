@@ -27,7 +27,9 @@
     "createGuild": "Utwórz gildię",
     "adminHelp": "Pomoc administratora",
     "help": "Pomoc",
-    "myAccount": "Moje konto"
+    "myAccount": "Moje konto",
+    "scrimHistory": "Historia scrimów",
+    "scrimmages": "Potyczki"
   },
   "topBar": {
     "notifications": "Powiadomienia",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Jesteś ostatnim superadministratorem. Awansuj kogoś innego na superadministratora, zanim usuniesz swoje konto."
   },
   "ingameNameDialog": {
-    "placeholder": "np. NovaSpectre",
-    "saving": "Oszczędność…",
-    "save": "Ratować",
-    "errorGeneric": "Nie udało się zapisać nazwy.",
     "title": "Powitanie",
     "explanation": "Najpierw wybierz swój język, a następnie określ, w jaki sposób chcesz się wyświetlać na listach wydarzeń. Możesz to później zmienić w Moim Koncie.",
     "languageLabel": "Język",
-    "nameLabel": "Nazwa w grze"
+    "nameLabel": "Nazwa w grze",
+    "placeholder": "np. NovaSpectre",
+    "saving": "Oszczędność…",
+    "save": "Ratować",
+    "errorGeneric": "Nie udało się zapisać nazwy."
   },
   "localeSwitcher": {
     "label": "Język",

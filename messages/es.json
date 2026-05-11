@@ -27,7 +27,9 @@
     "createGuild": "Crear gremio",
     "adminHelp": "Ayuda administrativa",
     "help": "Ayuda",
-    "myAccount": "Mi cuenta"
+    "myAccount": "Mi cuenta",
+    "scrimHistory": "Historia del scrim",
+    "scrimmages": "Partidos de práctica"
   },
   "topBar": {
     "notifications": "Notificaciones",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "Eres el último superadministrador. Nombra a otra persona como superadministrador antes de eliminar tu cuenta."
   },
   "ingameNameDialog": {
-    "placeholder": "p. ej. NovaSpectre",
-    "saving": "Ahorro…",
-    "save": "Ahorrar",
-    "errorGeneric": "No se pudo guardar el nombre.",
     "title": "Bienvenido",
     "explanation": "Primero, selecciona tu idioma y luego elige cómo quieres aparecer en las listas de participantes de los eventos. Puedes cambiar ambos posteriormente en Mi cuenta.",
     "languageLabel": "Idioma",
-    "nameLabel": "Nombre en el juego"
+    "nameLabel": "Nombre en el juego",
+    "placeholder": "p. ej. NovaSpectre",
+    "saving": "Ahorro…",
+    "save": "Ahorrar",
+    "errorGeneric": "No se pudo guardar el nombre."
   },
   "localeSwitcher": {
     "label": "Idioma",

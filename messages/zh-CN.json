@@ -27,7 +27,9 @@
     "createGuild": "创建公会",
     "adminHelp": "管理员帮助",
     "help": "帮助",
-    "myAccount": "我的账户"
+    "myAccount": "我的账户",
+    "scrimHistory": "Scrim 历史",
+    "scrimmages": "对抗赛"
   },
   "topBar": {
     "notifications": "通知",
@@ -362,14 +364,14 @@
     "lastSuperAdminDelete": "你是最后一个超级管理员。在删除你的账号之前，请将其他人晋升为超级管理员。"
   },
   "ingameNameDialog": {
-    "placeholder": "例如 NovaSpectre",
-    "saving": "保存…",
-    "save": "节省",
-    "errorGeneric": "无法保存名称。",
     "title": "欢迎",
     "explanation": "请先选择语言，然后选择您希望在赛事名单上的显示方式。您之后可以在“我的账户”中更改这两项设置。",
     "languageLabel": "语言",
-    "nameLabel": "游戏内名称"
+    "nameLabel": "游戏内名称",
+    "placeholder": "例如 NovaSpectre",
+    "saving": "保存…",
+    "save": "节省",
+    "errorGeneric": "无法保存名称。"
   },
   "localeSwitcher": {
     "label": "语言",
