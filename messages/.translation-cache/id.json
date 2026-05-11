@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "id",
-  "translatedAt": "2026-05-11T05:50:15.562Z",
+  "translatedAt": "2026-05-11T06:16:27.033Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -32,6 +32,7 @@
     "nav.help": "Help",
     "nav.myAccount": "My Account",
     "topBar.notifications": "Notifications",
+    "topBar.myAccount": "My Account",
     "topBar.roleSuperAdmin": "Super-admin",
     "topBar.roleGuildAdmin": "Guild admin",
     "topBar.roleMember": "Member",

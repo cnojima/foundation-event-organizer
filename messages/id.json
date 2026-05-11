@@ -38,7 +38,8 @@
     "roleMember": "Anggota",
     "roleNoGuild": "Tidak ada serikat",
     "signIn": "Masuk",
-    "signOut": "Keluar"
+    "signOut": "Keluar",
+    "myAccount": "Akun Saya"
   },
   "alphaBanner": {
     "tag": "Alfa",
@@ -377,59 +378,6 @@
     "label": "Bahasa",
     "ariaLabel": "Ganti bahasa"
   },
-  "playerHelp": {
-    "title": "Selamat datang di Penyelenggara Acara Yayasan",
-    "subtitle": "Di sinilah guild Anda mendaftar untuk berbagai acara — pertandingan Shadowfront, latihan tanding, dan apa pun yang diinginkan pimpinan untuk dimasukkan ke dalam kalender.",
-    "sections": {
-      "gettingIn": "Masuk",
-      "eventKinds": "Tiga jenis peristiwa",
-      "signup": "Mendaftar untuk pertandingan",
-      "status": "Apa arti status Anda?",
-      "scrims": "Pertandingan uji coba",
-      "reminders": "Pengingat dan kalender",
-      "closed": "Jika pendaftaran sudah ditutup"
-    },
-    "gettingIn": {
-      "step1": "Masuk menggunakan Google atau Discord di halaman utama.",
-      "step2": "Gabung ke guild Anda. Kebanyakan orang masuk melalui tautan undangan dari admin guild. Anda juga dapat menjelajahi guild publik di<discoveryLink> halaman penemuan</discoveryLink> .",
-      "step3": "Setelah Anda bergabung dengan sebuah guild, halaman beranda akan menampilkan acara-acara mendatang dari guild tersebut.",
-      "note": "Anda hanya dapat berada di satu guild dalam satu waktu. Untuk pindah, tinggalkan guild Anda saat ini terlebih dahulu."
-    },
-    "eventKinds": {
-      "match": "Pertandingan (Shadowfront dan sejenisnya) — dua regu, masing-masing dengan waktu mulai sendiri, posisi kepemimpinan, dan susunan pemain inti ditambah pemain cadangan.",
-      "scrim": "Acara Scrim — tantangan 1 lawan 1 antara guild Anda dan guild lain. Satu regu, satu waktu mulai, dan pemenang diumumkan setelah selesai. Lihat bagian Acara Scrimmage di bawah ini.",
-      "simple": "Acara sederhana — entri informasi saja di kalender (rapat, pengumuman, acara nonton bareng). Tidak ada formulir pendaftaran; hanya tanggal dan detail."
-    },
-    "signup": {
-      "intro": "Buka acara dari halaman utama. Formulir pendaftaran memiliki tiga hal:",
-      "step1": "Preferensi skuad (pilihan pertama). Pilih skuad yang paling ingin Anda ikuti. Jika pilihan pertama Anda penuh, admin akan mencoba menempatkan Anda di skuad lain.",
-      "step2": "Bersedia menjadi pemain cadangan. Aktif secara default. Pemain cadangan akan menggantikan pemain inti yang keluar. Nonaktifkan opsi ini jika Anda hanya ingin bermain dengan pemain inti yang terjamin.",
-      "step3": "Ajukan permohonan posisi kepemimpinan (opsional). Para pemimpin mengoordinasikan tim selama pertandingan. Admin menugaskan pemimpin dari permohonan yang masuk; Anda dapat meninggalkan catatan singkat tentang mengapa Anda menginginkan peran tersebut.",
-      "submit": "Klik Daftar. Anda dapat kembali dan mengubah jawaban apa pun hingga pendaftaran ditutup."
-    },
-    "status": {
-      "intro": "Saat Anda melihat daftar pemain, Anda akan melihat salah satu dari ini di sebelah setiap nama:",
-      "player": "Pemain — dalam daftar pemain inti.",
-      "backup": "Pemain cadangan — berada di daftar pemain cadangan; hanya bermain jika pemain inti absen.",
-      "leader": "Pemimpin — dipilih oleh admin untuk memimpin tim.",
-      "waitlist": "Daftar tunggu — semua slot tim dan cadangan sudah penuh saat Anda mendaftar. Anda akan dipromosikan secara otomatis jika ada yang mengundurkan diri.",
-      "wantsLeader": "Mencari Pemimpin — seorang pemain yang meminta peran tersebut; seorang admin akan memilih dari antara mereka."
-    },
-    "scrims": {
-      "intro": "Scrim adalah pertandingan antara guild Anda melawan guild lain. Halaman acara berfungsi sama seperti pertandingan — mendaftar, memilih kesediaan cadangan, dan secara opsional meminta kepemimpinan — tetapi dengan beberapa perbedaan yang perlu diketahui:",
-      "oneSquad": "Hanya satu regu. Tidak ada pemilihan Regu 1 vs Regu 2 — guild Anda menurunkan satu susunan pemain melawan lawan.",
-      "opponent": "Lawan akan ditampilkan di bagian atas halaman acara, beserta Syarat Kemenangan yang telah disepakati oleh kedua admin. Bacalah sebelum pertandingan — di situlah pemenang akan ditentukan.",
-      "result": "Chip hasil. Setelah pertandingan selesai dan admin mengumumkan hasilnya, Anda akan melihat chip berwarna di halaman acara: Menang, Kalah, Seri, atau Tidak ada pertandingan (untuk pengunduran diri atau pemutusan koneksi).",
-      "history": "Riwayat. Lihat pertandingan latihan (scrim) guild Anda yang akan datang dan yang telah lalu di sini.<scrimsLink> halaman riwayat scrim</scrimsLink> . Menang/kalah dilihat dari perspektif guild Anda.",
-      "note": "Hanya admin guild Anda yang dapat mengusulkan, menerima, atau membatalkan scrim — Anda cukup mendaftar seperti acara lainnya. Jika scrim dibatalkan sebelum berlangsung, acara tersebut akan hilang dari halaman beranda Anda dan pendaftaran Anda akan disembunyikan (admin tetap menyimpan catatan untuk riwayat kehadiran)."
-    },
-    "reminders": {
-      "bot": "Jika guild Anda telah mengatur bot Discord, bot tersebut akan memposting pengingat 1 hari, 1 jam, dan 20 menit sebelum setiap acara di saluran yang dipilih guild Anda.",
-      "ics": "Setiap halaman acara memiliki tautan Unduh .ics untuk menambahkan acara tersebut ke kalender Anda.",
-      "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
-    },
-    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
-  },
   "adminHelp": {
     "title": "Panduan admin",
     "subtitle": "Semua yang dibutuhkan admin guild untuk menjalankan event: membuat pertandingan, mengelola pemain, mengatur Discord, dan mengurus guild itu sendiri. Versi yang dapat diakses pemain ada di...<helpLink> /membantu</helpLink> .",
@@ -542,5 +490,58 @@
       "rescheduled": "Suatu acara dijadwal ulang dan orang-orang tidak mendapatkan pemberitahuan ulang. Konfirmasikan bahwa waktu benar-benar berubah (bandingkan dengan nilai sebelumnya). Bot hanya akan mengirimkan pengingat ulang untuk acara yang jendela waktunya masih lebih awal dari waktu baru — jika waktu baru Anda 30 menit dari sekarang, hanya pengingat 20 menit yang akan terkirim, bukan yang 24 jam.",
       "movedSquad": "Seorang pemain salah masuk skuad setelah saya memindahkannya. Lencana DIPINDAHKAN berarti penugasan berbeda dari preferensi. Untuk mengembalikannya, ubah peran/skuad mereka melalui menu tarik-turun atau gunakan tombol Pindah ke Skuad N untuk mengembalikannya."
     }
+  },
+  "playerHelp": {
+    "title": "Selamat datang di Penyelenggara Acara Yayasan",
+    "subtitle": "Di sinilah guild Anda mendaftar untuk berbagai acara — pertandingan Shadowfront, latihan tanding, dan apa pun yang diinginkan pimpinan untuk dimasukkan ke dalam kalender.",
+    "sections": {
+      "gettingIn": "Masuk",
+      "eventKinds": "Tiga jenis peristiwa",
+      "signup": "Mendaftar untuk pertandingan",
+      "status": "Apa arti status Anda?",
+      "scrims": "Pertandingan uji coba",
+      "reminders": "Pengingat dan kalender",
+      "closed": "Jika pendaftaran sudah ditutup"
+    },
+    "gettingIn": {
+      "step1": "Masuk menggunakan Google atau Discord di halaman utama.",
+      "step2": "Gabung ke guild Anda. Kebanyakan orang masuk melalui tautan undangan dari admin guild. Anda juga dapat menjelajahi guild publik di<discoveryLink> halaman penemuan</discoveryLink> .",
+      "step3": "Setelah Anda bergabung dengan sebuah guild, halaman beranda akan menampilkan acara-acara mendatang dari guild tersebut.",
+      "note": "Anda hanya dapat berada di satu guild dalam satu waktu. Untuk pindah, tinggalkan guild Anda saat ini terlebih dahulu."
+    },
+    "eventKinds": {
+      "match": "Pertandingan (Shadowfront dan sejenisnya) — dua regu, masing-masing dengan waktu mulai sendiri, posisi kepemimpinan, dan susunan pemain inti ditambah pemain cadangan.",
+      "scrim": "Acara Scrim — tantangan 1 lawan 1 antara guild Anda dan guild lain. Satu regu, satu waktu mulai, dan pemenang diumumkan setelah selesai. Lihat bagian Acara Scrimmage di bawah ini.",
+      "simple": "Acara sederhana — entri informasi saja di kalender (rapat, pengumuman, acara nonton bareng). Tidak ada formulir pendaftaran; hanya tanggal dan detail."
+    },
+    "signup": {
+      "intro": "Buka acara dari halaman utama. Formulir pendaftaran memiliki tiga hal:",
+      "step1": "Preferensi skuad (pilihan pertama). Pilih skuad yang paling ingin Anda ikuti. Jika pilihan pertama Anda penuh, admin akan mencoba menempatkan Anda di skuad lain.",
+      "step2": "Bersedia menjadi pemain cadangan. Aktif secara default. Pemain cadangan akan menggantikan pemain inti yang keluar. Nonaktifkan opsi ini jika Anda hanya ingin bermain dengan pemain inti yang terjamin.",
+      "step3": "Ajukan permohonan posisi kepemimpinan (opsional). Para pemimpin mengoordinasikan tim selama pertandingan. Admin menugaskan pemimpin dari permohonan yang masuk; Anda dapat meninggalkan catatan singkat tentang mengapa Anda menginginkan peran tersebut.",
+      "submit": "Klik Daftar. Anda dapat kembali dan mengubah jawaban apa pun hingga pendaftaran ditutup."
+    },
+    "status": {
+      "intro": "Saat Anda melihat daftar pemain, Anda akan melihat salah satu dari ini di sebelah setiap nama:",
+      "player": "Pemain — dalam daftar pemain inti.",
+      "backup": "Pemain cadangan — berada di daftar pemain cadangan; hanya bermain jika pemain inti absen.",
+      "leader": "Pemimpin — dipilih oleh admin untuk memimpin tim.",
+      "waitlist": "Daftar tunggu — semua slot tim dan cadangan sudah penuh saat Anda mendaftar. Anda akan dipromosikan secara otomatis jika ada yang mengundurkan diri.",
+      "wantsLeader": "Mencari Pemimpin — seorang pemain yang meminta peran tersebut; seorang admin akan memilih dari antara mereka."
+    },
+    "scrims": {
+      "intro": "Scrim adalah pertandingan antara guild Anda melawan guild lain. Halaman acara berfungsi sama seperti pertandingan — mendaftar, memilih kesediaan cadangan, dan secara opsional meminta kepemimpinan — tetapi dengan beberapa perbedaan yang perlu diketahui:",
+      "oneSquad": "Hanya satu regu. Tidak ada pemilihan Regu 1 vs Regu 2 — guild Anda menurunkan satu susunan pemain melawan lawan.",
+      "opponent": "Lawan akan ditampilkan di bagian atas halaman acara, beserta Syarat Kemenangan yang telah disepakati oleh kedua admin. Bacalah sebelum pertandingan — di situlah pemenang akan ditentukan.",
+      "result": "Chip hasil. Setelah pertandingan selesai dan admin mengumumkan hasilnya, Anda akan melihat chip berwarna di halaman acara: Menang, Kalah, Seri, atau Tidak ada pertandingan (untuk pengunduran diri atau pemutusan koneksi).",
+      "history": "Riwayat. Lihat pertandingan latihan (scrim) guild Anda yang akan datang dan yang telah lalu di sini.<scrimsLink> halaman riwayat scrim</scrimsLink> . Menang/kalah dilihat dari perspektif guild Anda.",
+      "note": "Hanya admin guild Anda yang dapat mengusulkan, menerima, atau membatalkan scrim — Anda cukup mendaftar seperti acara lainnya. Jika scrim dibatalkan sebelum berlangsung, acara tersebut akan hilang dari halaman beranda Anda dan pendaftaran Anda akan disembunyikan (admin tetap menyimpan catatan untuk riwayat kehadiran)."
+    },
+    "reminders": {
+      "bot": "Jika guild Anda telah mengatur bot Discord, bot tersebut akan memposting pengingat 1 hari, 1 jam, dan 20 menit sebelum setiap acara di saluran yang dipilih guild Anda.",
+      "ics": "Setiap halaman acara memiliki tautan Unduh .ics untuk menambahkan acara tersebut ke kalender Anda.",
+      "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
+    },
+    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
   }
 }

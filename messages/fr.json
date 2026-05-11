@@ -38,7 +38,8 @@
     "roleMember": "Membre",
     "roleNoGuild": "Pas de guilde",
     "signIn": "Se connecter",
-    "signOut": "Se déconnecter"
+    "signOut": "Se déconnecter",
+    "myAccount": "Mon compte"
   },
   "alphaBanner": {
     "tag": "Alpha",
@@ -377,59 +378,6 @@
     "label": "Langue",
     "ariaLabel": "Changer de langue"
   },
-  "playerHelp": {
-    "title": "Bienvenue sur le site de l'organisateur d'événements de la Fondation",
-    "subtitle": "C'est ici que votre guilde s'inscrit aux événements : matchs de Shadowfront, entraînements et tout autre événement que les dirigeants souhaitent ajouter au calendrier.",
-    "sections": {
-      "gettingIn": "Entrer",
-      "eventKinds": "Trois types d'événements",
-      "signup": "S'inscrire à un match",
-      "status": "Que signifie votre statut ?",
-      "scrims": "Événements d'entraînement",
-      "reminders": "Rappels et calendrier",
-      "closed": "Si les inscriptions sont fermées"
-    },
-    "gettingIn": {
-      "step1": "Connectez-vous avec Google ou Discord sur la page d'accueil.",
-      "step2": "Rejoignez votre guilde. La plupart des joueurs y accèdent via un lien d'invitation envoyé par un administrateur de guilde. Vous pouvez également consulter les guildes publiques sur le site de la guilde.<discoveryLink> page de découverte</discoveryLink> .",
-      "step3": "Une fois que vous êtes dans une guilde, la page d'accueil affiche les événements à venir de cette guilde.",
-      "note": "Vous ne pouvez appartenir qu'à une seule guilde à la fois. Pour en changer, quittez d'abord votre guilde actuelle."
-    },
-    "eventKinds": {
-      "match": "Événements de match (Shadowfront et similaires) — deux équipes, chacune avec son propre horaire de début, ses postes de leadership et une composition de départ plus des remplaçants.",
-      "scrim": "Événements d'entraînement — un défi en 1 contre 1 entre votre guilde et une autre. Une seule équipe, une seule heure de début et un vainqueur désigné à la fin. Consultez la section « Événements d'entraînement » ci-dessous.",
-      "simple": "Événements simples — entrées informatives dans le calendrier (une réunion, une annonce, une soirée de visionnage). Pas de formulaire d’inscription ; juste une date et des détails."
-    },
-    "signup": {
-      "intro": "Ouvrez l'événement depuis la page d'accueil. Le formulaire d'inscription comporte trois éléments :",
-      "step1": "Préférence d'équipe (premier choix). Choisissez l'équipe dans laquelle vous souhaitez le plus jouer. Si votre premier choix est complet, les administrateurs essaieront de vous placer dans une autre.",
-      "step2": "Prêt à servir de remplaçant. Activé par défaut. Les remplaçants prennent le relais lorsqu'un titulaire est libéré. Décochez cette option si vous souhaitez jouer uniquement avec un titulaire garanti.",
-      "step3": "Demander un rôle de leader (facultatif). Les leaders coordonnent l'équipe pendant le match. Les administrateurs attribuent les rôles de leader en fonction des demandes ; vous pouvez laisser un court message expliquant pourquoi vous souhaitez ce rôle.",
-      "submit": "Cliquez sur « S'inscrire ». Vous pourrez modifier vos réponses ultérieurement jusqu'à la fermeture des inscriptions."
-    },
-    "status": {
-      "intro": "Lorsque vous consultez les compositions des équipes, vous verrez l'un de ces symboles à côté de chaque nom :",
-      "player": "Joueur — dans l'équipe de départ.",
-      "backup": "Remplaçant — figure sur la liste des remplaçants ; ne joue que si un titulaire est forfait.",
-      "leader": "Chef d'équipe — choisi par un administrateur pour diriger l'équipe.",
-      "waitlist": "Liste d'attente — toutes les places dans l'équipe et les équipes de réserve étaient prises lors de votre inscription. Vous serez promu automatiquement en cas de désistement.",
-      "wantsLeader": "Candidat au poste de Leader — un joueur qui a demandé ce rôle ; un administrateur choisira parmi eux."
-    },
-    "scrims": {
-      "intro": "Un scrim est un affrontement entre votre guilde et une autre. La page de l'événement fonctionne de la même manière qu'un match : inscription, choix du nombre de remplaçants, possibilité de demander un capitaine, mais avec quelques différences importantes à connaître :",
-      "oneSquad": "Une seule équipe. Il n'y a pas de choix entre l'équipe 1 et l'équipe 2 : votre guilde aligne une seule formation contre l'adversaire.",
-      "opponent": "L'adversaire est indiqué en haut de la page de l'événement, ainsi que les conditions de victoire convenues entre les deux administrateurs. Veuillez les lire avant le match : elles déterminent le vainqueur.",
-      "result": "Jeton de résultat. Une fois le match terminé et le résultat annoncé par un administrateur, un jeton de couleur apparaîtra sur la page de l'événement : Victoire, Défaite, Match nul ou Sans résultat (en cas de forfait ou de déconnexion).",
-      "history": "Historique. Consultez les scrims à venir et passés de votre guilde sur le<scrimsLink> page d'historique des scrims</scrimsLink> Le ratio victoires/défaites est calculé du point de vue de votre guilde.",
-      "note": "Seul l'administrateur de votre guilde peut proposer, accepter ou annuler un scrim ; l'inscription se fait comme pour n'importe quel autre événement. Si un scrim est annulé avant son début, l'événement disparaît de votre page d'accueil et votre inscription est masquée (les administrateurs conservent toutefois l'historique des participations)."
-    },
-    "reminders": {
-      "bot": "Si votre guilde a configuré le bot Discord, celui-ci publie des rappels 1 jour, 1 heure et 20 minutes avant chaque événement dans le canal choisi par votre guilde.",
-      "ics": "Chaque page d'événement comporte un lien de téléchargement .ics permettant d'ajouter l'événement à votre calendrier.",
-      "slashCommands": "Commandes Discord : /upcoming affiche la liste des événements à venir de votre guilde, et /signup vous permet de vous inscrire sans quitter Discord. Vous devez vous connecter au site web avec Discord au moins une fois au préalable afin que le bot puisse associer votre compte."
-    },
-    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
-  },
   "adminHelp": {
     "title": "Guide de l'administrateur",
     "subtitle": "Tout ce dont un administrateur de guilde a besoin pour organiser des événements : création de matchs, gestion des joueurs, configuration de Discord et administration de la guilde. La version destinée aux joueurs se trouve ici :<helpLink> /aide</helpLink> .",
@@ -542,5 +490,58 @@
       "rescheduled": "Un événement a été reporté et les participants ne reçoivent pas de nouvelle notification. Veuillez vérifier que l'heure a bien été modifiée (comparez-la à l'heure précédente). Le bot ne relance que les notifications dont la période est encore antérieure à la nouvelle heure. Par exemple, si la nouvelle heure est dans 30 minutes, seul le rappel de 20 minutes sera envoyé, et non celui de 24 heures.",
       "movedSquad": "Un joueur a été affecté à la mauvaise équipe après mon déplacement. L'indication « DÉPLACÉ » signifie que l'affectation diffère de vos préférences. Pour rétablir son affectation initiale, modifiez son rôle/équipe via le menu déroulant ou utilisez le bouton « Déplacer vers l'équipe N »."
     }
+  },
+  "playerHelp": {
+    "title": "Bienvenue sur le site de l'organisateur d'événements de la Fondation",
+    "subtitle": "C'est ici que votre guilde s'inscrit aux événements : matchs de Shadowfront, entraînements et tout autre événement que les dirigeants souhaitent ajouter au calendrier.",
+    "sections": {
+      "gettingIn": "Entrer",
+      "eventKinds": "Trois types d'événements",
+      "signup": "S'inscrire à un match",
+      "status": "Que signifie votre statut ?",
+      "scrims": "Événements d'entraînement",
+      "reminders": "Rappels et calendrier",
+      "closed": "Si les inscriptions sont fermées"
+    },
+    "gettingIn": {
+      "step1": "Connectez-vous avec Google ou Discord sur la page d'accueil.",
+      "step2": "Rejoignez votre guilde. La plupart des joueurs y accèdent via un lien d'invitation envoyé par un administrateur de guilde. Vous pouvez également consulter les guildes publiques sur le site de la guilde.<discoveryLink> page de découverte</discoveryLink> .",
+      "step3": "Une fois que vous êtes dans une guilde, la page d'accueil affiche les événements à venir de cette guilde.",
+      "note": "Vous ne pouvez appartenir qu'à une seule guilde à la fois. Pour en changer, quittez d'abord votre guilde actuelle."
+    },
+    "eventKinds": {
+      "match": "Événements de match (Shadowfront et similaires) — deux équipes, chacune avec son propre horaire de début, ses postes de leadership et une composition de départ plus des remplaçants.",
+      "scrim": "Événements d'entraînement — un défi en 1 contre 1 entre votre guilde et une autre. Une seule équipe, une seule heure de début et un vainqueur désigné à la fin. Consultez la section « Événements d'entraînement » ci-dessous.",
+      "simple": "Événements simples — entrées informatives dans le calendrier (une réunion, une annonce, une soirée de visionnage). Pas de formulaire d’inscription ; juste une date et des détails."
+    },
+    "signup": {
+      "intro": "Ouvrez l'événement depuis la page d'accueil. Le formulaire d'inscription comporte trois éléments :",
+      "step1": "Préférence d'équipe (premier choix). Choisissez l'équipe dans laquelle vous souhaitez le plus jouer. Si votre premier choix est complet, les administrateurs essaieront de vous placer dans une autre.",
+      "step2": "Prêt à servir de remplaçant. Activé par défaut. Les remplaçants prennent le relais lorsqu'un titulaire est libéré. Décochez cette option si vous souhaitez jouer uniquement avec un titulaire garanti.",
+      "step3": "Demander un rôle de leader (facultatif). Les leaders coordonnent l'équipe pendant le match. Les administrateurs attribuent les rôles de leader en fonction des demandes ; vous pouvez laisser un court message expliquant pourquoi vous souhaitez ce rôle.",
+      "submit": "Cliquez sur « S'inscrire ». Vous pourrez modifier vos réponses ultérieurement jusqu'à la fermeture des inscriptions."
+    },
+    "status": {
+      "intro": "Lorsque vous consultez les compositions des équipes, vous verrez l'un de ces symboles à côté de chaque nom :",
+      "player": "Joueur — dans l'équipe de départ.",
+      "backup": "Remplaçant — figure sur la liste des remplaçants ; ne joue que si un titulaire est forfait.",
+      "leader": "Chef d'équipe — choisi par un administrateur pour diriger l'équipe.",
+      "waitlist": "Liste d'attente — toutes les places dans l'équipe et les équipes de réserve étaient prises lors de votre inscription. Vous serez promu automatiquement en cas de désistement.",
+      "wantsLeader": "Candidat au poste de Leader — un joueur qui a demandé ce rôle ; un administrateur choisira parmi eux."
+    },
+    "scrims": {
+      "intro": "Un scrim est un affrontement entre votre guilde et une autre. La page de l'événement fonctionne de la même manière qu'un match : inscription, choix du nombre de remplaçants, possibilité de demander un capitaine, mais avec quelques différences importantes à connaître :",
+      "oneSquad": "Une seule équipe. Il n'y a pas de choix entre l'équipe 1 et l'équipe 2 : votre guilde aligne une seule formation contre l'adversaire.",
+      "opponent": "L'adversaire est indiqué en haut de la page de l'événement, ainsi que les conditions de victoire convenues entre les deux administrateurs. Veuillez les lire avant le match : elles déterminent le vainqueur.",
+      "result": "Jeton de résultat. Une fois le match terminé et le résultat annoncé par un administrateur, un jeton de couleur apparaîtra sur la page de l'événement : Victoire, Défaite, Match nul ou Sans résultat (en cas de forfait ou de déconnexion).",
+      "history": "Historique. Consultez les scrims à venir et passés de votre guilde sur le<scrimsLink> page d'historique des scrims</scrimsLink> Le ratio victoires/défaites est calculé du point de vue de votre guilde.",
+      "note": "Seul l'administrateur de votre guilde peut proposer, accepter ou annuler un scrim ; l'inscription se fait comme pour n'importe quel autre événement. Si un scrim est annulé avant son début, l'événement disparaît de votre page d'accueil et votre inscription est masquée (les administrateurs conservent toutefois l'historique des participations)."
+    },
+    "reminders": {
+      "bot": "Si votre guilde a configuré le bot Discord, celui-ci publie des rappels 1 jour, 1 heure et 20 minutes avant chaque événement dans le canal choisi par votre guilde.",
+      "ics": "Chaque page d'événement comporte un lien de téléchargement .ics permettant d'ajouter l'événement à votre calendrier.",
+      "slashCommands": "Commandes Discord : /upcoming affiche la liste des événements à venir de votre guilde, et /signup vous permet de vous inscrire sans quitter Discord. Vous devez vous connecter au site web avec Discord au moins une fois au préalable afin que le bot puisse associer votre compte."
+    },
+    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
   }
 }

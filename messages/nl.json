@@ -38,7 +38,8 @@
     "roleMember": "Lid",
     "roleNoGuild": "Geen gilde",
     "signIn": "Inloggen",
-    "signOut": "Uitloggen"
+    "signOut": "Uitloggen",
+    "myAccount": "Mijn account"
   },
   "alphaBanner": {
     "tag": "Alpha",
@@ -377,59 +378,6 @@
     "label": "Taal",
     "ariaLabel": "Taal wisselen"
   },
-  "playerHelp": {
-    "title": "Welkom bij de evenementenorganisator van de Stichting.",
-    "subtitle": "Hier kan je gilde zich aanmelden voor evenementen: Shadowfront-wedstrijden, oefenwedstrijden en alles wat de leiding verder op de kalender wil zetten.",
-    "sections": {
-      "gettingIn": "Instappen",
-      "eventKinds": "Drie soorten evenementen",
-      "signup": "Aanmelden voor een wedstrijd",
-      "status": "Wat uw status betekent",
-      "scrims": "Oefenwedstrijden",
-      "reminders": "Herinneringen en agenda",
-      "closed": "Als de inschrijvingen gesloten zijn"
-    },
-    "gettingIn": {
-      "step1": "Meld je aan met Google of Discord op de homepage.",
-      "step2": "Word lid van je gilde. De meeste mensen komen binnen via een uitnodigingslink van een gildebeheerder. Je kunt ook openbare gilden bekijken op de website.<discoveryLink> ontdekkingspagina</discoveryLink> .",
-      "step3": "Als je eenmaal lid bent van een gilde, toont de homepage de aankomende evenementen van dat gilde.",
-      "note": "Je kunt maar in één gilde tegelijk lid zijn. Om van gilde te wisselen, moet je eerst je huidige gilde verlaten."
-    },
-    "eventKinds": {
-      "match": "Wedstrijdevenementen (Shadowfront en vergelijkbare evenementen) — twee teams, elk met hun eigen starttijd, leiderschapsposities en een basisopstelling plus reserves.",
-      "scrim": "Scrim-evenementen — een 1-tegen-1-uitdaging tussen jouw gilde en een ander gilde. Eén team, één starttijd en een winnaar na afloop. Zie het gedeelte Scrimmage-evenementen hieronder.",
-      "simple": "Eenvoudige evenementen — alleen informatieve vermeldingen in de agenda (een vergadering, een aankondiging, een kijkavond). Geen aanmeldformulier; alleen een datum en details."
-    },
-    "signup": {
-      "intro": "Open het evenement vanaf de homepage. Het aanmeldingsformulier bestaat uit drie onderdelen:",
-      "step1": "Teamvoorkeur (eerste keuze). Kies het team waar je het liefst in wilt spelen. Als je eerste keuze vol is, proberen de beheerders je in het andere team te plaatsen.",
-      "step2": "Bereid om als reserve te fungeren. Standaard ingeschakeld. Reserves vallen in als een basisspeler uitvalt. Schakel dit uit als je alleen met een gegarandeerde basisspeler wilt spelen.",
-      "step3": "Vraag een leiderschapspositie aan (optioneel). Leiders coördineren het team tijdens de wedstrijd. Beheerders wijzen leiders toe op basis van de aanvragen; je kunt een korte toelichting geven waarom je de rol graag wilt vervullen.",
-      "submit": "Klik op Aanmelden. Je kunt tot het moment dat de aanmeldingen sluiten terugkomen en al deze antwoorden wijzigen."
-    },
-    "status": {
-      "intro": "Als je naar de teamopstellingen kijkt, zie je naast elke naam een van deze opties staan:",
-      "player": "Speler — in de basisopstelling.",
-      "backup": "Reserve — staat op de reservelijst; speelt alleen als een basisspeler uitvalt.",
-      "leader": "Leider — gekozen door een beheerder om het team te leiden.",
-      "waitlist": "Wachtlijst — alle plaatsen in het team en de reserves waren bezet toen je je aanmeldde. Je wordt automatisch gepromoveerd als iemand afvalt.",
-      "wantsLeader": "Wil leider — een speler die om de rol heeft gevraagd; een beheerder kiest er een uit deze lijst."
-    },
-    "scrims": {
-      "intro": "Een scrim is een wedstrijd tussen jouw gilde en een ander gilde. De evenementpagina werkt hetzelfde als een wedstrijd: je meldt je aan, geeft aan of je bereid bent om als reserve mee te doen en je kunt eventueel een leiderschapsrol aanvragen. Er zijn echter een paar belangrijke verschillen:",
-      "oneSquad": "Slechts één team. Er is geen keuze tussen Team 1 en Team 2 — jouw gilde stelt één team op tegen de tegenstander.",
-      "opponent": "De tegenstander wordt bovenaan de evenementpagina weergegeven, samen met de winstvoorwaarden waar de twee beheerders het over eens zijn geworden. Lees deze voorwaarden vóór de wedstrijd, want zo wordt de winnaar bepaald.",
-      "result": "Resultaatchip. Zodra de wedstrijd is afgelopen en een beheerder de uitslag bekendmaakt, zie je een gekleurde chip op de evenementpagina: Gewonnen, Verloren, Gelijkspel of Geen wedstrijd (bij forfait of verbroken verbinding).",
-      "history": "Geschiedenis. Bekijk de aankomende en afgelopen oefenwedstrijden van je gilde op de<scrimsLink> geschiedenispagina van de scrim</scrimsLink> De winst/verlies-verhouding wordt weergegeven vanuit het perspectief van je gilde.",
-      "note": "Alleen de beheerder van je gilde kan een oefenwedstrijd voorstellen, accepteren of annuleren. Je meldt je gewoon aan zoals bij elk ander evenement. Als een oefenwedstrijd wordt geannuleerd voordat deze plaatsvindt, verdwijnt het evenement van je startpagina en wordt je aanmelding verborgen (beheerders bewaren de aanwezigheidsgeschiedenis wel)."
-    },
-    "reminders": {
-      "bot": "Als je gilde de Discord-bot heeft ingesteld, plaatst de bot herinneringen 1 dag, 1 uur en 20 minuten voor elk evenement in het door je gilde gekozen kanaal.",
-      "ics": "Op elke evenementpagina vind je een link om het .ics-bestand te downloaden, waarmee je het evenement aan je agenda kunt toevoegen.",
-      "slashCommands": "Discord slash-commando's: /upcoming toont een lijst met aankomende evenementen van je gilde, en met /signup kun je je aanmelden zonder Discord te verlaten. Je moet je wel eerst minstens één keer aanmelden op de website met Discord, zodat de bot je account kan koppelen."
-    },
-    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
-  },
   "adminHelp": {
     "title": "Beheerdershandleiding",
     "subtitle": "Alles wat een gildebeheerder nodig heeft om evenementen te organiseren: wedstrijden aanmaken, spelers beheren, Discord instellen en het gilde zelf onderhouden. De versie voor spelers is te vinden op<helpLink> /hulp</helpLink> .",
@@ -542,5 +490,58 @@
       "rescheduled": "Een evenement is verplaatst en mensen ontvangen geen nieuwe melding. Controleer of de tijd daadwerkelijk is gewijzigd (vergelijk met de vorige waarde). De bot verstuurt alleen herinneringen waarvan het tijdsvenster nog voor de nieuwe tijd ligt. Als de nieuwe tijd bijvoorbeeld over 30 minuten is, wordt alleen de herinnering van 20 minuten verstuurd, niet die van 24 uur.",
       "movedSquad": "Een speler is aan het verkeerde team toegewezen nadat ik hem verplaatst had. De badge 'VERPLAATST' betekent dat de toewijzing afwijkt van de voorkeur. Om dit ongedaan te maken, wijzig je de rol/het team via het keuzemenu of gebruik je de knop 'Verplaatsen naar team N' om de speler terug te zetten."
     }
+  },
+  "playerHelp": {
+    "title": "Welkom bij de evenementenorganisator van de Stichting.",
+    "subtitle": "Hier kan je gilde zich aanmelden voor evenementen: Shadowfront-wedstrijden, oefenwedstrijden en alles wat de leiding verder op de kalender wil zetten.",
+    "sections": {
+      "gettingIn": "Instappen",
+      "eventKinds": "Drie soorten evenementen",
+      "signup": "Aanmelden voor een wedstrijd",
+      "status": "Wat uw status betekent",
+      "scrims": "Oefenwedstrijden",
+      "reminders": "Herinneringen en agenda",
+      "closed": "Als de inschrijvingen gesloten zijn"
+    },
+    "gettingIn": {
+      "step1": "Meld je aan met Google of Discord op de homepage.",
+      "step2": "Word lid van je gilde. De meeste mensen komen binnen via een uitnodigingslink van een gildebeheerder. Je kunt ook openbare gilden bekijken op de website.<discoveryLink> ontdekkingspagina</discoveryLink> .",
+      "step3": "Als je eenmaal lid bent van een gilde, toont de homepage de aankomende evenementen van dat gilde.",
+      "note": "Je kunt maar in één gilde tegelijk lid zijn. Om van gilde te wisselen, moet je eerst je huidige gilde verlaten."
+    },
+    "eventKinds": {
+      "match": "Wedstrijdevenementen (Shadowfront en vergelijkbare evenementen) — twee teams, elk met hun eigen starttijd, leiderschapsposities en een basisopstelling plus reserves.",
+      "scrim": "Scrim-evenementen — een 1-tegen-1-uitdaging tussen jouw gilde en een ander gilde. Eén team, één starttijd en een winnaar na afloop. Zie het gedeelte Scrimmage-evenementen hieronder.",
+      "simple": "Eenvoudige evenementen — alleen informatieve vermeldingen in de agenda (een vergadering, een aankondiging, een kijkavond). Geen aanmeldformulier; alleen een datum en details."
+    },
+    "signup": {
+      "intro": "Open het evenement vanaf de homepage. Het aanmeldingsformulier bestaat uit drie onderdelen:",
+      "step1": "Teamvoorkeur (eerste keuze). Kies het team waar je het liefst in wilt spelen. Als je eerste keuze vol is, proberen de beheerders je in het andere team te plaatsen.",
+      "step2": "Bereid om als reserve te fungeren. Standaard ingeschakeld. Reserves vallen in als een basisspeler uitvalt. Schakel dit uit als je alleen met een gegarandeerde basisspeler wilt spelen.",
+      "step3": "Vraag een leiderschapspositie aan (optioneel). Leiders coördineren het team tijdens de wedstrijd. Beheerders wijzen leiders toe op basis van de aanvragen; je kunt een korte toelichting geven waarom je de rol graag wilt vervullen.",
+      "submit": "Klik op Aanmelden. Je kunt tot het moment dat de aanmeldingen sluiten terugkomen en al deze antwoorden wijzigen."
+    },
+    "status": {
+      "intro": "Als je naar de teamopstellingen kijkt, zie je naast elke naam een van deze opties staan:",
+      "player": "Speler — in de basisopstelling.",
+      "backup": "Reserve — staat op de reservelijst; speelt alleen als een basisspeler uitvalt.",
+      "leader": "Leider — gekozen door een beheerder om het team te leiden.",
+      "waitlist": "Wachtlijst — alle plaatsen in het team en de reserves waren bezet toen je je aanmeldde. Je wordt automatisch gepromoveerd als iemand afvalt.",
+      "wantsLeader": "Wil leider — een speler die om de rol heeft gevraagd; een beheerder kiest er een uit deze lijst."
+    },
+    "scrims": {
+      "intro": "Een scrim is een wedstrijd tussen jouw gilde en een ander gilde. De evenementpagina werkt hetzelfde als een wedstrijd: je meldt je aan, geeft aan of je bereid bent om als reserve mee te doen en je kunt eventueel een leiderschapsrol aanvragen. Er zijn echter een paar belangrijke verschillen:",
+      "oneSquad": "Slechts één team. Er is geen keuze tussen Team 1 en Team 2 — jouw gilde stelt één team op tegen de tegenstander.",
+      "opponent": "De tegenstander wordt bovenaan de evenementpagina weergegeven, samen met de winstvoorwaarden waar de twee beheerders het over eens zijn geworden. Lees deze voorwaarden vóór de wedstrijd, want zo wordt de winnaar bepaald.",
+      "result": "Resultaatchip. Zodra de wedstrijd is afgelopen en een beheerder de uitslag bekendmaakt, zie je een gekleurde chip op de evenementpagina: Gewonnen, Verloren, Gelijkspel of Geen wedstrijd (bij forfait of verbroken verbinding).",
+      "history": "Geschiedenis. Bekijk de aankomende en afgelopen oefenwedstrijden van je gilde op de<scrimsLink> geschiedenispagina van de scrim</scrimsLink> De winst/verlies-verhouding wordt weergegeven vanuit het perspectief van je gilde.",
+      "note": "Alleen de beheerder van je gilde kan een oefenwedstrijd voorstellen, accepteren of annuleren. Je meldt je gewoon aan zoals bij elk ander evenement. Als een oefenwedstrijd wordt geannuleerd voordat deze plaatsvindt, verdwijnt het evenement van je startpagina en wordt je aanmelding verborgen (beheerders bewaren de aanwezigheidsgeschiedenis wel)."
+    },
+    "reminders": {
+      "bot": "Als je gilde de Discord-bot heeft ingesteld, plaatst de bot herinneringen 1 dag, 1 uur en 20 minuten voor elk evenement in het door je gilde gekozen kanaal.",
+      "ics": "Op elke evenementpagina vind je een link om het .ics-bestand te downloaden, waarmee je het evenement aan je agenda kunt toevoegen.",
+      "slashCommands": "Discord slash-commando's: /upcoming toont een lijst met aankomende evenementen van je gilde, en met /signup kun je je aanmelden zonder Discord te verlaten. Je moet je wel eerst minstens één keer aanmelden op de website met Discord, zodat de bot je account kan koppelen."
+    },
+    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
   }
 }

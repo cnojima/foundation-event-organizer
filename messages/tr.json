@@ -38,7 +38,8 @@
     "roleMember": "Üye",
     "roleNoGuild": "Lonca yok",
     "signIn": "Giriş Yap",
-    "signOut": "Oturumu Kapat"
+    "signOut": "Oturumu Kapat",
+    "myAccount": "Hesabım"
   },
   "alphaBanner": {
     "tag": "Alfa",
@@ -377,59 +378,6 @@
     "label": "Dil",
     "ariaLabel": "Dil değiştir"
   },
-  "playerHelp": {
-    "title": "Vakıf Etkinlik Organizatörüne Hoş Geldiniz",
-    "subtitle": "Loncanız burada etkinliklere kaydolur: Shadowfront maçları, antrenman karşılaşmaları ve liderliğin takvime eklemek istediği diğer her şey.",
-    "sections": {
-      "gettingIn": "İçeri girmek",
-      "eventKinds": "Üç çeşit etkinlik",
-      "signup": "Maça kaydolmak",
-      "status": "Statünüzün anlamı",
-      "scrims": "Hazırlık maçları",
-      "reminders": "Hatırlatıcılar ve takvim",
-      "closed": "Kayıtlar kapalıysa"
-    },
-    "gettingIn": {
-      "step1": "Ana sayfada Google veya Discord ile giriş yapın.",
-      "step2": "Loncanıza katılın. Çoğu kişi lonca yöneticisinden gelen davet bağlantısı aracılığıyla katılır. Ayrıca herkese açık loncalara şu adresten de göz atabilirsiniz:<discoveryLink> keşif sayfası</discoveryLink> .",
-      "step3": "Bir loncaya katıldıktan sonra, ana sayfada o loncanın yaklaşan etkinlikleri gösterilir.",
-      "note": "Aynı anda yalnızca bir loncada bulunabilirsiniz. Lonca değiştirmek için önce mevcut loncanızdan ayrılmanız gerekir."
-    },
-    "eventKinds": {
-      "match": "Maç etkinlikleri (Shadowfront ve benzeri) — her biri kendi başlangıç saati, liderlik pozisyonları ve yedek oyunculardan oluşan bir başlangıç kadrosuna sahip iki takım.",
-      "scrim": "Scrim etkinlikleri — loncanız ile başka bir lonca arasında bire bir mücadele. Tek takım, tek başlangıç saati ve bittiğinde ilan edilen bir kazanan. Aşağıdaki Scrim etkinlikleri bölümüne bakın.",
-      "simple": "Basit etkinlikler — takvimde yalnızca bilgi amaçlı girişler (bir toplantı, bir duyuru, bir film izleme partisi). Kayıt formu yok; sadece tarih ve ayrıntılar."
-    },
-    "signup": {
-      "intro": "Etkinliği ana sayfadan açın. Kayıt formunda üç şey var:",
-      "step1": "Takım tercihi (ilk tercih). En çok oynamak istediğiniz takımı seçin. İlk tercihiniz doluysa, yöneticiler sizi diğer takıma yerleştirmeye çalışır.",
-      "step2": "Yedek oyuncu olmaya istekli. Varsayılan olarak açık. Başlangıç oyuncusu düştüğünde yedek oyuncular devreye girer. Sadece garantili bir başlangıç oyuncusuyla oynamak istiyorsanız bu seçeneğin işaretini kaldırın.",
-      "step3": "Liderlik pozisyonu talep edin (isteğe bağlı). Liderler maç sırasında takımı koordine eder. Yöneticiler talepler arasından lider ataması yapar; bu rolü neden istediğinize dair kısa bir not bırakabilirsiniz.",
-      "submit": "Kayıt Ol'a tıklayın. Kayıtlar kapanana kadar bu cevaplardan herhangi birini değiştirebilirsiniz."
-    },
-    "status": {
-      "intro": "Takım listelerine baktığınızda, her ismin yanında bunlardan birini göreceksiniz:",
-      "player": "Oyuncu — ilk 11'de yer alıyor.",
-      "backup": "Yedek oyuncu — yedek kadroda yer alır; sadece ilk 11 oyuncusu sakatlanırsa oynar.",
-      "leader": "Lider — takımı yönetmek üzere bir yönetici tarafından seçilir.",
-      "waitlist": "Bekleme listesi — kaydolduğunuzda tüm takım ve yedek oyuncu kontenjanları doluydu. Birisi ayrılırsa otomatik olarak birinci takıma yükseltilirsiniz.",
-      "wantsLeader": "Liderlik Görevi — bu rolü talep eden oyuncu; yöneticiler bunlar arasından seçim yapacak."
-    },
-    "scrims": {
-      "intro": "Bir scrim, loncanızın başka bir loncaya karşı yaptığı maçtır. Etkinlik sayfası, bir maçla aynı şekilde çalışır — kaydolun, yedek oyuncu seçmeyi seçin, isteğe bağlı olarak liderlik talep edin — ancak bilmeniz gereken birkaç fark vardır:",
-      "oneSquad": "Sadece tek bir takım. 1. Takım vs. 2. Takım seçimi yok; loncanız rakibe karşı tek bir kadroyla sahaya çıkacak.",
-      "opponent": "Rakip, etkinlik sayfasının en üstünde, iki yöneticinin üzerinde anlaştığı Kazanma Koşulu ile birlikte gösterilir. Maçtan önce okuyun; kazanan bu şekilde belirlenir.",
-      "result": "Sonuç çipi. Maç bittiğinde ve bir yönetici sonucu açıkladığında, etkinlik sayfasında renkli bir çip göreceksiniz: Kazandı, Kaybetti, Berabere veya Sonuçsuz (hükmen mağlubiyet veya bağlantı kopması durumunda).",
-      "history": "Tarihçe. Loncanızın yaklaşan ve geçmiş antrenman maçlarını şurada görebilirsiniz:<scrimsLink> scrim geçmişi sayfası</scrimsLink> Kazanma/kaybetme oranı, loncanızın bakış açısındandır.",
-      "note": "Sadece loncanızın yöneticisi bir scrim etkinliği önerebilir, kabul edebilir veya iptal edebilir; diğer etkinliklerde olduğu gibi kayıt olmanız yeterlidir. Bir scrim etkinliği gerçekleşmeden önce iptal edilirse, etkinlik ana sayfanızdan kaybolur ve kaydınız gizlenir (yöneticiler yine de katılım geçmişi için kaydı saklar)."
-    },
-    "reminders": {
-      "bot": "Eğer loncanızda Discord botu kuruluysa, bot her etkinlikten 1 gün, 1 saat ve 20 dakika önce loncanızın seçtiği kanalda hatırlatıcılar yayınlar.",
-      "ics": "Her etkinlik sayfasında, etkinliği takviminize eklemek için bir .ics dosyasını indirme bağlantısı bulunur.",
-      "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
-    },
-    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
-  },
   "adminHelp": {
     "title": "Yönetici kılavuzu",
     "subtitle": "Bir lonca yöneticisinin etkinlikleri yürütmek için ihtiyaç duyduğu her şey: maç oluşturma, oyuncuları yönetme, Discord'u entegre etme ve loncanın kendisini yönetme. Oyunculara yönelik sürümü ise şu adreste bulunuyor:<helpLink> /yardım</helpLink> .",
@@ -542,5 +490,58 @@
       "rescheduled": "Bir etkinlik yeniden planlandı ve katılımcılara tekrar bildirim gönderilmiyor. Zamanın gerçekten değiştiğini doğrulayın (önceki değerle karşılaştırın). Bot yalnızca penceresi yeni zamandan daha ileride olan türleri yeniden tetikler; yeni zamanınız şu andan 30 dakika sonraysa, yalnızca 20 dakikalık hatırlatıcı tetiklenir, 24 saatlik olan değil.",
       "movedSquad": "Oyuncuyu taşıdıktan sonra yanlış takıma atandı. \"TAŞINDI\" rozeti, atamanın tercihten farklı olduğunu gösterir. Geri almak için, açılır menüden rolünü/takımını değiştirin veya \"Takım N'ye Taşı\" düğmesini kullanarak eski haline getirin."
     }
+  },
+  "playerHelp": {
+    "title": "Vakıf Etkinlik Organizatörüne Hoş Geldiniz",
+    "subtitle": "Loncanız burada etkinliklere kaydolur: Shadowfront maçları, antrenman karşılaşmaları ve liderliğin takvime eklemek istediği diğer her şey.",
+    "sections": {
+      "gettingIn": "İçeri girmek",
+      "eventKinds": "Üç çeşit etkinlik",
+      "signup": "Maça kaydolmak",
+      "status": "Statünüzün anlamı",
+      "scrims": "Hazırlık maçları",
+      "reminders": "Hatırlatıcılar ve takvim",
+      "closed": "Kayıtlar kapalıysa"
+    },
+    "gettingIn": {
+      "step1": "Ana sayfada Google veya Discord ile giriş yapın.",
+      "step2": "Loncanıza katılın. Çoğu kişi lonca yöneticisinden gelen davet bağlantısı aracılığıyla katılır. Ayrıca herkese açık loncalara şu adresten de göz atabilirsiniz:<discoveryLink> keşif sayfası</discoveryLink> .",
+      "step3": "Bir loncaya katıldıktan sonra, ana sayfada o loncanın yaklaşan etkinlikleri gösterilir.",
+      "note": "Aynı anda yalnızca bir loncada bulunabilirsiniz. Lonca değiştirmek için önce mevcut loncanızdan ayrılmanız gerekir."
+    },
+    "eventKinds": {
+      "match": "Maç etkinlikleri (Shadowfront ve benzeri) — her biri kendi başlangıç saati, liderlik pozisyonları ve yedek oyunculardan oluşan bir başlangıç kadrosuna sahip iki takım.",
+      "scrim": "Scrim etkinlikleri — loncanız ile başka bir lonca arasında bire bir mücadele. Tek takım, tek başlangıç saati ve bittiğinde ilan edilen bir kazanan. Aşağıdaki Scrim etkinlikleri bölümüne bakın.",
+      "simple": "Basit etkinlikler — takvimde yalnızca bilgi amaçlı girişler (bir toplantı, bir duyuru, bir film izleme partisi). Kayıt formu yok; sadece tarih ve ayrıntılar."
+    },
+    "signup": {
+      "intro": "Etkinliği ana sayfadan açın. Kayıt formunda üç şey var:",
+      "step1": "Takım tercihi (ilk tercih). En çok oynamak istediğiniz takımı seçin. İlk tercihiniz doluysa, yöneticiler sizi diğer takıma yerleştirmeye çalışır.",
+      "step2": "Yedek oyuncu olmaya istekli. Varsayılan olarak açık. Başlangıç oyuncusu düştüğünde yedek oyuncular devreye girer. Sadece garantili bir başlangıç oyuncusuyla oynamak istiyorsanız bu seçeneğin işaretini kaldırın.",
+      "step3": "Liderlik pozisyonu talep edin (isteğe bağlı). Liderler maç sırasında takımı koordine eder. Yöneticiler talepler arasından lider ataması yapar; bu rolü neden istediğinize dair kısa bir not bırakabilirsiniz.",
+      "submit": "Kayıt Ol'a tıklayın. Kayıtlar kapanana kadar bu cevaplardan herhangi birini değiştirebilirsiniz."
+    },
+    "status": {
+      "intro": "Takım listelerine baktığınızda, her ismin yanında bunlardan birini göreceksiniz:",
+      "player": "Oyuncu — ilk 11'de yer alıyor.",
+      "backup": "Yedek oyuncu — yedek kadroda yer alır; sadece ilk 11 oyuncusu sakatlanırsa oynar.",
+      "leader": "Lider — takımı yönetmek üzere bir yönetici tarafından seçilir.",
+      "waitlist": "Bekleme listesi — kaydolduğunuzda tüm takım ve yedek oyuncu kontenjanları doluydu. Birisi ayrılırsa otomatik olarak birinci takıma yükseltilirsiniz.",
+      "wantsLeader": "Liderlik Görevi — bu rolü talep eden oyuncu; yöneticiler bunlar arasından seçim yapacak."
+    },
+    "scrims": {
+      "intro": "Bir scrim, loncanızın başka bir loncaya karşı yaptığı maçtır. Etkinlik sayfası, bir maçla aynı şekilde çalışır — kaydolun, yedek oyuncu seçmeyi seçin, isteğe bağlı olarak liderlik talep edin — ancak bilmeniz gereken birkaç fark vardır:",
+      "oneSquad": "Sadece tek bir takım. 1. Takım vs. 2. Takım seçimi yok; loncanız rakibe karşı tek bir kadroyla sahaya çıkacak.",
+      "opponent": "Rakip, etkinlik sayfasının en üstünde, iki yöneticinin üzerinde anlaştığı Kazanma Koşulu ile birlikte gösterilir. Maçtan önce okuyun; kazanan bu şekilde belirlenir.",
+      "result": "Sonuç çipi. Maç bittiğinde ve bir yönetici sonucu açıkladığında, etkinlik sayfasında renkli bir çip göreceksiniz: Kazandı, Kaybetti, Berabere veya Sonuçsuz (hükmen mağlubiyet veya bağlantı kopması durumunda).",
+      "history": "Tarihçe. Loncanızın yaklaşan ve geçmiş antrenman maçlarını şurada görebilirsiniz:<scrimsLink> scrim geçmişi sayfası</scrimsLink> Kazanma/kaybetme oranı, loncanızın bakış açısındandır.",
+      "note": "Sadece loncanızın yöneticisi bir scrim etkinliği önerebilir, kabul edebilir veya iptal edebilir; diğer etkinliklerde olduğu gibi kayıt olmanız yeterlidir. Bir scrim etkinliği gerçekleşmeden önce iptal edilirse, etkinlik ana sayfanızdan kaybolur ve kaydınız gizlenir (yöneticiler yine de katılım geçmişi için kaydı saklar)."
+    },
+    "reminders": {
+      "bot": "Eğer loncanızda Discord botu kuruluysa, bot her etkinlikten 1 gün, 1 saat ve 20 dakika önce loncanızın seçtiği kanalda hatırlatıcılar yayınlar.",
+      "ics": "Her etkinlik sayfasında, etkinliği takviminize eklemek için bir .ics dosyasını indirme bağlantısı bulunur.",
+      "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
+    },
+    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
   }
 }

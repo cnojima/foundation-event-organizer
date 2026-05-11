@@ -38,7 +38,8 @@
     "roleMember": "Członek",
     "roleNoGuild": "Brak gildii",
     "signIn": "Zalogować się",
-    "signOut": "Wyloguj się"
+    "signOut": "Wyloguj się",
+    "myAccount": "Moje konto"
   },
   "alphaBanner": {
     "tag": "Alfa",
@@ -377,59 +378,6 @@
     "label": "Język",
     "ariaLabel": "Zmień język"
   },
-  "playerHelp": {
-    "title": "Witamy w Foundation Event Organizer",
-    "subtitle": "W tym miejscu Twoja gildia zapisuje się na wydarzenia — mecze Shadowfront, treningi i inne wydarzenia, które przywódcy zaplanowali na ten rok.",
-    "sections": {
-      "gettingIn": "Wsiadanie",
-      "eventKinds": "Trzy rodzaje wydarzeń",
-      "signup": "Zapisywanie się na mecz",
-      "status": "Co oznacza Twój status",
-      "scrims": "Wydarzenia treningowe",
-      "reminders": "Przypomnienia i kalendarz",
-      "closed": "Jeśli zapisy są zamknięte"
-    },
-    "gettingIn": {
-      "step1": "Zaloguj się za pomocą konta Google lub Discord na stronie głównej.",
-      "step2": "Dołącz do swojej gildii. Większość osób dołącza za pośrednictwem linku z zaproszeniem od administratora gildii. Możesz również przeglądać gildie publiczne na<discoveryLink> strona odkrywcza</discoveryLink> .",
-      "step3": "Gdy już będziesz w gildii, na jej stronie głównej będą wyświetlane nadchodzące wydarzenia.",
-      "note": "Możesz należeć tylko do jednej gildii na raz. Aby się przenieść, najpierw opuść obecną."
-    },
-    "eventKinds": {
-      "match": "Wydarzenia meczowe (Shadowfront i podobne) — dwie drużyny, każda z własnym czasem rozpoczęcia, miejscami liderów oraz składem wyjściowym i rezerwowymi.",
-      "scrim": "Mecze towarzyskie – pojedynki 1 na 1 między twoją gildią a inną gildią. Jedna drużyna, jeden czas rozpoczęcia i zwycięzca po zakończeniu. Zobacz sekcję „Scrimmage” poniżej.",
-      "simple": "Proste wydarzenia — wpisy w kalendarzu zawierające wyłącznie informacje (spotkanie, ogłoszenie, impreza). Bez formularza rejestracyjnego; tylko data i szczegóły."
-    },
-    "signup": {
-      "intro": "Otwórz wydarzenie ze strony głównej. Formularz rejestracyjny zawiera trzy elementy:",
-      "step1": "Preferowany skład (pierwszy wybór). Wybierz skład, w którym najbardziej chcesz grać. Jeśli Twój pierwszy wybór jest pełny, administratorzy spróbują umieścić Cię w drugim składzie.",
-      "step2": "Chęć bycia rezerwowym. Domyślnie włączone. Rezerwowi pojawiają się, gdy startujący gracz zniknie. Odznacz to, jeśli chcesz grać tylko z gwarantowanym miejscem startowym.",
-      "step3": "Poproś o stanowisko lidera (opcjonalnie). Liderzy koordynują drużynę podczas meczu. Administratorzy przydzielają liderów na podstawie próśb; możesz zostawić krótką notatkę, dlaczego chcesz otrzymać tę rolę.",
-      "submit": "Kliknij „Zarejestruj się”. Możesz wrócić i zmienić dowolną z tych odpowiedzi do momentu zamknięcia rejestracji."
-    },
-    "status": {
-      "intro": "Gdy przyjrzysz się składom drużyn, obok każdego nazwiska zobaczysz jeden z tych symboli:",
-      "player": "Zawodnik — w składzie wyjściowym.",
-      "backup": "Rezerwowy — w składzie rezerwowym; gra tylko, jeśli zawodnik wyjściowy wypadnie z drużyny.",
-      "leader": "Lider — wybrany przez administratora do przewodzenia drużynie.",
-      "waitlist": "Lista oczekujących — wszystkie miejsca w drużynie i rezerwowych były zajęte, gdy się rejestrowałeś. Awansujesz automatycznie, jeśli ktoś zrezygnuje.",
-      "wantsLeader": "Chce Lidera — gracza, który poprosił o tę rolę; administrator dokona wyboru spośród tych osób."
-    },
-    "scrims": {
-      "intro": "Scrim to pojedynek Twojej gildii z inną gildią. Strona wydarzenia działa tak samo jak mecz – zapisz się, wybierz gotowość rezerwowego, opcjonalnie poproś o przywództwo – ale z kilkoma różnicami, o których warto wiedzieć:",
-      "oneSquad": "Tylko jeden skład. Nie ma wyboru między drużynami 1 i 2 — twoja gildia wystawia jeden skład na mecz z przeciwnikiem.",
-      "opponent": "Przeciwnik jest wyświetlany na górze strony wydarzenia wraz z Warunkiem Zwycięstwa, na który zgodzili się obaj administratorzy. Przeczytaj go przed meczem – to on decyduje o wygranej.",
-      "result": "Żeton wyniku. Po zakończeniu meczu i ogłoszeniu wyniku przez administratora, na stronie wydarzenia zobaczysz kolorowy żeton: Wygrana, Przegrana, Remis lub Nierozstrzygnięty (w przypadku walkowerów lub rozłączeń).",
-      "history": "Historia. Zobacz nadchodzące i przeszłe mecze treningowe swojej gildii na<scrimsLink> strona historii scrimów</scrimsLink> . W/L przedstawia perspektywę twojej gildii.",
-      "note": "Tylko administrator Twojej gildii może zaproponować, zaakceptować lub odwołać scrim – po prostu zapisujesz się jak na każde inne wydarzenie. Jeśli scrim zostanie odwołany przed jego rozpoczęciem, wydarzenie zniknie ze strony głównej, a rejestracja zostanie ukryta (administratorzy nadal przechowują historię obecności)."
-    },
-    "reminders": {
-      "bot": "Jeśli w Twojej gildii skonfigurowano bota Discord, bot będzie publikował przypomnienia 1 dzień, 1 godzinę i 20 minut przed każdym wydarzeniem na wybranym przez Twoją gildię kanale.",
-      "ics": "Na każdej stronie wydarzenia znajduje się link do pobrania pliku .ics umożliwiający dodanie wydarzenia do kalendarza.",
-      "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
-    },
-    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
-  },
   "adminHelp": {
     "title": "Przewodnik administratora",
     "subtitle": "Wszystko, czego administrator gildii potrzebuje do prowadzenia wydarzeń: tworzenia meczów, zarządzania graczami, podłączania Discorda i dbania o samą gildię. Wersja dla graczy znajduje się pod adresem<helpLink> /pomoc</helpLink> .",
@@ -542,5 +490,58 @@
       "rescheduled": "Wydarzenie zostało przełożone, a uczestnicy nie otrzymują ponownego powiadomienia. Sprawdź, czy godzina faktycznie uległa zmianie (porównaj z poprzednią wartością). Bot ponownie uruchamia tylko te typy, których okno czasowe jest nadal przed nowym czasem — jeśli nowy czas przypada za 30 minut, uruchomi się tylko przypomnienie 20-minutowe, a nie 24-godzinne.",
       "movedSquad": "Gracz został przydzielony do niewłaściwego oddziału po tym, jak go przeniosłem. Odznaka PRZENIESIONY oznacza, że przydział różni się od preferencji. Aby przywrócić poprzednią pozycję, zmień jego rolę/oddział za pomocą menu rozwijanego lub użyj przycisku „Przenieś do oddziału N”, aby go ponownie przenieść."
     }
+  },
+  "playerHelp": {
+    "title": "Witamy w Foundation Event Organizer",
+    "subtitle": "W tym miejscu Twoja gildia zapisuje się na wydarzenia — mecze Shadowfront, treningi i inne wydarzenia, które przywódcy zaplanowali na ten rok.",
+    "sections": {
+      "gettingIn": "Wsiadanie",
+      "eventKinds": "Trzy rodzaje wydarzeń",
+      "signup": "Zapisywanie się na mecz",
+      "status": "Co oznacza Twój status",
+      "scrims": "Wydarzenia treningowe",
+      "reminders": "Przypomnienia i kalendarz",
+      "closed": "Jeśli zapisy są zamknięte"
+    },
+    "gettingIn": {
+      "step1": "Zaloguj się za pomocą konta Google lub Discord na stronie głównej.",
+      "step2": "Dołącz do swojej gildii. Większość osób dołącza za pośrednictwem linku z zaproszeniem od administratora gildii. Możesz również przeglądać gildie publiczne na<discoveryLink> strona odkrywcza</discoveryLink> .",
+      "step3": "Gdy już będziesz w gildii, na jej stronie głównej będą wyświetlane nadchodzące wydarzenia.",
+      "note": "Możesz należeć tylko do jednej gildii na raz. Aby się przenieść, najpierw opuść obecną."
+    },
+    "eventKinds": {
+      "match": "Wydarzenia meczowe (Shadowfront i podobne) — dwie drużyny, każda z własnym czasem rozpoczęcia, miejscami liderów oraz składem wyjściowym i rezerwowymi.",
+      "scrim": "Mecze towarzyskie – pojedynki 1 na 1 między twoją gildią a inną gildią. Jedna drużyna, jeden czas rozpoczęcia i zwycięzca po zakończeniu. Zobacz sekcję „Scrimmage” poniżej.",
+      "simple": "Proste wydarzenia — wpisy w kalendarzu zawierające wyłącznie informacje (spotkanie, ogłoszenie, impreza). Bez formularza rejestracyjnego; tylko data i szczegóły."
+    },
+    "signup": {
+      "intro": "Otwórz wydarzenie ze strony głównej. Formularz rejestracyjny zawiera trzy elementy:",
+      "step1": "Preferowany skład (pierwszy wybór). Wybierz skład, w którym najbardziej chcesz grać. Jeśli Twój pierwszy wybór jest pełny, administratorzy spróbują umieścić Cię w drugim składzie.",
+      "step2": "Chęć bycia rezerwowym. Domyślnie włączone. Rezerwowi pojawiają się, gdy startujący gracz zniknie. Odznacz to, jeśli chcesz grać tylko z gwarantowanym miejscem startowym.",
+      "step3": "Poproś o stanowisko lidera (opcjonalnie). Liderzy koordynują drużynę podczas meczu. Administratorzy przydzielają liderów na podstawie próśb; możesz zostawić krótką notatkę, dlaczego chcesz otrzymać tę rolę.",
+      "submit": "Kliknij „Zarejestruj się”. Możesz wrócić i zmienić dowolną z tych odpowiedzi do momentu zamknięcia rejestracji."
+    },
+    "status": {
+      "intro": "Gdy przyjrzysz się składom drużyn, obok każdego nazwiska zobaczysz jeden z tych symboli:",
+      "player": "Zawodnik — w składzie wyjściowym.",
+      "backup": "Rezerwowy — w składzie rezerwowym; gra tylko, jeśli zawodnik wyjściowy wypadnie z drużyny.",
+      "leader": "Lider — wybrany przez administratora do przewodzenia drużynie.",
+      "waitlist": "Lista oczekujących — wszystkie miejsca w drużynie i rezerwowych były zajęte, gdy się rejestrowałeś. Awansujesz automatycznie, jeśli ktoś zrezygnuje.",
+      "wantsLeader": "Chce Lidera — gracza, który poprosił o tę rolę; administrator dokona wyboru spośród tych osób."
+    },
+    "scrims": {
+      "intro": "Scrim to pojedynek Twojej gildii z inną gildią. Strona wydarzenia działa tak samo jak mecz – zapisz się, wybierz gotowość rezerwowego, opcjonalnie poproś o przywództwo – ale z kilkoma różnicami, o których warto wiedzieć:",
+      "oneSquad": "Tylko jeden skład. Nie ma wyboru między drużynami 1 i 2 — twoja gildia wystawia jeden skład na mecz z przeciwnikiem.",
+      "opponent": "Przeciwnik jest wyświetlany na górze strony wydarzenia wraz z Warunkiem Zwycięstwa, na który zgodzili się obaj administratorzy. Przeczytaj go przed meczem – to on decyduje o wygranej.",
+      "result": "Żeton wyniku. Po zakończeniu meczu i ogłoszeniu wyniku przez administratora, na stronie wydarzenia zobaczysz kolorowy żeton: Wygrana, Przegrana, Remis lub Nierozstrzygnięty (w przypadku walkowerów lub rozłączeń).",
+      "history": "Historia. Zobacz nadchodzące i przeszłe mecze treningowe swojej gildii na<scrimsLink> strona historii scrimów</scrimsLink> . W/L przedstawia perspektywę twojej gildii.",
+      "note": "Tylko administrator Twojej gildii może zaproponować, zaakceptować lub odwołać scrim – po prostu zapisujesz się jak na każde inne wydarzenie. Jeśli scrim zostanie odwołany przed jego rozpoczęciem, wydarzenie zniknie ze strony głównej, a rejestracja zostanie ukryta (administratorzy nadal przechowują historię obecności)."
+    },
+    "reminders": {
+      "bot": "Jeśli w Twojej gildii skonfigurowano bota Discord, bot będzie publikował przypomnienia 1 dzień, 1 godzinę i 20 minut przed każdym wydarzeniem na wybranym przez Twoją gildię kanale.",
+      "ics": "Na każdej stronie wydarzenia znajduje się link do pobrania pliku .ics umożliwiający dodanie wydarzenia do kalendarza.",
+      "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
+    },
+    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
   }
 }

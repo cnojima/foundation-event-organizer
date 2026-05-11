@@ -33,6 +33,7 @@
   },
   "topBar": {
     "notifications": "Notifications",
+    "myAccount": "My Account",
     "roleSuperAdmin": "Super-admin",
     "roleGuildAdmin": "Guild admin",
     "roleMember": "Member",
