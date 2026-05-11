@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { requireSignedInApi } from "@/lib/rbac";
+import { requireSignedInApi, softDeleteGuildAndEvents } from "@/lib/rbac";
 import { db } from "@/db";
 import { events, signups, users } from "@/db/schema";
 import { and, eq, inArray, isNull, sql } from "drizzle-orm";
@@ -16,8 +16,20 @@ export async function POST() {
   }
 
   const result = db.transaction((tx) => {
-    // If user is an admin, ensure at least one other admin exists.
-    if (membership.guildRole === "admin") {
+    // How many members are in this guild right now (including the leaver).
+    const memberCount = Number(
+      tx
+        .select({ count: sql<number>`count(*)` })
+        .from(users)
+        .where(eq(users.guildId, membership.guildId!))
+        .get()?.count ?? 0
+    );
+    const isLastMember = memberCount <= 1;
+
+    // If user is an admin AND someone else would be left behind, ensure
+    // there's at least one other admin. (The last-member case bypasses this
+    // entirely — the guild is going away with them.)
+    if (membership.guildRole === "admin" && !isLastMember) {
       const otherAdmins = tx
         .select({ count: sql<number>`count(*)` })
         .from(users)
@@ -64,12 +76,20 @@ export async function POST() {
       .where(eq(users.id, membership.userId))
       .run();
 
-    return { ok: true as const };
+    // Empty guild → soft-delete it and its events. No one's left to use it.
+    if (isLastMember) {
+      softDeleteGuildAndEvents(tx, membership.guildId!);
+    }
+
+    return { ok: true as const, guildDeleted: isLastMember };
   });
 
   if ("error" in result) {
     return NextResponse.json({ error: result.error }, { status: result.status });
   }
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({
+    success: true,
+    guildDeleted: result.guildDeleted,
+  });
 }

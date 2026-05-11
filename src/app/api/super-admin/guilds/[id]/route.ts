@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { requireSuperAdminApi } from "@/lib/rbac";
+import { requireSuperAdminApi, softDeleteGuildAndEvents } from "@/lib/rbac";
 import { db } from "@/db";
-import { events, guilds, users } from "@/db/schema";
-import { and, eq, isNull } from "drizzle-orm";
+import { guilds, users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function DELETE(
   _req: Request,
@@ -14,13 +14,8 @@ export async function DELETE(
   const guard = requireSuperAdminApi(session);
   if (!guard.ok) return guard.response;
 
-  const now = new Date().toISOString();
   db.transaction((tx) => {
-    tx.update(guilds).set({ deletedAt: now }).where(eq(guilds.id, id)).run();
-    tx.update(events)
-      .set({ deletedAt: now })
-      .where(and(eq(events.guildId, id), isNull(events.deletedAt)))
-      .run();
+    softDeleteGuildAndEvents(tx, id);
     tx.update(users)
       .set({ guildId: null, guildRole: null })
       .where(eq(users.guildId, id))

@@ -3,7 +3,11 @@ import { auth } from "@/auth";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { and, eq, sql } from "drizzle-orm";
-import { countGuildAdmins } from "@/lib/rbac";
+import {
+  countGuildAdmins,
+  countGuildMembers,
+  softDeleteGuildAndEvents,
+} from "@/lib/rbac";
 import { isSupportedLocale, LOCALE_COOKIE } from "@/i18n/config";
 
 const MAX_NAME_LENGTH = 32;
@@ -91,16 +95,25 @@ export async function DELETE() {
     return NextResponse.json({ error: "Account not found" }, { status: 404 });
   }
 
-  if (me.guildRole === "admin" && me.guildId) {
-    const admins = await countGuildAdmins(me.guildId);
-    if (admins <= 1) {
-      return NextResponse.json(
-        {
-          error:
-            "You're the only admin of your guild. Promote someone else first, or have a super-admin take over.",
-        },
-        { status: 409 }
-      );
+  // If user is in a guild, check leave-blocking rules. Special case: if
+  // they're the LAST member of the guild, we let them go and soft-delete
+  // the guild instead of requiring a non-existent successor admin.
+  let lastMemberGuildId: string | null = null;
+  if (me.guildId) {
+    const totalMembers = await countGuildMembers(me.guildId);
+    if (totalMembers <= 1) {
+      lastMemberGuildId = me.guildId;
+    } else if (me.guildRole === "admin") {
+      const admins = await countGuildAdmins(me.guildId);
+      if (admins <= 1) {
+        return NextResponse.json(
+          {
+            error:
+              "You're the only admin of your guild. Promote someone else first, or have a super-admin take over.",
+          },
+          { status: 409 }
+        );
+      }
     }
   }
 
@@ -123,6 +136,11 @@ export async function DELETE() {
     }
   }
 
-  await db.delete(users).where(eq(users.id, userId));
+  db.transaction((tx) => {
+    if (lastMemberGuildId) {
+      softDeleteGuildAndEvents(tx, lastMemberGuildId);
+    }
+    tx.delete(users).where(eq(users.id, userId)).run();
+  });
   return NextResponse.json({ success: true });
 }

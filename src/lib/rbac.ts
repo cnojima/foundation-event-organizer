@@ -209,6 +209,36 @@ export async function countGuildAdmins(guildId: string): Promise<number> {
   return Number(row?.count ?? 0);
 }
 
+// Total live members in a guild (any role).
+export async function countGuildMembers(guildId: string): Promise<number> {
+  const row = await db
+    .select({ count: sql<number>`count(*)` })
+    .from(users)
+    .where(eq(users.guildId, guildId))
+    .get();
+  return Number(row?.count ?? 0);
+}
+
+// Soft-deletes a guild and its active events. Doesn't touch the users table —
+// callers (leave, account delete, super-admin delete) handle user detachment
+// independently so they can wrap it in their own transaction. The `tx` arg
+// accepts either a transaction handle or the bare `db` so this composes both
+// inside and outside transactions.
+type DbExec = {
+  update: typeof db.update;
+};
+export function softDeleteGuildAndEvents(
+  tx: DbExec,
+  guildId: string,
+  nowIso: string = new Date().toISOString()
+): void {
+  tx.update(guilds).set({ deletedAt: nowIso }).where(eq(guilds.id, guildId)).run();
+  tx.update(events)
+    .set({ deletedAt: nowIso })
+    .where(and(eq(events.guildId, guildId), isNull(events.deletedAt)))
+    .run();
+}
+
 // ---- Slug utilities ----
 
 export async function isSlugTaken(slug: string): Promise<boolean> {
