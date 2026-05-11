@@ -29,17 +29,20 @@
     "createGuild": "Utwórz gildię",
     "adminHelp": "Pomoc administratora",
     "help": "Pomoc",
-    "myAccount": "Moje konto"
+    "myAccount": "Moje konto",
+    "findPlayers": "Znajdź graczy",
+    "duels": "Pojedynki",
+    "leaderboard": "Tabela wyników"
   },
   "topBar": {
     "notifications": "Powiadomienia",
+    "myAccount": "Moje konto",
     "roleSuperAdmin": "Superadministrator",
     "roleGuildAdmin": "Administrator gildii",
     "roleMember": "Członek",
     "roleNoGuild": "Brak gildii",
     "signIn": "Zalogować się",
-    "signOut": "Wyloguj się",
-    "myAccount": "Moje konto"
+    "signOut": "Wyloguj się"
   },
   "alphaBanner": {
     "tag": "Alfa",
@@ -344,7 +347,18 @@
     "deleteButton": "Usuń moje konto",
     "deleting": "Usuwanie…",
     "deleteConfirm": "Usunąć konto? To spowoduje usunięcie Cię z gildii, usunięcie wszystkich Twoich rejestracji i odłączenie Google/Discord. Tego nie da się cofnąć.",
-    "language": "Język"
+    "language": "Język",
+    "duels": {
+      "heading": "Pojedynek",
+      "powerTier": "Poziom mocy",
+      "powerTierNotSet": "Nie ustawiono",
+      "powerTierHelp": "Samodzielnie zgłoszony kamień milowy mocy w grze (I–XIII). Wyświetlany na karcie gracza i używany jako filtr na stronie odkrywania. System zaufania — ustaw go poprawnie.",
+      "discoverableLabel": "Możliwość odkrycia w pojedynkach 1 na 1",
+      "discoverableHelp": "Po włączeniu inni gracze na tym samym serwerze mogą znaleźć Cię na stronie odkryć i wyzwać na pojedynek. Wyłącz tę opcję, aby ukryć ją przed listami i wyzwaniami. Twoje wewnętrzne doświadczenia w gildii pozostaną niezmienione.",
+      "dmLabel": "Powiadom mnie o pojedynkach za pomocą wiadomości bezpośredniej na Discordzie",
+      "dmHelp": "Po włączeniu bot wysyła Ci wiadomość prywatną, gdy ktoś rzuca Ci wyzwanie, akceptuje lub odrzuca Twoją propozycję, anuluje pojedynek lub ogłasza wynik. Wyłącz tę opcję, aby całkowicie wyciszyć wiadomości prywatne na Discordzie dotyczące pojedynków. Nadal będziesz widzieć wszystko na stronie.",
+      "dmHelpUnlinked": "Zaloguj się do Discorda przynajmniej raz, aby włączyć bezpośrednie wiadomości o pojedynkach. (Wyloguj się, a następnie zaloguj ponownie do Discorda.)"
+    }
   },
   "errors": {
     "forbidden": "Zabroniony",
@@ -501,7 +515,8 @@
       "status": "Co oznacza Twój status",
       "scrims": "Wydarzenia treningowe",
       "reminders": "Przypomnienia i kalendarz",
-      "closed": "Jeśli zapisy są zamknięte"
+      "closed": "Jeśli zapisy są zamknięte",
+      "duels": "Pojedynki 1 na 1"
     },
     "gettingIn": {
       "step1": "Zaloguj się za pomocą konta Google lub Discord na stronie głównej.",
@@ -542,6 +557,83 @@
       "ics": "Na każdej stronie wydarzenia znajduje się link do pobrania pliku .ics umożliwiający dodanie wydarzenia do kalendarza.",
       "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
     },
-    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
+    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy.",
+    "duels": {
+      "intro": "Pojedynki to pojedynki jeden na jednego między dwoma graczami. Są one niezależne od meczów towarzyskich i sparingów – nie ma składu ani formularza zgłoszeniowego, a jedynie dwie osoby ustalają termin i zasady.",
+      "find": "Znajdź przeciwników na<playersLink> strona odkrywania graczy</playersLink> . Wyświetla listę wszystkich osób na Twoim serwerze, które wyraziły zgodę na ujawnienie. Filtruj według poziomu mocy, gildii lub nazwy. Kliknij nazwę dowolnego gracza, aby zobaczyć jego pełny profil — ocenę, rekord i pełną historię pojedynków.",
+      "powerTier": "Każdy gracz może ustawić samodzielnie określony poziom mocy od I do XIII na stronie Moje Konto. Poziom odzwierciedla postępy postaci w grze i pomaga przeciwnikom ocenić, czy starcie będzie sprawiedliwe. Ustaw swój poziom, aby inni mogli Cię znaleźć na Twoim poziomie.",
+      "challenge": "Kliknij „Wyzwanie” na karcie gracza, aby zaproponować pojedynek. Wybierz czas, lokalizację (Kruger, Cerno, Kanvo, Sfinks lub niestandardową mapę) oraz Warunek Zwycięstwa – jasno ustal zasady, ponieważ są one powiązane z ogłoszonym wynikiem.",
+      "respond": "Gdy ktoś wyzwie Cię na pojedynek, pojawi się on w sekcji „Przychodzące wyzwania” na stronie pojedynków. Możesz zaakceptować, odrzucić lub edytować kontrpropozycję, aby zaproponować inne warunki. Osoba proponująca może się wycofać w dowolnym momencie przed zaakceptowaniem pojedynku.",
+      "negotiate": "Każdy z graczy może edytować oczekującą propozycję – zmienić czas, lokalizację, warunek wygranej lub komunikat. Ten, kto ustali ostatnie warunki, nie może zaakceptować własnych zmian; druga strona musi je potwierdzić. Kontrpropozycje mogą być negowane, aż ktoś zaakceptuje to, co jest na stole.",
+      "result": "Po pojedynku każdy z graczy ogłasza wynik na stronie pojedynku: Wygrałem, Przegrałem, Remis lub Nierozstrzygnięty (w przypadku walkowerów lub rozłączeń). Pierwszy gracz, który zgłosi się do pojedynku, blokuje go dla obu stron. Wygrane i przegrane aktualizują Twój ranking ELO; Nierozstrzygnięty liczy się jako pojedynek, ale nie wpływa na ranking.",
+      "rating": "Twój ranking ELO zaczyna się od 1000 i rośnie lub spada w zależności od wyniku pojedynku i rankingu przeciwnika. Pokonanie gracza o wyższej randze daje więcej punktów; przegrana z graczem o niższej randze kosztuje więcej. Twój rekord (WLD) i ranking są widoczne na karcie gracza.",
+      "leaderboard": "Po rozegraniu co najmniej 3 potwierdzonych pojedynków pojawisz się na<leaderboardLink> ranking serwera</leaderboardLink> Ranking według oceny. Za najlepsze miejsca przyznawane są złote/srebrne/brązowe żetony. Twoja pozycja jest widoczna nawet wtedy, gdy znajdujesz się poza pierwszą 25-tką.",
+      "reputation": "Po ogłoszeniu wyniku pojedynku obaj gracze mogą zostawić 👍 lub 👎 na temat przeciwnika. Suma punktów pojawia się jako wartość procentowa na karcie każdego gracza, gdy ten ma co najmniej 5 ocen. Jedna ocena na pojedynek, zablokowana po przesłaniu.",
+      "history": "Zobacz pełną historię pojedynków (nadchodzące, zakończone, odrzucone, wycofane, anulowane) na<duelsLink> strona pojedynków</duelsLink> Wyniki pokazują W/L/D/NC z Twojej perspektywy.",
+      "discordDm": "Jeśli zalogowałeś się do Discorda przynajmniej raz, bot może wysyłać Ci wiadomości prywatne o wydarzeniach pojedynkowych — nadchodzących wyzwaniach, zaakceptowanych, odrzuconych, anulowanych i ogłoszonych wynikach. Możesz to włączyć w Moim Koncie. Jeśli masz wyłączone wiadomości prywatne od członków serwera w ustawieniach Discorda, bot nie będzie mógł się z Tobą skontaktować.",
+      "privacy": "Możesz wyłączyć możliwość odkrywania pojedynków w Moim Koncie, aby ukryć się na stronie odkrywania i zablokować przychodzące wyzwania. Twoje wewnętrzne doświadczenia w gildii pozostaną niezmienione."
+    }
+  },
+  "playerProfile": {
+    "backToPlayers": "Powrót do graczy",
+    "youBadge": "Ty",
+    "noGuild": "Brak gildii",
+    "serverLabel": "Serwer nr {serverNumber}",
+    "challenge": "Wyzwanie",
+    "rating": "Ocena",
+    "record": "Nagrywać",
+    "reputation": "Reputacja",
+    "lastActive": "Ostatni pojedynek",
+    "duelsTotal": "{count, plural, =0 {No duels} jeden {# duel} inne {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} inne {# ratings} }",
+    "reputationNotEnough": "Wymagane oceny 5+",
+    "historyHeading": "Historia pojedynków",
+    "historyEmpty": "Brak ukończonych pojedynków.",
+    "locationLabel": "Lokalizacja",
+    "winConditionLabel": "Warunek zwycięstwa",
+    "unknownPlayer": "Nieznany gracz",
+    "prev": "← Poprzedni",
+    "next": "Dalej →",
+    "pageOf": "Strona {page} z {total}"
+  },
+  "leaderboard": {
+    "title": "Tabela wyników",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} jeden {# ranked player on your server} inni {# ranked players on your server} }.",
+    "serverLabel": "Serwer nr {serverNumber}",
+    "howItWorks": "Jak działają rankingi →",
+    "yourRank": "Twoja ranga: # {rank} · {rating} ocena",
+    "notRankedYet": "Graj co najmniej {min} Potwierdzone pojedynki pojawią się w tabeli wyników. Twój ranking zaczyna się od 1000 i aktualizuje się w zależności od wygranej lub przegranej.",
+    "rankLabel": "Ranga {rank}",
+    "noMatches": "Żaden gracz nie spełnia tych filtrów.",
+    "emptyState": "Na Twoim serwerze nie ma jeszcze graczy rankingowych. Bądź pierwszy.",
+    "needsServerNumber": "Ustaw numer serwera dla swojej gildii w<settingsLink> Ustawienia gildii</settingsLink> aby zobaczyć tabelę wyników.",
+    "prev": "← Poprzedni",
+    "next": "Dalej →",
+    "pageOf": "Strona {page} z {total}"
+  },
+  "players": {
+    "title": "Znajdź graczy",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} jeden {# discoverable player on your server} inni {# discoverable players on your server} }.",
+    "serverLabel": "Serwer nr {serverNumber}",
+    "searchPlaceholder": "Wyszukaj po nazwie w grze…",
+    "allTiers": "Wszystkie poziomy mocy",
+    "allGuilds": "Wszystkie gildie",
+    "tierLabel": "Poziom {tier}",
+    "reset": "Nastawić",
+    "rating": "ocena",
+    "ratingTooltip": "Ocena PvP w stylu ELO — zaczyna się od 1000, aktualizowana po potwierdzonych pojedynkach.",
+    "recordTooltip": "Zwycięstwa · Porażki · Remisy w potwierdzonych pojedynkach.",
+    "reputationTooltip": "Reputacja: łączny procent pozytywnych ocen w {count} oceny.",
+    "lastActiveLabel": "aktywny",
+    "challenge": "Wyzwanie",
+    "sameGuildBadge": "Twoja gildia",
+    "sameGuildChallengeHint": "Koordynuj pojedynki członków gildii bezpośrednio — są oni już obok ciebie.",
+    "noMatches": "Żaden gracz nie spełnia tych filtrów.",
+    "emptyState": "Na Twoim serwerze nie ma jeszcze żadnych graczy możliwych do odkrycia.",
+    "needsServerNumber": "Ustaw numer serwera dla swojej gildii w<settingsLink> Ustawienia gildii</settingsLink> aby odkryć graczy na tym samym serwerze.",
+    "noGuildsOnServer": "Na tym serwerze nie zarejestrowano jeszcze żadnych innych gildii.",
+    "prev": "← Poprzedni",
+    "next": "Dalej →",
+    "pageOf": "Strona {page} z {total}"
   }
 }

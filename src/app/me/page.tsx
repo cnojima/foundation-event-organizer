@@ -1,13 +1,14 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
-import { guilds, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
+import { accounts, guilds, users } from "@/db/schema";
+import { and, eq } from "drizzle-orm";
 import { getTranslations } from "next-intl/server";
 import { requireSignedInPage } from "@/lib/rbac";
 import { InGameNameForm } from "@/components/in-game-name-form";
 import { LeaveGuildButton } from "@/components/leave-guild-button";
 import { DeleteAccountButton } from "@/components/delete-account-button";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { DuelSettingsForm } from "@/components/duel-settings-form";
 
 export const metadata = {
   title: "My Account — Foundation Event Organizer",
@@ -37,6 +38,21 @@ export default async function MePage() {
       })
     : null;
 
+  // Linked-Discord check controls whether the duel DM toggle is editable.
+  // Users without a Discord OAuth link can flip the toggle but it has no
+  // effect — DMs require their Discord user ID.
+  const discordLinkRow = await db
+    .select({ id: accounts.providerAccountId })
+    .from(accounts)
+    .where(
+      and(
+        eq(accounts.userId, membership.userId),
+        eq(accounts.provider, "discord")
+      )
+    )
+    .get();
+  const discordLinked = !!discordLinkRow;
+
   return (
     <div className="mx-auto max-w-2xl space-y-8">
       <header>
@@ -56,6 +72,16 @@ export default async function MePage() {
         <div className="rounded-lg border bg-white p-4">
           <LocaleSwitcher />
         </div>
+      </section>
+
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">{t("duels.heading")}</h2>
+        <DuelSettingsForm
+          defaultPowerTier={me.powerTier}
+          defaultDiscoverable={me.discoverableForDuels}
+          defaultDmEnabled={me.duelDmEnabled}
+          discordLinked={discordLinked}
+        />
       </section>
 
       <section>

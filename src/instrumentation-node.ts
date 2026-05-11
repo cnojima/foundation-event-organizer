@@ -14,6 +14,20 @@ export async function registerNode(): Promise<void> {
 
   installLifecycleHandlers();
 
+  // Apply pending DB migrations BEFORE booting the bot — the bot reads
+  // from the same DB and would fail on schema mismatches. Migrations are
+  // idempotent (Drizzle tracks applied ones in __drizzle_migrations) so
+  // this is safe to run every boot.
+  try {
+    const { runMigrations } = await import("@/db/migrate");
+    runMigrations();
+    console.log("[boot] migrations applied");
+  } catch (err) {
+    console.error("[boot] migration failed:", err);
+    // Don't throw — let the app boot so /api/health still responds and the
+    // operator can investigate via logs.
+  }
+
   const { startBot } = await import("@/bot/discord-bot");
   startBot();
 }

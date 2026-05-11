@@ -29,17 +29,20 @@
     "createGuild": "Crea gilda",
     "adminHelp": "Assistenza amministrativa",
     "help": "Aiuto",
-    "myAccount": "Il mio conto"
+    "myAccount": "Il mio conto",
+    "findPlayers": "Trova giocatori",
+    "duels": "Duelli",
+    "leaderboard": "Classifica"
   },
   "topBar": {
     "notifications": "Notifiche",
+    "myAccount": "Il mio conto",
     "roleSuperAdmin": "Super-amministratore",
     "roleGuildAdmin": "Amministratore della gilda",
     "roleMember": "Membro",
     "roleNoGuild": "Nessuna gilda",
     "signIn": "Registrazione",
-    "signOut": "Disconnessione",
-    "myAccount": "Il mio conto"
+    "signOut": "Disconnessione"
   },
   "alphaBanner": {
     "tag": "Alfa",
@@ -344,7 +347,18 @@
     "deleteButton": "Elimina il mio account",
     "deleting": "Eliminazione in corso…",
     "deleteConfirm": "Vuoi eliminare il tuo account? Questa operazione ti rimuove dalla gilda, cancella tutte le tue iscrizioni e scollega i tuoi account Google/Discord. È un'operazione irreversibile.",
-    "language": "Lingua"
+    "language": "Lingua",
+    "duels": {
+      "heading": "Duello",
+      "powerTier": "Livello di potenza",
+      "powerTierNotSet": "Non impostato",
+      "powerTierHelp": "Traguardi di potenza autodichiarati in gioco (I–XIII). Mostrati sulla tua scheda giocatore e utilizzati come filtro nella pagina di scoperta. Sistema di fiducia: impostalo correttamente.",
+      "discoverableLabel": "Scoperta per i duelli 1 contro 1",
+      "discoverableHelp": "Quando questa opzione è attiva, gli altri giocatori sul tuo stesso server possono trovarti nella pagina di scoperta e sfidarti a duello. Disattivala per nasconderti dagli elenchi e dalle sfide. La tua esperienza all'interno della gilda non subirà variazioni.",
+      "dmLabel": "Avvisami tramite messaggio privato su Discord riguardo ai duelli",
+      "dmHelp": "Quando è attivo, il bot ti invia un messaggio privato su Discord quando qualcuno ti sfida, accetta o rifiuta la tua proposta, annulla un duello o dichiara un risultato. Disattivalo per silenziare completamente i messaggi privati su Discord relativi ai duelli. Potrai comunque visualizzare tutto sul sito web.",
+      "dmHelpUnlinked": "Accedi a Discord almeno una volta per abilitare i messaggi diretti relativi ai duelli. (Esci e poi accedi nuovamente a Discord.)"
+    }
   },
   "errors": {
     "forbidden": "Vietato",
@@ -501,7 +515,8 @@
       "status": "Cosa significa il tuo stato",
       "scrims": "Eventi di allenamento",
       "reminders": "Promemoria e calendario",
-      "closed": "Se le iscrizioni sono chiuse"
+      "closed": "Se le iscrizioni sono chiuse",
+      "duels": "duelli 1 contro 1"
     },
     "gettingIn": {
       "step1": "Accedi con Google o Discord dalla pagina principale.",
@@ -542,6 +557,83 @@
       "ics": "Ogni pagina evento contiene un link per scaricare il file .ics e aggiungerlo al calendario.",
       "slashCommands": "Comandi slash di Discord: /upcoming elenca gli eventi imminenti della tua gilda, mentre /signup ti permette di iscriverti senza uscire da Discord. Devi accedere al sito web tramite Discord almeno una volta, in modo che il bot possa associare il tuo account."
     },
-    "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni."
+    "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni.",
+    "duels": {
+      "intro": "I duelli sono sfide 1 contro 1 tra due giocatori. Sono separati dagli eventi match e dagli allenamenti: non c'è una lista di partecipanti, né un modulo di iscrizione, solo due persone che si accordano su un orario e sulle regole.",
+      "find": "Trova avversari su<playersLink> pagina di scoperta del giocatore</playersLink> Questa sezione elenca tutti i giocatori presenti sul tuo stesso server che hanno scelto di essere visibili. Filtra per livello di potenza, gilda o nome. Clicca sul nome di un giocatore per visualizzare il suo profilo completo: valutazione, record e cronologia completa dei duelli.",
+      "powerTier": "Ogni giocatore può impostare il proprio livello di potenza, da I a XIII, nella pagina \"Il mio account\". Il livello riflette la progressione del personaggio nel gioco e aiuta gli avversari a capire se un incontro sarà equilibrato. Imposta il tuo livello in modo che gli altri possano trovarti al tuo livello.",
+      "challenge": "Fai clic su \"Sfida\" sulla carta di un giocatore per proporre un duello. Scegli l'ora, il luogo (Kruger, Cerno, Kanvo, Sfinge o una mappa personalizzata) e la condizione di vittoria: concorda chiaramente le regole perché sono legate al risultato dichiarato.",
+      "respond": "Quando qualcuno ti sfida, il duello compare nella sezione \"Sfide in arrivo\" della tua pagina dei duelli. Puoi accettare, rifiutare o modificare la sfida per proporre termini diversi. Chi ti ha proposto la sfida può ritirarsi in qualsiasi momento prima che il duello venga accettato.",
+      "negotiate": "Ciascun giocatore può modificare una proposta in sospeso: cambiare l'ora, il luogo, le condizioni di vittoria o il messaggio. Chi stabilisce le ultime condizioni non può accettare le proprie modifiche; l'altra parte deve confermarle. Le controproposte possono rimbalzare finché qualcuno non accetta quanto proposto.",
+      "result": "Dopo il duello, uno dei due giocatori dichiara il risultato sulla pagina del duello: Ho vinto, Ho perso, Pareggio o Nessun risultato (in caso di ritiro o disconnessione). Il primo giocatore che invia il risultato lo convalida per entrambi. Vittorie e sconfitte aggiornano il punteggio ELO; il risultato \"Nessun risultato\" viene comunque conteggiato come un duello, ma non influisce sul punteggio.",
+      "rating": "Il tuo punteggio ELO parte da 1000 e aumenta o diminuisce a seconda del risultato del duello e del punteggio dell'avversario. Sconfiggere un giocatore con un punteggio più alto ti fa guadagnare più punti; perdere contro un giocatore con un punteggio più basso ti costa di più. Il tuo record (WLD) e il tuo punteggio sono indicati sulla tua scheda giocatore.",
+      "leaderboard": "Una volta che hai giocato almeno 3 duelli confermati, apparirai su<leaderboardLink> Classifica del server</leaderboardLink> Classifica basata sul punteggio. I primi posti ricevono gettoni d'oro/argento/bronzo. La tua posizione in classifica viene visualizzata anche se non sei tra i primi 25.",
+      "reputation": "Dopo la proclamazione del risultato del duello, entrambi i giocatori possono lasciare un 👍 o un 👎 sull'avversario. I punteggi aggregati vengono visualizzati in percentuale sulla scheda di ciascun giocatore una volta che hanno almeno 5 valutazioni. Una valutazione per duello, bloccata dopo l'invio.",
+      "history": "Visualizza la cronologia completa dei tuoi duelli (prossimi, passati, rifiutati, ritirati, annullati) su<duelsLink> pagina dei duelli</duelsLink> I risultati mostrano W/L/D/NC dal tuo punto di vista.",
+      "discordDm": "Se hai effettuato l'accesso a Discord almeno una volta, il bot può inviarti messaggi privati (DM) relativi agli eventi dei duelli: sfide in arrivo, accettate, rifiutate, annullate e risultato dichiarato. Puoi attivare o disattivare questa opzione in \"Il mio account\". Se hai disabilitato i messaggi privati dai membri del server nelle impostazioni di Discord, il bot non potrà contattarti.",
+      "privacy": "Puoi disattivare la visibilità dei duelli nella sezione Il mio account per nasconderti dalla pagina di scoperta e bloccare le sfide in arrivo. La tua esperienza all'interno della gilda non subirà variazioni."
+    }
+  },
+  "playerProfile": {
+    "backToPlayers": "Torna ai giocatori",
+    "youBadge": "Voi",
+    "noGuild": "Nessuna gilda",
+    "serverLabel": "Server n. {serverNumber}",
+    "challenge": "Sfida",
+    "rating": "Valutazione",
+    "record": "Documentazione",
+    "reputation": "Reputazione",
+    "lastActive": "Ultimo duello",
+    "duelsTotal": "{count, plural, =0 {No duels} uno {# duel} altri {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} altre {# ratings} }",
+    "reputationNotEnough": "Necessita di almeno 5 valutazioni",
+    "historyHeading": "Storia dei duelli",
+    "historyEmpty": "Nessun duello completato finora.",
+    "locationLabel": "Posizione",
+    "winConditionLabel": "Condizione di vittoria",
+    "unknownPlayer": "Giocatore sconosciuto",
+    "prev": "← Precedente",
+    "next": "Avanti →",
+    "pageOf": "Pagina {page} di {total}"
+  },
+  "leaderboard": {
+    "title": "Classifica",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} un {# ranked player on your server} altri {# ranked players on your server} }.",
+    "serverLabel": "Server n. {serverNumber}",
+    "howItWorks": "Come funzionano le classifiche →",
+    "yourRank": "La tua posizione in classifica: # {rank} · {rating} valutazione",
+    "notRankedYet": "Gioca almeno {min} I duelli confermati appariranno nella classifica. Il tuo punteggio parte da 1000 e si aggiorna man mano che vinci o perdi.",
+    "rankLabel": "Classifica {rank}",
+    "noMatches": "Nessun giocatore corrisponde a quei filtri.",
+    "emptyState": "Sul tuo server non ci sono ancora giocatori classificati. Sii il primo!",
+    "needsServerNumber": "Imposta un server # per la tua gilda in<settingsLink> Impostazioni della gilda</settingsLink> per visualizzare la classifica.",
+    "prev": "← Precedente",
+    "next": "Avanti →",
+    "pageOf": "Pagina {page} di {total}"
+  },
+  "players": {
+    "title": "Trova giocatori",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} un {# discoverable player on your server} altri {# discoverable players on your server} }.",
+    "serverLabel": "Server n. {serverNumber}",
+    "searchPlaceholder": "Cerca per nome nel gioco…",
+    "allTiers": "Tutti i livelli di potenza",
+    "allGuilds": "Tutte le gilde",
+    "tierLabel": "Livello {tier}",
+    "reset": "Reset",
+    "rating": "valutazione",
+    "ratingTooltip": "Punteggio PvP in stile ELO: parte da 1000 e si aggiorna in base ai duelli confermati.",
+    "recordTooltip": "Vittorie · Sconfitte · Pareggi nei duelli confermati.",
+    "reputationTooltip": "Reputazione: percentuale aggregata di pollici in su su {count} valutazioni.",
+    "lastActiveLabel": "attivo",
+    "challenge": "Sfida",
+    "sameGuildBadge": "La tua gilda",
+    "sameGuildChallengeHint": "Coordina direttamente i duelli tra membri della gilda: sono già accanto a te.",
+    "noMatches": "Nessun giocatore corrisponde a quei filtri.",
+    "emptyState": "Al momento non sono stati rilevati giocatori sul tuo server.",
+    "needsServerNumber": "Imposta un server # per la tua gilda in<settingsLink> Impostazioni della gilda</settingsLink> per scoprire i giocatori sullo stesso server.",
+    "noGuildsOnServer": "Su questo server non sono ancora state registrate altre gilde.",
+    "prev": "← Precedente",
+    "next": "Avanti →",
+    "pageOf": "Pagina {page} di {total}"
   }
 }

@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import {
   sqliteTable,
   text,
@@ -26,6 +27,59 @@ export const users = sqliteTable("users", {
     onDelete: "set null",
   }),
   guildRole: text("guild_role", { enum: ["admin", "member"] }),
+  // ---- 1v1 duels ----
+  // Self-reported in-game power milestone (I–XIII). Null = not declared yet.
+  // Shown on player cards and used as a filter on the discovery page.
+  powerTier: text("power_tier", {
+    enum: [
+      "I",
+      "II",
+      "III",
+      "IV",
+      "V",
+      "VI",
+      "VII",
+      "VIII",
+      "IX",
+      "X",
+      "XI",
+      "XII",
+      "XIII",
+    ],
+  }),
+  // Opt-out switch for the cross-guild player discovery page. When false the
+  // user is hidden from /players, the leaderboard, and challenge dropdowns —
+  // their guild-internal experience is unaffected.
+  discoverableForDuels: integer("discoverable_for_duels", { mode: "boolean" })
+    .notNull()
+    .default(true),
+  // When true (default), the bot DMs the user about duel lifecycle events
+  // (proposed/accepted/declined/cancelled/result-declared) instead of
+  // posting to their guild channel. Only effective when the user has a
+  // linked Discord OAuth account; users without a linked Discord account
+  // get no notifications regardless of this setting.
+  duelDmEnabled: integer("duel_dm_enabled", { mode: "boolean" })
+    .notNull()
+    .default(true),
+  // ELO-style PvP rating. Starts at 1000, mutated only on confirmed duel
+  // results. Separate from powerTier — measures on-platform performance,
+  // not character strength.
+  duelRating: integer("duel_rating").notNull().default(1000),
+  // Denormalized W/L/D counts for fast display. Recomputable from
+  // duel_proposals if drift is suspected. Defaults wrapped in `sql` because
+  // Drizzle Kit's diff generator skips a literal `.default(0)` due to a
+  // falsy-check (same for boolean `false`); using `sql\`0\`` forces the
+  // DEFAULT clause into the migration so existing rows backfill cleanly.
+  duelWins: integer("duel_wins").notNull().default(sql`0`),
+  duelLosses: integer("duel_losses").notNull().default(sql`0`),
+  duelDraws: integer("duel_draws").notNull().default(sql`0`),
+  // ISO timestamp of the most recently confirmed duel — used to filter out
+  // inactive players from the leaderboard and surface "active" badges.
+  lastDuelAt: text("last_duel_at"),
+  // Reputation aggregates from post-duel thumbs-up/down feedback. Individual
+  // ratings live on the duel_proposals row; these are denormalized totals.
+  feedbackUpCount: integer("feedback_up_count").notNull().default(sql`0`),
+  feedbackDownCount: integer("feedback_down_count").notNull().default(sql`0`),
 });
 
 export const accounts = sqliteTable(
@@ -202,6 +256,76 @@ export const scrimProposals = sqliteTable("scrim_proposals", {
   createdAt: text("created_at").notNull(),
   updatedAt: text("updated_at").notNull(),
 });
+
+// 1v1 duels — player-to-player challenges, distinct from scrims (which are
+// guild-to-guild). No mirrored events table needed since duels are just a
+// two-person agreement; everything lives on this row. Result uses an
+// absolute (perspective-free) enum so each side renders its own W/L. Same-
+// server constraint and discoverableForDuels check are enforced at the API
+// layer rather than via DB triggers.
+export const duelProposals = sqliteTable("duel_proposals", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  proposingUserId: text("proposing_user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  opposingUserId: text("opposing_user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  proposedGameTime: text("proposed_game_time").notNull(),
+  location: text("location").notNull(),
+  winCondition: text("win_condition").notNull(),
+  message: text("message"),
+  status: text("status", {
+    enum: ["pending", "accepted", "declined", "withdrawn", "cancelled"],
+  })
+    .notNull()
+    .default("pending"),
+  respondedByUserId: text("responded_by_user_id").references(() => users.id),
+  respondedAt: text("responded_at"),
+  // Who most recently edited the proposal while pending. Null means no
+  // edits have happened yet — treated as if the proposer made the
+  // original offer (so the opposer is the one who can accept). Used to
+  // enforce "you can't accept your own latest terms" for bidirectional
+  // counter-proposals during negotiation.
+  lastEditedByUserId: text("last_edited_by_user_id").references(() => users.id),
+  // Result lives on the same row (no events table for duels). Filled by
+  // Phase 4 result-declaration flow; null until then.
+  result: text("result", {
+    enum: ["proposing_won", "opposing_won", "draw", "no_contest"],
+  }),
+  resultNotes: text("result_notes"),
+  resultDeclaredByUserId: text("result_declared_by_user_id").references(
+    () => users.id
+  ),
+  resultDeclaredAt: text("result_declared_at"),
+  // Per-side post-duel feedback (thumbs up/down). Aggregates are
+  // denormalized onto users.feedback_up_count / down_count.
+  proposingFeedback: text("proposing_feedback", { enum: ["up", "down"] }),
+  proposingFeedbackAt: text("proposing_feedback_at"),
+  opposingFeedback: text("opposing_feedback", { enum: ["up", "down"] }),
+  opposingFeedbackAt: text("opposing_feedback_at"),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
+});
+
+// Tracks which duel reminder kinds have been sent. Composite PK
+// (duelId, kind) — duels have no per-squad notion, just one cycle per
+// duel. Mirrors event_notifications shape for poller symmetry.
+export const duelNotifications = sqliteTable(
+  "duel_notifications",
+  {
+    duelId: text("duel_id")
+      .notNull()
+      .references(() => duelProposals.id, { onDelete: "cascade" }),
+    kind: text("kind", { enum: ["day", "hour", "twenty_min"] }).notNull(),
+    sentAt: text("sent_at").notNull(),
+  },
+  (t) => ({
+    pk: primaryKey({ columns: [t.duelId, t.kind] }),
+  })
+);
 
 // Tracks which notification kinds have been sent. Composite PK
 // (eventId, squad, kind) makes the bot poll loop idempotent — duplicate

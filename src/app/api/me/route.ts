@@ -12,9 +12,30 @@ import { isSupportedLocale, LOCALE_COOKIE } from "@/i18n/config";
 
 const MAX_NAME_LENGTH = 32;
 
+const POWER_TIERS = [
+  "I",
+  "II",
+  "III",
+  "IV",
+  "V",
+  "VI",
+  "VII",
+  "VIII",
+  "IX",
+  "X",
+  "XI",
+  "XII",
+  "XIII",
+] as const;
+type PowerTier = (typeof POWER_TIERS)[number];
+
+function isPowerTier(v: unknown): v is PowerTier {
+  return typeof v === "string" && (POWER_TIERS as readonly string[]).includes(v);
+}
+
 // PATCH /api/me — partial update of the current user's profile fields.
-// Currently supports `inGameName` (string) and `locale` (BCP-47 tag from the
-// supported list). Any field can be updated independently.
+// Supports `inGameName`, `locale`, `powerTier` (I–XIII or null), and
+// `discoverableForDuels` (boolean). Any field can be updated independently.
 export async function PATCH(req: Request) {
   const session = await auth();
   if (!session?.user?.id) {
@@ -58,6 +79,40 @@ export async function PATCH(req: Request) {
     }
     updates.locale = body.locale;
     cookieToSet = body.locale;
+  }
+
+  if ("powerTier" in body) {
+    const raw = body.powerTier;
+    if (raw === null || raw === "") {
+      updates.powerTier = null;
+    } else if (isPowerTier(raw)) {
+      updates.powerTier = raw;
+    } else {
+      return NextResponse.json(
+        { error: "Power tier must be one of I–XIII or null." },
+        { status: 400 }
+      );
+    }
+  }
+
+  if ("discoverableForDuels" in body) {
+    if (typeof body.discoverableForDuels !== "boolean") {
+      return NextResponse.json(
+        { error: "discoverableForDuels must be a boolean" },
+        { status: 400 }
+      );
+    }
+    updates.discoverableForDuels = body.discoverableForDuels;
+  }
+
+  if ("duelDmEnabled" in body) {
+    if (typeof body.duelDmEnabled !== "boolean") {
+      return NextResponse.json(
+        { error: "duelDmEnabled must be a boolean" },
+        { status: 400 }
+      );
+    }
+    updates.duelDmEnabled = body.duelDmEnabled;
   }
 
   if (Object.keys(updates).length === 0) {

@@ -95,6 +95,35 @@ const ICONS = {
       />
     </svg>
   ),
+  crosshair: (
+    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+      <circle cx="10" cy="10" r="7.5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="10" cy="10" r="3" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M10 1v3M10 16v3M1 10h3M16 10h3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  ),
+  trophy: (
+    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+      <path
+        d="M6 3h8v4a4 4 0 0 1-8 0V3Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 4h2a2 2 0 0 1-2 4M6 4H4a2 2 0 0 0 2 4M8 11.5h4M7 17h6M9 11.5v4M11 11.5v4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  ),
 };
 
 const NAV_ITEMS: NavItem[] = [
@@ -102,6 +131,9 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
   { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin" },
   { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild" },
+  { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild" },
+  { labelKey: "duels", href: "/duels", icon: ICONS.swords, visibility: "signedInWithGuild" },
+  { labelKey: "leaderboard", href: "/leaderboard", icon: ICONS.trophy, visibility: "signedInWithGuild" },
   { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly" },
   { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
   { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },

@@ -29,17 +29,20 @@
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta"
+    "myAccount": "Minha conta",
+    "findPlayers": "Encontre jogadores",
+    "duels": "Duelos",
+    "leaderboard": "Classificação"
   },
   "topBar": {
     "notifications": "Notificações",
+    "myAccount": "Minha conta",
     "roleSuperAdmin": "Superadministrador",
     "roleGuildAdmin": "Administrador da guilda",
     "roleMember": "Membro",
     "roleNoGuild": "Sem guilda",
     "signIn": "Entrar",
-    "signOut": "Sair",
-    "myAccount": "Minha conta"
+    "signOut": "Sair"
   },
   "alphaBanner": {
     "tag": "Alfa",
@@ -344,7 +347,18 @@
     "deleteButton": "Excluir minha conta",
     "deleting": "Excluindo…",
     "deleteConfirm": "Excluir sua conta? Isso remove você da sua guilda, exclui todos os seus cadastros e desvincula sua conta do Google/Discord. Essa ação é irreversível.",
-    "language": "Linguagem"
+    "language": "Linguagem",
+    "duels": {
+      "heading": "Duelo",
+      "powerTier": "Nível de poder",
+      "powerTierNotSet": "Não definido",
+      "powerTierHelp": "Marcos de poder autodeclarados no jogo (I–XIII). Exibidos no seu cartão de jogador e usados como filtro na página de descoberta. Sistema de confiança — configure-o corretamente.",
+      "discoverableLabel": "Detectável em duelos 1 contra 1",
+      "discoverableHelp": "Quando ativada, essa opção permite que outros jogadores no mesmo servidor encontrem você na página de descoberta e o desafiem para um duelo. Desative-a para ocultar você das listas e desafios. Sua experiência dentro da guilda não será afetada.",
+      "dmLabel": "Avise-me por mensagem direta no Discord sobre duelos.",
+      "dmHelp": "Quando ativado, o bot envia mensagens diretas (DMs) quando alguém o desafia, aceita ou recusa sua proposta, cancela um duelo ou declara um resultado. Desative-o para silenciar completamente as DMs do Discord sobre duelos. Você ainda verá tudo no site.",
+      "dmHelpUnlinked": "Faça login com sua conta do Discord pelo menos uma vez para habilitar o envio de mensagens diretas sobre duelos. (Saia da sua conta e faça login novamente com sua conta do Discord.)"
+    }
   },
   "errors": {
     "forbidden": "Proibido",
@@ -501,7 +515,8 @@
       "status": "O que significa o seu status",
       "scrims": "Eventos de treino",
       "reminders": "Lembretes e calendário",
-      "closed": "Se as inscrições estiverem encerradas"
+      "closed": "Se as inscrições estiverem encerradas",
+      "duels": "duelos 1v1"
     },
     "gettingIn": {
       "step1": "Faça login com o Google ou o Discord na página inicial.",
@@ -542,6 +557,83 @@
       "ics": "Cada página de evento possui um link para baixar o arquivo .ics e adicioná-lo ao seu calendário.",
       "slashCommands": "Comandos de barra do Discord: /upcoming lista os próximos eventos da sua guilda e /signup permite que você se inscreva sem sair do Discord. Você precisa fazer login no site com o Discord pelo menos uma vez para que o bot possa associar sua conta."
     },
-    "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
+    "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente.",
+    "duels": {
+      "intro": "Duelos são desafios 1 contra 1 entre dois jogadores. São independentes de partidas e treinos — sem lista de jogadores, sem formulário de inscrição, apenas duas pessoas que concordam com um horário e regras.",
+      "find": "Encontre oponentes no<playersLink> página de descoberta de jogadores</playersLink> Esta lista mostra todos os jogadores do seu servidor que optaram por serem detectáveis. Filtre por nível de poder, guilda ou nome. Clique no nome de qualquer jogador para ver seu perfil completo — classificação, histórico e todo o histórico de duelos.",
+      "powerTier": "Cada jogador pode definir um nível de poder autodeclarado de I a XIII na página \"Minha Conta\". O nível reflete a progressão do seu personagem no jogo e ajuda os oponentes a verem se um confronto será justo. Defina o seu para que outros possam encontrar você no seu nível.",
+      "challenge": "Clique em \"Desafio\" na carta de um jogador para propor um duelo. Escolha a hora, o local (Kruger, Cerno, Kanvo, Esfinge ou um mapa personalizado) e a Condição de Vitória — combine as regras claramente, pois elas estão ligadas ao resultado declarado.",
+      "respond": "Quando alguém te desafia, o duelo aparece em \"Desafios recebidos\" na sua página de duelos. Você pode aceitar, recusar ou editar para apresentar uma contraproposta com termos diferentes. O proponente pode desistir a qualquer momento antes que o duelo seja aceito.",
+      "negotiate": "Qualquer jogador pode editar uma proposta pendente — alterar a hora, o local, a condição de vitória ou a mensagem. Quem definir os termos mais recentes não pode aceitar as próprias alterações; o outro lado precisa confirmar. Contrapropostas podem ser trocadas até que alguém aceite o que está sendo proposto.",
+      "result": "Após o duelo, qualquer um dos jogadores declara o resultado na página do duelo: Eu ganhei, Eu perdi, Empate ou Sem resultado (em caso de desistência ou desconexão). O primeiro jogador a enviar a declaração a confirma para ambos os lados. Vitórias e derrotas atualizam sua classificação ELO; \"Sem resultado\" conta como um duelo, mas não afeta a classificação.",
+      "rating": "Sua classificação ELO começa em 1000 e sobe ou desce dependendo do resultado do duelo e da classificação do oponente. Vencer um jogador com classificação superior concede mais pontos; perder para um jogador com classificação inferior custa mais pontos. Seu histórico (vitórias, derrotas e empates) e sua classificação são exibidos no seu cartão de jogador.",
+      "leaderboard": "Após ter participado de pelo menos 3 duelos confirmados, você aparecerá na lista de jogadores.<leaderboardLink> placar do servidor</leaderboardLink> Classificado por avaliação. Os primeiros colocados recebem fichas de ouro/prata/bronze. Sua própria classificação é exibida mesmo que você esteja fora do top 25.",
+      "reputation": "Após o resultado do duelo ser declarado, ambos os jogadores podem deixar um 👍 ou 👎 sobre o oponente. A pontuação total aparece como uma porcentagem no cartão de cada jogador assim que ele tiver pelo menos 5 avaliações. Uma avaliação por duelo, bloqueada após o envio.",
+      "history": "Veja seu histórico completo de duelos (próximos, passados, recusados, retirados, cancelados) em<duelsLink> página de duelos</duelsLink> Os chips de resultado mostram W/L/D/NC da sua perspectiva.",
+      "discordDm": "Se você já fez login no Discord pelo menos uma vez, o bot pode enviar mensagens diretas sobre eventos de duelo — desafios recebidos, aceitos, recusados, cancelados e resultados divulgados. Ative ou desative essa opção em \"Minha conta\". Se você desativou as mensagens diretas de membros do servidor nas configurações do Discord, o bot não poderá entrar em contato com você.",
+      "privacy": "Você pode desativar a visibilidade de duelos em Minha Conta para ocultar sua conta da página de descoberta e bloquear desafios recebidos. Sua experiência dentro da guilda não será afetada."
+    }
+  },
+  "playerProfile": {
+    "backToPlayers": "Voltar aos jogadores",
+    "youBadge": "Você",
+    "noGuild": "Sem guilda",
+    "serverLabel": "Servidor nº {serverNumber}",
+    "challenge": "Desafio",
+    "rating": "Avaliação",
+    "record": "Registro",
+    "reputation": "Reputação",
+    "lastActive": "Último duelo",
+    "duelsTotal": "{count, plural, =0 {No duels} um {# duel} outros {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} outras {# ratings} }",
+    "reputationNotEnough": "Precisa de 5 ou mais avaliações.",
+    "historyHeading": "Histórico de duelos",
+    "historyEmpty": "Ainda não há duelos concluídos.",
+    "locationLabel": "Localização",
+    "winConditionLabel": "Condição de vitória",
+    "unknownPlayer": "Jogador desconhecido",
+    "prev": "← Anterior",
+    "next": "Próximo →",
+    "pageOf": "Página {page} de {total}"
+  },
+  "leaderboard": {
+    "title": "Classificação",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} um {# ranked player on your server} outros {# ranked players on your server} }.",
+    "serverLabel": "Servidor nº {serverNumber}",
+    "howItWorks": "Como funcionam os rankings →",
+    "yourRank": "Sua classificação: # {rank} · {rating} avaliação",
+    "notRankedYet": "Jogue pelo menos {min} Os duelos confirmados aparecerão na tabela de classificação. Sua classificação começa em 1000 e é atualizada conforme você vence ou perde.",
+    "rankLabel": "Classificação {rank}",
+    "noMatches": "Nenhum jogador corresponde a esses filtros.",
+    "emptyState": "Ainda não há jogadores ranqueados no seu servidor. Seja o primeiro.",
+    "needsServerNumber": "Defina um número de servidor para sua guilda em<settingsLink> Configurações da Guilda</settingsLink> Para ver a tabela de classificação.",
+    "prev": "← Anterior",
+    "next": "Próximo →",
+    "pageOf": "Página {page} de {total}"
+  },
+  "players": {
+    "title": "Encontre jogadores",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} um {# discoverable player on your server} outros {# discoverable players on your server} }.",
+    "serverLabel": "Servidor nº {serverNumber}",
+    "searchPlaceholder": "Pesquisar pelo nome no jogo…",
+    "allTiers": "Todos os níveis de poder",
+    "allGuilds": "Todas as guildas",
+    "tierLabel": "Nível {tier}",
+    "reset": "Reiniciar",
+    "rating": "avaliação",
+    "ratingTooltip": "Sistema de classificação PvP no estilo ELO — começa em 1000 e é atualizado com base em duelos confirmados.",
+    "recordTooltip": "Vitórias · Derrotas · Empates em todos os duelos confirmados.",
+    "reputationTooltip": "Reputação: percentagem agregada de votos positivos em relação a {count} classificações.",
+    "lastActiveLabel": "ativo",
+    "challenge": "Desafio",
+    "sameGuildBadge": "Sua guilda",
+    "sameGuildChallengeHint": "Coordene duelos entre membros da guilda diretamente — eles já estão perto de você.",
+    "noMatches": "Nenhum jogador corresponde a esses filtros.",
+    "emptyState": "Ainda não há jogadores detectáveis no seu servidor.",
+    "needsServerNumber": "Defina um número de servidor para sua guilda em<settingsLink> Configurações da Guilda</settingsLink> Para descobrir jogadores no mesmo servidor.",
+    "noGuildsOnServer": "Nenhuma outra guilda foi registrada neste servidor ainda.",
+    "prev": "← Anterior",
+    "next": "Próximo →",
+    "pageOf": "Página {page} de {total}"
   }
 }

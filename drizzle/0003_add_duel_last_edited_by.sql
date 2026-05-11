@@ -1,0 +1,1 @@
+ALTER TABLE `duel_proposals` ADD `last_edited_by_user_id` text REFERENCES users(id);

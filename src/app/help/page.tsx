@@ -27,6 +27,7 @@ export default async function HelpPage() {
     { id: "signup", title: t("sections.signup") },
     { id: "status", title: t("sections.status") },
     { id: "scrims", title: t("sections.scrims") },
+    { id: "duels", title: t("sections.duels") },
     { id: "reminders", title: t("sections.reminders") },
     { id: "closed", title: t("sections.closed") },
   ];
@@ -104,6 +105,48 @@ export default async function HelpPage() {
           </li>
         </ul>
         <p className="text-sm text-gray-600">{t("scrims.note")}</p>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="duels" title={t("sections.duels")}>
+        <p>{t("duels.intro")}</p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            {t.rich("duels.find", {
+              playersLink: (c: Chunks) => (
+                <Link className="text-violet-700 underline" href="/players">
+                  {c}
+                </Link>
+              ),
+            })}
+          </li>
+          <li>{t("duels.powerTier")}</li>
+          <li>{t("duels.challenge")}</li>
+          <li>{t("duels.respond")}</li>
+          <li>{t("duels.negotiate")}</li>
+          <li>{t("duels.result")}</li>
+          <li>{t("duels.rating")}</li>
+          <li>
+            {t.rich("duels.leaderboard", {
+              leaderboardLink: (c: Chunks) => (
+                <Link className="text-violet-700 underline" href="/leaderboard">
+                  {c}
+                </Link>
+              ),
+            })}
+          </li>
+          <li>{t("duels.reputation")}</li>
+          <li>
+            {t.rich("duels.history", {
+              duelsLink: (c: Chunks) => (
+                <Link className="text-violet-700 underline" href="/duels">
+                  {c}
+                </Link>
+              ),
+            })}
+          </li>
+          <li>{t("duels.discordDm")}</li>
+          <li>{t("duels.privacy")}</li>
+        </ul>
       </CollapsibleSection>
 
       <CollapsibleSection id="reminders" title={t("sections.reminders")}>

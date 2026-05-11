@@ -12,9 +12,11 @@ Foundation Event Organizer — a multi-guild website for running squad-based eve
 - `npm run build` — production build
 - `npm run lint` — ESLint
 - `npx tsc --noEmit` — type check
-- `npm run db:push` — push schema changes to SQLite
-- `npm run db:generate` — generate Drizzle migrations
+- `npm run db:generate` — generate a SQL migration file from `schema.ts` diffs (writes to `drizzle/`)
+- `npm run db:migrate` — apply pending migrations to the DB (also runs automatically at app startup)
+- `npm run db:migrate:baseline` — one-time bootstrap for DBs that predate the migrations folder (marks `0000_baseline.sql` as already applied)
 - `npm run db:studio` — open Drizzle Studio (DB browser)
+- `npm run db:push` — *discouraged.* Was used before we adopted versioned migrations; has surfaced a recurring "index already exists" bug on table recreations. Use `db:generate` + `db:migrate` instead.
 
 ## Architecture
 
@@ -61,16 +63,53 @@ Next.js 16 App Router with SQLite (better-sqlite3 + Drizzle ORM). Auth via Auth.
 - Slugs are unique, lowercase, 3-40 chars. Reserved slugs in `RESERVED_SLUGS` (rbac.ts).
 - Dates are ISO strings in TEXT columns.
 - The `data/` directory is gitignored.
+- **Duel negotiation**: pending `duel_proposals` rows track `last_edited_by_user_id`. Either participant can `PATCH /api/duels/[id]` while pending; each edit stamps the editor. `POST /api/duels/[id]/accept` requires `caller !== effectiveLastEditor` (where `effectiveLastEditor = last_edited_by_user_id ?? proposing_user_id`), so neither side can lock in terms the other side hasn't seen since they last changed. Counter-proposals can ping-pong; Withdraw (proposer-only) and Decline (opposer-only) remain the unconditional exits.
 
 ## Setup
 
 1. Copy `.env.local.example` to `.env.local` and fill in OAuth credentials.
 2. Run `npx auth secret` to generate `AUTH_SECRET`.
-3. Run `npm run db:push` to initialize the database.
+3. Run `npm run db:migrate` to apply all migrations and create the DB.
 4. Sign in via OAuth so your user row exists.
 5. Open `npm run db:studio`, find your `users` row, and set `is_super_admin = 1`.
 6. Sign out and back in so the session picks up the new flag.
 7. Visit `/guilds/new` to create your first guild.
+
+## Database migrations
+
+Schema lives in [src/db/schema.ts](src/db/schema.ts). Changes flow through versioned SQL migrations in `drizzle/`.
+
+**Adding a schema change:**
+
+1. Edit `src/db/schema.ts`.
+2. Run `npm run db:generate -- --name <short_description>`. Drizzle Kit diffs the schema against the previous snapshot in `drizzle/meta/` and writes a new `<N>_<name>.sql` migration file.
+3. Inspect the generated SQL. If anything looks wrong (table recreations, unintended drops), refine the schema and regenerate.
+4. Commit the schema change + the new migration file + the updated `drizzle/meta/` snapshot together.
+
+**Applying migrations:**
+
+- App startup runs migrations automatically (`src/db/migrate.ts`, called from `src/instrumentation-node.ts`). Idempotent — Drizzle tracks applied migrations in `__drizzle_migrations`.
+- Explicit run: `npm run db:migrate`.
+
+**Existing DBs created before this workflow:**
+
+DBs that were initialized with `npm run db:push` (no migration history) need a one-time bootstrap so the migrator doesn't try to re-CREATE existing tables:
+
+```
+npm run db:migrate:baseline
+```
+
+This marks `0000_baseline.sql` as already applied. Subsequent migrations apply incrementally from there. Safe to re-run.
+
+**On Fly / production:**
+
+Migrations run on every machine restart via [src/instrumentation-node.ts](src/instrumentation-node.ts). For a deployed DB that's pre-migration, SSH in and run the baseline once:
+
+```
+fly ssh console -a <app> -C "node scripts/db-mark-baseline-applied.mjs"
+```
+
+Then redeploy — the in-process migrator will pick up from there.
 
 ## Seeding
 

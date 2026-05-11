@@ -29,17 +29,20 @@
     "createGuild": "Maak een gilde aan",
     "adminHelp": "Admin Help",
     "help": "Hulp",
-    "myAccount": "Mijn account"
+    "myAccount": "Mijn account",
+    "findPlayers": "Spelers zoeken",
+    "duels": "Duels",
+    "leaderboard": "Klassement"
   },
   "topBar": {
     "notifications": "Meldingen",
+    "myAccount": "Mijn account",
     "roleSuperAdmin": "Superbeheerder",
     "roleGuildAdmin": "Gildebeheerder",
     "roleMember": "Lid",
     "roleNoGuild": "Geen gilde",
     "signIn": "Inloggen",
-    "signOut": "Uitloggen",
-    "myAccount": "Mijn account"
+    "signOut": "Uitloggen"
   },
   "alphaBanner": {
     "tag": "Alpha",
@@ -344,7 +347,18 @@
     "deleteButton": "Mijn account verwijderen",
     "deleting": "Verwijderen…",
     "deleteConfirm": "Wil je je account verwijderen? Dan word je uit je gilde verwijderd, worden al je aanmeldingen gewist en wordt de koppeling met Google/Discord verbroken. Dit kan niet ongedaan worden gemaakt.",
-    "language": "Taal"
+    "language": "Taal",
+    "duels": {
+      "heading": "Duelleren",
+      "powerTier": "Krachtniveau",
+      "powerTierNotSet": "Niet ingesteld",
+      "powerTierHelp": "Zelf gerapporteerde prestatiemijlpaal in het spel (I–XIII). Wordt weergegeven op je spelerskaart en gebruikt als filter op de ontdekkingspagina. Vertrouwenssysteem — stel dit nauwkeurig in.",
+      "discoverableLabel": "Te vinden voor 1-tegen-1 duels",
+      "discoverableHelp": "Wanneer deze functie is ingeschakeld, kunnen andere spelers op dezelfde server je vinden op de ontdekkingspagina en je uitdagen voor een duel. Schakel deze functie uit om je te verbergen voor vermeldingen en uitdagingen. Je ervaring binnen de gilde blijft ongewijzigd.",
+      "dmLabel": "Stuur me een direct bericht op Discord over duels.",
+      "dmHelp": "Wanneer deze functie is ingeschakeld, stuurt de bot je een privébericht wanneer iemand je uitdaagt, je voorstel accepteert of afwijst, een duel annuleert of een uitslag bekendmaakt. Schakel deze functie uit om alle privéberichten over duels op Discord te stoppen. Je ziet alles nog steeds op de website.",
+      "dmHelpUnlinked": "Meld je minstens één keer aan bij Discord om directe berichten over duels te kunnen versturen. (Log uit en meld je vervolgens weer aan bij Discord.)"
+    }
   },
   "errors": {
     "forbidden": "Verboden",
@@ -501,7 +515,8 @@
       "status": "Wat uw status betekent",
       "scrims": "Oefenwedstrijden",
       "reminders": "Herinneringen en agenda",
-      "closed": "Als de inschrijvingen gesloten zijn"
+      "closed": "Als de inschrijvingen gesloten zijn",
+      "duels": "1-tegen-1 duels"
     },
     "gettingIn": {
       "step1": "Meld je aan met Google of Discord op de homepage.",
@@ -542,6 +557,83 @@
       "ics": "Op elke evenementpagina vind je een link om het .ics-bestand te downloaden, waarmee je het evenement aan je agenda kunt toevoegen.",
       "slashCommands": "Discord slash-commando's: /upcoming toont een lijst met aankomende evenementen van je gilde, en met /signup kun je je aanmelden zonder Discord te verlaten. Je moet je wel eerst minstens één keer aanmelden op de website met Discord, zodat de bot je account kan koppelen."
     },
-    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
+    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen.",
+    "duels": {
+      "intro": "Duels zijn 1-tegen-1-uitdagingen tussen twee spelers. Ze staan los van wedstrijden en oefenwedstrijden — er is geen teamopstelling, geen inschrijfformulier, gewoon twee mensen die een tijdstip en regels afspreken.",
+      "find": "Zoek tegenstanders op de<playersLink> pagina voor het ontdekken van spelers</playersLink> Het toont iedereen op dezelfde server die ervoor heeft gekozen om vindbaar te zijn. Filter op krachtniveau, gilde of naam. Klik op de naam van een speler om zijn of haar volledige profiel te bekijken: rating, statistieken en complete duelgeschiedenis.",
+      "powerTier": "Elke speler kan op zijn/haar accountpagina een zelfgekozen krachtniveau instellen van I tot XIII. Dit niveau weerspiegelt de voortgang van je personage in het spel en helpt tegenstanders te bepalen of een gevecht eerlijk zal zijn. Stel je niveau in, zodat anderen je op jouw niveau kunnen vinden.",
+      "challenge": "Klik op 'Uitdaging' op een spelerskaart om een duel voor te stellen. Kies de tijd, de locatie (Kruger, Cerno, Kanvo, Sphinx of een aangepaste kaart) en de winstvoorwaarde. Spreek de regels duidelijk af, want ze zijn gekoppeld aan de uiteindelijke uitslag.",
+      "respond": "Wanneer iemand je uitdaagt, verschijnt het duel onder 'Inkomende uitdagingen' op je duelpagina. Je kunt de uitdaging accepteren, weigeren of bewerken om andere voorwaarden voor te stellen. De uitdager kan zich op elk moment terugtrekken voordat het duel is geaccepteerd.",
+      "negotiate": "Beide spelers kunnen een lopend voorstel bewerken – de tijd, locatie, winvoorwaarde of boodschap wijzigen. Degene die de meest recente voorwaarden opstelt, kan zijn eigen wijzigingen niet accepteren; de andere partij moet deze bevestigen. Tegenvoorstellen kunnen heen en weer worden gestuurd totdat iemand het voorgestelde voorstel accepteert.",
+      "result": "Na het duel geeft een van beide spelers de uitslag aan op de duelpagina: Ik heb gewonnen, Ik heb verloren, Gelijkspel of Geen resultaat (bij opgave of verbroken verbinding). De eerste speler die zijn of haar resultaat indient, bepaalt de uitslag voor beide partijen. Winsten en verliezen verhogen je ELO-rating; 'geen resultaat' telt als een duel, maar heeft geen invloed op de rating.",
+      "rating": "Je ELO-rating begint bij 1000 en stijgt of daalt afhankelijk van de uitslag van het duel en de rating van je tegenstander. Het verslaan van een speler met een hogere rating levert meer punten op; verliezen van een speler met een lagere rating kost meer punten. Je resultaten (WLD) en rating staan op je spelerskaart.",
+      "leaderboard": "Zodra je minimaal 3 bevestigde duels hebt gespeeld, verschijn je op de lijst.<leaderboardLink> serverklassement</leaderboardLink> Gerangschikt op basis van rating. De hoogste plaatsen worden beloond met gouden/zilveren/bronzen fiches. Je eigen ranking wordt weergegeven, zelfs als je buiten de top 25 staat.",
+      "reputation": "Nadat de uitslag van het duel bekend is gemaakt, kunnen beide spelers een 👍 of 👎 achterlaten over de tegenstander. De totalen worden als percentage weergegeven op de kaart van elke speler zodra ze minimaal 5 beoordelingen hebben. Eén beoordeling per duel, vergrendeld na inzending.",
+      "history": "Bekijk je volledige duelgeschiedenis (aanstaande, afgelopen, geweigerd, ingetrokken, geannuleerd) op de<duelsLink> duels pagina</duelsLink> De resultaatchips tonen W/L/D/NC vanuit uw perspectief.",
+      "discordDm": "Als je minstens één keer bent ingelogd met Discord, kan de bot je privéberichten sturen over duels: binnenkomende uitdagingen, geaccepteerde, geweigerde, geannuleerde en bekendgemaakte uitslagen. Je kunt dit in- of uitschakelen in Mijn account. Als je privéberichten van serverleden hebt uitgeschakeld in je Discord-instellingen, kan de bot je niet bereiken.",
+      "privacy": "Je kunt de zichtbaarheid van duels uitschakelen in Mijn Account om ze te verbergen op de ontdekkingspagina en inkomende uitdagingen te blokkeren. Je ervaring binnen de gilde blijft ongewijzigd."
+    }
+  },
+  "playerProfile": {
+    "backToPlayers": "Terug naar de spelers",
+    "youBadge": "Jij",
+    "noGuild": "Geen gilde",
+    "serverLabel": "Servernummer {serverNumber}",
+    "challenge": "Uitdaging",
+    "rating": "Beoordeling",
+    "record": "Dossier",
+    "reputation": "Reputatie",
+    "lastActive": "Laatste duel",
+    "duelsTotal": "{count, plural, =0 {No duels} één {# duel} andere {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} andere {# ratings} }",
+    "reputationNotEnough": "Vereist 5+ beoordelingen",
+    "historyHeading": "Duelgeschiedenis",
+    "historyEmpty": "Er zijn nog geen duels afgerond.",
+    "locationLabel": "Locatie",
+    "winConditionLabel": "Win-voorwaarde",
+    "unknownPlayer": "Onbekende speler",
+    "prev": "← Vorige",
+    "next": "Volgende →",
+    "pageOf": "Pagina {page} van {total}"
+  },
+  "leaderboard": {
+    "title": "Klassement",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} één {# ranked player on your server} andere {# ranked players on your server} }.",
+    "serverLabel": "Servernummer {serverNumber}",
+    "howItWorks": "Hoe ranglijsten werken →",
+    "yourRank": "Jouw rang: # {rank} · {rating} beoordeling",
+    "notRankedYet": "Speel minimaal {min} Bevestigde duels verschijnen op het scorebord. Je rating begint bij 1000 en wordt bijgewerkt naarmate je wint of verliest.",
+    "rankLabel": "Rang {rank}",
+    "noMatches": "Geen enkele speler voldoet aan die filters.",
+    "emptyState": "Er zijn nog geen gerangschikte spelers op jouw server. Wees de eerste.",
+    "needsServerNumber": "Stel een servernummer in voor je gilde in<settingsLink> Gilde-instellingen</settingsLink> om het klassement te bekijken.",
+    "prev": "← Vorige",
+    "next": "Volgende →",
+    "pageOf": "Pagina {page} van {total}"
+  },
+  "players": {
+    "title": "Spelers zoeken",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} één {# discoverable player on your server} andere {# discoverable players on your server} }.",
+    "serverLabel": "Servernummer {serverNumber}",
+    "searchPlaceholder": "Zoeken op in-game naam…",
+    "allTiers": "Alle krachtniveaus",
+    "allGuilds": "Alle gilden",
+    "tierLabel": "Niveau {tier}",
+    "reset": "Reset",
+    "rating": "beoordeling",
+    "ratingTooltip": "ELO-achtige PvP-rating — begint bij 1000, updates bij bevestigde duels.",
+    "recordTooltip": "Overwinningen · Nederlagen · Gelijkspelen in bevestigde duels.",
+    "reputationTooltip": "Reputatie: totaal percentage duimpjes omhoog over {count} beoordelingen.",
+    "lastActiveLabel": "actief",
+    "challenge": "Uitdaging",
+    "sameGuildBadge": "Jouw gilde",
+    "sameGuildChallengeHint": "Coördineer duels met gildeleden direct; ze staan toch al naast je.",
+    "noMatches": "Geen enkele speler voldoet aan die filters.",
+    "emptyState": "Er zijn nog geen spelers op je server te vinden.",
+    "needsServerNumber": "Stel een servernummer in voor je gilde in<settingsLink> Gilde-instellingen</settingsLink> om spelers op dezelfde server te ontdekken.",
+    "noGuildsOnServer": "Er zijn nog geen andere gilden op deze server geregistreerd.",
+    "prev": "← Vorige",
+    "next": "Volgende →",
+    "pageOf": "Pagina {page} van {total}"
   }
 }

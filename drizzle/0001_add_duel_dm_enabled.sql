@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `duel_dm_enabled` integer DEFAULT true NOT NULL;

@@ -20,6 +20,10 @@ import {
   recordSent,
   type NotificationTarget,
 } from "@/lib/notifications";
+import {
+  findPendingDuels,
+  recordSentDuel,
+} from "@/lib/duel-notifications";
 import { createSignup } from "@/lib/signups";
 
 // 5-minute poll cadence — small enough to never miss a notification window
@@ -280,15 +284,60 @@ async function runOnce(): Promise<PollMetrics> {
     }
   }
 
+  // ---- Duel reminders ----
+  // Separate from the event loop because duels DM both players directly
+  // (no guild channel) and have their own idempotency table. Failures
+  // here don't roll back the recordSent step — once the kind is locked,
+  // we move on. (DM-disabled recipients can't be retried.)
+  let duelPending = 0;
+  let duelSent = 0;
+  let duelFailed = 0;
+  try {
+    const duelTargets = await findPendingDuels();
+    duelPending = duelTargets.length;
+    for (const d of duelTargets) {
+      if (!recordSentDuel(d.duelId, d.kind)) continue;
+      try {
+        await sendDuelNotification({
+          proposingUserId: d.proposingUserId,
+          opposingUserId: d.opposingUserId,
+          action: "reminder",
+          proposedGameTime: d.proposedGameTime,
+          location: d.location,
+          winCondition: d.winCondition,
+          duelId: d.duelId,
+          reminderKind: d.kind,
+        });
+        duelSent++;
+        console.log(
+          `[bot] duel reminder duel=${d.duelId} kind=${d.kind} sent`
+        );
+      } catch (err) {
+        duelFailed++;
+        console.error(
+          `[bot] duel reminder failed duel=${d.duelId} kind=${d.kind}:`,
+          err
+        );
+      }
+    }
+  } catch (err) {
+    console.error("[bot] findPendingDuels failed:", err);
+  }
+
   const durationMs = Date.now() - startedAt.getTime();
   state.lastPollDurationMs = durationMs;
-  state.lastPollPendingCount = pending.length;
-  state.lastPollSentCount = sent;
-  state.lastPollFailedCount = failed;
+  state.lastPollPendingCount = pending.length + duelPending;
+  state.lastPollSentCount = sent + duelSent;
+  state.lastPollFailedCount = failed + duelFailed;
   console.log(
-    `[bot] poll done in ${durationMs}ms — pending=${pending.length} sent=${sent} failed=${failed}`
+    `[bot] poll done in ${durationMs}ms — events: pending=${pending.length} sent=${sent} failed=${failed} · duels: pending=${duelPending} sent=${duelSent} failed=${duelFailed}`
   );
-  return { pending: pending.length, sent, failed, durationMs };
+  return {
+    pending: pending.length + duelPending,
+    sent: sent + duelSent,
+    failed: failed + duelFailed,
+    durationMs,
+  };
 }
 
 async function persistDiscordGuildIdIfNeeded(
@@ -518,6 +567,85 @@ async function postScrimToChannel(
   }
 }
 
+// Sends a direct message to a Discord user via the REST API. Two-step
+// flow: open a DM channel with `recipient_id`, then post into it. Returns
+// true on success. False on any failure (user has DMs disabled, user
+// doesn't share a guild with the bot, transient API error) — never
+// throws. Failures are logged at warn level.
+async function sendDirectMessage(
+  token: string,
+  discordUserId: string,
+  content: string
+): Promise<boolean> {
+  try {
+    const channelRes = await fetch(
+      `https://discord.com/api/v10/users/@me/channels`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bot ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ recipient_id: discordUserId }),
+      }
+    );
+    if (!channelRes.ok) {
+      const body = await channelRes.text().catch(() => "");
+      console.warn(
+        `[bot] DM channel open failed user=${discordUserId} status=${channelRes.status} body=${body.slice(0, 200)}`
+      );
+      return false;
+    }
+    const channel = (await channelRes.json()) as { id: string };
+
+    const postRes = await fetch(
+      `https://discord.com/api/v10/channels/${channel.id}/messages`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bot ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content,
+          allowed_mentions: { parse: [] },
+        }),
+      }
+    );
+    if (!postRes.ok) {
+      const body = await postRes.text().catch(() => "");
+      // Discord code 50007 = "Cannot send messages to this user" — the
+      // most common cause is that the user disabled DMs from server
+      // members. Treated as a soft failure (caller logs but doesn't
+      // surface to the actor).
+      console.warn(
+        `[bot] DM post failed user=${discordUserId} status=${postRes.status} body=${body.slice(0, 200)}`
+      );
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.warn(`[bot] DM fetch threw user=${discordUserId}:`, err);
+    return false;
+  }
+}
+
+// Looks up the linked Discord user ID for an app user. Returns null when
+// the user hasn't signed in with Discord (or unlinked their Discord
+// account). Pure DB read — cheap.
+async function resolveDiscordUserId(
+  appUserId: string
+): Promise<string | null> {
+  const row = await db
+    .select({ providerAccountId: accounts.providerAccountId })
+    .from(accounts)
+    .where(
+      and(eq(accounts.userId, appUserId), eq(accounts.provider, "discord"))
+    )
+    .get();
+  return row?.providerAccountId ?? null;
+}
+
 function buildScrimMessage(args: {
   action: ScrimNotifyAction;
   proposingName: string;
@@ -568,6 +696,209 @@ function buildScrimMessage(args: {
   // declined
   return [
     `**Scrim declined** — ${opposer} declined ${proposer}'s scrim challenge.`,
+    `Was proposed for ${when}.`,
+  ].join("\n");
+}
+
+// ---- Duel lifecycle notifications (1v1 player-vs-player) ----
+
+export type DuelNotifyAction =
+  | "proposed"
+  | "accepted"
+  | "declined"
+  | "withdrawn"
+  | "edited"
+  | "cancelled"
+  | "result_declared"
+  | "reminder";
+
+type DuelNotificationInput = {
+  proposingUserId: string;
+  opposingUserId: string;
+  action: DuelNotifyAction;
+  proposedGameTime: string;
+  location: string;
+  winCondition: string;
+  duelId: string;
+  appBaseUrl?: string;
+  // When set, only this user receives the DM. Used by withdraw + edit
+  // where the actor already knows what they did — only the OTHER side
+  // needs to learn about the change. Unset = DM both players (default).
+  targetUserId?: string;
+  // For action="reminder": the lead-time bucket so the message body can
+  // say "starts in 1 hour" / "starts in 20 minutes" / "starts tomorrow".
+  reminderKind?: "day" | "hour" | "twenty_min";
+};
+
+export type DuelNotifyOutcome = {
+  // In-game names of players the DM didn't reach (had Discord linked +
+  // opted in, but Discord refused — usually because DMs are disabled).
+  // Players without a linked Discord account or who opted out aren't
+  // counted as failures.
+  failedPlayerNames: string[];
+};
+
+// DMs each player about a duel state change. We use direct messages
+// rather than guild-channel posts because duels are personal — a guild's
+// other members don't need to see the play-by-play of every 1v1.
+//
+// A delivery attempt is made when:
+//   1. The player has a linked Discord OAuth account (we have their ID).
+//   2. The player has `duelDmEnabled = true` (default).
+//   3. The bot has a token configured.
+//
+// Discord returns code 50007 "Cannot send messages to this user" when
+// the recipient has DMs disabled; we log a warning and surface the name
+// in `failedPlayerNames` so the caller can show a soft hint.
+export async function sendDuelNotification(
+  input: DuelNotificationInput
+): Promise<DuelNotifyOutcome> {
+  const token = process.env.DISCORD_BOT_TOKEN;
+
+  const [proposing, opposing] = await Promise.all([
+    db.query.users.findFirst({ where: eq(users.id, input.proposingUserId) }),
+    db.query.users.findFirst({ where: eq(users.id, input.opposingUserId) }),
+  ]);
+  if (!proposing || !opposing) return { failedPlayerNames: [] };
+
+  if (!token) {
+    console.warn(
+      "[bot] DISCORD_BOT_TOKEN not set — duel DMs will not be sent"
+    );
+    return { failedPlayerNames: [] };
+  }
+
+  const content = buildDuelMessage({
+    action: input.action,
+    proposingName: proposing.inGameName ?? "A player",
+    opposingName: opposing.inGameName ?? "Another player",
+    proposedGameTime: input.proposedGameTime,
+    location: input.location,
+    winCondition: input.winCondition,
+    duelId: input.duelId,
+    appBaseUrl: input.appBaseUrl,
+    reminderKind: input.reminderKind,
+  });
+
+  // Resolve both players' Discord IDs in parallel. Same player on both
+  // sides is impossible (API rejects self-duels), so no dedup needed.
+  // When targetUserId is set, we filter down to just that side.
+  const failures: string[] = [];
+  const allTargets = [
+    { player: proposing, label: proposing.inGameName ?? "Proposer" },
+    { player: opposing, label: opposing.inGameName ?? "Opponent" },
+  ];
+  const targets = input.targetUserId
+    ? allTargets.filter((t) => t.player.id === input.targetUserId)
+    : allTargets;
+
+  await Promise.all(
+    targets.map(async ({ player, label }) => {
+      if (!player.duelDmEnabled) return; // opted out, silent
+      const discordUserId = await resolveDiscordUserId(player.id);
+      if (!discordUserId) return; // no linked Discord, silent
+      const ok = await sendDirectMessage(token, discordUserId, content);
+      if (!ok) failures.push(label);
+    })
+  );
+
+  return { failedPlayerNames: failures };
+}
+
+function buildDuelMessage(args: {
+  action: DuelNotifyAction;
+  proposingName: string;
+  opposingName: string;
+  proposedGameTime: string;
+  location: string;
+  winCondition: string;
+  duelId: string;
+  appBaseUrl?: string;
+  reminderKind?: "day" | "hour" | "twenty_min";
+}): string {
+  const when = discordTimestamp(args.proposedGameTime, "F");
+  const relative = discordTimestamp(args.proposedGameTime, "R");
+  const proposer = `**${args.proposingName}**`;
+  const opposer = `**${args.opposingName}**`;
+  const duelUrl = args.appBaseUrl
+    ? `${args.appBaseUrl}/duels/${args.duelId}`
+    : null;
+
+  if (args.action === "proposed") {
+    const lines = [
+      `**Duel proposed** — ${proposer} has challenged ${opposer} to a 1v1.`,
+      `Time: ${when} (${relative})`,
+      `Location: ${args.location}`,
+      `Condition of Win: ${args.winCondition}`,
+    ];
+    if (duelUrl) {
+      lines.push(`${opposer} can accept or decline at <${duelUrl}>`);
+    }
+    return lines.join("\n");
+  }
+  if (args.action === "accepted") {
+    const lines = [
+      `**Duel accepted** — ${opposer} accepted ${proposer}'s 1v1 challenge.`,
+      `Time: ${when} (${relative})`,
+      `Location: ${args.location}`,
+      `Condition of Win: ${args.winCondition}`,
+    ];
+    if (duelUrl) lines.push(`Details: <${duelUrl}>`);
+    return lines.join("\n");
+  }
+  if (args.action === "cancelled") {
+    return [
+      `**Duel cancelled** — The 1v1 between ${proposer} and ${opposer} (scheduled for ${when}) has been cancelled.`,
+    ].join("\n");
+  }
+  if (args.action === "result_declared") {
+    const lines = [
+      `**Duel result declared** — The 1v1 between ${proposer} and ${opposer} (${when}) has a final result.`,
+    ];
+    if (duelUrl) lines.push(`See it at <${duelUrl}>`);
+    return lines.join("\n");
+  }
+  if (args.action === "withdrawn") {
+    return [
+      `**Duel withdrawn** — ${proposer} withdrew their 1v1 challenge against ${opposer}.`,
+      `Was proposed for ${when}.`,
+    ].join("\n");
+  }
+  if (args.action === "edited") {
+    const lines = [
+      `**Duel updated** — ${proposer} updated their 1v1 challenge against ${opposer}.`,
+      `Time: ${when} (${relative})`,
+      `Location: ${args.location}`,
+      `Condition of Win: ${args.winCondition}`,
+    ];
+    if (duelUrl) {
+      lines.push(`Review and accept or decline at <${duelUrl}>`);
+    }
+    return lines.join("\n");
+  }
+  if (args.action === "reminder") {
+    // Lead-time phrasing scaled by which bucket fired this reminder.
+    // Falls back to the relative timestamp if no bucket was provided.
+    const lead =
+      args.reminderKind === "twenty_min"
+        ? "starts in 20 minutes"
+        : args.reminderKind === "hour"
+          ? "starts in about 1 hour"
+          : args.reminderKind === "day"
+            ? "starts tomorrow"
+            : `starts ${relative}`;
+    const lines = [
+      `**Duel reminder** — Your 1v1 between ${proposer} and ${opposer} ${lead}.`,
+      `Time: ${when}`,
+      `Location: ${args.location}`,
+      `Condition of Win: ${args.winCondition}`,
+    ];
+    if (duelUrl) lines.push(`Details: <${duelUrl}>`);
+    return lines.join("\n");
+  }
+  // declined
+  return [
+    `**Duel declined** — ${opposer} declined ${proposer}'s 1v1 challenge.`,
     `Was proposed for ${when}.`,
   ].join("\n");
 }

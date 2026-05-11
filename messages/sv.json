@@ -29,17 +29,20 @@
     "createGuild": "Skapa gille",
     "adminHelp": "Administratörshjälp",
     "help": "Hjälp",
-    "myAccount": "Mitt konto"
+    "myAccount": "Mitt konto",
+    "findPlayers": "Hitta spelare",
+    "duels": "Dueller",
+    "leaderboard": "Topplista"
   },
   "topBar": {
     "notifications": "Aviseringar",
+    "myAccount": "Mitt konto",
     "roleSuperAdmin": "Superadministratör",
     "roleGuildAdmin": "Gildeadministratör",
     "roleMember": "Medlem",
     "roleNoGuild": "Ingen gille",
     "signIn": "Logga in",
-    "signOut": "Logga ut",
-    "myAccount": "Mitt konto"
+    "signOut": "Logga ut"
   },
   "alphaBanner": {
     "tag": "Alfa",
@@ -344,7 +347,18 @@
     "deleteButton": "Ta bort mitt konto",
     "deleting": "Tar bort…",
     "deleteConfirm": "Radera ditt konto? Detta tar bort dig från din gille, raderar alla dina registreringar och kopplar bort Google/Discord. Detta kan inte ångras.",
-    "language": "Språk"
+    "language": "Språk",
+    "duels": {
+      "heading": "Duellering",
+      "powerTier": "Kraftnivå",
+      "powerTierNotSet": "Inte inställd",
+      "powerTierHelp": "Självrapporterad milstolpe för kraft i spelet (I–XIII). Visas på ditt spelarkort och används som ett filter på upptäcktssidan. Tillitssystem — ställ in det korrekt.",
+      "discoverableLabel": "Upptäckbar för 1-mot-1-dueller",
+      "discoverableHelp": "När den är påslagen kan andra spelare på samma server hitta dig på upptäcktssidan och utmana dig till en duell. Stäng av för att dölja dig från listningar och utmaningar. Din gillesinterna upplevelse påverkas inte.",
+      "dmLabel": "Meddela mig via Discord-direktmeddelande om dueller",
+      "dmHelp": "När den är påslagen skickar boten ett direktmeddelande till dig när någon utmanar dig, accepterar eller avböjer ditt förslag, avbryter en duell eller tillkännager ett resultat. Stäng av för att tysta Discord-direktmeddelanden om dueller helt. Du kommer fortfarande att se allt på webbplatsen.",
+      "dmHelpUnlinked": "Logga in med Discord minst en gång för att aktivera direktmeddelanden om dueller. (Logga ut och logga sedan in igen med Discord.)"
+    }
   },
   "errors": {
     "forbidden": "Förbjuden",
@@ -501,7 +515,8 @@
       "status": "Vad din status betyder",
       "scrims": "Scrimmage-evenemang",
       "reminders": "Påminnelser och kalender",
-      "closed": "Om anmälningarna är stängda"
+      "closed": "Om anmälningarna är stängda",
+      "duels": "1v1-dueller"
     },
     "gettingIn": {
       "step1": "Logga in med Google eller Discord på startsidan.",
@@ -542,6 +557,83 @@
       "ics": "Varje evenemangssida har en nedladdningslänk för .ics för att lägga till evenemanget i din kalender.",
       "slashCommands": "Discord-kommandon med snedstreck: /upcoming listar din gilles kommande evenemang, och /signup låter dig registrera dig utan att lämna Discord. Du måste logga in på webbplatsen med Discord minst en gång först, så att boten kan matcha ditt konto."
     },
-    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
+    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt.",
+    "duels": {
+      "intro": "Dueller är 1-mot-1-utmaningar mellan två spelare. De är separata från matchevenemang och träningsmatcher – ingen laguppställning, inget anmälningsformulär, bara två personer som kommer överens om tid och regler.",
+      "find": "Hitta motståndare på<playersLink> sidan för spelarupptäckt</playersLink> Den listar alla på samma server som har valt att vara synliga. Filtrera efter styrka, gille eller namn. Klicka på valfri spelares namn för att se deras fullständiga profil – betyg, meritlista och fullständig duellhistorik.",
+      "powerTier": "Varje spelare kan ställa in en självrapporterad kraftnivå från I till XIII på sin Mitt Konto-sida. Nivån återspeglar din karaktärsutveckling i spelet och hjälper motståndare att se om en matchning kommer att vara rättvis. Ställ in din så att andra kan hitta dig på din nivå.",
+      "challenge": "Klicka på Utmaning på ett spelarkort för att föreslå en duell. Välj tid, plats (Kruger, Cerno, Kanvo, Sphinx eller en anpassad karta) och Vinstvillkor – bestäm reglerna tydligt eftersom de är knutna till det deklarerade resultatet.",
+      "respond": "När någon utmanar dig visas duellen under Inkommande utmaningar på din duellsida. Du kan acceptera, avböja eller redigera för att motförslå andra villkor. Förslagsställaren kan dra sig tillbaka när som helst innan duellen är accepterad.",
+      "negotiate": "Båda spelarna kan redigera ett väntande förslag – ändra tid, plats, vinstvillkor eller meddelande. Den som anger de senaste villkoren kan inte acceptera sina egna ändringar; den andra sidan måste bekräfta. Motförslag kan pingpongas tills någon accepterar det som ligger på bordet.",
+      "result": "Efter duellen deklarerar endera spelaren resultatet på duellsidan: Jag vann, Jag förlorade, Oavgjort eller Ingen match (vid förverkande eller frånkopplingar). Den första spelaren som skickar in ett resultat låser in det för båda sidor. Vinster och förluster uppdaterar ditt ELO-betyg; ingen match räknas som en duell men påverkar inte betygen.",
+      "rating": "Din ELO-rating börjar på 1000 och går upp eller ner beroende på duellresultatet och motståndarens rating. Att slå en spelare med högre rating ger fler poäng; att förlora mot en spelare med lägre rating kostar mer. Din meritlista (WLD) och rating visas på ditt spelarkort.",
+      "leaderboard": "När du har spelat minst 3 bekräftade dueller visas du på<leaderboardLink> serverns topplista</leaderboardLink> Rankad efter betyg. Topplaceringarna får guld-/silver-/bronsmarker. Din egen ranking syns även om du inte är bland de 25 bästa.",
+      "reputation": "Efter att duellresultatet har tillkännagivits kan båda spelarna lämna ett 👍 eller 👎 om motståndaren. Sammanlagda betyg visas som en procentandel på varje spelares kort när de har minst 5 betyg. Ett betyg per duell, låst efter inskick.",
+      "history": "Se din fullständiga duellhistorik (kommande, tidigare, avböjda, tillbakadragna, avbrutna) på<duelsLink> dueller sida</duelsLink> Resultatchipen visar W/L/D/NC ur ditt perspektiv.",
+      "discordDm": "Om du har loggat in på Discord minst en gång kan boten skicka direktmeddelanden till dig om duellhändelser – inkommande utmaningar, accepterade, avböjda, avbrutna och resultatdeklarerade. Aktivera detta i Mitt konto. Om du har inaktiverat direktmeddelanden från servermedlemmar i dina Discord-inställningar kan boten inte nå dig.",
+      "privacy": "Du kan stänga av duellupptäckbarheten i Mitt konto för att dölja dig från upptäcktssidan och blockera inkommande utmaningar. Din gillesinterna upplevelse påverkas inte."
+    }
+  },
+  "playerProfile": {
+    "backToPlayers": "Tillbaka till spelarna",
+    "youBadge": "Du",
+    "noGuild": "Ingen gille",
+    "serverLabel": "Servernummer {serverNumber}",
+    "challenge": "Utmaning",
+    "rating": "Gradering",
+    "record": "Spela in",
+    "reputation": "Rykte",
+    "lastActive": "Sista duellen",
+    "duelsTotal": "{count, plural, =0 {No duels} en {# duel} andra {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} andra {# ratings} }",
+    "reputationNotEnough": "Behöver 5+ betyg",
+    "historyHeading": "Duellhistoria",
+    "historyEmpty": "Inga avklarade dueller ännu.",
+    "locationLabel": "Plats",
+    "winConditionLabel": "Vinstvillkor",
+    "unknownPlayer": "Okänd spelare",
+    "prev": "← Föregående",
+    "next": "Nästa →",
+    "pageOf": "Sida {page} av {total}"
+  },
+  "leaderboard": {
+    "title": "Topplista",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} en {# ranked player on your server} andra {# ranked players on your server} }.",
+    "serverLabel": "Servernummer {serverNumber}",
+    "howItWorks": "Hur rankningar fungerar →",
+    "yourRank": "Din rangordning: # {rank} · {rating} gradering",
+    "notRankedYet": "Spela minst {min} Bekräftade dueller kommer att visas på topplistan. Ditt betyg börjar på 1000 och uppdateras allt eftersom du vinner eller förlorar.",
+    "rankLabel": "{rank}",
+    "noMatches": "Inga spelare matchar dessa filter.",
+    "emptyState": "Inga rankade spelare på din server ännu. Bli först.",
+    "needsServerNumber": "Ange ett servernummer för din guild i<settingsLink> Gillets inställningar</settingsLink> för att se topplistan.",
+    "prev": "← Föregående",
+    "next": "Nästa →",
+    "pageOf": "Sida {page} av {total}"
+  },
+  "players": {
+    "title": "Hitta spelare",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} en {# discoverable player on your server} andra {# discoverable players on your server} }.",
+    "serverLabel": "Servernummer {serverNumber}",
+    "searchPlaceholder": "Sök efter namn i spelet…",
+    "allTiers": "Alla effektnivåer",
+    "allGuilds": "Alla gillen",
+    "tierLabel": "Nivå {tier}",
+    "reset": "Återställa",
+    "rating": "gradering",
+    "ratingTooltip": "ELO-liknande PvP-betyg — börjar på 1000, uppdateringar om bekräftade dueller.",
+    "recordTooltip": "Vinster · Förluster · Oavgjorda i bekräftade dueller.",
+    "reputationTooltip": "Rykte: sammanlagd tummen upp-procent över {count} betyg.",
+    "lastActiveLabel": "aktiv",
+    "challenge": "Utmaning",
+    "sameGuildBadge": "Ditt gille",
+    "sameGuildChallengeHint": "Koordinera gilleskamratsdueller direkt – de är redan bredvid dig.",
+    "noMatches": "Inga spelare matchar dessa filter.",
+    "emptyState": "Inga upptäckbara spelare på din server ännu.",
+    "needsServerNumber": "Ange ett servernummer för din guild i<settingsLink> Gillets inställningar</settingsLink> för att hitta spelare på samma server.",
+    "noGuildsOnServer": "Inga andra gillen på den här servern har ännu registrerats.",
+    "prev": "← Föregående",
+    "next": "Nästa →",
+    "pageOf": "Sida {page} av {total}"
   }
 }

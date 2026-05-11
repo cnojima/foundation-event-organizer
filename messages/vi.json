@@ -29,17 +29,20 @@
     "createGuild": "Tạo Bang hội",
     "adminHelp": "Trợ giúp quản trị viên",
     "help": "Giúp đỡ",
-    "myAccount": "Tài khoản của tôi"
+    "myAccount": "Tài khoản của tôi",
+    "findPlayers": "Tìm người chơi",
+    "duels": "Đấu tay đôi",
+    "leaderboard": "Bảng xếp hạng"
   },
   "topBar": {
     "notifications": "Thông báo",
+    "myAccount": "Tài khoản của tôi",
     "roleSuperAdmin": "Quản trị viên cấp cao",
     "roleGuildAdmin": "Quản trị viên bang hội",
     "roleMember": "Thành viên",
     "roleNoGuild": "Không có hội",
     "signIn": "Đăng nhập",
-    "signOut": "Đăng xuất",
-    "myAccount": "Tài khoản của tôi"
+    "signOut": "Đăng xuất"
   },
   "alphaBanner": {
     "tag": "Alpha",
@@ -344,7 +347,18 @@
     "deleteButton": "Xóa tài khoản của tôi",
     "deleting": "Đang xóa…",
     "deleteConfirm": "Xóa tài khoản của bạn? Thao tác này sẽ xóa bạn khỏi bang hội, xóa tất cả các tài khoản đã đăng ký và hủy liên kết với Google/Discord. Không thể hoàn tác.",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "duels": {
+      "heading": "Đấu tay đôi",
+      "powerTier": "Cấp độ sức mạnh",
+      "powerTierNotSet": "Chưa được thiết lập",
+      "powerTierHelp": "Mức sức mạnh tự báo cáo trong game (I–XIII). Hiển thị trên thẻ người chơi và được sử dụng làm bộ lọc trên trang khám phá. Hệ thống tin cậy — thiết lập chính xác.",
+      "discoverableLabel": "Có thể tìm thấy trong các trận đấu 1 chọi 1",
+      "discoverableHelp": "Khi bật tính năng này, những người chơi khác trên cùng máy chủ có thể tìm thấy bạn trên trang khám phá và thách đấu bạn. Tắt tính năng này để ẩn khỏi danh sách và lời thách đấu. Trải nghiệm nội bộ bang hội của bạn không bị ảnh hưởng.",
+      "dmLabel": "Hãy thông báo cho tôi qua tin nhắn trực tiếp trên Discord về các trận đấu.",
+      "dmHelp": "Khi bật, bot sẽ gửi tin nhắn riêng cho bạn khi ai đó thách đấu, chấp nhận hoặc từ chối đề nghị của bạn, hủy bỏ một trận đấu tay đôi hoặc công bố kết quả. Tắt chức năng này để hoàn toàn im lặng khi nhận tin nhắn riêng trên Discord về các trận đấu. Bạn vẫn sẽ thấy mọi thứ trên trang web.",
+      "dmHelpUnlinked": "Hãy đăng nhập vào Discord ít nhất một lần để có thể gửi tin nhắn trực tiếp về các trận đấu. (Đăng xuất rồi đăng nhập lại vào Discord.)"
+    }
   },
   "errors": {
     "forbidden": "Cấm",
@@ -501,7 +515,8 @@
       "status": "Trạng thái của bạn có nghĩa là gì?",
       "scrims": "Các sự kiện giao hữu",
       "reminders": "Lời nhắc và lịch",
-      "closed": "Nếu việc đăng ký đã đóng"
+      "closed": "Nếu việc đăng ký đã đóng",
+      "duels": "đấu tay đôi 1v1"
     },
     "gettingIn": {
       "step1": "Đăng nhập bằng tài khoản Google hoặc Discord trên trang chủ.",
@@ -542,6 +557,83 @@
       "ics": "Mỗi trang sự kiện đều có liên kết \"Tải xuống tệp .ics\" để thêm sự kiện vào lịch của bạn.",
       "slashCommands": "Các lệnh slash trên Discord: /upcoming liệt kê các sự kiện sắp tới của bang hội bạn, và /signup cho phép bạn đăng ký mà không cần rời khỏi Discord. Bạn phải đăng nhập vào trang web bằng Discord ít nhất một lần trước, để bot có thể xác nhận tài khoản của bạn."
     },
-    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
+    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công.",
+    "duels": {
+      "intro": "Các trận đấu tay đôi là những thử thách 1 chọi 1 giữa hai người chơi. Chúng khác biệt với các sự kiện thi đấu và các trận giao hữu — không có danh sách người chơi, không có mẫu đăng ký, chỉ cần hai người thống nhất về thời gian và luật chơi.",
+      "find": "Tìm đối thủ trên<playersLink> trang khám phá người chơi</playersLink> Danh sách này hiển thị tất cả người chơi trên cùng máy chủ với bạn, những người đã chọn hiển thị thông tin cá nhân. Bạn có thể lọc theo cấp độ sức mạnh, bang hội hoặc tên. Nhấp vào tên bất kỳ người chơi nào để xem hồ sơ đầy đủ của họ — xếp hạng, thành tích và lịch sử đấu tay đôi hoàn chỉnh.",
+      "powerTier": "Mỗi người chơi có thể tự thiết lập cấp độ sức mạnh từ I đến XIII trên trang Tài khoản của mình. Cấp độ này phản ánh sự tiến bộ của nhân vật trong game và giúp đối thủ biết liệu trận đấu có công bằng hay không. Hãy thiết lập cấp độ của bạn để những người khác có thể tìm thấy bạn ở đúng cấp độ của mình.",
+      "challenge": "Nhấp vào nút Thách đấu trên thẻ bài của người chơi để đề xuất một trận đấu tay đôi. Chọn thời gian, địa điểm (Kruger, Cerno, Kanvo, Sphinx hoặc bản đồ tùy chỉnh) và Điều kiện chiến thắng — hãy thống nhất rõ ràng các quy tắc vì chúng gắn liền với kết quả được công bố.",
+      "respond": "Khi ai đó thách đấu bạn, trận đấu sẽ hiển thị trong mục Thách đấu đến trên trang các trận đấu của bạn. Bạn có thể Chấp nhận, Từ chối hoặc Chỉnh sửa để đề xuất các điều khoản khác. Người đề xuất có thể rút lui bất cứ lúc nào trước khi trận đấu được chấp nhận.",
+      "negotiate": "Bất kỳ người chơi nào cũng có thể chỉnh sửa đề xuất đang chờ xử lý — thay đổi thời gian, địa điểm, điều kiện thắng hoặc thông điệp. Người đặt ra các điều khoản mới nhất không thể tự chấp nhận những thay đổi của mình; bên kia phải xác nhận. Các đề xuất phản hồi có thể được trao đổi qua lại cho đến khi một bên chấp nhận đề xuất hiện tại.",
+      "result": "Sau trận đấu, một trong hai người chơi sẽ tuyên bố kết quả trên trang đấu: Tôi thắng, Tôi thua, Hòa, hoặc Không có kết quả (trong trường hợp bỏ cuộc hoặc mất kết nối). Người chơi đầu tiên gửi kết quả sẽ xác nhận cho cả hai bên. Thắng và thua sẽ cập nhật điểm ELO của bạn; kết quả không có kết quả được tính là một trận đấu nhưng không ảnh hưởng đến điểm số.",
+      "rating": "Điểm ELO của bạn bắt đầu ở mức 1000 và tăng hoặc giảm tùy thuộc vào kết quả trận đấu và điểm số của đối thủ. Thắng người chơi có điểm số cao hơn sẽ nhận được nhiều điểm hơn; thua người chơi có điểm số thấp hơn sẽ mất nhiều điểm hơn. Thành tích (Thắng/Thua/Thua) và điểm số của bạn được hiển thị trên thẻ người chơi.",
+      "leaderboard": "Sau khi bạn đã chơi ít nhất 3 trận đấu được xác nhận, bạn sẽ xuất hiện trên bảng xếp hạng.<leaderboardLink> bảng xếp hạng máy chủ</leaderboardLink> Xếp hạng theo điểm số. Những người đứng đầu sẽ nhận được huy hiệu vàng/bạc/đồng. Thứ hạng của bạn sẽ được hiển thị ngay cả khi bạn không nằm trong top 25.",
+      "reputation": "Sau khi kết quả trận đấu được công bố, cả hai người chơi có thể để lại biểu tượng 👍 hoặc 👎 về đối thủ. Tổng điểm sẽ hiển thị dưới dạng phần trăm trên thẻ của mỗi người chơi khi họ có ít nhất 5 đánh giá. Mỗi trận đấu chỉ được đánh giá một lần, và đánh giá này sẽ bị khóa sau khi gửi.",
+      "history": "Xem toàn bộ lịch sử đấu tay đôi của bạn (sắp diễn ra, đã diễn ra, bị từ chối, rút lui, bị hủy) trên trang này.<duelsLink> trang đấu tay đôi</duelsLink> Các chip kết quả hiển thị W/L/D/NC từ góc nhìn của bạn.",
+      "discordDm": "Nếu bạn đã đăng nhập bằng Discord ít nhất một lần, bot có thể gửi tin nhắn riêng cho bạn về các sự kiện đấu tay đôi — các thử thách sắp tới, đã chấp nhận, từ chối, hủy bỏ và kết quả đã được công bố. Bật/tắt tính năng này trong mục Tài khoản của tôi. Nếu bạn đã tắt tính năng gửi tin nhắn riêng từ thành viên máy chủ trong cài đặt Discord, bot sẽ không thể liên lạc được với bạn.",
+      "privacy": "Bạn có thể tắt chế độ hiển thị trận đấu trong Tài khoản của tôi để ẩn khỏi trang tìm kiếm và chặn các thử thách đến. Trải nghiệm nội bộ bang hội của bạn sẽ không bị ảnh hưởng."
+    }
+  },
+  "playerProfile": {
+    "backToPlayers": "Trở lại người chơi",
+    "youBadge": "Bạn",
+    "noGuild": "Không có hội",
+    "serverLabel": "Máy chủ # {serverNumber}",
+    "challenge": "Thử thách",
+    "rating": "Xếp hạng",
+    "record": "Ghi",
+    "reputation": "Danh tiếng",
+    "lastActive": "Trận đấu cuối cùng",
+    "duelsTotal": "{count, plural, =0 {No duels} một {# duel} các trận đấu khác {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} các xếp hạng khác {# ratings} }",
+    "reputationNotEnough": "Cần có ít nhất 5 đánh giá.",
+    "historyHeading": "Lịch sử đấu tay đôi",
+    "historyEmpty": "Chưa có trận đấu nào hoàn thành.",
+    "locationLabel": "Vị trí",
+    "winConditionLabel": "Điều kiện thắng",
+    "unknownPlayer": "Người chơi không xác định",
+    "prev": "← Trước đó",
+    "next": "Tiếp theo →",
+    "pageOf": "Trang {page} của {total}"
+  },
+  "leaderboard": {
+    "title": "Bảng xếp hạng",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} một {# ranked player on your server} {# ranked players on your server} }.",
+    "serverLabel": "Máy chủ # {serverNumber}",
+    "howItWorks": "Cách thức xếp hạng hoạt động →",
+    "yourRank": "Thứ hạng của bạn: # {rank} · {rating} xếp hạng",
+    "notRankedYet": "Chơi ít nhất {min} Các trận đấu đã được xác nhận sẽ xuất hiện trên bảng xếp hạng. Điểm số của bạn bắt đầu ở mức 1000 và sẽ được cập nhật khi bạn thắng hoặc thua.",
+    "rankLabel": "Hạng {rank}",
+    "noMatches": "Không có cầu thủ nào đáp ứng các bộ lọc đó.",
+    "emptyState": "Máy chủ của bạn chưa có người chơi xếp hạng nào. Hãy là người đầu tiên.",
+    "needsServerNumber": "Đặt số máy chủ cho bang hội của bạn trong<settingsLink> Cài đặt Bang hội</settingsLink> Để xem bảng xếp hạng.",
+    "prev": "← Trước đó",
+    "next": "Tiếp theo →",
+    "pageOf": "Trang {page} của {total}"
+  },
+  "players": {
+    "title": "Tìm người chơi",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} một {# discoverable player on your server} {# discoverable players on your server} }.",
+    "serverLabel": "Máy chủ # {serverNumber}",
+    "searchPlaceholder": "Tìm kiếm theo tên trong game…",
+    "allTiers": "Tất cả các cấp độ sức mạnh",
+    "allGuilds": "Tất cả các bang hội",
+    "tierLabel": "Cấp độ {tier}",
+    "reset": "Cài lại",
+    "rating": "xếp hạng",
+    "ratingTooltip": "Hệ thống xếp hạng PvP kiểu ELO — bắt đầu từ 1000, cập nhật dựa trên các trận đấu đã được xác nhận.",
+    "recordTooltip": "Thắng · Thua · Hòa trong các trận đấu đã được xác nhận.",
+    "reputationTooltip": "Uy tín: Tỷ lệ phần trăm tổng số lượt thích (thumbs-up) trên {count} xếp hạng.",
+    "lastActiveLabel": "tích cực",
+    "challenge": "Thử thách",
+    "sameGuildBadge": "Hội của bạn",
+    "sameGuildChallengeHint": "Phối hợp trực tiếp các trận đấu tay đôi với đồng đội trong bang hội — họ đã ở ngay bên cạnh bạn rồi.",
+    "noMatches": "Không có cầu thủ nào đáp ứng các bộ lọc đó.",
+    "emptyState": "Hiện chưa có người chơi nào được tìm thấy trên máy chủ của bạn.",
+    "needsServerNumber": "Đặt số máy chủ cho bang hội của bạn trong<settingsLink> Cài đặt Bang hội</settingsLink> Tìm kiếm người chơi trên cùng máy chủ.",
+    "noGuildsOnServer": "Hiện chưa có bang hội nào khác được đăng ký trên máy chủ này.",
+    "prev": "← Trước đó",
+    "next": "Tiếp theo →",
+    "pageOf": "Trang {page} của {total}"
   }
 }
