@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { events, signups, users, guilds } from "@/db/schema";
+import { events, scrimProposals, signups, users, guilds } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { auth } from "@/auth";
 import { requireGuildAdminPage } from "@/lib/rbac";
@@ -11,6 +11,8 @@ import { DeleteEventButton } from "@/components/delete-event-button";
 import { EditEventDatesForm } from "@/components/edit-event-dates-form";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
+import { ScrimResultForm } from "@/components/scrim-result-form";
+import { scrimSideFor, viewerOutcome } from "@/lib/scrims";
 
 export default async function AdminEventPage({
   params,
@@ -44,8 +46,29 @@ export default async function AdminEventPage({
   const guildTag = eventGuild?.tag ?? null;
 
   const isMatch = event.kind === "match";
+  const isScrim = event.kind === "scrim";
+  const hasRoster = isMatch || isScrim;
 
-  const eventSignups = isMatch
+  // Scrims load their proposal (for opponent name + result state) and reuse
+  // the match signup tables — but only the squad1 column is populated.
+  const scrim =
+    isScrim && event.scrimmageId
+      ? await db.query.scrimProposals.findFirst({
+          where: eq(scrimProposals.id, event.scrimmageId),
+        })
+      : null;
+  const opposingGuild =
+    isScrim && event.opposingGuildId
+      ? await db.query.guilds.findFirst({
+          where: eq(guilds.id, event.opposingGuildId),
+        })
+      : null;
+  const scrimSide = scrim
+    ? scrimSideFor(event.guildId, scrim.proposingGuildId, scrim.opposingGuildId)
+    : null;
+  const scrimOutcome = scrim ? viewerOutcome(scrimSide!, scrim.result) : null;
+
+  const eventSignups = hasRoster
     ? await db
         .select({ signup: signups, user: users })
         .from(signups)
@@ -120,16 +143,35 @@ export default async function AdminEventPage({
         </div>
       )}
       <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500">
-        {!isMatch && (
+        {(isScrim || !isMatch) && event.gameTime && !isScrim && (
           <span>
-            {event.gameTime ? (
-              <>
-                Starts: <DateTime iso={event.gameTime} />
-              </>
-            ) : (
-              "No time set"
-            )}
+            Starts: <DateTime iso={event.gameTime} />
           </span>
+        )}
+        {isScrim && (
+          <>
+            <span>
+              {event.gameTime ? (
+                <DateTime iso={event.gameTime} />
+              ) : (
+                <span className="font-mono text-gray-400">TBD</span>
+              )}
+            </span>
+            {opposingGuild && (
+              <span>
+                vs{" "}
+                <strong className="text-gray-800">
+                  {opposingGuild.tag
+                    ? `[${opposingGuild.tag}] ${opposingGuild.name}`
+                    : opposingGuild.name}
+                </strong>
+              </span>
+            )}
+            {scrim && <span>Location: {scrim.location}</span>}
+          </>
+        )}
+        {!isMatch && !isScrim && !event.gameTime && (
+          <span>No time set</span>
         )}
         {isMatch && (
           <>
@@ -161,13 +203,65 @@ export default async function AdminEventPage({
             Signup closes <DateTime iso={event.signupCloses} />
           </span>
         )}
-        {!isMatch && (
+        {!isMatch && !isScrim && (
           <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600">
             Simple Event
           </span>
         )}
+        {isScrim && (
+          <span className="rounded border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-rose-700">
+            Scrim
+          </span>
+        )}
       </div>
-      {!event.deletedAt && (
+
+      {isScrim && scrim && (
+        <div className="mb-6 rounded-lg border border-rose-200 bg-rose-50/40 p-4">
+          <p className="text-sm">
+            <span className="font-semibold text-gray-900">Condition of Win:</span>{" "}
+            <span className="text-gray-700">{scrim.winCondition}</span>
+          </p>
+          {scrim.result ? (
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+              <span className="font-semibold text-gray-900">Result:</span>
+              <span
+                className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${
+                  scrimOutcome === "W"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    : scrimOutcome === "L"
+                      ? "border-red-200 bg-red-50 text-red-700"
+                      : scrimOutcome === "D"
+                        ? "border-amber-200 bg-amber-50 text-amber-700"
+                        : "border-gray-200 bg-gray-50 text-gray-600"
+                }`}
+              >
+                {scrimOutcome === "W"
+                  ? "Won"
+                  : scrimOutcome === "L"
+                    ? "Lost"
+                    : scrimOutcome === "D"
+                      ? "Draw"
+                      : "No contest"}
+              </span>
+              {scrim.resultDeclaredAt && (
+                <span className="text-xs text-gray-500">
+                  declared <DateTime iso={scrim.resultDeclaredAt} mode="date" />
+                </span>
+              )}
+              {scrim.resultNotes && (
+                <p className="basis-full text-xs italic text-gray-600">
+                  &ldquo;{scrim.resultNotes}&rdquo;
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="mt-3">
+              <ScrimResultForm scrimId={scrim.id} />
+            </div>
+          )}
+        </div>
+      )}
+      {!event.deletedAt && !isScrim && (
         <div className="mb-6">
           <EditEventDatesForm
             eventId={event.id}
@@ -187,7 +281,7 @@ export default async function AdminEventPage({
         <p className="mb-6 text-sm text-gray-700">{event.description}</p>
       )}
 
-      {isMatch && (
+      {hasRoster && (
         <>
           <div className="mb-6 grid grid-cols-2 gap-3 text-center sm:grid-cols-4 sm:gap-4">
             <div className="rounded-lg border p-3">
@@ -212,7 +306,13 @@ export default async function AdminEventPage({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+          <div
+            className={
+              isScrim
+                ? "grid grid-cols-1 gap-6"
+                : "grid grid-cols-1 gap-6 lg:grid-cols-2"
+            }
+          >
             <section>
               <h2 className="text-lg font-semibold mb-3">
                 {event.squad1Name} ({squad1Signups.length})
@@ -231,23 +331,25 @@ export default async function AdminEventPage({
               </div>
             </section>
 
-            <section>
-              <h2 className="text-lg font-semibold mb-3">
-                {event.squad2Name} ({squad2Signups.length})
-              </h2>
-              <div className="space-y-2">
-                {squad2Signups.map(({ signup, user }) => (
-                  <AdminSignupRow
-                    key={signup.id}
-                    signup={signup}
-                    userName={displayName(user, guildTag)}
-                    userImage={user?.image || undefined}
-                    squad1Name={event.squad1Name}
-                    squad2Name={event.squad2Name}
-                  />
-                ))}
-              </div>
-            </section>
+            {!isScrim && (
+              <section>
+                <h2 className="text-lg font-semibold mb-3">
+                  {event.squad2Name} ({squad2Signups.length})
+                </h2>
+                <div className="space-y-2">
+                  {squad2Signups.map(({ signup, user }) => (
+                    <AdminSignupRow
+                      key={signup.id}
+                      signup={signup}
+                      userName={displayName(user, guildTag)}
+                      userImage={user?.image || undefined}
+                      squad1Name={event.squad1Name}
+                      squad2Name={event.squad2Name}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
 
           {waitlistSignups.length > 0 && (

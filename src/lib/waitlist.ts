@@ -7,10 +7,13 @@ export const WAITLIST_ROLE = "waitlist";
 type EventCapacityFields = {
   maxPlayers: number;
   maxBackups: number;
+  // Scrim events have a single squad, so capacity is half of a match.
+  kind?: "match" | "simple" | "scrim";
 };
 
 export function getEventCapacity(event: EventCapacityFields): number {
-  return (event.maxPlayers + event.maxBackups) * 2;
+  const squads = event.kind === "scrim" ? 1 : 2;
+  return (event.maxPlayers + event.maxBackups) * squads;
 }
 
 export type EventCapacityStanding = {

@@ -18,6 +18,8 @@
   "nav": {
     "manageEvents": "Manage Events",
     "events": "Events",
+    "scrimHistory": "Scrim History",
+    "scrimmages": "Scrimmages",
     "players": "Players",
     "members": "Members",
     "invites": "Invites",

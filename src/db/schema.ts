@@ -134,8 +134,10 @@ export const events = sqliteTable("events", {
   squad2StartsAt: text("squad2_starts_at"), // match only; nullable until scheduled
   signupOpens: text("signup_opens"), // ISO datetime string
   signupCloses: text("signup_closes"), // ISO datetime string
-  // "match" — has two squads + signups + waitlist. "simple" — info-only event.
-  kind: text("kind", { enum: ["match", "simple"] }).notNull().default("match"),
+  // "match" — has two squads + signups + waitlist. "simple" — info-only.
+  // "scrim" — single squad (this guild's lineup) facing another guild's
+  // mirrored event. squad2Name/squad2StartsAt unused for scrim events.
+  kind: text("kind", { enum: ["match", "simple", "scrim"] }).notNull().default("match"),
   squad1Name: text("squad1_name").notNull().default("Squad 1"),
   squad2Name: text("squad2_name").notNull().default("Squad 2"),
   maxPlayers: integer("max_players").notNull().default(20),
@@ -144,6 +146,61 @@ export const events = sqliteTable("events", {
   metadata: text("metadata"), // JSON string for additional fields
   createdAt: text("created_at").notNull(),
   deletedAt: text("deleted_at"), // ISO datetime; null = active. Soft-deleted events are kept for attendance reports.
+  // Scrim-only: links back to the scrim_proposals row and identifies the
+  // other guild. Both null for non-scrim events.
+  scrimmageId: text("scrimmage_id"),
+  opposingGuildId: text("opposing_guild_id").references(
+    (): AnySQLiteColumn => guilds.id,
+    { onDelete: "set null" }
+  ),
+});
+
+// Scrim proposals — negotiation phase between two guilds on the same
+// server. On acceptance, two mirrored `events` rows are created (one per
+// guild) linked back here via events.scrimmageId. Both guilds' admins can
+// declare the result; we store an absolute (perspective-free) outcome that
+// the UI translates to W/L from each viewer's side.
+export const scrimProposals = sqliteTable("scrim_proposals", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  proposingGuildId: text("proposing_guild_id")
+    .notNull()
+    .references(() => guilds.id, { onDelete: "cascade" }),
+  opposingGuildId: text("opposing_guild_id")
+    .notNull()
+    .references(() => guilds.id, { onDelete: "cascade" }),
+  proposedByUserId: text("proposed_by_user_id")
+    .notNull()
+    .references(() => users.id),
+  proposedGameTime: text("proposed_game_time").notNull(),
+  location: text("location").notNull(),
+  winCondition: text("win_condition").notNull(),
+  message: text("message"),
+  status: text("status", {
+    enum: ["pending", "accepted", "declined", "withdrawn", "cancelled"],
+  })
+    .notNull()
+    .default("pending"),
+  respondedByUserId: text("responded_by_user_id").references(() => users.id),
+  respondedAt: text("responded_at"),
+  proposingEventId: text("proposing_event_id").references(() => events.id, {
+    onDelete: "set null",
+  }),
+  opposingEventId: text("opposing_event_id").references(() => events.id, {
+    onDelete: "set null",
+  }),
+  // Result — absolute perspective. UI maps to W/L per viewer's guild side.
+  result: text("result", {
+    enum: ["proposing_won", "opposing_won", "draw", "no_contest"],
+  }),
+  resultNotes: text("result_notes"),
+  resultDeclaredByUserId: text("result_declared_by_user_id").references(
+    () => users.id
+  ),
+  resultDeclaredAt: text("result_declared_at"),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
 });
 
 // Tracks which notification kinds have been sent. Composite PK

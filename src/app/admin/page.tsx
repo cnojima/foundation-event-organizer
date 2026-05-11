@@ -184,11 +184,13 @@ function EventSection({
   );
 }
 
-function KindBadge({ kind }: { kind: "match" | "simple" }) {
+function KindBadge({ kind }: { kind: EventRow["kind"] }) {
   const styles =
     kind === "match"
       ? "border-violet-200 bg-violet-50 text-violet-700"
-      : "border-gray-200 bg-gray-50 text-gray-600";
+      : kind === "scrim"
+        ? "border-rose-200 bg-rose-50 text-rose-700"
+        : "border-gray-200 bg-gray-50 text-gray-600";
   return (
     <span
       className={`rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${styles}`}

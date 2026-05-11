@@ -84,14 +84,27 @@ const ICONS = {
       <circle cx="10" cy="14.5" r="0.75" fill="currentColor" />
     </svg>
   ),
+  swords: (
+    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+      <path
+        d="M3 3l5 5M3 3v3M3 3h3M17 3l-5 5M17 3v3M17 3h-3M8 8l4 4-5 5H3v-4l5-5ZM12 8l-4 4 5 5h4v-4l-5-5Z"
+        stroke="currentColor"
+        strokeWidth="1.3"
+        strokeLinejoin="round"
+        strokeLinecap="round"
+      />
+    </svg>
+  ),
 };
 
 const NAV_ITEMS: NavItem[] = [
   { labelKey: "manageEvents", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin" },
   { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
+  { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild" },
   { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly" },
   { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
   { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },
+  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin" },
   { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin" },
   { labelKey: "settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin" },
   { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
@@ -145,6 +158,7 @@ const IMPERSONATION_AWARE_PREFIXES = [
   "/admin/players",
   "/admin/members",
   "/admin/invites",
+  "/admin/scrimmages",
   "/admin/settings",
 ];
 

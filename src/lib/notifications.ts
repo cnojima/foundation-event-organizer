@@ -51,7 +51,7 @@ type CandidateRow = {
   eventName: string;
   guildId: string;
   channelId: string | null;
-  kind: "match" | "simple";
+  kind: "match" | "simple" | "scrim";
   gameTime: string | null;
   squad1Name: string;
   squad2Name: string;
@@ -147,7 +147,8 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
             { squadNumber: 1, squadLabel: row.squad1Name, startsAt: row.squad1StartsAt },
             { squadNumber: 2, squadLabel: row.squad2Name, startsAt: row.squad2StartsAt },
           ]
-        : [{ squadNumber: 0, squadLabel: null, startsAt: row.gameTime }];
+        : // simple & scrim share one start time and one announcement.
+          [{ squadNumber: 0, squadLabel: null, startsAt: row.gameTime }];
 
     for (const c of candidates) {
       if (!c.startsAt) continue;

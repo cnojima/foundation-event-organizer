@@ -41,7 +41,7 @@ export function createSignup({
     if (!event || event.deletedAt) {
       return { ok: false as const, reason: "Event not found", status: 404 };
     }
-    if (event.kind !== "match") {
+    if (event.kind !== "match" && event.kind !== "scrim") {
       return {
         ok: false as const,
         reason: "This event does not accept signups",

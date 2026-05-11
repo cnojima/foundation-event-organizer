@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { events, guilds, signups, users } from "@/db/schema";
+import { events, guilds, scrimProposals, signups, users } from "@/db/schema";
 import { eq, and, asc, isNull } from "drizzle-orm";
 import { auth } from "@/auth";
 import { requireAnyGuildPage } from "@/lib/rbac";
@@ -11,6 +11,7 @@ import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
+import { scrimSideFor, viewerOutcome } from "@/lib/scrims";
 
 type SignupRow = {
   signup: typeof signups.$inferSelect;
@@ -72,15 +73,35 @@ export default async function EventPage({
   const guildTag = eventGuild?.tag ?? null;
 
   const isMatch = event.kind === "match";
+  const isScrim = event.kind === "scrim";
+  const hasRoster = isMatch || isScrim;
+
+  // Scrim metadata: opponent guild name + result chip.
+  const scrim =
+    isScrim && event.scrimmageId
+      ? await db.query.scrimProposals.findFirst({
+          where: eq(scrimProposals.id, event.scrimmageId),
+        })
+      : null;
+  const opposingGuild =
+    isScrim && event.opposingGuildId
+      ? await db.query.guilds.findFirst({
+          where: eq(guilds.id, event.opposingGuildId),
+        })
+      : null;
+  const scrimSide = scrim
+    ? scrimSideFor(event.guildId, scrim.proposingGuildId, scrim.opposingGuildId)
+    : null;
+  const scrimOutcome = scrim ? viewerOutcome(scrimSide!, scrim.result) : null;
 
   const now = new Date().toISOString();
   const isOpen =
     (!event.signupOpens || event.signupOpens <= now) &&
     (!event.signupCloses || event.signupCloses > now);
 
-  const standing = isMatch ? await getEventStanding(event.id) : null;
+  const standing = hasRoster ? await getEventStanding(event.id) : null;
 
-  const eventSignups: SignupRow[] = isMatch
+  const eventSignups: SignupRow[] = hasRoster
     ? await db
         .select({ signup: signups, user: users })
         .from(signups)
@@ -94,7 +115,7 @@ export default async function EventPage({
   const waitlist = eventSignups.filter((s) => bucketSquad(s) === "waitlist");
 
   let existingSignup = null;
-  if (isMatch) {
+  if (hasRoster) {
     existingSignup = await db.query.signups.findFirst({
       where: and(
         eq(signups.eventId, event.id),
@@ -119,11 +140,38 @@ export default async function EventPage({
       )}
 
       <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-        {!isMatch && event.gameTime && (
+        {!isMatch && !isScrim && event.gameTime && (
           <div>
             <span className="font-medium">Start Time:</span>{" "}
             <DateTime iso={event.gameTime} />
           </div>
+        )}
+        {isScrim && (
+          <>
+            {event.gameTime && (
+              <div>
+                <span className="font-medium">Start Time:</span>{" "}
+                <DateTime iso={event.gameTime} />
+              </div>
+            )}
+            {opposingGuild && (
+              <div>
+                <span className="font-medium">Opponent:</span>{" "}
+                {opposingGuild.tag
+                  ? `[${opposingGuild.tag}] ${opposingGuild.name}`
+                  : opposingGuild.name}
+              </div>
+            )}
+            {scrim && (
+              <div>
+                <span className="font-medium">Location:</span> {scrim.location}
+              </div>
+            )}
+            <div>
+              <span className="font-medium">Slots:</span> {event.maxPlayers}{" "}
+              players + {event.maxBackups} backups
+            </div>
+          </>
         )}
         {isMatch && (
           <>
@@ -159,7 +207,45 @@ export default async function EventPage({
         )}
       </div>
 
-      {isMatch && standing && (
+      {isScrim && scrim && (
+        <div className="mb-6 rounded-lg border border-rose-200 bg-rose-50/40 p-4 text-sm">
+          <p>
+            <span className="font-semibold text-gray-900">Condition of Win:</span>{" "}
+            <span className="text-gray-700">{scrim.winCondition}</span>
+          </p>
+          {scrim.result && (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="font-semibold text-gray-900">Result:</span>
+              <span
+                className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${
+                  scrimOutcome === "W"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    : scrimOutcome === "L"
+                      ? "border-red-200 bg-red-50 text-red-700"
+                      : scrimOutcome === "D"
+                        ? "border-amber-200 bg-amber-50 text-amber-700"
+                        : "border-gray-200 bg-gray-50 text-gray-600"
+                }`}
+              >
+                {scrimOutcome === "W"
+                  ? "Won"
+                  : scrimOutcome === "L"
+                    ? "Lost"
+                    : scrimOutcome === "D"
+                      ? "Draw"
+                      : "No contest"}
+              </span>
+              {scrim.resultNotes && (
+                <p className="basis-full text-xs italic text-gray-600">
+                  &ldquo;{scrim.resultNotes}&rdquo;
+                </p>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {hasRoster && standing && (
         <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4">
           <div className="mb-2 flex items-center justify-between text-sm">
             <span className="font-medium text-gray-900">
@@ -188,7 +274,7 @@ export default async function EventPage({
         </div>
       )}
 
-      {isMatch && (
+      {hasRoster && (
         <div className="mb-6">
           {!isOpen ? (
             <div className="bg-gray-100 rounded-lg p-4 text-center text-gray-600">
@@ -205,26 +291,40 @@ export default async function EventPage({
                   you know if a spot opens up. You can still update your
                   preferences below.
                 </p>
-                <SignupForm event={event} existing={existingSignup} />
+                <SignupForm
+                  event={event}
+                  existing={existingSignup}
+                  singleSquad={isScrim}
+                />
               </div>
             ) : (
               <div className="bg-green-50 rounded-lg p-4">
                 <p className="font-medium text-green-800 mb-2">
                   You&apos;re signed up!
                 </p>
-                <SignupForm event={event} existing={existingSignup} />
+                <SignupForm
+                  event={event}
+                  existing={existingSignup}
+                  singleSquad={isScrim}
+                />
               </div>
             )
           ) : (
-            <SignupForm event={event} existing={null} />
+            <SignupForm event={event} existing={null} singleSquad={isScrim} />
           )}
         </div>
       )}
 
-      {isMatch && (
+      {hasRoster && (
         <section className="mt-8">
-          <h2 className="mb-3 text-xl font-bold tracking-tight text-gray-900">Squads</h2>
-          <div className="grid gap-4 md:grid-cols-2">
+          <h2 className="mb-3 text-xl font-bold tracking-tight text-gray-900">
+            {isScrim ? "Roster" : "Squads"}
+          </h2>
+          <div
+            className={
+              isScrim ? "grid gap-4" : "grid gap-4 md:grid-cols-2"
+            }
+          >
             <SquadRoster
               name={event.squad1Name}
               squadNumber={1}
@@ -233,19 +333,21 @@ export default async function EventPage({
               currentUserId={currentUserId}
               guildTag={guildTag}
             />
-            <SquadRoster
-              name={event.squad2Name}
-              squadNumber={2}
-              rows={squad2}
-              event={event}
-              currentUserId={currentUserId}
-              guildTag={guildTag}
-            />
+            {!isScrim && (
+              <SquadRoster
+                name={event.squad2Name}
+                squadNumber={2}
+                rows={squad2}
+                event={event}
+                currentUserId={currentUserId}
+                guildTag={guildTag}
+              />
+            )}
           </div>
         </section>
       )}
 
-      {isMatch && waitlist.length > 0 && (
+      {hasRoster && waitlist.length > 0 && (
         <details className="group mt-8">
           <summary className="flex cursor-pointer list-none items-center gap-2 [&::-webkit-details-marker]:hidden">
             <Chevron />

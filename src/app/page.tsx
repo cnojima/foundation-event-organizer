@@ -29,20 +29,21 @@ export default async function Home() {
     .orderBy(desc(events.createdAt));
 
   // Which of those events has the current user already signed up for? Drives
-  // the "needs your attention" emphasis on cards below.
+  // the "needs your attention" emphasis on cards below. Includes scrim events
+  // since they accept signups too.
   const signedUpEventIds = new Set<string>();
   if (guildEvents.length > 0) {
-    const matchEventIds = guildEvents
-      .filter((e) => e.kind === "match")
+    const rosterEventIds = guildEvents
+      .filter((e) => e.kind === "match" || e.kind === "scrim")
       .map((e) => e.id);
-    if (matchEventIds.length > 0) {
+    if (rosterEventIds.length > 0) {
       const rows = await db
         .select({ eventId: signups.eventId })
         .from(signups)
         .where(
           and(
             eq(signups.userId, membership.userId),
-            inArray(signups.eventId, matchEventIds),
+            inArray(signups.eventId, rosterEventIds),
             isNull(signups.deletedAt)
           )
         );
@@ -82,10 +83,10 @@ export default async function Home() {
               (!event.signupOpens || event.signupOpens <= now) &&
               (!event.signupCloses || event.signupCloses > now);
             const isMatch = event.kind === "match";
+            const isScrim = event.kind === "scrim";
+            const hasRoster = isMatch || isScrim;
             const signedUp = signedUpEventIds.has(event.id);
-            // Emphasize match events that are still actionable (open and not
-            // yet signed up). Closed events and simple events stay neutral.
-            const needsAction = isMatch && isOpen && !signedUp;
+            const needsAction = hasRoster && isOpen && !signedUp;
 
             return (
               <Link
@@ -101,13 +102,28 @@ export default async function Home() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-900">{event.name}</h2>
-                    {event.description && (
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-lg font-semibold text-gray-900">
+                        {event.name}
+                      </h2>
+                      {isScrim && (
+                        <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700">
+                          Scrim
+                        </span>
+                      )}
+                    </div>
+                    {event.description && !isScrim && (
                       <p className="mt-1 text-sm text-gray-600">{event.description}</p>
                     )}
                     {event.kind === "simple" && event.gameTime && (
                       <p className="mt-1 text-xs text-gray-500">
                         {t("starts")}: <DateTime iso={event.gameTime} showUTC={false} />
+                      </p>
+                    )}
+                    {isScrim && event.gameTime && (
+                      <p className="mt-1 text-xs text-gray-500">
+                        {t("starts")}:{" "}
+                        <DateTime iso={event.gameTime} showUTC={false} />
                       </p>
                     )}
                     {isMatch && (
@@ -126,12 +142,12 @@ export default async function Home() {
                     )}
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
-                    {isMatch && signedUp && (
+                    {hasRoster && signedUp && (
                       <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">
                         {t("signedUp")}
                       </span>
                     )}
-                    {isMatch && !signedUp && isOpen && (
+                    {hasRoster && !signedUp && isOpen && (
                       <span className="rounded border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700">
                         {t("signUp")}
                       </span>
