@@ -20,6 +20,9 @@
     "events": "이벤트",
     "scrimHistory": "스크림 히스토리",
     "scrimmages": "연습 경기",
+    "findPlayers": "플레이어 찾기",
+    "duels": "결투",
+    "leaderboard": "순위표",
     "players": "플레이어",
     "members": "회원들",
     "invites": "초대",
@@ -30,9 +33,12 @@
     "adminHelp": "관리자 도움말",
     "help": "돕다",
     "myAccount": "내 계정",
-    "findPlayers": "플레이어 찾기",
-    "duels": "결투",
-    "leaderboard": "순위표"
+    "category": {
+      "play": "놀다",
+      "manage": "관리하다",
+      "platform": "플랫폼",
+      "account": "계정"
+    }
   },
   "topBar": {
     "notifications": "알림",
@@ -207,6 +213,68 @@
     "waitlistOrdered": "등록 시간 순으로 정렬됩니다. 플레이어의 지정된 역할을 \"대기자\"에서 플레이어, 백업 또는 리더로 변경하여 플레이어를 승격시킬 수 있습니다.",
     "firstChoice": "첫 번째 선택"
   },
+  "playerProfile": {
+    "backToPlayers": "플레이어 목록으로 돌아가기",
+    "youBadge": "너",
+    "noGuild": "길드 없음",
+    "serverLabel": "서버 번호 {serverNumber}",
+    "challenge": "도전",
+    "rating": "평가",
+    "record": "기록",
+    "reputation": "평판",
+    "lastActive": "마지막 결투",
+    "duelsTotal": "{count, plural, =0 {No duels} 하나 {# duel} 다른 {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} 기타 {# ratings} }",
+    "reputationNotEnough": "평점 5점 이상 필요",
+    "historyHeading": "결투 역사",
+    "historyEmpty": "아직 완료된 결투가 없습니다.",
+    "locationLabel": "위치",
+    "winConditionLabel": "승리 조건",
+    "unknownPlayer": "알 수 없는 플레이어",
+    "prev": "← 이전",
+    "next": "다음 →",
+    "pageOf": "페이지 {page} {total}"
+  },
+  "leaderboard": {
+    "title": "순위표",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} 한 명 {# ranked player on your server} {# ranked players on your server} }.",
+    "serverLabel": "서버 번호 {serverNumber}",
+    "howItWorks": "순위는 어떻게 매겨지는가 →",
+    "yourRank": "당신의 순위: # {rank} · {rating} 평가",
+    "notRankedYet": "최소 {min} 동안 플레이하세요 {min} 확정된 대결 결과는 순위표에 표시됩니다. 레이팅은 1000에서 시작하며 승패에 따라 업데이트됩니다.",
+    "rankLabel": "순위 {rank}",
+    "noMatches": "해당 필터 조건에 맞는 선수가 없습니다.",
+    "emptyState": "아직 서버에 랭크 플레이어가 없습니다. 첫 번째 플레이어가 되어 보세요.",
+    "needsServerNumber": "길드에 사용할 서버 번호를 설정하세요.<settingsLink> 길드 설정</settingsLink> 순위표를 보려면.",
+    "prev": "← 이전",
+    "next": "다음 →",
+    "pageOf": "페이지 {page} {total}"
+  },
+  "players": {
+    "title": "플레이어 찾기",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} 한 명 {# discoverable player on your server} {# discoverable players on your server} }.",
+    "serverLabel": "서버 번호 {serverNumber}",
+    "searchPlaceholder": "게임 내 이름으로 검색…",
+    "allTiers": "모든 파워 티어",
+    "allGuilds": "모든 길드",
+    "tierLabel": "티어 {tier}",
+    "reset": "다시 놓기",
+    "rating": "평가",
+    "ratingTooltip": "ELO 방식의 PvP 레이팅 시스템 - 1000에서 시작하며, 확정된 결투에 따라 업데이트됩니다.",
+    "recordTooltip": "확정된 대결에서의 승리 · 패배 · 무승부.",
+    "reputationTooltip": "평판: {count} 개에 대한 총 좋아요 비율 {count} 평가.",
+    "lastActiveLabel": "활동적인",
+    "challenge": "도전",
+    "sameGuildBadge": "당신의 길드",
+    "sameGuildChallengeHint": "길드원들과의 결투를 직접 조율하세요. 그들은 이미 당신 옆에 있습니다.",
+    "noMatches": "해당 필터 조건에 맞는 선수가 없습니다.",
+    "emptyState": "아직 서버에 접속 가능한 플레이어가 없습니다.",
+    "needsServerNumber": "길드에 사용할 서버 번호를 설정하세요.<settingsLink> 길드 설정</settingsLink> 같은 서버에 있는 플레이어를 찾기 위해.",
+    "noGuildsOnServer": "이 서버에는 아직 다른 길드가 등록되지 않았습니다.",
+    "prev": "← 이전",
+    "next": "다음 →",
+    "pageOf": "페이지 {page} {total}"
+  },
   "playersPage": {
     "title": "플레이어",
     "titleNamed": "{guildName} — 선수들",
@@ -335,6 +403,17 @@
     "subtitle": "게임 내 닉네임을 변경하거나, 길드를 탈퇴하거나, 계정을 삭제할 수 있습니다.",
     "inGameName": "게임 내 이름",
     "inGameNameHelp": "이것이 명단 및 참가 신청 시 표시되는 방식입니다. 최대 {max} 명까지 가능합니다. {max} 캐릭터.",
+    "duels": {
+      "heading": "결투",
+      "powerTier": "파워 티어",
+      "powerTierNotSet": "설정되지 않음",
+      "powerTierHelp": "본인이 직접 보고한 게임 내 전투력 단계(I~XIII). 플레이어 카드에 표시되며, 탐색 페이지에서 필터로 사용됩니다. 신뢰도 시스템 - 정확하게 설정하세요.",
+      "discoverableLabel": "1대1 대결에서 발견 가능",
+      "discoverableHelp": "이 기능을 켜면 같은 서버의 다른 플레이어가 검색 페이지에서 당신을 찾아 결투를 신청할 수 있습니다. 끄면 검색 결과 및 결투 신청 목록에서 당신을 숨길 수 있습니다. 길드 내부 경험에는 영향을 미치지 않습니다.",
+      "dmLabel": "결투 관련해서 디스코드 다이렉트 메시지로 알려주세요.",
+      "dmHelp": "봇이 활성화되면 누군가가 당신에게 결투 신청을 하거나, 제안을 수락 또는 거절하거나, 결투를 취소하거나, 결투 결과를 발표할 때 DM으로 알림을 보냅니다. 봇을 끄면 결투 관련 Discord DM 알림을 완전히 차단할 수 있습니다. 웹사이트에서는 모든 알림을 계속 볼 수 있습니다.",
+      "dmHelpUnlinked": "결투 관련 다이렉트 메시지를 활성화하려면 최소 한 번 이상 Discord 계정으로 로그인하세요. (로그아웃한 후 Discord 계정으로 다시 로그인하세요.)"
+    },
     "guildMembership": "길드 회원 자격",
     "youreInGuild": "당신은 {role} 입니다. {role} {guildName} .",
     "leaveExplanation": "이 길드를 탈퇴하면 길드 행사 참여 목록에서 제외되며, 과거 가입 기록(길드 출석 보고서 작성을 위해 보관됨)은 일시적으로 삭제됩니다.",
@@ -347,18 +426,7 @@
     "deleteButton": "내 계정을 삭제해 주세요",
     "deleting": "삭제 중…",
     "deleteConfirm": "계정을 삭제하시겠습니까? 계정을 삭제하면 길드에서 탈퇴되고, 모든 가입 기록이 삭제되며, Google/Discord 연결도 해제됩니다. 이 작업은 되돌릴 수 없습니다.",
-    "language": "언어",
-    "duels": {
-      "heading": "결투",
-      "powerTier": "파워 티어",
-      "powerTierNotSet": "설정되지 않음",
-      "powerTierHelp": "본인이 직접 보고한 게임 내 전투력 단계(I~XIII). 플레이어 카드에 표시되며, 탐색 페이지에서 필터로 사용됩니다. 신뢰도 시스템 - 정확하게 설정하세요.",
-      "discoverableLabel": "1대1 대결에서 발견 가능",
-      "discoverableHelp": "이 기능을 켜면 같은 서버의 다른 플레이어가 검색 페이지에서 당신을 찾아 결투를 신청할 수 있습니다. 끄면 검색 결과 및 결투 신청 목록에서 당신을 숨길 수 있습니다. 길드 내부 경험에는 영향을 미치지 않습니다.",
-      "dmLabel": "결투 관련해서 디스코드 다이렉트 메시지로 알려주세요.",
-      "dmHelp": "봇이 활성화되면 누군가가 당신에게 결투 신청을 하거나, 제안을 수락 또는 거절하거나, 결투를 취소하거나, 결투 결과를 발표할 때 DM으로 알림을 보냅니다. 봇을 끄면 결투 관련 Discord DM 알림을 완전히 차단할 수 있습니다. 웹사이트에서는 모든 알림을 계속 볼 수 있습니다.",
-      "dmHelpUnlinked": "결투 관련 다이렉트 메시지를 활성화하려면 최소 한 번 이상 Discord 계정으로 로그인하세요. (로그아웃한 후 Discord 계정으로 다시 로그인하세요.)"
-    }
+    "language": "언어"
   },
   "errors": {
     "forbidden": "금지됨",
@@ -514,9 +582,9 @@
       "signup": "경기 참가 신청하기",
       "status": "당신의 상태가 의미하는 바는 무엇일까요?",
       "scrims": "연습 경기",
+      "duels": "1대1 결투",
       "reminders": "알림 및 캘린더",
-      "closed": "등록이 마감된 경우",
-      "duels": "1대1 결투"
+      "closed": "등록이 마감된 경우"
     },
     "gettingIn": {
       "step1": "홈페이지에서 Google 또는 Discord로 로그인하세요.",
@@ -552,12 +620,6 @@
       "history": "기록. 길드의 예정된 스크림과 지난 스크림을 확인하세요.<scrimsLink> 스크림 기록 페이지</scrimsLink> 승패는 길드의 관점에서 본 것입니다.",
       "note": "스크림은 길드 관리자만 제안, 수락 또는 취소할 수 있으며, 다른 이벤트와 마찬가지로 신청하시면 됩니다. 스크림이 시작되기 전에 취소되면 해당 이벤트는 홈 페이지에서 사라지고 신청 내역도 숨겨집니다(관리자는 참석 기록 보관을 위해 해당 내역을 계속 보유합니다)."
     },
-    "reminders": {
-      "bot": "길드에 디스코드 봇이 설정되어 있으면, 봇이 길드에서 선택한 채널에 각 이벤트 1일 전, 1시간 전, 20분 전에 알림을 게시합니다.",
-      "ics": "모든 이벤트 페이지에는 이벤트를 캘린더에 추가할 수 있는 .ics 파일 다운로드 링크가 있습니다.",
-      "slashCommands": "디스코드 슬래시 명령어: /upcoming은 길드의 예정된 이벤트를 보여주고, /signup은 디스코드를 나가지 않고 가입할 수 있게 해줍니다. 봇이 계정을 연결할 수 있도록 웹사이트에 디스코드 계정으로 최소 한 번 이상 로그인해야 합니다."
-    },
-    "closed": "신청서가 \"신청 마감\" 메시지로 바뀝니다. 늦게 신청해야 하는 경우 길드 관리자에게 문의하세요. 관리자가 수동으로 신청을 조정해 드릴 수 있습니다.",
     "duels": {
       "intro": "듀얼은 두 플레이어 간의 1대1 대결입니다. 매치 이벤트나 스크림과는 별개이며, 선수 명단이나 참가 신청서 없이 두 사람이 시간과 규칙에 동의하기만 하면 됩니다.",
       "find": "상대방을 찾아보세요<playersLink> 플레이어 검색 페이지</playersLink> 같은 서버에서 활동 중 공개 설정을 한 모든 플레이어 목록을 보여줍니다. 전투력 등급, 길드 또는 이름으로 필터링할 수 있습니다. 플레이어 이름을 클릭하면 평점, 전적, 전체 결투 기록 등 전체 프로필을 볼 수 있습니다.",
@@ -572,68 +634,12 @@
       "history": "예정된 결투, 지난 결투, 거절된 결투, 철회된 결투, 취소된 결투를 포함한 전체 결투 내역을 확인하세요.<duelsLink> 결투 페이지</duelsLink> 결과 칩에는 사용자의 관점에서 W/L/D/NC가 표시됩니다.",
       "discordDm": "Discord에 한 번이라도 로그인한 적이 있다면, 봇이 결투 이벤트(도전 신청, 수락, 거절, 취소, 결과 발표 등)에 대한 DM을 보낼 수 있습니다. 내 계정에서 이 기능을 켜고 끌 수 있습니다. Discord 설정에서 서버 구성원의 DM 수신을 차단했다면, 봇은 당신에게 연락할 수 없습니다.",
       "privacy": "내 계정에서 결투 공개 설정을 해제하면 검색 페이지에 표시되지 않아 결투 신청을 차단할 수 있습니다. 길드 내부 경험에는 아무런 영향을 미치지 않습니다."
-    }
-  },
-  "playerProfile": {
-    "backToPlayers": "플레이어 목록으로 돌아가기",
-    "youBadge": "너",
-    "noGuild": "길드 없음",
-    "serverLabel": "서버 번호 {serverNumber}",
-    "challenge": "도전",
-    "rating": "평가",
-    "record": "기록",
-    "reputation": "평판",
-    "lastActive": "마지막 결투",
-    "duelsTotal": "{count, plural, =0 {No duels} 하나 {# duel} 다른 {# duels} }",
-    "reputationSub": "{count, plural, one {# rating} 기타 {# ratings} }",
-    "reputationNotEnough": "평점 5점 이상 필요",
-    "historyHeading": "결투 역사",
-    "historyEmpty": "아직 완료된 결투가 없습니다.",
-    "locationLabel": "위치",
-    "winConditionLabel": "승리 조건",
-    "unknownPlayer": "알 수 없는 플레이어",
-    "prev": "← 이전",
-    "next": "다음 →",
-    "pageOf": "페이지 {page} {total}"
-  },
-  "leaderboard": {
-    "title": "순위표",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} 한 명 {# ranked player on your server} {# ranked players on your server} }.",
-    "serverLabel": "서버 번호 {serverNumber}",
-    "howItWorks": "순위는 어떻게 매겨지는가 →",
-    "yourRank": "당신의 순위: # {rank} · {rating} 평가",
-    "notRankedYet": "최소 {min} 동안 플레이하세요 {min} 확정된 대결 결과는 순위표에 표시됩니다. 레이팅은 1000에서 시작하며 승패에 따라 업데이트됩니다.",
-    "rankLabel": "순위 {rank}",
-    "noMatches": "해당 필터 조건에 맞는 선수가 없습니다.",
-    "emptyState": "아직 서버에 랭크 플레이어가 없습니다. 첫 번째 플레이어가 되어 보세요.",
-    "needsServerNumber": "길드에 사용할 서버 번호를 설정하세요.<settingsLink> 길드 설정</settingsLink> 순위표를 보려면.",
-    "prev": "← 이전",
-    "next": "다음 →",
-    "pageOf": "페이지 {page} {total}"
-  },
-  "players": {
-    "title": "플레이어 찾기",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} 한 명 {# discoverable player on your server} {# discoverable players on your server} }.",
-    "serverLabel": "서버 번호 {serverNumber}",
-    "searchPlaceholder": "게임 내 이름으로 검색…",
-    "allTiers": "모든 파워 티어",
-    "allGuilds": "모든 길드",
-    "tierLabel": "티어 {tier}",
-    "reset": "다시 놓기",
-    "rating": "평가",
-    "ratingTooltip": "ELO 방식의 PvP 레이팅 시스템 - 1000에서 시작하며, 확정된 결투에 따라 업데이트됩니다.",
-    "recordTooltip": "확정된 대결에서의 승리 · 패배 · 무승부.",
-    "reputationTooltip": "평판: {count} 개에 대한 총 좋아요 비율 {count} 평가.",
-    "lastActiveLabel": "활동적인",
-    "challenge": "도전",
-    "sameGuildBadge": "당신의 길드",
-    "sameGuildChallengeHint": "길드원들과의 결투를 직접 조율하세요. 그들은 이미 당신 옆에 있습니다.",
-    "noMatches": "해당 필터 조건에 맞는 선수가 없습니다.",
-    "emptyState": "아직 서버에 접속 가능한 플레이어가 없습니다.",
-    "needsServerNumber": "길드에 사용할 서버 번호를 설정하세요.<settingsLink> 길드 설정</settingsLink> 같은 서버에 있는 플레이어를 찾기 위해.",
-    "noGuildsOnServer": "이 서버에는 아직 다른 길드가 등록되지 않았습니다.",
-    "prev": "← 이전",
-    "next": "다음 →",
-    "pageOf": "페이지 {page} {total}"
+    },
+    "reminders": {
+      "bot": "길드에 디스코드 봇이 설정되어 있으면, 봇이 길드에서 선택한 채널에 각 이벤트 1일 전, 1시간 전, 20분 전에 알림을 게시합니다.",
+      "ics": "모든 이벤트 페이지에는 이벤트를 캘린더에 추가할 수 있는 .ics 파일 다운로드 링크가 있습니다.",
+      "slashCommands": "디스코드 슬래시 명령어: /upcoming은 길드의 예정된 이벤트를 보여주고, /signup은 디스코드를 나가지 않고 가입할 수 있게 해줍니다. 봇이 계정을 연결할 수 있도록 웹사이트에 디스코드 계정으로 최소 한 번 이상 로그인해야 합니다."
+    },
+    "closed": "신청서가 \"신청 마감\" 메시지로 바뀝니다. 늦게 신청해야 하는 경우 길드 관리자에게 문의하세요. 관리자가 수동으로 신청을 조정해 드릴 수 있습니다."
   }
 }

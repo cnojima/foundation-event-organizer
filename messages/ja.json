@@ -20,6 +20,9 @@
     "events": "イベント",
     "scrimHistory": "スクリムの歴史",
     "scrimmages": "スクリメージ",
+    "findPlayers": "プレイヤーを探す",
+    "duels": "決闘",
+    "leaderboard": "リーダーボード",
     "players": "選手たち",
     "members": "メンバー",
     "invites": "招待状",
@@ -30,9 +33,12 @@
     "adminHelp": "管理者ヘルプ",
     "help": "ヘルプ",
     "myAccount": "私のアカウント",
-    "findPlayers": "プレイヤーを探す",
-    "duels": "決闘",
-    "leaderboard": "リーダーボード"
+    "category": {
+      "play": "遊ぶ",
+      "manage": "管理",
+      "platform": "プラットフォーム",
+      "account": "アカウント"
+    }
   },
   "topBar": {
     "notifications": "通知",
@@ -207,6 +213,68 @@
     "waitlistOrdered": "登録時間順に表示されます。プレイヤーの役割を「待機リスト」から「プレイヤー」、「バックアップ」、「リーダー」に変更することで、プレイヤーを昇格させることができます。",
     "firstChoice": "第一選択"
   },
+  "playerProfile": {
+    "backToPlayers": "選手一覧に戻る",
+    "youBadge": "あなた",
+    "noGuild": "ギルドなし",
+    "serverLabel": "サーバー番号： {serverNumber}",
+    "challenge": "チャレンジ",
+    "rating": "評価",
+    "record": "記録",
+    "reputation": "評判",
+    "lastActive": "最後の決闘",
+    "duelsTotal": "{count, plural, =0 {No duels} 1つの{# duel}その他の{# duels} }",
+    "reputationSub": "{count, plural, one {# rating}その他の{# ratings} }",
+    "reputationNotEnough": "5件以上の評価が必要です",
+    "historyHeading": "決闘の歴史",
+    "historyEmpty": "まだ決闘は完了していません。",
+    "locationLabel": "位置",
+    "winConditionLabel": "勝利条件",
+    "unknownPlayer": "不明なプレイヤー",
+    "prev": "← 前へ",
+    "next": "次へ →",
+    "pageOf": "ページ{page} {total}の{total}"
+  },
+  "leaderboard": {
+    "title": "リーダーボード",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} 1人{# ranked player on your server} {# ranked players on your server} }。",
+    "serverLabel": "サーバー番号： {serverNumber}",
+    "howItWorks": "ランキングの仕組み →",
+    "yourRank": "あなたのランク：# {rank}・{rating}評価",
+    "notRankedYet": "最低{min}プレイしてください{min}確定した対戦結果がリーダーボードに表示されます。レーティングは1000から始まり、勝敗に応じて更新されます。",
+    "rankLabel": "ランク{rank}",
+    "noMatches": "これらの条件に一致するプレイヤーはいません。",
+    "emptyState": "あなたのサーバーにはまだランクマッチのプレイヤーがいません。あなたが最初のプレイヤーになりましょう。",
+    "needsServerNumber": "ギルドのサーバー番号を設定してください<settingsLink>ギルド設定</settingsLink>リーダーボードを見るには。",
+    "prev": "← 前へ",
+    "next": "次へ →",
+    "pageOf": "ページ{page} {total}の{total}"
+  },
+  "players": {
+    "title": "プレイヤーを探す",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} 1人{# discoverable player on your server}その他{# discoverable players on your server} }。",
+    "serverLabel": "サーバー番号： {serverNumber}",
+    "searchPlaceholder": "ゲーム内名で検索…",
+    "allTiers": "すべてのパワーレベル",
+    "allGuilds": "すべてのギルド",
+    "tierLabel": "ティア{tier}",
+    "reset": "リセット",
+    "rating": "評価",
+    "ratingTooltip": "ELO方式のPvPレーティング ― 1000から始まり、決闘が確定すると更新されます。",
+    "recordTooltip": "確定した対戦における勝利数・敗北数・引き分け数。",
+    "reputationTooltip": "評判： {count}以上の高評価の割合{count}評価。",
+    "lastActiveLabel": "アクティブ",
+    "challenge": "チャレンジ",
+    "sameGuildBadge": "あなたのギルド",
+    "sameGuildChallengeHint": "ギルドメンバー同士の決闘は直接調整しましょう。彼らはすでにあなたのすぐそばにいるのですから。",
+    "noMatches": "これらの条件に一致するプレイヤーはいません。",
+    "emptyState": "あなたのサーバーにはまだ発見可能なプレイヤーがいません。",
+    "needsServerNumber": "ギルドのサーバー番号を設定してください<settingsLink>ギルド設定</settingsLink>同じサーバー上のプレイヤーを見つける。",
+    "noGuildsOnServer": "このサーバーには、まだ他のギルドは登録されていません。",
+    "prev": "← 前へ",
+    "next": "次へ →",
+    "pageOf": "ページ{page} {total}の{total}"
+  },
   "playersPage": {
     "title": "選手たち",
     "titleNamed": "{guildName} — 選手たち",
@@ -335,6 +403,17 @@
     "subtitle": "ゲーム内の名前を更新するか、ギルドを脱退するか、アカウントを削除してください。",
     "inGameName": "ゲーム内名",
     "inGameNameHelp": "これは名簿や登録画面に表示される方法です。最大{max}キャラクター。",
+    "duels": {
+      "heading": "決闘",
+      "powerTier": "パワーティア",
+      "powerTierNotSet": "設定されていません",
+      "powerTierHelp": "ゲーム内での自己申告によるパワーレベル（I～XIII）。プレイヤーカードに表示され、発見ページでのフィルターとして使用されます。信頼度システム ― 正確に設定してください。",
+      "discoverableLabel": "1対1のデュエルで発見可能",
+      "discoverableHelp": "オンにすると、同じサーバーの他のプレイヤーが発見ページであなたを見つけて、決闘を挑むことができます。オフにすると、リストや挑戦から非表示になります。ギルド内での体験には影響しません。",
+      "dmLabel": "決闘についてDiscordのダイレクトメッセージで通知してください",
+      "dmHelp": "有効にすると、誰かがあなたに挑戦したり、あなたの提案を承認または拒否したり、決闘をキャンセルしたり、結果を宣言したりすると、ボットがあなたにダイレクトメッセージ（DM）を送信します。無効にすると、決闘に関するDiscordのDMを完全に停止できます。ウェブサイト上では引き続きすべての情報が表示されます。",
+      "dmHelpUnlinked": "決闘に関するダイレクトメッセージを有効にするには、少なくとも一度はDiscordにログインしてください。（一度ログアウトしてから、再度Discordにログインしてください。）"
+    },
     "guildMembership": "ギルド会員",
     "youreInGuild": "あなたは{role}です{role} {guildName}の{guildName} 。",
     "leaveExplanation": "このギルドを脱退すると、ギルドのイベントへの参加資格が失われ、過去の参加登録履歴も（ギルドの出席状況報告のために）削除されます。",
@@ -347,18 +426,7 @@
     "deleteButton": "アカウントを削除",
     "deleting": "削除中…",
     "deleteConfirm": "アカウントを削除しますか？削除すると、ギルドから除名され、すべての登録情報が削除され、Google/Discordとの連携も解除されます。この操作は元に戻せません。",
-    "language": "言語",
-    "duels": {
-      "heading": "決闘",
-      "powerTier": "パワーティア",
-      "powerTierNotSet": "設定されていません",
-      "powerTierHelp": "ゲーム内での自己申告によるパワーレベル（I～XIII）。プレイヤーカードに表示され、発見ページでのフィルターとして使用されます。信頼度システム ― 正確に設定してください。",
-      "discoverableLabel": "1対1のデュエルで発見可能",
-      "discoverableHelp": "オンにすると、同じサーバーの他のプレイヤーが発見ページであなたを見つけて、決闘を挑むことができます。オフにすると、リストや挑戦から非表示になります。ギルド内での体験には影響しません。",
-      "dmLabel": "決闘についてDiscordのダイレクトメッセージで通知してください",
-      "dmHelp": "有効にすると、誰かがあなたに挑戦したり、あなたの提案を承認または拒否したり、決闘をキャンセルしたり、結果を宣言したりすると、ボットがあなたにダイレクトメッセージ（DM）を送信します。無効にすると、決闘に関するDiscordのDMを完全に停止できます。ウェブサイト上では引き続きすべての情報が表示されます。",
-      "dmHelpUnlinked": "決闘に関するダイレクトメッセージを有効にするには、少なくとも一度はDiscordにログインしてください。（一度ログアウトしてから、再度Discordにログインしてください。）"
-    }
+    "language": "言語"
   },
   "errors": {
     "forbidden": "禁断",
@@ -514,9 +582,9 @@
       "signup": "試合への参加登録",
       "status": "あなたのステータスの意味",
       "scrims": "練習試合",
+      "duels": "1対1の決闘",
       "reminders": "リマインダーとカレンダー",
-      "closed": "登録受付が終了している場合",
-      "duels": "1対1の決闘"
+      "closed": "登録受付が終了している場合"
     },
     "gettingIn": {
       "step1": "ホームページでGoogleアカウントまたはDiscordアカウントでログインしてください。",
@@ -552,12 +620,6 @@
       "history": "履歴。ギルドの今後のスクリムと過去のスクリムについては、<scrimsLink>スクリムの歴史ページ</scrimsLink>勝敗数はギルドの視点からのものです。",
       "note": "スクリムの提案、承認、キャンセルはギルド管理者のみが行えます。他のイベントと同様に、参加登録をするだけです。スクリムが開催前にキャンセルされた場合、イベントはホームページから消え、登録情報も非表示になります（管理者は出席履歴として記録を保持します）。"
     },
-    "reminders": {
-      "bot": "ギルドにDiscordボットが設定されている場合、ボットは各イベントの1日前、1時間前、20分前に、ギルドが指定したチャンネルにリマインダーを投稿します。",
-      "ics": "各イベントページには、イベントをカレンダーに追加するための「.icsファイルをダウンロード」リンクがあります。",
-      "slashCommands": "Discordのスラッシュコマンド：/upcomingでギルドの今後のイベント一覧が表示され、/signupでDiscordを離れることなく登録できます。ボットがあなたのアカウントを照合できるように、最初にDiscordでウェブサイトに少なくとも一度ログインする必要があります。"
-    },
-    "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。",
     "duels": {
       "intro": "デュエルとは、2人のプレイヤーが1対1で対戦する形式のチャレンジです。試合イベントや練習試合とは別個のもので、登録者リストも申込用紙も不要。2人が日時とルールについて合意するだけで成立します。",
       "find": "対戦相手を探す<playersLink>プレイヤー発見ページ</playersLink>同じサーバー上で、検索対象として公開設定にしているプレイヤー全員が表示されます。パワーティア、ギルド、または名前で絞り込み検索が可能です。プレイヤーの名前をクリックすると、レーティング、戦績、完全な決闘履歴など、詳細なプロフィールが表示されます。",
@@ -572,68 +634,12 @@
       "history": "決闘の全履歴（今後の決闘、過去の決闘、拒否された決闘、取り下げられた決闘、キャンセルされた決闘）は、<duelsLink>決闘ページ</duelsLink>結果チップには、あなたの視点から見た勝敗（W/L/D/NC）が表示されます。",
       "discordDm": "Discordに一度でもログインしていれば、ボットからデュエルイベントに関するダイレクトメッセージ（DM）が届きます。メッセージの内容は、挑戦の受付状況、承認済み、拒否済み、キャンセル済み、結果発表済みなどです。この機能は「マイアカウント」でオン/オフを切り替えられます。Discordの設定でサーバーメンバーからのDMを無効にしている場合、ボットからメッセージが届きません。",
       "privacy": "マイアカウントでデュエルの表示設定をオフにすると、検索結果ページに表示されなくなり、対戦の挑戦もブロックされます。ギルド内でのプレイ体験には影響はありません。"
-    }
-  },
-  "playerProfile": {
-    "backToPlayers": "選手一覧に戻る",
-    "youBadge": "あなた",
-    "noGuild": "ギルドなし",
-    "serverLabel": "サーバー番号： {serverNumber}",
-    "challenge": "チャレンジ",
-    "rating": "評価",
-    "record": "記録",
-    "reputation": "評判",
-    "lastActive": "最後の決闘",
-    "duelsTotal": "{count, plural, =0 {No duels} 1つの{# duel}その他の{# duels} }",
-    "reputationSub": "{count, plural, one {# rating}その他の{# ratings} }",
-    "reputationNotEnough": "5件以上の評価が必要です",
-    "historyHeading": "決闘の歴史",
-    "historyEmpty": "まだ決闘は完了していません。",
-    "locationLabel": "位置",
-    "winConditionLabel": "勝利条件",
-    "unknownPlayer": "不明なプレイヤー",
-    "prev": "← 前へ",
-    "next": "次へ →",
-    "pageOf": "ページ{page} {total}の{total}"
-  },
-  "leaderboard": {
-    "title": "リーダーボード",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} 1人{# ranked player on your server} {# ranked players on your server} }。",
-    "serverLabel": "サーバー番号： {serverNumber}",
-    "howItWorks": "ランキングの仕組み →",
-    "yourRank": "あなたのランク：# {rank}・{rating}評価",
-    "notRankedYet": "最低{min}プレイしてください{min}確定した対戦結果がリーダーボードに表示されます。レーティングは1000から始まり、勝敗に応じて更新されます。",
-    "rankLabel": "ランク{rank}",
-    "noMatches": "これらの条件に一致するプレイヤーはいません。",
-    "emptyState": "あなたのサーバーにはまだランクマッチのプレイヤーがいません。あなたが最初のプレイヤーになりましょう。",
-    "needsServerNumber": "ギルドのサーバー番号を設定してください<settingsLink>ギルド設定</settingsLink>リーダーボードを見るには。",
-    "prev": "← 前へ",
-    "next": "次へ →",
-    "pageOf": "ページ{page} {total}の{total}"
-  },
-  "players": {
-    "title": "プレイヤーを探す",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} 1人{# discoverable player on your server}その他{# discoverable players on your server} }。",
-    "serverLabel": "サーバー番号： {serverNumber}",
-    "searchPlaceholder": "ゲーム内名で検索…",
-    "allTiers": "すべてのパワーレベル",
-    "allGuilds": "すべてのギルド",
-    "tierLabel": "ティア{tier}",
-    "reset": "リセット",
-    "rating": "評価",
-    "ratingTooltip": "ELO方式のPvPレーティング ― 1000から始まり、決闘が確定すると更新されます。",
-    "recordTooltip": "確定した対戦における勝利数・敗北数・引き分け数。",
-    "reputationTooltip": "評判： {count}以上の高評価の割合{count}評価。",
-    "lastActiveLabel": "アクティブ",
-    "challenge": "チャレンジ",
-    "sameGuildBadge": "あなたのギルド",
-    "sameGuildChallengeHint": "ギルドメンバー同士の決闘は直接調整しましょう。彼らはすでにあなたのすぐそばにいるのですから。",
-    "noMatches": "これらの条件に一致するプレイヤーはいません。",
-    "emptyState": "あなたのサーバーにはまだ発見可能なプレイヤーがいません。",
-    "needsServerNumber": "ギルドのサーバー番号を設定してください<settingsLink>ギルド設定</settingsLink>同じサーバー上のプレイヤーを見つける。",
-    "noGuildsOnServer": "このサーバーには、まだ他のギルドは登録されていません。",
-    "prev": "← 前へ",
-    "next": "次へ →",
-    "pageOf": "ページ{page} {total}の{total}"
+    },
+    "reminders": {
+      "bot": "ギルドにDiscordボットが設定されている場合、ボットは各イベントの1日前、1時間前、20分前に、ギルドが指定したチャンネルにリマインダーを投稿します。",
+      "ics": "各イベントページには、イベントをカレンダーに追加するための「.icsファイルをダウンロード」リンクがあります。",
+      "slashCommands": "Discordのスラッシュコマンド：/upcomingでギルドの今後のイベント一覧が表示され、/signupでDiscordを離れることなく登録できます。ボットがあなたのアカウントを照合できるように、最初にDiscordでウェブサイトに少なくとも一度ログインする必要があります。"
+    },
+    "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。"
   }
 }

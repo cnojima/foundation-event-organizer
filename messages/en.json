@@ -16,6 +16,12 @@
     "optional": "Optional"
   },
   "nav": {
+    "category": {
+      "play": "Play",
+      "manage": "Manage",
+      "platform": "Platform",
+      "account": "Account"
+    },
     "manageEvents": "Manage Events",
     "events": "Events",
     "scrimHistory": "Scrim History",

@@ -20,6 +20,9 @@
     "events": "Acara",
     "scrimHistory": "Sejarah Scrim",
     "scrimmages": "Latihan tanding",
+    "findPlayers": "Cari Pemain",
+    "duels": "Duel",
+    "leaderboard": "Papan Peringkat",
     "players": "Pemain",
     "members": "Anggota",
     "invites": "Undangan",
@@ -30,9 +33,12 @@
     "adminHelp": "Bantuan Admin",
     "help": "Membantu",
     "myAccount": "Akun Saya",
-    "findPlayers": "Cari Pemain",
-    "duels": "Duel",
-    "leaderboard": "Papan Peringkat"
+    "category": {
+      "play": "Bermain",
+      "manage": "Mengelola",
+      "platform": "Platform",
+      "account": "Akun"
+    }
   },
   "topBar": {
     "notifications": "Pemberitahuan",
@@ -207,6 +213,68 @@
     "waitlistOrdered": "Diurutkan berdasarkan waktu pendaftaran. Promosikan pemain dengan mengubah Peran yang Ditugaskan dari \"daftar tunggu\" menjadi pemain, cadangan, atau pemimpin.",
     "firstChoice": "Pilihan Pertama"
   },
+  "playerProfile": {
+    "backToPlayers": "Kembali ke pemain",
+    "youBadge": "Anda",
+    "noGuild": "Tidak ada serikat",
+    "serverLabel": "Server # {serverNumber}",
+    "challenge": "Tantangan",
+    "rating": "Peringkat",
+    "record": "Catatan",
+    "reputation": "Reputasi",
+    "lastActive": "Duel terakhir",
+    "duelsTotal": "{count, plural, =0 {No duels} satu {# duel} duel lainnya {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} peringkat lainnya {# ratings} }",
+    "reputationNotEnough": "Membutuhkan 5+ peringkat",
+    "historyHeading": "Sejarah duel",
+    "historyEmpty": "Belum ada duel yang selesai.",
+    "locationLabel": "Lokasi",
+    "winConditionLabel": "Kondisi menang",
+    "unknownPlayer": "Pemain tak dikenal",
+    "prev": "← Sebelumnya",
+    "next": "Selanjutnya →",
+    "pageOf": "Halaman {page} dari {total}"
+  },
+  "leaderboard": {
+    "title": "Papan Peringkat",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} satu {# ranked player on your server} {# ranked players on your server} }.",
+    "serverLabel": "Server # {serverNumber}",
+    "howItWorks": "Cara kerja peringkat →",
+    "yourRank": "Peringkat Anda: # {rank} · {rating} peringkat",
+    "notRankedYet": "Mainkan setidaknya {min} Duel yang telah dikonfirmasi akan muncul di papan peringkat. Peringkat Anda dimulai dari 1000 dan akan diperbarui seiring Anda menang atau kalah.",
+    "rankLabel": "Peringkat {rank}",
+    "noMatches": "Tidak ada pemain yang sesuai dengan filter tersebut.",
+    "emptyState": "Belum ada pemain berperingkat di server Anda. Jadilah yang pertama.",
+    "needsServerNumber": "Tetapkan Nomor Server untuk guild Anda di<settingsLink> Pengaturan Guild</settingsLink> untuk melihat papan peringkat.",
+    "prev": "← Sebelumnya",
+    "next": "Selanjutnya →",
+    "pageOf": "Halaman {page} dari {total}"
+  },
+  "players": {
+    "title": "Cari Pemain",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} satu {# discoverable player on your server} {# discoverable players on your server} }.",
+    "serverLabel": "Server # {serverNumber}",
+    "searchPlaceholder": "Cari berdasarkan nama dalam game…",
+    "allTiers": "Semua tingkatan kekuatan",
+    "allGuilds": "Semua serikat",
+    "tierLabel": "Tingkat {tier}",
+    "reset": "Mengatur ulang",
+    "rating": "peringkat",
+    "ratingTooltip": "Peringkat PvP ala ELO — dimulai dari 1000, diperbarui berdasarkan duel yang telah dikonfirmasi.",
+    "recordTooltip": "Kemenangan · Kekalahan · Hasil seri dalam duel yang telah dikonfirmasi.",
+    "reputationTooltip": "Reputasi: persentase jempol positif agregat dari {count} peringkat.",
+    "lastActiveLabel": "aktif",
+    "challenge": "Tantangan",
+    "sameGuildBadge": "Persekutuanmu",
+    "sameGuildChallengeHint": "Koordinasikan duel antar anggota guild secara langsung — mereka sudah berada di sebelah Anda.",
+    "noMatches": "Tidak ada pemain yang sesuai dengan filter tersebut.",
+    "emptyState": "Belum ada pemain yang terdeteksi di server Anda.",
+    "needsServerNumber": "Tetapkan Nomor Server untuk guild Anda di<settingsLink> Pengaturan Guild</settingsLink> untuk menemukan pemain di server yang sama.",
+    "noGuildsOnServer": "Belum ada guild lain yang terdaftar di server ini.",
+    "prev": "← Sebelumnya",
+    "next": "Selanjutnya →",
+    "pageOf": "Halaman {page} dari {total}"
+  },
   "playersPage": {
     "title": "Pemain",
     "titleNamed": "{guildName} — Pemain",
@@ -335,6 +403,17 @@
     "subtitle": "Perbarui nama Anda di dalam game, keluar dari guild, atau hapus akun Anda.",
     "inGameName": "Nama dalam game",
     "inGameNameHelp": "Beginilah tampilan Anda pada daftar pemain dan pendaftaran. Hingga {max} karakter.",
+    "duels": {
+      "heading": "Duel",
+      "powerTier": "Tingkat kekuatan",
+      "powerTierNotSet": "Belum diatur",
+      "powerTierHelp": "Pencapaian kekuatan dalam game yang dilaporkan sendiri (I–XIII). Ditampilkan pada kartu pemain Anda dan digunakan sebagai filter pada halaman penemuan. Sistem kepercayaan — atur dengan akurat.",
+      "discoverableLabel": "Dapat ditemukan untuk duel 1 lawan 1",
+      "discoverableHelp": "Saat diaktifkan, pemain lain di server yang sama dapat menemukan Anda di halaman penemuan dan menantang Anda untuk berduel. Matikan untuk menyembunyikan diri dari daftar dan tantangan. Pengalaman internal guild Anda tidak terpengaruh.",
+      "dmLabel": "Beri tahu saya melalui pesan langsung Discord tentang duel.",
+      "dmHelp": "Saat diaktifkan, bot akan mengirimkan pesan pribadi (DM) kepada Anda ketika seseorang menantang Anda, menerima atau menolak proposal Anda, membatalkan duel, atau mengumumkan hasilnya. Matikan untuk membisukan pesan pribadi Discord tentang duel sepenuhnya. Anda tetap dapat melihat semuanya di situs web.",
+      "dmHelpUnlinked": "Masuk ke Discord setidaknya sekali untuk mengaktifkan pesan langsung tentang duel. (Keluar, lalu masuk kembali ke Discord.)"
+    },
     "guildMembership": "Keanggotaan perkumpulan",
     "youreInGuild": "Kamu adalah seorang {role} dari {guildName} .",
     "leaveExplanation": "Keluar dari guild ini akan menghapus Anda dari acara-acaranya dan menghapus pendaftaran Anda sebelumnya (tetap disimpan untuk laporan kehadiran guild).",
@@ -347,18 +426,7 @@
     "deleteButton": "Hapus akun saya",
     "deleting": "Menghapus…",
     "deleteConfirm": "Menghapus akun Anda? Ini akan menghapus Anda dari guild, menghapus semua pendaftaran Anda, dan memutuskan tautan Google/Discord. Tindakan ini tidak dapat dibatalkan.",
-    "language": "Bahasa",
-    "duels": {
-      "heading": "Duel",
-      "powerTier": "Tingkat kekuatan",
-      "powerTierNotSet": "Belum diatur",
-      "powerTierHelp": "Pencapaian kekuatan dalam game yang dilaporkan sendiri (I–XIII). Ditampilkan pada kartu pemain Anda dan digunakan sebagai filter pada halaman penemuan. Sistem kepercayaan — atur dengan akurat.",
-      "discoverableLabel": "Dapat ditemukan untuk duel 1 lawan 1",
-      "discoverableHelp": "Saat diaktifkan, pemain lain di server yang sama dapat menemukan Anda di halaman penemuan dan menantang Anda untuk berduel. Matikan untuk menyembunyikan diri dari daftar dan tantangan. Pengalaman internal guild Anda tidak terpengaruh.",
-      "dmLabel": "Beri tahu saya melalui pesan langsung Discord tentang duel.",
-      "dmHelp": "Saat diaktifkan, bot akan mengirimkan pesan pribadi (DM) kepada Anda ketika seseorang menantang Anda, menerima atau menolak proposal Anda, membatalkan duel, atau mengumumkan hasilnya. Matikan untuk membisukan pesan pribadi Discord tentang duel sepenuhnya. Anda tetap dapat melihat semuanya di situs web.",
-      "dmHelpUnlinked": "Masuk ke Discord setidaknya sekali untuk mengaktifkan pesan langsung tentang duel. (Keluar, lalu masuk kembali ke Discord.)"
-    }
+    "language": "Bahasa"
   },
   "errors": {
     "forbidden": "Terlarang",
@@ -514,9 +582,9 @@
       "signup": "Mendaftar untuk pertandingan",
       "status": "Apa arti status Anda?",
       "scrims": "Pertandingan uji coba",
+      "duels": "duel 1 lawan 1",
       "reminders": "Pengingat dan kalender",
-      "closed": "Jika pendaftaran sudah ditutup",
-      "duels": "duel 1 lawan 1"
+      "closed": "Jika pendaftaran sudah ditutup"
     },
     "gettingIn": {
       "step1": "Masuk menggunakan Google atau Discord di halaman utama.",
@@ -552,12 +620,6 @@
       "history": "Riwayat. Lihat pertandingan latihan (scrim) guild Anda yang akan datang dan yang telah lalu di sini.<scrimsLink> halaman riwayat scrim</scrimsLink> . Menang/kalah dilihat dari perspektif guild Anda.",
       "note": "Hanya admin guild Anda yang dapat mengusulkan, menerima, atau membatalkan scrim — Anda cukup mendaftar seperti acara lainnya. Jika scrim dibatalkan sebelum berlangsung, acara tersebut akan hilang dari halaman beranda Anda dan pendaftaran Anda akan disembunyikan (admin tetap menyimpan catatan untuk riwayat kehadiran)."
     },
-    "reminders": {
-      "bot": "Jika guild Anda telah mengatur bot Discord, bot tersebut akan memposting pengingat 1 hari, 1 jam, dan 20 menit sebelum setiap acara di saluran yang dipilih guild Anda.",
-      "ics": "Setiap halaman acara memiliki tautan Unduh .ics untuk menambahkan acara tersebut ke kalender Anda.",
-      "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
-    },
-    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual.",
     "duels": {
       "intro": "Duel adalah tantangan 1 lawan 1 antara dua pemain. Duel terpisah dari pertandingan dan latihan tanding — tidak ada daftar pemain, tidak ada formulir pendaftaran, hanya dua orang yang menyepakati waktu dan aturan.",
       "find": "Temukan lawan di<playersLink> halaman penemuan pemain</playersLink> Ini menampilkan semua orang di server yang sama dengan Anda yang telah memilih untuk dapat ditemukan. Saring berdasarkan tingkat kekuatan, guild, atau nama. Klik nama pemain mana pun untuk melihat profil lengkap mereka — peringkat, rekor, dan riwayat duel lengkap.",
@@ -572,68 +634,12 @@
       "history": "Lihat riwayat duel lengkap Anda (mendatang, lalu, ditolak, ditarik, dibatalkan) di sini.<duelsLink> halaman duel</duelsLink> Chip hasil menunjukkan W/L/D/NC dari perspektif Anda.",
       "discordDm": "Jika Anda sudah masuk menggunakan Discord setidaknya sekali, bot dapat mengirimkan pesan pribadi (DM) kepada Anda tentang acara duel — tantangan yang akan datang, yang diterima, ditolak, dibatalkan, dan hasil yang diumumkan. Aktifkan atau nonaktifkan ini di Akun Saya. Jika Anda menonaktifkan DM dari anggota server di pengaturan Discord Anda, bot tidak dapat menghubungi Anda.",
       "privacy": "Anda dapat menonaktifkan deteksi duel di Akun Saya untuk menyembunyikan diri dari halaman deteksi dan memblokir tantangan yang masuk. Pengalaman internal guild Anda tidak akan terpengaruh."
-    }
-  },
-  "playerProfile": {
-    "backToPlayers": "Kembali ke pemain",
-    "youBadge": "Anda",
-    "noGuild": "Tidak ada serikat",
-    "serverLabel": "Server # {serverNumber}",
-    "challenge": "Tantangan",
-    "rating": "Peringkat",
-    "record": "Catatan",
-    "reputation": "Reputasi",
-    "lastActive": "Duel terakhir",
-    "duelsTotal": "{count, plural, =0 {No duels} satu {# duel} duel lainnya {# duels} }",
-    "reputationSub": "{count, plural, one {# rating} peringkat lainnya {# ratings} }",
-    "reputationNotEnough": "Membutuhkan 5+ peringkat",
-    "historyHeading": "Sejarah duel",
-    "historyEmpty": "Belum ada duel yang selesai.",
-    "locationLabel": "Lokasi",
-    "winConditionLabel": "Kondisi menang",
-    "unknownPlayer": "Pemain tak dikenal",
-    "prev": "← Sebelumnya",
-    "next": "Selanjutnya →",
-    "pageOf": "Halaman {page} dari {total}"
-  },
-  "leaderboard": {
-    "title": "Papan Peringkat",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} satu {# ranked player on your server} {# ranked players on your server} }.",
-    "serverLabel": "Server # {serverNumber}",
-    "howItWorks": "Cara kerja peringkat →",
-    "yourRank": "Peringkat Anda: # {rank} · {rating} peringkat",
-    "notRankedYet": "Mainkan setidaknya {min} Duel yang telah dikonfirmasi akan muncul di papan peringkat. Peringkat Anda dimulai dari 1000 dan akan diperbarui seiring Anda menang atau kalah.",
-    "rankLabel": "Peringkat {rank}",
-    "noMatches": "Tidak ada pemain yang sesuai dengan filter tersebut.",
-    "emptyState": "Belum ada pemain berperingkat di server Anda. Jadilah yang pertama.",
-    "needsServerNumber": "Tetapkan Nomor Server untuk guild Anda di<settingsLink> Pengaturan Guild</settingsLink> untuk melihat papan peringkat.",
-    "prev": "← Sebelumnya",
-    "next": "Selanjutnya →",
-    "pageOf": "Halaman {page} dari {total}"
-  },
-  "players": {
-    "title": "Cari Pemain",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} satu {# discoverable player on your server} {# discoverable players on your server} }.",
-    "serverLabel": "Server # {serverNumber}",
-    "searchPlaceholder": "Cari berdasarkan nama dalam game…",
-    "allTiers": "Semua tingkatan kekuatan",
-    "allGuilds": "Semua serikat",
-    "tierLabel": "Tingkat {tier}",
-    "reset": "Mengatur ulang",
-    "rating": "peringkat",
-    "ratingTooltip": "Peringkat PvP ala ELO — dimulai dari 1000, diperbarui berdasarkan duel yang telah dikonfirmasi.",
-    "recordTooltip": "Kemenangan · Kekalahan · Hasil seri dalam duel yang telah dikonfirmasi.",
-    "reputationTooltip": "Reputasi: persentase jempol positif agregat dari {count} peringkat.",
-    "lastActiveLabel": "aktif",
-    "challenge": "Tantangan",
-    "sameGuildBadge": "Persekutuanmu",
-    "sameGuildChallengeHint": "Koordinasikan duel antar anggota guild secara langsung — mereka sudah berada di sebelah Anda.",
-    "noMatches": "Tidak ada pemain yang sesuai dengan filter tersebut.",
-    "emptyState": "Belum ada pemain yang terdeteksi di server Anda.",
-    "needsServerNumber": "Tetapkan Nomor Server untuk guild Anda di<settingsLink> Pengaturan Guild</settingsLink> untuk menemukan pemain di server yang sama.",
-    "noGuildsOnServer": "Belum ada guild lain yang terdaftar di server ini.",
-    "prev": "← Sebelumnya",
-    "next": "Selanjutnya →",
-    "pageOf": "Halaman {page} dari {total}"
+    },
+    "reminders": {
+      "bot": "Jika guild Anda telah mengatur bot Discord, bot tersebut akan memposting pengingat 1 hari, 1 jam, dan 20 menit sebelum setiap acara di saluran yang dipilih guild Anda.",
+      "ics": "Setiap halaman acara memiliki tautan Unduh .ics untuk menambahkan acara tersebut ke kalender Anda.",
+      "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
+    },
+    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
   }
 }

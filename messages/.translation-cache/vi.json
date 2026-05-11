@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "vi",
-  "translatedAt": "2026-05-11T19:50:31.247Z",
+  "translatedAt": "2026-05-11T20:58:35.373Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -17,6 +17,10 @@
     "common.you": "(you)",
     "common.back": "← Back",
     "common.optional": "Optional",
+    "nav.category.play": "Play",
+    "nav.category.manage": "Manage",
+    "nav.category.platform": "Platform",
+    "nav.category.account": "Account",
     "nav.manageEvents": "Manage Events",
     "nav.events": "Events",
     "nav.scrimHistory": "Scrim History",

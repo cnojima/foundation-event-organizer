@@ -20,6 +20,9 @@
     "events": "Olaylar",
     "scrimHistory": "Perde Tarihi",
     "scrimmages": "Antrenman maçları",
+    "findPlayers": "Oyuncuları Bul",
+    "duels": "Düellolar",
+    "leaderboard": "Liderlik Tablosu",
     "players": "Oyuncular",
     "members": "Üyeler",
     "invites": "Davetiyeler",
@@ -30,9 +33,12 @@
     "adminHelp": "Yönetici Yardımı",
     "help": "Yardım",
     "myAccount": "Hesabım",
-    "findPlayers": "Oyuncuları Bul",
-    "duels": "Düellolar",
-    "leaderboard": "Liderlik Tablosu"
+    "category": {
+      "play": "Oynamak",
+      "manage": "Üstesinden gelmek",
+      "platform": "Platform",
+      "account": "Hesap"
+    }
   },
   "topBar": {
     "notifications": "Bildirimler",
@@ -207,6 +213,68 @@
     "waitlistOrdered": "Kayıt zamanına göre sıralanmıştır. Bir oyuncunun atanmış rolünü \"bekleme listesi\"nden oyuncu, yedek veya lider olarak değiştirerek oyuncuyu terfi ettirin.",
     "firstChoice": "İlk Tercih"
   },
+  "playerProfile": {
+    "backToPlayers": "Oyunculara geri dön",
+    "youBadge": "Sen",
+    "noGuild": "Lonca yok",
+    "serverLabel": "Sunucu # {serverNumber}",
+    "challenge": "Meydan okumak",
+    "rating": "Değerlendirme",
+    "record": "Kayıt",
+    "reputation": "İtibar",
+    "lastActive": "Son düello",
+    "duelsTotal": "{count, plural, =0 {No duels} bir {# duel} diğer {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} diğer {# ratings} }",
+    "reputationNotEnough": "5+ değerlendirme gerekiyor",
+    "historyHeading": "Düello geçmişi",
+    "historyEmpty": "Henüz tamamlanmış düello yok.",
+    "locationLabel": "Konum",
+    "winConditionLabel": "Kazanma koşulu",
+    "unknownPlayer": "Bilinmeyen oyuncu",
+    "prev": "← Önceki",
+    "next": "Sonraki →",
+    "pageOf": "Sayfa {page} {total}"
+  },
+  "leaderboard": {
+    "title": "Liderlik Tablosu",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} {# ranked players on your server} }.",
+    "serverLabel": "Sunucu # {serverNumber}",
+    "howItWorks": "Sıralamalar nasıl çalışır →",
+    "yourRank": "Sıralamanız: # {rank} · {rating} derecelendirme",
+    "notRankedYet": "En az {min} oynayın {min} Onaylanmış düellolar sıralama tablosunda görünecektir. Puanınız 1000'den başlar ve kazanıp kaybettikçe güncellenir.",
+    "rankLabel": "Sıralama {rank}",
+    "noMatches": "Bu filtrelerle eşleşen oyuncu yok.",
+    "emptyState": "Sunucunuzda henüz rütbeli oyuncu yok. İlk siz olun.",
+    "needsServerNumber": "Loncanız için bir Sunucu Numarası belirleyin.<settingsLink> Lonca Ayarları</settingsLink> Skor tablosunu görmek için.",
+    "prev": "← Önceki",
+    "next": "Sonraki →",
+    "pageOf": "Sayfa {page} {total}"
+  },
+  "players": {
+    "title": "Oyuncuları Bul",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} {# discoverable players on your server} }.",
+    "serverLabel": "Sunucu # {serverNumber}",
+    "searchPlaceholder": "Oyun içi isme göre ara…",
+    "allTiers": "Tüm güç seviyeleri",
+    "allGuilds": "Tüm loncalar",
+    "tierLabel": "Kademe {tier}",
+    "reset": "Sıfırla",
+    "rating": "derecelendirme",
+    "ratingTooltip": "ELO tarzı PvP derecelendirmesi — 1000'den başlar, onaylanmış düellolar güncellenir.",
+    "recordTooltip": "Onaylanmış düellolardaki galibiyetler, mağlubiyetler ve beraberlikler.",
+    "reputationTooltip": "İtibar: {count} üzerinden toplam beğeni yüzdesi {count} değerlendirmeler.",
+    "lastActiveLabel": "aktif",
+    "challenge": "Meydan okumak",
+    "sameGuildBadge": "Loncanız",
+    "sameGuildChallengeHint": "Lonca arkadaşlarınızla düelloları doğrudan koordine edin; zaten yanınızdalar.",
+    "noMatches": "Bu filtrelerle eşleşen oyuncu yok.",
+    "emptyState": "Sunucunuzda henüz keşfedilebilir oyuncu yok.",
+    "needsServerNumber": "Loncanız için bir Sunucu Numarası belirleyin.<settingsLink> Lonca Ayarları</settingsLink> Aynı sunucudaki oyuncuları keşfetmek için.",
+    "noGuildsOnServer": "Bu sunucuda henüz başka hiçbir lonca kayıtlı değil.",
+    "prev": "← Önceki",
+    "next": "Sonraki →",
+    "pageOf": "Sayfa {page} {total}"
+  },
   "playersPage": {
     "title": "Oyuncular",
     "titleNamed": "{guildName} — Oyuncular",
@@ -335,6 +403,17 @@
     "subtitle": "Oyun içi adınızı güncelleyin, loncanızdan ayrılın veya hesabınızı silin.",
     "inGameName": "Oyun içi isim",
     "inGameNameHelp": "Kadrolarda ve kayıt formlarında bu şekilde görünürsünüz. En fazla {max} karakterler.",
+    "duels": {
+      "heading": "Düello",
+      "powerTier": "Güç seviyesi",
+      "powerTierNotSet": "Ayarlanmadı",
+      "powerTierHelp": "Oyun içi güç kazanımı (I–XIII) olarak bildirilen değerler. Oyuncu kartınızda gösterilir ve keşif sayfasında filtre olarak kullanılır. Güven sistemi — lütfen doğru şekilde ayarlayın.",
+      "discoverableLabel": "1'e 1 düellolar için keşfedilebilir.",
+      "discoverableHelp": "Bu özellik açık olduğunda, aynı sunucudaki diğer oyuncular sizi keşif sayfasında bulabilir ve düelloya davet edebilir. Listelemelerden ve meydan okumalardan gizlenmek için bu özelliği kapatın. Lonca içi deneyiminiz etkilenmez.",
+      "dmLabel": "Düellolar hakkında beni Discord üzerinden doğrudan mesajla bilgilendir.",
+      "dmHelp": "Bot etkinleştirildiğinde, biri size meydan okuduğunda, teklifinizi kabul ettiğinde veya reddettiğinde, düelloyu iptal ettiğinde veya sonucu açıkladığında size özel mesaj gönderir. Düellolarla ilgili Discord özel mesajlarını tamamen susturmak için bu özelliği kapatın. Yine de her şeyi web sitesinde görebilirsiniz.",
+      "dmHelpUnlinked": "Düellolar hakkında doğrudan mesajlaşmayı etkinleştirmek için en az bir kez Discord hesabınızla oturum açın. (Oturumunuzu kapatın, ardından Discord hesabınızla tekrar oturum açın.)"
+    },
     "guildMembership": "Lonca üyeliği",
     "youreInGuild": "Sen bir {role} sün. {role} {guildName} in {guildName} .",
     "leaveExplanation": "Bu loncadan ayrılmak sizi etkinliklerden çıkarır ve geçmiş kayıtlarınızı (loncanın katılım raporları için saklanır) geçici olarak siler.",
@@ -347,18 +426,7 @@
     "deleteButton": "Hesabımı sil",
     "deleting": "Siliniyor…",
     "deleteConfirm": "Hesabınızı silmek mi istiyorsunuz? Bu işlem sizi loncanızdan çıkarır, tüm kayıtlarınızı siler ve Google/Discord bağlantınızı keser. Bu işlem geri alınamaz.",
-    "language": "Dil",
-    "duels": {
-      "heading": "Düello",
-      "powerTier": "Güç seviyesi",
-      "powerTierNotSet": "Ayarlanmadı",
-      "powerTierHelp": "Oyun içi güç kazanımı (I–XIII) olarak bildirilen değerler. Oyuncu kartınızda gösterilir ve keşif sayfasında filtre olarak kullanılır. Güven sistemi — lütfen doğru şekilde ayarlayın.",
-      "discoverableLabel": "1'e 1 düellolar için keşfedilebilir.",
-      "discoverableHelp": "Bu özellik açık olduğunda, aynı sunucudaki diğer oyuncular sizi keşif sayfasında bulabilir ve düelloya davet edebilir. Listelemelerden ve meydan okumalardan gizlenmek için bu özelliği kapatın. Lonca içi deneyiminiz etkilenmez.",
-      "dmLabel": "Düellolar hakkında beni Discord üzerinden doğrudan mesajla bilgilendir.",
-      "dmHelp": "Bot etkinleştirildiğinde, biri size meydan okuduğunda, teklifinizi kabul ettiğinde veya reddettiğinde, düelloyu iptal ettiğinde veya sonucu açıkladığında size özel mesaj gönderir. Düellolarla ilgili Discord özel mesajlarını tamamen susturmak için bu özelliği kapatın. Yine de her şeyi web sitesinde görebilirsiniz.",
-      "dmHelpUnlinked": "Düellolar hakkında doğrudan mesajlaşmayı etkinleştirmek için en az bir kez Discord hesabınızla oturum açın. (Oturumunuzu kapatın, ardından Discord hesabınızla tekrar oturum açın.)"
-    }
+    "language": "Dil"
   },
   "errors": {
     "forbidden": "Yasaklı",
@@ -514,9 +582,9 @@
       "signup": "Maça kaydolmak",
       "status": "Statünüzün anlamı",
       "scrims": "Hazırlık maçları",
+      "duels": "1'e 1 düellolar",
       "reminders": "Hatırlatıcılar ve takvim",
-      "closed": "Kayıtlar kapalıysa",
-      "duels": "1'e 1 düellolar"
+      "closed": "Kayıtlar kapalıysa"
     },
     "gettingIn": {
       "step1": "Ana sayfada Google veya Discord ile giriş yapın.",
@@ -552,12 +620,6 @@
       "history": "Tarihçe. Loncanızın yaklaşan ve geçmiş antrenman maçlarını şurada görebilirsiniz:<scrimsLink> scrim geçmişi sayfası</scrimsLink> Kazanma/kaybetme oranı, loncanızın bakış açısındandır.",
       "note": "Sadece loncanızın yöneticisi bir scrim etkinliği önerebilir, kabul edebilir veya iptal edebilir; diğer etkinliklerde olduğu gibi kayıt olmanız yeterlidir. Bir scrim etkinliği gerçekleşmeden önce iptal edilirse, etkinlik ana sayfanızdan kaybolur ve kaydınız gizlenir (yöneticiler yine de katılım geçmişi için kaydı saklar)."
     },
-    "reminders": {
-      "bot": "Eğer loncanızda Discord botu kuruluysa, bot her etkinlikten 1 gün, 1 saat ve 20 dakika önce loncanızın seçtiği kanalda hatırlatıcılar yayınlar.",
-      "ics": "Her etkinlik sayfasında, etkinliği takviminize eklemek için bir .ics dosyasını indirme bağlantısı bulunur.",
-      "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
-    },
-    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler.",
     "duels": {
       "intro": "Düellolar, iki oyuncu arasında bire bir yapılan mücadelelerdir. Maç etkinliklerinden ve antrenman maçlarından ayrıdırlar; kadro yok, kayıt formu yok, sadece iki kişi zaman ve kurallar konusunda anlaşıyor.",
       "find": "Rakipleri şu platformda bulun:<playersLink> oyuncu keşif sayfası</playersLink> Aynı sunucuda bulunan ve keşfedilebilir olmayı seçmiş herkesi listeler. Güç seviyesine, loncaya veya isme göre filtreleyebilirsiniz. Herhangi bir oyuncunun adına tıklayarak tam profilini (derecelendirme, sicil ve eksiksiz düello geçmişi) görebilirsiniz.",
@@ -572,68 +634,12 @@
       "history": "Tüm düello geçmişinizi (yaklaşan, geçmiş, reddedilen, geri çekilen, iptal edilen) şu adreste görüntüleyin:<duelsLink> düellolar sayfası</duelsLink> Sonuç çipleri, sizin bakış açınızdan W/L/D/NC değerlerini gösterir.",
       "discordDm": "Discord'a en az bir kez giriş yaptıysanız, bot size düello etkinlikleri hakkında özel mesaj gönderebilir: gelen meydan okumalar, kabul edilen, reddedilen, iptal edilen ve sonuçları açıklanan meydan okumalar. Bunu Hesabım bölümünden açıp kapatabilirsiniz. Discord ayarlarınızda sunucu üyelerinden gelen özel mesajları devre dışı bıraktıysanız, bot size ulaşamaz.",
       "privacy": "Hesabım bölümünden düello görünürlüğünü kapatarak keşif sayfasından gizlenebilir ve gelen meydan okumaları engelleyebilirsiniz. Lonca içi deneyiminiz etkilenmez."
-    }
-  },
-  "playerProfile": {
-    "backToPlayers": "Oyunculara geri dön",
-    "youBadge": "Sen",
-    "noGuild": "Lonca yok",
-    "serverLabel": "Sunucu # {serverNumber}",
-    "challenge": "Meydan okumak",
-    "rating": "Değerlendirme",
-    "record": "Kayıt",
-    "reputation": "İtibar",
-    "lastActive": "Son düello",
-    "duelsTotal": "{count, plural, =0 {No duels} bir {# duel} diğer {# duels} }",
-    "reputationSub": "{count, plural, one {# rating} diğer {# ratings} }",
-    "reputationNotEnough": "5+ değerlendirme gerekiyor",
-    "historyHeading": "Düello geçmişi",
-    "historyEmpty": "Henüz tamamlanmış düello yok.",
-    "locationLabel": "Konum",
-    "winConditionLabel": "Kazanma koşulu",
-    "unknownPlayer": "Bilinmeyen oyuncu",
-    "prev": "← Önceki",
-    "next": "Sonraki →",
-    "pageOf": "Sayfa {page} {total}"
-  },
-  "leaderboard": {
-    "title": "Liderlik Tablosu",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} {# ranked players on your server} }.",
-    "serverLabel": "Sunucu # {serverNumber}",
-    "howItWorks": "Sıralamalar nasıl çalışır →",
-    "yourRank": "Sıralamanız: # {rank} · {rating} derecelendirme",
-    "notRankedYet": "En az {min} oynayın {min} Onaylanmış düellolar sıralama tablosunda görünecektir. Puanınız 1000'den başlar ve kazanıp kaybettikçe güncellenir.",
-    "rankLabel": "Sıralama {rank}",
-    "noMatches": "Bu filtrelerle eşleşen oyuncu yok.",
-    "emptyState": "Sunucunuzda henüz rütbeli oyuncu yok. İlk siz olun.",
-    "needsServerNumber": "Loncanız için bir Sunucu Numarası belirleyin.<settingsLink> Lonca Ayarları</settingsLink> Skor tablosunu görmek için.",
-    "prev": "← Önceki",
-    "next": "Sonraki →",
-    "pageOf": "Sayfa {page} {total}"
-  },
-  "players": {
-    "title": "Oyuncuları Bul",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} {# discoverable players on your server} }.",
-    "serverLabel": "Sunucu # {serverNumber}",
-    "searchPlaceholder": "Oyun içi isme göre ara…",
-    "allTiers": "Tüm güç seviyeleri",
-    "allGuilds": "Tüm loncalar",
-    "tierLabel": "Kademe {tier}",
-    "reset": "Sıfırla",
-    "rating": "derecelendirme",
-    "ratingTooltip": "ELO tarzı PvP derecelendirmesi — 1000'den başlar, onaylanmış düellolar güncellenir.",
-    "recordTooltip": "Onaylanmış düellolardaki galibiyetler, mağlubiyetler ve beraberlikler.",
-    "reputationTooltip": "İtibar: {count} üzerinden toplam beğeni yüzdesi {count} değerlendirmeler.",
-    "lastActiveLabel": "aktif",
-    "challenge": "Meydan okumak",
-    "sameGuildBadge": "Loncanız",
-    "sameGuildChallengeHint": "Lonca arkadaşlarınızla düelloları doğrudan koordine edin; zaten yanınızdalar.",
-    "noMatches": "Bu filtrelerle eşleşen oyuncu yok.",
-    "emptyState": "Sunucunuzda henüz keşfedilebilir oyuncu yok.",
-    "needsServerNumber": "Loncanız için bir Sunucu Numarası belirleyin.<settingsLink> Lonca Ayarları</settingsLink> Aynı sunucudaki oyuncuları keşfetmek için.",
-    "noGuildsOnServer": "Bu sunucuda henüz başka hiçbir lonca kayıtlı değil.",
-    "prev": "← Önceki",
-    "next": "Sonraki →",
-    "pageOf": "Sayfa {page} {total}"
+    },
+    "reminders": {
+      "bot": "Eğer loncanızda Discord botu kuruluysa, bot her etkinlikten 1 gün, 1 saat ve 20 dakika önce loncanızın seçtiği kanalda hatırlatıcılar yayınlar.",
+      "ics": "Her etkinlik sayfasında, etkinliği takviminize eklemek için bir .ics dosyasını indirme bağlantısı bulunur.",
+      "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
+    },
+    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
   }
 }

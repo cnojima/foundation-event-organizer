@@ -20,6 +20,9 @@
     "events": "活动",
     "scrimHistory": "Scrim 历史",
     "scrimmages": "对抗赛",
+    "findPlayers": "寻找玩家",
+    "duels": "决斗",
+    "leaderboard": "排行榜",
     "players": "球员",
     "members": "成员",
     "invites": "邀请",
@@ -30,9 +33,12 @@
     "adminHelp": "管理员帮助",
     "help": "帮助",
     "myAccount": "我的账户",
-    "findPlayers": "寻找玩家",
-    "duels": "决斗",
-    "leaderboard": "排行榜"
+    "category": {
+      "play": "玩",
+      "manage": "管理",
+      "platform": "平台",
+      "account": "帐户"
+    }
   },
   "topBar": {
     "notifications": "通知",
@@ -207,6 +213,68 @@
     "waitlistOrdered": "按报名时间排序。通过将球员的分配角色从“候补名单”更改为球员、替补或队长来提升球员等级。",
     "firstChoice": "第一选择"
   },
+  "playerProfile": {
+    "backToPlayers": "返回玩家列表",
+    "youBadge": "你",
+    "noGuild": "没有公会",
+    "serverLabel": "服务器编号： {serverNumber}",
+    "challenge": "挑战",
+    "rating": "等级",
+    "record": "记录",
+    "reputation": "名声",
+    "lastActive": "最后决斗",
+    "duelsTotal": "{count, plural, =0 {No duels}一场{# duel}其他{# duels} }",
+    "reputationSub": "{count, plural, one {# rating}其他{# ratings} }",
+    "reputationNotEnough": "需要 5 星以上评价",
+    "historyHeading": "决斗历史",
+    "historyEmpty": "目前还没有完成的决斗。",
+    "locationLabel": "地点",
+    "winConditionLabel": "获胜条件",
+    "unknownPlayer": "未知玩家",
+    "prev": "← 上一页",
+    "next": "下一页 →",
+    "pageOf": "页{page} {total}"
+  },
+  "leaderboard": {
+    "title": "排行榜",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} {# ranked players on your server} }。",
+    "serverLabel": "服务器编号： {serverNumber}",
+    "howItWorks": "排名机制 →",
+    "yourRank": "您的排名：# {rank} · {rating}等级",
+    "notRankedYet": "至少玩{min}已确认的对决将显示在排行榜上。您的初始评分为 1000 分，并会随着胜负而更新。",
+    "rankLabel": "排名{rank}",
+    "noMatches": "没有玩家符合这些筛选条件。",
+    "emptyState": "你的服务器上还没有排名玩家。成为第一个吧！",
+    "needsServerNumber": "在以下位置为你的公会设置服务器编号：<settingsLink>公会设置</settingsLink>查看排行榜。",
+    "prev": "← 上一页",
+    "next": "下一页 →",
+    "pageOf": "页{page} {total}"
+  },
+  "players": {
+    "title": "寻找玩家",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} {# discoverable players on your server} }。",
+    "serverLabel": "服务器编号： {serverNumber}",
+    "searchPlaceholder": "按游戏内名称搜索…",
+    "allTiers": "所有实力等级",
+    "allGuilds": "所有公会",
+    "tierLabel": "层级{tier}",
+    "reset": "重置",
+    "rating": "等级",
+    "ratingTooltip": "ELO 式 PvP 评分——初始评分为 1000，根据已确认的对决进行更新。",
+    "recordTooltip": "已确认对决的胜场·负场·平局。",
+    "reputationTooltip": "声誉：点赞数占总点赞数百分比（以{count}评分。",
+    "lastActiveLabel": "积极的",
+    "challenge": "挑战",
+    "sameGuildBadge": "你的公会",
+    "sameGuildChallengeHint": "直接协调公会成员之间的决斗——他们就在你身边。",
+    "noMatches": "没有玩家符合这些筛选条件。",
+    "emptyState": "您的服务器上目前还没有可发现的玩家。",
+    "needsServerNumber": "在以下位置为你的公会设置服务器编号：<settingsLink>公会设置</settingsLink>发现同一服务器上的玩家。",
+    "noGuildsOnServer": "该服务器上还没有其他公会注册。",
+    "prev": "← 上一页",
+    "next": "下一页 →",
+    "pageOf": "页{page} {total}"
+  },
   "playersPage": {
     "title": "球员",
     "titleNamed": "{guildName} ——球员",
@@ -335,6 +403,17 @@
     "subtitle": "更新您的游戏内名称、退出公会或删除您的账号。",
     "inGameName": "游戏内名称",
     "inGameNameHelp": "这是您在名单和报名表中的显示方式。最多{max}人物。",
+    "duels": {
+      "heading": "决斗",
+      "powerTier": "力量等级",
+      "powerTierNotSet": "未设置",
+      "powerTierHelp": "玩家自行报告的游戏内实力里程碑（I-XIII）。显示在玩家卡片上，并用作探索页面的筛选条件。信任系统——请准确设置。",
+      "discoverableLabel": "可用于 1 对 1 决斗",
+      "discoverableHelp": "开启此功能后，同一服务器上的其他玩家可以在发现页面找到你并向你发起决斗挑战。关闭此功能即可隐藏你的身份，使其不出现在列表和挑战列表中。你的公会内部体验不受影响。",
+      "dmLabel": "请通过 Discord 私信通知我决斗事宜。",
+      "dmHelp": "开启此功能后，当有人向你发起挑战、接受或拒绝你的提议、取消决斗或宣布决斗结果时，机器人会通过私信通知你。关闭此功能可完全屏蔽所有关于决斗的 Discord 私信。你仍然可以在网站上看到所有内容。",
+      "dmHelpUnlinked": "请至少使用 Discord 登录一次，以启用决斗相关的私信功能。（退出 Discord 账号，然后重新登录。）"
+    },
     "guildMembership": "公会会员资格",
     "youreInGuild": "你是一名{role} {guildName} 。",
     "leaveExplanation": "离开此公会后，您将不再参与该公会的活动，并且您过去的报名记录将被软删除（公会会保留这些记录用于出勤报告）。",
@@ -347,18 +426,7 @@
     "deleteButton": "删除我的帐户",
     "deleting": "正在删除…",
     "deleteConfirm": "删除账号？这将使您从公会中移除，删除您的所有注册信息，并解除 Google/Discord 的关联。此操作无法撤销。",
-    "language": "语言",
-    "duels": {
-      "heading": "决斗",
-      "powerTier": "力量等级",
-      "powerTierNotSet": "未设置",
-      "powerTierHelp": "玩家自行报告的游戏内实力里程碑（I-XIII）。显示在玩家卡片上，并用作探索页面的筛选条件。信任系统——请准确设置。",
-      "discoverableLabel": "可用于 1 对 1 决斗",
-      "discoverableHelp": "开启此功能后，同一服务器上的其他玩家可以在发现页面找到你并向你发起决斗挑战。关闭此功能即可隐藏你的身份，使其不出现在列表和挑战列表中。你的公会内部体验不受影响。",
-      "dmLabel": "请通过 Discord 私信通知我决斗事宜。",
-      "dmHelp": "开启此功能后，当有人向你发起挑战、接受或拒绝你的提议、取消决斗或宣布决斗结果时，机器人会通过私信通知你。关闭此功能可完全屏蔽所有关于决斗的 Discord 私信。你仍然可以在网站上看到所有内容。",
-      "dmHelpUnlinked": "请至少使用 Discord 登录一次，以启用决斗相关的私信功能。（退出 Discord 账号，然后重新登录。）"
-    }
+    "language": "语言"
   },
   "errors": {
     "forbidden": "禁忌",
@@ -514,9 +582,9 @@
       "signup": "报名参加比赛",
       "status": "你的状态意味着什么",
       "scrims": "对抗赛",
+      "duels": "1对1决斗",
       "reminders": "提醒和日历",
-      "closed": "如果报名已关闭",
-      "duels": "1对1决斗"
+      "closed": "如果报名已关闭"
     },
     "gettingIn": {
       "step1": "在首页使用 Google 或 Discord 登录。",
@@ -552,12 +620,6 @@
       "history": "历史记录。查看您公会即将举行和已结束的训练赛。<scrimsLink>训练赛历史页面</scrimsLink>胜率（W/L）是从你们公会的角度来看的。",
       "note": "只有公会管理员才能提议、接受或取消训练赛——你只需像报名参加其他活动一样报名即可。如果训练赛在开始前被取消，该活动将从你的主页消失，你的报名记录也会被隐藏（管理员仍会保留你的出勤记录）。"
     },
-    "reminders": {
-      "bot": "如果你的公会设置了 Discord 机器人，该机器人会在每次活动开始前 1 天、1 小时和 20 分钟在公会选择的频道发布提醒。",
-      "ics": "每个活动页面都有一个“下载 .ics”链接，用于将活动添加到您的日历中。",
-      "slashCommands": "Discord 斜杠命令：/upcoming 列出你公会的近期活动，/signup 允许你无需离开 Discord 即可注册。你必须先使用 Discord 登录网站至少一次，以便机器人匹配你的账号。"
-    },
-    "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。",
     "duels": {
       "intro": "决斗是两名玩家之间的一对一挑战。它独立于比赛和训练赛——没有参赛名单，没有报名表，只需两人商定时间和规则即可。",
       "find": "在以下平台上寻找对手<playersLink>玩家发现页面</playersLink>它会列出你所在服务器上所有选择公开身份的玩家。你可以按战力等级、公会或名字筛选。点击任何玩家的名字即可查看其完整个人资料——包括等级、战绩和完整的决斗记录。",
@@ -572,68 +634,12 @@
       "history": "查看您的完整决斗记录（即将进行的、已进行的、已拒绝的、已撤回的、已取消的）<duelsLink>决斗页面</duelsLink>结果芯片从您的角度显示 W/L/D/NC。",
       "discordDm": "如果您至少登录过一次 Discord，机器人就可以私信您有关决斗活动的信息——包括即将到来的挑战、已接受、已拒绝、已取消以及已公布结果的挑战。您可以在“我的帐户”中启用此功能。如果您在 Discord 设置中禁用了服务器成员的私信功能，机器人将无法联系到您。",
       "privacy": "您可以在“我的账户”中关闭决斗发现功能，从而隐藏自己，使其不出现在发现页面并阻止收到挑战。这不会影响您在公会内部的体验。"
-    }
-  },
-  "playerProfile": {
-    "backToPlayers": "返回玩家列表",
-    "youBadge": "你",
-    "noGuild": "没有公会",
-    "serverLabel": "服务器编号： {serverNumber}",
-    "challenge": "挑战",
-    "rating": "等级",
-    "record": "记录",
-    "reputation": "名声",
-    "lastActive": "最后决斗",
-    "duelsTotal": "{count, plural, =0 {No duels}一场{# duel}其他{# duels} }",
-    "reputationSub": "{count, plural, one {# rating}其他{# ratings} }",
-    "reputationNotEnough": "需要 5 星以上评价",
-    "historyHeading": "决斗历史",
-    "historyEmpty": "目前还没有完成的决斗。",
-    "locationLabel": "地点",
-    "winConditionLabel": "获胜条件",
-    "unknownPlayer": "未知玩家",
-    "prev": "← 上一页",
-    "next": "下一页 →",
-    "pageOf": "页{page} {total}"
-  },
-  "leaderboard": {
-    "title": "排行榜",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} {# ranked players on your server} }。",
-    "serverLabel": "服务器编号： {serverNumber}",
-    "howItWorks": "排名机制 →",
-    "yourRank": "您的排名：# {rank} · {rating}等级",
-    "notRankedYet": "至少玩{min}已确认的对决将显示在排行榜上。您的初始评分为 1000 分，并会随着胜负而更新。",
-    "rankLabel": "排名{rank}",
-    "noMatches": "没有玩家符合这些筛选条件。",
-    "emptyState": "你的服务器上还没有排名玩家。成为第一个吧！",
-    "needsServerNumber": "在以下位置为你的公会设置服务器编号：<settingsLink>公会设置</settingsLink>查看排行榜。",
-    "prev": "← 上一页",
-    "next": "下一页 →",
-    "pageOf": "页{page} {total}"
-  },
-  "players": {
-    "title": "寻找玩家",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} {# discoverable players on your server} }。",
-    "serverLabel": "服务器编号： {serverNumber}",
-    "searchPlaceholder": "按游戏内名称搜索…",
-    "allTiers": "所有实力等级",
-    "allGuilds": "所有公会",
-    "tierLabel": "层级{tier}",
-    "reset": "重置",
-    "rating": "等级",
-    "ratingTooltip": "ELO 式 PvP 评分——初始评分为 1000，根据已确认的对决进行更新。",
-    "recordTooltip": "已确认对决的胜场·负场·平局。",
-    "reputationTooltip": "声誉：点赞数占总点赞数百分比（以{count}评分。",
-    "lastActiveLabel": "积极的",
-    "challenge": "挑战",
-    "sameGuildBadge": "你的公会",
-    "sameGuildChallengeHint": "直接协调公会成员之间的决斗——他们就在你身边。",
-    "noMatches": "没有玩家符合这些筛选条件。",
-    "emptyState": "您的服务器上目前还没有可发现的玩家。",
-    "needsServerNumber": "在以下位置为你的公会设置服务器编号：<settingsLink>公会设置</settingsLink>发现同一服务器上的玩家。",
-    "noGuildsOnServer": "该服务器上还没有其他公会注册。",
-    "prev": "← 上一页",
-    "next": "下一页 →",
-    "pageOf": "页{page} {total}"
+    },
+    "reminders": {
+      "bot": "如果你的公会设置了 Discord 机器人，该机器人会在每次活动开始前 1 天、1 小时和 20 分钟在公会选择的频道发布提醒。",
+      "ics": "每个活动页面都有一个“下载 .ics”链接，用于将活动添加到您的日历中。",
+      "slashCommands": "Discord 斜杠命令：/upcoming 列出你公会的近期活动，/signup 允许你无需离开 Discord 即可注册。你必须先使用 Discord 登录网站至少一次，以便机器人匹配你的账号。"
+    },
+    "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。"
   }
 }

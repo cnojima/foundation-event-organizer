@@ -20,6 +20,9 @@
     "events": "Wydarzenia",
     "scrimHistory": "Historia scrimów",
     "scrimmages": "Potyczki",
+    "findPlayers": "Znajdź graczy",
+    "duels": "Pojedynki",
+    "leaderboard": "Tabela wyników",
     "players": "Gracze",
     "members": "Członkowie",
     "invites": "Zaproszenia",
@@ -30,9 +33,12 @@
     "adminHelp": "Pomoc administratora",
     "help": "Pomoc",
     "myAccount": "Moje konto",
-    "findPlayers": "Znajdź graczy",
-    "duels": "Pojedynki",
-    "leaderboard": "Tabela wyników"
+    "category": {
+      "play": "Grać",
+      "manage": "Zarządzać",
+      "platform": "Platforma",
+      "account": "Konto"
+    }
   },
   "topBar": {
     "notifications": "Powiadomienia",
@@ -207,6 +213,68 @@
     "waitlistOrdered": "Sortowane według czasu rejestracji. Awansuj gracza, zmieniając jego przypisaną rolę z „listy oczekujących” na gracza, rezerwowego lub lidera.",
     "firstChoice": "Pierwszy wybór"
   },
+  "playerProfile": {
+    "backToPlayers": "Powrót do graczy",
+    "youBadge": "Ty",
+    "noGuild": "Brak gildii",
+    "serverLabel": "Serwer nr {serverNumber}",
+    "challenge": "Wyzwanie",
+    "rating": "Ocena",
+    "record": "Nagrywać",
+    "reputation": "Reputacja",
+    "lastActive": "Ostatni pojedynek",
+    "duelsTotal": "{count, plural, =0 {No duels} jeden {# duel} inne {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} inne {# ratings} }",
+    "reputationNotEnough": "Wymagane oceny 5+",
+    "historyHeading": "Historia pojedynków",
+    "historyEmpty": "Brak ukończonych pojedynków.",
+    "locationLabel": "Lokalizacja",
+    "winConditionLabel": "Warunek zwycięstwa",
+    "unknownPlayer": "Nieznany gracz",
+    "prev": "← Poprzedni",
+    "next": "Dalej →",
+    "pageOf": "Strona {page} z {total}"
+  },
+  "leaderboard": {
+    "title": "Tabela wyników",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} jeden {# ranked player on your server} inni {# ranked players on your server} }.",
+    "serverLabel": "Serwer nr {serverNumber}",
+    "howItWorks": "Jak działają rankingi →",
+    "yourRank": "Twoja ranga: # {rank} · {rating} ocena",
+    "notRankedYet": "Graj co najmniej {min} Potwierdzone pojedynki pojawią się w tabeli wyników. Twój ranking zaczyna się od 1000 i aktualizuje się w zależności od wygranej lub przegranej.",
+    "rankLabel": "Ranga {rank}",
+    "noMatches": "Żaden gracz nie spełnia tych filtrów.",
+    "emptyState": "Na Twoim serwerze nie ma jeszcze graczy rankingowych. Bądź pierwszy.",
+    "needsServerNumber": "Ustaw numer serwera dla swojej gildii w<settingsLink> Ustawienia gildii</settingsLink> aby zobaczyć tabelę wyników.",
+    "prev": "← Poprzedni",
+    "next": "Dalej →",
+    "pageOf": "Strona {page} z {total}"
+  },
+  "players": {
+    "title": "Znajdź graczy",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} jeden {# discoverable player on your server} inni {# discoverable players on your server} }.",
+    "serverLabel": "Serwer nr {serverNumber}",
+    "searchPlaceholder": "Wyszukaj po nazwie w grze…",
+    "allTiers": "Wszystkie poziomy mocy",
+    "allGuilds": "Wszystkie gildie",
+    "tierLabel": "Poziom {tier}",
+    "reset": "Nastawić",
+    "rating": "ocena",
+    "ratingTooltip": "Ocena PvP w stylu ELO — zaczyna się od 1000, aktualizowana po potwierdzonych pojedynkach.",
+    "recordTooltip": "Zwycięstwa · Porażki · Remisy w potwierdzonych pojedynkach.",
+    "reputationTooltip": "Reputacja: łączny procent pozytywnych ocen w {count} oceny.",
+    "lastActiveLabel": "aktywny",
+    "challenge": "Wyzwanie",
+    "sameGuildBadge": "Twoja gildia",
+    "sameGuildChallengeHint": "Koordynuj pojedynki członków gildii bezpośrednio — są oni już obok ciebie.",
+    "noMatches": "Żaden gracz nie spełnia tych filtrów.",
+    "emptyState": "Na Twoim serwerze nie ma jeszcze żadnych graczy możliwych do odkrycia.",
+    "needsServerNumber": "Ustaw numer serwera dla swojej gildii w<settingsLink> Ustawienia gildii</settingsLink> aby odkryć graczy na tym samym serwerze.",
+    "noGuildsOnServer": "Na tym serwerze nie zarejestrowano jeszcze żadnych innych gildii.",
+    "prev": "← Poprzedni",
+    "next": "Dalej →",
+    "pageOf": "Strona {page} z {total}"
+  },
   "playersPage": {
     "title": "Gracze",
     "titleNamed": "{guildName} — Gracze",
@@ -335,6 +403,17 @@
     "subtitle": "Zaktualizuj swoją nazwę w grze, opuść gildię lub usuń konto.",
     "inGameName": "Nazwa w grze",
     "inGameNameHelp": "Tak wyglądasz na listach i w rejestracjach. Do {max} pismo.",
+    "duels": {
+      "heading": "Pojedynek",
+      "powerTier": "Poziom mocy",
+      "powerTierNotSet": "Nie ustawiono",
+      "powerTierHelp": "Samodzielnie zgłoszony kamień milowy mocy w grze (I–XIII). Wyświetlany na karcie gracza i używany jako filtr na stronie odkrywania. System zaufania — ustaw go poprawnie.",
+      "discoverableLabel": "Możliwość odkrycia w pojedynkach 1 na 1",
+      "discoverableHelp": "Po włączeniu inni gracze na tym samym serwerze mogą znaleźć Cię na stronie odkryć i wyzwać na pojedynek. Wyłącz tę opcję, aby ukryć ją przed listami i wyzwaniami. Twoje wewnętrzne doświadczenia w gildii pozostaną niezmienione.",
+      "dmLabel": "Powiadom mnie o pojedynkach za pomocą wiadomości bezpośredniej na Discordzie",
+      "dmHelp": "Po włączeniu bot wysyła Ci wiadomość prywatną, gdy ktoś rzuca Ci wyzwanie, akceptuje lub odrzuca Twoją propozycję, anuluje pojedynek lub ogłasza wynik. Wyłącz tę opcję, aby całkowicie wyciszyć wiadomości prywatne na Discordzie dotyczące pojedynków. Nadal będziesz widzieć wszystko na stronie.",
+      "dmHelpUnlinked": "Zaloguj się do Discorda przynajmniej raz, aby włączyć bezpośrednie wiadomości o pojedynkach. (Wyloguj się, a następnie zaloguj ponownie do Discorda.)"
+    },
     "guildMembership": "Członkostwo w gildii",
     "youreInGuild": "Jesteś {role} z {guildName} .",
     "leaveExplanation": "Opuszczenie gildii spowoduje usunięcie Cię z jej wydarzeń i trwałe usunięcie Twoich wcześniejszych zapisów (zachowanych w raportach frekwencji gildii).",
@@ -347,18 +426,7 @@
     "deleteButton": "Usuń moje konto",
     "deleting": "Usuwanie…",
     "deleteConfirm": "Usunąć konto? To spowoduje usunięcie Cię z gildii, usunięcie wszystkich Twoich rejestracji i odłączenie Google/Discord. Tego nie da się cofnąć.",
-    "language": "Język",
-    "duels": {
-      "heading": "Pojedynek",
-      "powerTier": "Poziom mocy",
-      "powerTierNotSet": "Nie ustawiono",
-      "powerTierHelp": "Samodzielnie zgłoszony kamień milowy mocy w grze (I–XIII). Wyświetlany na karcie gracza i używany jako filtr na stronie odkrywania. System zaufania — ustaw go poprawnie.",
-      "discoverableLabel": "Możliwość odkrycia w pojedynkach 1 na 1",
-      "discoverableHelp": "Po włączeniu inni gracze na tym samym serwerze mogą znaleźć Cię na stronie odkryć i wyzwać na pojedynek. Wyłącz tę opcję, aby ukryć ją przed listami i wyzwaniami. Twoje wewnętrzne doświadczenia w gildii pozostaną niezmienione.",
-      "dmLabel": "Powiadom mnie o pojedynkach za pomocą wiadomości bezpośredniej na Discordzie",
-      "dmHelp": "Po włączeniu bot wysyła Ci wiadomość prywatną, gdy ktoś rzuca Ci wyzwanie, akceptuje lub odrzuca Twoją propozycję, anuluje pojedynek lub ogłasza wynik. Wyłącz tę opcję, aby całkowicie wyciszyć wiadomości prywatne na Discordzie dotyczące pojedynków. Nadal będziesz widzieć wszystko na stronie.",
-      "dmHelpUnlinked": "Zaloguj się do Discorda przynajmniej raz, aby włączyć bezpośrednie wiadomości o pojedynkach. (Wyloguj się, a następnie zaloguj ponownie do Discorda.)"
-    }
+    "language": "Język"
   },
   "errors": {
     "forbidden": "Zabroniony",
@@ -514,9 +582,9 @@
       "signup": "Zapisywanie się na mecz",
       "status": "Co oznacza Twój status",
       "scrims": "Wydarzenia treningowe",
+      "duels": "Pojedynki 1 na 1",
       "reminders": "Przypomnienia i kalendarz",
-      "closed": "Jeśli zapisy są zamknięte",
-      "duels": "Pojedynki 1 na 1"
+      "closed": "Jeśli zapisy są zamknięte"
     },
     "gettingIn": {
       "step1": "Zaloguj się za pomocą konta Google lub Discord na stronie głównej.",
@@ -552,12 +620,6 @@
       "history": "Historia. Zobacz nadchodzące i przeszłe mecze treningowe swojej gildii na<scrimsLink> strona historii scrimów</scrimsLink> . W/L przedstawia perspektywę twojej gildii.",
       "note": "Tylko administrator Twojej gildii może zaproponować, zaakceptować lub odwołać scrim – po prostu zapisujesz się jak na każde inne wydarzenie. Jeśli scrim zostanie odwołany przed jego rozpoczęciem, wydarzenie zniknie ze strony głównej, a rejestracja zostanie ukryta (administratorzy nadal przechowują historię obecności)."
     },
-    "reminders": {
-      "bot": "Jeśli w Twojej gildii skonfigurowano bota Discord, bot będzie publikował przypomnienia 1 dzień, 1 godzinę i 20 minut przed każdym wydarzeniem na wybranym przez Twoją gildię kanale.",
-      "ics": "Na każdej stronie wydarzenia znajduje się link do pobrania pliku .ics umożliwiający dodanie wydarzenia do kalendarza.",
-      "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
-    },
-    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy.",
     "duels": {
       "intro": "Pojedynki to pojedynki jeden na jednego między dwoma graczami. Są one niezależne od meczów towarzyskich i sparingów – nie ma składu ani formularza zgłoszeniowego, a jedynie dwie osoby ustalają termin i zasady.",
       "find": "Znajdź przeciwników na<playersLink> strona odkrywania graczy</playersLink> . Wyświetla listę wszystkich osób na Twoim serwerze, które wyraziły zgodę na ujawnienie. Filtruj według poziomu mocy, gildii lub nazwy. Kliknij nazwę dowolnego gracza, aby zobaczyć jego pełny profil — ocenę, rekord i pełną historię pojedynków.",
@@ -572,68 +634,12 @@
       "history": "Zobacz pełną historię pojedynków (nadchodzące, zakończone, odrzucone, wycofane, anulowane) na<duelsLink> strona pojedynków</duelsLink> Wyniki pokazują W/L/D/NC z Twojej perspektywy.",
       "discordDm": "Jeśli zalogowałeś się do Discorda przynajmniej raz, bot może wysyłać Ci wiadomości prywatne o wydarzeniach pojedynkowych — nadchodzących wyzwaniach, zaakceptowanych, odrzuconych, anulowanych i ogłoszonych wynikach. Możesz to włączyć w Moim Koncie. Jeśli masz wyłączone wiadomości prywatne od członków serwera w ustawieniach Discorda, bot nie będzie mógł się z Tobą skontaktować.",
       "privacy": "Możesz wyłączyć możliwość odkrywania pojedynków w Moim Koncie, aby ukryć się na stronie odkrywania i zablokować przychodzące wyzwania. Twoje wewnętrzne doświadczenia w gildii pozostaną niezmienione."
-    }
-  },
-  "playerProfile": {
-    "backToPlayers": "Powrót do graczy",
-    "youBadge": "Ty",
-    "noGuild": "Brak gildii",
-    "serverLabel": "Serwer nr {serverNumber}",
-    "challenge": "Wyzwanie",
-    "rating": "Ocena",
-    "record": "Nagrywać",
-    "reputation": "Reputacja",
-    "lastActive": "Ostatni pojedynek",
-    "duelsTotal": "{count, plural, =0 {No duels} jeden {# duel} inne {# duels} }",
-    "reputationSub": "{count, plural, one {# rating} inne {# ratings} }",
-    "reputationNotEnough": "Wymagane oceny 5+",
-    "historyHeading": "Historia pojedynków",
-    "historyEmpty": "Brak ukończonych pojedynków.",
-    "locationLabel": "Lokalizacja",
-    "winConditionLabel": "Warunek zwycięstwa",
-    "unknownPlayer": "Nieznany gracz",
-    "prev": "← Poprzedni",
-    "next": "Dalej →",
-    "pageOf": "Strona {page} z {total}"
-  },
-  "leaderboard": {
-    "title": "Tabela wyników",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} jeden {# ranked player on your server} inni {# ranked players on your server} }.",
-    "serverLabel": "Serwer nr {serverNumber}",
-    "howItWorks": "Jak działają rankingi →",
-    "yourRank": "Twoja ranga: # {rank} · {rating} ocena",
-    "notRankedYet": "Graj co najmniej {min} Potwierdzone pojedynki pojawią się w tabeli wyników. Twój ranking zaczyna się od 1000 i aktualizuje się w zależności od wygranej lub przegranej.",
-    "rankLabel": "Ranga {rank}",
-    "noMatches": "Żaden gracz nie spełnia tych filtrów.",
-    "emptyState": "Na Twoim serwerze nie ma jeszcze graczy rankingowych. Bądź pierwszy.",
-    "needsServerNumber": "Ustaw numer serwera dla swojej gildii w<settingsLink> Ustawienia gildii</settingsLink> aby zobaczyć tabelę wyników.",
-    "prev": "← Poprzedni",
-    "next": "Dalej →",
-    "pageOf": "Strona {page} z {total}"
-  },
-  "players": {
-    "title": "Znajdź graczy",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} jeden {# discoverable player on your server} inni {# discoverable players on your server} }.",
-    "serverLabel": "Serwer nr {serverNumber}",
-    "searchPlaceholder": "Wyszukaj po nazwie w grze…",
-    "allTiers": "Wszystkie poziomy mocy",
-    "allGuilds": "Wszystkie gildie",
-    "tierLabel": "Poziom {tier}",
-    "reset": "Nastawić",
-    "rating": "ocena",
-    "ratingTooltip": "Ocena PvP w stylu ELO — zaczyna się od 1000, aktualizowana po potwierdzonych pojedynkach.",
-    "recordTooltip": "Zwycięstwa · Porażki · Remisy w potwierdzonych pojedynkach.",
-    "reputationTooltip": "Reputacja: łączny procent pozytywnych ocen w {count} oceny.",
-    "lastActiveLabel": "aktywny",
-    "challenge": "Wyzwanie",
-    "sameGuildBadge": "Twoja gildia",
-    "sameGuildChallengeHint": "Koordynuj pojedynki członków gildii bezpośrednio — są oni już obok ciebie.",
-    "noMatches": "Żaden gracz nie spełnia tych filtrów.",
-    "emptyState": "Na Twoim serwerze nie ma jeszcze żadnych graczy możliwych do odkrycia.",
-    "needsServerNumber": "Ustaw numer serwera dla swojej gildii w<settingsLink> Ustawienia gildii</settingsLink> aby odkryć graczy na tym samym serwerze.",
-    "noGuildsOnServer": "Na tym serwerze nie zarejestrowano jeszcze żadnych innych gildii.",
-    "prev": "← Poprzedni",
-    "next": "Dalej →",
-    "pageOf": "Strona {page} z {total}"
+    },
+    "reminders": {
+      "bot": "Jeśli w Twojej gildii skonfigurowano bota Discord, bot będzie publikował przypomnienia 1 dzień, 1 godzinę i 20 minut przed każdym wydarzeniem na wybranym przez Twoją gildię kanale.",
+      "ics": "Na każdej stronie wydarzenia znajduje się link do pobrania pliku .ics umożliwiający dodanie wydarzenia do kalendarza.",
+      "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
+    },
+    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
   }
 }

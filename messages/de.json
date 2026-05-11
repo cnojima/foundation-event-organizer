@@ -20,6 +20,9 @@
     "events": "Veranstaltungen",
     "scrimHistory": "Scrim-Geschichte",
     "scrimmages": "Trainingsspiele",
+    "findPlayers": "Spieler finden",
+    "duels": "Duelle",
+    "leaderboard": "Rangliste",
     "players": "Spieler",
     "members": "Mitglieder",
     "invites": "Einladungen",
@@ -30,9 +33,12 @@
     "adminHelp": "Admin-Hilfe",
     "help": "Helfen",
     "myAccount": "Mein Konto",
-    "findPlayers": "Spieler finden",
-    "duels": "Duelle",
-    "leaderboard": "Rangliste"
+    "category": {
+      "play": "Spielen",
+      "manage": "Verwalten",
+      "platform": "Plattform",
+      "account": "Konto"
+    }
   },
   "topBar": {
     "notifications": "Benachrichtigungen",
@@ -207,6 +213,68 @@
     "waitlistOrdered": "Sortiert nach Anmeldezeitpunkt. Befördere einen Spieler, indem du seine zugewiesene Rolle von „Warteliste“ auf Spieler, Ersatzspieler oder Anführer änderst.",
     "firstChoice": "Erste Wahl"
   },
+  "playerProfile": {
+    "backToPlayers": "Zurück zu den Spielern",
+    "youBadge": "Du",
+    "noGuild": "Keine Gilde",
+    "serverLabel": "Server # {serverNumber}",
+    "challenge": "Herausforderung",
+    "rating": "Bewertung",
+    "record": "Aufzeichnen",
+    "reputation": "Ruf",
+    "lastActive": "Letztes Duell",
+    "duelsTotal": "{count, plural, =0 {No duels} eins {# duel} andere {# duels} }",
+    "reputationSub": "{count, plural, one {# rating} andere {# ratings} }",
+    "reputationNotEnough": "Benötigt mindestens 5 Bewertungen",
+    "historyHeading": "Duellgeschichte",
+    "historyEmpty": "Bisher wurden noch keine Duelle abgeschlossen.",
+    "locationLabel": "Standort",
+    "winConditionLabel": "Siegbedingung",
+    "unknownPlayer": "Unbekannter Spieler",
+    "prev": "← Zurück",
+    "next": "Weiter →",
+    "pageOf": "Seite {page} von {total}"
+  },
+  "leaderboard": {
+    "title": "Rangliste",
+    "subtitle": "{count, plural, =0 {No ranked players on your server yet} ein {# ranked player on your server} andere {# ranked players on your server} }.",
+    "serverLabel": "Server # {serverNumber}",
+    "howItWorks": "Wie Ranglisten funktionieren →",
+    "yourRank": "Ihr Rang: # {rank} · {rating} Bewertung",
+    "notRankedYet": "Spiele mindestens {min} Bestätigte Duelle werden in der Rangliste angezeigt. Deine Wertung beginnt bei 1000 und aktualisiert sich mit jedem Sieg oder jeder Niederlage.",
+    "rankLabel": "Rang {rank}",
+    "noMatches": "Kein Spieler entspricht diesen Filtern.",
+    "emptyState": "Auf deinem Server gibt es noch keine Ranglistenspieler. Sei der Erste.",
+    "needsServerNumber": "Legt eine Servernummer für eure Gilde fest in<settingsLink> Gildeneinstellungen</settingsLink> um die Rangliste zu sehen.",
+    "prev": "← Zurück",
+    "next": "Weiter →",
+    "pageOf": "Seite {page} von {total}"
+  },
+  "players": {
+    "title": "Spieler finden",
+    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} ein {# discoverable player on your server} andere {# discoverable players on your server} }.",
+    "serverLabel": "Server # {serverNumber}",
+    "searchPlaceholder": "Suche nach dem In-Game-Namen…",
+    "allTiers": "Alle Leistungsstufen",
+    "allGuilds": "Alle Gilden",
+    "tierLabel": "Tier {tier}",
+    "reset": "Zurücksetzen",
+    "rating": "Bewertung",
+    "ratingTooltip": "PvP-Wertung im ELO-Stil – beginnt bei 1000, Aktualisierung nach bestätigten Duellen.",
+    "recordTooltip": "Siege · Niederlagen · Unentschieden aus bestätigten Duellen.",
+    "reputationTooltip": "Reputation: Gesamtprozentsatz der positiven Bewertungen über {count} Bewertungen.",
+    "lastActiveLabel": "aktiv",
+    "challenge": "Herausforderung",
+    "sameGuildBadge": "Deine Gilde",
+    "sameGuildChallengeHint": "Koordiniere Duelle mit Gildenmitgliedern direkt – sie sind ja schon neben dir.",
+    "noMatches": "Kein Spieler entspricht diesen Filtern.",
+    "emptyState": "Auf deinem Server sind noch keine Spieler auffindbar.",
+    "needsServerNumber": "Legt eine Servernummer für eure Gilde fest in<settingsLink> Gildeneinstellungen</settingsLink> um Spieler auf demselben Server zu finden.",
+    "noGuildsOnServer": "Bisher wurden keine weiteren Gilden auf diesem Server registriert.",
+    "prev": "← Zurück",
+    "next": "Weiter →",
+    "pageOf": "Seite {page} von {total}"
+  },
   "playersPage": {
     "title": "Spieler",
     "titleNamed": "{guildName} — Spieler",
@@ -335,6 +403,17 @@
     "subtitle": "Aktualisiere deinen In-Game-Namen, verlasse deine Gilde oder lösche deinen Account.",
     "inGameName": "In-Game-Name",
     "inGameNameHelp": "So werden Sie in Teilnehmerlisten und Anmeldungen angezeigt. Bis zu {max} Charaktere.",
+    "duels": {
+      "heading": "Duell",
+      "powerTier": "Leistungsstufe",
+      "powerTierNotSet": "Nicht festgelegt",
+      "powerTierHelp": "Selbstberichteter Meilenstein der Spielstärke (I–XIII). Wird auf deiner Spielerkarte angezeigt und als Filter auf der Entdeckungsseite verwendet. Vertrauenssystem – bitte korrekt einstellen.",
+      "discoverableLabel": "Auffindbar für 1-gegen-1-Duelle",
+      "discoverableHelp": "Wenn diese Option aktiviert ist, können dich andere Spieler auf deinem Server auf der Entdeckungsseite finden und dich zu einem Duell herausfordern. Deaktiviere sie, um in den Listen und Herausforderungen nicht mehr angezeigt zu werden. Dein Gilden-Erlebnis bleibt davon unberührt.",
+      "dmLabel": "Benachrichtige mich bitte per Discord-Direktnachricht über Duelle.",
+      "dmHelp": "Wenn der Bot aktiviert ist, benachrichtigt er dich per Direktnachricht, sobald dich jemand herausfordert, deinen Vorschlag annimmt oder ablehnt, ein Duell absagt oder ein Ergebnis verkündet. Deaktiviere ihn, um alle Direktnachrichten zu Duellen auf Discord zu stummzuschalten. Alle Inhalte auf der Website bleiben weiterhin sichtbar.",
+      "dmHelpUnlinked": "Melde dich mindestens einmal mit Discord an, um Direktnachrichten zu Duellen zu aktivieren. (Melde dich ab und melde dich dann wieder mit Discord an.)"
+    },
     "guildMembership": "Gildenmitgliedschaft",
     "youreInGuild": "Du bist eine {role} von {guildName} Die",
     "leaveExplanation": "Wenn du diese Gilde verlässt, wirst du von ihren Veranstaltungen abgemeldet und deine bisherigen Anmeldungen (die für die Anwesenheitsberichte der Gilde aufbewahrt werden) werden vorläufig gelöscht.",
@@ -347,18 +426,7 @@
     "deleteButton": "Mein Konto löschen",
     "deleting": "Löschen…",
     "deleteConfirm": "Dein Konto löschen? Dadurch wirst du aus deiner Gilde entfernt, alle deine Anmeldungen werden gelöscht und die Verknüpfung mit Google/Discord wird aufgehoben. Dies kann nicht rückgängig gemacht werden.",
-    "language": "Sprache",
-    "duels": {
-      "heading": "Duell",
-      "powerTier": "Leistungsstufe",
-      "powerTierNotSet": "Nicht festgelegt",
-      "powerTierHelp": "Selbstberichteter Meilenstein der Spielstärke (I–XIII). Wird auf deiner Spielerkarte angezeigt und als Filter auf der Entdeckungsseite verwendet. Vertrauenssystem – bitte korrekt einstellen.",
-      "discoverableLabel": "Auffindbar für 1-gegen-1-Duelle",
-      "discoverableHelp": "Wenn diese Option aktiviert ist, können dich andere Spieler auf deinem Server auf der Entdeckungsseite finden und dich zu einem Duell herausfordern. Deaktiviere sie, um in den Listen und Herausforderungen nicht mehr angezeigt zu werden. Dein Gilden-Erlebnis bleibt davon unberührt.",
-      "dmLabel": "Benachrichtige mich bitte per Discord-Direktnachricht über Duelle.",
-      "dmHelp": "Wenn der Bot aktiviert ist, benachrichtigt er dich per Direktnachricht, sobald dich jemand herausfordert, deinen Vorschlag annimmt oder ablehnt, ein Duell absagt oder ein Ergebnis verkündet. Deaktiviere ihn, um alle Direktnachrichten zu Duellen auf Discord zu stummzuschalten. Alle Inhalte auf der Website bleiben weiterhin sichtbar.",
-      "dmHelpUnlinked": "Melde dich mindestens einmal mit Discord an, um Direktnachrichten zu Duellen zu aktivieren. (Melde dich ab und melde dich dann wieder mit Discord an.)"
-    }
+    "language": "Sprache"
   },
   "errors": {
     "forbidden": "Verboten",
@@ -514,9 +582,9 @@
       "signup": "Anmeldung zu einem Spiel",
       "status": "Was Ihr Status bedeutet",
       "scrims": "Trainingsspiele",
+      "duels": "1-gegen-1-Duelle",
       "reminders": "Erinnerungen und Kalender",
-      "closed": "Wenn die Anmeldung geschlossen ist",
-      "duels": "1-gegen-1-Duelle"
+      "closed": "Wenn die Anmeldung geschlossen ist"
     },
     "gettingIn": {
       "step1": "Melde dich auf der Startseite mit Google oder Discord an.",
@@ -552,12 +620,6 @@
       "history": "Verlauf. Sieh dir die anstehenden und vergangenen Trainingsspiele deiner Gilde auf der Website an.<scrimsLink> Seite zur Geschichte des Scrims</scrimsLink> Die W/L-Wertung bezieht sich auf die Perspektive eurer Gilde.",
       "note": "Nur der Administrator eurer Gilde kann ein Trainingsspiel vorschlagen, annehmen oder absagen – die Anmeldung erfolgt wie bei jeder anderen Veranstaltung. Wird ein Trainingsspiel vor dem Termin abgesagt, verschwindet die Veranstaltung von eurer Startseite und eure Anmeldung wird ausgeblendet (Administratoren speichern weiterhin die Anwesenheitsliste)."
     },
-    "reminders": {
-      "bot": "Wenn eure Gilde den Discord-Bot eingerichtet hat, postet der Bot 1 Tag, 1 Stunde und 20 Minuten vor jedem Event Erinnerungen im von eurer Gilde gewählten Kanal.",
-      "ics": "Auf jeder Veranstaltungsseite finden Sie einen Download-Link für die .ics-Datei, über den Sie die Veranstaltung zu Ihrem Kalender hinzufügen können.",
-      "slashCommands": "Discord-Befehle: /upcoming listet die anstehenden Events eurer Gilde auf, und /signup ermöglicht die Anmeldung direkt in Discord. Ihr müsst euch zuvor mindestens einmal mit Discord auf der Website anmelden, damit der Bot euer Konto zuordnen kann."
-    },
-    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen.",
     "duels": {
       "intro": "Duelle sind 1-gegen-1-Herausforderungen zwischen zwei Spielern. Sie sind von Wettkämpfen und Trainingsspielen getrennt – keine Mannschaftsliste, kein Anmeldeformular, nur zwei Personen, die sich auf einen Zeitpunkt und Regeln einigen.",
       "find": "Finde Gegner auf dem<playersLink> Spieler-Entdeckungsseite</playersLink> Hier werden alle Spieler auf deinem Server aufgelistet, die ihre Sichtbarkeit aktiviert haben. Filtere nach Stärke, Gilde oder Namen. Klicke auf den Namen eines Spielers, um sein vollständiges Profil anzuzeigen – Wertung, Bilanz und Duellhistorie.",
@@ -572,68 +634,12 @@
       "history": "Ihre vollständige Duellhistorie (anstehende, vergangene, abgelehnte, zurückgezogene, abgesagte Duelle) finden Sie hier:<duelsLink> Duellseite</duelsLink> Die Ergebnischips zeigen W/L/D/NC aus Ihrer Perspektive an.",
       "discordDm": "Wenn du dich mindestens einmal mit Discord angemeldet hast, kann dich der Bot per Direktnachricht über Duell-Events informieren – über anstehende Herausforderungen, angenommene, abgelehnte, abgesagte und bereits entschiedene Herausforderungen. Diese Funktion kannst du in deinem Konto aktivieren. Falls du Direktnachrichten von Servermitgliedern in deinen Discord-Einstellungen deaktiviert hast, kann dich der Bot nicht erreichen.",
       "privacy": "Du kannst die Duell-Sichtbarkeit in deinem Konto deaktivieren, um auf der Entdeckungsseite nicht mehr angezeigt zu werden und eingehende Herausforderungen zu blockieren. Dein Gilden-Erlebnis bleibt davon unberührt."
-    }
-  },
-  "playerProfile": {
-    "backToPlayers": "Zurück zu den Spielern",
-    "youBadge": "Du",
-    "noGuild": "Keine Gilde",
-    "serverLabel": "Server # {serverNumber}",
-    "challenge": "Herausforderung",
-    "rating": "Bewertung",
-    "record": "Aufzeichnen",
-    "reputation": "Ruf",
-    "lastActive": "Letztes Duell",
-    "duelsTotal": "{count, plural, =0 {No duels} eins {# duel} andere {# duels} }",
-    "reputationSub": "{count, plural, one {# rating} andere {# ratings} }",
-    "reputationNotEnough": "Benötigt mindestens 5 Bewertungen",
-    "historyHeading": "Duellgeschichte",
-    "historyEmpty": "Bisher wurden noch keine Duelle abgeschlossen.",
-    "locationLabel": "Standort",
-    "winConditionLabel": "Siegbedingung",
-    "unknownPlayer": "Unbekannter Spieler",
-    "prev": "← Zurück",
-    "next": "Weiter →",
-    "pageOf": "Seite {page} von {total}"
-  },
-  "leaderboard": {
-    "title": "Rangliste",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} ein {# ranked player on your server} andere {# ranked players on your server} }.",
-    "serverLabel": "Server # {serverNumber}",
-    "howItWorks": "Wie Ranglisten funktionieren →",
-    "yourRank": "Ihr Rang: # {rank} · {rating} Bewertung",
-    "notRankedYet": "Spiele mindestens {min} Bestätigte Duelle werden in der Rangliste angezeigt. Deine Wertung beginnt bei 1000 und aktualisiert sich mit jedem Sieg oder jeder Niederlage.",
-    "rankLabel": "Rang {rank}",
-    "noMatches": "Kein Spieler entspricht diesen Filtern.",
-    "emptyState": "Auf deinem Server gibt es noch keine Ranglistenspieler. Sei der Erste.",
-    "needsServerNumber": "Legt eine Servernummer für eure Gilde fest in<settingsLink> Gildeneinstellungen</settingsLink> um die Rangliste zu sehen.",
-    "prev": "← Zurück",
-    "next": "Weiter →",
-    "pageOf": "Seite {page} von {total}"
-  },
-  "players": {
-    "title": "Spieler finden",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} ein {# discoverable player on your server} andere {# discoverable players on your server} }.",
-    "serverLabel": "Server # {serverNumber}",
-    "searchPlaceholder": "Suche nach dem In-Game-Namen…",
-    "allTiers": "Alle Leistungsstufen",
-    "allGuilds": "Alle Gilden",
-    "tierLabel": "Tier {tier}",
-    "reset": "Zurücksetzen",
-    "rating": "Bewertung",
-    "ratingTooltip": "PvP-Wertung im ELO-Stil – beginnt bei 1000, Aktualisierung nach bestätigten Duellen.",
-    "recordTooltip": "Siege · Niederlagen · Unentschieden aus bestätigten Duellen.",
-    "reputationTooltip": "Reputation: Gesamtprozentsatz der positiven Bewertungen über {count} Bewertungen.",
-    "lastActiveLabel": "aktiv",
-    "challenge": "Herausforderung",
-    "sameGuildBadge": "Deine Gilde",
-    "sameGuildChallengeHint": "Koordiniere Duelle mit Gildenmitgliedern direkt – sie sind ja schon neben dir.",
-    "noMatches": "Kein Spieler entspricht diesen Filtern.",
-    "emptyState": "Auf deinem Server sind noch keine Spieler auffindbar.",
-    "needsServerNumber": "Legt eine Servernummer für eure Gilde fest in<settingsLink> Gildeneinstellungen</settingsLink> um Spieler auf demselben Server zu finden.",
-    "noGuildsOnServer": "Bisher wurden keine weiteren Gilden auf diesem Server registriert.",
-    "prev": "← Zurück",
-    "next": "Weiter →",
-    "pageOf": "Seite {page} von {total}"
+    },
+    "reminders": {
+      "bot": "Wenn eure Gilde den Discord-Bot eingerichtet hat, postet der Bot 1 Tag, 1 Stunde und 20 Minuten vor jedem Event Erinnerungen im von eurer Gilde gewählten Kanal.",
+      "ics": "Auf jeder Veranstaltungsseite finden Sie einen Download-Link für die .ics-Datei, über den Sie die Veranstaltung zu Ihrem Kalender hinzufügen können.",
+      "slashCommands": "Discord-Befehle: /upcoming listet die anstehenden Events eurer Gilde auf, und /signup ermöglicht die Anmeldung direkt in Discord. Ihr müsst euch zuvor mindestens einmal mit Discord auf der Website anmelden, damit der Bot euer Konto zuordnen kann."
+    },
+    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
   }
 }

@@ -13,12 +13,20 @@ type Visibility =
   | "superAdmin"
   | "guildless";
 
+// Top-level grouping for the sidebar. Order here is the order categories
+// render in. Within a category, NAV_ITEMS order wins. Category headers
+// hide automatically when no items inside are visible to the viewer.
+type Category = "play" | "manage" | "platform" | "account";
+
+const CATEGORY_ORDER: Category[] = ["play", "manage", "platform", "account"];
+
 type NavItem = {
   /** Translation key under `nav.*`. */
   labelKey: string;
   href: string;
   icon: React.ReactNode;
   visibility: Visibility;
+  category: Category;
 };
 
 const ICONS = {
@@ -127,24 +135,31 @@ const ICONS = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { labelKey: "manageEvents", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin" },
-  { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
-  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin" },
-  { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild" },
-  { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild" },
-  { labelKey: "duels", href: "/duels", icon: ICONS.swords, visibility: "signedInWithGuild" },
-  { labelKey: "leaderboard", href: "/leaderboard", icon: ICONS.trophy, visibility: "signedInWithGuild" },
-  { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly" },
-  { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
-  { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },
-  { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin" },
-  { labelKey: "settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin" },
-  { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "guildless" },
-  { labelKey: "createGuild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless" },
-  { labelKey: "adminHelp", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin" },
-  { labelKey: "help", href: "/help", icon: ICONS.help, visibility: "always" },
-  { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
-  { labelKey: "myAccount", href: "/me", icon: ICONS.settings, visibility: "signedIn" },
+  // ---- Play: what you do as a member of a guild ----
+  { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild", category: "play" },
+  { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild", category: "play" },
+  { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild", category: "play" },
+  { labelKey: "duels", href: "/duels", icon: ICONS.swords, visibility: "signedInWithGuild", category: "play" },
+  { labelKey: "leaderboard", href: "/leaderboard", icon: ICONS.trophy, visibility: "signedInWithGuild", category: "play" },
+  { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly", category: "play" },
+
+  // ---- Manage: guild discovery (everyone) + guild-admin tools ----
+  { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "signedIn", category: "manage" },
+  { labelKey: "createGuild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless", category: "manage" },
+  { labelKey: "manageEvents", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "adminHelp", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin", category: "manage" },
+
+  // ---- Platform: site-wide super-admin ----
+  { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin", category: "platform" },
+
+  // ---- Account: per-user utilities (always visible to signed-in users) ----
+  { labelKey: "myAccount", href: "/me", icon: ICONS.settings, visibility: "signedIn", category: "account" },
+  { labelKey: "help", href: "/help", icon: ICONS.help, visibility: "always", category: "account" },
 ];
 
 type SidebarNavProps = {
@@ -210,30 +225,57 @@ export function SidebarNav(props: SidebarNavProps) {
   const t = useTranslations("nav");
   const items = NAV_ITEMS.filter((item) => isVisible(item, props));
 
+  // Bucket visible items by category, then walk CATEGORY_ORDER so the
+  // sections render top-down in a stable order. Empty categories are
+  // dropped silently — a player without admin role won't see a hollow
+  // "Platform" header, for example.
+  const grouped: Record<Category, NavItem[]> = {
+    play: [],
+    manage: [],
+    platform: [],
+    account: [],
+  };
+  for (const item of items) {
+    grouped[item.category].push(item);
+  }
+
   return (
-    <nav className="flex flex-col gap-1">
-      {items.map((item) => {
-        const active =
-          item.href === "/"
-            ? pathname === "/"
-            : pathname === item.href || pathname.startsWith(`${item.href}/`);
-        const href =
-          impersonatingGuildId && preservesImpersonation(item.href)
-            ? `${item.href}?guildId=${impersonatingGuildId}`
-            : item.href;
+    <nav className="flex flex-col gap-4">
+      {CATEGORY_ORDER.map((category) => {
+        const categoryItems = grouped[category];
+        if (categoryItems.length === 0) return null;
         return (
-          <Link
-            key={item.href}
-            href={href}
-            className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
-              active
-                ? "bg-violet-50 text-violet-700"
-                : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-            }`}
-          >
-            <span className={active ? "text-violet-600" : "text-gray-400"}>{item.icon}</span>
-            <span className="uppercase">{t(item.labelKey)}</span>
-          </Link>
+          <div key={category} className="flex flex-col gap-1">
+            <p className="mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
+              {t(`category.${category}`)}
+            </p>
+            {categoryItems.map((item) => {
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const href =
+                impersonatingGuildId && preservesImpersonation(item.href)
+                  ? `${item.href}?guildId=${impersonatingGuildId}`
+                  : item.href;
+              return (
+                <Link
+                  key={item.href}
+                  href={href}
+                  className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+                    active
+                      ? "bg-violet-50 text-violet-700"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  }`}
+                >
+                  <span className={active ? "text-violet-600" : "text-gray-400"}>
+                    {item.icon}
+                  </span>
+                  <span className="uppercase">{t(item.labelKey)}</span>
+                </Link>
+              );
+            })}
+          </div>
         );
       })}
     </nav>

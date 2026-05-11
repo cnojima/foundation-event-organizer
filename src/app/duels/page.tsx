@@ -261,6 +261,17 @@ function DuelCard({
               Declare result
             </Link>
           )}
+          {/* Pending rows: an explicit "Counter-propose" link to the detail
+              page where the edit form lives. Without this, an opposer who
+              wants to negotiate terms has no obvious path off the dashboard. */}
+          {(bucket === "incoming" || bucket === "outgoing") && (
+            <Link
+              href={`/duels/${row.id}`}
+              className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+            >
+              Counter-propose
+            </Link>
+          )}
           {(bucket === "past" || bucket === "upcoming") && (
             <Link
               href={`/duels/${row.id}`}
