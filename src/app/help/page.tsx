@@ -1,12 +1,27 @@
 import { HelpViewedTracker } from "@/components/help-viewed-tracker";
+import {
+  CollapsibleSection,
+  HelpLayout,
+  type HelpSectionMeta,
+} from "@/components/help-layout";
 
 export const metadata = {
   title: "Help — Foundation Event Organizer",
 };
 
+const SECTIONS: HelpSectionMeta[] = [
+  { id: "getting-in", title: "Getting in" },
+  { id: "event-kinds", title: "Three kinds of events" },
+  { id: "signup", title: "Signing up for a match" },
+  { id: "status", title: "What your status means" },
+  { id: "scrims", title: "Scrimmage events" },
+  { id: "reminders", title: "Reminders and calendar" },
+  { id: "closed", title: "If signups are closed" },
+];
+
 export default function HelpPage() {
   return (
-    <article className="mx-auto max-w-3xl space-y-8 text-gray-800">
+    <HelpLayout sections={SECTIONS}>
       <HelpViewedTracker />
       <header>
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
@@ -18,7 +33,7 @@ export default function HelpPage() {
         </p>
       </header>
 
-      <Section title="Getting in">
+      <CollapsibleSection id="getting-in" title="Getting in">
         <ol className="list-decimal space-y-2 pl-5">
           <li>
             <strong>Sign in</strong> with Google or Discord on the home page.
@@ -37,9 +52,9 @@ export default function HelpPage() {
           You can only be in one guild at a time. To move, leave the current
           one first.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Two kinds of events">
+      <CollapsibleSection id="event-kinds" title="Three kinds of events">
         <ul className="list-disc space-y-2 pl-5">
           <li>
             <strong>Match events</strong> (Shadowfront and similar) — two
@@ -47,14 +62,20 @@ export default function HelpPage() {
             starting roster + backups.
           </li>
           <li>
+            <strong>Scrim events</strong> — a 1-vs-1 challenge between your
+            guild and another guild. Single squad, one start time, and a
+            declared winner when it&apos;s over. See{" "}
+            <em>Scrimmage events</em> below.
+          </li>
+          <li>
             <strong>Simple events</strong> — info-only entries on the calendar
             (a meeting, an announcement, a watch party). No signup form; just a
             date and details.
           </li>
         </ul>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Signing up for a match">
+      <CollapsibleSection id="signup" title="Signing up for a match">
         <p>Open the event from the home page. The signup form has three things:</p>
         <ol className="list-decimal space-y-2 pl-5">
           <li>
@@ -78,9 +99,9 @@ export default function HelpPage() {
           Hit <strong>Sign Up</strong>. You can come back and change any of
           these answers up until signups close.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="What your status means">
+      <CollapsibleSection id="status" title="What your status means">
         <p>
           When you look at the squad rosters, you&apos;ll see one of these next
           to each name:
@@ -106,9 +127,50 @@ export default function HelpPage() {
             admin will pick from these.
           </li>
         </ul>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Reminders and calendar">
+      <CollapsibleSection id="scrims" title="Scrimmage events">
+        <p>
+          A scrim is your guild against another guild. The event page works
+          the same as a match — sign up, pick backup willingness, optionally
+          request leadership — but with a few differences worth knowing:
+        </p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            <strong>One squad only.</strong> There&apos;s no &ldquo;Squad
+            1&rdquo; vs &ldquo;Squad 2&rdquo; pick — your guild fields a single
+            lineup against the opponent.
+          </li>
+          <li>
+            <strong>The opponent is shown</strong> at the top of the event
+            page, along with the <strong>Condition of Win</strong> the two
+            admins agreed on. Read it before the match — it&apos;s how the
+            winner gets determined.
+          </li>
+          <li>
+            <strong>Result chip.</strong> Once the match is done and an admin
+            declares the result, you&apos;ll see a colored chip on the event
+            page: <em>Won</em>, <em>Lost</em>, <em>Draw</em>, or{" "}
+            <em>No contest</em> (forfeit / disconnect).
+          </li>
+          <li>
+            <strong>History.</strong> See your guild&apos;s upcoming and past
+            scrims at{" "}
+            <a className="text-violet-700 underline" href="/scrims">
+              /scrims
+            </a>
+            . W/L is from your guild&apos;s perspective.
+          </li>
+        </ul>
+        <p className="text-sm text-gray-600">
+          Only your guild&apos;s admin can propose, accept, or cancel a scrim —
+          you just sign up like any other event. If a scrim is cancelled before
+          it happens, the event disappears from your home page and your signup
+          is hidden (admins still keep the record for attendance history).
+        </p>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="reminders" title="Reminders and calendar">
         <ul className="list-disc space-y-2 pl-5">
           <li>
             If your guild has the Discord bot set up, the bot posts reminders
@@ -127,32 +189,15 @@ export default function HelpPage() {
             account.
           </li>
         </ul>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="If signups are closed">
+      <CollapsibleSection id="closed" title="If signups are closed">
         <p>
           The form turns into a &ldquo;Signups are closed&rdquo; message. Reach
           out to a guild admin if you need to be added late — they can adjust
           signups manually.
         </p>
-      </Section>
-    </article>
-  );
-}
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="space-y-3">
-      <h2 className="text-lg font-semibold tracking-tight text-gray-900">
-        {title}
-      </h2>
-      {children}
-    </section>
+      </CollapsibleSection>
+    </HelpLayout>
   );
 }

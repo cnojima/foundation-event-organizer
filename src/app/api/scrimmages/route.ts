@@ -4,6 +4,7 @@ import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
 import { guilds, scrimProposals } from "@/db/schema";
 import { and, desc, eq, isNull, or } from "drizzle-orm";
+import { sendScrimNotification } from "@/bot/discord-bot";
 
 // POST /api/scrimmages — propose a scrim with another guild on the same server.
 // Body: { opposingGuildId, proposedGameTime, location, winCondition, message? }
@@ -89,7 +90,16 @@ export async function POST(req: Request) {
     updatedAt: now,
   });
 
-  return NextResponse.json({ id }, { status: 201 });
+  const notify = await sendScrimNotification({
+    proposingGuildId: me.guildId,
+    opposingGuildId,
+    action: "proposed",
+    proposedGameTime: start.toISOString(),
+    location,
+    winCondition,
+  });
+
+  return NextResponse.json({ id, notify }, { status: 201 });
 }
 
 // GET /api/scrimmages — list scrims involving the caller's guild, bucketed

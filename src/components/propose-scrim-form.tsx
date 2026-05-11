@@ -81,6 +81,17 @@ export function ProposeScrimForm({ opponents }: { opponents: OpponentOption[] })
       return;
     }
 
+    const body = (await res.json().catch(() => ({}))) as {
+      notify?: { failedGuildNames?: string[] };
+    };
+    const failed = body.notify?.failedGuildNames ?? [];
+    if (failed.length > 0) {
+      window.alert(
+        `Proposal sent, but Discord notification didn't reach: ${failed.join(", ")}.\n\n` +
+          "Check that the bot is in their Discord server and the channel ID in Guild Settings is correct."
+      );
+    }
+
     router.push("/admin/scrimmages");
     router.refresh();
   }

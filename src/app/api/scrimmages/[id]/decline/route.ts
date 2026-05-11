@@ -4,6 +4,7 @@ import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
 import { scrimProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { sendScrimNotification } from "@/bot/discord-bot";
 
 // POST /api/scrimmages/[id]/decline — opposing-side admin declines.
 // No events are created; proposal flips to "declined".
@@ -44,5 +45,14 @@ export async function POST(
     })
     .where(eq(scrimProposals.id, id));
 
-  return NextResponse.json({ success: true });
+  const notify = await sendScrimNotification({
+    proposingGuildId: proposal.proposingGuildId,
+    opposingGuildId: proposal.opposingGuildId,
+    action: "declined",
+    proposedGameTime: proposal.proposedGameTime,
+    location: proposal.location,
+    winCondition: proposal.winCondition,
+  });
+
+  return NextResponse.json({ success: true, notify });
 }

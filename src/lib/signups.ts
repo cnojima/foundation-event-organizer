@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { events, signups } from "@/db/schema";
+import { events, signups, users } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { generateId } from "@/lib/ids";
 import { computeStanding, WAITLIST_ROLE } from "@/lib/waitlist";
@@ -48,9 +48,21 @@ export function createSignup({
         status: 400,
       };
     }
-    // Guild membership check: super-admins bypass.
-    if (!membership.isSuperAdmin && membership.guildId !== event.guildId) {
-      return { ok: false as const, reason: "Forbidden", status: 403 };
+    // Guild membership check — read users.guildId fresh from the DB rather
+    // than trusting `membership.guildId` from the session, which can be stale
+    // across guild leave/join transitions. For scrim events `event.guildId`
+    // is the home-side guild, so a user from the opposing guild correctly
+    // gets blocked here (they sign up via their own mirrored event instead).
+    // Super-admins bypass for platform-support reasons.
+    if (!membership.isSuperAdmin) {
+      const userRow = tx
+        .select({ guildId: users.guildId })
+        .from(users)
+        .where(eq(users.id, input.userId))
+        .get();
+      if (!userRow || userRow.guildId !== event.guildId) {
+        return { ok: false as const, reason: "Forbidden", status: 403 };
+      }
     }
 
     const existing = tx

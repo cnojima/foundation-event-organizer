@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireSignedInApi } from "@/lib/rbac";
 import { db } from "@/db";
-import { signups } from "@/db/schema";
+import { events, signups, users } from "@/db/schema";
 import { eq, and, isNull } from "drizzle-orm";
 import { createSignup } from "@/lib/signups";
 
@@ -56,6 +56,18 @@ export async function PUT(req: Request) {
 
   if (!existing) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  // Confirm the user is still in the event's guild via fresh DB reads —
+  // sessions can carry stale guildId after leave/join. Super-admins bypass.
+  if (!membership.isSuperAdmin) {
+    const [event, me] = await Promise.all([
+      db.query.events.findFirst({ where: eq(events.id, existing.eventId) }),
+      db.query.users.findFirst({ where: eq(users.id, membership.userId) }),
+    ]);
+    if (!event || !me || me.guildId !== event.guildId) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
   }
 
   await db

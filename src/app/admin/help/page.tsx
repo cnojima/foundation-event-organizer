@@ -1,16 +1,36 @@
 import { auth } from "@/auth";
 import { requireGuildAdminPage } from "@/lib/rbac";
+import {
+  CollapsibleSection,
+  HelpLayout,
+  type HelpSectionMeta,
+} from "@/components/help-layout";
 
 export const metadata = {
   title: "Admin Help — Foundation Event Organizer",
 };
+
+// Section list — also drives the TOC. Order here matches the order on the page.
+const SECTIONS: HelpSectionMeta[] = [
+  { id: "create-match", title: "Create a match event" },
+  { id: "edit-event", title: "Edit event details" },
+  { id: "manage-players", title: "Manage players" },
+  { id: "waitlist", title: "The waitlist" },
+  { id: "scrims", title: "Run a scrim" },
+  { id: "invite-bot", title: "Invite the Discord bot" },
+  { id: "discord-channel", title: "Set up the Discord channel" },
+  { id: "slash-commands", title: "Discord slash commands" },
+  { id: "manage-guild", title: "Manage your guild" },
+  { id: "players-page", title: "Players page" },
+  { id: "troubleshooting", title: "Things you might run into" },
+];
 
 export default async function AdminHelpPage() {
   const session = await auth();
   requireGuildAdminPage(session);
 
   return (
-    <article className="mx-auto max-w-3xl space-y-8 text-gray-800">
+    <HelpLayout sections={SECTIONS}>
       <header>
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
           Admin guide
@@ -26,7 +46,7 @@ export default async function AdminHelpPage() {
         </p>
       </header>
 
-      <Section title="Create a match event">
+      <CollapsibleSection id="create-match" title="Create a match event">
         <ol className="list-decimal space-y-2 pl-5">
           <li>
             Go to <strong>Manage Events</strong> in the sidebar and click{" "}
@@ -65,9 +85,9 @@ export default async function AdminHelpPage() {
             page.
           </li>
         </ol>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Edit event details after the fact">
+      <CollapsibleSection id="edit-event" title="Edit event details">
         <ul className="list-disc space-y-2 pl-5">
           <li>
             <strong>Dates:</strong> on the event admin page, click{" "}
@@ -88,9 +108,9 @@ export default async function AdminHelpPage() {
             &quot;Deleted&quot; section on Manage Events.
           </li>
         </ul>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Manage players">
+      <CollapsibleSection id="manage-players" title="Manage players">
         <p>
           The event admin page shows two squad columns and a waitlist below. In
           each squad column, every signup is a row with these controls:
@@ -132,9 +152,9 @@ export default async function AdminHelpPage() {
           player asked for a leadership role on signup. Pick leaders from these
           requests by changing their role to <em>Leader</em>.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="The waitlist">
+      <CollapsibleSection id="waitlist" title="The waitlist">
         <p>
           When all squad and backup slots are taken, new signups land in the
           waitlist (assigned role = <em>waitlist</em>). The waitlist section at
@@ -147,9 +167,142 @@ export default async function AdminHelpPage() {
           Their squad placement comes from their first-choice preference unless
           you explicitly move them.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Invite the Discord bot">
+      <CollapsibleSection id="scrims" title="Run a scrim">
+        <p>
+          A <strong>scrim</strong> is a 1-vs-1 guild challenge negotiated
+          between two guild admins, with a single squad on each side. Once
+          accepted, both guilds get a mirrored event that their members can
+          sign up for. After the match either admin declares the result.
+        </p>
+        <p className="text-sm text-gray-600">
+          <strong>Server # is required.</strong> Both guilds must have the same{" "}
+          <em>Server #</em> set in Guild Settings — otherwise they won&apos;t
+          appear in each other&apos;s opponent dropdown. Set yours in{" "}
+          <a className="text-violet-700 underline" href="/admin/settings">
+            /admin/settings
+          </a>{" "}
+          first.
+        </p>
+        <h3 className="mt-4 font-semibold">Propose a scrim</h3>
+        <ol className="list-decimal space-y-2 pl-5">
+          <li>
+            Go to{" "}
+            <a className="text-violet-700 underline" href="/admin/scrimmages">
+              /admin/scrimmages
+            </a>{" "}
+            and click <strong>+ Propose scrim</strong>.
+          </li>
+          <li>
+            Pick the <strong>opponent</strong> (filtered to your same Server #),
+            the <strong>game time</strong>, and the <strong>location</strong> —
+            either one of the canonical maps (Kruger, Cerno, Kanvo, Sphinx) or
+            a free-text custom location.
+          </li>
+          <li>
+            Fill in the <strong>Condition of Win</strong> (required). State the
+            rules clearly — both sides see this and it&apos;s tied to the
+            declared result. Example: &ldquo;First team to 3 captures&rdquo; or
+            &ldquo;Hold the central fortress for 5 minutes.&rdquo;
+          </li>
+          <li>
+            Optional <strong>message</strong> for house rules, format notes,
+            etc. Click <strong>Send proposal</strong>.
+          </li>
+        </ol>
+        <h3 className="mt-4 font-semibold">Accept or decline an incoming proposal</h3>
+        <p>
+          Pending proposals from other guilds show up in the{" "}
+          <strong>Incoming proposals</strong> section of the scrim dashboard.
+        </p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            <strong>Accept</strong> creates two mirrored events (one per guild)
+            in a single transaction. Each side&apos;s event is named{" "}
+            <em>&ldquo;Scrim vs &lt;opponent&gt;&rdquo;</em>, gets the proposed
+            game time as its start, and accepts member signups like a normal
+            match — except there&apos;s only one squad.
+          </li>
+          <li>
+            <strong>Decline</strong> flips the proposal to <em>declined</em>{" "}
+            without creating any events.
+          </li>
+          <li>
+            <strong>Withdraw</strong> (outgoing only) cancels your own pending
+            proposal before the other side responds.
+          </li>
+        </ul>
+        <h3 className="mt-4 font-semibold">Roster the scrim event</h3>
+        <p>
+          The mirrored event lives under <strong>Manage Events</strong> with a
+          red <strong>SCRIM</strong> badge. Open it to see your roster — single
+          squad, same admin controls as a match (move to backup, role dropdown,
+          attended, rating). Squad-2 columns and the second start time are
+          hidden because they don&apos;t apply.
+        </p>
+        <h3 className="mt-4 font-semibold">Cancel an accepted scrim</h3>
+        <p>
+          Either guild&apos;s admin can <strong>Cancel</strong> from the
+          dashboard while it&apos;s in <em>Upcoming scrims</em> and before a
+          result is declared. Cancel soft-deletes both mirrored events
+          (signups are kept for attendance history) and flips the proposal to{" "}
+          <em>cancelled</em>.
+        </p>
+        <h3 className="mt-4 font-semibold">Declare the result</h3>
+        <p>
+          Open the scrim event under <strong>Manage Events</strong>. The
+          result form has four buttons:
+        </p>
+        <ul className="list-disc space-y-2 pl-5">
+          <li>
+            <strong>We won</strong> / <strong>We lost</strong> — your guild&apos;s
+            outcome. The server stores an absolute (perspective-free) result,
+            so the opposing guild sees the inverse W/L automatically.
+          </li>
+          <li>
+            <strong>Draw</strong> / <strong>No contest</strong> — symmetric
+            outcomes. <em>No contest</em> covers forfeits, disconnects, or any
+            scenario where the match didn&apos;t complete.
+          </li>
+        </ul>
+        <p>
+          Optional notes are visible to both guilds&apos; members. Once
+          declared, the result shows up as a chip on the event page, the scrim
+          dashboard, and players&apos; <code>/scrims</code> history. Either
+          admin can declare — first one to submit wins (no overwrite UI).
+        </p>
+        <h3 className="mt-4 font-semibold">Discord notifications</h3>
+        <p>
+          If a guild has a Discord channel configured (see below), the bot
+          posts an English message to <em>both</em> guilds&apos; channels on
+          propose / accept / decline. The message includes the opponent name,
+          game time (rendered in each viewer&apos;s local timezone), location,
+          and condition of win.
+        </p>
+        <p className="text-sm text-gray-600">
+          If the other guild has a channel configured but the bot can&apos;t
+          reach it (bot kicked, channel deleted, wrong ID), you&apos;ll see a
+          browser alert listing the affected guild names after your action
+          completes. Guilds without any channel configured stay silent — that&apos;s
+          an intentional opt-out.
+        </p>
+        <h3 className="mt-4 font-semibold">Player visibility</h3>
+        <p>
+          Players see scrim events on the home page with a red{" "}
+          <strong>SCRIM</strong> badge, can sign up like any match (just one
+          squad to pick), and can browse all accepted scrims (upcoming + past
+          results) at{" "}
+          <a className="text-violet-700 underline" href="/scrims">
+            /scrims
+          </a>
+          . Declined / withdrawn / cancelled proposals are hidden from
+          players — they only see scrims that actually happened or are
+          scheduled.
+        </p>
+      </CollapsibleSection>
+
+      <CollapsibleSection id="invite-bot" title="Invite the Discord bot">
         <p>
           Reminders and slash commands rely on a Discord bot the operator
           already deployed. To wire it up to your Discord server:
@@ -176,9 +329,9 @@ export default async function AdminHelpPage() {
             That&apos;s it — no per-bot configuration on the Discord side.
           </li>
         </ol>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Set up the Discord channel">
+      <CollapsibleSection id="discord-channel" title="Set up the Discord channel">
         <p>
           The bot posts reminders into one channel of your choice. To configure
           it:
@@ -224,9 +377,9 @@ export default async function AdminHelpPage() {
           <em>&ldquo;That channel ID doesn&apos;t exist&rdquo;</em> (you copied
           the server ID, not the channel ID).
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Discord slash commands">
+      <CollapsibleSection id="slash-commands" title="Discord slash commands">
         <p>
           Once the bot is in the server and you&apos;ve linked the channel via
           Test integration, your members can use:
@@ -249,9 +402,9 @@ export default async function AdminHelpPage() {
           New global slash commands take up to ~1 hour to propagate the first
           time after the bot deploys. After that, they&apos;re instant.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Manage your guild">
+      <CollapsibleSection id="manage-guild" title="Manage your guild">
         <ul className="list-disc space-y-3 pl-5">
           <li>
             <strong>
@@ -293,9 +446,9 @@ export default async function AdminHelpPage() {
             you&apos;re the only admin, you have to promote someone else first.
           </li>
         </ul>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Players page (review history)">
+      <CollapsibleSection id="players-page" title="Players page">
         <p>
           <a className="text-violet-700 underline" href="/admin/players">
             /admin/players
@@ -305,9 +458,9 @@ export default async function AdminHelpPage() {
           leadership notes. Useful for picking leaders, building shortlists, or
           following up with no-shows.
         </p>
-      </Section>
+      </CollapsibleSection>
 
-      <Section title="Things you might run into">
+      <CollapsibleSection id="troubleshooting" title="Things you might run into">
         <ul className="list-disc space-y-2 pl-5">
           <li>
             <strong>Reminders aren&apos;t firing.</strong> Check{" "}
@@ -331,24 +484,7 @@ export default async function AdminHelpPage() {
             back.
           </li>
         </ul>
-      </Section>
-    </article>
-  );
-}
-
-function Section({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section className="space-y-3">
-      <h2 className="text-lg font-semibold tracking-tight text-gray-900">
-        {title}
-      </h2>
-      {children}
-    </section>
+      </CollapsibleSection>
+    </HelpLayout>
   );
 }

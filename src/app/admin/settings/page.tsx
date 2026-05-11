@@ -4,6 +4,7 @@ import { eq } from "drizzle-orm";
 import { auth } from "@/auth";
 import { requireGuildAdminPage, resolveAdminGuildId } from "@/lib/rbac";
 import { GuildSettingsForm } from "@/components/guild-settings-form";
+import { DiscordSettingsForm } from "@/components/discord-settings-form";
 import { LeaveGuildButton } from "@/components/leave-guild-button";
 
 export default async function GuildSettingsPage({
@@ -46,10 +47,16 @@ export default async function GuildSettingsPage({
         defaultName={guild.name}
         defaultDescription={guild.description ?? ""}
         defaultIsPublic={guild.isPublic}
-        defaultDiscordChannelId={guild.discordChannelId ?? ""}
         defaultServerNumber={guild.serverNumber != null ? String(guild.serverNumber) : ""}
         defaultTag={guild.tag ?? ""}
       />
+
+      <div className="mt-6">
+        <DiscordSettingsForm
+          guildId={guild.id}
+          defaultDiscordChannelId={guild.discordChannelId ?? ""}
+        />
+      </div>
 
       {!isImpersonating && (
         <section className="mt-10 rounded-lg border border-red-200 bg-red-50 p-4">

@@ -1,19 +1,35 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { guilds, scrimProposals } from "@/db/schema";
 import { desc, eq, inArray, or } from "drizzle-orm";
-import { requireAnyGuildPage } from "@/lib/rbac";
+import { requireSignedInPage, resolveAdminGuildId } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
 import { scrimSideFor, viewerOutcome } from "@/lib/scrims";
 
 // Player-facing scrim history for the viewer's guild. Read-only — admins
 // manage proposals at /admin/scrimmages. Shows accepted/past scrims with
-// results from the viewer's perspective.
-export default async function ScrimHistoryPage() {
+// results from the viewer's perspective. Super-admins can pin a different
+// guild via ?guildId= (matching the rest of the impersonation UX).
+export default async function ScrimHistoryPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ guildId?: string }>;
+}) {
   const session = await auth();
-  const membership = requireAnyGuildPage(session);
-  const guildId = membership.guildId!;
+  const membership = requireSignedInPage(session);
+
+  const { guildId: requestedGuildId } = await searchParams;
+  const targetGuildId = await resolveAdminGuildId(membership, requestedGuildId);
+  if (!targetGuildId) redirect("/guilds");
+  const guildId = targetGuildId;
+
+  const isImpersonating =
+    membership.isSuperAdmin && guildId !== membership.guildId;
+  const actingGuild = isImpersonating
+    ? await db.query.guilds.findFirst({ where: eq(guilds.id, guildId) })
+    : null;
 
   const rows = await db
     .select()
@@ -46,8 +62,13 @@ export default async function ScrimHistoryPage() {
 
   return (
     <main className="mx-auto max-w-3xl p-6">
+      {isImpersonating && actingGuild && (
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+          Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
+        </div>
+      )}
       <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
-        Scrimmages
+        {actingGuild ? `${actingGuild.name} — Scrimmages` : "Scrimmages"}
       </h1>
       <p className="mb-6 text-sm text-gray-500">
         Guild-vs-guild matches your guild has played or has scheduled.

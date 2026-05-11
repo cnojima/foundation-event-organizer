@@ -13,6 +13,7 @@ import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
 import { ScrimResultForm } from "@/components/scrim-result-form";
 import { scrimSideFor, viewerOutcome } from "@/lib/scrims";
+import { SquadRoster, sortRoster, bucketSquad } from "@/components/squad-roster";
 
 export default async function AdminEventPage({
   params,
@@ -75,6 +76,32 @@ export default async function AdminEventPage({
         .leftJoin(users, eq(signups.userId, users.id))
         .where(and(eq(signups.eventId, id), isNull(signups.deletedAt)))
     : [];
+
+  // Scrim — load the opposing guild's mirrored event + roster so the admin
+  // sees both lineups side by side. Opposing roster is rendered read-only
+  // (no AdminSignupRow controls); admin internals stay private to each guild.
+  const opposingEventId = scrim
+    ? event.guildId === scrim.proposingGuildId
+      ? scrim.opposingEventId
+      : scrim.proposingEventId
+    : null;
+  const opposingEvent = opposingEventId
+    ? await db.query.events.findFirst({
+        where: eq(events.id, opposingEventId),
+      })
+    : null;
+  const opposingSignups = opposingEventId
+    ? await db
+        .select({ signup: signups, user: users })
+        .from(signups)
+        .leftJoin(users, eq(signups.userId, users.id))
+        .where(
+          and(eq(signups.eventId, opposingEventId), isNull(signups.deletedAt))
+        )
+    : [];
+  const opposingRoster = sortRoster(
+    opposingSignups.filter((s) => bucketSquad(s) === 1)
+  );
 
   // Effective squad placement: admin's explicit assignment wins; fall back
   // to first-choice preference. This way "Move to Bravo" actually relocates
@@ -306,16 +333,15 @@ export default async function AdminEventPage({
             </div>
           </div>
 
-          <div
-            className={
-              isScrim
-                ? "grid grid-cols-1 gap-6"
-                : "grid grid-cols-1 gap-6 lg:grid-cols-2"
-            }
-          >
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <section>
               <h2 className="text-lg font-semibold mb-3">
                 {event.squad1Name} ({squad1Signups.length})
+                {isScrim && (
+                  <span className="ml-2 text-xs font-normal text-gray-500">
+                    Your guild
+                  </span>
+                )}
               </h2>
               <div className="space-y-2">
                 {squad1Signups.map(({ signup, user }) => (
@@ -330,6 +356,34 @@ export default async function AdminEventPage({
                 ))}
               </div>
             </section>
+
+            {isScrim && opposingGuild && opposingEvent && (
+              <section>
+                <h2 className="text-lg font-semibold mb-3">
+                  vs{" "}
+                  {opposingGuild.tag
+                    ? `[${opposingGuild.tag}] ${opposingGuild.name}`
+                    : opposingGuild.name}{" "}
+                  ({opposingRoster.length})
+                  <span className="ml-2 text-xs font-normal text-gray-500">
+                    Opponent — read-only
+                  </span>
+                </h2>
+                <SquadRoster
+                  name={
+                    opposingGuild.tag
+                      ? `[${opposingGuild.tag}] ${opposingGuild.name}`
+                      : opposingGuild.name
+                  }
+                  subtitle="Opponent"
+                  rows={opposingRoster}
+                  event={opposingEvent}
+                  currentUserId={null}
+                  guildTag={opposingGuild.tag}
+                  defaultOpen
+                />
+              </section>
+            )}
 
             {!isScrim && (
               <section>

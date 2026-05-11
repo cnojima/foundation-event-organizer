@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { events, guilds, scrimProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { generateId } from "@/lib/ids";
+import { sendScrimNotification } from "@/bot/discord-bot";
 
 // POST /api/scrimmages/[id]/accept — opposing-side admin accepts. Creates
 // two mirrored `events` rows (one per guild, both kind=scrim, linked via
@@ -104,9 +105,19 @@ export async function POST(
       .run();
   });
 
+  const notify = await sendScrimNotification({
+    proposingGuildId: proposal.proposingGuildId,
+    opposingGuildId: proposal.opposingGuildId,
+    action: "accepted",
+    proposedGameTime: proposal.proposedGameTime,
+    location: proposal.location,
+    winCondition: proposal.winCondition,
+  });
+
   return NextResponse.json({
     success: true,
     proposingEventId,
     opposingEventId,
+    notify,
   });
 }

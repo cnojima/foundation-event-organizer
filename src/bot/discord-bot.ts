@@ -375,6 +375,170 @@ export async function sendTestMessage(
   return { ok: true };
 }
 
+// ---- Scrim lifecycle notifications ----
+
+export type ScrimNotifyAction = "proposed" | "accepted" | "declined";
+
+type ScrimNotificationInput = {
+  proposingGuildId: string;
+  opposingGuildId: string;
+  action: ScrimNotifyAction;
+  proposedGameTime: string;
+  location: string;
+  winCondition: string;
+};
+
+// Names of guilds that have a configured Discord channel but where the
+// notification didn't reach Discord. Empty list = either everything posted
+// successfully OR the affected guilds have no channel configured (which is
+// the admin's intentional opt-out — not a warning condition).
+export type ScrimNotifyOutcome = {
+  failedGuildNames: string[];
+};
+
+// Posts a one-off scrim state-change message to each guild's configured
+// Discord channel. Uses the REST API directly (mirrors sendTestMessage) so
+// route handlers don't depend on the gateway client. Returns a per-guild
+// outcome so callers can surface a soft warning when a configured channel
+// failed to deliver. Never throws — a Discord outage must not break the
+// scrim API.
+export async function sendScrimNotification(
+  input: ScrimNotificationInput
+): Promise<ScrimNotifyOutcome> {
+  const token = process.env.DISCORD_BOT_TOKEN;
+
+  const [proposing, opposing] = await Promise.all([
+    db.query.guilds.findFirst({
+      where: and(eq(guilds.id, input.proposingGuildId), isNull(guilds.deletedAt)),
+    }),
+    db.query.guilds.findFirst({
+      where: and(eq(guilds.id, input.opposingGuildId), isNull(guilds.deletedAt)),
+    }),
+  ]);
+  if (!proposing || !opposing) return { failedGuildNames: [] };
+
+  const content = buildScrimMessage({
+    action: input.action,
+    proposingName: proposing.name,
+    opposingName: opposing.name,
+    proposedGameTime: input.proposedGameTime,
+    location: input.location,
+    winCondition: input.winCondition,
+  });
+
+  const targets = [proposing, opposing].filter(
+    (g): g is typeof g & { discordChannelId: string } => !!g.discordChannelId
+  );
+  // Nothing configured — admins opted out, not a warning.
+  if (targets.length === 0) return { failedGuildNames: [] };
+
+  // No token = configured guilds can't be reached. Surface them as failures
+  // so the admin sees the deployment-side problem.
+  if (!token) {
+    console.warn(
+      "[bot] DISCORD_BOT_TOKEN not set — scrim notifications will not be sent"
+    );
+    return { failedGuildNames: targets.map((g) => g.name) };
+  }
+
+  const results = await Promise.all(
+    targets.map(async (g) => {
+      const ok = await postScrimToChannel(
+        token,
+        g.discordChannelId,
+        content,
+        g.id
+      );
+      return { name: g.name, ok };
+    })
+  );
+  return {
+    failedGuildNames: results.filter((r) => !r.ok).map((r) => r.name),
+  };
+}
+
+async function postScrimToChannel(
+  token: string,
+  channelId: string,
+  content: string,
+  appGuildId: string
+): Promise<boolean> {
+  try {
+    const res = await fetch(
+      `https://discord.com/api/v10/channels/${channelId}/messages`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bot ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content,
+          allowed_mentions: { parse: [] },
+        }),
+      }
+    );
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.warn(
+        `[bot] scrim notification failed guild=${appGuildId} channel=${channelId} status=${res.status} body=${body.slice(0, 200)}`
+      );
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.warn(
+      `[bot] scrim notification fetch threw guild=${appGuildId} channel=${channelId}:`,
+      err
+    );
+    return false;
+  }
+}
+
+function buildScrimMessage(args: {
+  action: ScrimNotifyAction;
+  proposingName: string;
+  opposingName: string;
+  proposedGameTime: string;
+  location: string;
+  winCondition: string;
+}): string {
+  const when = discordTimestamp(args.proposedGameTime, "F");
+  const relative = discordTimestamp(args.proposedGameTime, "R");
+  const proposer = `**${args.proposingName}**`;
+  const opposer = `**${args.opposingName}**`;
+  if (args.action === "proposed") {
+    return [
+      `**Scrim proposed** — ${proposer} has challenged ${opposer} to a scrim.`,
+      `Time: ${when} (${relative})`,
+      `Location: ${args.location}`,
+      `Condition of Win: ${args.winCondition}`,
+      `${opposer} admins can accept or decline on the website.`,
+    ].join("\n");
+  }
+  if (args.action === "accepted") {
+    return [
+      `**Scrim accepted** — ${opposer} accepted ${proposer}'s scrim challenge.`,
+      `Time: ${when} (${relative})`,
+      `Location: ${args.location}`,
+      `Condition of Win: ${args.winCondition}`,
+    ].join("\n");
+  }
+  // declined
+  return [
+    `**Scrim declined** — ${opposer} declined ${proposer}'s scrim challenge.`,
+    `Was proposed for ${when}.`,
+  ].join("\n");
+}
+
+// Discord timestamp tokens: <t:UNIX:STYLE> renders in each viewer's local
+// timezone. F = "Saturday, May 11, 2024 2:00 PM"; R = "in 3 hours".
+function discordTimestamp(iso: string, style: "F" | "R"): string {
+  const ms = new Date(iso).getTime();
+  if (Number.isNaN(ms)) return iso;
+  return `<t:${Math.floor(ms / 1000)}:${style}>`;
+}
+
 async function translateDiscordError(res: Response): Promise<string> {
   let body: { code?: number; message?: string } | null = null;
   try {

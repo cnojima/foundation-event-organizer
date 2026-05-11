@@ -1,31 +1,43 @@
 import { db } from "@/db";
-import { events, signups } from "@/db/schema";
+import { events, guilds, signups } from "@/db/schema";
 import { and, desc, eq, inArray, isNull } from "drizzle-orm";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
-import { requireSignedInPage } from "@/lib/rbac";
+import { requireSignedInPage, resolveAdminGuildId } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { squadTimes } from "@/lib/event-times";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ guildId?: string }>;
+}) {
   const session = await auth();
   const membership = requireSignedInPage(session);
 
   const cookieStore = await cookies();
   if (!cookieStore.get("help_viewed")) redirect("/help");
 
-  if (!membership.guildId) redirect("/guilds");
+  // Super-admins can pin a target guild via ?guildId=. Regular users always
+  // resolve back to their own guildId.
+  const { guildId: requestedGuildId } = await searchParams;
+  const targetGuildId = await resolveAdminGuildId(membership, requestedGuildId);
+  if (!targetGuildId) redirect("/guilds");
+
+  const isImpersonating =
+    membership.isSuperAdmin && targetGuildId !== membership.guildId;
+  const actingGuild = isImpersonating
+    ? await db.query.guilds.findFirst({ where: eq(guilds.id, targetGuildId) })
+    : null;
 
   const guildEvents = await db
     .select()
     .from(events)
-    .where(
-      and(eq(events.guildId, membership.guildId!), isNull(events.deletedAt))
-    )
+    .where(and(eq(events.guildId, targetGuildId), isNull(events.deletedAt)))
     .orderBy(desc(events.createdAt));
 
   // Which of those events has the current user already signed up for? Drives
@@ -64,8 +76,15 @@ export default async function Home() {
 
   return (
     <div className="mx-auto max-w-3xl">
+      {isImpersonating && actingGuild && (
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+          Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
+        </div>
+      )}
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">{t("title")}</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+          {actingGuild ? `${actingGuild.name} — ${t("title")}` : t("title")}
+        </h1>
         {hasAnyScheduled && (
           <CalendarDownloadLink
             href="/api/events/all/ics"

@@ -100,18 +100,18 @@ const ICONS = {
 const NAV_ITEMS: NavItem[] = [
   { labelKey: "manageEvents", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin" },
   { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild" },
+  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin" },
   { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild" },
   { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly" },
   { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin" },
   { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin" },
-  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin" },
   { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin" },
   { labelKey: "settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin" },
-  { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
   { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "guildless" },
   { labelKey: "createGuild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless" },
   { labelKey: "adminHelp", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin" },
   { labelKey: "help", href: "/help", icon: ICONS.help, visibility: "always" },
+  { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin" },
   { labelKey: "myAccount", href: "/me", icon: ICONS.settings, visibility: "signedIn" },
 ];
 
@@ -153,6 +153,8 @@ function isVisible(item: NavItem, p: SidebarNavProps): boolean {
 // super-admin's navigation stays inside the impersonated guild instead of
 // snapping back to their own. /admin/help is static and intentionally excluded.
 const IMPERSONATION_AWARE_PREFIXES = [
+  "/",
+  "/scrims",
   "/admin",
   "/admin/event",
   "/admin/players",
