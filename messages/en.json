@@ -40,6 +40,14 @@
     "help": "Help",
     "myAccount": "My Account"
   },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} other {# notifications}}",
+    "discord_unlinked": {
+      "title": "Link Discord to enable duel DMs",
+      "body": "You signed up with Google. Link a Discord account so the bot can DM you when someone challenges you to a duel.",
+      "action": "Link Discord →"
+    }
+  },
   "topBar": {
     "notifications": "Notifications",
     "myAccount": "My Account",
@@ -414,6 +422,14 @@
       "dmLabel": "Notify me via Discord direct message about duels",
       "dmHelp": "When on, the bot DMs you when someone challenges you, accepts or declines your proposal, cancels a duel, or declares a result. Turn off to silence Discord DMs about duels entirely. You'll still see everything on the website.",
       "dmHelpUnlinked": "Sign in with Discord at least once to enable direct messages about duels. (Sign out, then sign back in with Discord.)"
+    },
+    "discord": {
+      "heading": "Discord direct messages",
+      "reachableTitle": "Discord User ID on file",
+      "reachableBody": "The bot can DM you about duels. You can update or clear your ID below.",
+      "unreachableBody": "Paste your Discord User ID below so the bot can DM you about duel challenges, accepts, declines, and results. Without it, you'll still see everything on the website — just no Discord notifications.",
+      "idLabel": "Discord User ID",
+      "idHelp": "In Discord, enable Developer Mode (User Settings → Advanced), then right-click your own profile and choose \"Copy User ID\". It's a 17-20 digit number. We don't verify ownership — if you ever receive an unwanted DM from the bot, disable \"Allow direct messages from server members\" in your Discord privacy settings."
     },
     "guildMembership": "Guild membership",
     "youreInGuild": "You're a {role} of {guildName}.",

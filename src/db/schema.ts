@@ -20,6 +20,13 @@ export const users = sqliteTable("users", {
   // BCP-47 language tag (e.g., "en", "pt-BR", "zh-CN"). Null = use the
   // browser's Accept-Language header to pick a supported locale.
   locale: text("locale"),
+  // Discord user ID (snowflake — 17-20 digit numeric string). Populated
+  // automatically when a user signs in via Discord OAuth (see auth.ts
+  // signIn event) OR manually entered on the /me page by users who
+  // signed up via Google. Source of truth for bot DM delivery —
+  // resolveDiscordUserId() prefers this over the legacy accounts-table
+  // lookup.
+  discordUserId: text("discord_user_id"),
   // Site-wide super-admin (replaces the old is_admin flag). Bootstrap manually via Drizzle Studio.
   isSuperAdmin: integer("is_super_admin", { mode: "boolean" }).notNull().default(false),
   // One guild per user. Both columns null when the user has not joined a guild yet.

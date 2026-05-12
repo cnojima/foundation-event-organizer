@@ -29,6 +29,13 @@
       "when": 1778528156030,
       "tag": "0003_add_duel_last_edited_by",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1778609830002,
+      "tag": "0004_add_users_discord_user_id",
+      "breakpoints": true
     }
   ]
 }

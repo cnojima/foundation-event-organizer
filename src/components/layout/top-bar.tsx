@@ -4,6 +4,8 @@ import { getTranslations } from "next-intl/server";
 import { SignInButton, SignOutButton } from "@/components/auth-buttons";
 import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
+import { NotificationBell } from "@/components/notification-bell";
+import { computeUserAlerts } from "@/lib/user-alerts";
 
 export async function TopBar({
   leftSlot,
@@ -16,28 +18,16 @@ export async function TopBar({
   const user = session?.user;
   const t = await getTranslations("topBar");
 
+  // Alerts are computed server-side per-request — cheap (one short DB
+  // read) and avoids shipping the rule logic to the client. Skipped
+  // entirely for signed-out visitors.
+  const alerts = user?.id ? await computeUserAlerts(user.id) : [];
+
   return (
     <header className="flex items-center justify-between gap-4 border-b border-gray-200 bg-white px-4 py-3 sm:px-6">
       <div className="flex items-center gap-2">{leftSlot}</div>
       <div className="flex items-center gap-4">
-      {/* Notification bell — hidden until we have real notifications wired up.
-          Keeping the markup so the slot is easy to re-enable later. */}
-      <button
-        type="button"
-        className="relative hidden size-9 place-items-center rounded-full text-gray-500 hover:bg-gray-100"
-        aria-label={t("notifications")}
-      >
-        <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
-          <path
-            d="M5 8a5 5 0 0 1 10 0v3l1.5 2.5h-13L5 11V8Z"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinejoin="round"
-          />
-          <path d="M8 16a2 2 0 0 0 4 0" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-        </svg>
-        <span className="absolute right-1 top-1 size-2 rounded-full bg-violet-600 ring-2 ring-white" />
-      </button>
+      {user && <NotificationBell alerts={alerts} />}
 
       {user ? (
         <div className="flex items-center gap-3">

@@ -24,6 +24,26 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
     }),
   ],
+  events: {
+    // When a user signs in via Discord OAuth, mirror their Discord user
+    // ID (the snowflake stored as `account.providerAccountId`) onto the
+    // users row. That column is the canonical source of truth for bot
+    // DM targeting — Google-signup users can also set it manually on
+    // /me without needing to OAuth. Idempotent + cheap to run on every
+    // Discord sign-in.
+    async signIn({ user, account }) {
+      if (
+        account?.provider === "discord" &&
+        account.providerAccountId &&
+        user?.id
+      ) {
+        await db
+          .update(users)
+          .set({ discordUserId: account.providerAccountId })
+          .where(eq(users.id, user.id));
+      }
+    },
+  },
   callbacks: {
     // Public-path allowlist. Auth.js's default behavior on `false` is to
     // bounce signed-out users to /api/auth/signin BEFORE the page

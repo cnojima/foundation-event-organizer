@@ -9,6 +9,7 @@ import { LeaveGuildButton } from "@/components/leave-guild-button";
 import { DeleteAccountButton } from "@/components/delete-account-button";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { DuelSettingsForm } from "@/components/duel-settings-form";
+import { DiscordIdForm } from "@/components/discord-id-form";
 
 export const metadata = {
   title: "My Account — Foundation Event Organizer",
@@ -38,20 +39,24 @@ export default async function MePage() {
       })
     : null;
 
-  // Linked-Discord check controls whether the duel DM toggle is editable.
-  // Users without a Discord OAuth link can flip the toggle but it has no
-  // effect — DMs require their Discord user ID.
-  const discordLinkRow = await db
-    .select({ id: accounts.providerAccountId })
-    .from(accounts)
-    .where(
-      and(
-        eq(accounts.userId, membership.userId),
-        eq(accounts.provider, "discord")
+  // Whether the bot can reach the user via DM. True if they've entered a
+  // Discord User ID directly, OR if they signed in with Discord OAuth at
+  // any point (legacy: providerAccountId in accounts is the snowflake).
+  // Controls whether the duel DM toggle is editable.
+  let discordReachable = !!me.discordUserId;
+  if (!discordReachable) {
+    const legacyLink = await db
+      .select({ id: accounts.providerAccountId })
+      .from(accounts)
+      .where(
+        and(
+          eq(accounts.userId, membership.userId),
+          eq(accounts.provider, "discord")
+        )
       )
-    )
-    .get();
-  const discordLinked = !!discordLinkRow;
+      .get();
+    discordReachable = !!legacyLink;
+  }
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
@@ -80,8 +85,37 @@ export default async function MePage() {
           defaultPowerTier={me.powerTier}
           defaultDiscoverable={me.discoverableForDuels}
           defaultDmEnabled={me.duelDmEnabled}
-          discordLinked={discordLinked}
+          discordLinked={discordReachable}
         />
+      </section>
+
+      <section>
+        <h2 className="mb-3 text-lg font-semibold">
+          {t("discord.heading")}
+        </h2>
+        <div className="space-y-3 rounded-lg border bg-white p-4">
+          {discordReachable && (
+            <div className="flex items-start gap-3">
+              <span className="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700">
+                ✓
+              </span>
+              <div>
+                <p className="text-sm font-semibold text-gray-900">
+                  {t("discord.reachableTitle")}
+                </p>
+                <p className="mt-1 text-sm text-gray-600">
+                  {t("discord.reachableBody")}
+                </p>
+              </div>
+            </div>
+          )}
+          {!discordReachable && (
+            <p className="text-sm text-gray-700">
+              {t("discord.unreachableBody")}
+            </p>
+          )}
+          <DiscordIdForm defaultValue={me.discordUserId} />
+        </div>
       </section>
 
       <section>

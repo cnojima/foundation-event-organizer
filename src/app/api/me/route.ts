@@ -115,6 +115,28 @@ export async function PATCH(req: Request) {
     updates.duelDmEnabled = body.duelDmEnabled;
   }
 
+  if ("discordUserId" in body) {
+    const raw = body.discordUserId;
+    if (raw === null || raw === "") {
+      updates.discordUserId = null;
+    } else if (typeof raw === "string" && /^\d{17,20}$/.test(raw.trim())) {
+      // Discord snowflakes are 17-20 digit numeric strings. We don't
+      // verify ownership (the user could enter someone else's ID), but
+      // the format check catches accidental garbage. Worst-case misuse
+      // is contained because the target user can disable DMs from
+      // server members in their own Discord settings.
+      updates.discordUserId = raw.trim();
+    } else {
+      return NextResponse.json(
+        {
+          error:
+            "Discord User ID must be a 17-20 digit number (the snowflake from Discord — enable Developer Mode → right-click your name → Copy User ID).",
+        },
+        { status: 400 }
+      );
+    }
+  }
+
   if (Object.keys(updates).length === 0) {
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
   }

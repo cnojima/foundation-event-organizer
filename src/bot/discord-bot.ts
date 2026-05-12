@@ -631,20 +631,32 @@ async function sendDirectMessage(
   }
 }
 
-// Looks up the linked Discord user ID for an app user. Returns null when
-// the user hasn't signed in with Discord (or unlinked their Discord
-// account). Pure DB read — cheap.
+// Looks up the Discord user ID for an app user. Prefers users.discord_user_id
+// (the canonical source — populated automatically on Discord sign-in via
+// the auth.ts signIn event, OR manually entered on /me by Google-signup
+// users). Falls back to the legacy accounts-table lookup for users who
+// linked Discord before the column existed and haven't signed in again.
+// Pure DB read — cheap.
 async function resolveDiscordUserId(
   appUserId: string
 ): Promise<string | null> {
-  const row = await db
+  const userRow = await db.query.users.findFirst({
+    where: eq(users.id, appUserId),
+    columns: { discordUserId: true },
+  });
+  if (userRow?.discordUserId) return userRow.discordUserId;
+
+  // Legacy fallback — pre-column Discord-OAuth users still have their
+  // ID in the accounts table from the initial sign-in. Going forward
+  // the signIn event mirrors it to users.discord_user_id.
+  const accountRow = await db
     .select({ providerAccountId: accounts.providerAccountId })
     .from(accounts)
     .where(
       and(eq(accounts.userId, appUserId), eq(accounts.provider, "discord"))
     )
     .get();
-  return row?.providerAccountId ?? null;
+  return accountRow?.providerAccountId ?? null;
 }
 
 function buildScrimMessage(args: {
