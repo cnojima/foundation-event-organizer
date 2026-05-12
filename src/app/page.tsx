@@ -10,6 +10,7 @@ import { requireSignedInPage, resolveAdminGuildId } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { squadTimes } from "@/lib/event-times";
+import { LandingPage } from "@/components/landing-page";
 
 export default async function Home({
   searchParams,
@@ -17,6 +18,12 @@ export default async function Home({
   searchParams: Promise<{ guildId?: string }>;
 }) {
   const session = await auth();
+  // Signed-out visitors get the public marketing landing instead of being
+  // bounced to Auth.js's bare provider picker. The landing's CTA still
+  // routes through /api/auth/signin — we just give them context first.
+  if (!session?.user) {
+    return <LandingPage />;
+  }
   const membership = requireSignedInPage(session);
 
   const cookieStore = await cookies();

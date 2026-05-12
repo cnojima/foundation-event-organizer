@@ -573,6 +573,75 @@
       "movedSquad": "A player got assigned to the wrong squad after I moved them. The MOVED badge means assignment differs from preference. To revert, change their role/squad via the dropdown or use the Move to Squad N button to flip them back."
     }
   },
+  "landing": {
+    "hero": {
+      "kicker": "Guild engagement, leveled up",
+      "headline": "Your members will show up. Your bench gets deeper.",
+      "subhead": "Replace messy Discord threads with a single hub for event signups, scrims, 1v1 duels, and a leaderboard. Automatic reminders, instant signup, and friendly competition that keeps your roster active.",
+      "signIn": "Sign in with Google or Discord",
+      "browseGuilds": "Browse public guilds"
+    },
+    "stats": {
+      "guilds": "Guilds",
+      "events": "Events run",
+      "duels": "Duels played",
+      "players": "Players"
+    },
+    "engagement": {
+      "kicker": "The problem we solve",
+      "heading": "Guilds lose members to friction.",
+      "body": "Event scheduling buried in Discord threads. Signups tracked in a spreadsheet someone forgot to update. Reminders that didn't fire. Players who stopped showing up because nothing pulled them back. Foundation Event Organizer fixes all of that.",
+      "beforeTitle": "Before",
+      "beforeBody": "Messy Discord threads, lost signups, missed reminders, no record of who actually showed up — and members slowly drifting away.",
+      "afterTitle": "After",
+      "afterBody": "One signup form per event. Automatic 1-day, 1-hour, and 20-minute Discord reminders. Attendance + ratings tracked. Scrims and duels with leaderboards and ELO. A clear reason to log in.",
+      "outcomeTitle": "Result",
+      "outcomeBody": "More events with full rosters. More cross-guild competition. More reasons for your members to come back — and a record of who actually carries their weight."
+    },
+    "features": {
+      "heading": "What's inside",
+      "matches": {
+        "title": "Match events",
+        "body": "Two squads, leadership slots, automatic waitlist, attendance tracking, post-event ratings — everything you need to run a recurring Shadowfront-style event."
+      },
+      "scrims": {
+        "title": "Guild-vs-guild scrims",
+        "body": "Propose a scrim against another guild on your server. Both sides agree on time, location, and win condition. Results feed a guild record."
+      },
+      "duels": {
+        "title": "1v1 duels with ELO",
+        "body": "Players challenge each other across the server. Ping-pong negotiation, mutual confirmation of results, ELO ratings, thumbs-up/down reputation, and a server leaderboard."
+      },
+      "discord": {
+        "title": "Discord bot integration",
+        "body": "@everyone reminders 1 day, 1 hour, and 20 minutes before each event. Slash commands /upcoming and /signup. Direct messages for duel lifecycle events."
+      },
+      "multiGuild": {
+        "title": "Multi-guild from day one",
+        "body": "Each guild has its own admins, members, events, and Discord channel. Super-admins manage the platform. Slugs are permanent; everything else is configurable."
+      },
+      "i18n": {
+        "title": "17 languages",
+        "body": "Auto-translated UI in English, French, German, Spanish, Russian, Ukrainian, Chinese, Japanese, Korean, Portuguese, Italian, Indonesian, Dutch, Turkish, Polish, Vietnamese, and Swedish."
+      }
+    },
+    "screenshots": {
+      "heading": "What it looks like",
+      "eventAdmin": "Event admin dashboard — squad rosters, leadership requests, waitlist, attendance.",
+      "duels": "Duel detail page — matchup, ELO ratings, result chip, location, and rules.",
+      "leaderboard": "Server leaderboard — ELO-ranked players, top-3 chips, your rank surfaced.",
+      "discord": "Discord reminders — automatic @everyone pings before every event."
+    },
+    "bottomCta": {
+      "heading": "Stop losing members to friction.",
+      "body": "Spin up a guild in 30 seconds. Free forever, open source, no credit card."
+    },
+    "footer": {
+      "builtWith": "Built with Next.js, Drizzle, Auth.js, and the Discord API. Free and open source.",
+      "viewSource": "View source on GitHub",
+      "help": "Help"
+    }
+  },
   "playerHelp": {
     "title": "Welcome to Foundation Event Organizer",
     "subtitle": "This is where your guild signs up for events — Shadowfront matches, scrims, and anything else the leadership wants on the calendar.",

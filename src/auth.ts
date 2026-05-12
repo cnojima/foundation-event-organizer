@@ -25,7 +25,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
-    authorized({ auth }) {
+    // Public-path allowlist. Auth.js's default behavior on `false` is to
+    // bounce signed-out users to /api/auth/signin BEFORE the page
+    // component runs — which means a signed-out landing page never gets a
+    // chance to render unless we whitelist its route here. Add new
+    // public surfaces to this list when they're built.
+    authorized({ auth, request }) {
+      const pathname = request.nextUrl.pathname;
+      const PUBLIC_PATHS = new Set(["/"]);
+      if (PUBLIC_PATHS.has(pathname)) return true;
       return !!auth;
     },
     async session({ session, user }) {
