@@ -57,8 +57,11 @@ if (!fs.existsSync(migrationsFolder)) {
   process.exit(1);
 }
 
-// Find the baseline migration — the one with the lowest tag prefix
-// (typically 0000_*).
+// Find ALL migration files. We mark every existing .sql as already
+// applied — the operator runs this script only when they know the DB's
+// schema already matches the latest drizzle/ state (typically because it
+// was kept up-to-date with `drizzle-kit push --force` before we adopted
+// versioned migrations).
 const sqlFiles = fs
   .readdirSync(migrationsFolder)
   .filter((f) => f.endsWith(".sql"))
@@ -67,12 +70,6 @@ if (sqlFiles.length === 0) {
   console.error("No .sql files in drizzle/. Generate a baseline first.");
   process.exit(1);
 }
-const baseline = sqlFiles[0];
-const baselineTag = baseline.replace(/\.sql$/, "");
-const baselineSql = fs.readFileSync(path.join(migrationsFolder, baseline), "utf8");
-
-// Drizzle's migrator identifies migrations by a sha-256 of the SQL content.
-const hash = crypto.createHash("sha256").update(baselineSql).digest("hex");
 
 const sqlite = new Database(dbPath);
 sqlite.pragma("journal_mode = WAL");
@@ -86,25 +83,34 @@ sqlite.exec(`
   );
 `);
 
-const existing = sqlite
-  .prepare("SELECT id, hash FROM __drizzle_migrations WHERE hash = ?")
-  .get(hash);
+const insertStmt = sqlite.prepare(
+  "INSERT INTO __drizzle_migrations (hash, created_at) VALUES (?, ?)"
+);
+const lookupStmt = sqlite.prepare(
+  "SELECT id FROM __drizzle_migrations WHERE hash = ?"
+);
 
-if (existing) {
-  console.log(`Baseline ${baselineTag} already marked applied (id=${existing.id}).`);
-  sqlite.close();
-  process.exit(0);
+let marked = 0;
+let alreadyApplied = 0;
+for (const file of sqlFiles) {
+  const tag = file.replace(/\.sql$/, "");
+  const sql = fs.readFileSync(path.join(migrationsFolder, file), "utf8");
+  const hash = crypto.createHash("sha256").update(sql).digest("hex");
+  if (lookupStmt.get(hash)) {
+    console.log(`  • ${tag}: already marked applied`);
+    alreadyApplied++;
+    continue;
+  }
+  insertStmt.run(hash, Date.now());
+  console.log(`  ✓ ${tag}: marked applied (hash=${hash.slice(0, 12)}…)`);
+  marked++;
 }
 
-sqlite
-  .prepare(
-    "INSERT INTO __drizzle_migrations (hash, created_at) VALUES (?, ?)"
-  )
-  .run(hash, Date.now());
-
-console.log(`Marked baseline ${baselineTag} as applied (hash=${hash.slice(0, 12)}…).`);
 console.log(
-  "Future `npm run db:migrate` runs will start from the next migration file."
+  `\nDone. Marked ${marked} migration(s), ${alreadyApplied} already applied.`
+);
+console.log(
+  "Future `npm run db:migrate` runs will only execute migration files generated after this point."
 );
 sqlite.close();
 
