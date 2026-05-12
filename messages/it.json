@@ -16,6 +16,12 @@
     "optional": "Opzionale"
   },
   "nav": {
+    "category": {
+      "play": "Giocare",
+      "manage": "Maneggio",
+      "platform": "Piattaforma",
+      "account": "Account"
+    },
     "manageEvents": "Gestione degli eventi",
     "events": "Eventi",
     "scrimHistory": "Storia di Scrim",
@@ -32,13 +38,7 @@
     "createGuild": "Crea gilda",
     "adminHelp": "Assistenza amministrativa",
     "help": "Aiuto",
-    "myAccount": "Il mio conto",
-    "category": {
-      "play": "Giocare",
-      "manage": "Maneggio",
-      "platform": "Piattaforma",
-      "account": "Account"
-    }
+    "myAccount": "Il mio conto"
   },
   "topBar": {
     "notifications": "Notifiche",
@@ -641,5 +641,74 @@
       "slashCommands": "Comandi slash di Discord: /upcoming elenca gli eventi imminenti della tua gilda, mentre /signup ti permette di iscriverti senza uscire da Discord. Devi accedere al sito web tramite Discord almeno una volta, in modo che il bot possa associare il tuo account."
     },
     "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni."
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Coinvolgimento della gilda, livello aumentato",
+      "headline": "I tuoi membri si faranno avanti. La tua squadra si amplierà.",
+      "subhead": "Sostituisci i caotici thread di Discord con un unico hub per iscrizioni agli eventi, partite di allenamento, duelli 1 contro 1 e classifiche. Promemoria automatici, iscrizioni immediate e sana competizione che mantiene attivo il tuo team.",
+      "signIn": "Accedi con Google o Discord",
+      "browseGuilds": "Esplora le gilde pubbliche"
+    },
+    "stats": {
+      "guilds": "Gilde",
+      "events": "Gli eventi si svolgono",
+      "duels": "Duelli giocati",
+      "players": "Giocatori"
+    },
+    "engagement": {
+      "kicker": "Il problema che risolviamo",
+      "heading": "Le corporazioni perdono membri a causa dei conflitti.",
+      "body": "Pianificazione degli eventi sepolta nei thread di Discord. Iscrizioni tracciate in un foglio di calcolo che qualcuno si è dimenticato di aggiornare. Promemoria che non vengono inviati. Giocatori che hanno smesso di partecipare perché nulla li ha motivati a tornare. Foundation Event Organizer risolve tutti questi problemi.",
+      "beforeTitle": "Prima",
+      "beforeBody": "Discussioni disordinate su Discord, iscrizioni perse, promemoria non inviati, nessuna traccia di chi si è effettivamente presentato e membri che si allontanano lentamente.",
+      "afterTitle": "Dopo",
+      "afterBody": "Un modulo di iscrizione per ogni evento. Promemoria automatici su Discord a 1 giorno, 1 ora e 20 minuti. Monitoraggio delle presenze e delle valutazioni. Partite di allenamento e duelli con classifiche e punteggio ELO. Un motivo valido per accedere.",
+      "outcomeTitle": "Risultato",
+      "outcomeBody": "Più eventi con partecipanti al completo. Più competizione tra gilde. Più motivi per cui i tuoi membri torneranno e una registrazione di chi effettivamente si impegna a fondo."
+    },
+    "features": {
+      "heading": "Cosa c'è dentro?",
+      "matches": {
+        "title": "Eventi della partita",
+        "body": "Due squadre, ruoli di leadership, lista d'attesa automatica, monitoraggio delle presenze, valutazioni post-evento: tutto il necessario per organizzare un evento ricorrente in stile Shadowfront."
+      },
+      "scrims": {
+        "title": "Scontri tra gilde",
+        "body": "Proponete una partita di allenamento contro un'altra gilda del vostro server. Entrambe le squadre concordano su orario, luogo e condizioni di vittoria. I risultati contribuiscono al record della gilda."
+      },
+      "duels": {
+        "title": "Duelli 1 contro 1 con ELO",
+        "body": "I giocatori si sfidano a vicenda sul server. Negoziazione in stile ping-pong, conferma reciproca dei risultati, punteggio ELO, reputazione con voti positivi/negativi e classifica del server."
+      },
+      "discord": {
+        "title": "Integrazione del bot di Discord",
+        "body": "@everyone promemoria 1 giorno, 1 ora e 20 minuti prima di ogni evento. Comandi slash /upcoming e /signup. Messaggi diretti per eventi con doppio ciclo di vita."
+      },
+      "multiGuild": {
+        "title": "Multigilda fin dal primo giorno",
+        "body": "Ogni gilda ha i propri amministratori, membri, eventi e canale Discord. I super-amministratori gestiscono la piattaforma. Gli slug sono permanenti; tutto il resto è configurabile."
+      },
+      "i18n": {
+        "title": "17 lingue",
+        "body": "Interfaccia utente tradotta automaticamente in inglese, francese, tedesco, spagnolo, russo, ucraino, cinese, giapponese, coreano, portoghese, italiano, indonesiano, olandese, turco, polacco, vietnamita e svedese."
+      }
+    },
+    "screenshots": {
+      "heading": "Che aspetto ha",
+      "eventAdmin": "Pannello di amministrazione dell'evento: elenchi delle squadre, richieste di leadership, lista d'attesa, presenze.",
+      "duels": "Pagina dei dettagli del duello: abbinamento, punteggio ELO, gettone risultato, luogo e regole.",
+      "leaderboard": "Classifica del server: giocatori con punteggio ELO, primi 3 giocatori, il tuo rango visualizzato.",
+      "discord": "Promemoria su Discord: notifiche automatiche a tutti (@everyone) prima di ogni evento."
+    },
+    "bottomCta": {
+      "heading": "Smettetela di perdere membri a causa dell'attrito.",
+      "body": "Crea una gilda in 30 secondi. Gratis per sempre, open source, senza carta di credito."
+    },
+    "footer": {
+      "builtWith": "Realizzato con Next.js, Drizzle, Auth.js e l'API di Discord. Gratuito e open source.",
+      "viewSource": "Visualizza il codice sorgente su GitHub",
+      "help": "Aiuto"
+    }
   }
 }

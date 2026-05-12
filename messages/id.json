@@ -16,6 +16,12 @@
     "optional": "Opsional"
   },
   "nav": {
+    "category": {
+      "play": "Bermain",
+      "manage": "Mengelola",
+      "platform": "Platform",
+      "account": "Akun"
+    },
     "manageEvents": "Kelola Acara",
     "events": "Acara",
     "scrimHistory": "Sejarah Scrim",
@@ -32,13 +38,7 @@
     "createGuild": "Buat Persekutuan",
     "adminHelp": "Bantuan Admin",
     "help": "Membantu",
-    "myAccount": "Akun Saya",
-    "category": {
-      "play": "Bermain",
-      "manage": "Mengelola",
-      "platform": "Platform",
-      "account": "Akun"
-    }
+    "myAccount": "Akun Saya"
   },
   "topBar": {
     "notifications": "Pemberitahuan",
@@ -641,5 +641,74 @@
       "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
     },
     "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Keterlibatan dalam guild, ditingkatkan levelnya",
+      "headline": "Anggota Anda akan datang. Cadangan pemain Anda akan bertambah.",
+      "subhead": "Gantikan obrolan Discord yang berantakan dengan satu pusat terpadu untuk pendaftaran acara, latihan tanding, duel 1v1, dan papan peringkat. Pengingat otomatis, pendaftaran instan, dan kompetisi ramah yang menjaga tim Anda tetap aktif.",
+      "signIn": "Masuk menggunakan Google atau Discord",
+      "browseGuilds": "Jelajahi guild publik"
+    },
+    "stats": {
+      "guilds": "Serikat pekerja",
+      "events": "Acara diselenggarakan",
+      "duels": "Duel dimainkan",
+      "players": "Pemain"
+    },
+    "engagement": {
+      "kicker": "Masalah yang kita selesaikan",
+      "heading": "Serikat pekerja kehilangan anggotanya karena gesekan.",
+      "body": "Penjadwalan acara terkubur dalam utas Discord. Pendaftaran dilacak dalam spreadsheet yang lupa diperbarui oleh seseorang. Pengingat yang tidak terpicu. Pemain yang berhenti hadir karena tidak ada yang menarik mereka kembali. Foundation Event Organizer memperbaiki semua itu.",
+      "beforeTitle": "Sebelum",
+      "beforeBody": "Diskusi Discord yang berantakan, pendaftaran yang hilang, pengingat yang terlewat, tidak ada catatan siapa yang benar-benar hadir — dan anggota perlahan-lahan menjauh.",
+      "afterTitle": "Setelah",
+      "afterBody": "Satu formulir pendaftaran per acara. Pengingat Discord otomatis 1 hari, 1 jam, dan 20 menit. Kehadiran + peringkat dilacak. Scrim dan duel dengan papan peringkat dan ELO. Alasan yang jelas untuk masuk.",
+      "outcomeTitle": "Hasil",
+      "outcomeBody": "Lebih banyak acara dengan daftar pemain lengkap. Lebih banyak kompetisi antar guild. Lebih banyak alasan bagi anggota Anda untuk kembali — dan catatan tentang siapa yang benar-benar menjalankan tugasnya dengan baik."
+    },
+    "features": {
+      "heading": "Apa yang ada di dalamnya",
+      "matches": {
+        "title": "Peristiwa pertandingan",
+        "body": "Dua regu, posisi kepemimpinan, daftar tunggu otomatis, pelacakan kehadiran, penilaian pasca-acara — semua yang Anda butuhkan untuk menjalankan acara bergaya Shadowfront secara berkala."
+      },
+      "scrims": {
+        "title": "Pertandingan latihan antar guild",
+        "body": "Usulkan pertandingan latihan melawan guild lain di server Anda. Kedua belah pihak menyepakati waktu, lokasi, dan syarat kemenangan. Hasilnya akan dimasukkan ke dalam catatan guild."
+      },
+      "duels": {
+        "title": "Duel 1 lawan 1 dengan ELO",
+        "body": "Para pemain saling menantang di seluruh server. Negosiasi ping-pong, konfirmasi hasil bersama, peringkat ELO, reputasi jempol ke atas/ke bawah, dan papan peringkat server."
+      },
+      "discord": {
+        "title": "Integrasi bot Discord",
+        "body": "Pengingat untuk @everyone 1 hari, 1 jam, dan 20 menit sebelum setiap acara. Perintah slash /upcoming dan /signup. Pesan langsung untuk acara siklus hidup ganda."
+      },
+      "multiGuild": {
+        "title": "Multi-guild sejak hari pertama",
+        "body": "Setiap guild memiliki admin, anggota, acara, dan saluran Discord sendiri. Super-admin mengelola platform. Slug bersifat permanen; semua hal lainnya dapat dikonfigurasi."
+      },
+      "i18n": {
+        "title": "17 bahasa",
+        "body": "Antarmuka pengguna yang diterjemahkan secara otomatis dalam bahasa Inggris, Prancis, Jerman, Spanyol, Rusia, Ukraina, Cina, Jepang, Korea, Portugis, Italia, Indonesia, Belanda, Turki, Polandia, Vietnam, dan Swedia."
+      }
+    },
+    "screenshots": {
+      "heading": "Beginilah penampakannya",
+      "eventAdmin": "Dasbor admin acara — daftar anggota tim, permintaan kepemimpinan, daftar tunggu, kehadiran.",
+      "duels": "Halaman detail duel — susunan pertandingan, peringkat ELO, chip hasil, lokasi, dan aturan.",
+      "leaderboard": "Papan peringkat server — Pemain berperingkat ELO, 3 chip teratas, peringkat Anda ditampilkan.",
+      "discord": "Pengingat Discord — pemberitahuan otomatis @everyone sebelum setiap acara."
+    },
+    "bottomCta": {
+      "heading": "Hentikan kehilangan anggota karena gesekan.",
+      "body": "Buat guild dalam 30 detik. Gratis selamanya, open source, tanpa kartu kredit."
+    },
+    "footer": {
+      "builtWith": "Dibangun dengan Next.js, Drizzle, Auth.js, dan API Discord. Gratis dan sumber terbuka.",
+      "viewSource": "Lihat kode sumber di GitHub",
+      "help": "Membantu"
+    }
   }
 }

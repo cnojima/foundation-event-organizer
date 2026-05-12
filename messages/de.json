@@ -16,6 +16,12 @@
     "optional": "Optional"
   },
   "nav": {
+    "category": {
+      "play": "Spielen",
+      "manage": "Verwalten",
+      "platform": "Plattform",
+      "account": "Konto"
+    },
     "manageEvents": "Veranstaltungen verwalten",
     "events": "Veranstaltungen",
     "scrimHistory": "Scrim-Geschichte",
@@ -32,13 +38,7 @@
     "createGuild": "Gilde erstellen",
     "adminHelp": "Admin-Hilfe",
     "help": "Helfen",
-    "myAccount": "Mein Konto",
-    "category": {
-      "play": "Spielen",
-      "manage": "Verwalten",
-      "platform": "Plattform",
-      "account": "Konto"
-    }
+    "myAccount": "Mein Konto"
   },
   "topBar": {
     "notifications": "Benachrichtigungen",
@@ -641,5 +641,74 @@
       "slashCommands": "Discord-Befehle: /upcoming listet die anstehenden Events eurer Gilde auf, und /signup ermöglicht die Anmeldung direkt in Discord. Ihr müsst euch zuvor mindestens einmal mit Discord auf der Website anmelden, damit der Bot euer Konto zuordnen kann."
     },
     "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Gildenengagement, Stufe erhöht",
+      "headline": "Ihre Mitglieder werden erscheinen. Ihr Kader wächst.",
+      "subhead": "Ersetze unübersichtliche Discord-Threads durch eine zentrale Plattform für Event-Anmeldungen, Trainingsspiele, 1-gegen-1-Duelle und eine Rangliste. Automatische Erinnerungen, sofortige Anmeldung und freundschaftlicher Wettkampf sorgen für aktives Team.",
+      "signIn": "Melde dich mit Google oder Discord an",
+      "browseGuilds": "Durchsuchen Sie öffentliche Gilden"
+    },
+    "stats": {
+      "guilds": "Gilden",
+      "events": "Veranstaltungen finden statt",
+      "duels": "Duelle gespielt",
+      "players": "Spieler"
+    },
+    "engagement": {
+      "kicker": "Das Problem, das wir lösen",
+      "heading": "Gilden verlieren Mitglieder durch interne Konflikte.",
+      "body": "Eventplanung, die in Discord-Threads vergraben ist. Anmeldungen in einer Tabelle, die jemand vergessen hat zu aktualisieren. Erinnerungen, die nicht versendet wurden. Spieler, die nicht mehr erschienen, weil sie nicht mehr motiviert wurden. Foundation Event Organizer löst all diese Probleme.",
+      "beforeTitle": "Vor",
+      "beforeBody": "Unübersichtliche Discord-Threads, verlorene Anmeldungen, verpasste Erinnerungen, keine Aufzeichnungen darüber, wer tatsächlich erschienen ist – und Mitglieder, die sich langsam zurückziehen.",
+      "afterTitle": "Nach",
+      "afterBody": "Ein Anmeldeformular pro Event. Automatische Discord-Erinnerungen (1 Tag, 1 Stunde, 20 Minuten). Anwesenheit und Wertung werden erfasst. Trainingsspiele und Duelle mit Ranglisten und ELO-Wertung. Ein guter Grund, sich einzuloggen.",
+      "outcomeTitle": "Ergebnis",
+      "outcomeBody": "Mehr Events mit vollen Teilnehmerlisten. Mehr gildenübergreifender Wettbewerb. Mehr Gründe für eure Mitglieder, wiederzukommen – und ein Nachweis darüber, wer wirklich seinen Beitrag leistet."
+    },
+    "features": {
+      "heading": "Was ist drin?",
+      "matches": {
+        "title": "Spielveranstaltungen",
+        "body": "Zwei Teams, Führungspositionen, automatische Warteliste, Anwesenheitsverfolgung, Bewertungen nach der Veranstaltung – alles, was Sie für die Durchführung einer regelmäßig stattfindenden Veranstaltung im Shadowfront-Stil benötigen."
+      },
+      "scrims": {
+        "title": "Gilde-gegen-Gilde-Scrims",
+        "body": "Schlage ein Trainingsspiel gegen eine andere Gilde auf deinem Server vor. Beide Seiten einigen sich auf Zeit, Ort und Siegbedingungen. Die Ergebnisse werden in der Gildenstatistik erfasst."
+      },
+      "duels": {
+        "title": "1-gegen-1-Duelle mit ELO",
+        "body": "Die Spieler fordern sich serverweit gegenseitig heraus. Dazu gehören Verhandlungen wie beim Tischtennis, die gegenseitige Bestätigung der Ergebnisse, ELO-Wertungen, positive/negative Bewertungen und eine Server-Rangliste."
+      },
+      "discord": {
+        "title": "Discord-Bot-Integration",
+        "body": "@everyone erinnert 1 Tag, 1 Stunde und 20 Minuten vor jedem Event. Slash-Befehle: /upcoming und /signup. Direktnachrichten für Events mit zwei Lebenszyklen."
+      },
+      "multiGuild": {
+        "title": "Multi-Gilde vom ersten Tag an",
+        "body": "Jede Gilde hat ihre eigenen Administratoren, Mitglieder, Events und ihren eigenen Discord-Kanal. Super-Administratoren verwalten die Plattform. Die Slugs sind permanent; alles andere ist konfigurierbar."
+      },
+      "i18n": {
+        "title": "17 Sprachen",
+        "body": "Automatisch übersetzte Benutzeroberfläche in Englisch, Französisch, Deutsch, Spanisch, Russisch, Ukrainisch, Chinesisch, Japanisch, Koreanisch, Portugiesisch, Italienisch, Indonesisch, Niederländisch, Türkisch, Polnisch, Vietnamesisch und Schwedisch."
+      }
+    },
+    "screenshots": {
+      "heading": "So sieht es aus",
+      "eventAdmin": "Event-Admin-Dashboard – Mannschaftslisten, Führungsanfragen, Warteliste, Anwesenheitsliste.",
+      "duels": "Duelldetailseite – Paarung, ELO-Wertung, Ergebnischip, Ort und Regeln.",
+      "leaderboard": "Server-Rangliste – ELO-rangierte Spieler, Top-3-Chips, dein Rang wird angezeigt.",
+      "discord": "Discord-Erinnerungen – automatische Benachrichtigungen an alle Personen vor jedem Ereignis."
+    },
+    "bottomCta": {
+      "heading": "Verhindern Sie Mitgliederverluste durch Reibungsverluste.",
+      "body": "Erstelle in 30 Sekunden eine Gilde. Kostenlos und dauerhaft, Open Source, keine Kreditkarte erforderlich."
+    },
+    "footer": {
+      "builtWith": "Entwickelt mit Next.js, Drizzle, Auth.js und der Discord-API. Kostenlos und Open Source.",
+      "viewSource": "Quellcode auf GitHub ansehen",
+      "help": "Helfen"
+    }
   }
 }

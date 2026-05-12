@@ -3,9 +3,19 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { locales, localeLabels, type Locale } from "@/i18n/config";
+import { locales, localeLabels, LOCALE_COOKIE, type Locale } from "@/i18n/config";
 
-export function LocaleSwitcher({ className = "" }: { className?: string }) {
+// When `signedIn` is false (the default for the landing page), the
+// switcher sets NEXT_LOCALE via document.cookie and refreshes — no API
+// call, no user-record update. Signed-in users get the original PATCH
+// /api/me flow so their choice persists across devices.
+export function LocaleSwitcher({
+  className = "",
+  signedIn = true,
+}: {
+  className?: string;
+  signedIn?: boolean;
+}) {
   const router = useRouter();
   const current = useLocale();
   const t = useTranslations("localeSwitcher");
@@ -16,15 +26,21 @@ export function LocaleSwitcher({ className = "" }: { className?: string }) {
     const next = e.target.value as Locale;
     if (next === current) return;
     setSubmitting(true);
-    // Persist to user record + set the cookie. The server endpoint sets
-    // NEXT_LOCALE on the response so subsequent requests use the new value.
-    const res = await fetch("/api/me", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ locale: next }),
-    });
-    if (res.ok) {
-      // Re-fetch the current route under the new locale.
+    if (signedIn) {
+      // Persist to user record + set the cookie via the API response.
+      const res = await fetch("/api/me", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locale: next }),
+      });
+      if (res.ok) {
+        startTransition(() => router.refresh());
+      }
+    } else {
+      // Signed-out — just set the cookie client-side. next-intl reads
+      // NEXT_LOCALE on the next request. 1 year so it survives browser
+      // sessions. SameSite=Lax matches the API-set cookie.
+      document.cookie = `${LOCALE_COOKIE}=${next}; Path=/; Max-Age=${60 * 60 * 24 * 365}; SameSite=Lax`;
       startTransition(() => router.refresh());
     }
     setSubmitting(false);

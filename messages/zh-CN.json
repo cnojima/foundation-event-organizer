@@ -16,6 +16,12 @@
     "optional": "选修的"
   },
   "nav": {
+    "category": {
+      "play": "玩",
+      "manage": "管理",
+      "platform": "平台",
+      "account": "帐户"
+    },
     "manageEvents": "管理事件",
     "events": "活动",
     "scrimHistory": "Scrim 历史",
@@ -32,13 +38,7 @@
     "createGuild": "创建公会",
     "adminHelp": "管理员帮助",
     "help": "帮助",
-    "myAccount": "我的账户",
-    "category": {
-      "play": "玩",
-      "manage": "管理",
-      "platform": "平台",
-      "account": "帐户"
-    }
+    "myAccount": "我的账户"
   },
   "topBar": {
     "notifications": "通知",
@@ -641,5 +641,74 @@
       "slashCommands": "Discord 斜杠命令：/upcoming 列出你公会的近期活动，/signup 允许你无需离开 Discord 即可注册。你必须先使用 Discord 登录网站至少一次，以便机器人匹配你的账号。"
     },
     "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。"
+  },
+  "landing": {
+    "hero": {
+      "kicker": "公会参与度，升级",
+      "headline": "你的成员会到场。你的后备力量会越来越强。",
+      "subhead": "用一个统一的中心平台取代杂乱的 Discord 讨论串，该平台集活动报名、训练赛、1v1 对决和排行榜于一体。自动提醒、即时报名和友好的竞争氛围，让你的队伍保持活跃。",
+      "signIn": "使用 Google 或 Discord 登录",
+      "browseGuilds": "浏览公开公会"
+    },
+    "stats": {
+      "guilds": "行会",
+      "events": "活动运行",
+      "duels": "决斗",
+      "players": "球员"
+    },
+    "engagement": {
+      "kicker": "我们解决的问题",
+      "heading": "公会因内部摩擦而流失成员。",
+      "body": "活动安排信息散落在 Discord 聊天群里。报名信息记录在一个无人更新的电子表格中。提醒信息经常失效。玩家因为缺乏召回而不再参加。Foundation Event Organizer 解决了所有这些问题。",
+      "beforeTitle": "前",
+      "beforeBody": "混乱的 Discord 讨论串、丢失的报名信息、错过的提醒、没有实际到场人员的记录——成员们正慢慢流失。",
+      "afterTitle": "后",
+      "afterBody": "每个活动只需填写一份报名表。Discord 会自动发送 1 天、1 小时和 20 分钟的提醒。记录出勤率和评分。提供带有排行榜和 ELO 值的练习赛和对决。让您有充分的理由登录。",
+      "outcomeTitle": "结果",
+      "outcomeBody": "更多满员参赛的活动。更多跨公会比赛。更多让成员回归的理由——以及一份真正记录谁贡献了多少力量的档案。"
+    },
+    "features": {
+      "heading": "里面有什么",
+      "matches": {
+        "title": "比赛赛事",
+        "body": "两个小队、领导职位、自动候补名单、出席情况跟踪、活动后评分——举办类似 Shadowfront 的循环活动所需的一切。"
+      },
+      "scrims": {
+        "title": "公会对抗赛",
+        "body": "提议与服务器上的其他公会进行一场练习赛。双方协商确定时间、地点和获胜条件。比赛结果计入公会战绩。"
+      },
+      "duels": {
+        "title": "与ELO进行1v1决斗",
+        "body": "玩家在服务器内互相挑战。采用乒乓式谈判、结果相互确认、ELO 等级分、点赞/踩声誉以及服务器排行榜。"
+      },
+      "discord": {
+        "title": "Discord机器人集成",
+        "body": "@everyone 会在每次活动开始前 1 天、1 小时和 20 分钟发送提醒。使用斜杠命令 /upcoming 和 /signup。双重生命周期活动会通过私信通知。"
+      },
+      "multiGuild": {
+        "title": "从一开始就支持多公会",
+        "body": "每个公会都有自己的管理员、成员、活动和Discord频道。超级管理员负责管理平台。角色是永久存在的；其他所有设置都可以自定义。"
+      },
+      "i18n": {
+        "title": "17种语言",
+        "body": "自动翻译用户界面支持英语、法语、德语、西班牙语、俄语、乌克兰语、中文、日语、韩语、葡萄牙语、意大利语、印尼语、荷兰语、土耳其语、波兰语、越南语和瑞典语。"
+      }
+    },
+    "screenshots": {
+      "heading": "它看起来像什么",
+      "eventAdmin": "活动管理仪表盘——队伍名单、领导请求、候补名单、出席情况。",
+      "duels": "对决详情页面——对阵双方、ELO 等级分、结果筹码、地点和规则。",
+      "leaderboard": "服务器排行榜——ELO排名玩家、前3名筹码、您的排名将显示出来。",
+      "discord": "Discord 提醒 — 每次活动开始前自动向所有人发送 @everyone 通知。"
+    },
+    "bottomCta": {
+      "heading": "停止因摩擦而流失会员。",
+      "body": "30秒内即可创建公会。永久免费，开源，无需信用卡。"
+    },
+    "footer": {
+      "builtWith": "基于 Next.js、Drizzle、Auth.js 和 Discord API 构建。免费开源。",
+      "viewSource": "在 GitHub 上查看源代码",
+      "help": "帮助"
+    }
   }
 }

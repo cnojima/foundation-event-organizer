@@ -16,6 +16,12 @@
     "optional": "Opcional"
   },
   "nav": {
+    "category": {
+      "play": "Jogar",
+      "manage": "Gerenciar",
+      "platform": "Plataforma",
+      "account": "Conta"
+    },
     "manageEvents": "Gerenciar eventos",
     "events": "Eventos",
     "scrimHistory": "Histórico de treinos",
@@ -32,13 +38,7 @@
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta",
-    "category": {
-      "play": "Jogar",
-      "manage": "Gerenciar",
-      "platform": "Plataforma",
-      "account": "Conta"
-    }
+    "myAccount": "Minha conta"
   },
   "topBar": {
     "notifications": "Notificações",
@@ -641,5 +641,74 @@
       "slashCommands": "Comandos de barra do Discord: /upcoming lista os próximos eventos da sua guilda e /signup permite que você se inscreva sem sair do Discord. Você precisa fazer login no site com o Discord pelo menos uma vez para que o bot possa associar sua conta."
     },
     "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Engajamento na guilda, subiu de nível.",
+      "headline": "Seus membros aparecerão. Seu banco de reservas ficará mais robusto.",
+      "subhead": "Substitua as conversas confusas do Discord por um único lugar para inscrições em eventos, treinos, duelos 1v1 e um ranking. Lembretes automáticos, inscrição instantânea e competição amigável que mantém seu grupo ativo.",
+      "signIn": "Faça login com o Google ou o Discord.",
+      "browseGuilds": "Navegue pelas guildas públicas"
+    },
+    "stats": {
+      "guilds": "Guildas",
+      "events": "Os eventos são realizados",
+      "duels": "Duelos jogados",
+      "players": "Jogadores"
+    },
+    "engagement": {
+      "kicker": "O problema que resolvemos",
+      "heading": "Guildas perdem membros devido a atritos.",
+      "body": "Agendamento de eventos perdido em tópicos do Discord. Inscrições registradas em uma planilha esquecida. Lembretes que não funcionavam. Jogadores que paravam de aparecer porque nada os fazia voltar. O Foundation Event Organizer resolve tudo isso.",
+      "beforeTitle": "Antes",
+      "beforeBody": "Tópicos confusos no Discord, inscrições perdidas, lembretes ignorados, nenhum registro de quem realmente compareceu — e membros se afastando aos poucos.",
+      "afterTitle": "Depois",
+      "afterBody": "Um formulário de inscrição por evento. Lembretes automáticos no Discord com 1 dia, 1 hora e 20 minutos de antecedência. Presença e avaliações registradas. Treinos e duelos com placares e ELO. Um motivo claro para entrar.",
+      "outcomeTitle": "Resultado",
+      "outcomeBody": "Mais eventos com listas completas de participantes. Mais competições entre guildas. Mais motivos para seus membros voltarem — e um registro de quem realmente cumpre sua parte."
+    },
+    "features": {
+      "heading": "O que tem dentro?",
+      "matches": {
+        "title": "Eventos da partida",
+        "body": "Duas equipes, vagas de liderança, lista de espera automática, controle de presença, avaliações pós-evento — tudo o que você precisa para organizar um evento recorrente no estilo Shadowfront."
+      },
+      "scrims": {
+        "title": "Treinos de guilda contra guilda",
+        "body": "Proponha um scrim contra outra guilda no seu servidor. Ambos os lados concordam com o horário, local e condição de vitória. Os resultados alimentam o registro da guilda."
+      },
+      "duels": {
+        "title": "Duelos 1v1 com ELO",
+        "body": "Jogadores se desafiam em todo o servidor. Negociação de pingue-pongue, confirmação mútua de resultados, classificações ELO, reputação com votos positivos/negativos e uma tabela de classificação do servidor."
+      },
+      "discord": {
+        "title": "Integração de bot do Discord",
+        "body": "Lembretes para todos 1 dia, 1 hora e 20 minutos antes de cada evento. Comandos de barra /upcoming e /signup. Mensagens diretas para eventos do ciclo de vida duplo."
+      },
+      "multiGuild": {
+        "title": "Multiguilda desde o primeiro dia",
+        "body": "Cada guilda tem seus próprios administradores, membros, eventos e canal no Discord. Os superadministradores gerenciam a plataforma. Os slugs são permanentes; todo o resto é configurável."
+      },
+      "i18n": {
+        "title": "17 idiomas",
+        "body": "Interface do usuário traduzida automaticamente para inglês, francês, alemão, espanhol, russo, ucraniano, chinês, japonês, coreano, português, italiano, indonésio, holandês, turco, polonês, vietnamita e sueco."
+      }
+    },
+    "screenshots": {
+      "heading": "Como é a aparência?",
+      "eventAdmin": "Painel de administração do evento — listas de equipes, solicitações de liderança, lista de espera, presença.",
+      "duels": "Página de detalhes do duelo — confronto, classificação ELO, ficha de resultado, local e regras.",
+      "leaderboard": "Classificação do servidor — jogadores classificados por ELO, top 3 em fichas, sua posição no ranking exibida.",
+      "discord": "Lembretes no Discord — notificações automáticas para @todos antes de cada evento."
+    },
+    "bottomCta": {
+      "heading": "Pare de perder membros por causa de atritos.",
+      "body": "Crie uma guilda em 30 segundos. Grátis para sempre, código aberto, sem necessidade de cartão de crédito."
+    },
+    "footer": {
+      "builtWith": "Desenvolvido com Next.js, Drizzle, Auth.js e a API do Discord. Gratuito e de código aberto.",
+      "viewSource": "Ver código-fonte no GitHub",
+      "help": "Ajuda"
+    }
   }
 }

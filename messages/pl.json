@@ -16,6 +16,12 @@
     "optional": "Fakultatywny"
   },
   "nav": {
+    "category": {
+      "play": "Grać",
+      "manage": "Zarządzać",
+      "platform": "Platforma",
+      "account": "Konto"
+    },
     "manageEvents": "Zarządzaj wydarzeniami",
     "events": "Wydarzenia",
     "scrimHistory": "Historia scrimów",
@@ -32,13 +38,7 @@
     "createGuild": "Utwórz gildię",
     "adminHelp": "Pomoc administratora",
     "help": "Pomoc",
-    "myAccount": "Moje konto",
-    "category": {
-      "play": "Grać",
-      "manage": "Zarządzać",
-      "platform": "Platforma",
-      "account": "Konto"
-    }
+    "myAccount": "Moje konto"
   },
   "topBar": {
     "notifications": "Powiadomienia",
@@ -641,5 +641,74 @@
       "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
     },
     "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Zaangażowanie gildii, awans",
+      "headline": "Twoi członkowie się pojawią. Twoja ławka rezerwowych będzie dłuższa.",
+      "subhead": "Zastąp chaotyczne wątki na Discordzie jednym centrum zapisów na wydarzenia, treningów, pojedynków 1 na 1 i tabeli wyników. Automatyczne przypomnienia, natychmiastowe zapisy i przyjazna rywalizacja, które utrzymają aktywność Twojej drużyny.",
+      "signIn": "Zaloguj się za pomocą Google lub Discord",
+      "browseGuilds": "Przeglądaj gildie publiczne"
+    },
+    "stats": {
+      "guilds": "Gildie",
+      "events": "Wydarzenia odbywają się",
+      "duels": "Rozegrano pojedynki",
+      "players": "Gracze"
+    },
+    "engagement": {
+      "kicker": "Problem, który rozwiązujemy",
+      "heading": "Gildie tracą członków z powodu tarć.",
+      "body": "Harmonogram wydarzeń zakopany w wątkach na Discordzie. Zapisy śledzone w arkuszu kalkulacyjnym, którego ktoś zapomniał zaktualizować. Przypomnienia, które się nie uruchomiły. Gracze, którzy przestali się pojawiać, bo nic ich nie przyciągnęło. Organizator wydarzeń Foundation rozwiązuje ten problem.",
+      "beforeTitle": "Zanim",
+      "beforeBody": "Nieuporządkowane wątki na Discordzie, utracone zapisy, pominięte przypomnienia, brak informacji o tym, kto się faktycznie pojawił — i powolne odchodzenie członków.",
+      "afterTitle": "Po",
+      "afterBody": "Jeden formularz rejestracyjny na wydarzenie. Automatyczne przypomnienia na Discordzie (co 1 dzień, godzinę i 20 minut). Monitorowana frekwencja i oceny. Pojedynki i scrimy z rankingami i ELO. Jasny powód, żeby się zalogować.",
+      "outcomeTitle": "Wynik",
+      "outcomeBody": "Więcej wydarzeń z pełnymi składami. Większa rywalizacja międzygildyjna. Więcej powodów, dla których Twoi członkowie będą wracać — i lista osób, które faktycznie mają na to wpływ."
+    },
+    "features": {
+      "heading": "Co jest w środku",
+      "matches": {
+        "title": "Wydarzenia meczowe",
+        "body": "Dwie drużyny, miejsca liderów, automatyczna lista oczekujących, śledzenie obecności, oceny po wydarzeniu — wszystko, czego potrzebujesz, aby zorganizować cykliczne wydarzenie w stylu Shadowfront."
+      },
+      "scrims": {
+        "title": "Pojedynki gildii przeciwko gildii",
+        "body": "Zaproponuj scrim z inną gildią na swoim serwerze. Obie strony zgadzają się co do czasu, miejsca i warunków zwycięstwa. Wyniki trafiają do rejestru gildii."
+      },
+      "duels": {
+        "title": "Pojedynki 1 na 1 z ELO",
+        "body": "Gracze rywalizują ze sobą na całym serwerze. Negocjacje w ping-ponga, wzajemne potwierdzanie wyników, rankingi ELO, reputacja z kciukami w górę/w dół oraz tabela wyników serwera."
+      },
+      "discord": {
+        "title": "Integracja z botem Discord",
+        "body": "Przypomnienia @everyone na 1 dzień, 1 godzinę i 20 minut przed każdym wydarzeniem. Polecenia ukośnika /upcoming i /signup. Wiadomości bezpośrednie dotyczące wydarzeń cyklu życia pojedynków."
+      },
+      "multiGuild": {
+        "title": "Multi-gildia od pierwszego dnia",
+        "body": "Każda gildia ma własnych administratorów, członków, wydarzenia i kanał na Discordzie. Platformą zarządzają superadministratorzy. Slugi są stałe; wszystko inne można konfigurować."
+      },
+      "i18n": {
+        "title": "17 języków",
+        "body": "Interfejs użytkownika tłumaczony automatycznie na język angielski, francuski, niemiecki, hiszpański, rosyjski, ukraiński, chiński, japoński, koreański, portugalski, włoski, indonezyjski, holenderski, turecki, polski, wietnamski i szwedzki."
+      }
+    },
+    "screenshots": {
+      "heading": "Jak to wygląda",
+      "eventAdmin": "Panel administracyjny wydarzenia — składy drużyn, prośby kierownictwa, lista oczekujących, frekwencja.",
+      "duels": "Strona ze szczegółami pojedynku — zestawienie, ranking ELO, żeton wyniku, lokalizacja i zasady.",
+      "leaderboard": "Tabela wyników serwera — gracze z rankingiem ELO, 3 najlepsze żetony, Twoja ranga.",
+      "discord": "Przypomnienia Discord — automatyczne wysyłanie pingów przez @everyone przed każdym wydarzeniem."
+    },
+    "bottomCta": {
+      "heading": "Przestań tracić członków z powodu tarć.",
+      "body": "Załóż gildię w 30 sekund. Za darmo na zawsze, open source, bez karty kredytowej."
+    },
+    "footer": {
+      "builtWith": "Zbudowany z wykorzystaniem Next.js, Drizzle, Auth.js i API Discord. Darmowy i otwarty kod źródłowy.",
+      "viewSource": "Zobacz źródło na GitHub",
+      "help": "Pomoc"
+    }
   }
 }

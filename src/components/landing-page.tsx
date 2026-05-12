@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/db";
 import { duelProposals, events, guilds, users } from "@/db/schema";
 import { and, eq, isNotNull, isNull, sql } from "drizzle-orm";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
 // Public landing page for signed-out visitors. Mock screenshots are styled
 // inline (no image files) so the placeholders can be swapped for real
@@ -47,7 +48,12 @@ export async function LandingPage() {
     stats.guilds + stats.events + stats.duels + stats.players > 0;
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-12 sm:py-16">
+    <div className="mx-auto max-w-5xl px-4 py-6 sm:py-8">
+      {/* ---- Locale switcher (top-right) ---- */}
+      <div className="mb-6 flex justify-end">
+        <LocaleSwitcher signedIn={false} />
+      </div>
+
       {/* ---- Hero ---- */}
       <section className="text-center">
         <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-violet-700">
