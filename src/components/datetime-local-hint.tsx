@@ -2,26 +2,29 @@
 
 import { useEffect, useState } from "react";
 
-// Renders a small helper line under a <input type="datetime-local"> that
-// (1) confirms the input is in the user's local timezone, and (2) shows the
-// UTC equivalent of whatever they've entered. Stored values are UTC, so this
-// removes the "wait, did I type 18:00 PST or 18:00 UTC?" ambiguity.
+// Helper line under a UTC-mode <input type="datetime-local">. The input
+// itself is wall-clock UTC (e.g. "14:00" means 14:00 UTC); this hint
+// translates that to the viewer's local time so they can sanity-check
+// without doing TZ math in their head.
 export function DatetimeLocalHint({ value }: { value: string }) {
+  const [local, setLocal] = useState<string | null>(null);
   const [zone, setZone] = useState<string | null>(null);
 
-  // Browser-only — the timezone label depends on the visitor's locale.
-  useEffect(() => setZone(detectTimezoneLabel()), []);
-
-  const utc = formatUtc(value);
+  // Client-only: localized rendering depends on the visitor's TZ + locale.
+  useEffect(() => {
+    setZone(detectTimezoneLabel());
+    setLocal(formatLocal(value));
+  }, [value]);
 
   return (
     <p className="mt-1 text-xs text-gray-500">
-      <span>Your local time{zone ? ` (${zone})` : ""}.</span>
-      {utc && (
+      <span>UTC.</span>
+      {local && (
         <>
           {" "}
           <span>
-            Saved as <span className="font-mono">{utc}</span>.
+            Your local time{zone ? ` (${zone})` : ""}:{" "}
+            <span className="font-mono">{local}</span>.
           </span>
         </>
       )}
@@ -31,8 +34,6 @@ export function DatetimeLocalHint({ value }: { value: string }) {
 
 function detectTimezoneLabel(): string {
   try {
-    // e.g., "PST", "GMT+1". Falls back to "local" if the runtime can't
-    // resolve a short name.
     const parts = new Intl.DateTimeFormat(undefined, {
       timeZoneName: "short",
     }).formatToParts(new Date());
@@ -42,12 +43,12 @@ function detectTimezoneLabel(): string {
   }
 }
 
-function formatUtc(localValue: string): string | null {
-  if (!localValue) return null;
-  const d = new Date(localValue);
+function formatLocal(utcInput: string): string | null {
+  if (!utcInput) return null;
+  const d = new Date(`${utcInput}:00Z`);
   if (Number.isNaN(d.getTime())) return null;
   const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(
-    d.getUTCDate()
-  )} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())} UTC`;
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
+    d.getDate()
+  )} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }

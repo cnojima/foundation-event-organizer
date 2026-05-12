@@ -20,15 +20,22 @@ const FIELD_HELP: Record<DateField, string> = {
   squad2StartsAt: "When this squad plays. Leave blank if not scheduled yet.",
 };
 
-// <input type="datetime-local"> wants "YYYY-MM-DDTHH:MM" in local time.
-function isoToLocalInput(iso: string | null): string {
+// <input type="datetime-local"> wants "YYYY-MM-DDTHH:MM". This app treats
+// the input as UTC wall-clock — what you type is what's saved.
+function isoToUtcInput(iso: string | null): string {
   if (!iso) return "";
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return "";
   const pad = (n: number) => String(n).padStart(2, "0");
-  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(
-    d.getHours()
-  )}:${pad(d.getMinutes())}`;
+  return `${d.getUTCFullYear()}-${pad(d.getUTCMonth() + 1)}-${pad(
+    d.getUTCDate()
+  )}T${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
+}
+
+function utcInputToIso(input: string): string | null {
+  if (!input) return null;
+  const d = new Date(`${input}:00Z`);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
 }
 
 export function EditEventDatesForm({
@@ -59,11 +66,11 @@ export function EditEventDatesForm({
   const [savedAt, setSavedAt] = useState<number | null>(null);
 
   const initial = {
-    gameTime: isoToLocalInput(gameTime),
-    signupOpens: isoToLocalInput(signupOpens),
-    signupCloses: isoToLocalInput(signupCloses),
-    squad1StartsAt: isoToLocalInput(squad1StartsAt),
-    squad2StartsAt: isoToLocalInput(squad2StartsAt),
+    gameTime: isoToUtcInput(gameTime),
+    signupOpens: isoToUtcInput(signupOpens),
+    signupCloses: isoToUtcInput(signupCloses),
+    squad1StartsAt: isoToUtcInput(squad1StartsAt),
+    squad2StartsAt: isoToUtcInput(squad2StartsAt),
   };
   const [values, setValues] = useState(initial);
 
@@ -92,8 +99,7 @@ export function EditEventDatesForm({
 
     const body: Record<string, string | null> = {};
     for (const { key } of fields) {
-      const v = values[key];
-      body[key] = v ? new Date(v).toISOString() : null;
+      body[key] = utcInputToIso(values[key]);
     }
 
     const res = await fetch(`/api/admin/events/${eventId}`, {

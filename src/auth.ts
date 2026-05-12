@@ -52,7 +52,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // public surfaces to this list when they're built.
     authorized({ auth, request }) {
       const pathname = request.nextUrl.pathname;
-      const PUBLIC_PATHS = new Set(["/"]);
+      const PUBLIC_PATHS = new Set(["/", "/tos", "/privacy"]);
       if (PUBLIC_PATHS.has(pathname)) return true;
       return !!auth;
     },

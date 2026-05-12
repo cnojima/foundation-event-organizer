@@ -17,7 +17,10 @@ export function CreateInviteForm({ guildId }: { guildId: string }) {
     const expiresAtInput = String(form.get("expiresAt") ?? "");
     const maxUsesInput = String(form.get("maxUses") ?? "");
     const body: Record<string, unknown> = {};
-    if (expiresAtInput) body.expiresAt = new Date(expiresAtInput).toISOString();
+    // Input is wall-clock UTC; append :00Z so the parser treats it as such
+    // regardless of viewer or server TZ.
+    if (expiresAtInput)
+      body.expiresAt = new Date(`${expiresAtInput}:00Z`).toISOString();
     if (maxUsesInput) body.maxUses = Number(maxUsesInput);
 
     const res = await fetch(`/api/guilds/${guildId}/invites`, {
@@ -42,14 +45,14 @@ export function CreateInviteForm({ guildId }: { guildId: string }) {
     >
       <div>
         <label className="block text-xs font-medium text-gray-600 mb-1">
-          Expires at (optional)
+          Expires at (UTC, optional)
         </label>
         <input
           name="expiresAt"
           type="datetime-local"
           className="w-full border rounded px-2 py-1 text-sm"
         />
-        <FieldHelp>Link stops working after this time. Blank = never expires.</FieldHelp>
+        <FieldHelp>Link stops working after this time (UTC). Blank = never expires.</FieldHelp>
       </div>
       <div>
         <label className="block text-xs font-medium text-gray-600 mb-1">
