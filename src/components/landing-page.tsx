@@ -4,6 +4,8 @@ import { db } from "@/db";
 import { duelProposals, events, guilds, users } from "@/db/schema";
 import { and, eq, isNotNull, isNull, sql } from "drizzle-orm";
 import { LocaleSwitcher } from "@/components/locale-switcher";
+import { Logo } from "@/components/logo";
+import { FEEDBACK_REPO_URL, SUPPORT_DISCORD_URL } from "@/lib/feedback";
 
 // Public landing page for signed-out visitors. Mock screenshots are styled
 // inline (no image files) so the placeholders can be swapped for real
@@ -49,13 +51,15 @@ export async function LandingPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6 sm:py-8">
-      {/* ---- Locale switcher (top-right) ---- */}
-      <div className="mb-6 flex justify-end">
+      {/* ---- Top bar: wordmark left, locale switcher right ---- */}
+      <div className="mb-8 flex items-center justify-between gap-4">
+        <Logo variant="wordmark" />
         <LocaleSwitcher signedIn={false} />
       </div>
 
       {/* ---- Hero ---- */}
       <section className="text-center">
+        <Logo variant="icon" className="mx-auto mb-6 size-20" />
         <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-violet-700">
           {t("hero.kicker")}
         </p>
@@ -205,11 +209,20 @@ export async function LandingPage() {
         <p className="mt-1">
           <a
             className="text-violet-700 hover:underline"
-            href="https://github.com/anthropics/foundation-event-organizer"
+            href={FEEDBACK_REPO_URL}
             target="_blank"
             rel="noopener noreferrer"
           >
             {t("footer.viewSource")}
+          </a>
+          {" · "}
+          <a
+            className="text-indigo-600 hover:underline"
+            href={SUPPORT_DISCORD_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {t("footer.discordSupport")}
           </a>
           {" · "}
           <Link className="text-violet-700 hover:underline" href="/help">

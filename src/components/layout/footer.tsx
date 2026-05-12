@@ -1,7 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { BrandMark } from "./brand-mark";
 import { FeedbackMenu } from "@/components/feedback-menu";
-import type { FeedbackUserContext } from "@/lib/feedback";
+import { SUPPORT_DISCORD_URL, type FeedbackUserContext } from "@/lib/feedback";
 
 export async function Footer({ user }: { user: FeedbackUserContext }) {
   const t = await getTranslations("footer");
@@ -13,7 +13,17 @@ export async function Footer({ user }: { user: FeedbackUserContext }) {
           {t("tagline")}
         </span>
       </div>
-      <FeedbackMenu user={user} />
+      <div className="flex items-center gap-4">
+        <a
+          href={SUPPORT_DISCORD_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-semibold text-indigo-600 hover:underline"
+        >
+          {t("discordSupport")}
+        </a>
+        <FeedbackMenu user={user} />
+      </div>
     </footer>
   );
 }

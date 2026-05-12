@@ -11,9 +11,10 @@ import {
   type RESTPostAPIApplicationCommandsJSONBody,
   type TextChannel,
 } from "discord.js";
+import { randomBytes } from "node:crypto";
 import { db } from "@/db";
-import { accounts, events, guilds, users } from "@/db/schema";
-import { and, eq, inArray, isNull } from "drizzle-orm";
+import { accounts, events, guildInvites, guilds, users } from "@/db/schema";
+import { and, eq, gt, inArray, isNull, or, sql } from "drizzle-orm";
 import {
   buildMessage,
   findPending,
@@ -901,6 +902,115 @@ function buildDuelMessage(args: {
     `**Duel declined** — ${opposer} declined ${proposer}'s 1v1 challenge.`,
     `Was proposed for ${when}.`,
   ].join("\n");
+}
+
+// ---- Guild join announcements ----
+
+// Posts a "[name] has joined [TAG] — <join-link>" message to the guild's
+// configured Discord channel after a user joins. Three preconditions
+// (all silent skips if missed — never blocks the join API):
+//
+//   1. Guild has a discordChannelId set
+//   2. Bot has a token
+//   3. We can resolve OR generate a usable invite link
+//
+// For invite resolution we prefer the longest-lived existing invite
+// (never-expires + unlimited-uses sort first). If none is usable, we
+// auto-generate a permanent invite owned by the guild's creator so the
+// announcement link is actually clickable. That invite is real and
+// persists — admins can revoke it later from /admin/invites.
+export async function sendGuildJoinAnnouncement(input: {
+  guildId: string;
+  joinedUserId: string;
+  appBaseUrl: string;
+}): Promise<void> {
+  const token = process.env.DISCORD_BOT_TOKEN;
+  if (!token) return;
+
+  const [guild, joinedUser] = await Promise.all([
+    db.query.guilds.findFirst({
+      where: and(eq(guilds.id, input.guildId), isNull(guilds.deletedAt)),
+    }),
+    db.query.users.findFirst({ where: eq(users.id, input.joinedUserId) }),
+  ]);
+  if (!guild?.discordChannelId) return;
+  if (!joinedUser?.inGameName) return; // no name to announce yet
+
+  const inviteCode = await resolveOrCreatePermanentInvite(
+    guild.id,
+    guild.createdByUserId
+  );
+  if (!inviteCode) {
+    // Couldn't get/create an invite — guild may be in a weird state.
+    // Skip rather than post a broken link.
+    return;
+  }
+
+  const tag = guild.tag ? `[${guild.tag}]` : guild.name;
+  const joinUrl = `${input.appBaseUrl}/join/${inviteCode}`;
+  const content = `**${joinedUser.inGameName}** has joined **${tag}** — <${joinUrl}>`;
+
+  await postScrimToChannel(token, guild.discordChannelId, content, guild.id);
+}
+
+// Returns a usable invite code for the guild. If no existing invite is
+// usable (expired, revoked, maxed out, or none at all), generates a new
+// permanent one (never-expires, unlimited uses) attributed to the guild
+// creator.
+async function resolveOrCreatePermanentInvite(
+  guildId: string,
+  createdByUserId: string
+): Promise<string | null> {
+  const nowIso = new Date().toISOString();
+
+  // Find any usable invite: not revoked, not expired, not at max uses.
+  // Prefer permanent (null expiresAt + null maxUses) by sorting them
+  // first via the SQL flags so they win when multiple match.
+  const usable = await db
+    .select()
+    .from(guildInvites)
+    .where(
+      and(
+        eq(guildInvites.guildId, guildId),
+        isNull(guildInvites.revokedAt),
+        or(isNull(guildInvites.expiresAt), gt(guildInvites.expiresAt, nowIso)),
+        or(
+          isNull(guildInvites.maxUses),
+          sql`${guildInvites.usesCount} < ${guildInvites.maxUses}`
+        )
+      )
+    )
+    .orderBy(
+      sql`${guildInvites.expiresAt} IS NULL DESC`,
+      sql`${guildInvites.maxUses} IS NULL DESC`
+    )
+    .limit(1)
+    .get();
+
+  if (usable) return usable.code;
+
+  // None usable — generate a permanent invite. Same code shape as the
+  // admin-created invites (8 random bytes → base64url ≈ 11 chars).
+  try {
+    const code = randomBytes(8).toString("base64url");
+    await db.insert(guildInvites).values({
+      id: crypto.randomUUID(),
+      guildId,
+      code,
+      createdByUserId,
+      expiresAt: null,
+      maxUses: null,
+      usesCount: 0,
+      createdAt: nowIso,
+    });
+    return code;
+  } catch (err) {
+    console.warn(
+      `[bot] failed to auto-generate permanent invite for guild=${guildId}:`,
+      err
+    );
+    return null;
+  }
 }
 
 // ---- Event lifecycle notifications (match / simple) ----

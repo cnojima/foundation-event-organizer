@@ -57,7 +57,8 @@
   },
   "footer": {
     "tagline": "THE FOUNDATION CALLS. ANSWER TOGETHER.",
-    "feedback": "FEEDBACK"
+    "feedback": "FEEDBACK",
+    "discordSupport": "DISCORD SUPPORT"
   },
   "feedback": {
     "reportBug": "Report a bug",
@@ -639,6 +640,7 @@
     "footer": {
       "builtWith": "Built with Next.js, Drizzle, Auth.js, and the Discord API. Free and open source.",
       "viewSource": "View source on GitHub",
+      "discordSupport": "Discord support",
       "help": "Help"
     }
   },

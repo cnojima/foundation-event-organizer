@@ -4,6 +4,8 @@ import { requireSignedInApi, isInviteUsable } from "@/lib/rbac";
 import { db } from "@/db";
 import { guildInvites, guilds, users } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
+import { sendGuildJoinAnnouncement } from "@/bot/discord-bot";
+import { appBaseUrlFromRequest } from "@/lib/url";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -83,6 +85,15 @@ export async function POST(req: Request) {
   if ("error" in result) {
     return NextResponse.json({ error: result.error }, { status: result.status });
   }
+
+  // Fire-and-await the Discord announcement. Failures inside the helper
+  // log but never throw, so a misconfigured guild channel won't break the
+  // join response.
+  await sendGuildJoinAnnouncement({
+    guildId: result.guildId,
+    joinedUserId: membership.userId,
+    appBaseUrl: appBaseUrlFromRequest(req),
+  });
 
   return NextResponse.json({ success: true, guildId: result.guildId });
 }

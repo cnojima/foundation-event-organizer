@@ -1,6 +1,10 @@
 export const FEEDBACK_REPO_URL =
   "https://github.com/cnojima/foundation-event-organizer";
 export const FEEDBACK_ISSUES_URL = `${FEEDBACK_REPO_URL}/issues`;
+// Public Discord server where players + admins can ask for help, report
+// issues casually, and follow announcements. Linked from both the
+// in-app footer and the public landing page footer.
+export const SUPPORT_DISCORD_URL = "https://discord.gg/bz9MuQNFDQ";
 
 export type FeedbackKind = "bug" | "suggestion";
 
