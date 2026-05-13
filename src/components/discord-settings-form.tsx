@@ -28,8 +28,13 @@ export function DiscordSettingsForm({
   const [error, setError] = useState<string | null>(null);
 
   const [testing, setTesting] = useState(false);
+  type LinkResult =
+    | { ok: true; discordGuildId: string; changed: boolean }
+    | { ok: false; reason: string };
   const [testResult, setTestResult] = useState<
-    { ok: true } | { ok: false; reason: string } | null
+    | { ok: true; link?: LinkResult }
+    | { ok: false; reason: string }
+    | null
   >(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -62,7 +67,10 @@ export function DiscordSettingsForm({
       body: JSON.stringify({ discordChannelId: channelId.trim() || null }),
     });
     if (res.ok) {
-      setTestResult({ ok: true });
+      const data = (await res.json().catch(() => ({}))) as {
+        link?: LinkResult;
+      };
+      setTestResult({ ok: true, link: data.link });
     } else {
       const data = await res.json().catch(() => ({}));
       setTestResult({ ok: false, reason: data?.error ?? "Test failed." });
@@ -129,9 +137,27 @@ export function DiscordSettingsForm({
           @everyone ping.
         </FieldHelp>
         {testResult?.ok && (
-          <p className="mt-1 text-sm text-emerald-700 dark:text-emerald-300">
-            Test message sent. Check the channel.
-          </p>
+          <div className="mt-1 space-y-1 text-sm">
+            <p className="text-emerald-700 dark:text-emerald-300">
+              Test message sent. Check the channel.
+            </p>
+            {testResult.link?.ok && (
+              <p className="text-emerald-700 dark:text-emerald-300">
+                {testResult.link.changed
+                  ? "Server link refreshed — slash commands should work now."
+                  : "Server link confirmed — slash commands enabled."}{" "}
+                <span className="font-mono text-xs text-gray-500 dark:text-gray-400">
+                  (Discord server ID: {testResult.link.discordGuildId})
+                </span>
+              </p>
+            )}
+            {testResult.link && !testResult.link.ok && (
+              <p className="text-amber-700 dark:text-amber-300">
+                Reminders will work, but slash commands won&apos;t — couldn&apos;t
+                auto-link the Discord server: {testResult.link.reason}
+              </p>
+            )}
+          </div>
         )}
         {testResult && !testResult.ok && (
           <p className="mt-1 text-sm text-red-600 dark:text-red-300">{testResult.reason}</p>

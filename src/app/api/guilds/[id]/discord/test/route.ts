@@ -56,7 +56,12 @@ export async function POST(
     entityType: "guild",
     entityId: id,
     entityLabel: guild.name,
+    changes: { after: { link: result.link } },
   });
 
-  return NextResponse.json({ success: true });
+  // Surface the auto-link half. The message POST succeeded (otherwise we'd
+  // have early-returned above) — but if the channel-info fetch or the DB
+  // update failed, slash commands will stay broken even though reminders
+  // work. Admins need that signal.
+  return NextResponse.json({ success: true, link: result.link });
 }

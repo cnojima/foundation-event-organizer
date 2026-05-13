@@ -387,10 +387,13 @@ async function persistDiscordGuildIdIfNeeded(
   const discordGuild = (channel as { guild?: Guild }).guild;
   if (!discordGuild) return;
   try {
+    // Unconditional refresh — the previous `isNull(discordGuildId)` guard
+    // meant a stale value (from a moved-bot or partial earlier setup) never
+    // self-healed even though the poll loop has all the information needed.
     await db
       .update(guilds)
       .set({ discordGuildId: discordGuild.id })
-      .where(and(eq(guilds.id, appGuildId), isNull(guilds.discordGuildId)));
+      .where(eq(guilds.id, appGuildId));
   } catch (err) {
     console.error("[bot] failed to persist discord_guild_id:", err);
   }
@@ -398,7 +401,19 @@ async function persistDiscordGuildIdIfNeeded(
 
 // ---- Test message API (called from /api/guilds/[id]/discord/test) ----
 
-export type TestResult = { ok: true } | { ok: false; reason: string };
+// `link` reports the auto-link half of Test Integration. It's separate from
+// `ok` because the message post can succeed while the channel-info fetch (or
+// the DB update) silently fails — admins need to know about that, because
+// without a correct `discord_guild_id` the slash commands stay broken even
+// though reminders work.
+export type TestResult =
+  | {
+      ok: true;
+      link:
+        | { ok: true; discordGuildId: string; changed: boolean }
+        | { ok: false; reason: string };
+    }
+  | { ok: false; reason: string };
 
 // Sends a one-off test message via Discord's REST API. Deliberately bypasses
 // the gateway client / bot module state so the route handler doesn't depend
@@ -439,28 +454,55 @@ export async function sendTestMessage(
     return { ok: false, reason: await translateDiscordError(postRes) };
   }
 
-  // Auto-link Discord server ID by inspecting the channel.
-  if (appGuildId) {
+  // Auto-link the Discord server ID by inspecting the channel. Always
+  // overwrites the stored value — the previous `isNull(discordGuildId)`
+  // guard meant that once a wrong/stale value was in the DB (e.g. the bot
+  // was moved to a different Discord server, or the original auto-link
+  // partially failed), Test Integration silently never repaired it.
+  // Re-running Test Integration is now the way to refresh the link.
+  let link:
+    | { ok: true; discordGuildId: string; changed: boolean }
+    | { ok: false; reason: string };
+  if (!appGuildId) {
+    link = { ok: false, reason: "App guild ID not supplied — skipping auto-link." };
+  } else {
     try {
       const chRes = await fetch(
         `https://discord.com/api/v10/channels/${channelId}`,
         { headers: { Authorization: `Bot ${token}` } }
       );
-      if (chRes.ok) {
+      if (!chRes.ok) {
+        link = {
+          ok: false,
+          reason: `Channel info fetch failed (${chRes.status}). Bot may lack View Channel permission.`,
+        };
+      } else {
         const ch = (await chRes.json()) as { guild_id?: string };
-        if (ch.guild_id) {
+        if (!ch.guild_id) {
+          link = { ok: false, reason: "Channel response had no guild_id (DM channel?)." };
+        } else {
+          const existing = await db.query.guilds.findFirst({
+            where: eq(guilds.id, appGuildId),
+            columns: { discordGuildId: true },
+          });
+          const changed = existing?.discordGuildId !== ch.guild_id;
           await db
             .update(guilds)
             .set({ discordGuildId: ch.guild_id })
-            .where(and(eq(guilds.id, appGuildId), isNull(guilds.discordGuildId)));
+            .where(eq(guilds.id, appGuildId));
+          link = { ok: true, discordGuildId: ch.guild_id, changed };
         }
       }
     } catch (err) {
-      console.error("[bot] failed to persist discord_guild_id during test:", err);
+      console.error("[bot] auto-link failed during test:", err);
+      link = {
+        ok: false,
+        reason: err instanceof Error ? err.message : "Unknown error during auto-link.",
+      };
     }
   }
 
-  return { ok: true };
+  return { ok: true, link };
 }
 
 // ---- Scrim lifecycle notifications ----
@@ -1290,6 +1332,9 @@ async function handleUpcoming(
 ): Promise<void> {
   const appGuildId = await resolveAppGuildId(interaction.guildId);
   if (!appGuildId) {
+    console.warn(
+      `[bot] /upcoming: no app guild linked to discord guild ${interaction.guildId} (user=${interaction.user.id})`
+    );
     await interaction.editReply(notConfiguredMessage());
     return;
   }
@@ -1326,6 +1371,9 @@ async function handleSignup(
 
   const appGuildId = await resolveAppGuildId(interaction.guildId);
   if (!appGuildId) {
+    console.warn(
+      `[bot] /signup: no app guild linked to discord guild ${interaction.guildId} (user=${interaction.user.id})`
+    );
     await interaction.editReply(notConfiguredMessage());
     return;
   }
