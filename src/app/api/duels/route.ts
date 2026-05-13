@@ -6,6 +6,7 @@ import { duelProposals, guilds, users } from "@/db/schema";
 import { desc, eq, or } from "drizzle-orm";
 import { sendDuelNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/duels — propose a duel against another player on the same
 // server. Body: { opposingUserId, proposedGameTime, location, winCondition,
@@ -108,6 +109,17 @@ export async function POST(req: Request) {
     status: "pending",
     createdAt: now,
     updatedAt: now,
+  });
+
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "duel.propose",
+    entityType: "duel",
+    entityId: id,
+    entityLabel: `vs ${await resolveActorDisplay(opposingUserId)}`,
+    changes: { after: { proposedGameTime: start.toISOString(), location } },
   });
 
   const notify = await sendDuelNotification({

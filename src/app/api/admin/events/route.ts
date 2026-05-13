@@ -6,6 +6,7 @@ import { events } from "@/db/schema";
 import { generateId } from "@/lib/ids";
 import { sendEventNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -52,6 +53,17 @@ export async function POST(req: Request) {
   };
 
   await db.insert(events).values(event);
+
+  void logAudit({
+    guildId: event.guildId,
+    actorUserId: membership.userId,
+    actorDisplay: await resolveActorDisplay(membership.userId),
+    action: "event.create",
+    entityType: "event",
+    entityId: event.id,
+    entityLabel: event.name,
+    changes: { after: { kind: event.kind, name: event.name } },
+  });
 
   await sendEventNotification({
     guildId: targetGuildId,

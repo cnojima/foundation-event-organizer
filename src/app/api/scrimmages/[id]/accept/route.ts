@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { generateId } from "@/lib/ids";
 import { sendScrimNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/scrimmages/[id]/accept — opposing-side admin accepts. Creates
 // two mirrored `events` rows (one per guild, both kind=scrim, linked via
@@ -104,6 +105,16 @@ export async function POST(
       })
       .where(eq(scrimProposals.id, id))
       .run();
+  });
+
+  void logAudit({
+    guildId: me.guildId ?? proposal.opposingGuildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "scrim.accept",
+    entityType: "scrim",
+    entityId: proposal.id,
+    entityLabel: `vs ${proposingGuild.name}`,
   });
 
   const notify = await sendScrimNotification({

@@ -6,6 +6,7 @@ import { guilds, scrimProposals } from "@/db/schema";
 import { and, desc, eq, isNull, or } from "drizzle-orm";
 import { sendScrimNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/scrimmages — propose a scrim with another guild on the same server.
 // Body: { opposingGuildId, proposedGameTime, location, winCondition, message? }
@@ -89,6 +90,17 @@ export async function POST(req: Request) {
     status: "pending",
     createdAt: now,
     updatedAt: now,
+  });
+
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "scrim.propose",
+    entityType: "scrim",
+    entityId: id,
+    entityLabel: `vs ${opponent.name}`,
+    changes: { after: { proposedGameTime: start.toISOString(), location } },
   });
 
   const notify = await sendScrimNotification({

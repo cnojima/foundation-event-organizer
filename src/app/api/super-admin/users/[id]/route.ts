@@ -4,6 +4,7 @@ import { requireSuperAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function PATCH(
   req: Request,
@@ -36,9 +37,29 @@ export async function PATCH(
     }
   }
 
+  const target = await db.query.users.findFirst({
+    where: eq(users.id, id),
+    columns: { isSuperAdmin: true, inGameName: true, name: true, email: true },
+  });
+
   await db
     .update(users)
     .set({ isSuperAdmin: body.isSuperAdmin })
     .where(eq(users.id, id));
+
+  void logAudit({
+    guildId: null,
+    actorUserId: guard.value.userId,
+    actorDisplay: await resolveActorDisplay(guard.value.userId),
+    action: "user.super_admin.update",
+    entityType: "user",
+    entityId: id,
+    entityLabel: target?.inGameName ?? target?.name ?? target?.email ?? id,
+    changes: {
+      before: { isSuperAdmin: target?.isSuperAdmin ?? false },
+      after: { isSuperAdmin: body.isSuperAdmin },
+    },
+  });
+
   return NextResponse.json({ success: true });
 }

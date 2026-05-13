@@ -4,6 +4,7 @@ import { requireSignedInApi, isValidSlug, isSlugTaken } from "@/lib/rbac";
 import { db } from "@/db";
 import { guilds, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -79,6 +80,17 @@ export async function POST(req: Request) {
       .set({ guildId, guildRole: "admin" })
       .where(eq(users.id, membership.userId))
       .run();
+  });
+
+  void logAudit({
+    guildId,
+    actorUserId: membership.userId,
+    actorDisplay: await resolveActorDisplay(membership.userId),
+    action: "guild.create",
+    entityType: "guild",
+    entityId: guildId,
+    entityLabel: name,
+    changes: { after: { name, slug, isPublic } },
   });
 
   return NextResponse.json({ id: guildId, slug }, { status: 201 });

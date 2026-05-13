@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireSuperAdminApi } from "@/lib/rbac";
 import { triggerPoll } from "@/bot/discord-bot";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/admin/bot/poll-now
 //
@@ -18,5 +19,15 @@ export async function POST() {
   if (!result.ok) {
     return NextResponse.json({ error: result.reason }, { status: 503 });
   }
+
+  void logAudit({
+    guildId: null,
+    actorUserId: guard.value.userId,
+    actorDisplay: await resolveActorDisplay(guard.value.userId),
+    action: "bot.poll_now",
+    entityType: "bot",
+    entityLabel: "manual poll trigger",
+  });
+
   return NextResponse.json({ success: true, metrics: result.metrics });
 }

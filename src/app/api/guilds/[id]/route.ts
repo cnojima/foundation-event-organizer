@@ -4,6 +4,7 @@ import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
 import { guilds } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function PATCH(
   req: Request,
@@ -13,6 +14,7 @@ export async function PATCH(
   const session = await auth();
   const guard = requireGuildAdminApi(session, id);
   if (!guard.ok) return guard.response;
+  const membership = guard.value;
 
   const body = await req.json();
   const updates: Record<string, unknown> = {};
@@ -67,6 +69,26 @@ export async function PATCH(
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
   }
 
+  const existing = await db.query.guilds.findFirst({ where: eq(guilds.id, id) });
+
   await db.update(guilds).set(updates).where(eq(guilds.id, id));
+
+  const before: Record<string, unknown> = {};
+  if (existing) {
+    for (const k of Object.keys(updates)) {
+      before[k] = (existing as Record<string, unknown>)[k];
+    }
+  }
+  void logAudit({
+    guildId: id,
+    actorUserId: membership.userId,
+    actorDisplay: await resolveActorDisplay(membership.userId),
+    action: "guild.update",
+    entityType: "guild",
+    entityId: id,
+    entityLabel: existing?.name ?? id,
+    changes: { before, after: updates },
+  });
+
   return NextResponse.json({ success: true });
 }

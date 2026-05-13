@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
-import { events, scrimProposals } from "@/db/schema";
+import { events, guilds, scrimProposals } from "@/db/schema";
 import { and, eq, inArray, isNull } from "drizzle-orm";
 import { sendScrimNotification } from "@/bot/discord-bot";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/scrimmages/[id]/cancel — either guild's admin cancels an
 // accepted scrim before the result is declared. Soft-deletes both mirrored
@@ -61,6 +62,24 @@ export async function POST(
       .set({ status: "cancelled", updatedAt: now })
       .where(eq(scrimProposals.id, id))
       .run();
+  });
+
+  const opponentGuildId =
+    proposal.proposingGuildId === me.guildId
+      ? proposal.opposingGuildId
+      : proposal.proposingGuildId;
+  const opponentGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, opponentGuildId),
+    columns: { name: true },
+  });
+  void logAudit({
+    guildId: me.guildId ?? proposal.proposingGuildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "scrim.cancel",
+    entityType: "scrim",
+    entityId: proposal.id,
+    entityLabel: `vs ${opponentGuild?.name ?? opponentGuildId}`,
   });
 
   const notify = await sendScrimNotification({

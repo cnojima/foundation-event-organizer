@@ -92,6 +92,22 @@ const ICONS = {
       <circle cx="10" cy="14.5" r="0.75" fill="currentColor" />
     </svg>
   ),
+  scroll: (
+    <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+      <path
+        d="M4 3h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V3Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M7 7h6M7 10h6M7 13h4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+    </svg>
+  ),
   swords: (
     <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
       <path
@@ -152,6 +168,7 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin", category: "manage" },
   { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin", category: "manage" },
   { labelKey: "settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "auditLog", href: "/admin/audit", icon: ICONS.scroll, visibility: "guildAdmin", category: "manage" },
   { labelKey: "adminHelp", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin", category: "manage" },
 
   // ---- Platform: site-wide super-admin ----
@@ -209,6 +226,7 @@ const IMPERSONATION_AWARE_PREFIXES = [
   "/admin/invites",
   "/admin/scrimmages",
   "/admin/settings",
+  "/admin/audit",
 ];
 
 function preservesImpersonation(href: string): boolean {

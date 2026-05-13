@@ -4,6 +4,7 @@ import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
 import { guildInvites } from "@/db/schema";
 import { randomBytes } from "crypto";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function POST(
   req: Request,
@@ -34,6 +35,17 @@ export async function POST(
     expiresAt,
     maxUses,
     createdAt,
+  });
+
+  void logAudit({
+    guildId,
+    actorUserId: membership.userId,
+    actorDisplay: await resolveActorDisplay(membership.userId),
+    action: "invite.create",
+    entityType: "invite",
+    entityId: inviteId,
+    entityLabel: code,
+    changes: { after: { maxUses, expiresAt } },
   });
 
   return NextResponse.json({ id: inviteId, code }, { status: 201 });

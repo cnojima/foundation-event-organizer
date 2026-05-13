@@ -33,6 +33,7 @@
     "members": "Members",
     "invites": "Invites",
     "settings": "Settings",
+    "auditLog": "Audit Log",
     "superAdmin": "Super Admin",
     "browseGuilds": "Browse Guilds",
     "createGuild": "Create Guild",

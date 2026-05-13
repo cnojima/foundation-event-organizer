@@ -11,6 +11,7 @@ import {
 } from "@/lib/duels";
 import { sendDuelNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/duels/[id]/result — either player declares the outcome of an
 // accepted duel. Single-declaration model: whoever submits first locks in
@@ -153,6 +154,21 @@ export async function POST(
 
     // Silence the unused flag warning — kept for readability above.
     void isNoContest;
+  });
+
+  const opponentUserId =
+    me.userId === duel.proposingUserId
+      ? duel.opposingUserId
+      : duel.proposingUserId;
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "duel.result",
+    entityType: "duel",
+    entityId: duel.id,
+    entityLabel: `vs ${await resolveActorDisplay(opponentUserId)}`,
+    changes: { after: { outcome, result: absolute } },
   });
 
   const notify = await sendDuelNotification({

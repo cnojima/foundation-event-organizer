@@ -6,6 +6,7 @@ import { guildInvites, guilds, users } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { sendGuildJoinAnnouncement } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -93,6 +94,17 @@ export async function POST(req: Request) {
     guildId: result.guildId,
     joinedUserId: membership.userId,
     appBaseUrl: appBaseUrlFromRequest(req),
+  });
+
+  void logAudit({
+    guildId: result.guildId,
+    actorUserId: membership.userId,
+    actorDisplay: await resolveActorDisplay(membership.userId),
+    action: "member.join",
+    entityType: "member",
+    entityId: membership.userId,
+    entityLabel: await resolveActorDisplay(membership.userId),
+    changes: { after: { via: code ? "invite" : "discovery" } },
   });
 
   return NextResponse.json({ success: true, guildId: result.guildId });

@@ -4,6 +4,7 @@ import { requireSignedInApi } from "@/lib/rbac";
 import { db } from "@/db";
 import { duelProposals, users } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/duels/[id]/feedback — each duelist leaves a thumbs-up or
 // thumbs-down for the opponent after the result is declared. One rating
@@ -100,6 +101,17 @@ export async function POST(
       )
       .where(eq(users.id, opponentUserId))
       .run();
+  });
+
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "duel.feedback",
+    entityType: "duel",
+    entityId: duel.id,
+    entityLabel: `vs ${await resolveActorDisplay(opponentUserId)}`,
+    changes: { after: { rating } },
   });
 
   return NextResponse.json({ success: true, rating });

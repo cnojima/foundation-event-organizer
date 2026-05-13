@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
-import { scrimProposals } from "@/db/schema";
+import { guilds, scrimProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/scrimmages/[id]/withdraw — proposer-side admin withdraws a
 // still-pending proposal. Mirrors decline but is owner-initiated.
@@ -43,6 +44,20 @@ export async function POST(
       updatedAt: now,
     })
     .where(eq(scrimProposals.id, id));
+
+  const opposingGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, proposal.opposingGuildId),
+    columns: { name: true },
+  });
+  void logAudit({
+    guildId: proposal.proposingGuildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "scrim.withdraw",
+    entityType: "scrim",
+    entityId: proposal.id,
+    entityLabel: `vs ${opposingGuild?.name ?? proposal.opposingGuildId}`,
+  });
 
   return NextResponse.json({ success: true });
 }

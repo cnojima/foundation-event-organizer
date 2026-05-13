@@ -6,6 +6,7 @@ import { duelProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sendDuelNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/duels/[id]/withdraw — proposer-only cancellation of a pending
 // duel before the opponent responds. DMs the opposer (the proposer
@@ -47,6 +48,16 @@ export async function POST(
       updatedAt: now,
     })
     .where(eq(duelProposals.id, id));
+
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "duel.withdraw",
+    entityType: "duel",
+    entityId: duel.id,
+    entityLabel: `vs ${await resolveActorDisplay(duel.opposingUserId)}`,
+  });
 
   const notify = await sendDuelNotification({
     proposingUserId: duel.proposingUserId,

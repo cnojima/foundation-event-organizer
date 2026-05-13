@@ -4,6 +4,7 @@ import { requireGuildAdminApi, countGuildAdmins } from "@/lib/rbac";
 import { db } from "@/db";
 import { events, signups, users } from "@/db/schema";
 import { and, eq, inArray, isNull } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function PATCH(
   req: Request,
@@ -41,6 +42,18 @@ export async function PATCH(
   }
 
   await db.update(users).set({ guildRole: role }).where(eq(users.id, userId));
+
+  void logAudit({
+    guildId,
+    actorUserId: guard.value.userId,
+    actorDisplay: await resolveActorDisplay(guard.value.userId),
+    action: role === "admin" ? "member.promote" : "member.demote",
+    entityType: "member",
+    entityId: userId,
+    entityLabel: target.inGameName ?? target.name ?? target.email ?? userId,
+    changes: { before: { guildRole: target.guildRole }, after: { guildRole: role } },
+  });
+
   return NextResponse.json({ success: true });
 }
 
@@ -92,6 +105,17 @@ export async function DELETE(
       .set({ guildId: null, guildRole: null })
       .where(eq(users.id, userId))
       .run();
+  });
+
+  void logAudit({
+    guildId,
+    actorUserId: guard.value.userId,
+    actorDisplay: await resolveActorDisplay(guard.value.userId),
+    action: "member.kick",
+    entityType: "member",
+    entityId: userId,
+    entityLabel: target.inGameName ?? target.name ?? target.email ?? userId,
+    changes: { before: { guildRole: target.guildRole } },
   });
 
   return NextResponse.json({ success: true });

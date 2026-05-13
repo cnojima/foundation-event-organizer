@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
-import { scrimProposals } from "@/db/schema";
+import { guilds, scrimProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // PATCH /api/scrimmages/[id] — proposer-only edits while pending.
 // Body: { proposedGameTime?, location?, winCondition?, message? }
@@ -68,5 +69,34 @@ export async function PATCH(
   updates.updatedAt = new Date().toISOString();
 
   await db.update(scrimProposals).set(updates).where(eq(scrimProposals.id, id));
+
+  const before: Record<string, unknown> = {};
+  for (const k of Object.keys(updates)) {
+    if (k === "updatedAt") continue;
+    if (k === "message") continue;
+    before[k] = (proposal as Record<string, unknown>)[k];
+  }
+  const opponentGuildId =
+    proposal.proposingGuildId === me.guildId
+      ? proposal.opposingGuildId
+      : proposal.proposingGuildId;
+  const opponentGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, opponentGuildId),
+    columns: { name: true },
+  });
+  const afterForLog: Record<string, unknown> = { ...updates };
+  delete afterForLog.updatedAt;
+  delete afterForLog.message;
+  void logAudit({
+    guildId: proposal.proposingGuildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "scrim.update",
+    entityType: "scrim",
+    entityId: proposal.id,
+    entityLabel: `vs ${opponentGuild?.name ?? opponentGuildId}`,
+    changes: { before, after: afterForLog },
+  });
+
   return NextResponse.json({ success: true });
 }

@@ -9,6 +9,7 @@ import {
   softDeleteGuildAndEvents,
 } from "@/lib/rbac";
 import { isSupportedLocale, LOCALE_COOKIE } from "@/i18n/config";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 const MAX_NAME_LENGTH = 32;
 
@@ -141,7 +142,28 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
   }
 
+  const before = await db.query.users.findFirst({
+    where: eq(users.id, session.user.id),
+  });
+
   await db.update(users).set(updates).where(eq(users.id, session.user.id));
+
+  const beforeForLog: Record<string, unknown> = {};
+  if (before) {
+    for (const k of Object.keys(updates)) {
+      beforeForLog[k] = (before as Record<string, unknown>)[k];
+    }
+  }
+  void logAudit({
+    guildId: before?.guildId ?? null,
+    actorUserId: session.user.id,
+    actorDisplay: await resolveActorDisplay(session.user.id),
+    action: "user.update",
+    entityType: "user",
+    entityId: session.user.id,
+    entityLabel: before?.inGameName ?? before?.name ?? before?.email ?? session.user.id,
+    changes: { before: beforeForLog, after: updates },
+  });
 
   const res = NextResponse.json({ success: true, ...updates });
   if (cookieToSet) {

@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
-import { scrimProposals } from "@/db/schema";
+import { guilds, scrimProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sendScrimNotification } from "@/bot/discord-bot";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/scrimmages/[id]/decline — opposing-side admin declines.
 // No events are created; proposal flips to "declined".
@@ -44,6 +45,20 @@ export async function POST(
       updatedAt: now,
     })
     .where(eq(scrimProposals.id, id));
+
+  const proposingGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, proposal.proposingGuildId),
+    columns: { name: true },
+  });
+  void logAudit({
+    guildId: me.guildId ?? proposal.opposingGuildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "scrim.decline",
+    entityType: "scrim",
+    entityId: proposal.id,
+    entityLabel: `vs ${proposingGuild?.name ?? proposal.proposingGuildId}`,
+  });
 
   const notify = await sendScrimNotification({
     proposingGuildId: proposal.proposingGuildId,

@@ -36,6 +36,13 @@
       "when": 1778609830002,
       "tag": "0004_add_users_discord_user_id",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1778646960374,
+      "tag": "0005_add_audit_log",
+      "breakpoints": true
     }
   ]
 }

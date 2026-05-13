@@ -353,6 +353,51 @@ export const eventNotifications = sqliteTable(
   })
 );
 
+// Per-guild audit trail. Every state-mutating API endpoint calls logAudit()
+// (src/lib/audit.ts) after the mutation succeeds; failures are logged but
+// never roll back the user's action — this table is observability, not the
+// system of record.
+//
+// guildId is nullable because some actions are site-level (super-admin
+// promotes another super-admin, super-admin soft-deletes a guild). Per-guild
+// admin views filter `guildId = <theirs>`; super-admins can additionally
+// view `guildId IS NULL` rows.
+//
+// `entityLabel` and `actorDisplay` are snapshots taken at write time so the
+// log stays readable after the referenced row is renamed or deleted.
+//
+// `flaggedByUserId` / `flaggedAt` / `flagNote` are the admin "flag for
+// review" controls — phase 1 of the per-guild changelog issue. Revert is
+// deferred to phase 2.
+export const auditLog = sqliteTable("audit_log", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  guildId: text("guild_id").references(() => guilds.id, {
+    onDelete: "cascade",
+  }),
+  actorUserId: text("actor_user_id").references(() => users.id, {
+    onDelete: "set null",
+  }),
+  actorDisplay: text("actor_display").notNull(),
+  // Dot-namespaced action key, e.g. "event.create", "member.kick",
+  // "guild.settings.update". Stable identifier — the UI maps these to
+  // human-readable labels via i18n.
+  action: text("action").notNull(),
+  entityType: text("entity_type").notNull(),
+  entityId: text("entity_id"),
+  entityLabel: text("entity_label"),
+  // JSON: { before?: Record<string, unknown>, after?: Record<string, unknown> }
+  // Stored as text — SQLite has no native JSON column type.
+  changes: text("changes"),
+  flaggedByUserId: text("flagged_by_user_id").references(() => users.id, {
+    onDelete: "set null",
+  }),
+  flaggedAt: text("flagged_at"),
+  flagNote: text("flag_note"),
+  createdAt: text("created_at").notNull(),
+});
+
 export const signups = sqliteTable("signups", {
   id: text("id").primaryKey(),
   eventId: text("event_id")

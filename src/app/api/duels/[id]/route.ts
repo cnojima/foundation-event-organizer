@@ -7,6 +7,7 @@ import { eq } from "drizzle-orm";
 import { sendDuelNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
 import { clearDuelNotifications } from "@/lib/duel-notifications";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // PATCH /api/duels/[id] — proposer-only edits while still pending. Body:
 // { proposedGameTime?, location?, winCondition?, message? }
@@ -92,6 +93,30 @@ export async function PATCH(
   if (timeChanged) {
     clearDuelNotifications(id);
   }
+
+  const before: Record<string, unknown> = {};
+  for (const k of Object.keys(updates)) {
+    if (k === "updatedAt" || k === "lastEditedByUserId" || k === "message") continue;
+    before[k] = (duel as Record<string, unknown>)[k];
+  }
+  const afterForLog: Record<string, unknown> = { ...updates };
+  delete afterForLog.updatedAt;
+  delete afterForLog.lastEditedByUserId;
+  delete afterForLog.message;
+  const opponentUserIdForLabel =
+    me.userId === duel.proposingUserId
+      ? duel.opposingUserId
+      : duel.proposingUserId;
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "duel.update",
+    entityType: "duel",
+    entityId: duel.id,
+    entityLabel: `vs ${await resolveActorDisplay(opponentUserIdForLabel)}`,
+    changes: { before, after: afterForLog },
+  });
 
   // DM the OTHER side (not the editor) with the new details. Post-update
   // values so the message reflects the new time / location / win

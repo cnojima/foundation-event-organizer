@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireGuildAdminApi } from "@/lib/rbac";
 import { db } from "@/db";
-import { scrimProposals } from "@/db/schema";
+import { guilds, scrimProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { outcomeToAbsoluteResult, scrimSideFor } from "@/lib/scrims";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/scrimmages/[id]/result — either guild's admin declares the
 // outcome. Body: { outcome: "won"|"lost"|"draw"|"no_contest", notes? }.
@@ -71,6 +72,25 @@ export async function POST(
       updatedAt: now,
     })
     .where(eq(scrimProposals.id, id));
+
+  const opponentGuildId =
+    proposal.proposingGuildId === me.guildId
+      ? proposal.opposingGuildId
+      : proposal.proposingGuildId;
+  const opponentGuild = await db.query.guilds.findFirst({
+    where: eq(guilds.id, opponentGuildId),
+    columns: { name: true },
+  });
+  void logAudit({
+    guildId: me.guildId ?? proposal.proposingGuildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "scrim.result",
+    entityType: "scrim",
+    entityId: proposal.id,
+    entityLabel: `vs ${opponentGuild?.name ?? opponentGuildId}`,
+    changes: { after: { outcome, result: absolute } },
+  });
 
   return NextResponse.json({ success: true, result: absolute });
 }

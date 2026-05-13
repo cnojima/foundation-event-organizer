@@ -6,6 +6,7 @@ import { duelProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sendDuelNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/duels/[id]/decline — opposing player declines a pending duel.
 export async function POST(
@@ -44,6 +45,16 @@ export async function POST(
       updatedAt: now,
     })
     .where(eq(duelProposals.id, id));
+
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "duel.decline",
+    entityType: "duel",
+    entityId: duel.id,
+    entityLabel: `vs ${await resolveActorDisplay(duel.proposingUserId)}`,
+  });
 
   const notify = await sendDuelNotification({
     proposingUserId: duel.proposingUserId,

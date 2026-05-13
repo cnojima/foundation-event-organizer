@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { guilds } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sendTestMessage } from "@/bot/discord-bot";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function POST(
   req: Request,
@@ -14,6 +15,7 @@ export async function POST(
   const session = await auth();
   const guard = requireGuildAdminApi(session, id);
   if (!guard.ok) return guard.response;
+  const membership = guard.value;
 
   const guild = await db.query.guilds.findFirst({ where: eq(guilds.id, id) });
   if (!guild) {
@@ -45,5 +47,16 @@ export async function POST(
   if (!result.ok) {
     return NextResponse.json({ error: result.reason }, { status: 502 });
   }
+
+  void logAudit({
+    guildId: id,
+    actorUserId: membership.userId,
+    actorDisplay: await resolveActorDisplay(membership.userId),
+    action: "guild.discord.test",
+    entityType: "guild",
+    entityId: id,
+    entityLabel: guild.name,
+  });
+
   return NextResponse.json({ success: true });
 }

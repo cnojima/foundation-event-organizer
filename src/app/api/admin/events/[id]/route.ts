@@ -7,6 +7,7 @@ import { and, eq, isNull } from "drizzle-orm";
 import { clearNotifications } from "@/lib/notifications";
 import { sendEventNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 const DATE_FIELDS = [
   "gameTime",
@@ -73,6 +74,19 @@ export async function PATCH(
 
   await db.update(events).set(updates).where(eq(events.id, id));
 
+  const before: Record<string, string | null> = {};
+  for (const f of Object.keys(updates) as DateField[]) before[f] = event[f];
+  void logAudit({
+    guildId: event.guildId,
+    actorUserId: guard.value.membership.userId,
+    actorDisplay: await resolveActorDisplay(guard.value.membership.userId),
+    action: "event.dates.update",
+    entityType: "event",
+    entityId: event.id,
+    entityLabel: event.name,
+    changes: { before, after: updates },
+  });
+
   // Only ping Discord on time changes — silent for signup-window tweaks.
   // Scrim events have their own lifecycle messages via /api/scrimmages/*.
   if (startTimeChanged && event.kind !== "scrim") {
@@ -112,6 +126,16 @@ export async function DELETE(
   if (result.length === 0) {
     return NextResponse.json({ error: "Event not found" }, { status: 404 });
   }
+
+  void logAudit({
+    guildId: event.guildId,
+    actorUserId: guard.value.membership.userId,
+    actorDisplay: await resolveActorDisplay(guard.value.membership.userId),
+    action: "event.delete",
+    entityType: "event",
+    entityId: event.id,
+    entityLabel: event.name,
+  });
 
   // Scrim events use the scrim-cancel flow for their own notification; skip
   // the generic event-cancelled message here to avoid double-posting.

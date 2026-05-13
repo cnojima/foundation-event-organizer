@@ -6,6 +6,7 @@ import { duelProposals } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { sendDuelNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // POST /api/duels/[id]/cancel — either player cancels an accepted duel
 // before a result is declared. Flips status to "cancelled". Discord-posts
@@ -51,6 +52,20 @@ export async function POST(
     .update(duelProposals)
     .set({ status: "cancelled", updatedAt: now })
     .where(eq(duelProposals.id, id));
+
+  const opponentUserId =
+    me.userId === duel.proposingUserId
+      ? duel.opposingUserId
+      : duel.proposingUserId;
+  void logAudit({
+    guildId: me.guildId,
+    actorUserId: me.userId,
+    actorDisplay: await resolveActorDisplay(me.userId),
+    action: "duel.cancel",
+    entityType: "duel",
+    entityId: duel.id,
+    entityLabel: `vs ${await resolveActorDisplay(opponentUserId)}`,
+  });
 
   const notify = await sendDuelNotification({
     proposingUserId: duel.proposingUserId,

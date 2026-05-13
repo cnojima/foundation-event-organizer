@@ -2,8 +2,9 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { canManageEvent } from "@/lib/rbac";
 import { db } from "@/db";
-import { signups } from "@/db/schema";
+import { signups, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function PATCH(req: Request) {
   const session = await auth();
@@ -34,6 +35,21 @@ export async function PATCH(req: Request) {
   if ("assignedRole" in updates) allowedFields.assignedRole = updates.assignedRole;
 
   await db.update(signups).set(allowedFields).where(eq(signups.id, id));
+
+  const target = await db.query.users.findFirst({
+    where: eq(users.id, signup.userId),
+    columns: { inGameName: true, name: true },
+  });
+  void logAudit({
+    guildId: guard.value.event.guildId,
+    actorUserId: guard.value.membership.userId,
+    actorDisplay: await resolveActorDisplay(guard.value.membership.userId),
+    action: "signup.admin.update",
+    entityType: "signup",
+    entityId: signup.id,
+    entityLabel: `${target?.inGameName ?? target?.name ?? signup.userId} @ ${guard.value.event.name}`,
+    changes: { after: allowedFields },
+  });
 
   return NextResponse.json({ success: true });
 }

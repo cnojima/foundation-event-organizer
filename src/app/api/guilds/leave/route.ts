@@ -4,6 +4,7 @@ import { requireSignedInApi, softDeleteGuildAndEvents } from "@/lib/rbac";
 import { db } from "@/db";
 import { events, signups, users } from "@/db/schema";
 import { and, eq, inArray, isNull, sql } from "drizzle-orm";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 export async function POST() {
   const session = await auth();
@@ -87,6 +88,17 @@ export async function POST() {
   if ("error" in result) {
     return NextResponse.json({ error: result.error }, { status: result.status });
   }
+
+  void logAudit({
+    guildId: membership.guildId,
+    actorUserId: membership.userId,
+    actorDisplay: await resolveActorDisplay(membership.userId),
+    action: "member.leave",
+    entityType: "member",
+    entityId: membership.userId,
+    entityLabel: await resolveActorDisplay(membership.userId),
+    changes: { before: { guildRole: membership.guildRole } },
+  });
 
   return NextResponse.json({
     success: true,
