@@ -56,6 +56,7 @@ Next.js 16 App Router with SQLite (better-sqlite3 + Drizzle ORM). Auth via Auth.
 
 ### Key Design Decisions
 
+- **Single-machine by design.** Webapp + SQLite + Discord bot run in one Fly machine. Horizontal scaling has three real blockers (SQLite-on-volume, singleton Discord gateway, shared idempotency tables) — see [TODO_FLY.md](TODO_FLY.md) for the analysis and migration paths (LiteFS vs Postgres) before touching `fly.toml` or the data layer.
 - All admin gates flow through `src/lib/rbac.ts`. Super-admins implicitly pass guild-admin checks; pages accept an optional `?guildId=` for super-admin "acting as" mode.
 - Events carry `guild_id` (NOT NULL, cascade delete on guild deletion).
 - Signups have `deleted_at` for soft-delete on guild leave/kick — preserves attendance history while hiding signups from the user.
