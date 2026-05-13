@@ -38,7 +38,8 @@
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta"
+    "myAccount": "Minha conta",
+    "auditLog": "Registro de auditoria"
   },
   "topBar": {
     "notifications": "Notificações",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "A FUNDAÇÃO CONVOCA. ATENDAMOS JUNTOS.",
-    "feedback": "OPINIÃO"
+    "feedback": "OPINIÃO",
+    "discordSupport": "SUPORTE NO DISCORD",
+    "terms": "TERMOS",
+    "privacy": "PRIVACIDADE"
   },
   "feedback": {
     "reportBug": "Reportar um bug",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "Eventos",
-    "noEvents": "Ainda não há eventos.",
     "starts": "Começa",
     "addAllToCalendar": "Adicionar tudo ao calendário",
     "addToCalendar": "Adicionar ao calendário",
@@ -89,7 +92,11 @@
     "startTime": "Horário de início:",
     "signupCloses": "As inscrições encerram em:",
     "slotsLabel": "Caça-níqueis:",
-    "slotsValue": "{maxPlayers} jogadores + {maxBackups} backups cada"
+    "slotsValue": "{maxPlayers} jogadores + {maxBackups} backups cada",
+    "noEvents": "Nenhum evento futuro.",
+    "noPastEvents": "Ainda não há eventos passados.",
+    "upcoming": "Por vir",
+    "past": "Passado"
   },
   "eventCard": {
     "deleted": "Excluído",
@@ -426,7 +433,15 @@
     "deleteButton": "Excluir minha conta",
     "deleting": "Excluindo…",
     "deleteConfirm": "Excluir sua conta? Isso remove você da sua guilda, exclui todos os seus cadastros e desvincula sua conta do Google/Discord. Essa ação é irreversível.",
-    "language": "Linguagem"
+    "language": "Linguagem",
+    "discord": {
+      "heading": "mensagens diretas do Discord",
+      "reachableTitle": "ID de usuário do Discord cadastrado",
+      "reachableBody": "O bot pode enviar mensagens privadas sobre duelos. Você pode atualizar ou limpar seu ID abaixo.",
+      "unreachableBody": "Cole seu ID de usuário do Discord abaixo para que o bot possa enviar mensagens diretas sobre desafios de duelo, aceitações, recusas e resultados. Sem ele, você ainda verá tudo no site — apenas não receberá notificações do Discord.",
+      "idLabel": "ID de usuário do Discord",
+      "idHelp": "No Discord, ative o Modo Desenvolvedor (Configurações do Usuário → Avançado), clique com o botão direito do mouse no seu perfil e escolha \"Copiar ID do Usuário\". É um número de 17 a 20 dígitos. Não verificamos a propriedade — se você receber uma mensagem direta indesejada do bot, desative a opção \"Permitir mensagens diretas de membros do servidor\" nas suas configurações de privacidade do Discord."
+    }
   },
   "errors": {
     "forbidden": "Proibido",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "Lembretes e comandos de barra dependem de um bot do Discord que o operador já tenha implementado. Para integrá-lo ao seu servidor do Discord:",
       "step1Intro": "Obtenha o URL de instalação com o administrador do seu site. Ele tem o seguinte formato:",
-      "step1Note": "A parte permissions=133120 abrange Send Messages (Enviar mensagens) e Mention Everyone (Mencionar todos). Ambas são necessárias — sem Mention Everyone, o @everyone nos lembretes é exibido como texto simples e não envia menções a ninguém.",
       "step2": "Abra o URL de instalação em um navegador. Selecione o servidor do Discord no qual deseja instalar o bot. Você precisa da permissão \"Gerenciar servidor\" nesse servidor. Clique em \"Autorizar\".",
-      "step3": "Confirme se o bot aparece na lista de membros do seu servidor Discord. É só isso — nenhuma configuração individual para o bot no Discord."
+      "step3": "Confirme se o bot aparece na lista de membros do seu servidor Discord. É só isso — nenhuma configuração individual para o bot no Discord.",
+      "step1Note": "A parte permissions=2147616768 abrange os comandos de barra, o envio de mensagens e a menção a todos. Ambos são necessários — sem a menção a todos, o @everyone nos lembretes é exibido como texto simples e não envia menções a ninguém."
     },
     "discordChannel": {
       "intro": "O bot publica lembretes em um canal de sua escolha. Para configurá-lo:",
@@ -571,6 +586,76 @@
       "reminders": "Os lembretes não estão sendo disparados. Verifique /api/health — se bot.lastPollStartedAt estiver atrasado em mais de 5 minutos em relação ao horário atual, o coletor de dados está travado. Superadministradores também podem enviar uma requisição POST para /api/admin/bot/poll-now para forçar um novo ciclo de coleta de dados.",
       "rescheduled": "Um evento foi remarcado e as pessoas não estão recebendo novas notificações. Confirme se o horário realmente mudou (compare com o valor anterior). O bot só envia novamente os lembretes cuja janela ainda está adiantada em relação ao novo horário — se o novo horário for daqui a 30 minutos, apenas o lembrete de 20 minutos será enviado, e não o de 24 horas.",
       "movedSquad": "Um jogador foi alocado ao esquadrão errado depois que eu o movi. O indicador \"MOVIDO\" significa que a alocação difere da preferência. Para reverter, altere a função/esquadrão dele através do menu suspenso ou use o botão \"Mover para o Esquadrão N\" para trazê-lo de volta."
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Engajamento na guilda, subiu de nível.",
+      "headline": "Seus membros aparecerão. Seu banco de reservas ficará mais robusto.",
+      "subhead": "Substitua as conversas confusas do Discord por um único lugar para inscrições em eventos, treinos, duelos 1v1 e um ranking. Lembretes automáticos, inscrição instantânea e competição amigável que mantém seu grupo ativo.",
+      "signIn": "Faça login com o Google ou o Discord.",
+      "browseGuilds": "Navegue pelas guildas públicas"
+    },
+    "stats": {
+      "guilds": "Guildas",
+      "events": "Os eventos são realizados",
+      "duels": "Duelos jogados",
+      "players": "Jogadores"
+    },
+    "engagement": {
+      "kicker": "O problema que resolvemos",
+      "heading": "Guildas perdem membros devido a atritos.",
+      "body": "Agendamento de eventos perdido em tópicos do Discord. Inscrições registradas em uma planilha esquecida. Lembretes que não funcionavam. Jogadores que paravam de aparecer porque nada os fazia voltar. O Foundation Event Organizer resolve tudo isso.",
+      "beforeTitle": "Antes",
+      "beforeBody": "Tópicos confusos no Discord, inscrições perdidas, lembretes ignorados, nenhum registro de quem realmente compareceu — e membros se afastando aos poucos.",
+      "afterTitle": "Depois",
+      "afterBody": "Um formulário de inscrição por evento. Lembretes automáticos no Discord com 1 dia, 1 hora e 20 minutos de antecedência. Presença e avaliações registradas. Treinos e duelos com placares e ELO. Um motivo claro para entrar.",
+      "outcomeTitle": "Resultado",
+      "outcomeBody": "Mais eventos com listas completas de participantes. Mais competições entre guildas. Mais motivos para seus membros voltarem — e um registro de quem realmente cumpre sua parte."
+    },
+    "features": {
+      "heading": "O que tem dentro?",
+      "matches": {
+        "title": "Eventos da partida",
+        "body": "Duas equipes, vagas de liderança, lista de espera automática, controle de presença, avaliações pós-evento — tudo o que você precisa para organizar um evento recorrente no estilo Shadowfront."
+      },
+      "scrims": {
+        "title": "Treinos de guilda contra guilda",
+        "body": "Proponha um scrim contra outra guilda no seu servidor. Ambos os lados concordam com o horário, local e condição de vitória. Os resultados alimentam o registro da guilda."
+      },
+      "duels": {
+        "title": "Duelos 1v1 com ELO",
+        "body": "Jogadores se desafiam em todo o servidor. Negociação de pingue-pongue, confirmação mútua de resultados, classificações ELO, reputação com votos positivos/negativos e uma tabela de classificação do servidor."
+      },
+      "discord": {
+        "title": "Integração de bot do Discord",
+        "body": "Lembretes para todos 1 dia, 1 hora e 20 minutos antes de cada evento. Comandos de barra /upcoming e /signup. Mensagens diretas para eventos do ciclo de vida duplo."
+      },
+      "multiGuild": {
+        "title": "Multiguilda desde o primeiro dia",
+        "body": "Cada guilda tem seus próprios administradores, membros, eventos e canal no Discord. Os superadministradores gerenciam a plataforma. Os slugs são permanentes; todo o resto é configurável."
+      },
+      "i18n": {
+        "title": "17 idiomas",
+        "body": "Interface do usuário traduzida automaticamente para inglês, francês, alemão, espanhol, russo, ucraniano, chinês, japonês, coreano, português, italiano, indonésio, holandês, turco, polonês, vietnamita e sueco."
+      }
+    },
+    "screenshots": {
+      "heading": "Como é a aparência?",
+      "eventAdmin": "Painel de administração do evento — listas de equipes, solicitações de liderança, lista de espera, presença.",
+      "duels": "Página de detalhes do duelo — confronto, classificação ELO, ficha de resultado, local e regras.",
+      "leaderboard": "Classificação do servidor — jogadores classificados por ELO, top 3 em fichas, sua posição no ranking exibida.",
+      "discord": "Lembretes no Discord — notificações automáticas para @todos antes de cada evento."
+    },
+    "bottomCta": {
+      "heading": "Pare de perder membros por causa de atritos.",
+      "body": "Crie uma guilda em 30 segundos. Grátis para sempre, código aberto, sem necessidade de cartão de crédito."
+    },
+    "footer": {
+      "builtWith": "Desenvolvido com Next.js, Drizzle, Auth.js e a API do Discord. Gratuito e de código aberto.",
+      "viewSource": "Ver código-fonte no GitHub",
+      "help": "Ajuda",
+      "discordSupport": "Suporte do Discord"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
   },
-  "landing": {
-    "hero": {
-      "kicker": "Engajamento na guilda, subiu de nível.",
-      "headline": "Seus membros aparecerão. Seu banco de reservas ficará mais robusto.",
-      "subhead": "Substitua as conversas confusas do Discord por um único lugar para inscrições em eventos, treinos, duelos 1v1 e um ranking. Lembretes automáticos, inscrição instantânea e competição amigável que mantém seu grupo ativo.",
-      "signIn": "Faça login com o Google ou o Discord.",
-      "browseGuilds": "Navegue pelas guildas públicas"
-    },
-    "stats": {
-      "guilds": "Guildas",
-      "events": "Os eventos são realizados",
-      "duels": "Duelos jogados",
-      "players": "Jogadores"
-    },
-    "engagement": {
-      "kicker": "O problema que resolvemos",
-      "heading": "Guildas perdem membros devido a atritos.",
-      "body": "Agendamento de eventos perdido em tópicos do Discord. Inscrições registradas em uma planilha esquecida. Lembretes que não funcionavam. Jogadores que paravam de aparecer porque nada os fazia voltar. O Foundation Event Organizer resolve tudo isso.",
-      "beforeTitle": "Antes",
-      "beforeBody": "Tópicos confusos no Discord, inscrições perdidas, lembretes ignorados, nenhum registro de quem realmente compareceu — e membros se afastando aos poucos.",
-      "afterTitle": "Depois",
-      "afterBody": "Um formulário de inscrição por evento. Lembretes automáticos no Discord com 1 dia, 1 hora e 20 minutos de antecedência. Presença e avaliações registradas. Treinos e duelos com placares e ELO. Um motivo claro para entrar.",
-      "outcomeTitle": "Resultado",
-      "outcomeBody": "Mais eventos com listas completas de participantes. Mais competições entre guildas. Mais motivos para seus membros voltarem — e um registro de quem realmente cumpre sua parte."
-    },
-    "features": {
-      "heading": "O que tem dentro?",
-      "matches": {
-        "title": "Eventos da partida",
-        "body": "Duas equipes, vagas de liderança, lista de espera automática, controle de presença, avaliações pós-evento — tudo o que você precisa para organizar um evento recorrente no estilo Shadowfront."
-      },
-      "scrims": {
-        "title": "Treinos de guilda contra guilda",
-        "body": "Proponha um scrim contra outra guilda no seu servidor. Ambos os lados concordam com o horário, local e condição de vitória. Os resultados alimentam o registro da guilda."
-      },
-      "duels": {
-        "title": "Duelos 1v1 com ELO",
-        "body": "Jogadores se desafiam em todo o servidor. Negociação de pingue-pongue, confirmação mútua de resultados, classificações ELO, reputação com votos positivos/negativos e uma tabela de classificação do servidor."
-      },
-      "discord": {
-        "title": "Integração de bot do Discord",
-        "body": "Lembretes para todos 1 dia, 1 hora e 20 minutos antes de cada evento. Comandos de barra /upcoming e /signup. Mensagens diretas para eventos do ciclo de vida duplo."
-      },
-      "multiGuild": {
-        "title": "Multiguilda desde o primeiro dia",
-        "body": "Cada guilda tem seus próprios administradores, membros, eventos e canal no Discord. Os superadministradores gerenciam a plataforma. Os slugs são permanentes; todo o resto é configurável."
-      },
-      "i18n": {
-        "title": "17 idiomas",
-        "body": "Interface do usuário traduzida automaticamente para inglês, francês, alemão, espanhol, russo, ucraniano, chinês, japonês, coreano, português, italiano, indonésio, holandês, turco, polonês, vietnamita e sueco."
-      }
-    },
-    "screenshots": {
-      "heading": "Como é a aparência?",
-      "eventAdmin": "Painel de administração do evento — listas de equipes, solicitações de liderança, lista de espera, presença.",
-      "duels": "Página de detalhes do duelo — confronto, classificação ELO, ficha de resultado, local e regras.",
-      "leaderboard": "Classificação do servidor — jogadores classificados por ELO, top 3 em fichas, sua posição no ranking exibida.",
-      "discord": "Lembretes no Discord — notificações automáticas para @todos antes de cada evento."
-    },
-    "bottomCta": {
-      "heading": "Pare de perder membros por causa de atritos.",
-      "body": "Crie uma guilda em 30 segundos. Grátis para sempre, código aberto, sem necessidade de cartão de crédito."
-    },
-    "footer": {
-      "builtWith": "Desenvolvido com Next.js, Drizzle, Auth.js e a API do Discord. Gratuito e de código aberto.",
-      "viewSource": "Ver código-fonte no GitHub",
-      "help": "Ajuda"
+  "alerts": {
+    "heading": "{count, plural, one {# notification} outras {# notifications} }",
+    "discord_unlinked": {
+      "title": "Conecte o Discord para habilitar mensagens diretas duplas.",
+      "body": "Você se cadastrou com o Google. Vincule uma conta do Discord para que o bot possa te enviar mensagens diretas quando alguém te desafiar para um duelo.",
+      "action": "Link do Discord →"
     }
   }
 }

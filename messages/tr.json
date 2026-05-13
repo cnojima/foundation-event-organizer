@@ -38,7 +38,8 @@
     "createGuild": "Lonca Oluştur",
     "adminHelp": "Yönetici Yardımı",
     "help": "Yardım",
-    "myAccount": "Hesabım"
+    "myAccount": "Hesabım",
+    "auditLog": "Denetim Günlüğü"
   },
   "topBar": {
     "notifications": "Bildirimler",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "VAKIF ÇAĞIRIYOR. BİRLİKTE CEVAP VERELİM.",
-    "feedback": "GERİ BİLDİRİM"
+    "feedback": "GERİ BİLDİRİM",
+    "discordSupport": "DISCORD DESTEĞİ",
+    "terms": "ŞARTLAR",
+    "privacy": "MAHREMİYET"
   },
   "feedback": {
     "reportBug": "Hata bildir",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "Olaylar",
-    "noEvents": "Henüz hiçbir etkinlik yok.",
     "starts": "Başlıyor",
     "addAllToCalendar": "Takvime Tümünü Ekle",
     "addToCalendar": "Takvime Ekle",
@@ -89,7 +92,11 @@
     "startTime": "Başlangıç Saati:",
     "signupCloses": "Kayıtlar Kapanıyor:",
     "slotsLabel": "Yuvalar:",
-    "slotsValue": "{maxPlayers} oyuncular + {maxBackups} her birinin yedeklemeleri"
+    "slotsValue": "{maxPlayers} oyuncular + {maxBackups} her birinin yedeklemeleri",
+    "noEvents": "Yakın zamanda herhangi bir etkinlik bulunmamaktadır.",
+    "noPastEvents": "Henüz geçmişe ait bir etkinlik yok.",
+    "upcoming": "Yakında",
+    "past": "Geçmiş"
   },
   "eventCard": {
     "deleted": "Silindi",
@@ -426,7 +433,15 @@
     "deleteButton": "Hesabımı sil",
     "deleting": "Siliniyor…",
     "deleteConfirm": "Hesabınızı silmek mi istiyorsunuz? Bu işlem sizi loncanızdan çıkarır, tüm kayıtlarınızı siler ve Google/Discord bağlantınızı keser. Bu işlem geri alınamaz.",
-    "language": "Dil"
+    "language": "Dil",
+    "discord": {
+      "heading": "Discord direkt mesajları",
+      "reachableTitle": "Dosyada Discord kullanıcı kimliği mevcut.",
+      "reachableBody": "Bot size düellolar hakkında özel mesaj gönderebilir. Kimliğinizi aşağıdan güncelleyebilir veya silebilirsiniz.",
+      "unreachableBody": "Botun düellolar, kabul edilen ve reddedilen teklifler ve sonuçlar hakkında size özel mesaj gönderebilmesi için Discord kullanıcı kimliğinizi aşağıya yapıştırın. Kullanıcı kimliğinizi eklemezseniz, her şeyi web sitesinde görebilirsiniz, ancak Discord bildirimleri alamazsınız.",
+      "idLabel": "Discord Kullanıcı Kimliği",
+      "idHelp": "Discord'da Geliştirici Modunu etkinleştirin (Kullanıcı Ayarları → Gelişmiş), ardından kendi profilinize sağ tıklayın ve \"Kullanıcı Kimliğini Kopyala\"yı seçin. Bu, 17-20 haneli bir sayıdır. Sahipliği doğrulamıyoruz — eğer bottan istenmeyen bir DM alırsanız, Discord gizlilik ayarlarınızda \"Sunucu üyelerinden gelen doğrudan mesajlara izin ver\" seçeneğini devre dışı bırakın."
+    }
   },
   "errors": {
     "forbidden": "Yasaklı",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "Hatırlatmalar ve komut satırları, operatörün önceden kurduğu bir Discord botuna bağlıdır. Bunu Discord sunucunuza bağlamak için:",
       "step1Intro": "Sitenizin operatöründen kurulum URL'sini alın. Şöyle bir şey:",
-      "step1Note": "permissions=133120 kısmı Mesaj Gönder ve Herkese Etiketle seçeneklerini kapsar. Her ikisi de gereklidir; Herkese Etiketle seçeneği olmadan hatırlatıcılardaki @everyone etiketi düz metin olarak görüntülenir ve kimseye bildirim göndermez.",
       "step2": "Kurulum URL'sini bir tarayıcıda açın. Botun kurulmasını istediğiniz Discord sunucusunu seçin. Bu sunucuda \"Sunucuyu Yönet\" iznine sahip olmanız gerekiyor. \"Yetkilendir\"e tıklayın.",
-      "step3": "Botun Discord sunucunuzun üye listesinde göründüğünü doğrulayın. Hepsi bu kadar; Discord tarafında bot başına herhangi bir yapılandırma yapmanıza gerek yok."
+      "step3": "Botun Discord sunucunuzun üye listesinde göründüğünü doğrulayın. Hepsi bu kadar; Discord tarafında bot başına herhangi bir yapılandırma yapmanıza gerek yok.",
+      "step1Note": "permissions=2147616768 kısmı, Slash Komutları, Mesaj Gönderme ve Herkese Etiketleme seçeneklerini kapsar. Her ikisi de gereklidir; Herkese Etiketleme seçeneği olmadan hatırlatıcılardaki @everyone ifadesi düz metin olarak görüntülenir ve kimseye bildirim göndermez."
     },
     "discordChannel": {
       "intro": "Bot, seçtiğiniz bir kanala hatırlatma mesajları gönderir. Yapılandırmak için:",
@@ -571,6 +586,76 @@
       "reminders": "Hatırlatmalar tetiklenmiyor. /api/health adresini kontrol edin — eğer bot.lastPollStartedAt mevcut zamandan yaklaşık 5 dakikadan fazla gerideyse, yoklama işlemi takılı kalmıştır. Süper yöneticiler ayrıca bir yoklama döngüsünü zorlamak için /api/admin/bot/poll-now adresine POST isteği gönderebilirler.",
       "rescheduled": "Bir etkinlik yeniden planlandı ve katılımcılara tekrar bildirim gönderilmiyor. Zamanın gerçekten değiştiğini doğrulayın (önceki değerle karşılaştırın). Bot yalnızca penceresi yeni zamandan daha ileride olan türleri yeniden tetikler; yeni zamanınız şu andan 30 dakika sonraysa, yalnızca 20 dakikalık hatırlatıcı tetiklenir, 24 saatlik olan değil.",
       "movedSquad": "Oyuncuyu taşıdıktan sonra yanlış takıma atandı. \"TAŞINDI\" rozeti, atamanın tercihten farklı olduğunu gösterir. Geri almak için, açılır menüden rolünü/takımını değiştirin veya \"Takım N'ye Taşı\" düğmesini kullanarak eski haline getirin."
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Lonca katılımı, seviye atladı",
+      "headline": "Üyeleriniz gelecek. Yedek kadronuz daha da güçlenecek.",
+      "subhead": "Dağınık Discord konularını, etkinlik kayıtları, antrenman maçları, bire bir düellolar ve liderlik tablosu için tek bir merkezle değiştirin. Otomatik hatırlatıcılar, anında kayıt ve dostça rekabet, kadronuzu aktif tutar.",
+      "signIn": "Google veya Discord ile giriş yapın",
+      "browseGuilds": "Herkese açık loncalara göz atın"
+    },
+    "stats": {
+      "guilds": "Loncalar",
+      "events": "Etkinlikler düzenleniyor",
+      "duels": "Düellolar oynandı",
+      "players": "Oyuncular"
+    },
+    "engagement": {
+      "kicker": "Çözdüğümüz sorun",
+      "heading": "Loncalar sürtüşmeler nedeniyle üye kaybeder.",
+      "body": "Etkinlik planlaması Discord mesajlarının arasında kaybolmuş durumda. Kayıtlar, birinin güncellemeyi unuttuğu bir elektronik tabloda takip ediliyor. Tetiklenmeyen hatırlatmalar. Hiçbir şey onları geri çekmediği için gelmeyi bırakan oyuncular. Foundation Event Organizer tüm bunları düzeltiyor.",
+      "beforeTitle": "Önce",
+      "beforeBody": "Dağınık Discord sohbetleri, kayıp kayıtlar, kaçırılan hatırlatmalar, kimin gerçekten katıldığına dair hiçbir kayıt olmaması ve üyelerin yavaş yavaş uzaklaşması.",
+      "afterTitle": "Sonrasında",
+      "afterBody": "Her etkinlik için bir kayıt formu. Otomatik 1 günlük, 1 saatlik ve 20 dakikalık Discord hatırlatıcıları. Katılım ve puanlama takibi. Liderlik tabloları ve ELO puanlarıyla antrenman maçları ve düellolar. Giriş yapmak için net bir neden.",
+      "outcomeTitle": "Sonuç",
+      "outcomeBody": "Tam kadrolu daha fazla etkinlik. Loncalar arası daha fazla rekabet. Üyelerinizin geri dönmesi için daha fazla neden ve kimin gerçekten üzerine düşeni yaptığının kaydı."
+    },
+    "features": {
+      "heading": "İçindekiler",
+      "matches": {
+        "title": "Maç etkinlikleri",
+        "body": "İki takım, liderlik pozisyonları, otomatik bekleme listesi, katılım takibi, etkinlik sonrası değerlendirmeler — Shadowfront tarzı tekrarlayan bir etkinlik düzenlemek için ihtiyacınız olan her şey."
+      },
+      "scrims": {
+        "title": "Lonca-lonca karşılaşmaları",
+        "body": "Sunucunuzdaki başka bir lonca ile bir hazırlık maçı yapmayı teklif edin. Her iki taraf da zaman, yer ve kazanma koşulu konusunda anlaşır. Sonuçlar lonca kayıtlarına işlenir."
+      },
+      "duels": {
+        "title": "ELO ile 1'e 1 düellolar",
+        "body": "Oyuncular sunucu genelinde birbirlerine meydan okuyor. Masa tenisi müzakeresi, sonuçların karşılıklı onaylanması, ELO puanları, olumlu/olumsuz itibar ve sunucu liderlik tablosu mevcut."
+      },
+      "discord": {
+        "title": "Discord bot entegrasyonu",
+        "body": "@everyone her etkinlikten 1 gün, 1 saat ve 20 dakika önce hatırlatma gönderir. /upcoming ve /signup komutlarını kullanabilirsiniz. Aynı yaşam döngüsüne sahip etkinlikler için doğrudan mesaj gönderebilirsiniz."
+      },
+      "multiGuild": {
+        "title": "İlk günden itibaren çoklu lonca",
+        "body": "Her loncanın kendi yöneticileri, üyeleri, etkinlikleri ve Discord kanalı vardır. Süper yöneticiler platformu yönetir. Kullanıcı adları kalıcıdır; diğer her şey yapılandırılabilir."
+      },
+      "i18n": {
+        "title": "17 dil",
+        "body": "Kullanıcı arayüzü İngilizce, Fransızca, Almanca, İspanyolca, Rusça, Ukraynaca, Çince, Japonca, Korece, Portekizce, İtalyanca, Endonezce, Felemenkçe, Türkçe, Lehçe, Vietnamca ve İsveççe dillerinde otomatik olarak çevrilmiştir."
+      }
+    },
+    "screenshots": {
+      "heading": "Nasıl göründüğü",
+      "eventAdmin": "Etkinlik yönetim paneli — takım listeleri, liderlik talepleri, bekleme listesi, katılım.",
+      "duels": "Düello detay sayfası — eşleşme, ELO puanları, sonuç çipi, konum ve kurallar.",
+      "leaderboard": "Sunucu liderlik tablosu — ELO sıralamasına göre en yüksek puanlı oyuncular, ilk 3 çip, sıralamanız göründü.",
+      "discord": "Discord hatırlatıcıları — her etkinlikten önce otomatik olarak @everyone kullanıcısına bildirim gönderir."
+    },
+    "bottomCta": {
+      "heading": "Sürtüşmeler nedeniyle üye kaybetmeyi bırakın.",
+      "body": "30 saniyede bir lonca kurun. Sonsuza dek ücretsiz, açık kaynak kodlu, kredi kartı gerekmez."
+    },
+    "footer": {
+      "builtWith": "Next.js, Drizzle, Auth.js ve Discord API kullanılarak geliştirilmiştir. Ücretsiz ve açık kaynaklıdır.",
+      "viewSource": "GitHub'da kaynak kodunu görüntüle",
+      "help": "Yardım",
+      "discordSupport": "Discord desteği"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
   },
-  "landing": {
-    "hero": {
-      "kicker": "Lonca katılımı, seviye atladı",
-      "headline": "Üyeleriniz gelecek. Yedek kadronuz daha da güçlenecek.",
-      "subhead": "Dağınık Discord konularını, etkinlik kayıtları, antrenman maçları, bire bir düellolar ve liderlik tablosu için tek bir merkezle değiştirin. Otomatik hatırlatıcılar, anında kayıt ve dostça rekabet, kadronuzu aktif tutar.",
-      "signIn": "Google veya Discord ile giriş yapın",
-      "browseGuilds": "Herkese açık loncalara göz atın"
-    },
-    "stats": {
-      "guilds": "Loncalar",
-      "events": "Etkinlikler düzenleniyor",
-      "duels": "Düellolar oynandı",
-      "players": "Oyuncular"
-    },
-    "engagement": {
-      "kicker": "Çözdüğümüz sorun",
-      "heading": "Loncalar sürtüşmeler nedeniyle üye kaybeder.",
-      "body": "Etkinlik planlaması Discord mesajlarının arasında kaybolmuş durumda. Kayıtlar, birinin güncellemeyi unuttuğu bir elektronik tabloda takip ediliyor. Tetiklenmeyen hatırlatmalar. Hiçbir şey onları geri çekmediği için gelmeyi bırakan oyuncular. Foundation Event Organizer tüm bunları düzeltiyor.",
-      "beforeTitle": "Önce",
-      "beforeBody": "Dağınık Discord sohbetleri, kayıp kayıtlar, kaçırılan hatırlatmalar, kimin gerçekten katıldığına dair hiçbir kayıt olmaması ve üyelerin yavaş yavaş uzaklaşması.",
-      "afterTitle": "Sonrasında",
-      "afterBody": "Her etkinlik için bir kayıt formu. Otomatik 1 günlük, 1 saatlik ve 20 dakikalık Discord hatırlatıcıları. Katılım ve puanlama takibi. Liderlik tabloları ve ELO puanlarıyla antrenman maçları ve düellolar. Giriş yapmak için net bir neden.",
-      "outcomeTitle": "Sonuç",
-      "outcomeBody": "Tam kadrolu daha fazla etkinlik. Loncalar arası daha fazla rekabet. Üyelerinizin geri dönmesi için daha fazla neden ve kimin gerçekten üzerine düşeni yaptığının kaydı."
-    },
-    "features": {
-      "heading": "İçindekiler",
-      "matches": {
-        "title": "Maç etkinlikleri",
-        "body": "İki takım, liderlik pozisyonları, otomatik bekleme listesi, katılım takibi, etkinlik sonrası değerlendirmeler — Shadowfront tarzı tekrarlayan bir etkinlik düzenlemek için ihtiyacınız olan her şey."
-      },
-      "scrims": {
-        "title": "Lonca-lonca karşılaşmaları",
-        "body": "Sunucunuzdaki başka bir lonca ile bir hazırlık maçı yapmayı teklif edin. Her iki taraf da zaman, yer ve kazanma koşulu konusunda anlaşır. Sonuçlar lonca kayıtlarına işlenir."
-      },
-      "duels": {
-        "title": "ELO ile 1'e 1 düellolar",
-        "body": "Oyuncular sunucu genelinde birbirlerine meydan okuyor. Masa tenisi müzakeresi, sonuçların karşılıklı onaylanması, ELO puanları, olumlu/olumsuz itibar ve sunucu liderlik tablosu mevcut."
-      },
-      "discord": {
-        "title": "Discord bot entegrasyonu",
-        "body": "@everyone her etkinlikten 1 gün, 1 saat ve 20 dakika önce hatırlatma gönderir. /upcoming ve /signup komutlarını kullanabilirsiniz. Aynı yaşam döngüsüne sahip etkinlikler için doğrudan mesaj gönderebilirsiniz."
-      },
-      "multiGuild": {
-        "title": "İlk günden itibaren çoklu lonca",
-        "body": "Her loncanın kendi yöneticileri, üyeleri, etkinlikleri ve Discord kanalı vardır. Süper yöneticiler platformu yönetir. Kullanıcı adları kalıcıdır; diğer her şey yapılandırılabilir."
-      },
-      "i18n": {
-        "title": "17 dil",
-        "body": "Kullanıcı arayüzü İngilizce, Fransızca, Almanca, İspanyolca, Rusça, Ukraynaca, Çince, Japonca, Korece, Portekizce, İtalyanca, Endonezce, Felemenkçe, Türkçe, Lehçe, Vietnamca ve İsveççe dillerinde otomatik olarak çevrilmiştir."
-      }
-    },
-    "screenshots": {
-      "heading": "Nasıl göründüğü",
-      "eventAdmin": "Etkinlik yönetim paneli — takım listeleri, liderlik talepleri, bekleme listesi, katılım.",
-      "duels": "Düello detay sayfası — eşleşme, ELO puanları, sonuç çipi, konum ve kurallar.",
-      "leaderboard": "Sunucu liderlik tablosu — ELO sıralamasına göre en yüksek puanlı oyuncular, ilk 3 çip, sıralamanız göründü.",
-      "discord": "Discord hatırlatıcıları — her etkinlikten önce otomatik olarak @everyone kullanıcısına bildirim gönderir."
-    },
-    "bottomCta": {
-      "heading": "Sürtüşmeler nedeniyle üye kaybetmeyi bırakın.",
-      "body": "30 saniyede bir lonca kurun. Sonsuza dek ücretsiz, açık kaynak kodlu, kredi kartı gerekmez."
-    },
-    "footer": {
-      "builtWith": "Next.js, Drizzle, Auth.js ve Discord API kullanılarak geliştirilmiştir. Ücretsiz ve açık kaynaklıdır.",
-      "viewSource": "GitHub'da kaynak kodunu görüntüle",
-      "help": "Yardım"
+  "alerts": {
+    "heading": "{count, plural, one {# notification} diğer {# notifications} }",
+    "discord_unlinked": {
+      "title": "Çift DM'leri etkinleştirmek için Discord bağlantısını ekleyin.",
+      "body": "Google ile kayıt oldunuz. Birisi sizi düelloya davet ettiğinde botun size özel mesaj gönderebilmesi için bir Discord hesabı bağlayın.",
+      "action": "Discord bağlantısı →"
     }
   }
 }

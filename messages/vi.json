@@ -38,7 +38,8 @@
     "createGuild": "Tạo Bang hội",
     "adminHelp": "Trợ giúp quản trị viên",
     "help": "Giúp đỡ",
-    "myAccount": "Tài khoản của tôi"
+    "myAccount": "Tài khoản của tôi",
+    "auditLog": "Nhật ký kiểm toán"
   },
   "topBar": {
     "notifications": "Thông báo",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "TỔ CHỨC KÊU GỌI. HÃY CÙNG NHAU ĐÁP LỜI.",
-    "feedback": "NHẬN XÉT"
+    "feedback": "NHẬN XÉT",
+    "discordSupport": "HỖ TRỢ DISCORD",
+    "terms": "ĐIỀU KHOẢN",
+    "privacy": "SỰ RIÊNG TƯ"
   },
   "feedback": {
     "reportBug": "Báo cáo lỗi",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "Sự kiện",
-    "noEvents": "Chưa có sự kiện nào.",
     "starts": "Bắt đầu",
     "addAllToCalendar": "Thêm tất cả vào lịch",
     "addToCalendar": "Thêm vào lịch",
@@ -89,7 +92,11 @@
     "startTime": "Thời gian bắt đầu:",
     "signupCloses": "Thời gian đăng ký kết thúc:",
     "slotsLabel": "Các vị trí:",
-    "slotsValue": "{maxPlayers} người chơi + {maxBackups} sao lưu từng"
+    "slotsValue": "{maxPlayers} người chơi + {maxBackups} sao lưu từng",
+    "noEvents": "Không có sự kiện nào sắp diễn ra.",
+    "noPastEvents": "Chưa có sự kiện nào diễn ra trước đó.",
+    "upcoming": "Sắp tới",
+    "past": "Quá khứ"
   },
   "eventCard": {
     "deleted": "Đã xóa",
@@ -426,7 +433,15 @@
     "deleteButton": "Xóa tài khoản của tôi",
     "deleting": "Đang xóa…",
     "deleteConfirm": "Xóa tài khoản của bạn? Thao tác này sẽ xóa bạn khỏi bang hội, xóa tất cả các tài khoản đã đăng ký và hủy liên kết với Google/Discord. Không thể hoàn tác.",
-    "language": "Ngôn ngữ"
+    "language": "Ngôn ngữ",
+    "discord": {
+      "heading": "Tin nhắn trực tiếp trên Discord",
+      "reachableTitle": "Thông tin người dùng Discord đã được lưu trữ.",
+      "reachableBody": "Bot có thể nhắn tin riêng cho bạn về các trận đấu. Bạn có thể cập nhật hoặc xóa ID của mình bên dưới.",
+      "unreachableBody": "Hãy dán ID người dùng Discord của bạn bên dưới để bot có thể nhắn tin riêng cho bạn về các thử thách đấu tay đôi, chấp nhận, từ chối và kết quả. Nếu không có ID này, bạn vẫn sẽ thấy mọi thứ trên trang web — chỉ là không nhận được thông báo trên Discord.",
+      "idLabel": "ID người dùng Discord",
+      "idHelp": "Trong Discord, hãy bật Chế độ nhà phát triển (Cài đặt người dùng → Nâng cao), sau đó nhấp chuột phải vào hồ sơ của bạn và chọn \"Sao chép ID người dùng\". Đó là một dãy số gồm 17-20 chữ số. Chúng tôi không xác minh quyền sở hữu — nếu bạn nhận được tin nhắn trực tiếp không mong muốn từ bot, hãy tắt \"Cho phép tin nhắn trực tiếp từ thành viên máy chủ\" trong cài đặt quyền riêng tư của Discord."
+    }
   },
   "errors": {
     "forbidden": "Cấm",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "Các lời nhắc và lệnh gạch chéo dựa trên một bot Discord mà người điều hành đã triển khai. Để kết nối nó với máy chủ Discord của bạn:",
       "step1Intro": "Lấy URL cài đặt từ người quản trị trang web của bạn. URL đó có dạng như sau:",
-      "step1Note": "Phần permissions=133120 bao gồm quyền Gửi tin nhắn và Nhắc đến mọi người. Cả hai đều cần thiết — nếu không có quyền Nhắc đến mọi người, @everyone trong lời nhắc sẽ hiển thị dưới dạng văn bản thuần và không nhắc đến ai cả.",
       "step2": "Mở URL cài đặt trong trình duyệt. Chọn máy chủ Discord mà bạn muốn cài đặt bot. Bạn cần quyền Quản lý máy chủ trong máy chủ đó. Nhấp vào Ủy quyền.",
-      "step3": "Hãy xác nhận rằng bot xuất hiện trong danh sách thành viên của máy chủ Discord của bạn. Vậy là xong — không cần cấu hình riêng cho từng bot ở phía Discord."
+      "step3": "Hãy xác nhận rằng bot xuất hiện trong danh sách thành viên của máy chủ Discord của bạn. Vậy là xong — không cần cấu hình riêng cho từng bot ở phía Discord.",
+      "step1Note": "Phần permissions=2147616768 bao gồm Lệnh gạch chéo, Gửi tin nhắn và Nhắc đến mọi người. Cả hai đều bắt buộc — nếu không có phần Nhắc đến mọi người, @everyone trong lời nhắc sẽ hiển thị dưới dạng văn bản thuần và không nhắc đến ai cả."
     },
     "discordChannel": {
       "intro": "Bot sẽ đăng lời nhắc vào một kênh mà bạn chọn. Để cấu hình:",
@@ -571,6 +586,76 @@
       "reminders": "Chức năng nhắc nhở không hoạt động. Hãy kiểm tra /api/health — nếu bot.lastPollStartedAt cách thời gian hiện tại hơn khoảng 5 phút, trình thăm dò đang bị kẹt. Quản trị viên cấp cao cũng có thể gửi yêu cầu POST đến /api/admin/bot/poll-now để buộc thực hiện chu kỳ thăm dò.",
       "rescheduled": "Sự kiện đã được dời lịch và mọi người không nhận được thông báo lại. Hãy xác nhận xem thời gian thực sự đã thay đổi chưa (so sánh với giá trị trước đó). Bot chỉ gửi lại các loại thông báo có khoảng thời gian vẫn còn phía trước thời gian mới — nếu thời gian mới của bạn là 30 phút nữa, chỉ có thông báo nhắc nhở 20 phút sẽ được gửi đi, chứ không phải thông báo 24 giờ.",
       "movedSquad": "Một cầu thủ đã bị xếp vào đội sai sau khi tôi di chuyển họ. Biểu tượng \"ĐÃ DI CHUYỂN\" có nghĩa là việc phân công khác với lựa chọn của bạn. Để hoàn tác, hãy thay đổi vai trò/đội của họ thông qua menu thả xuống hoặc sử dụng nút \"Di chuyển đến Đội N\" để chuyển họ trở lại vị trí cũ."
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Sự tham gia của bang hội, được nâng cấp",
+      "headline": "Các thành viên của bạn sẽ đến. Đội ngũ của bạn sẽ mạnh hơn.",
+      "subhead": "Thay thế những luồng thảo luận lộn xộn trên Discord bằng một nền tảng duy nhất để đăng ký sự kiện, tập luyện, đấu tay đôi 1v1 và bảng xếp hạng. Nhắc nhở tự động, đăng ký tức thì và cạnh tranh lành mạnh giúp duy trì hoạt động của đội hình.",
+      "signIn": "Đăng nhập bằng Google hoặc Discord",
+      "browseGuilds": "Tìm kiếm các bang hội công khai"
+    },
+    "stats": {
+      "guilds": "Hội",
+      "events": "Các sự kiện diễn ra",
+      "duels": "Các cuộc đấu tay đôi đã diễn ra",
+      "players": "Người chơi"
+    },
+    "engagement": {
+      "kicker": "Vấn đề chúng ta giải quyết",
+      "heading": "Các hội nhóm mất thành viên do mâu thuẫn.",
+      "body": "Lịch trình sự kiện bị chôn vùi trong các cuộc trò chuyện trên Discord. Việc đăng ký được theo dõi trong một bảng tính mà ai đó quên cập nhật. Các lời nhắc không được gửi đi. Người chơi ngừng tham gia vì không có gì thu hút họ quay lại. Foundation Event Organizer giải quyết tất cả những vấn đề đó.",
+      "beforeTitle": "Trước",
+      "beforeBody": "Các cuộc trò chuyện trên Discord lộn xộn, thông tin đăng ký bị mất, lời nhắc bị bỏ lỡ, không có ghi chép về những người thực sự tham dự — và các thành viên dần dần rời bỏ nhóm.",
+      "afterTitle": "Sau đó",
+      "afterBody": "Một mẫu đăng ký duy nhất cho mỗi sự kiện. Tự động nhắc nhở trên Discord trước 1 ngày, 1 giờ và 20 phút. Theo dõi điểm danh và xếp hạng. Các trận đấu tập và đấu tay đôi với bảng xếp hạng và điểm ELO. Một lý do rõ ràng để đăng nhập.",
+      "outcomeTitle": "Kết quả",
+      "outcomeBody": "Nhiều sự kiện hơn với đầy đủ người tham gia. Nhiều cuộc cạnh tranh giữa các bang hội hơn. Nhiều lý do hơn để các thành viên quay lại — và ghi nhận ai thực sự đóng góp hết mình."
+    },
+    "features": {
+      "heading": "Bên trong có gì?",
+      "matches": {
+        "title": "Các sự kiện trận đấu",
+        "body": "Hai đội, vị trí lãnh đạo, danh sách chờ tự động, theo dõi điểm danh, xếp hạng sau sự kiện — mọi thứ bạn cần để tổ chức một sự kiện định kỳ theo phong cách Shadowfront."
+      },
+      "scrims": {
+        "title": "Trận đấu tập giữa các bang hội",
+        "body": "Đề xuất một trận đấu tập với một bang hội khác trên máy chủ của bạn. Cả hai bên thống nhất về thời gian, địa điểm và điều kiện thắng. Kết quả sẽ được ghi vào hồ sơ của bang hội."
+      },
+      "duels": {
+        "title": "Đấu tay đôi 1v1 với hệ thống ELO",
+        "body": "Người chơi thách đấu với nhau trên toàn máy chủ. Hệ thống sử dụng cơ chế đàm phán ping-pong, xác nhận kết quả lẫn nhau, xếp hạng ELO, đánh giá tích cực/tiêu cực và bảng xếp hạng máy chủ."
+      },
+      "discord": {
+        "title": "Tích hợp bot Discord",
+        "body": "@everyone nhắc nhở 1 ngày, 1 giờ và 20 phút trước mỗi sự kiện. Lệnh gạch chéo /upcoming và /signup. Tin nhắn trực tiếp cho các sự kiện vòng đời đấu tay đôi."
+      },
+      "multiGuild": {
+        "title": "Tham gia nhiều bang hội ngay từ ngày đầu tiên",
+        "body": "Mỗi guild có quản trị viên, thành viên, sự kiện và kênh Discord riêng. Quản trị viên cấp cao quản lý toàn bộ nền tảng. Tên người dùng (slug) là cố định; mọi thứ khác đều có thể cấu hình."
+      },
+      "i18n": {
+        "title": "17 ngôn ngữ",
+        "body": "Giao diện người dùng được dịch tự động sang tiếng Anh, tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha, tiếng Nga, tiếng Ukraina, tiếng Trung Quốc, tiếng Nhật, tiếng Hàn, tiếng Bồ Đào Nha, tiếng Ý, tiếng Indonesia, tiếng Hà Lan, tiếng Thổ Nhĩ Kỳ, tiếng Ba Lan, tiếng Việt và tiếng Thụy Điển."
+      }
+    },
+    "screenshots": {
+      "heading": "Nó trông như thế nào?",
+      "eventAdmin": "Bảng điều khiển quản trị sự kiện — danh sách đội nhóm, yêu cầu lãnh đạo, danh sách chờ, điểm danh.",
+      "duels": "Trang chi tiết trận đấu — đối thủ, xếp hạng ELO, chip kết quả, địa điểm và luật chơi.",
+      "leaderboard": "Bảng xếp hạng máy chủ — Người chơi được xếp hạng ELO, top 3 người chơi có chip tốt nhất, thứ hạng của bạn đã được hiển thị.",
+      "discord": "Thông báo trên Discord — tự động gửi thông báo @everyone trước mỗi sự kiện."
+    },
+    "bottomCta": {
+      "heading": "Hãy ngừng để mất thành viên vì những mâu thuẫn.",
+      "body": "Tạo máy chủ chỉ trong 30 giây. Miễn phí vĩnh viễn, mã nguồn mở, không cần thẻ tín dụng."
+    },
+    "footer": {
+      "builtWith": "Được xây dựng bằng Next.js, Drizzle, Auth.js và API của Discord. Miễn phí và mã nguồn mở.",
+      "viewSource": "Xem mã nguồn trên GitHub",
+      "help": "Giúp đỡ",
+      "discordSupport": "Hỗ trợ Discord"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
   },
-  "landing": {
-    "hero": {
-      "kicker": "Sự tham gia của bang hội, được nâng cấp",
-      "headline": "Các thành viên của bạn sẽ đến. Đội ngũ của bạn sẽ mạnh hơn.",
-      "subhead": "Thay thế những luồng thảo luận lộn xộn trên Discord bằng một nền tảng duy nhất để đăng ký sự kiện, tập luyện, đấu tay đôi 1v1 và bảng xếp hạng. Nhắc nhở tự động, đăng ký tức thì và cạnh tranh lành mạnh giúp duy trì hoạt động của đội hình.",
-      "signIn": "Đăng nhập bằng Google hoặc Discord",
-      "browseGuilds": "Tìm kiếm các bang hội công khai"
-    },
-    "stats": {
-      "guilds": "Hội",
-      "events": "Các sự kiện diễn ra",
-      "duels": "Các cuộc đấu tay đôi đã diễn ra",
-      "players": "Người chơi"
-    },
-    "engagement": {
-      "kicker": "Vấn đề chúng ta giải quyết",
-      "heading": "Các hội nhóm mất thành viên do mâu thuẫn.",
-      "body": "Lịch trình sự kiện bị chôn vùi trong các cuộc trò chuyện trên Discord. Việc đăng ký được theo dõi trong một bảng tính mà ai đó quên cập nhật. Các lời nhắc không được gửi đi. Người chơi ngừng tham gia vì không có gì thu hút họ quay lại. Foundation Event Organizer giải quyết tất cả những vấn đề đó.",
-      "beforeTitle": "Trước",
-      "beforeBody": "Các cuộc trò chuyện trên Discord lộn xộn, thông tin đăng ký bị mất, lời nhắc bị bỏ lỡ, không có ghi chép về những người thực sự tham dự — và các thành viên dần dần rời bỏ nhóm.",
-      "afterTitle": "Sau đó",
-      "afterBody": "Một mẫu đăng ký duy nhất cho mỗi sự kiện. Tự động nhắc nhở trên Discord trước 1 ngày, 1 giờ và 20 phút. Theo dõi điểm danh và xếp hạng. Các trận đấu tập và đấu tay đôi với bảng xếp hạng và điểm ELO. Một lý do rõ ràng để đăng nhập.",
-      "outcomeTitle": "Kết quả",
-      "outcomeBody": "Nhiều sự kiện hơn với đầy đủ người tham gia. Nhiều cuộc cạnh tranh giữa các bang hội hơn. Nhiều lý do hơn để các thành viên quay lại — và ghi nhận ai thực sự đóng góp hết mình."
-    },
-    "features": {
-      "heading": "Bên trong có gì?",
-      "matches": {
-        "title": "Các sự kiện trận đấu",
-        "body": "Hai đội, vị trí lãnh đạo, danh sách chờ tự động, theo dõi điểm danh, xếp hạng sau sự kiện — mọi thứ bạn cần để tổ chức một sự kiện định kỳ theo phong cách Shadowfront."
-      },
-      "scrims": {
-        "title": "Trận đấu tập giữa các bang hội",
-        "body": "Đề xuất một trận đấu tập với một bang hội khác trên máy chủ của bạn. Cả hai bên thống nhất về thời gian, địa điểm và điều kiện thắng. Kết quả sẽ được ghi vào hồ sơ của bang hội."
-      },
-      "duels": {
-        "title": "Đấu tay đôi 1v1 với hệ thống ELO",
-        "body": "Người chơi thách đấu với nhau trên toàn máy chủ. Hệ thống sử dụng cơ chế đàm phán ping-pong, xác nhận kết quả lẫn nhau, xếp hạng ELO, đánh giá tích cực/tiêu cực và bảng xếp hạng máy chủ."
-      },
-      "discord": {
-        "title": "Tích hợp bot Discord",
-        "body": "@everyone nhắc nhở 1 ngày, 1 giờ và 20 phút trước mỗi sự kiện. Lệnh gạch chéo /upcoming và /signup. Tin nhắn trực tiếp cho các sự kiện vòng đời đấu tay đôi."
-      },
-      "multiGuild": {
-        "title": "Tham gia nhiều bang hội ngay từ ngày đầu tiên",
-        "body": "Mỗi guild có quản trị viên, thành viên, sự kiện và kênh Discord riêng. Quản trị viên cấp cao quản lý toàn bộ nền tảng. Tên người dùng (slug) là cố định; mọi thứ khác đều có thể cấu hình."
-      },
-      "i18n": {
-        "title": "17 ngôn ngữ",
-        "body": "Giao diện người dùng được dịch tự động sang tiếng Anh, tiếng Pháp, tiếng Đức, tiếng Tây Ban Nha, tiếng Nga, tiếng Ukraina, tiếng Trung Quốc, tiếng Nhật, tiếng Hàn, tiếng Bồ Đào Nha, tiếng Ý, tiếng Indonesia, tiếng Hà Lan, tiếng Thổ Nhĩ Kỳ, tiếng Ba Lan, tiếng Việt và tiếng Thụy Điển."
-      }
-    },
-    "screenshots": {
-      "heading": "Nó trông như thế nào?",
-      "eventAdmin": "Bảng điều khiển quản trị sự kiện — danh sách đội nhóm, yêu cầu lãnh đạo, danh sách chờ, điểm danh.",
-      "duels": "Trang chi tiết trận đấu — đối thủ, xếp hạng ELO, chip kết quả, địa điểm và luật chơi.",
-      "leaderboard": "Bảng xếp hạng máy chủ — Người chơi được xếp hạng ELO, top 3 người chơi có chip tốt nhất, thứ hạng của bạn đã được hiển thị.",
-      "discord": "Thông báo trên Discord — tự động gửi thông báo @everyone trước mỗi sự kiện."
-    },
-    "bottomCta": {
-      "heading": "Hãy ngừng để mất thành viên vì những mâu thuẫn.",
-      "body": "Tạo máy chủ chỉ trong 30 giây. Miễn phí vĩnh viễn, mã nguồn mở, không cần thẻ tín dụng."
-    },
-    "footer": {
-      "builtWith": "Được xây dựng bằng Next.js, Drizzle, Auth.js và API của Discord. Miễn phí và mã nguồn mở.",
-      "viewSource": "Xem mã nguồn trên GitHub",
-      "help": "Giúp đỡ"
+  "alerts": {
+    "heading": "{count, plural, one {# notification} thông báo khác {# notifications} }",
+    "discord_unlinked": {
+      "title": "Liên kết Discord để bật tin nhắn riêng (DM) đấu tay đôi.",
+      "body": "Bạn đã đăng ký bằng tài khoản Google. Hãy liên kết tài khoản Discord để bot có thể nhắn tin riêng cho bạn khi có người thách đấu.",
+      "action": "Link Discord →"
     }
   }
 }

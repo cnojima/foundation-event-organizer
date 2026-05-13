@@ -16,9 +16,9 @@ Before you start, the **site operator** must have already deployed the app and c
 
 - The **bot install URL**. It looks like:
   ```
-  https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=133120
+  https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=2147616768
   ```
-  (`133120` = Send Messages + Mention Everyone — both required so `@everyone` reminders actually ping members.)
+  (`2147616768` = Slash Commands + Send Messages + Mention Everyone — both required so `@everyone` reminders actually ping members.)
 - (Optionally) the bot's display name, so you can recognize it in your server.
 
 If you're the site operator, see [CLAUDE.md](CLAUDE.md) → **Discord bot** for one-time setup (creating a Discord application, setting the `DISCORD_BOT_TOKEN` secret, etc.).

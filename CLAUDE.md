@@ -127,9 +127,9 @@ Posts `@everyone` reminders 1 day, 1 hour, and 20 minutes before each event's `g
    fly secrets set DISCORD_BOT_TOKEN=<token>
    ```
    Locally, put it in `.env.local`.
-3. Build an install URL with **Send Messages + Mention Everyone** permissions (`permissions=133120`) and both `bot` + `applications.commands` scopes (the latter is required for slash commands; the Mention Everyone bit is required so `@everyone` reminders actually ping):
+3. Build an install URL with **Send Messages + Mention Everyone + Slash Commands** permissions (`permissions=2147616768`) and both `bot` + `applications.commands` scopes (the latter is required for slash commands; the Mention Everyone bit is required so `@everyone` reminders actually ping):
    ```
-   https://discord.com/oauth2/authorize?client_id=<APPLICATION_ID>&scope=bot+applications.commands&permissions=133120
+   https://discord.com/oauth2/authorize?client_id=<APPLICATION_ID>&scope=bot+applications.commands&permissions=2147616768
    ```
 4. Each guild admin uses that URL to add the bot to their Discord server, then enables **Developer Mode** (User Settings → Advanced) and copies the channel ID for their target channel into Guild Settings → Discord channel ID.
 5. Click **Test integration** in Guild Settings — this also auto-links the Discord server ID to the app guild so slash commands work.

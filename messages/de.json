@@ -38,7 +38,8 @@
     "createGuild": "Gilde erstellen",
     "adminHelp": "Admin-Hilfe",
     "help": "Helfen",
-    "myAccount": "Mein Konto"
+    "myAccount": "Mein Konto",
+    "auditLog": "Audit-Protokoll"
   },
   "topBar": {
     "notifications": "Benachrichtigungen",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "DIE STIFTUNG RUFT. ANTWORTEN SIE GEMEINSAM.",
-    "feedback": "RÜCKMELDUNG"
+    "feedback": "RÜCKMELDUNG",
+    "discordSupport": "DISCORD-UNTERSTÜTZUNG",
+    "terms": "BEDINGUNGEN",
+    "privacy": "Datenschutz"
   },
   "feedback": {
     "reportBug": "Fehler melden",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "Veranstaltungen",
-    "noEvents": "Bisher keine Veranstaltungen.",
     "starts": "Beginnt",
     "addAllToCalendar": "Alle zum Kalender hinzufügen",
     "addToCalendar": "Zum Kalender hinzufügen",
@@ -89,7 +92,11 @@
     "startTime": "Startzeit:",
     "signupCloses": "Anmeldeschluss:",
     "slotsLabel": "Spielautomaten:",
-    "slotsValue": "{maxPlayers} Spieler + {maxBackups} Backups jeweils"
+    "slotsValue": "{maxPlayers} Spieler + {maxBackups} Backups jeweils",
+    "noEvents": "Keine anstehenden Veranstaltungen.",
+    "noPastEvents": "Bisher keine vergangenen Ereignisse.",
+    "upcoming": "Demnächst",
+    "past": "Vergangenheit"
   },
   "eventCard": {
     "deleted": "Gelöscht",
@@ -426,7 +433,15 @@
     "deleteButton": "Mein Konto löschen",
     "deleting": "Löschen…",
     "deleteConfirm": "Dein Konto löschen? Dadurch wirst du aus deiner Gilde entfernt, alle deine Anmeldungen werden gelöscht und die Verknüpfung mit Google/Discord wird aufgehoben. Dies kann nicht rückgängig gemacht werden.",
-    "language": "Sprache"
+    "language": "Sprache",
+    "discord": {
+      "heading": "Discord-Direktnachrichten",
+      "reachableTitle": "Discord-Benutzer-ID hinterlegt",
+      "reachableBody": "Der Bot kann dich per Direktnachricht zu Duellen herausfordern. Du kannst deine ID unten aktualisieren oder löschen.",
+      "unreachableBody": "Füge unten deine Discord-Benutzer-ID ein, damit der Bot dich per Direktnachricht über Duellherausforderungen, Annahmen, Ablehnungen und Ergebnisse informieren kann. Ohne deine ID siehst du weiterhin alles auf der Website – nur keine Discord-Benachrichtigungen.",
+      "idLabel": "Discord-Benutzer-ID",
+      "idHelp": "Aktiviere in Discord den Entwicklermodus (Benutzereinstellungen → Erweitert), klicke dann mit der rechten Maustaste auf dein Profil und wähle „Benutzer-ID kopieren“. Es handelt sich um eine 17- bis 20-stellige Zahl. Wir überprüfen nicht die Inhaberschaft. Solltest du unerwünschte Direktnachrichten vom Bot erhalten, deaktiviere in deinen Discord-Datenschutzeinstellungen die Option „Direktnachrichten von Servermitgliedern zulassen“."
+    }
   },
   "errors": {
     "forbidden": "Verboten",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "Erinnerungen und Slash-Befehle benötigen einen Discord-Bot, den der Betreiber bereits eingerichtet hat. So verbinden Sie ihn mit Ihrem Discord-Server:",
       "step1Intro": "Die Installations-URL erhalten Sie von Ihrem Website-Betreiber. Sie sieht folgendermaßen aus:",
-      "step1Note": "Die Berechtigungseinstellung „133120“ umfasst die Funktionen „Nachrichten senden“ und „Jeden erwähnen“. Beide sind erforderlich – ohne „Jeden erwähnen“ wird die Erwähnung von „@Jeder“ in Erinnerungen als reiner Text dargestellt und niemand wird benachrichtigt.",
       "step2": "Öffne die Installations-URL in einem Browser. Wähle den Discord-Server aus, auf dem der Bot installiert werden soll. Du benötigst die Berechtigung „Server verwalten“ auf diesem Server. Klicke auf „Autorisieren“.",
-      "step3": "Vergewissern Sie sich, dass der Bot in der Mitgliederliste Ihres Discord-Servers angezeigt wird. Das ist alles – keine weiteren Konfigurationen pro Bot auf Discord-Seite erforderlich."
+      "step3": "Vergewissern Sie sich, dass der Bot in der Mitgliederliste Ihres Discord-Servers angezeigt wird. Das ist alles – keine weiteren Konfigurationen pro Bot auf Discord-Seite erforderlich.",
+      "step1Note": "Der Abschnitt „permissions=2147616768“ umfasst Slash-Befehle, das Senden von Nachrichten und das Erwähnen aller Personen. Beide sind erforderlich – ohne „Alle erwähnen“ wird die @everyone-Erwähnung in Erinnerungen als reiner Text dargestellt und niemand wird benachrichtigt."
     },
     "discordChannel": {
       "intro": "Der Bot postet Erinnerungen in einem Kanal Ihrer Wahl. So konfigurieren Sie ihn:",
@@ -571,6 +586,76 @@
       "reminders": "Erinnerungen werden nicht ausgelöst. Überprüfen Sie /api/health – wenn bot.lastPollStartedAt mehr als etwa 5 Minuten hinter der aktuellen Zeit liegt, hängt der Poller fest. Super-Admins können auch einen POST-Request an /api/admin/bot/poll-now senden, um einen neuen Polling-Zyklus zu erzwingen.",
       "rescheduled": "Eine Veranstaltung wurde verschoben, und die Teilnehmer erhalten keine erneute Benachrichtigung. Bitte überprüfen Sie, ob sich die Uhrzeit tatsächlich geändert hat (vergleichen Sie sie mit dem vorherigen Wert). Der Bot sendet nur Benachrichtigungen erneut, deren Zeitfenster noch vor der neuen Uhrzeit liegt – wenn Ihre neue Uhrzeit beispielsweise 30 Minuten später ist, wird nur die 20-Minuten-Erinnerung gesendet, nicht die 24-Stunden-Erinnerung.",
       "movedSquad": "Ein Spieler wurde nach meiner Verschiebung dem falschen Team zugewiesen. Das Symbol „VERSCHOBEN“ bedeutet, dass die Zuweisung nicht Ihrer Präferenz entspricht. Um dies rückgängig zu machen, ändern Sie seine Rolle/sein Team über das Dropdown-Menü oder verwenden Sie die Schaltfläche „Zu Team N verschieben“, um ihn zurückzuwechseln."
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Gildenengagement, Stufe erhöht",
+      "headline": "Ihre Mitglieder werden erscheinen. Ihr Kader wächst.",
+      "subhead": "Ersetze unübersichtliche Discord-Threads durch eine zentrale Plattform für Event-Anmeldungen, Trainingsspiele, 1-gegen-1-Duelle und eine Rangliste. Automatische Erinnerungen, sofortige Anmeldung und freundschaftlicher Wettkampf sorgen für aktives Team.",
+      "signIn": "Melde dich mit Google oder Discord an",
+      "browseGuilds": "Durchsuchen Sie öffentliche Gilden"
+    },
+    "stats": {
+      "guilds": "Gilden",
+      "events": "Veranstaltungen finden statt",
+      "duels": "Duelle gespielt",
+      "players": "Spieler"
+    },
+    "engagement": {
+      "kicker": "Das Problem, das wir lösen",
+      "heading": "Gilden verlieren Mitglieder durch interne Konflikte.",
+      "body": "Eventplanung, die in Discord-Threads vergraben ist. Anmeldungen in einer Tabelle, die jemand vergessen hat zu aktualisieren. Erinnerungen, die nicht versendet wurden. Spieler, die nicht mehr erschienen, weil sie nicht mehr motiviert wurden. Foundation Event Organizer löst all diese Probleme.",
+      "beforeTitle": "Vor",
+      "beforeBody": "Unübersichtliche Discord-Threads, verlorene Anmeldungen, verpasste Erinnerungen, keine Aufzeichnungen darüber, wer tatsächlich erschienen ist – und Mitglieder, die sich langsam zurückziehen.",
+      "afterTitle": "Nach",
+      "afterBody": "Ein Anmeldeformular pro Event. Automatische Discord-Erinnerungen (1 Tag, 1 Stunde, 20 Minuten). Anwesenheit und Wertung werden erfasst. Trainingsspiele und Duelle mit Ranglisten und ELO-Wertung. Ein guter Grund, sich einzuloggen.",
+      "outcomeTitle": "Ergebnis",
+      "outcomeBody": "Mehr Events mit vollen Teilnehmerlisten. Mehr gildenübergreifender Wettbewerb. Mehr Gründe für eure Mitglieder, wiederzukommen – und ein Nachweis darüber, wer wirklich seinen Beitrag leistet."
+    },
+    "features": {
+      "heading": "Was ist drin?",
+      "matches": {
+        "title": "Spielveranstaltungen",
+        "body": "Zwei Teams, Führungspositionen, automatische Warteliste, Anwesenheitsverfolgung, Bewertungen nach der Veranstaltung – alles, was Sie für die Durchführung einer regelmäßig stattfindenden Veranstaltung im Shadowfront-Stil benötigen."
+      },
+      "scrims": {
+        "title": "Gilde-gegen-Gilde-Scrims",
+        "body": "Schlage ein Trainingsspiel gegen eine andere Gilde auf deinem Server vor. Beide Seiten einigen sich auf Zeit, Ort und Siegbedingungen. Die Ergebnisse werden in der Gildenstatistik erfasst."
+      },
+      "duels": {
+        "title": "1-gegen-1-Duelle mit ELO",
+        "body": "Die Spieler fordern sich serverweit gegenseitig heraus. Dazu gehören Verhandlungen wie beim Tischtennis, die gegenseitige Bestätigung der Ergebnisse, ELO-Wertungen, positive/negative Bewertungen und eine Server-Rangliste."
+      },
+      "discord": {
+        "title": "Discord-Bot-Integration",
+        "body": "@everyone erinnert 1 Tag, 1 Stunde und 20 Minuten vor jedem Event. Slash-Befehle: /upcoming und /signup. Direktnachrichten für Events mit zwei Lebenszyklen."
+      },
+      "multiGuild": {
+        "title": "Multi-Gilde vom ersten Tag an",
+        "body": "Jede Gilde hat ihre eigenen Administratoren, Mitglieder, Events und ihren eigenen Discord-Kanal. Super-Administratoren verwalten die Plattform. Die Slugs sind permanent; alles andere ist konfigurierbar."
+      },
+      "i18n": {
+        "title": "17 Sprachen",
+        "body": "Automatisch übersetzte Benutzeroberfläche in Englisch, Französisch, Deutsch, Spanisch, Russisch, Ukrainisch, Chinesisch, Japanisch, Koreanisch, Portugiesisch, Italienisch, Indonesisch, Niederländisch, Türkisch, Polnisch, Vietnamesisch und Schwedisch."
+      }
+    },
+    "screenshots": {
+      "heading": "So sieht es aus",
+      "eventAdmin": "Event-Admin-Dashboard – Mannschaftslisten, Führungsanfragen, Warteliste, Anwesenheitsliste.",
+      "duels": "Duelldetailseite – Paarung, ELO-Wertung, Ergebnischip, Ort und Regeln.",
+      "leaderboard": "Server-Rangliste – ELO-rangierte Spieler, Top-3-Chips, dein Rang wird angezeigt.",
+      "discord": "Discord-Erinnerungen – automatische Benachrichtigungen an alle Personen vor jedem Ereignis."
+    },
+    "bottomCta": {
+      "heading": "Verhindern Sie Mitgliederverluste durch Reibungsverluste.",
+      "body": "Erstelle in 30 Sekunden eine Gilde. Kostenlos und dauerhaft, Open Source, keine Kreditkarte erforderlich."
+    },
+    "footer": {
+      "builtWith": "Entwickelt mit Next.js, Drizzle, Auth.js und der Discord-API. Kostenlos und Open Source.",
+      "viewSource": "Quellcode auf GitHub ansehen",
+      "help": "Helfen",
+      "discordSupport": "Discord-Unterstützung"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
   },
-  "landing": {
-    "hero": {
-      "kicker": "Gildenengagement, Stufe erhöht",
-      "headline": "Ihre Mitglieder werden erscheinen. Ihr Kader wächst.",
-      "subhead": "Ersetze unübersichtliche Discord-Threads durch eine zentrale Plattform für Event-Anmeldungen, Trainingsspiele, 1-gegen-1-Duelle und eine Rangliste. Automatische Erinnerungen, sofortige Anmeldung und freundschaftlicher Wettkampf sorgen für aktives Team.",
-      "signIn": "Melde dich mit Google oder Discord an",
-      "browseGuilds": "Durchsuchen Sie öffentliche Gilden"
-    },
-    "stats": {
-      "guilds": "Gilden",
-      "events": "Veranstaltungen finden statt",
-      "duels": "Duelle gespielt",
-      "players": "Spieler"
-    },
-    "engagement": {
-      "kicker": "Das Problem, das wir lösen",
-      "heading": "Gilden verlieren Mitglieder durch interne Konflikte.",
-      "body": "Eventplanung, die in Discord-Threads vergraben ist. Anmeldungen in einer Tabelle, die jemand vergessen hat zu aktualisieren. Erinnerungen, die nicht versendet wurden. Spieler, die nicht mehr erschienen, weil sie nicht mehr motiviert wurden. Foundation Event Organizer löst all diese Probleme.",
-      "beforeTitle": "Vor",
-      "beforeBody": "Unübersichtliche Discord-Threads, verlorene Anmeldungen, verpasste Erinnerungen, keine Aufzeichnungen darüber, wer tatsächlich erschienen ist – und Mitglieder, die sich langsam zurückziehen.",
-      "afterTitle": "Nach",
-      "afterBody": "Ein Anmeldeformular pro Event. Automatische Discord-Erinnerungen (1 Tag, 1 Stunde, 20 Minuten). Anwesenheit und Wertung werden erfasst. Trainingsspiele und Duelle mit Ranglisten und ELO-Wertung. Ein guter Grund, sich einzuloggen.",
-      "outcomeTitle": "Ergebnis",
-      "outcomeBody": "Mehr Events mit vollen Teilnehmerlisten. Mehr gildenübergreifender Wettbewerb. Mehr Gründe für eure Mitglieder, wiederzukommen – und ein Nachweis darüber, wer wirklich seinen Beitrag leistet."
-    },
-    "features": {
-      "heading": "Was ist drin?",
-      "matches": {
-        "title": "Spielveranstaltungen",
-        "body": "Zwei Teams, Führungspositionen, automatische Warteliste, Anwesenheitsverfolgung, Bewertungen nach der Veranstaltung – alles, was Sie für die Durchführung einer regelmäßig stattfindenden Veranstaltung im Shadowfront-Stil benötigen."
-      },
-      "scrims": {
-        "title": "Gilde-gegen-Gilde-Scrims",
-        "body": "Schlage ein Trainingsspiel gegen eine andere Gilde auf deinem Server vor. Beide Seiten einigen sich auf Zeit, Ort und Siegbedingungen. Die Ergebnisse werden in der Gildenstatistik erfasst."
-      },
-      "duels": {
-        "title": "1-gegen-1-Duelle mit ELO",
-        "body": "Die Spieler fordern sich serverweit gegenseitig heraus. Dazu gehören Verhandlungen wie beim Tischtennis, die gegenseitige Bestätigung der Ergebnisse, ELO-Wertungen, positive/negative Bewertungen und eine Server-Rangliste."
-      },
-      "discord": {
-        "title": "Discord-Bot-Integration",
-        "body": "@everyone erinnert 1 Tag, 1 Stunde und 20 Minuten vor jedem Event. Slash-Befehle: /upcoming und /signup. Direktnachrichten für Events mit zwei Lebenszyklen."
-      },
-      "multiGuild": {
-        "title": "Multi-Gilde vom ersten Tag an",
-        "body": "Jede Gilde hat ihre eigenen Administratoren, Mitglieder, Events und ihren eigenen Discord-Kanal. Super-Administratoren verwalten die Plattform. Die Slugs sind permanent; alles andere ist konfigurierbar."
-      },
-      "i18n": {
-        "title": "17 Sprachen",
-        "body": "Automatisch übersetzte Benutzeroberfläche in Englisch, Französisch, Deutsch, Spanisch, Russisch, Ukrainisch, Chinesisch, Japanisch, Koreanisch, Portugiesisch, Italienisch, Indonesisch, Niederländisch, Türkisch, Polnisch, Vietnamesisch und Schwedisch."
-      }
-    },
-    "screenshots": {
-      "heading": "So sieht es aus",
-      "eventAdmin": "Event-Admin-Dashboard – Mannschaftslisten, Führungsanfragen, Warteliste, Anwesenheitsliste.",
-      "duels": "Duelldetailseite – Paarung, ELO-Wertung, Ergebnischip, Ort und Regeln.",
-      "leaderboard": "Server-Rangliste – ELO-rangierte Spieler, Top-3-Chips, dein Rang wird angezeigt.",
-      "discord": "Discord-Erinnerungen – automatische Benachrichtigungen an alle Personen vor jedem Ereignis."
-    },
-    "bottomCta": {
-      "heading": "Verhindern Sie Mitgliederverluste durch Reibungsverluste.",
-      "body": "Erstelle in 30 Sekunden eine Gilde. Kostenlos und dauerhaft, Open Source, keine Kreditkarte erforderlich."
-    },
-    "footer": {
-      "builtWith": "Entwickelt mit Next.js, Drizzle, Auth.js und der Discord-API. Kostenlos und Open Source.",
-      "viewSource": "Quellcode auf GitHub ansehen",
-      "help": "Helfen"
+  "alerts": {
+    "heading": "{count, plural, one {# notification} andere {# notifications} }",
+    "discord_unlinked": {
+      "title": "Verknüpfe Discord, um Dual-Direktnachrichten zu ermöglichen",
+      "body": "Du hast dich mit Google angemeldet. Verknüpfe ein Discord-Konto, damit der Bot dich per Direktnachricht kontaktieren kann, wenn dich jemand zu einem Duell herausfordert.",
+      "action": "Link zu Discord →"
     }
   }
 }

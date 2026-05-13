@@ -38,7 +38,8 @@
     "createGuild": "创建公会",
     "adminHelp": "管理员帮助",
     "help": "帮助",
-    "myAccount": "我的账户"
+    "myAccount": "我的账户",
+    "auditLog": "审计日志"
   },
   "topBar": {
     "notifications": "通知",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "基金会发出呼吁，让我们携手响应。",
-    "feedback": "反馈"
+    "feedback": "反馈",
+    "discordSupport": "Discord 支持",
+    "terms": "条款",
+    "privacy": "隐私"
   },
   "feedback": {
     "reportBug": "报告错误",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "活动",
-    "noEvents": "目前还没有活动。",
     "starts": "开始",
     "addAllToCalendar": "全部添加到日历",
     "addToCalendar": "添加到日历",
@@ -89,7 +92,11 @@
     "startTime": "开始时间：",
     "signupCloses": "报名截止：",
     "slotsLabel": "插槽：",
-    "slotsValue": "{maxPlayers}玩家 + {maxBackups}备份每个"
+    "slotsValue": "{maxPlayers}玩家 + {maxBackups}备份每个",
+    "noEvents": "暂无活动安排。",
+    "noPastEvents": "目前还没有过往事件。",
+    "upcoming": "即将推出",
+    "past": "过去的"
   },
   "eventCard": {
     "deleted": "已删除",
@@ -426,7 +433,15 @@
     "deleteButton": "删除我的帐户",
     "deleting": "正在删除…",
     "deleteConfirm": "删除账号？这将使您从公会中移除，删除您的所有注册信息，并解除 Google/Discord 的关联。此操作无法撤销。",
-    "language": "语言"
+    "language": "语言",
+    "discord": {
+      "heading": "Discord 私信",
+      "reachableTitle": "存档的 Discord 用户 ID",
+      "reachableBody": "机器人可以通过私信联系你进行决斗。你可以在下方更新或清除你的ID。",
+      "unreachableBody": "请在下方粘贴您的 Discord 用户 ID，以便机器人可以通过私信通知您决斗挑战、接受挑战、拒绝挑战以及挑战结果。如果您不粘贴，您仍然可以在网站上看到所有内容，只是无法收到 Discord 通知。",
+      "idLabel": "Discord 用户 ID",
+      "idHelp": "在 Discord 中，启用开发者模式（用户设置 → 高级），然后右键单击您的个人资料并选择“复制用户 ID”。这是一个 17 到 20 位数字。我们不验证所有权——如果您收到来自机器人的骚扰私信，请在 Discord 隐私设置中禁用“允许服务器成员发送私信”。"
+    }
   },
   "errors": {
     "forbidden": "禁忌",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "提醒和斜杠命令依赖于运营者已部署的 Discord 机器人。要将其连接到您的 Discord 服务器：",
       "step1Intro": "从您的网站管理员处获取安装 URL。它看起来像这样：",
-      "step1Note": "权限 133120 涵盖了“发送消息”和“提及所有人”两项权限。这两项权限都是必需的——如果没有“提及所有人”权限，提醒中的 @everyone 将以纯文本形式显示，不会通知任何人。",
       "step2": "在浏览器中打开安装链接。选择你想将机器人添加到的 Discord 服务器。你需要拥有该服务器的“管理服务器”权限。点击“授权”。",
-      "step3": "确认机器人出现在你的 Discord 服务器成员列表中。就这么简单——Discord 端无需对每个机器人进行单独配置。"
+      "step3": "确认机器人出现在你的 Discord 服务器成员列表中。就这么简单——Discord 端无需对每个机器人进行单独配置。",
+      "step1Note": "权限 2147616768 涵盖了斜杠命令、发送消息和提及所有人这三个权限。这两项权限都是必需的——如果没有提及所有人的权限，提醒中的 @everyone 会以纯文本形式显示，不会通知任何人。"
     },
     "discordChannel": {
       "intro": "机器人会将提醒信息发布到您选择的频道。配置方法如下：",
@@ -571,6 +586,76 @@
       "reminders": "提醒功能未触发。请检查 /api/health——如果 bot.lastPollStartedAt 比当前时间晚 5 分钟以上，则轮询器已卡住。超级管理员也可以向 /api/admin/bot/poll-now 发送 POST 请求来强制启动轮询周期。",
       "rescheduled": "活动已重新安排，但用户未收到重新通知。请确认时间是否确实已更改（与之前的时间进行比较）。机器人只会重新发送时间窗口仍在新时间之前的提醒——例如，如果您的新时间距离现在还有 30 分钟，则只会发送 20 分钟的提醒，而不会发送 24 小时的提醒。",
       "movedSquad": "我移动球员后，他被分配到了错误的队伍。“已移动”徽章表示分配与我的偏好不符。要恢复原状，请通过下拉菜单更改他们的角色/队伍，或使用“移动到队伍 N”按钮将其调回原位。"
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "公会参与度，升级",
+      "headline": "你的成员会到场。你的后备力量会越来越强。",
+      "subhead": "用一个统一的中心平台取代杂乱的 Discord 讨论串，该平台集活动报名、训练赛、1v1 对决和排行榜于一体。自动提醒、即时报名和友好的竞争氛围，让你的队伍保持活跃。",
+      "signIn": "使用 Google 或 Discord 登录",
+      "browseGuilds": "浏览公开公会"
+    },
+    "stats": {
+      "guilds": "行会",
+      "events": "活动运行",
+      "duels": "决斗",
+      "players": "球员"
+    },
+    "engagement": {
+      "kicker": "我们解决的问题",
+      "heading": "公会因内部摩擦而流失成员。",
+      "body": "活动安排信息散落在 Discord 聊天群里。报名信息记录在一个无人更新的电子表格中。提醒信息经常失效。玩家因为缺乏召回而不再参加。Foundation Event Organizer 解决了所有这些问题。",
+      "beforeTitle": "前",
+      "beforeBody": "混乱的 Discord 讨论串、丢失的报名信息、错过的提醒、没有实际到场人员的记录——成员们正慢慢流失。",
+      "afterTitle": "后",
+      "afterBody": "每个活动只需填写一份报名表。Discord 会自动发送 1 天、1 小时和 20 分钟的提醒。记录出勤率和评分。提供带有排行榜和 ELO 值的练习赛和对决。让您有充分的理由登录。",
+      "outcomeTitle": "结果",
+      "outcomeBody": "更多满员参赛的活动。更多跨公会比赛。更多让成员回归的理由——以及一份真正记录谁贡献了多少力量的档案。"
+    },
+    "features": {
+      "heading": "里面有什么",
+      "matches": {
+        "title": "比赛赛事",
+        "body": "两个小队、领导职位、自动候补名单、出席情况跟踪、活动后评分——举办类似 Shadowfront 的循环活动所需的一切。"
+      },
+      "scrims": {
+        "title": "公会对抗赛",
+        "body": "提议与服务器上的其他公会进行一场练习赛。双方协商确定时间、地点和获胜条件。比赛结果计入公会战绩。"
+      },
+      "duels": {
+        "title": "与ELO进行1v1决斗",
+        "body": "玩家在服务器内互相挑战。采用乒乓式谈判、结果相互确认、ELO 等级分、点赞/踩声誉以及服务器排行榜。"
+      },
+      "discord": {
+        "title": "Discord机器人集成",
+        "body": "@everyone 会在每次活动开始前 1 天、1 小时和 20 分钟发送提醒。使用斜杠命令 /upcoming 和 /signup。双重生命周期活动会通过私信通知。"
+      },
+      "multiGuild": {
+        "title": "从一开始就支持多公会",
+        "body": "每个公会都有自己的管理员、成员、活动和Discord频道。超级管理员负责管理平台。角色是永久存在的；其他所有设置都可以自定义。"
+      },
+      "i18n": {
+        "title": "17种语言",
+        "body": "自动翻译用户界面支持英语、法语、德语、西班牙语、俄语、乌克兰语、中文、日语、韩语、葡萄牙语、意大利语、印尼语、荷兰语、土耳其语、波兰语、越南语和瑞典语。"
+      }
+    },
+    "screenshots": {
+      "heading": "它看起来像什么",
+      "eventAdmin": "活动管理仪表盘——队伍名单、领导请求、候补名单、出席情况。",
+      "duels": "对决详情页面——对阵双方、ELO 等级分、结果筹码、地点和规则。",
+      "leaderboard": "服务器排行榜——ELO排名玩家、前3名筹码、您的排名将显示出来。",
+      "discord": "Discord 提醒 — 每次活动开始前自动向所有人发送 @everyone 通知。"
+    },
+    "bottomCta": {
+      "heading": "停止因摩擦而流失会员。",
+      "body": "30秒内即可创建公会。永久免费，开源，无需信用卡。"
+    },
+    "footer": {
+      "builtWith": "基于 Next.js、Drizzle、Auth.js 和 Discord API 构建。免费开源。",
+      "viewSource": "在 GitHub 上查看源代码",
+      "help": "帮助",
+      "discordSupport": "Discord 支持"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。"
   },
-  "landing": {
-    "hero": {
-      "kicker": "公会参与度，升级",
-      "headline": "你的成员会到场。你的后备力量会越来越强。",
-      "subhead": "用一个统一的中心平台取代杂乱的 Discord 讨论串，该平台集活动报名、训练赛、1v1 对决和排行榜于一体。自动提醒、即时报名和友好的竞争氛围，让你的队伍保持活跃。",
-      "signIn": "使用 Google 或 Discord 登录",
-      "browseGuilds": "浏览公开公会"
-    },
-    "stats": {
-      "guilds": "行会",
-      "events": "活动运行",
-      "duels": "决斗",
-      "players": "球员"
-    },
-    "engagement": {
-      "kicker": "我们解决的问题",
-      "heading": "公会因内部摩擦而流失成员。",
-      "body": "活动安排信息散落在 Discord 聊天群里。报名信息记录在一个无人更新的电子表格中。提醒信息经常失效。玩家因为缺乏召回而不再参加。Foundation Event Organizer 解决了所有这些问题。",
-      "beforeTitle": "前",
-      "beforeBody": "混乱的 Discord 讨论串、丢失的报名信息、错过的提醒、没有实际到场人员的记录——成员们正慢慢流失。",
-      "afterTitle": "后",
-      "afterBody": "每个活动只需填写一份报名表。Discord 会自动发送 1 天、1 小时和 20 分钟的提醒。记录出勤率和评分。提供带有排行榜和 ELO 值的练习赛和对决。让您有充分的理由登录。",
-      "outcomeTitle": "结果",
-      "outcomeBody": "更多满员参赛的活动。更多跨公会比赛。更多让成员回归的理由——以及一份真正记录谁贡献了多少力量的档案。"
-    },
-    "features": {
-      "heading": "里面有什么",
-      "matches": {
-        "title": "比赛赛事",
-        "body": "两个小队、领导职位、自动候补名单、出席情况跟踪、活动后评分——举办类似 Shadowfront 的循环活动所需的一切。"
-      },
-      "scrims": {
-        "title": "公会对抗赛",
-        "body": "提议与服务器上的其他公会进行一场练习赛。双方协商确定时间、地点和获胜条件。比赛结果计入公会战绩。"
-      },
-      "duels": {
-        "title": "与ELO进行1v1决斗",
-        "body": "玩家在服务器内互相挑战。采用乒乓式谈判、结果相互确认、ELO 等级分、点赞/踩声誉以及服务器排行榜。"
-      },
-      "discord": {
-        "title": "Discord机器人集成",
-        "body": "@everyone 会在每次活动开始前 1 天、1 小时和 20 分钟发送提醒。使用斜杠命令 /upcoming 和 /signup。双重生命周期活动会通过私信通知。"
-      },
-      "multiGuild": {
-        "title": "从一开始就支持多公会",
-        "body": "每个公会都有自己的管理员、成员、活动和Discord频道。超级管理员负责管理平台。角色是永久存在的；其他所有设置都可以自定义。"
-      },
-      "i18n": {
-        "title": "17种语言",
-        "body": "自动翻译用户界面支持英语、法语、德语、西班牙语、俄语、乌克兰语、中文、日语、韩语、葡萄牙语、意大利语、印尼语、荷兰语、土耳其语、波兰语、越南语和瑞典语。"
-      }
-    },
-    "screenshots": {
-      "heading": "它看起来像什么",
-      "eventAdmin": "活动管理仪表盘——队伍名单、领导请求、候补名单、出席情况。",
-      "duels": "对决详情页面——对阵双方、ELO 等级分、结果筹码、地点和规则。",
-      "leaderboard": "服务器排行榜——ELO排名玩家、前3名筹码、您的排名将显示出来。",
-      "discord": "Discord 提醒 — 每次活动开始前自动向所有人发送 @everyone 通知。"
-    },
-    "bottomCta": {
-      "heading": "停止因摩擦而流失会员。",
-      "body": "30秒内即可创建公会。永久免费，开源，无需信用卡。"
-    },
-    "footer": {
-      "builtWith": "基于 Next.js、Drizzle、Auth.js 和 Discord API 构建。免费开源。",
-      "viewSource": "在 GitHub 上查看源代码",
-      "help": "帮助"
+  "alerts": {
+    "heading": "{count, plural, one {# notification}其他{# notifications} }",
+    "discord_unlinked": {
+      "title": "关联 Discord 以启用决斗私信功能",
+      "body": "您已使用 Google 帐户注册。请关联您的 Discord 帐户，以便机器人能在有人向您发起决斗挑战时私信您。",
+      "action": "Discord链接 →"
     }
   }
 }

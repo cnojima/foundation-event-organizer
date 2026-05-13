@@ -38,7 +38,8 @@
     "createGuild": "Crear gremio",
     "adminHelp": "Ayuda administrativa",
     "help": "Ayuda",
-    "myAccount": "Mi cuenta"
+    "myAccount": "Mi cuenta",
+    "auditLog": "Registro de auditoría"
   },
   "topBar": {
     "notifications": "Notificaciones",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "LA FUNDACIÓN HACE UN LLAMADO. RESPONDAMOS JUNTOS.",
-    "feedback": "COMENTARIO"
+    "feedback": "COMENTARIO",
+    "discordSupport": "SOPORTE DE DISCORD",
+    "terms": "TÉRMINOS",
+    "privacy": "PRIVACIDAD"
   },
   "feedback": {
     "reportBug": "Informar de un error",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "Eventos",
-    "noEvents": "Aún no hay eventos.",
     "starts": "Comienza",
     "addAllToCalendar": "Agregar todo al calendario",
     "addToCalendar": "Añadir al calendario",
@@ -89,7 +92,11 @@
     "startTime": "Hora de inicio:",
     "signupCloses": "Cierre de inscripciones:",
     "slotsLabel": "Ranuras:",
-    "slotsValue": "{maxPlayers} jugadores + {maxBackups} copias de seguridad cada"
+    "slotsValue": "{maxPlayers} jugadores + {maxBackups} copias de seguridad cada",
+    "noEvents": "No hay eventos próximos.",
+    "noPastEvents": "Aún no hay eventos pasados.",
+    "upcoming": "Próximamente",
+    "past": "Pasado"
   },
   "eventCard": {
     "deleted": "Eliminado",
@@ -426,7 +433,15 @@
     "deleteButton": "Eliminar mi cuenta",
     "deleting": "Eliminando…",
     "deleteConfirm": "¿Quieres eliminar tu cuenta? Esto te expulsará de tu gremio, borrará todos tus registros y desvinculará tu cuenta de Google/Discord. Esta acción es irreversible.",
-    "language": "Idioma"
+    "language": "Idioma",
+    "discord": {
+      "heading": "Mensajes directos de Discord",
+      "reachableTitle": "ID de usuario de Discord registrado",
+      "reachableBody": "El bot puede enviarte mensajes directos sobre duelos. Puedes actualizar o borrar tu ID a continuación.",
+      "unreachableBody": "Pega tu ID de usuario de Discord a continuación para que el bot pueda enviarte mensajes privados sobre desafíos de duelo, aceptaciones, rechazos y resultados. Sin él, seguirás viendo todo en el sitio web, pero no recibirás notificaciones de Discord.",
+      "idLabel": "ID de usuario de Discord",
+      "idHelp": "En Discord, activa el Modo desarrollador (Configuración de usuario → Avanzado), luego haz clic derecho en tu perfil y selecciona \"Copiar ID de usuario\". Es un número de entre 17 y 20 dígitos. No verificamos la propiedad; si recibes un mensaje directo no deseado del bot, desactiva la opción \"Permitir mensajes directos de miembros del servidor\" en la configuración de privacidad de Discord."
+    }
   },
   "errors": {
     "forbidden": "Prohibido",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "Los recordatorios y los comandos de barra diagonal dependen de un bot de Discord que el operador ya ha implementado. Para conectarlo a tu servidor de Discord:",
       "step1Intro": "Obtén la URL de instalación de tu operador de sitio. Tiene este aspecto:",
-      "step1Note": "La parte permissions=133120 cubre Enviar mensajes y Mencionar a todos. Ambas son necesarias; sin Mencionar a todos, el @everyone en los recordatorios se muestra como texto sin formato y no notifica a nadie.",
       "step2": "Abre la URL de instalación en un navegador. Selecciona el servidor de Discord donde quieres instalar el bot. Necesitas el permiso de \"Administrar servidor\" en ese servidor. Haz clic en \"Autorizar\".",
-      "step3": "Confirma que el bot aparece en la lista de miembros de tu servidor de Discord. Eso es todo; no se requiere ninguna configuración individual para cada bot en Discord."
+      "step3": "Confirma que el bot aparece en la lista de miembros de tu servidor de Discord. Eso es todo; no se requiere ninguna configuración individual para cada bot en Discord.",
+      "step1Note": "La parte permissions=2147616768 abarca los comandos de barra diagonal, el envío de mensajes y la mención a todos. Ambos son obligatorios; sin la mención a todos, el @everyone en los recordatorios se muestra como texto sin formato y no notifica a nadie."
     },
     "discordChannel": {
       "intro": "El bot publica recordatorios en el canal que elijas. Para configurarlo:",
@@ -571,6 +586,76 @@
       "reminders": "Los recordatorios no se están activando. Comprueba /api/health: si bot.lastPollStartedAt tiene un retraso de más de 5 minutos con respecto a la hora actual, el proceso de sondeo está bloqueado. Los superadministradores también pueden enviar una solicitud POST a /api/admin/bot/poll-now para forzar un ciclo de sondeo.",
       "rescheduled": "Se reprogramó un evento y las personas no están recibiendo nuevas notificaciones. Confirma que la hora haya cambiado (compárala con el valor anterior). El bot solo vuelve a enviar notificaciones a los tipos cuya ventana temporal aún está por delante de la nueva hora; si la nueva hora es dentro de 30 minutos, solo se enviará el recordatorio de 20 minutos, no el de 24 horas.",
       "movedSquad": "Un jugador fue asignado al equipo equivocado después de que lo cambié de puesto. El distintivo \"MOVIDO\" indica que la asignación no coincide con la preferencia. Para revertir la asignación, cambia su rol o equipo mediante el menú desplegable o usa el botón \"Mover al equipo N\" para devolverlo a su puesto original."
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Compromiso con el gremio, subido de nivel",
+      "headline": "Tus miembros se presentarán. Tu equipo se fortalecerá.",
+      "subhead": "Sustituye los hilos desordenados de Discord por un único centro para inscripciones a eventos, entrenamientos, duelos 1 contra 1 y una tabla de clasificación. Recordatorios automáticos, inscripción instantánea y una sana competencia que mantiene a tu equipo activo.",
+      "signIn": "Inicia sesión con Google o Discord.",
+      "browseGuilds": "Explorar gremios públicos"
+    },
+    "stats": {
+      "guilds": "Gremios",
+      "events": "Se organizan eventos",
+      "duels": "Duelos jugados",
+      "players": "Jugadores"
+    },
+    "engagement": {
+      "kicker": "El problema que resolvemos",
+      "heading": "Los gremios pierden miembros debido a las fricciones.",
+      "body": "La planificación de eventos queda oculta entre hilos de Discord. Las inscripciones se registran en una hoja de cálculo que alguien olvidó actualizar. Los recordatorios no se enviaron. Jugadores que dejaron de asistir porque nada los motivó a regresar. Foundation Event Organizer soluciona todo eso.",
+      "beforeTitle": "Antes",
+      "beforeBody": "Hilos de Discord desorganizados, inscripciones perdidas, recordatorios omitidos, sin registro de quién asistió realmente, y miembros que se van alejando poco a poco.",
+      "afterTitle": "Después",
+      "afterBody": "Un formulario de inscripción por evento. Recordatorios automáticos en Discord cada 1 día, 1 hora y 20 minutos. Seguimiento de asistencia y puntuaciones. Partidas de práctica y duelos con tablas de clasificación y ELO. Un motivo claro para conectarse.",
+      "outcomeTitle": "Resultado",
+      "outcomeBody": "Más eventos con listas de participantes completas. Más competencia entre gremios. Más razones para que tus miembros regresen, y un registro de quién realmente cumple con su cometido."
+    },
+    "features": {
+      "heading": "¿Qué hay dentro?",
+      "matches": {
+        "title": "Eventos de partido",
+        "body": "Dos escuadrones, puestos de liderazgo, lista de espera automática, control de asistencia, valoraciones posteriores al evento: todo lo que necesitas para organizar un evento recurrente al estilo Shadowfront."
+      },
+      "scrims": {
+        "title": "Partidas de entrenamiento entre gremios",
+        "body": "Propón una partida de entrenamiento contra otro clan de tu servidor. Ambos equipos acordarán la hora, el lugar y la condición de victoria. Los resultados se incluirán en el historial del clan."
+      },
+      "duels": {
+        "title": "Duelos 1 contra 1 con ELO",
+        "body": "Los jugadores se desafían entre sí a través del servidor. Negociación mediante ping-pong, confirmación mutua de resultados, clasificaciones ELO, reputación mediante votos positivos/negativos y una tabla de clasificación del servidor."
+      },
+      "discord": {
+        "title": "Integración del bot de Discord",
+        "body": "Recordatorios para todos: 1 día, 1 hora y 20 minutos antes de cada evento. Comandos de barra inclinada: /upcoming y /signup. Mensajes directos para eventos de doble ciclo de vida."
+      },
+      "multiGuild": {
+        "title": "Multigremio desde el primer día",
+        "body": "Cada clan tiene sus propios administradores, miembros, eventos y canal de Discord. Los superadministradores gestionan la plataforma. Los slugs son permanentes; todo lo demás es configurable."
+      },
+      "i18n": {
+        "title": "17 idiomas",
+        "body": "Interfaz de usuario con traducción automática al inglés, francés, alemán, español, ruso, ucraniano, chino, japonés, coreano, portugués, italiano, indonesio, neerlandés, turco, polaco, vietnamita y sueco."
+      }
+    },
+    "screenshots": {
+      "heading": "Cómo se ve",
+      "eventAdmin": "Panel de administración del evento: listas de participantes, solicitudes de liderazgo, lista de espera, asistencia.",
+      "duels": "Página de detalles del duelo: enfrentamiento, clasificación ELO, ficha de resultado, ubicación y reglas.",
+      "leaderboard": "Clasificación del servidor: jugadores clasificados por ELO, los 3 mejores jugadores en fichas, tu clasificación mostrada.",
+      "discord": "Recordatorios de Discord: notificaciones automáticas a @everyone antes de cada evento."
+    },
+    "bottomCta": {
+      "heading": "Evite perder miembros por fricciones.",
+      "body": "Crea un gremio en 30 segundos. Gratis para siempre, de código abierto, sin tarjeta de crédito."
+    },
+    "footer": {
+      "builtWith": "Desarrollado con Next.js, Drizzle, Auth.js y la API de Discord. Gratuito y de código abierto.",
+      "viewSource": "Ver el código fuente en GitHub",
+      "help": "Ayuda",
+      "discordSupport": "Soporte de Discord"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente."
   },
-  "landing": {
-    "hero": {
-      "kicker": "Compromiso con el gremio, subido de nivel",
-      "headline": "Tus miembros se presentarán. Tu equipo se fortalecerá.",
-      "subhead": "Sustituye los hilos desordenados de Discord por un único centro para inscripciones a eventos, entrenamientos, duelos 1 contra 1 y una tabla de clasificación. Recordatorios automáticos, inscripción instantánea y una sana competencia que mantiene a tu equipo activo.",
-      "signIn": "Inicia sesión con Google o Discord.",
-      "browseGuilds": "Explorar gremios públicos"
-    },
-    "stats": {
-      "guilds": "Gremios",
-      "events": "Se organizan eventos",
-      "duels": "Duelos jugados",
-      "players": "Jugadores"
-    },
-    "engagement": {
-      "kicker": "El problema que resolvemos",
-      "heading": "Los gremios pierden miembros debido a las fricciones.",
-      "body": "La planificación de eventos queda oculta entre hilos de Discord. Las inscripciones se registran en una hoja de cálculo que alguien olvidó actualizar. Los recordatorios no se enviaron. Jugadores que dejaron de asistir porque nada los motivó a regresar. Foundation Event Organizer soluciona todo eso.",
-      "beforeTitle": "Antes",
-      "beforeBody": "Hilos de Discord desorganizados, inscripciones perdidas, recordatorios omitidos, sin registro de quién asistió realmente, y miembros que se van alejando poco a poco.",
-      "afterTitle": "Después",
-      "afterBody": "Un formulario de inscripción por evento. Recordatorios automáticos en Discord cada 1 día, 1 hora y 20 minutos. Seguimiento de asistencia y puntuaciones. Partidas de práctica y duelos con tablas de clasificación y ELO. Un motivo claro para conectarse.",
-      "outcomeTitle": "Resultado",
-      "outcomeBody": "Más eventos con listas de participantes completas. Más competencia entre gremios. Más razones para que tus miembros regresen, y un registro de quién realmente cumple con su cometido."
-    },
-    "features": {
-      "heading": "¿Qué hay dentro?",
-      "matches": {
-        "title": "Eventos de partido",
-        "body": "Dos escuadrones, puestos de liderazgo, lista de espera automática, control de asistencia, valoraciones posteriores al evento: todo lo que necesitas para organizar un evento recurrente al estilo Shadowfront."
-      },
-      "scrims": {
-        "title": "Partidas de entrenamiento entre gremios",
-        "body": "Propón una partida de entrenamiento contra otro clan de tu servidor. Ambos equipos acordarán la hora, el lugar y la condición de victoria. Los resultados se incluirán en el historial del clan."
-      },
-      "duels": {
-        "title": "Duelos 1 contra 1 con ELO",
-        "body": "Los jugadores se desafían entre sí a través del servidor. Negociación mediante ping-pong, confirmación mutua de resultados, clasificaciones ELO, reputación mediante votos positivos/negativos y una tabla de clasificación del servidor."
-      },
-      "discord": {
-        "title": "Integración del bot de Discord",
-        "body": "Recordatorios para todos: 1 día, 1 hora y 20 minutos antes de cada evento. Comandos de barra inclinada: /upcoming y /signup. Mensajes directos para eventos de doble ciclo de vida."
-      },
-      "multiGuild": {
-        "title": "Multigremio desde el primer día",
-        "body": "Cada clan tiene sus propios administradores, miembros, eventos y canal de Discord. Los superadministradores gestionan la plataforma. Los slugs son permanentes; todo lo demás es configurable."
-      },
-      "i18n": {
-        "title": "17 idiomas",
-        "body": "Interfaz de usuario con traducción automática al inglés, francés, alemán, español, ruso, ucraniano, chino, japonés, coreano, portugués, italiano, indonesio, neerlandés, turco, polaco, vietnamita y sueco."
-      }
-    },
-    "screenshots": {
-      "heading": "Cómo se ve",
-      "eventAdmin": "Panel de administración del evento: listas de participantes, solicitudes de liderazgo, lista de espera, asistencia.",
-      "duels": "Página de detalles del duelo: enfrentamiento, clasificación ELO, ficha de resultado, ubicación y reglas.",
-      "leaderboard": "Clasificación del servidor: jugadores clasificados por ELO, los 3 mejores jugadores en fichas, tu clasificación mostrada.",
-      "discord": "Recordatorios de Discord: notificaciones automáticas a @everyone antes de cada evento."
-    },
-    "bottomCta": {
-      "heading": "Evite perder miembros por fricciones.",
-      "body": "Crea un gremio en 30 segundos. Gratis para siempre, de código abierto, sin tarjeta de crédito."
-    },
-    "footer": {
-      "builtWith": "Desarrollado con Next.js, Drizzle, Auth.js y la API de Discord. Gratuito y de código abierto.",
-      "viewSource": "Ver el código fuente en GitHub",
-      "help": "Ayuda"
+  "alerts": {
+    "heading": "{count, plural, one {# notification} otras {# notifications} }",
+    "discord_unlinked": {
+      "title": "Enlace a Discord para habilitar los mensajes directos de duelo.",
+      "body": "Te registraste con Google. Vincula una cuenta de Discord para que el bot pueda enviarte un mensaje directo cuando alguien te desafíe a un duelo.",
+      "action": "Enlace a Discord →"
     }
   }
 }

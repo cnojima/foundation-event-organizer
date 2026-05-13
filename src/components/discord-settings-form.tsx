@@ -6,10 +6,10 @@ import { FieldHelp } from "@/components/field-help";
 
 // Discord OAuth install URL for the Event Organizer bot. The client_id is the
 // app's Discord application ID — fixed per deployment, embedded here so the
-// CTA works without a per-guild env lookup. permissions=133120 covers
+// CTA works without a per-guild env lookup. permissions=2147616768 covers
 // Send Messages + Mention Everyone (required for @everyone reminders).
 const BOT_INVITE_URL =
-  "https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=133120";
+  "https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=2147616768";
 
 // Standalone card for Discord integration: bot-invite CTA, channel ID,
 // test-integration button. Saves the channel ID independently of the main

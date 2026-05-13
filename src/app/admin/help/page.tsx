@@ -24,7 +24,7 @@ type Chunks = React.ReactNode;
 // URL is shown verbatim to the admin who copies it into Discord; the curl
 // snippet is operator-only ops glue.
 const INSTALL_URL =
-  "https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=133120";
+  "https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=2147616768";
 const FLUSH_COMMANDS_CURL = `# wipe global commands so the bot re-registers fresh on next startup
 curl -X PUT -H "Authorization: Bot $DISCORD_BOT_TOKEN" \\
   -H "Content-Type: application/json" \\

@@ -38,7 +38,8 @@
     "createGuild": "Skapa gille",
     "adminHelp": "Administratörshjälp",
     "help": "Hjälp",
-    "myAccount": "Mitt konto"
+    "myAccount": "Mitt konto",
+    "auditLog": "Granskningslogg"
   },
   "topBar": {
     "notifications": "Aviseringar",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "STIFTELSEN ROPAR. SVARA TILLSAMMANS.",
-    "feedback": "FEED-BACK"
+    "feedback": "FEED-BACK",
+    "discordSupport": "DISCORD-STÖD",
+    "terms": "VILLKOR",
+    "privacy": "PRIVATLIV"
   },
   "feedback": {
     "reportBug": "Rapportera ett fel",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "Händelser",
-    "noEvents": "Inga evenemang ännu.",
     "starts": "Startar",
     "addAllToCalendar": "Lägg till alla i kalendern",
     "addToCalendar": "Lägg till i kalendern",
@@ -89,7 +92,11 @@
     "startTime": "Starttid:",
     "signupCloses": "Anmälan stänger:",
     "slotsLabel": "Slots:",
-    "slotsValue": "{maxPlayers} spelare + {maxBackups} säkerhetskopior varje"
+    "slotsValue": "{maxPlayers} spelare + {maxBackups} säkerhetskopior varje",
+    "noEvents": "Inga kommande evenemang.",
+    "noPastEvents": "Inga tidigare händelser ännu.",
+    "upcoming": "Kommande",
+    "past": "Förbi"
   },
   "eventCard": {
     "deleted": "Borttagen",
@@ -426,7 +433,15 @@
     "deleteButton": "Ta bort mitt konto",
     "deleting": "Tar bort…",
     "deleteConfirm": "Radera ditt konto? Detta tar bort dig från din gille, raderar alla dina registreringar och kopplar bort Google/Discord. Detta kan inte ångras.",
-    "language": "Språk"
+    "language": "Språk",
+    "discord": {
+      "heading": "Discord-direktmeddelanden",
+      "reachableTitle": "Discord användar-ID finns i arkivet",
+      "reachableBody": "Boten kan skicka direktmeddelanden till dig om dueller. Du kan uppdatera eller rensa ditt ID nedan.",
+      "unreachableBody": "Klistra in ditt Discord-användar-ID nedan så att boten kan skicka direktmeddelanden till dig om duellutmaningar, godkännanden, avböjanden och resultat. Utan det ser du fortfarande allt på webbplatsen – bara inga Discord-notifieringar.",
+      "idLabel": "Discord användar-ID",
+      "idHelp": "I Discord, aktivera utvecklarläget (Användarinställningar → Avancerat), högerklicka sedan på din egen profil och välj \"Kopiera användar-ID\". Det är ett nummer på 17–20 siffror. Vi verifierar inte ägarskap – om du någonsin får ett oönskat direktmeddelande från boten, inaktivera \"Tillåt direktmeddelanden från servermedlemmar\" i dina Discord-sekretessinställningar."
+    }
   },
   "errors": {
     "forbidden": "Förbjuden",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "Påminnelser och snedstreckkommandon är beroende av en Discord-bot som operatören redan har distribuerat. För att ansluta den till din Discord-server:",
       "step1Intro": "Hämta installations-URL:en från din webbplatsoperatör. Den ser ut så här:",
-      "step1Note": "Delen permissions=133120 täcker Skicka meddelanden och Nämn alla. Båda krävs – utan Nämn alla renderas @everyone i påminnelser som vanlig text och pingar ingen.",
       "step2": "Öppna installations-URL:en i en webbläsare. Välj den Discord-server där du vill att boten ska vara. Du behöver behörigheten \"Hantera server\" på den servern. Klicka på Auktorisera.",
-      "step3": "Bekräfta att boten visas i din Discord-servers medlemslista. Det var allt – ingen konfiguration per bot på Discord-sidan."
+      "step3": "Bekräfta att boten visas i din Discord-servers medlemslista. Det var allt – ingen konfiguration per bot på Discord-sidan.",
+      "step1Note": "Delen permissions=2147616768 täcker Slash-kommandon, Skicka meddelanden och Nämn alla. Båda krävs – utan Nämn alla renderas @everyone i påminnelser som vanlig text och pingar ingen."
     },
     "discordChannel": {
       "intro": "Boten publicerar påminnelser i en valfri kanal. Så här konfigurerar du den:",
@@ -571,6 +586,76 @@
       "reminders": "Påminnelser aktiveras inte. Kontrollera /api/health — om bot.lastPollStartedAt är mer än cirka 5 minuter efter aktuell tid har pollern fastnat. Superadministratörer kan också POSTA till /api/admin/bot/poll-now för att tvinga fram en pollcykel.",
       "rescheduled": "Ett evenemang har omplanerats och personer får inte någon ny avisering. Bekräfta att tiden faktiskt har ändrats (jämför med det tidigare värdet). Boten utlöser bara om typer vars fönster fortfarande ligger före den nya tiden – om din nya tid är 30 minuter från nu kommer endast 20-minuterspåminnelsen att utlösas, inte 24-timmarspåminnelsen.",
       "movedSquad": "En spelare blev tilldelad fel trupp efter att jag flyttade dem. FLYTTAD-märket betyder att tilldelningen skiljer sig från preferensen. För att återställa, ändra deras roll/trupp via rullgardinsmenyn eller använd knappen Flytta till trupp N för att återställa dem."
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Gildets engagemang, uppgraderat",
+      "headline": "Dina medlemmar kommer att dyka upp. Din bänk blir djupare.",
+      "subhead": "Ersätt röriga Discord-trådar med en enda hubb för evenemangsanmälningar, träningsmatcher, 1v1-dueller och en topplista. Automatiska påminnelser, omedelbar anmälan och vänlig tävling som håller din laguppställning aktiv.",
+      "signIn": "Logga in med Google eller Discord",
+      "browseGuilds": "Bläddra bland offentliga gillen"
+    },
+    "stats": {
+      "guilds": "Gillen",
+      "events": "Händelser körs",
+      "duels": "Dueller spelade",
+      "players": "Spelare"
+    },
+    "engagement": {
+      "kicker": "Problemet vi löser",
+      "heading": "Gillen förlorar medlemmar på grund av friktion.",
+      "body": "Evenemangsschemaläggning begravd i Discord-trådar. Registreringar som spåras i ett kalkylblad som någon glömt att uppdatera. Påminnelser som inte aktiverades. Spelare som slutade dyka upp eftersom ingenting fick dem att komma tillbaka. Foundation Event Organizer fixar allt det där.",
+      "beforeTitle": "Före",
+      "beforeBody": "Röriga Discord-trådar, förlorade registreringar, missade påminnelser, ingen registrering av vilka som faktiskt dök upp – och medlemmar som sakta försvinner.",
+      "afterTitle": "Efter",
+      "afterBody": "Ett anmälningsformulär per evenemang. Automatiska Discord-påminnelser för 1 dag, 1 timme och 20 minuter. Närvaro + betyg spåras. Träningsmatcher och dueller med topplistor och ELO. En tydlig anledning att logga in.",
+      "outcomeTitle": "Resultat",
+      "outcomeBody": "Fler evenemang med fullständiga laguppställningar. Mer konkurrens mellan olika gille. Fler anledningar för dina medlemmar att komma tillbaka – och en översikt över vilka som faktiskt bär sin vikt."
+    },
+    "features": {
+      "heading": "Vad som finns inuti",
+      "matches": {
+        "title": "Matchevenemang",
+        "body": "Två grupper, ledarplatser, automatisk väntelista, närvaroregistrering, betyg efter evenemanget – allt du behöver för att genomföra ett återkommande evenemang i Shadowfront-stil."
+      },
+      "scrims": {
+        "title": "Gilde-mot-gilled-undersökningar",
+        "body": "Föreslå en övningsmatch mot ett annat gille på din server. Båda sidor är överens om tid, plats och vinstvillkor. Resultaten matar in ett gillesrekord."
+      },
+      "duels": {
+        "title": "1v1-dueller med ELO",
+        "body": "Spelare utmanar varandra över hela servern. Pingisförhandlingar, ömsesidig bekräftelse av resultat, ELO-betyg, tummen upp/ner-rykte och en servertopplista."
+      },
+      "discord": {
+        "title": "Discord-botintegration",
+        "body": "@everyone-påminnelser 1 dag, 1 timme och 20 minuter före varje händelse. Slash-kommandon /upcoming och /signup. Direktmeddelanden för händelser i dubbla livscykeln."
+      },
+      "multiGuild": {
+        "title": "Multigile från dag ett",
+        "body": "Varje gille har sina egna administratörer, medlemmar, evenemang och Discord-kanal. Superadministratörer hanterar plattformen. Slugs är permanenta; allt annat är konfigurerbart."
+      },
+      "i18n": {
+        "title": "17 språk",
+        "body": "Automatiskt översatt användargränssnitt till engelska, franska, tyska, spanska, ryska, ukrainska, kinesiska, japanska, koreanska, portugisiska, italienska, indonesiska, nederländska, turkiska, polska, vietnamesiska och svenska."
+      }
+    },
+    "screenshots": {
+      "heading": "Hur det ser ut",
+      "eventAdmin": "Administratörspanel för evenemang — laguppställningar, ledarskapsförfrågningar, väntelista, närvaro.",
+      "duels": "Duelldetaljersida — matchup, ELO-betyg, resultatchip, plats och regler.",
+      "leaderboard": "Serverns topplista — ELO-rankade spelare, topp 3-marker, din ranking har dykt upp.",
+      "discord": "Discord-påminnelser — automatiska @everyone-pingar före varje evenemang."
+    },
+    "bottomCta": {
+      "heading": "Sluta förlora medlemmar på grund av friktion.",
+      "body": "Snurra upp ett gille på 30 sekunder. Gratis för alltid, öppen källkod, inget kreditkort."
+    },
+    "footer": {
+      "builtWith": "Byggt med Next.js, Drizzle, Auth.js och Discord API. Gratis och öppen källkod.",
+      "viewSource": "Visa källa på GitHub",
+      "help": "Hjälp",
+      "discordSupport": "Discord-stöd"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
   },
-  "landing": {
-    "hero": {
-      "kicker": "Gildets engagemang, uppgraderat",
-      "headline": "Dina medlemmar kommer att dyka upp. Din bänk blir djupare.",
-      "subhead": "Ersätt röriga Discord-trådar med en enda hubb för evenemangsanmälningar, träningsmatcher, 1v1-dueller och en topplista. Automatiska påminnelser, omedelbar anmälan och vänlig tävling som håller din laguppställning aktiv.",
-      "signIn": "Logga in med Google eller Discord",
-      "browseGuilds": "Bläddra bland offentliga gillen"
-    },
-    "stats": {
-      "guilds": "Gillen",
-      "events": "Händelser körs",
-      "duels": "Dueller spelade",
-      "players": "Spelare"
-    },
-    "engagement": {
-      "kicker": "Problemet vi löser",
-      "heading": "Gillen förlorar medlemmar på grund av friktion.",
-      "body": "Evenemangsschemaläggning begravd i Discord-trådar. Registreringar som spåras i ett kalkylblad som någon glömt att uppdatera. Påminnelser som inte aktiverades. Spelare som slutade dyka upp eftersom ingenting fick dem att komma tillbaka. Foundation Event Organizer fixar allt det där.",
-      "beforeTitle": "Före",
-      "beforeBody": "Röriga Discord-trådar, förlorade registreringar, missade påminnelser, ingen registrering av vilka som faktiskt dök upp – och medlemmar som sakta försvinner.",
-      "afterTitle": "Efter",
-      "afterBody": "Ett anmälningsformulär per evenemang. Automatiska Discord-påminnelser för 1 dag, 1 timme och 20 minuter. Närvaro + betyg spåras. Träningsmatcher och dueller med topplistor och ELO. En tydlig anledning att logga in.",
-      "outcomeTitle": "Resultat",
-      "outcomeBody": "Fler evenemang med fullständiga laguppställningar. Mer konkurrens mellan olika gille. Fler anledningar för dina medlemmar att komma tillbaka – och en översikt över vilka som faktiskt bär sin vikt."
-    },
-    "features": {
-      "heading": "Vad som finns inuti",
-      "matches": {
-        "title": "Matchevenemang",
-        "body": "Två grupper, ledarplatser, automatisk väntelista, närvaroregistrering, betyg efter evenemanget – allt du behöver för att genomföra ett återkommande evenemang i Shadowfront-stil."
-      },
-      "scrims": {
-        "title": "Gilde-mot-gilled-undersökningar",
-        "body": "Föreslå en övningsmatch mot ett annat gille på din server. Båda sidor är överens om tid, plats och vinstvillkor. Resultaten matar in ett gillesrekord."
-      },
-      "duels": {
-        "title": "1v1-dueller med ELO",
-        "body": "Spelare utmanar varandra över hela servern. Pingisförhandlingar, ömsesidig bekräftelse av resultat, ELO-betyg, tummen upp/ner-rykte och en servertopplista."
-      },
-      "discord": {
-        "title": "Discord-botintegration",
-        "body": "@everyone-påminnelser 1 dag, 1 timme och 20 minuter före varje händelse. Slash-kommandon /upcoming och /signup. Direktmeddelanden för händelser i dubbla livscykeln."
-      },
-      "multiGuild": {
-        "title": "Multigile från dag ett",
-        "body": "Varje gille har sina egna administratörer, medlemmar, evenemang och Discord-kanal. Superadministratörer hanterar plattformen. Slugs är permanenta; allt annat är konfigurerbart."
-      },
-      "i18n": {
-        "title": "17 språk",
-        "body": "Automatiskt översatt användargränssnitt till engelska, franska, tyska, spanska, ryska, ukrainska, kinesiska, japanska, koreanska, portugisiska, italienska, indonesiska, nederländska, turkiska, polska, vietnamesiska och svenska."
-      }
-    },
-    "screenshots": {
-      "heading": "Hur det ser ut",
-      "eventAdmin": "Administratörspanel för evenemang — laguppställningar, ledarskapsförfrågningar, väntelista, närvaro.",
-      "duels": "Duelldetaljersida — matchup, ELO-betyg, resultatchip, plats och regler.",
-      "leaderboard": "Serverns topplista — ELO-rankade spelare, topp 3-marker, din ranking har dykt upp.",
-      "discord": "Discord-påminnelser — automatiska @everyone-pingar före varje evenemang."
-    },
-    "bottomCta": {
-      "heading": "Sluta förlora medlemmar på grund av friktion.",
-      "body": "Snurra upp ett gille på 30 sekunder. Gratis för alltid, öppen källkod, inget kreditkort."
-    },
-    "footer": {
-      "builtWith": "Byggt med Next.js, Drizzle, Auth.js och Discord API. Gratis och öppen källkod.",
-      "viewSource": "Visa källa på GitHub",
-      "help": "Hjälp"
+  "alerts": {
+    "heading": "{count, plural, one {# notification} andra {# notifications} }",
+    "discord_unlinked": {
+      "title": "Länka Discord för att aktivera dubbla DM:n",
+      "body": "Du har registrerat dig hos Google. Länka ett Discord-konto så att boten kan skicka ett direktmeddelande till dig när någon utmanar dig på en duell.",
+      "action": "Länk Discord →"
     }
   }
 }

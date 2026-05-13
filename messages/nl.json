@@ -38,7 +38,8 @@
     "createGuild": "Maak een gilde aan",
     "adminHelp": "Admin Help",
     "help": "Hulp",
-    "myAccount": "Mijn account"
+    "myAccount": "Mijn account",
+    "auditLog": "Auditlogboek"
   },
   "topBar": {
     "notifications": "Meldingen",
@@ -57,7 +58,10 @@
   },
   "footer": {
     "tagline": "DE STICHTING ROEPT OP. GEEF SAMEN ANTWOORD.",
-    "feedback": "FEEDBACK"
+    "feedback": "FEEDBACK",
+    "discordSupport": "DISCORD-ONDERSTEUNING",
+    "terms": "VOORWAARDEN",
+    "privacy": "PRIVACY"
   },
   "feedback": {
     "reportBug": "Een bug melden",
@@ -69,7 +73,6 @@
   },
   "events": {
     "title": "Evenementen",
-    "noEvents": "Nog geen evenementen.",
     "starts": "Begint",
     "addAllToCalendar": "Alles toevoegen aan de kalender",
     "addToCalendar": "Voeg toe aan agenda",
@@ -89,7 +92,11 @@
     "startTime": "Aanvangstijd:",
     "signupCloses": "Aanmelding sluit:",
     "slotsLabel": "Slots:",
-    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk"
+    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk",
+    "noEvents": "Geen aankomende evenementen.",
+    "noPastEvents": "Nog geen eerdere evenementen.",
+    "upcoming": "Aanstaande",
+    "past": "Verleden"
   },
   "eventCard": {
     "deleted": "Verwijderd",
@@ -426,7 +433,15 @@
     "deleteButton": "Mijn account verwijderen",
     "deleting": "Verwijderen…",
     "deleteConfirm": "Wil je je account verwijderen? Dan word je uit je gilde verwijderd, worden al je aanmeldingen gewist en wordt de koppeling met Google/Discord verbroken. Dit kan niet ongedaan worden gemaakt.",
-    "language": "Taal"
+    "language": "Taal",
+    "discord": {
+      "heading": "Directe berichten via Discord",
+      "reachableTitle": "Discord-gebruikers-ID opgeslagen",
+      "reachableBody": "De bot kan je via DM berichten sturen over duels. Je kunt je ID hieronder bijwerken of verwijderen.",
+      "unreachableBody": "Plak hieronder je Discord-gebruikers-ID zodat de bot je via DM op de hoogte kan houden van dueluitdagingen, acceptaties, afwijzingen en uitslagen. Zonder je ID zie je alles nog steeds op de website, maar ontvang je geen meldingen van Discord.",
+      "idLabel": "Discord-gebruikers-ID",
+      "idHelp": "Schakel in Discord de ontwikkelaarsmodus in (Gebruikersinstellingen → Geavanceerd), klik vervolgens met de rechtermuisknop op je eigen profiel en kies 'Gebruikers-ID kopiëren'. Dit is een nummer van 17 tot 20 cijfers. We verifiëren het eigenaarschap niet. Als je ooit een ongewenst privébericht van de bot ontvangt, schakel dan 'Directe berichten van serverleden toestaan' uit in je privacyinstellingen van Discord."
+    }
   },
   "errors": {
     "forbidden": "Verboden",
@@ -534,9 +549,9 @@
     "inviteBot": {
       "intro": "Herinneringen en slash-commando's zijn afhankelijk van een Discord-bot die de beheerder al heeft geïmplementeerd. Om deze te koppelen aan je Discord-server:",
       "step1Intro": "Vraag de installatie-URL aan uw websitebeheerder. Deze ziet er als volgt uit:",
-      "step1Note": "Het gedeelte permissions=133120 heeft betrekking op 'Berichten verzenden' en 'Iedereen taggen'. Beide zijn vereist; zonder 'Iedereen taggen' wordt de @iedereen in herinneringen als platte tekst weergegeven en wordt niemand getagd.",
       "step2": "Open de installatie-URL in een browser. Kies de Discord-server waar je de bot wilt installeren. Je hebt de machtiging 'Server beheren' nodig voor die server. Klik op 'Autoriseren'.",
-      "step3": "Controleer of de bot in de ledenlijst van je Discord-server verschijnt. Dat is alles — er is geen configuratie per bot nodig aan de Discord-kant."
+      "step3": "Controleer of de bot in de ledenlijst van je Discord-server verschijnt. Dat is alles — er is geen configuratie per bot nodig aan de Discord-kant.",
+      "step1Note": "Het gedeelte permissions=2147616768 heeft betrekking op Slash Commands, Send Messages en Mention Everyone. Beide zijn vereist; zonder Mention Everyone wordt @everyone in herinneringen als platte tekst weergegeven en wordt niemand getagd."
     },
     "discordChannel": {
       "intro": "De bot plaatst herinneringen in een kanaal naar keuze. Om dit te configureren:",
@@ -571,6 +586,76 @@
       "reminders": "De herinneringen worden niet verzonden. Controleer /api/health — als bot.lastPollStartedAt meer dan ongeveer 5 minuten achterloopt op de huidige tijd, zit de poller vast. Superbeheerders kunnen ook een POST-verzoek sturen naar /api/admin/bot/poll-now om een pollcyclus af te dwingen.",
       "rescheduled": "Een evenement is verplaatst en mensen ontvangen geen nieuwe melding. Controleer of de tijd daadwerkelijk is gewijzigd (vergelijk met de vorige waarde). De bot verstuurt alleen herinneringen waarvan het tijdsvenster nog voor de nieuwe tijd ligt. Als de nieuwe tijd bijvoorbeeld over 30 minuten is, wordt alleen de herinnering van 20 minuten verstuurd, niet die van 24 uur.",
       "movedSquad": "Een speler is aan het verkeerde team toegewezen nadat ik hem verplaatst had. De badge 'VERPLAATST' betekent dat de toewijzing afwijkt van de voorkeur. Om dit ongedaan te maken, wijzig je de rol/het team via het keuzemenu of gebruik je de knop 'Verplaatsen naar team N' om de speler terug te zetten."
+    }
+  },
+  "landing": {
+    "hero": {
+      "kicker": "Gildebetrokkenheid, niveau omhoog",
+      "headline": "Je leden zullen komen opdagen. Je team wordt sterker.",
+      "subhead": "Vervang rommelige Discord-threads door één centrale plek voor evenementaanmeldingen, oefenwedstrijden, 1-tegen-1 duels en een scorebord. Automatische herinneringen, direct aanmelden en vriendschappelijke competitie die je team actief houdt.",
+      "signIn": "Meld je aan met Google of Discord",
+      "browseGuilds": "Bekijk openbare gilden"
+    },
+    "stats": {
+      "guilds": "Gilden",
+      "events": "Evenementen organiseren",
+      "duels": "Duels gespeeld",
+      "players": "Spelers"
+    },
+    "engagement": {
+      "kicker": "Het probleem dat we oplossen",
+      "heading": "Gilden verliezen leden door onderlinge conflicten.",
+      "body": "Evenementenplanning verborgen in Discord-threads. Aanmeldingen bijgehouden in een spreadsheet die iemand vergeten is bij te werken. Herinneringen die niet werden verzonden. Spelers die niet meer opdoken omdat er niets was dat hen teruglokte. Foundation Event Organizer lost dit allemaal op.",
+      "beforeTitle": "Voor",
+      "beforeBody": "Rommelige Discord-gesprekken, verloren aanmeldingen, gemiste herinneringen, geen overzicht van wie er daadwerkelijk aanwezig was — en leden die langzaam afhaken.",
+      "afterTitle": "Na",
+      "afterBody": "Eén inschrijfformulier per evenement. Automatische Discord-herinneringen 1 dag, 1 uur en 20 minuten van tevoren. Aanwezigheid en beoordelingen worden bijgehouden. Oefenwedstrijden en duels met scoreborden en ELO-punten. Een duidelijke reden om in te loggen.",
+      "outcomeTitle": "Resultaat",
+      "outcomeBody": "Meer evenementen met volledige deelnemerslijsten. Meer competitie tussen verschillende gilden. Meer redenen voor je leden om terug te komen – en een overzicht van wie daadwerkelijk zijn steentje bijdraagt."
+    },
+    "features": {
+      "heading": "Wat zit erin?",
+      "matches": {
+        "title": "Wedstrijdevenementen",
+        "body": "Twee teams, leiderschapsposities, automatische wachtlijst, aanwezigheidsregistratie, beoordelingen na afloop — alles wat je nodig hebt om een terugkerend evenement in Shadowfront-stijl te organiseren."
+      },
+      "scrims": {
+        "title": "Gilde-tegen-gilde oefenwedstrijden",
+        "body": "Stel een oefenwedstrijd voor tegen een andere guild op jouw server. Beide partijen spreken een tijd, locatie en winstvoorwaarden af. De resultaten worden bijgehouden in het guildrecord."
+      },
+      "duels": {
+        "title": "1-tegen-1 duels met ELO",
+        "body": "Spelers dagen elkaar uit op de server. Pingpongonderhandelingen, wederzijdse bevestiging van resultaten, ELO-ratings, reputatiepunten (duim omhoog/omlaag) en een serverklassement."
+      },
+      "discord": {
+        "title": "Discord bot-integratie",
+        "body": "@iedereen herinneringen 1 dag, 1 uur en 20 minuten voor elk evenement. Slash-commando's /upcoming en /signup. Directe berichten voor levenscyclusgebeurtenissen van duels."
+      },
+      "multiGuild": {
+        "title": "Multi-gilde vanaf dag één.",
+        "body": "Elke gilde heeft zijn eigen beheerders, leden, evenementen en Discord-kanaal. Superbeheerders beheren het platform. Slugs zijn permanent; al het andere is configureerbaar."
+      },
+      "i18n": {
+        "title": "17 talen",
+        "body": "De gebruikersinterface wordt automatisch vertaald in het Engels, Frans, Duits, Spaans, Russisch, Oekraïens, Chinees, Japans, Koreaans, Portugees, Italiaans, Indonesisch, Nederlands, Turks, Pools, Vietnamees en Zweeds."
+      }
+    },
+    "screenshots": {
+      "heading": "Hoe het eruitziet",
+      "eventAdmin": "Evenementbeheerdashboard — teamopstellingen, leiderschapsverzoeken, wachtlijst, aanwezigheid.",
+      "duels": "Dueldetailspagina — tegenstander, ELO-rating, resultaatfiche, locatie en regels.",
+      "leaderboard": "Serverklassement — ELO-spelers, top 3 chips, jouw rang wordt weergegeven.",
+      "discord": "Discord-herinneringen — automatische meldingen aan @iedereen vóór elk evenement."
+    },
+    "bottomCta": {
+      "heading": "Voorkom dat leden verloren gaan door wrijving.",
+      "body": "Start een gilde in 30 seconden. Voor altijd gratis, open source, geen creditcard nodig."
+    },
+    "footer": {
+      "builtWith": "Ontwikkeld met Next.js, Drizzle, Auth.js en de Discord API. Gratis en open source.",
+      "viewSource": "Bekijk de broncode op GitHub",
+      "help": "Hulp",
+      "discordSupport": "Discord-ondersteuning"
     }
   },
   "playerHelp": {
@@ -642,73 +727,12 @@
     },
     "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
   },
-  "landing": {
-    "hero": {
-      "kicker": "Gildebetrokkenheid, niveau omhoog",
-      "headline": "Je leden zullen komen opdagen. Je team wordt sterker.",
-      "subhead": "Vervang rommelige Discord-threads door één centrale plek voor evenementaanmeldingen, oefenwedstrijden, 1-tegen-1 duels en een scorebord. Automatische herinneringen, direct aanmelden en vriendschappelijke competitie die je team actief houdt.",
-      "signIn": "Meld je aan met Google of Discord",
-      "browseGuilds": "Bekijk openbare gilden"
-    },
-    "stats": {
-      "guilds": "Gilden",
-      "events": "Evenementen organiseren",
-      "duels": "Duels gespeeld",
-      "players": "Spelers"
-    },
-    "engagement": {
-      "kicker": "Het probleem dat we oplossen",
-      "heading": "Gilden verliezen leden door onderlinge conflicten.",
-      "body": "Evenementenplanning verborgen in Discord-threads. Aanmeldingen bijgehouden in een spreadsheet die iemand vergeten is bij te werken. Herinneringen die niet werden verzonden. Spelers die niet meer opdoken omdat er niets was dat hen teruglokte. Foundation Event Organizer lost dit allemaal op.",
-      "beforeTitle": "Voor",
-      "beforeBody": "Rommelige Discord-gesprekken, verloren aanmeldingen, gemiste herinneringen, geen overzicht van wie er daadwerkelijk aanwezig was — en leden die langzaam afhaken.",
-      "afterTitle": "Na",
-      "afterBody": "Eén inschrijfformulier per evenement. Automatische Discord-herinneringen 1 dag, 1 uur en 20 minuten van tevoren. Aanwezigheid en beoordelingen worden bijgehouden. Oefenwedstrijden en duels met scoreborden en ELO-punten. Een duidelijke reden om in te loggen.",
-      "outcomeTitle": "Resultaat",
-      "outcomeBody": "Meer evenementen met volledige deelnemerslijsten. Meer competitie tussen verschillende gilden. Meer redenen voor je leden om terug te komen – en een overzicht van wie daadwerkelijk zijn steentje bijdraagt."
-    },
-    "features": {
-      "heading": "Wat zit erin?",
-      "matches": {
-        "title": "Wedstrijdevenementen",
-        "body": "Twee teams, leiderschapsposities, automatische wachtlijst, aanwezigheidsregistratie, beoordelingen na afloop — alles wat je nodig hebt om een terugkerend evenement in Shadowfront-stijl te organiseren."
-      },
-      "scrims": {
-        "title": "Gilde-tegen-gilde oefenwedstrijden",
-        "body": "Stel een oefenwedstrijd voor tegen een andere guild op jouw server. Beide partijen spreken een tijd, locatie en winstvoorwaarden af. De resultaten worden bijgehouden in het guildrecord."
-      },
-      "duels": {
-        "title": "1-tegen-1 duels met ELO",
-        "body": "Spelers dagen elkaar uit op de server. Pingpongonderhandelingen, wederzijdse bevestiging van resultaten, ELO-ratings, reputatiepunten (duim omhoog/omlaag) en een serverklassement."
-      },
-      "discord": {
-        "title": "Discord bot-integratie",
-        "body": "@iedereen herinneringen 1 dag, 1 uur en 20 minuten voor elk evenement. Slash-commando's /upcoming en /signup. Directe berichten voor levenscyclusgebeurtenissen van duels."
-      },
-      "multiGuild": {
-        "title": "Multi-gilde vanaf dag één.",
-        "body": "Elke gilde heeft zijn eigen beheerders, leden, evenementen en Discord-kanaal. Superbeheerders beheren het platform. Slugs zijn permanent; al het andere is configureerbaar."
-      },
-      "i18n": {
-        "title": "17 talen",
-        "body": "De gebruikersinterface wordt automatisch vertaald in het Engels, Frans, Duits, Spaans, Russisch, Oekraïens, Chinees, Japans, Koreaans, Portugees, Italiaans, Indonesisch, Nederlands, Turks, Pools, Vietnamees en Zweeds."
-      }
-    },
-    "screenshots": {
-      "heading": "Hoe het eruitziet",
-      "eventAdmin": "Evenementbeheerdashboard — teamopstellingen, leiderschapsverzoeken, wachtlijst, aanwezigheid.",
-      "duels": "Dueldetailspagina — tegenstander, ELO-rating, resultaatfiche, locatie en regels.",
-      "leaderboard": "Serverklassement — ELO-spelers, top 3 chips, jouw rang wordt weergegeven.",
-      "discord": "Discord-herinneringen — automatische meldingen aan @iedereen vóór elk evenement."
-    },
-    "bottomCta": {
-      "heading": "Voorkom dat leden verloren gaan door wrijving.",
-      "body": "Start een gilde in 30 seconden. Voor altijd gratis, open source, geen creditcard nodig."
-    },
-    "footer": {
-      "builtWith": "Ontwikkeld met Next.js, Drizzle, Auth.js en de Discord API. Gratis en open source.",
-      "viewSource": "Bekijk de broncode op GitHub",
-      "help": "Hulp"
+  "alerts": {
+    "heading": "{count, plural, one {# notification} andere {# notifications} }",
+    "discord_unlinked": {
+      "title": "Link naar Discord om privéberichten tussen twee spelers mogelijk te maken.",
+      "body": "Je hebt je aangemeld met Google. Koppel een Discord-account zodat de bot je een privébericht kan sturen als iemand je uitdaagt voor een duel.",
+      "action": "Link naar Discord →"
     }
   }
 }

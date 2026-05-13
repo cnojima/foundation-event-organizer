@@ -557,7 +557,7 @@
     "inviteBot": {
       "intro": "Reminders and slash commands rely on a Discord bot the operator already deployed. To wire it up to your Discord server:",
       "step1Intro": "Get the install URL from your site operator. It looks like:",
-      "step1Note": "The permissions=133120 part covers Send Messages and Mention Everyone. Both are required — without Mention Everyone the @everyone in reminders renders as plain text and doesn't ping anyone.",
+      "step1Note": "The permissions=2147616768 part covers Slash Commands, Send Messages and Mention Everyone. Both are required — without Mention Everyone the @everyone in reminders renders as plain text and doesn't ping anyone.",
       "step2": "Open the install URL in a browser. Pick the Discord server you want the bot in. You need the Manage Server permission in that server. Click Authorize.",
       "step3": "Confirm the bot appears in your Discord server's member list. That's it — no per-bot configuration on the Discord side."
     },
