@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { events, guilds, signups } from "@/db/schema";
-import { and, desc, eq, inArray, isNull } from "drizzle-orm";
+import { and, eq, inArray, isNull } from "drizzle-orm";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -9,13 +9,17 @@ import { auth } from "@/auth";
 import { requireSignedInPage, resolveAdminGuildId } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
-import { squadTimes } from "@/lib/event-times";
+import {
+  effectiveStartIso,
+  isEventPast,
+  squadTimes,
+} from "@/lib/event-times";
 import { LandingPage } from "@/components/landing-page";
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ guildId?: string }>;
+  searchParams: Promise<{ guildId?: string; past?: string }>;
 }) {
   const session = await auth();
   // Signed-out visitors get the public marketing landing instead of being
@@ -31,7 +35,8 @@ export default async function Home({
 
   // Super-admins can pin a target guild via ?guildId=. Regular users always
   // resolve back to their own guildId.
-  const { guildId: requestedGuildId } = await searchParams;
+  const { guildId: requestedGuildId, past: pastParam } = await searchParams;
+  const showPast = pastParam === "1";
   const targetGuildId = await resolveAdminGuildId(membership, requestedGuildId);
   if (!targetGuildId) redirect("/guilds");
 
@@ -41,11 +46,33 @@ export default async function Home({
     ? await db.query.guilds.findFirst({ where: eq(guilds.id, targetGuildId) })
     : null;
 
-  const guildEvents = await db
+  const allGuildEvents = await db
     .select()
     .from(events)
-    .where(and(eq(events.guildId, targetGuildId), isNull(events.deletedAt)))
-    .orderBy(desc(events.createdAt));
+    .where(and(eq(events.guildId, targetGuildId), isNull(events.deletedAt)));
+
+  // Partition by derived end time (latest scheduled time + 6h padding —
+  // see effectiveEndIso). Events with nothing scheduled are treated as
+  // upcoming (still being planned). Sort: upcoming ascending by start
+  // (closest first), past descending by start (most recent first).
+  const now = new Date();
+  const upcomingEvents: typeof allGuildEvents = [];
+  const pastEvents: typeof allGuildEvents = [];
+  for (const e of allGuildEvents) {
+    (isEventPast(e, now) ? pastEvents : upcomingEvents).push(e);
+  }
+  const FAR_FUTURE = "9999";
+  upcomingEvents.sort(
+    (a, b) =>
+      (effectiveStartIso(a) ?? FAR_FUTURE).localeCompare(
+        effectiveStartIso(b) ?? FAR_FUTURE
+      )
+  );
+  pastEvents.sort(
+    (a, b) =>
+      (effectiveStartIso(b) ?? "").localeCompare(effectiveStartIso(a) ?? "")
+  );
+  const guildEvents = showPast ? pastEvents : upcomingEvents;
 
   // Which of those events has the current user already signed up for? Drives
   // the "needs your attention" emphasis on cards below. Includes scrim events
@@ -70,7 +97,7 @@ export default async function Home({
     }
   }
 
-  const now = new Date().toISOString();
+  const nowIso = now.toISOString();
   const t = await getTranslations("events");
 
   // Only offer the bulk calendar export when at least one event actually has
@@ -88,11 +115,11 @@ export default async function Home({
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
-      <div className="mb-6 flex items-center justify-between gap-4">
+      <div className="mb-4 flex items-center justify-between gap-4">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900">
           {actingGuild ? `${actingGuild.name} — ${t("title")}` : t("title")}
         </h1>
-        {hasAnyScheduled && (
+        {hasAnyScheduled && !showPast && (
           <CalendarDownloadLink
             href="/api/events/all/ics"
             label={t("addAllToCalendar")}
@@ -100,14 +127,25 @@ export default async function Home({
         )}
       </div>
 
+      <EventsTabs
+        showPast={showPast}
+        upcomingCount={upcomingEvents.length}
+        pastCount={pastEvents.length}
+        guildIdParam={isImpersonating ? targetGuildId : null}
+        upcomingLabel={t("upcoming")}
+        pastLabel={t("past")}
+      />
+
       {guildEvents.length === 0 ? (
-        <p className="text-gray-500">{t("noEvents")}</p>
+        <p className="text-gray-500">
+          {showPast ? t("noPastEvents") : t("noEvents")}
+        </p>
       ) : (
         <div className="space-y-3">
           {guildEvents.map((event) => {
             const isOpen =
-              (!event.signupOpens || event.signupOpens <= now) &&
-              (!event.signupCloses || event.signupCloses > now);
+              (!event.signupOpens || event.signupOpens <= nowIso) &&
+              (!event.signupCloses || event.signupCloses > nowIso);
             const isMatch = event.kind === "match";
             const isScrim = event.kind === "scrim";
             const hasRoster = isMatch || isScrim;
@@ -195,5 +233,59 @@ export default async function Home({
         </div>
       )}
     </div>
+  );
+}
+
+function EventsTabs({
+  showPast,
+  upcomingCount,
+  pastCount,
+  guildIdParam,
+  upcomingLabel,
+  pastLabel,
+}: {
+  showPast: boolean;
+  upcomingCount: number;
+  pastCount: number;
+  guildIdParam: string | null;
+  upcomingLabel: string;
+  pastLabel: string;
+}) {
+  const upcomingHref = guildIdParam ? `/?guildId=${guildIdParam}` : "/";
+  const pastHref = guildIdParam
+    ? `/?guildId=${guildIdParam}&past=1`
+    : "/?past=1";
+  return (
+    <div className="mb-4 flex gap-1 border-b border-gray-200 text-sm font-semibold">
+      <Tab href={upcomingHref} active={!showPast}>
+        {upcomingLabel} ({upcomingCount})
+      </Tab>
+      <Tab href={pastHref} active={showPast}>
+        {pastLabel} ({pastCount})
+      </Tab>
+    </div>
+  );
+}
+
+function Tab({
+  href,
+  active,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className={`-mb-px border-b-2 px-3 py-2 transition-colors ${
+        active
+          ? "border-violet-600 text-violet-700"
+          : "border-transparent text-gray-500 hover:text-gray-700"
+      }`}
+    >
+      {children}
+    </Link>
   );
 }

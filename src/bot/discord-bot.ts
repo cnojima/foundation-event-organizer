@@ -31,6 +31,11 @@ import { createSignup } from "@/lib/signups";
 // (smallest window is 25 min wide), large enough that DB pressure is trivial.
 const POLL_INTERVAL_MS = 5 * 60 * 1000;
 
+// Operator-visible heartbeat channel. Each poll cycle posts a one-line
+// summary here so we can spot silent gateway drops (the bot looks alive
+// but reminders stop firing). If this stream goes quiet, the bot is dead.
+const HEARTBEAT_CHANNEL_ID = "1503976552629796954";
+
 // Bot state on globalThis so the singleton survives Next.js compiling the
 // same module into multiple chunks (instrumentation.ts and route handlers
 // can otherwise end up with separate module instances and therefore
@@ -108,7 +113,7 @@ const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
 export function startBot(): void {
   const state = getState();
   if (state.started) return;
-  const token = process.env.DISCORD_BOT_TOKEN;
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
   if (!token) {
     console.log("[bot] DISCORD_BOT_TOKEN not set — skipping bot startup.");
     return;
@@ -238,6 +243,12 @@ async function runOnce(): Promise<PollMetrics> {
     console.log(
       `[bot] poll skipped reason=${reason} at=${startedIso} durationMs=${durationMs}`
     );
+    // Heartbeat even on skip — the channel listener cares "is the bot
+    // running?", and a skip reason is itself useful signal. Only path that
+    // can't heartbeat is `not-ready` (no client to send through).
+    if (reason !== "not-ready" && state.client?.isReady()) {
+      void sendHeartbeat(state.client, `skipped (${reason})`);
+    }
     return { pending: 0, sent: 0, failed: 0, durationMs };
   };
 
@@ -333,12 +344,39 @@ async function runOnce(): Promise<PollMetrics> {
   console.log(
     `[bot] poll done in ${durationMs}ms — events: pending=${pending.length} sent=${sent} failed=${failed} · duels: pending=${duelPending} sent=${duelSent} failed=${duelFailed}`
   );
+  void sendHeartbeat(
+    client,
+    `${durationMs}ms · events p=${pending.length} s=${sent} f=${failed} · duels p=${duelPending} s=${duelSent} f=${duelFailed}`
+  );
   return {
     pending: pending.length + duelPending,
     sent: sent + duelSent,
     failed: failed + duelFailed,
     durationMs,
   };
+}
+
+// One-line heartbeat to HEARTBEAT_CHANNEL_ID. Fire-and-forget — failures
+// here must never break the poll loop. Discord `<t:UNIX:T>` renders in the
+// viewer's local timezone, so the same message reads correctly for any
+// operator watching the channel.
+async function sendHeartbeat(client: Client, summary: string): Promise<void> {
+  try {
+    const channel = await client.channels.fetch(HEARTBEAT_CHANNEL_ID);
+    if (!channel || !channel.isTextBased() || !("send" in channel)) {
+      console.warn(
+        `[bot] heartbeat channel ${HEARTBEAT_CHANNEL_ID} not text-based; skipping`
+      );
+      return;
+    }
+    const ts = Math.floor(Date.now() / 1000);
+    await (channel as TextChannel).send({
+      content: `\u{1FAC0} poll <t:${ts}:T> · ${summary}`,
+      allowedMentions: { parse: [] },
+    });
+  } catch (err) {
+    console.error("[bot] heartbeat post failed:", err);
+  }
 }
 
 async function persistDiscordGuildIdIfNeeded(
@@ -371,7 +409,7 @@ export async function sendTestMessage(
   guildName: string,
   appGuildId?: string
 ): Promise<TestResult> {
-  const token = process.env.DISCORD_BOT_TOKEN;
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
   if (!token) {
     return {
       ok: false,
@@ -467,7 +505,7 @@ export type ScrimNotifyOutcome = {
 export async function sendScrimNotification(
   input: ScrimNotificationInput
 ): Promise<ScrimNotifyOutcome> {
-  const token = process.env.DISCORD_BOT_TOKEN;
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
 
   const [proposing, opposing] = await Promise.all([
     db.query.guilds.findFirst({
@@ -766,7 +804,7 @@ export type DuelNotifyOutcome = {
 export async function sendDuelNotification(
   input: DuelNotificationInput
 ): Promise<DuelNotifyOutcome> {
-  const token = process.env.DISCORD_BOT_TOKEN;
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
 
   const [proposing, opposing] = await Promise.all([
     db.query.users.findFirst({ where: eq(users.id, input.proposingUserId) }),
@@ -936,7 +974,7 @@ export async function sendGuildJoinAnnouncement(input: {
   joinedUserId: string;
   appBaseUrl: string;
 }): Promise<void> {
-  const token = process.env.DISCORD_BOT_TOKEN;
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
   if (!token) return;
 
   const [guild, joinedUser] = await Promise.all([
@@ -1053,7 +1091,7 @@ type EventNotificationInput = {
 export async function sendEventNotification(
   input: EventNotificationInput
 ): Promise<void> {
-  const token = process.env.DISCORD_BOT_TOKEN;
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
   if (!token) return;
 
   const guild = await db.query.guilds.findFirst({

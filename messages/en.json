@@ -80,7 +80,10 @@
   },
   "events": {
     "title": "Events",
-    "noEvents": "No events yet.",
+    "noEvents": "No upcoming events.",
+    "noPastEvents": "No past events yet.",
+    "upcoming": "Upcoming",
+    "past": "Past",
     "starts": "Starts",
     "addAllToCalendar": "Add All to Calendar",
     "addToCalendar": "Add to Calendar",

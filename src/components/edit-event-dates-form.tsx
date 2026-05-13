@@ -159,6 +159,9 @@ export function EditEventDatesForm({
               }
               // 10-minute increments: picker shows :00, :10, :20, :30, :40, :50.
               step={600}
+              // Render picker in 24-hour / DD-MM-YYYY format — see
+              // DatetimeLocalField for the rationale.
+              lang="en-GB"
               className="w-full border rounded px-2 py-1 text-sm"
             />
             <DatetimeLocalHint value={values[key]} />

@@ -50,6 +50,9 @@ export function CreateInviteForm({ guildId }: { guildId: string }) {
         <input
           name="expiresAt"
           type="datetime-local"
+          // 24-hour rendering to match the UTC label — see
+          // DatetimeLocalField for the rationale.
+          lang="en-GB"
           className="w-full border rounded px-2 py-1 text-sm"
         />
         <FieldHelp>Link stops working after this time (UTC). Blank = never expires.</FieldHelp>

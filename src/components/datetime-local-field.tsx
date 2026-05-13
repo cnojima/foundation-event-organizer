@@ -44,6 +44,12 @@ export function DatetimeLocalField({
         // step in seconds — 600 = 10 minutes, so the picker shows :00, :10,
         // :20, :30, :40, :50 only.
         step={600}
+        // The input is wall-clock UTC. en-GB makes Chrome render the picker
+        // in 24-hour format (and DD/MM/YYYY), which reads less like "local
+        // AM/PM time" than the en-US default. Browsers offer no way to make
+        // the native picker actually timezone-aware; this is the closest
+        // visual signal we can give.
+        lang="en-GB"
         className={className}
       />
       <input type="hidden" name={name} value={utcInputToIso(value)} />
