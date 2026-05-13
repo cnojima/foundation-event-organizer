@@ -23,10 +23,10 @@ export default async function JoinByCodePage({
   if (!invite || !isInviteUsable(invite)) {
     return (
       <div className="mx-auto max-w-md text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           Invite invalid
         </h1>
-        <p className="mt-2 text-sm text-gray-600">
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           This invite link has expired, been revoked, or is invalid. Ask your
           guild admin for a new one.
         </p>
@@ -40,7 +40,7 @@ export default async function JoinByCodePage({
   if (!guild) {
     return (
       <div className="mx-auto max-w-md text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           Guild not found
         </h1>
       </div>
@@ -58,10 +58,10 @@ export default async function JoinByCodePage({
   if (me?.guildId) {
     return (
       <div className="mx-auto max-w-md">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           Already in a guild
         </h1>
-        <p className="mt-2 text-sm text-gray-700">
+        <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
           You&apos;re a member of another guild. Leave it first, then come back to
           this link to join <strong>{guild.name}</strong>.
         </p>

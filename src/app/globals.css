@@ -1,8 +1,24 @@
 @import "tailwindcss";
 
+/*
+ * Tailwind v4 hooks the `dark:` prefix to whichever selector you register
+ * with @custom-variant. We use a class on <html> (set by next-themes), so
+ * `dark:bg-gray-900` activates when <html class="dark"> is present.
+ *
+ * `:where()` keeps the selector at specificity 0 so utilities can still be
+ * overridden by other classes normally.
+ */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  color-scheme: dark;
 }
 
 @theme inline {

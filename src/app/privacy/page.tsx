@@ -10,10 +10,10 @@ export default function PrivacyPolicyPage() {
   return (
     <article className="mx-auto max-w-3xl space-y-6 py-4">
       <header>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           Privacy Policy
         </h1>
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
           Last updated: {LAST_UPDATED}
         </p>
       </header>
@@ -84,7 +84,7 @@ export default function PrivacyPolicyPage() {
           If you provide a Discord User ID (or sign in with Discord), the
           Service&rsquo;s bot may DM you about duels, scrim proposals, or
           event reminders. You can disable DMs in{" "}
-          <Link className="text-violet-700 underline" href="/me">
+          <Link className="text-violet-700 underline dark:text-violet-300" href="/me">
             My Account
           </Link>{" "}
           at any time. Discord&rsquo;s own &ldquo;Allow direct messages from
@@ -105,7 +105,7 @@ export default function PrivacyPolicyPage() {
         <p>
           We keep your account data while your account exists. When you
           delete your account from{" "}
-          <Link className="text-violet-700 underline" href="/me">
+          <Link className="text-violet-700 underline dark:text-violet-300" href="/me">
             My Account
           </Link>
           , we remove your user row, your active signups, and your OAuth
@@ -128,7 +128,7 @@ export default function PrivacyPolicyPage() {
         <p>
           You can review, edit, or delete your account data at any time
           from{" "}
-          <Link className="text-violet-700 underline" href="/me">
+          <Link className="text-violet-700 underline dark:text-violet-300" href="/me">
             My Account
           </Link>
           . For data-portability requests or other questions, reach out via
@@ -151,9 +151,9 @@ export default function PrivacyPolicyPage() {
         </p>
       </Section>
 
-      <footer className="border-t border-gray-200 pt-4 text-xs text-gray-500">
+      <footer className="border-t border-gray-200 pt-4 text-xs text-gray-500 dark:border-gray-800 dark:text-gray-400">
         See also our{" "}
-        <Link className="text-violet-700 underline" href="/tos">
+        <Link className="text-violet-700 underline dark:text-violet-300" href="/tos">
           Terms of Service
         </Link>
         .
@@ -171,8 +171,8 @@ function Section({
 }) {
   return (
     <section className="space-y-2">
-      <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
-      <div className="space-y-2 text-sm leading-relaxed text-gray-700">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+      <div className="space-y-2 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
         {children}
       </div>
     </section>

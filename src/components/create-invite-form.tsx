@@ -41,10 +41,10 @@ export function CreateInviteForm({ guildId }: { guildId: string }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="grid grid-cols-3 gap-3 rounded-lg border bg-white p-4"
+      className="grid grid-cols-3 gap-3 rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
     >
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
           Expires at (UTC, optional)
         </label>
         <input
@@ -53,19 +53,19 @@ export function CreateInviteForm({ guildId }: { guildId: string }) {
           // 24-hour rendering to match the UTC label — see
           // DatetimeLocalField for the rationale.
           lang="en-GB"
-          className="w-full border rounded px-2 py-1 text-sm"
+          className="w-full border rounded px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
         />
         <FieldHelp>Link stops working after this time (UTC). Blank = never expires.</FieldHelp>
       </div>
       <div>
-        <label className="block text-xs font-medium text-gray-600 mb-1">
+        <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
           Max uses (optional)
         </label>
         <input
           name="maxUses"
           type="number"
           min={1}
-          className="w-full border rounded px-2 py-1 text-sm"
+          className="w-full border rounded px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
         />
         <FieldHelp>Number of joins allowed. Blank = unlimited.</FieldHelp>
       </div>
@@ -78,7 +78,7 @@ export function CreateInviteForm({ guildId }: { guildId: string }) {
           {submitting ? "Creating..." : "Create"}
         </button>
       </div>
-      {error && <p className="col-span-3 text-xs text-red-600">{error}</p>}
+      {error && <p className="col-span-3 text-xs text-red-600 dark:text-red-300">{error}</p>}
     </form>
   );
 }

@@ -23,7 +23,7 @@ export default async function ScrimmagesAdminPage({
   if (!targetGuildId) {
     return (
       <main className="max-w-4xl mx-auto p-6">
-        <p className="text-red-600">Guild not found.</p>
+        <p className="text-red-600 dark:text-red-300">Guild not found.</p>
       </main>
     );
   }
@@ -96,12 +96,12 @@ export default async function ScrimmagesAdminPage({
   return (
     <main className="max-w-4xl mx-auto p-6">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {actingGuild ? `${actingGuild.name} — Scrimmages` : "Scrimmages"}
         </h1>
         <Link
@@ -206,14 +206,14 @@ function Section({
     <section className="mb-8">
       <h2
         className={`mb-3 text-lg font-semibold ${
-          muted ? "text-gray-500" : "text-gray-900"
+          muted ? "text-gray-500 dark:text-gray-400" : "text-gray-900 dark:text-gray-100"
         }`}
       >
         {title}
       </h2>
       {rows.length === 0 ? (
         emptyMessage ? (
-          <p className="text-sm text-gray-500">{emptyMessage}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{emptyMessage}</p>
         ) : null
       ) : (
         <div className="space-y-2">
@@ -268,39 +268,39 @@ function ScrimCard({
 
   return (
     <div
-      className={`rounded-lg border bg-white p-4 ${
-        muted ? "border-gray-200 opacity-80" : "border-gray-200"
+      className={`rounded-lg border bg-white p-4 dark:bg-gray-900 ${
+        muted ? "border-gray-200 opacity-80 dark:border-gray-800" : "border-gray-200 dark:border-gray-800"
       }`}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-gray-900">vs {opponentLabel}</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">vs {opponentLabel}</span>
             <StatusChip status={row.status} outcome={outcome} />
           </div>
-          <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500">
+          <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500 dark:text-gray-400">
             <span>
               <DateTime iso={row.proposedGameTime} showUTC={false} />
             </span>
             <span>Location: {row.location}</span>
           </div>
-          <p className="mt-2 text-sm text-gray-700">
+          <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
             <span className="font-semibold">Win:</span> {row.winCondition}
           </p>
           {row.message && (
-            <p className="mt-1 text-sm text-gray-600 whitespace-pre-line">
+            <p className="mt-1 text-sm text-gray-600 whitespace-pre-line dark:text-gray-400">
               {row.message}
             </p>
           )}
           {row.respondedByUserId && row.respondedAt && (
-            <p className="mt-2 text-[11px] text-gray-400">
+            <p className="mt-2 text-[11px] text-gray-400 dark:text-gray-500">
               {row.status === "accepted" ? "Accepted" : "Responded"} by{" "}
               {userLabel(userById.get(row.respondedByUserId))} ·{" "}
               <DateTime iso={row.respondedAt} mode="date" />
             </p>
           )}
           {row.result && row.resultDeclaredAt && (
-            <p className="mt-1 text-[11px] text-gray-400">
+            <p className="mt-1 text-[11px] text-gray-400 dark:text-gray-500">
               Result by{" "}
               {userLabel(
                 row.resultDeclaredByUserId
@@ -311,7 +311,7 @@ function ScrimCard({
             </p>
           )}
           {row.resultNotes && (
-            <p className="mt-1 text-xs text-gray-600 italic">
+            <p className="mt-1 text-xs text-gray-600 italic dark:text-gray-400">
               &ldquo;{row.resultNotes}&rdquo;
             </p>
           )}
@@ -331,7 +331,7 @@ function ScrimCard({
               {eventId && (
                 <Link
                   href={`/admin/event/${eventId}${guildSuffix}`}
-                  className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+                  className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
                 >
                   Manage event
                 </Link>
@@ -369,10 +369,10 @@ function StatusChip({
 }) {
   if (status === "accepted" && outcome) {
     const styles: Record<string, string> = {
-      W: "border-emerald-200 bg-emerald-50 text-emerald-700",
-      L: "border-red-200 bg-red-50 text-red-700",
-      D: "border-amber-200 bg-amber-50 text-amber-700",
-      NC: "border-gray-200 bg-gray-50 text-gray-600",
+      W: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+      L: "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300",
+      D: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+      NC: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
     };
     return (
       <span
@@ -383,11 +383,11 @@ function StatusChip({
     );
   }
   const styles: Record<string, string> = {
-    pending: "border-amber-200 bg-amber-50 text-amber-700",
-    accepted: "border-violet-200 bg-violet-50 text-violet-700",
-    declined: "border-gray-200 bg-gray-50 text-gray-600",
-    withdrawn: "border-gray-200 bg-gray-50 text-gray-600",
-    cancelled: "border-gray-200 bg-gray-50 text-gray-600",
+    pending: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+    accepted: "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300",
+    declined: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
+    withdrawn: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
+    cancelled: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
   };
   return (
     <span

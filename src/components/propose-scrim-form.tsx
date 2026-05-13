@@ -98,7 +98,7 @@ export function ProposeScrimForm({ opponents }: { opponents: OpponentOption[] })
 
   if (opponents.length === 0) {
     return (
-      <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
         No other guilds share your server number. Ask the other guild&apos;s
         admin to set their Server # in Guild Settings (or set yours if missing).
       </div>
@@ -108,14 +108,14 @@ export function ProposeScrimForm({ opponents }: { opponents: OpponentOption[] })
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 rounded-lg border border-gray-200 bg-white p-4"
+      className="space-y-4 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
     >
       <div>
         <label className="block text-sm font-medium mb-1">Opponent *</label>
         <select
           value={opposingGuildId}
           onChange={(e) => setOpposingGuildId(e.target.value)}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         >
           {opponents.map((g) => (
             <option key={g.id} value={g.id}>
@@ -142,7 +142,7 @@ export function ProposeScrimForm({ opponents }: { opponents: OpponentOption[] })
         <select
           value={locationChoice}
           onChange={(e) => setLocationChoice(e.target.value)}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         >
           {DEFAULT_SCRIM_LOCATIONS.map((loc) => (
             <option key={loc} value={loc}>
@@ -157,7 +157,7 @@ export function ProposeScrimForm({ opponents }: { opponents: OpponentOption[] })
             value={customLocation}
             onChange={(e) => setCustomLocation(e.target.value)}
             placeholder="Custom location"
-            className="mt-2 w-full border rounded px-3 py-2"
+            className="mt-2 w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
         )}
         <FieldHelp>Where the scrim will take place.</FieldHelp>
@@ -172,7 +172,7 @@ export function ProposeScrimForm({ opponents }: { opponents: OpponentOption[] })
           onChange={(e) => setWinCondition(e.target.value)}
           rows={2}
           placeholder="e.g. First team to 3 capture points, or hold the central fortress for 5 minutes."
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
         <FieldHelp>
           Agree the rules up front. Visible to both sides; declared with the result.
@@ -188,12 +188,12 @@ export function ProposeScrimForm({ opponents }: { opponents: OpponentOption[] })
           onChange={(e) => setMessage(e.target.value)}
           rows={3}
           placeholder="Anything else to add — house rules, format, etc."
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
       </div>
 
       {error && (
-        <p className="rounded border border-red-200 bg-red-50 p-2 text-sm text-red-700">
+        <p className="rounded border border-red-200 bg-red-50 p-2 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">
           {error}
         </p>
       )}

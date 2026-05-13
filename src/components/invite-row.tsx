@@ -46,15 +46,15 @@ export function InviteRow({
 
   return (
     <div
-      className={`flex items-center justify-between gap-4 rounded-lg border bg-white px-4 py-3 ${
-        usable ? "border-gray-200" : "border-gray-100 opacity-60"
+      className={`flex items-center justify-between gap-4 rounded-lg border bg-white px-4 py-3 dark:bg-gray-900 ${
+        usable ? "border-gray-200 dark:border-gray-800" : "border-gray-100 opacity-60 dark:border-gray-800"
       }`}
     >
       <div className="min-w-0 flex-1">
-        <code className="block truncate font-mono text-sm text-gray-900">
+        <code className="block truncate font-mono text-sm text-gray-900 dark:text-gray-100">
           {url}
         </code>
-        <p className="mt-1 text-xs text-gray-500">
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
           Code <span className="font-mono">{code}</span> · Used {usesCount}
           {maxUses != null && ` / ${maxUses}`}
           {expiresAt && ` · Expires ${new Date(expiresAt).toLocaleString()}`}
@@ -65,7 +65,7 @@ export function InviteRow({
         <button
           type="button"
           onClick={copy}
-          className="rounded border border-gray-300 bg-white px-2 py-1 font-semibold text-gray-700 hover:bg-gray-50"
+          className="rounded border border-gray-300 bg-white px-2 py-1 font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
         >
           {copied ? "Copied!" : "Copy"}
         </button>
@@ -74,7 +74,7 @@ export function InviteRow({
             type="button"
             onClick={revoke}
             disabled={busy}
-            className="rounded border border-red-300 bg-red-50 px-2 py-1 font-semibold text-red-700 hover:bg-red-100 disabled:opacity-50"
+            className="rounded border border-red-300 bg-red-50 px-2 py-1 font-semibold text-red-700 hover:bg-red-100 disabled:opacity-50 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300 dark:hover:bg-red-900/50"
           >
             Revoke
           </button>

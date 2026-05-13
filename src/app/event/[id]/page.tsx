@@ -139,7 +139,7 @@ export default async function EventPage({
         )}
       </div>
       {event.description && (
-        <p className="text-gray-600 mb-4">{event.description}</p>
+        <p className="text-gray-600 mb-4 dark:text-gray-400">{event.description}</p>
       )}
 
       <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
@@ -183,7 +183,7 @@ export default async function EventPage({
               {event.squad1StartsAt ? (
                 <DateTime iso={event.squad1StartsAt} />
               ) : (
-                <span className="font-mono text-gray-400">TBD</span>
+                <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
               )}
             </div>
             <div>
@@ -191,7 +191,7 @@ export default async function EventPage({
               {event.squad2StartsAt ? (
                 <DateTime iso={event.squad2StartsAt} />
               ) : (
-                <span className="font-mono text-gray-400">TBD</span>
+                <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
               )}
             </div>
           </>
@@ -211,23 +211,23 @@ export default async function EventPage({
       </div>
 
       {isScrim && scrim && (
-        <div className="mb-6 rounded-lg border border-rose-200 bg-rose-50/40 p-4 text-sm">
+        <div className="mb-6 rounded-lg border border-rose-200 bg-rose-50/40 p-4 text-sm dark:border-rose-900/60 dark:bg-rose-950/20">
           <p>
-            <span className="font-semibold text-gray-900">Condition of Win:</span>{" "}
-            <span className="text-gray-700">{scrim.winCondition}</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">Condition of Win:</span>{" "}
+            <span className="text-gray-700 dark:text-gray-300">{scrim.winCondition}</span>
           </p>
           {scrim.result && (
             <div className="mt-3 flex flex-wrap items-center gap-2">
-              <span className="font-semibold text-gray-900">Result:</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">Result:</span>
               <span
                 className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${
                   scrimOutcome === "W"
-                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300"
                     : scrimOutcome === "L"
-                      ? "border-red-200 bg-red-50 text-red-700"
+                      ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
                       : scrimOutcome === "D"
-                        ? "border-amber-200 bg-amber-50 text-amber-700"
-                        : "border-gray-200 bg-gray-50 text-gray-600"
+                        ? "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300"
+                        : "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400"
                 }`}
               >
                 {scrimOutcome === "W"
@@ -239,7 +239,7 @@ export default async function EventPage({
                       : "No contest"}
               </span>
               {scrim.resultNotes && (
-                <p className="basis-full text-xs italic text-gray-600">
+                <p className="basis-full text-xs italic text-gray-600 dark:text-gray-400">
                   &ldquo;{scrim.resultNotes}&rdquo;
                 </p>
               )}
@@ -249,18 +249,18 @@ export default async function EventPage({
       )}
 
       {hasRoster && standing && (
-        <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4">
+        <div className="mb-6 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <div className="mb-2 flex items-center justify-between text-sm">
-            <span className="font-medium text-gray-900">
+            <span className="font-medium text-gray-900 dark:text-gray-100">
               {standing.taken} / {standing.capacity} slots filled
             </span>
             {standing.waitlisted > 0 && (
-              <span className="text-xs font-semibold uppercase tracking-wider text-amber-700">
+              <span className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-300">
                 {standing.waitlisted} waitlisted
               </span>
             )}
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-gray-100">
+          <div className="h-2 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800">
             <div
               className={`h-full ${standing.isFull ? "bg-amber-500" : "bg-violet-500"}`}
               style={{
@@ -269,7 +269,7 @@ export default async function EventPage({
             />
           </div>
           {standing.isFull && !isWaitlisted && !existingSignup && (
-            <p className="mt-2 text-xs text-amber-700">
+            <p className="mt-2 text-xs text-amber-700 dark:text-amber-300">
               All squad and backup slots are full. New signups will be added to
               the waitlist.
             </p>
@@ -280,16 +280,16 @@ export default async function EventPage({
       {hasRoster && (
         <div className="mb-6">
           {!isOpen ? (
-            <div className="bg-gray-100 rounded-lg p-4 text-center text-gray-600">
+            <div className="bg-gray-100 rounded-lg p-4 text-center text-gray-600 dark:bg-gray-800 dark:text-gray-400">
               Signups are currently closed for this event.
             </div>
           ) : existingSignup ? (
             isWaitlisted ? (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4">
-                <p className="mb-2 font-semibold text-amber-900">
+              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900/60 dark:bg-amber-950/40">
+                <p className="mb-2 font-semibold text-amber-900 dark:text-amber-200">
                   You&apos;re on the waitlist
                 </p>
-                <p className="mb-3 text-sm text-amber-800">
+                <p className="mb-3 text-sm text-amber-800 dark:text-amber-300">
                   All squad and backup slots are currently full. We&apos;ll let
                   you know if a spot opens up. You can still update your
                   preferences below.
@@ -301,8 +301,8 @@ export default async function EventPage({
                 />
               </div>
             ) : (
-              <div className="bg-green-50 rounded-lg p-4">
-                <p className="font-medium text-green-800 mb-2">
+              <div className="bg-green-50 rounded-lg p-4 dark:bg-emerald-950/40">
+                <p className="font-medium text-green-800 mb-2 dark:text-emerald-300">
                   You&apos;re signed up!
                 </p>
                 <SignupForm
@@ -320,7 +320,7 @@ export default async function EventPage({
 
       {hasRoster && (
         <section className="mt-8">
-          <h2 className="mb-3 text-xl font-bold tracking-tight text-gray-900">
+          <h2 className="mb-3 text-xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
             {isScrim ? "Rosters" : "Squads"}
           </h2>
           <div className="grid gap-4 md:grid-cols-2">
@@ -370,7 +370,7 @@ export default async function EventPage({
               viewBox="0 0 20 20"
               fill="none"
               aria-hidden
-              className="size-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90"
+              className="size-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90 dark:text-gray-500"
             >
               <path
                 d="M7 5l5 5-5 5"
@@ -380,12 +380,12 @@ export default async function EventPage({
                 strokeLinejoin="round"
               />
             </svg>
-            <h2 className="text-xl font-bold tracking-tight text-gray-900">Waitlist</h2>
-            <span className="rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700">
+            <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Waitlist</h2>
+            <span className="rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
               {waitlist.length}
             </span>
           </summary>
-          <ol className="mt-3 space-y-1 rounded-lg border border-gray-200 bg-white p-3">
+          <ol className="mt-3 space-y-1 rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
             {waitlist.map((row, i) => (
               <li key={row.signup.id}>
                 <SignupListItem

@@ -136,7 +136,7 @@ export default async function AdminEventPage({
   return (
     <main className="max-w-6xl mx-auto p-6">
       {actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
@@ -144,7 +144,7 @@ export default async function AdminEventPage({
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-bold">{event.name}</h1>
           {event.deletedAt && (
-            <span className="rounded border border-gray-300 bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600">
+            <span className="rounded border border-gray-300 bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
               Deleted
             </span>
           )}
@@ -163,13 +163,13 @@ export default async function AdminEventPage({
         </div>
       </div>
       {event.deletedAt && (
-        <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+        <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
           This event was deleted on{" "}
           <DateTime iso={event.deletedAt} />. Signup data is retained for
           attendance reports.
         </div>
       )}
-      <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500">
+      <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-gray-500 dark:text-gray-400">
         {(isScrim || !isMatch) && event.gameTime && !isScrim && (
           <span>
             Starts: <DateTime iso={event.gameTime} />
@@ -181,13 +181,13 @@ export default async function AdminEventPage({
               {event.gameTime ? (
                 <DateTime iso={event.gameTime} />
               ) : (
-                <span className="font-mono text-gray-400">TBD</span>
+                <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
               )}
             </span>
             {opposingGuild && (
               <span>
                 vs{" "}
-                <strong className="text-gray-800">
+                <strong className="text-gray-800 dark:text-gray-200">
                   {opposingGuild.tag
                     ? `[${opposingGuild.tag}] ${opposingGuild.name}`
                     : opposingGuild.name}
@@ -207,7 +207,7 @@ export default async function AdminEventPage({
               {event.squad1StartsAt ? (
                 <DateTime iso={event.squad1StartsAt} />
               ) : (
-                <span className="font-mono text-gray-400">TBD</span>
+                <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
               )}
             </span>
             <span>
@@ -215,7 +215,7 @@ export default async function AdminEventPage({
               {event.squad2StartsAt ? (
                 <DateTime iso={event.squad2StartsAt} />
               ) : (
-                <span className="font-mono text-gray-400">TBD</span>
+                <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
               )}
             </span>
           </>
@@ -231,35 +231,35 @@ export default async function AdminEventPage({
           </span>
         )}
         {!isMatch && !isScrim && (
-          <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600">
+          <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
             Simple Event
           </span>
         )}
         {isScrim && (
-          <span className="rounded border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-rose-700">
+          <span className="rounded border border-rose-200 bg-rose-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300">
             Scrim
           </span>
         )}
       </div>
 
       {isScrim && scrim && (
-        <div className="mb-6 rounded-lg border border-rose-200 bg-rose-50/40 p-4">
+        <div className="mb-6 rounded-lg border border-rose-200 bg-rose-50/40 p-4 dark:border-rose-900/60 dark:bg-rose-950/20">
           <p className="text-sm">
-            <span className="font-semibold text-gray-900">Condition of Win:</span>{" "}
-            <span className="text-gray-700">{scrim.winCondition}</span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">Condition of Win:</span>{" "}
+            <span className="text-gray-700 dark:text-gray-300">{scrim.winCondition}</span>
           </p>
           {scrim.result ? (
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm">
-              <span className="font-semibold text-gray-900">Result:</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">Result:</span>
               <span
                 className={`rounded border px-2 py-0.5 text-xs font-bold uppercase tracking-wider ${
                   scrimOutcome === "W"
-                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300"
                     : scrimOutcome === "L"
-                      ? "border-red-200 bg-red-50 text-red-700"
+                      ? "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300"
                       : scrimOutcome === "D"
-                        ? "border-amber-200 bg-amber-50 text-amber-700"
-                        : "border-gray-200 bg-gray-50 text-gray-600"
+                        ? "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300"
+                        : "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400"
                 }`}
               >
                 {scrimOutcome === "W"
@@ -271,12 +271,12 @@ export default async function AdminEventPage({
                       : "No contest"}
               </span>
               {scrim.resultDeclaredAt && (
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-gray-500 dark:text-gray-400">
                   declared <DateTime iso={scrim.resultDeclaredAt} mode="date" />
                 </span>
               )}
               {scrim.resultNotes && (
-                <p className="basis-full text-xs italic text-gray-600">
+                <p className="basis-full text-xs italic text-gray-600 dark:text-gray-400">
                   &ldquo;{scrim.resultNotes}&rdquo;
                 </p>
               )}
@@ -305,31 +305,31 @@ export default async function AdminEventPage({
       )}
 
       {event.description && (
-        <p className="mb-6 text-sm text-gray-700">{event.description}</p>
+        <p className="mb-6 text-sm text-gray-700 dark:text-gray-300">{event.description}</p>
       )}
 
       {hasRoster && (
         <>
           <div className="mb-6 grid grid-cols-2 gap-3 text-center sm:grid-cols-4 sm:gap-4">
-            <div className="rounded-lg border p-3">
+            <div className="rounded-lg border p-3 dark:border-gray-800">
               <div className="text-2xl font-bold">
                 {standing.taken} / {standing.capacity}
               </div>
-              <div className="text-sm text-gray-500">Slots Filled</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Slots Filled</div>
             </div>
-            <div className="rounded-lg border p-3">
+            <div className="rounded-lg border p-3 dark:border-gray-800">
               <div className="text-2xl font-bold">{leadershipRequests.length}</div>
-              <div className="text-sm text-gray-500">Leadership Requests</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Leadership Requests</div>
             </div>
-            <div className="rounded-lg border p-3">
+            <div className="rounded-lg border p-3 dark:border-gray-800">
               <div className="text-2xl font-bold">{waitlistSignups.length}</div>
-              <div className="text-sm text-gray-500">Waitlist</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Waitlist</div>
             </div>
-            <div className="rounded-lg border p-3">
+            <div className="rounded-lg border p-3 dark:border-gray-800">
               <div className="text-2xl font-bold">
                 {eventSignups.filter((s) => s.signup.attended).length}
               </div>
-              <div className="text-sm text-gray-500">Attended</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">Attended</div>
             </div>
           </div>
 
@@ -338,7 +338,7 @@ export default async function AdminEventPage({
               <h2 className="text-lg font-semibold mb-3">
                 {event.squad1Name} ({squad1Signups.length})
                 {isScrim && (
-                  <span className="ml-2 text-xs font-normal text-gray-500">
+                  <span className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
                     Your guild
                   </span>
                 )}
@@ -365,7 +365,7 @@ export default async function AdminEventPage({
                     ? `[${opposingGuild.tag}] ${opposingGuild.name}`
                     : opposingGuild.name}{" "}
                   ({opposingRoster.length})
-                  <span className="ml-2 text-xs font-normal text-gray-500">
+                  <span className="ml-2 text-xs font-normal text-gray-500 dark:text-gray-400">
                     Opponent — read-only
                   </span>
                 </h2>
@@ -410,18 +410,18 @@ export default async function AdminEventPage({
             <section className="mt-8">
               <div className="mb-3 flex items-center gap-2">
                 <h2 className="text-lg font-semibold">Waitlist</h2>
-                <span className="rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700">
+                <span className="rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-semibold text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
                   {waitlistSignups.length}
                 </span>
               </div>
-              <p className="mb-3 text-sm text-gray-500">
+              <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
                 Ordered by signup time. Promote a player by changing their Assigned
                 Role from &ldquo;waitlist&rdquo; to player, backup, or leader.
               </p>
               <div className="space-y-2">
                 {waitlistSignups.map(({ signup, user }, i) => (
                   <div key={signup.id} className="flex items-start gap-3">
-                    <span className="mt-3 inline-block w-6 text-right text-sm font-mono text-gray-400">
+                    <span className="mt-3 inline-block w-6 text-right text-sm font-mono text-gray-400 dark:text-gray-500">
                       {i + 1}
                     </span>
                     <div className="flex-1">

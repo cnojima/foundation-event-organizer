@@ -48,10 +48,10 @@ export default async function LeaderboardPage({
   if (!viewerServerNumber) {
     return (
       <main className="mx-auto max-w-4xl p-6">
-        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           {t.rich("needsServerNumber", {
             settingsLink: (c) => (
               <Link
@@ -218,34 +218,34 @@ export default async function LeaderboardPage({
   return (
     <main className="mx-auto max-w-4xl p-6">
       <div className="mb-1 flex items-baseline justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-gray-500 dark:text-gray-400">
           {t("serverLabel", { serverNumber: viewerServerNumber })}
         </span>
       </div>
-      <p className="mb-1 text-sm text-gray-500">
+      <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
         {t("subtitle", { count: total })}
       </p>
       <p className="mb-4 text-xs">
-        <Link href="/help#duels" className="text-violet-700 hover:underline">
+        <Link href="/help#duels" className="text-violet-700 hover:underline dark:text-violet-300">
           {t("howItWorks")}
         </Link>
       </p>
 
       {/* Your-rank callout — separate from filters because filters don't
           change your global rank. */}
-      <div className="mb-4 rounded-lg border border-violet-200 bg-violet-50/40 p-3 text-sm">
+      <div className="mb-4 rounded-lg border border-violet-200 bg-violet-50/40 p-3 text-sm dark:border-violet-900/60 dark:bg-violet-950/20">
         {myRank !== null && me ? (
-          <p className="text-violet-900">
+          <p className="text-violet-900 dark:text-violet-200">
             {t("yourRank", {
               rank: myRank,
               rating: me.duelRating,
             })}
           </p>
         ) : (
-          <p className="text-gray-700">
+          <p className="text-gray-700 dark:text-gray-300">
             {t("notRankedYet", { min: MIN_DUELS_FOR_LEADERBOARD })}
           </p>
         )}
@@ -261,7 +261,7 @@ export default async function LeaderboardPage({
       </div>
 
       {ranked.length === 0 ? (
-        <p className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm text-gray-500">
+        <p className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
           {powerTier || filterGuildId ? t("noMatches") : t("emptyState")}
         </p>
       ) : (
@@ -270,18 +270,18 @@ export default async function LeaderboardPage({
             <li
               key={card.id}
               className={`flex items-stretch gap-3 ${
-                isMe ? "rounded-lg ring-2 ring-violet-300" : ""
+                isMe ? "rounded-lg ring-2 ring-violet-300 dark:ring-violet-800" : ""
               }`}
             >
               <div
                 className={`flex w-12 shrink-0 items-center justify-center rounded-md font-mono text-sm font-bold ${
                   rank === 1
-                    ? "bg-amber-100 text-amber-700"
+                    ? "bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300"
                     : rank === 2
-                      ? "bg-gray-200 text-gray-700"
+                      ? "bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300"
                       : rank === 3
-                        ? "bg-orange-100 text-orange-700"
-                        : "bg-gray-50 text-gray-600"
+                        ? "bg-orange-100 text-orange-700 dark:bg-orange-950/40 dark:text-orange-300"
+                        : "bg-gray-50 text-gray-600 dark:bg-gray-900 dark:text-gray-400"
                 }`}
                 aria-label={t("rankLabel", { rank })}
               >
@@ -299,24 +299,24 @@ export default async function LeaderboardPage({
         <nav className="mt-6 flex items-center justify-between text-sm">
           <Link
             href={pageHref(Math.max(1, currentPage - 1))}
-            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold ${
+            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold dark:border-gray-700 dark:bg-gray-900 ${
               currentPage > 1
-                ? "text-gray-700 hover:bg-gray-50"
-                : "pointer-events-none opacity-40"
+                ? "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+                : "pointer-events-none opacity-40 dark:text-gray-400"
             }`}
             aria-disabled={currentPage === 1}
           >
             {t("prev")}
           </Link>
-          <span className="text-gray-500">
+          <span className="text-gray-500 dark:text-gray-400">
             {t("pageOf", { page: currentPage, total: totalPages })}
           </span>
           <Link
             href={pageHref(Math.min(totalPages, currentPage + 1))}
-            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold ${
+            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold dark:border-gray-700 dark:bg-gray-900 ${
               currentPage < totalPages
-                ? "text-gray-700 hover:bg-gray-50"
-                : "pointer-events-none opacity-40"
+                ? "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+                : "pointer-events-none opacity-40 dark:text-gray-400"
             }`}
             aria-disabled={currentPage === totalPages}
           >

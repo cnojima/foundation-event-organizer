@@ -48,10 +48,10 @@ export default async function PlayersPage({
   if (!viewerServerNumber) {
     return (
       <main className="mx-auto max-w-4xl p-6">
-        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           {t.rich("needsServerNumber", {
             settingsLink: (c) => (
               <Link
@@ -84,10 +84,10 @@ export default async function PlayersPage({
   if (sameServerGuildIds.length === 0) {
     return (
       <main className="mx-auto max-w-4xl p-6">
-        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <p className="text-sm text-gray-500">{t("noGuildsOnServer")}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{t("noGuildsOnServer")}</p>
       </main>
     );
   }
@@ -187,18 +187,18 @@ export default async function PlayersPage({
   return (
     <main className="mx-auto max-w-4xl p-6">
       <div className="mb-1 flex items-baseline justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-gray-500 dark:text-gray-400">
           {t("serverLabel", { serverNumber: viewerServerNumber })}
         </span>
       </div>
-      <p className="mb-1 text-sm text-gray-500">
+      <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
         {t("subtitle", { count: total })}
       </p>
       <p className="mb-4 text-xs">
-        <Link href="/help#duels" className="text-violet-700 hover:underline">
+        <Link href="/help#duels" className="text-violet-700 hover:underline dark:text-violet-300">
           How duels work →
         </Link>
       </p>
@@ -213,7 +213,7 @@ export default async function PlayersPage({
       </div>
 
       {cards.length === 0 ? (
-        <p className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm text-gray-500">
+        <p className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
           {q || powerTier || filterGuildId
             ? t("noMatches")
             : t("emptyState")}
@@ -237,24 +237,24 @@ export default async function PlayersPage({
         <nav className="mt-6 flex items-center justify-between text-sm">
           <Link
             href={pageHref(Math.max(1, currentPage - 1))}
-            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold ${
+            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold dark:border-gray-700 dark:bg-gray-900 ${
               currentPage > 1
-                ? "text-gray-700 hover:bg-gray-50"
-                : "pointer-events-none opacity-40"
+                ? "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+                : "pointer-events-none opacity-40 dark:text-gray-400"
             }`}
             aria-disabled={currentPage === 1}
           >
             {t("prev")}
           </Link>
-          <span className="text-gray-500">
+          <span className="text-gray-500 dark:text-gray-400">
             {t("pageOf", { page: currentPage, total: totalPages })}
           </span>
           <Link
             href={pageHref(Math.min(totalPages, currentPage + 1))}
-            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold ${
+            className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold dark:border-gray-700 dark:bg-gray-900 ${
               currentPage < totalPages
-                ? "text-gray-700 hover:bg-gray-50"
-                : "pointer-events-none opacity-40"
+                ? "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+                : "pointer-events-none opacity-40 dark:text-gray-400"
             }`}
             aria-disabled={currentPage === totalPages}
           >

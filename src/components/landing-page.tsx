@@ -60,13 +60,13 @@ export async function LandingPage() {
       {/* ---- Hero ---- */}
       <section className="text-center">
         <Logo variant="icon" className="mx-auto mb-6 size-20" />
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-violet-700">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">
           {t("hero.kicker")}
         </p>
-        <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+        <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-gray-100">
           {t("hero.headline")}
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 sm:text-lg">
+        <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 sm:text-lg dark:text-gray-400">
           {t("hero.subhead")}
         </p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
@@ -78,7 +78,7 @@ export async function LandingPage() {
           </Link>
           <Link
             href="/guilds"
-            className="rounded-md border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50"
+            className="rounded-md border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
           >
             {t("hero.browseGuilds")}
           </Link>
@@ -96,14 +96,14 @@ export async function LandingPage() {
       )}
 
       {/* ---- The problem we solve (engagement) ---- */}
-      <section className="mt-16 rounded-lg border border-violet-200 bg-violet-50/40 p-6">
-        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-violet-700">
+      <section className="mt-16 rounded-lg border border-violet-200 bg-violet-50/40 p-6 dark:border-violet-900/60 dark:bg-violet-950/20">
+        <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">
           {t("engagement.kicker")}
         </p>
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h2 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("engagement.heading")}
         </h2>
-        <p className="mt-3 text-sm leading-relaxed text-gray-700">
+        <p className="mt-3 text-sm leading-relaxed text-gray-700 dark:text-gray-300">
           {t("engagement.body")}
         </p>
         <ul className="mt-4 grid gap-3 sm:grid-cols-3">
@@ -127,7 +127,7 @@ export async function LandingPage() {
 
       {/* ---- Features grid ---- */}
       <section className="mt-16">
-        <h2 className="mb-6 text-center text-2xl font-bold tracking-tight text-gray-900">
+        <h2 className="mb-6 text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("features.heading")}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -160,7 +160,7 @@ export async function LandingPage() {
 
       {/* ---- Mock screenshots ---- */}
       <section className="mt-16 space-y-12">
-        <h2 className="text-center text-2xl font-bold tracking-tight text-gray-900">
+        <h2 className="text-center text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("screenshots.heading")}
         </h2>
 
@@ -188,11 +188,11 @@ export async function LandingPage() {
       </section>
 
       {/* ---- Bottom CTA ---- */}
-      <section className="mt-16 rounded-lg border border-gray-200 bg-white p-8 text-center">
-        <h2 className="text-xl font-bold tracking-tight text-gray-900">
+      <section className="mt-16 rounded-lg border border-gray-200 bg-white p-8 text-center dark:border-gray-800 dark:bg-gray-900">
+        <h2 className="text-xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("bottomCta.heading")}
         </h2>
-        <p className="mx-auto mt-2 max-w-md text-sm text-gray-600">
+        <p className="mx-auto mt-2 max-w-md text-sm text-gray-600 dark:text-gray-400">
           {t("bottomCta.body")}
         </p>
         <Link
@@ -204,11 +204,11 @@ export async function LandingPage() {
       </section>
 
       {/* ---- Footer ---- */}
-      <footer className="mt-12 border-t border-gray-200 pt-6 text-center text-xs text-gray-500">
+      <footer className="mt-12 border-t border-gray-200 pt-6 text-center text-xs text-gray-500 dark:border-gray-800 dark:text-gray-400">
         <p>{t("footer.builtWith")}</p>
         <p className="mt-1">
           <a
-            className="text-violet-700 hover:underline"
+            className="text-violet-700 hover:underline dark:text-violet-300"
             href={FEEDBACK_REPO_URL}
             target="_blank"
             rel="noopener noreferrer"
@@ -217,7 +217,7 @@ export async function LandingPage() {
           </a>
           {" · "}
           <a
-            className="text-indigo-600 hover:underline"
+            className="text-indigo-600 hover:underline dark:text-indigo-400"
             href={SUPPORT_DISCORD_URL}
             target="_blank"
             rel="noopener noreferrer"
@@ -225,7 +225,7 @@ export async function LandingPage() {
             {t("footer.discordSupport")}
           </a>
           {" · "}
-          <Link className="text-violet-700 hover:underline" href="/help">
+          <Link className="text-violet-700 hover:underline dark:text-violet-300" href="/help">
             {t("footer.help")}
           </Link>
         </p>
@@ -238,11 +238,11 @@ export async function LandingPage() {
 
 function Stat({ value, label }: { value: number; label: string }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 text-center">
-      <p className="text-3xl font-bold tracking-tight text-gray-900">
+    <div className="rounded-lg border border-gray-200 bg-white p-4 text-center dark:border-gray-800 dark:bg-gray-900">
+      <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         {value.toLocaleString()}
       </p>
-      <p className="mt-1 text-xs font-bold uppercase tracking-[0.15em] text-gray-500">
+      <p className="mt-1 text-xs font-bold uppercase tracking-[0.15em] text-gray-500 dark:text-gray-400">
         {label}
       </p>
     </div>
@@ -251,9 +251,9 @@ function Stat({ value, label }: { value: number; label: string }) {
 
 function FeatureCard({ title, body }: { title: string; body: string }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4">
-      <h3 className="font-semibold text-gray-900">{title}</h3>
-      <p className="mt-1 text-sm text-gray-600">{body}</p>
+    <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+      <h3 className="font-semibold text-gray-900 dark:text-gray-100">{title}</h3>
+      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{body}</p>
     </div>
   );
 }
@@ -272,16 +272,16 @@ function EngagementPoint({
 }) {
   const titleColor =
     tone === "before"
-      ? "text-red-700"
+      ? "text-red-700 dark:text-red-300"
       : tone === "after"
-        ? "text-violet-700"
-        : "text-emerald-700";
+        ? "text-violet-700 dark:text-violet-300"
+        : "text-emerald-700 dark:text-emerald-300";
   return (
-    <li className="rounded-lg border border-gray-200 bg-white p-3">
+    <li className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
       <p className={`text-[10px] font-bold uppercase tracking-[0.15em] ${titleColor}`}>
         {title}
       </p>
-      <p className="mt-1 text-sm text-gray-700">{body}</p>
+      <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">{body}</p>
     </li>
   );
 }
@@ -313,7 +313,7 @@ function MockFrame({
         </div>
         <div className="bg-white p-4">{children}</div>
       </div>
-      <figcaption className="mt-2 text-center text-sm text-gray-500">
+      <figcaption className="mt-2 text-center text-sm text-gray-500 dark:text-gray-400">
         {caption}
       </figcaption>
     </figure>

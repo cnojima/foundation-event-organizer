@@ -83,17 +83,17 @@ export default async function DuelDetailPage({
 
   return (
     <main className="mx-auto max-w-3xl p-6">
-      <Link href="/duels" className="text-sm text-violet-700 hover:underline">
+      <Link href="/duels" className="text-sm text-violet-700 hover:underline dark:text-violet-300">
         ← Back to duels
       </Link>
 
       <div className="mt-2 flex items-baseline justify-between gap-3">
-        <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           Duel
         </h1>
         <Link
           href="/help#duels"
-          className="text-xs text-violet-700 hover:underline"
+          className="text-xs text-violet-700 hover:underline dark:text-violet-300"
         >
           How duels work →
         </Link>
@@ -115,24 +115,24 @@ export default async function DuelDetailPage({
         />
       </div>
 
-      <section className="mt-6 rounded-lg border border-gray-200 bg-white p-4 text-sm">
+      <section className="mt-6 rounded-lg border border-gray-200 bg-white p-4 text-sm dark:border-gray-800 dark:bg-gray-900">
         <p>
-          <span className="font-semibold text-gray-900">Time:</span>{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-100">Time:</span>{" "}
           <DateTime iso={duel.proposedGameTime} />
         </p>
         <p className="mt-1">
-          <span className="font-semibold text-gray-900">Location:</span>{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-100">Location:</span>{" "}
           {duel.location}
         </p>
         <p className="mt-1">
-          <span className="font-semibold text-gray-900">Condition of Win:</span>{" "}
+          <span className="font-semibold text-gray-900 dark:text-gray-100">Condition of Win:</span>{" "}
           {duel.winCondition}
         </p>
         {duel.message && (
-          <p className="mt-2 text-gray-600 whitespace-pre-line">{duel.message}</p>
+          <p className="mt-2 text-gray-600 whitespace-pre-line dark:text-gray-400">{duel.message}</p>
         )}
         {duel.resultNotes && (
-          <p className="mt-2 text-xs text-gray-600 italic">
+          <p className="mt-2 text-xs text-gray-600 italic dark:text-gray-400">
             Result notes: &ldquo;{duel.resultNotes}&rdquo;
           </p>
         )}
@@ -166,7 +166,7 @@ export default async function DuelDetailPage({
             defaultMessage={duel.message}
           />
           {!canAccept && duel.lastEditedByUserId === membership.userId && (
-            <p className="mt-2 text-xs text-gray-500">
+            <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
               You set the latest terms — waiting on the other player to
               accept (or counter-edit).
             </p>
@@ -239,7 +239,7 @@ function PlayerPanel({
 }) {
   if (!player) {
     return (
-      <div className="rounded-lg border border-gray-200 bg-white p-3 text-sm text-gray-500">
+      <div className="rounded-lg border border-gray-200 bg-white p-3 text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
         {label}: player deleted
       </div>
     );
@@ -249,10 +249,10 @@ function PlayerPanel({
     player.guildTag
   );
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-3">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
+    <div className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
+      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
         {label}
-        {isYou && <span className="ml-1 text-violet-600">(you)</span>}
+        {isYou && <span className="ml-1 text-violet-600 dark:text-violet-300">(you)</span>}
       </p>
       <div className="mt-1 flex items-center gap-2">
         <UserAvatar
@@ -261,8 +261,8 @@ function PlayerPanel({
           size="size-10"
         />
         <div className="min-w-0">
-          <p className="truncate text-sm font-semibold text-gray-900">{name}</p>
-          <p className="truncate text-xs text-gray-500">
+          <p className="truncate text-sm font-semibold text-gray-900 dark:text-gray-100">{name}</p>
+          <p className="truncate text-xs text-gray-500 dark:text-gray-400">
             {player.guildName ?? "—"}
             {player.powerTier && ` · Tier ${player.powerTier}`}
             {` · ${player.duelRating} rating`}
@@ -282,10 +282,10 @@ function StatusBanner({
 }) {
   if (status === "accepted" && outcome) {
     const styles: Record<string, string> = {
-      W: "border-emerald-300 bg-emerald-50 text-emerald-800",
-      L: "border-red-300 bg-red-50 text-red-800",
-      D: "border-amber-300 bg-amber-50 text-amber-800",
-      NC: "border-gray-300 bg-gray-50 text-gray-700",
+      W: "border-emerald-300 bg-emerald-50 text-emerald-800 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+      L: "border-red-300 bg-red-50 text-red-800 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300",
+      D: "border-amber-300 bg-amber-50 text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+      NC: "border-gray-300 bg-gray-50 text-gray-700 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300",
     };
     const labels: Record<string, string> = {
       W: "You won",
@@ -302,11 +302,11 @@ function StatusBanner({
     );
   }
   const statusStyles: Record<string, string> = {
-    pending: "border-amber-200 bg-amber-50 text-amber-700",
-    accepted: "border-violet-200 bg-violet-50 text-violet-700",
-    declined: "border-gray-200 bg-gray-50 text-gray-600",
-    withdrawn: "border-gray-200 bg-gray-50 text-gray-600",
-    cancelled: "border-gray-200 bg-gray-50 text-gray-600",
+    pending: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+    accepted: "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300",
+    declined: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
+    withdrawn: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
+    cancelled: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
   };
   return (
     <p

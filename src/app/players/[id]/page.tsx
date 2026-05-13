@@ -167,29 +167,29 @@ export default async function PlayerProfilePage({
 
   return (
     <main className="mx-auto max-w-3xl p-6">
-      <Link href="/players" className="text-sm text-violet-700 hover:underline">
+      <Link href="/players" className="text-sm text-violet-700 hover:underline dark:text-violet-300">
         ← {t("backToPlayers")}
       </Link>
 
-      <header className="mt-2 mb-6 flex items-start gap-4 rounded-lg border border-gray-200 bg-white p-4">
+      <header className="mt-2 mb-6 flex items-start gap-4 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <UserAvatar name={name} image={profile.image} size="size-16" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <h1 className="truncate text-2xl font-bold tracking-tight text-gray-900">
+            <h1 className="truncate text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
               {name}
             </h1>
             {profile.powerTier && (
-              <span className="rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-amber-700">
+              <span className="rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
                 {profile.powerTier}
               </span>
             )}
             {isSelf && (
-              <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700">
+              <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300">
                 {t("youBadge")}
               </span>
             )}
           </div>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             {profile.guildName ?? t("noGuild")}
             {profile.guildServerNumber
               ? ` · ${t("serverLabel", { serverNumber: profile.guildServerNumber })}`
@@ -243,11 +243,11 @@ export default async function PlayerProfilePage({
       </section>
 
       <section>
-        <h2 className="mb-3 text-lg font-semibold text-gray-900">
+        <h2 className="mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100">
           {t("historyHeading")}
         </h2>
         {historyRows.length === 0 ? (
-          <p className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm text-gray-500">
+          <p className="rounded-lg border border-gray-200 bg-white p-6 text-center text-sm text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
             {t("historyEmpty")}
           </p>
         ) : (
@@ -269,21 +269,21 @@ export default async function PlayerProfilePage({
               return (
                 <li
                   key={row.id}
-                  className="rounded-lg border border-gray-200 bg-white p-3"
+                  className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900"
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     {outcome && <OutcomeChip outcome={outcome} />}
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">
                       vs{" "}
                       <Link
                         href={`/players/${opponentId}`}
-                        className="text-violet-700 hover:underline"
+                        className="text-violet-700 hover:underline dark:text-violet-300"
                       >
                         {opponentName}
                       </Link>
                     </span>
                   </div>
-                  <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500">
+                  <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500 dark:text-gray-400">
                     <span>
                       <DateTime iso={row.proposedGameTime} mode="date" />
                     </span>
@@ -291,11 +291,11 @@ export default async function PlayerProfilePage({
                       {t("locationLabel")}: {row.location}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs text-gray-600">
+                  <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
                     {t("winConditionLabel")}: {row.winCondition}
                   </p>
                   {row.resultNotes && (
-                    <p className="mt-1 text-xs italic text-gray-600">
+                    <p className="mt-1 text-xs italic text-gray-600 dark:text-gray-400">
                       &ldquo;{row.resultNotes}&rdquo;
                     </p>
                   )}
@@ -309,24 +309,24 @@ export default async function PlayerProfilePage({
           <nav className="mt-4 flex items-center justify-between text-sm">
             <Link
               href={historyHref(Math.max(1, currentPage - 1))}
-              className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold ${
+              className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold dark:border-gray-700 dark:bg-gray-900 ${
                 currentPage > 1
-                  ? "text-gray-700 hover:bg-gray-50"
-                  : "pointer-events-none opacity-40"
+                  ? "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+                  : "pointer-events-none opacity-40 dark:text-gray-400"
               }`}
               aria-disabled={currentPage === 1}
             >
               {t("prev")}
             </Link>
-            <span className="text-gray-500">
+            <span className="text-gray-500 dark:text-gray-400">
               {t("pageOf", { page: currentPage, total: historyPages })}
             </span>
             <Link
               href={historyHref(Math.min(historyPages, currentPage + 1))}
-              className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold ${
+              className={`rounded border border-gray-300 bg-white px-3 py-1.5 font-semibold dark:border-gray-700 dark:bg-gray-900 ${
                 currentPage < historyPages
-                  ? "text-gray-700 hover:bg-gray-50"
-                  : "pointer-events-none opacity-40"
+                  ? "text-gray-700 hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-800"
+                  : "pointer-events-none opacity-40 dark:text-gray-400"
               }`}
               aria-disabled={currentPage === historyPages}
             >
@@ -349,22 +349,22 @@ function Stat({
   sub?: string;
 }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-3">
-      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500">
+    <div className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
+      <p className="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
         {label}
       </p>
-      <p className="mt-1 text-lg font-semibold text-gray-900">{value}</p>
-      {sub && <p className="text-[11px] text-gray-500">{sub}</p>}
+      <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{value}</p>
+      {sub && <p className="text-[11px] text-gray-500 dark:text-gray-400">{sub}</p>}
     </div>
   );
 }
 
 function OutcomeChip({ outcome }: { outcome: "W" | "L" | "D" | "NC" }) {
   const styles: Record<string, string> = {
-    W: "border-emerald-200 bg-emerald-50 text-emerald-700",
-    L: "border-red-200 bg-red-50 text-red-700",
-    D: "border-amber-200 bg-amber-50 text-amber-700",
-    NC: "border-gray-200 bg-gray-50 text-gray-600",
+    W: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+    L: "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300",
+    D: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+    NC: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
   };
   return (
     <span

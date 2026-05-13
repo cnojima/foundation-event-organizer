@@ -53,14 +53,14 @@ export function GuildSettingsForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-white p-4">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
       <div>
         <label className="block text-sm font-medium mb-1">Name</label>
         <input
           name="name"
           required
           defaultValue={defaultName}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
         <FieldHelp>Display name shown in the sidebar and discovery list.</FieldHelp>
       </div>
@@ -70,7 +70,7 @@ export function GuildSettingsForm({
           name="description"
           rows={3}
           defaultValue={defaultDescription}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
         <FieldHelp>Optional. Shown on the public guild page to help recruiting.</FieldHelp>
       </div>
@@ -85,7 +85,7 @@ export function GuildSettingsForm({
         </FieldHelp>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4">
+      <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4 dark:border-gray-800">
         <div>
           <label className="block text-sm font-medium mb-1">Server #</label>
           <input
@@ -96,7 +96,7 @@ export function GuildSettingsForm({
             step={1}
             defaultValue={defaultServerNumber}
             placeholder="e.g. 1234"
-            className="w-full border rounded px-3 py-2 font-mono"
+            className="w-full border rounded px-3 py-2 font-mono dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
           <FieldHelp>
             Game-server number (1001-9999). Optional. Shown for ops reference.
@@ -111,7 +111,7 @@ export function GuildSettingsForm({
             maxLength={4}
             defaultValue={defaultTag}
             placeholder="e.g. SHFT"
-            className="w-full border rounded px-3 py-2 font-mono uppercase"
+            className="w-full border rounded px-3 py-2 font-mono uppercase dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
           <FieldHelp>
             2-4 characters. When set, prepended to every member&apos;s
@@ -120,7 +120,7 @@ export function GuildSettingsForm({
         </div>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
       <div className="flex items-center gap-3">
         <button
           type="submit"
@@ -129,7 +129,7 @@ export function GuildSettingsForm({
         >
           {submitting ? "Saving..." : "Save"}
         </button>
-        {savedAt && <span className="text-xs text-emerald-600">Saved.</span>}
+        {savedAt && <span className="text-xs text-emerald-600 dark:text-emerald-300">Saved.</span>}
       </div>
     </form>
   );

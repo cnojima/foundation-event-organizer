@@ -28,7 +28,7 @@ export default async function MePage() {
     const tErrors = await getTranslations("errors");
     return (
       <div className="mx-auto max-w-2xl">
-        <p className="text-red-600">{tErrors("forbidden")}</p>
+        <p className="text-red-600 dark:text-red-300">{tErrors("forbidden")}</p>
       </div>
     );
   }
@@ -61,10 +61,10 @@ export default async function MePage() {
   return (
     <div className="mx-auto max-w-2xl space-y-8">
       <header>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <p className="mt-1 text-sm text-gray-500">{t("subtitle")}</p>
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t("subtitle")}</p>
       </header>
 
       <section>
@@ -74,7 +74,7 @@ export default async function MePage() {
 
       <section>
         <h2 className="mb-3 text-lg font-semibold">{t("language")}</h2>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <LocaleSwitcher />
         </div>
       </section>
@@ -93,24 +93,24 @@ export default async function MePage() {
         <h2 className="mb-3 text-lg font-semibold">
           {t("discord.heading")}
         </h2>
-        <div className="space-y-3 rounded-lg border bg-white p-4">
+        <div className="space-y-3 rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           {discordReachable && (
             <div className="flex items-start gap-3">
-              <span className="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700">
+              <span className="grid size-6 shrink-0 place-items-center rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
                 ✓
               </span>
               <div>
-                <p className="text-sm font-semibold text-gray-900">
+                <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                   {t("discord.reachableTitle")}
                 </p>
-                <p className="mt-1 text-sm text-gray-600">
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                   {t("discord.reachableBody")}
                 </p>
               </div>
             </div>
           )}
           {!discordReachable && (
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-700 dark:text-gray-300">
               {t("discord.unreachableBody")}
             </p>
           )}
@@ -121,8 +121,8 @@ export default async function MePage() {
       <section>
         <h2 className="mb-3 text-lg font-semibold">{t("guildMembership")}</h2>
         {guild ? (
-          <div className="rounded-lg border bg-white p-4">
-            <p className="text-sm text-gray-700">
+          <div className="rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+            <p className="text-sm text-gray-700 dark:text-gray-300">
               {t("youreInGuild", {
                 role:
                   membership.guildRole === "admin"
@@ -131,8 +131,8 @@ export default async function MePage() {
                 guildName: guild.name,
               })}
             </p>
-            <div className="mt-4 rounded-md border border-red-200 bg-red-50 p-3">
-              <p className="mb-3 text-sm text-red-800">
+            <div className="mt-4 rounded-md border border-red-200 bg-red-50 p-3 dark:border-red-900/60 dark:bg-red-950/40">
+              <p className="mb-3 text-sm text-red-800 dark:text-red-300">
                 {t("leaveExplanation")}
                 {membership.guildRole === "admin" && ` ${t("leaveAdminWarning")}`}
               </p>
@@ -140,9 +140,9 @@ export default async function MePage() {
             </div>
           </div>
         ) : (
-          <div className="rounded-lg border bg-white p-4 text-sm text-gray-700">
+          <div className="rounded-lg border bg-white p-4 text-sm text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             {t("notInGuild")}{" "}
-            <a className="font-semibold text-violet-700 underline" href="/guilds">
+            <a className="font-semibold text-violet-700 underline dark:text-violet-300" href="/guilds">
               {t("browseGuildsLink")}
             </a>{" "}
             {t("browseGuildsSuffix")}
@@ -150,11 +150,11 @@ export default async function MePage() {
         )}
       </section>
 
-      <section className="rounded-lg border border-red-200 bg-red-50 p-4">
-        <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-red-700">
+      <section className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-900/60 dark:bg-red-950/40">
+        <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-red-700 dark:text-red-300">
           {t("dangerZone")}
         </h2>
-        <p className="mb-3 text-sm text-red-800">{t("deleteExplanation")}</p>
+        <p className="mb-3 text-sm text-red-800 dark:text-red-300">{t("deleteExplanation")}</p>
         <DeleteAccountButton />
       </section>
     </div>

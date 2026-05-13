@@ -50,9 +50,9 @@ export function ScrimResultForm({ scrimId }: { scrimId: string }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-3 rounded-lg border border-violet-200 bg-violet-50/40 p-4"
+      className="space-y-3 rounded-lg border border-violet-200 bg-violet-50/40 p-4 dark:border-violet-900/60 dark:bg-violet-950/20"
     >
-      <p className="text-sm font-semibold text-gray-900">Declare scrim result</p>
+      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Declare scrim result</p>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {OPTIONS.map((opt) => {
           const active = outcome === opt.value;
@@ -63,27 +63,27 @@ export function ScrimResultForm({ scrimId }: { scrimId: string }) {
               onClick={() => setOutcome(opt.value)}
               className={`rounded-md border px-3 py-2 text-left transition-colors ${
                 active
-                  ? "border-violet-500 bg-violet-50 ring-1 ring-violet-500"
-                  : "border-gray-200 bg-white hover:border-gray-300"
+                  ? "border-violet-500 bg-violet-50 ring-1 ring-violet-500 dark:bg-violet-950/40"
+                  : "border-gray-200 bg-white hover:border-gray-300 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-gray-700"
               }`}
             >
-              <div className="text-sm font-semibold text-gray-900">
+              <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                 {opt.label}
               </div>
-              <div className="text-xs text-gray-500">{opt.help}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">{opt.help}</div>
             </button>
           );
         })}
       </div>
       <div>
-        <label className="block text-xs font-medium text-gray-700">
+        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
           Notes (optional)
         </label>
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={2}
-          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm"
+          className="mt-1 w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
       </div>
       <button
@@ -93,7 +93,7 @@ export function ScrimResultForm({ scrimId }: { scrimId: string }) {
       >
         {pending ? "Saving…" : "Save result"}
       </button>
-      {error && <p className="text-xs text-red-600">{error}</p>}
+      {error && <p className="text-xs text-red-600 dark:text-red-300">{error}</p>}
     </form>
   );
 }

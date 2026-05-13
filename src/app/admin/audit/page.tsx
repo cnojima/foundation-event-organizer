@@ -31,7 +31,7 @@ export default async function AuditPage({
   const params = await searchParams;
   const resolved = await resolveAdminGuildId(membership, params.guildId);
   if (!resolved) {
-    return <p className="text-red-600">Guild not found.</p>;
+    return <p className="text-red-600 dark:text-red-300">Guild not found.</p>;
   }
   const targetGuildId: string = resolved;
 
@@ -131,15 +131,15 @@ export default async function AuditPage({
   return (
     <div className="mx-auto max-w-5xl">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
       <header className="mb-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {actingGuild ? `${actingGuild.name} — Audit Log` : "Audit Log"}
         </h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           Every state-changing action in this guild, newest first. Flag rows
           you want to revisit — flagged rows are visible to all guild admins.
         </p>
@@ -147,30 +147,30 @@ export default async function AuditPage({
 
       <form
         method="get"
-        className="mb-4 flex flex-wrap items-end gap-2 rounded-lg border border-gray-200 bg-white p-3"
+        className="mb-4 flex flex-wrap items-end gap-2 rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900"
       >
         {isImpersonating && (
           <input type="hidden" name="guildId" value={targetGuildId} />
         )}
         <div className="flex-1 min-w-48">
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
             Search actor or target
           </label>
           <input
             name="q"
             defaultValue={q}
             placeholder="e.g. curisu, Shadowfront May 16"
-            className="w-full border rounded px-2 py-1 text-sm"
+            className="w-full border rounded px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-600 mb-1">
+          <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
             Action
           </label>
           <select
             name="action"
             defaultValue={action}
-            className="border rounded px-2 py-1 text-sm"
+            className="border rounded px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
           >
             <option value="">All</option>
             {distinctActions.map((a) => (
@@ -180,7 +180,7 @@ export default async function AuditPage({
             ))}
           </select>
         </div>
-        <label className="flex items-center gap-1 text-sm text-gray-700">
+        <label className="flex items-center gap-1 text-sm text-gray-700 dark:text-gray-300">
           <input
             type="checkbox"
             name="flagged"
@@ -203,7 +203,7 @@ export default async function AuditPage({
               q: "",
               flagged: false,
             })}
-            className="text-sm text-gray-500 hover:underline"
+            className="text-sm text-gray-500 hover:underline dark:text-gray-400"
           >
             Clear
           </Link>
@@ -211,13 +211,13 @@ export default async function AuditPage({
       </form>
 
       {rows.length === 0 ? (
-        <p className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-gray-500">
+        <p className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400">
           No audit entries match.
         </p>
       ) : (
-        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white">
+        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500">
+            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400">
               <tr>
                 <th className="px-3 py-2 font-semibold">When</th>
                 <th className="px-3 py-2 font-semibold">Actor</th>
@@ -255,14 +255,14 @@ export default async function AuditPage({
 
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between text-sm">
-          <span className="text-gray-500">
+          <span className="text-gray-500 dark:text-gray-400">
             Page {page} of {totalPages} · {total} entries
           </span>
           <div className="flex gap-2">
             {page > 1 && (
               <Link
                 href={buildHref({ page: page - 1 })}
-                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 font-semibold text-gray-700 hover:bg-gray-50"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
               >
                 ← Previous
               </Link>
@@ -270,7 +270,7 @@ export default async function AuditPage({
             {page < totalPages && (
               <Link
                 href={buildHref({ page: page + 1 })}
-                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 font-semibold text-gray-700 hover:bg-gray-50"
+                className="rounded-md border border-gray-300 bg-white px-3 py-1.5 font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
               >
                 Next →
               </Link>

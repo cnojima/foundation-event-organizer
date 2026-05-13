@@ -19,7 +19,7 @@ export default async function AdminPage({
   if (!targetGuildId) {
     return (
       <main className="max-w-4xl mx-auto p-6">
-        <p className="text-red-600">Guild not found.</p>
+        <p className="text-red-600 dark:text-red-300">Guild not found.</p>
       </main>
     );
   }
@@ -56,12 +56,12 @@ export default async function AdminPage({
   return (
     <main className="max-w-4xl mx-auto p-6">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {actingGuild ? `${actingGuild.name} — Manage Events` : "Manage Events"}
         </h1>
         <Link
@@ -91,10 +91,10 @@ export default async function AdminPage({
 
       {deletedEvents.length > 0 && (
         <section className="mt-8">
-          <h2 className="mb-3 text-lg font-semibold text-gray-600">
+          <h2 className="mb-3 text-lg font-semibold text-gray-600 dark:text-gray-400">
             Deleted ({deletedEvents.length})
           </h2>
-          <p className="mb-3 text-sm text-gray-500">
+          <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
             Kept for attendance reports. Click to view.
           </p>
           <div className="space-y-2">
@@ -102,16 +102,16 @@ export default async function AdminPage({
               <Link
                 key={event.id}
                 href={`/admin/event/${event.id}${guildSuffix}`}
-                className="block rounded-lg border border-gray-200 p-4 opacity-60 hover:opacity-100 hover:border-gray-400"
+                className="block rounded-lg border border-gray-200 p-4 opacity-60 hover:opacity-100 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-700"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <span className="font-medium line-through">{event.name}</span>
-                    <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600">
+                    <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
                       Deleted
                     </span>
                   </div>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
                     {event.deletedAt && (
                       <DateTime iso={event.deletedAt} mode="date" />
                     )}
@@ -144,35 +144,35 @@ function EventSection({
   return (
     <section className="mb-8">
       <h2
-        className={`mb-3 text-lg font-semibold ${muted ? "text-gray-500" : "text-gray-900"}`}
+        className={`mb-3 text-lg font-semibold ${muted ? "text-gray-500 dark:text-gray-400" : "text-gray-900 dark:text-gray-100"}`}
       >
         {title}
       </h2>
       {rows.length === 0 ? (
-        emptyMessage ? <p className="text-sm text-gray-500">{emptyMessage}</p> : null
+        emptyMessage ? <p className="text-sm text-gray-500 dark:text-gray-400">{emptyMessage}</p> : null
       ) : (
         <div className="space-y-2">
           {rows.map((event) => (
             <Link
               key={event.id}
               href={`/admin/event/${event.id}${guildSuffix}`}
-              className={`block rounded-lg border bg-white p-4 transition-colors ${
+              className={`block rounded-lg border bg-white p-4 transition-colors dark:bg-gray-900 ${
                 muted
-                  ? "border-gray-200 opacity-70 hover:opacity-100 hover:border-gray-300"
-                  : "border-gray-200 hover:border-violet-400"
+                  ? "border-gray-200 opacity-70 hover:opacity-100 hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700"
+                  : "border-gray-200 hover:border-violet-400 dark:border-gray-800 dark:hover:border-violet-700"
               }`}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-semibold text-gray-900">
+                    <span className="font-semibold text-gray-900 dark:text-gray-100">
                       {event.name}
                     </span>
                     <KindBadge kind={event.kind} />
                   </div>
                   <EventTimesLine event={event} />
                 </div>
-                <span className="shrink-0 text-xs text-gray-400">
+                <span className="shrink-0 text-xs text-gray-400 dark:text-gray-500">
                   Created <DateTime iso={event.createdAt} mode="date" />
                 </span>
               </div>
@@ -187,10 +187,10 @@ function EventSection({
 function KindBadge({ kind }: { kind: EventRow["kind"] }) {
   const styles =
     kind === "match"
-      ? "border-violet-200 bg-violet-50 text-violet-700"
+      ? "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300"
       : kind === "scrim"
-        ? "border-rose-200 bg-rose-50 text-rose-700"
-        : "border-gray-200 bg-gray-50 text-gray-600";
+        ? "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300"
+        : "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400";
   return (
     <span
       className={`rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${styles}`}
@@ -203,27 +203,27 @@ function KindBadge({ kind }: { kind: EventRow["kind"] }) {
 function EventTimesLine({ event }: { event: EventRow }) {
   if (event.kind === "simple") {
     return (
-      <p className="mt-1 text-xs text-gray-500">
+      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
         {event.gameTime ? (
           <>
             Starts: <DateTime iso={event.gameTime} showUTC={false} />
           </>
         ) : (
-          <span className="font-mono text-gray-400">No time set</span>
+          <span className="font-mono text-gray-400 dark:text-gray-500">No time set</span>
         )}
       </p>
     );
   }
   const squads = squadTimes(event);
   return (
-    <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500">
+    <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500 dark:text-gray-400">
       {squads.map((s) => (
         <span key={s.name}>
           {s.name}:{" "}
           {s.startsAt ? (
             <DateTime iso={s.startsAt} showUTC={false} />
           ) : (
-            <span className="font-mono text-gray-400">TBD</span>
+            <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
           )}
         </span>
       ))}

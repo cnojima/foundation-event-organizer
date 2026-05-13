@@ -24,7 +24,7 @@ export default async function MembersPage() {
   });
   if (!guild) {
     const tErrors = await getTranslations("errors");
-    return <p className="text-red-600">{tErrors("guildNotFound")}</p>;
+    return <p className="text-red-600 dark:text-red-300">{tErrors("guildNotFound")}</p>;
   }
 
   const members = await db
@@ -37,10 +37,10 @@ export default async function MembersPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
+      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         {t("titleNamed", { guildName: guild.name })}
       </h1>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
         {t("summary", { count: members.length, admins: adminCount })}
       </p>
 
@@ -48,24 +48,24 @@ export default async function MembersPage() {
         {members.map((m) => (
           <div
             key={m.id}
-            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-900"
           >
             <UserAvatar name={displayName(m, guild.tag)} image={m.image} />
             <div className="leading-tight">
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {displayName(m, guild.tag)}
                 </span>
                 {m.guildRole === "admin" && (
-                  <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700">
+                  <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300">
                     {t("adminBadge")}
                   </span>
                 )}
                 {m.id === membership.userId && (
-                  <span className="text-xs text-gray-500">(you)</span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">(you)</span>
                 )}
               </div>
-              <div className="text-xs text-gray-500">
+              <div className="text-xs text-gray-500 dark:text-gray-400">
                 {m.guildRole === "admin"
                   ? t("guildAdminLabel")
                   : t("memberLabel")}

@@ -39,7 +39,7 @@ export default async function SuperAdminPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="mb-6 text-2xl font-bold tracking-tight text-gray-900">
+      <h1 className="mb-6 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         Super Admin
       </h1>
 
@@ -53,7 +53,7 @@ export default async function SuperAdminPage() {
         <h2 className="text-lg font-semibold">Guilds</h2>
         <Link
           href="/super-admin/users"
-          className="text-sm font-semibold text-violet-700 hover:text-violet-900"
+          className="text-sm font-semibold text-violet-700 hover:text-violet-900 dark:text-violet-300 dark:hover:text-violet-200"
         >
           Manage super-admins →
         </Link>
@@ -63,26 +63,26 @@ export default async function SuperAdminPage() {
         {guildRows.map((g) => (
           <div
             key={g.id}
-            className={`flex items-center justify-between gap-4 rounded-lg border bg-white px-4 py-3 ${
-              g.deletedAt ? "border-gray-200 opacity-60" : "border-gray-200"
+            className={`flex items-center justify-between gap-4 rounded-lg border bg-white px-4 py-3 dark:bg-gray-900 ${
+              g.deletedAt ? "border-gray-200 opacity-60 dark:border-gray-800" : "border-gray-200 dark:border-gray-800"
             }`}
           >
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-semibold text-gray-900">{g.name}</span>
-                <code className="text-xs text-gray-500">{g.slug}</code>
+                <span className="font-semibold text-gray-900 dark:text-gray-100">{g.name}</span>
+                <code className="text-xs text-gray-500 dark:text-gray-400">{g.slug}</code>
                 {!g.isPublic && (
-                  <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600">
+                  <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
                     Private
                   </span>
                 )}
                 {g.deletedAt && (
-                  <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600">
+                  <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
                     Deleted
                   </span>
                 )}
               </div>
-              <p className="mt-1 text-xs text-gray-500">
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                 {g.memberCount} member{g.memberCount === 1 ? "" : "s"} · Created{" "}
                 <DateTime iso={g.createdAt} mode="date" />
               </p>
@@ -90,7 +90,7 @@ export default async function SuperAdminPage() {
             <div className="flex items-center gap-2 text-xs">
               <Link
                 href={`/admin?guildId=${g.id}`}
-                className="rounded border border-violet-300 bg-violet-50 px-2 py-1 font-semibold text-violet-700 hover:bg-violet-100"
+                className="rounded border border-violet-300 bg-violet-50 px-2 py-1 font-semibold text-violet-700 hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
               >
                 Manage as admin
               </Link>
@@ -105,9 +105,9 @@ export default async function SuperAdminPage() {
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white px-5 py-4">
-      <div className="text-2xl font-bold text-gray-900">{value}</div>
-      <div className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-500">
+    <div className="rounded-lg border border-gray-200 bg-white px-5 py-4 dark:border-gray-800 dark:bg-gray-900">
+      <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{value}</div>
+      <div className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
         {label}
       </div>
     </div>

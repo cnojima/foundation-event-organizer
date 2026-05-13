@@ -76,19 +76,19 @@ export function PlayerSearchForm({
   }
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-3">
+    <div className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
       <div className="grid gap-2 sm:grid-cols-[1fr_auto_auto_auto]">
         <input
           type="text"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder={t("searchPlaceholder")}
-          className="rounded border border-gray-300 px-3 py-2 text-sm"
+          className="rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
         <select
           value={powerTier}
           onChange={(e) => setPowerTier(e.target.value)}
-          className="rounded border border-gray-300 px-3 py-2 text-sm"
+          className="rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
         >
           <option value="">{t("allTiers")}</option>
           {POWER_TIERS.map((tier) => (
@@ -100,7 +100,7 @@ export function PlayerSearchForm({
         <select
           value={guildId}
           onChange={(e) => setGuildId(e.target.value)}
-          className="rounded border border-gray-300 px-3 py-2 text-sm"
+          className="rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
         >
           <option value="">{t("allGuilds")}</option>
           {guildOptions.map((g) => (
@@ -113,7 +113,7 @@ export function PlayerSearchForm({
           type="button"
           onClick={reset}
           disabled={!hasFilter}
-          className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
         >
           {t("reset")}
         </button>

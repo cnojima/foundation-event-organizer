@@ -31,8 +31,8 @@ export default async function GuildsPage() {
     <div className="mx-auto max-w-3xl">
       <div className="mb-6 flex items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Guilds</h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">Guilds</h1>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             {inAGuild
               ? "You're already a member of a guild. To join another, leave your current one first."
               : "Join an existing guild, create your own, or use an invite link."}
@@ -49,26 +49,26 @@ export default async function GuildsPage() {
       </div>
 
       {rows.length === 0 ? (
-        <p className="text-gray-500">No public guilds yet. Be the first to create one.</p>
+        <p className="text-gray-500 dark:text-gray-400">No public guilds yet. Be the first to create one.</p>
       ) : (
         <div className="space-y-3">
           {rows.map((guild) => (
             <div
               key={guild.id}
-              className="rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-violet-400"
+              className="rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-violet-400 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-violet-700"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <Link
                     href={`/guilds/${guild.slug}`}
-                    className="text-lg font-semibold text-gray-900 hover:text-violet-700"
+                    className="text-lg font-semibold text-gray-900 hover:text-violet-700 dark:text-gray-100 dark:hover:text-violet-300"
                   >
                     {guild.name}
                   </Link>
                   {guild.description && (
-                    <p className="mt-1 text-sm text-gray-600">{guild.description}</p>
+                    <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{guild.description}</p>
                   )}
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                     {guild.memberCount} member{guild.memberCount === 1 ? "" : "s"}
                   </p>
                 </div>

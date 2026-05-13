@@ -54,7 +54,7 @@ export function InfoTip({
       {children}
       <span
         role="tooltip"
-        className={`pointer-events-none absolute z-50 w-max max-w-xs rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs leading-relaxed text-gray-700 shadow-lg transition-opacity ${positionClasses} ${
+        className={`pointer-events-none absolute z-50 w-max max-w-xs rounded-md border border-gray-200 bg-white px-3 py-1.5 text-xs leading-relaxed text-gray-700 shadow-lg transition-opacity dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 ${positionClasses} ${
           open
             ? "opacity-100 visible"
             : "invisible opacity-0 group-hover:visible group-hover:opacity-100"
@@ -82,7 +82,7 @@ export function InfoTipIcon({
       <button
         type="button"
         aria-label={label}
-        className="inline-flex size-4 items-center justify-center rounded-full border border-gray-300 bg-white text-[10px] font-bold text-gray-500 hover:border-gray-400 hover:text-gray-700"
+        className="inline-flex size-4 items-center justify-center rounded-full border border-gray-300 bg-white text-[10px] font-bold text-gray-500 hover:border-gray-400 hover:text-gray-700 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400 dark:hover:border-gray-600 dark:hover:text-gray-200"
       >
         ?
       </button>

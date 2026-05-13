@@ -40,7 +40,7 @@ export function NotificationBell({ alerts }: { alerts: UserAlert[] }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="relative grid size-9 place-items-center rounded-full text-gray-500 hover:bg-gray-100"
+        className="relative grid size-9 place-items-center rounded-full text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800"
         aria-label={tTop("notifications")}
         aria-expanded={open}
       >
@@ -59,31 +59,31 @@ export function NotificationBell({ alerts }: { alerts: UserAlert[] }) {
           />
         </svg>
         <span
-          className="absolute right-1 top-1 size-2 rounded-full bg-violet-600 ring-2 ring-white"
+          className="absolute right-1 top-1 size-2 rounded-full bg-violet-600 ring-2 ring-white dark:ring-gray-950"
           aria-hidden
         />
       </button>
 
       {open && (
-        <div className="absolute right-0 z-30 mt-2 w-72 rounded-lg border border-gray-200 bg-white shadow-lg">
-          <div className="border-b border-gray-100 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500">
+        <div className="absolute right-0 z-30 mt-2 w-72 rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900">
+          <div className="border-b border-gray-100 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 dark:border-gray-800 dark:text-gray-400">
             {t("heading", { count: alerts.length })}
           </div>
-          <ul className="divide-y divide-gray-100">
+          <ul className="divide-y divide-gray-100 dark:divide-gray-800">
             {alerts.map((alert) => (
               <li key={alert.kind}>
                 <Link
                   href={alert.href}
                   onClick={() => setOpen(false)}
-                  className="block px-3 py-3 hover:bg-gray-50"
+                  className="block px-3 py-3 hover:bg-gray-50 dark:hover:bg-gray-800"
                 >
-                  <p className="text-sm font-semibold text-gray-900">
+                  <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                     {t(`${alert.kind}.title`)}
                   </p>
-                  <p className="mt-0.5 text-xs text-gray-600">
+                  <p className="mt-0.5 text-xs text-gray-600 dark:text-gray-400">
                     {t(`${alert.kind}.body`)}
                   </p>
-                  <p className="mt-1 text-xs font-semibold text-violet-700">
+                  <p className="mt-1 text-xs font-semibold text-violet-700 dark:text-violet-300">
                     {t(`${alert.kind}.action`)}
                   </p>
                 </Link>

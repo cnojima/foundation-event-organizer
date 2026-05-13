@@ -53,7 +53,7 @@ export default async function AdminHelpPage() {
   // Reusable link renderers — keep the in-app navigation paths out of
   // translated strings.
   const link = (href: string) => (c: Chunks) => (
-    <Link className="text-violet-700 underline" href={href}>
+    <Link className="text-violet-700 underline dark:text-violet-300" href={href}>
       {c}
     </Link>
   );
@@ -61,10 +61,10 @@ export default async function AdminHelpPage() {
   return (
     <HelpLayout sections={sections}>
       <header>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <p className="mt-2 text-gray-600">
+        <p className="mt-2 text-gray-600 dark:text-gray-400">
           {t.rich("subtitle", { helpLink: link("/help") })}
         </p>
       </header>
@@ -108,7 +108,7 @@ export default async function AdminHelpPage() {
 
       <CollapsibleSection id="scrims" title={t("sections.scrims")}>
         <p>{t("scrims.intro")}</p>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           {t.rich("scrims.serverNote", {
             settingsLink: link("/admin/settings"),
           })}
@@ -152,7 +152,7 @@ export default async function AdminHelpPage() {
           {t("scrims.discordNotificationsHeading")}
         </h3>
         <p>{t("scrims.discordNotificationsBody")}</p>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-gray-600 dark:text-gray-400">
           {t("scrims.discordNotificationsFallback")}
         </p>
 
@@ -169,7 +169,7 @@ export default async function AdminHelpPage() {
         <ol className="list-decimal space-y-2 pl-5">
           <li>
             {t("inviteBot.step1Intro")}
-            <pre className="mt-2 overflow-x-auto rounded bg-gray-50 p-2 text-xs">
+            <pre className="mt-2 overflow-x-auto rounded bg-gray-50 p-2 text-xs dark:bg-gray-900 dark:text-gray-200">
               {INSTALL_URL}
             </pre>
             <span className="mt-2 block">{t("inviteBot.step1Note")}</span>
@@ -192,7 +192,7 @@ export default async function AdminHelpPage() {
           <li>{t("discordChannel.step4")}</li>
           <li>{t("discordChannel.step5")}</li>
         </ol>
-        <p className="text-sm text-gray-600">{t("discordChannel.commonErrors")}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{t("discordChannel.commonErrors")}</p>
       </CollapsibleSection>
 
       <CollapsibleSection id="slash-commands" title={t("sections.slashCommands")}>
@@ -201,7 +201,7 @@ export default async function AdminHelpPage() {
           <li>{t("slashCommands.upcoming")}</li>
           <li>{t("slashCommands.signup")}</li>
         </ul>
-        <p className="text-sm text-gray-600">{t("slashCommands.propagation")}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{t("slashCommands.propagation")}</p>
 
         <h3 className="mt-4 font-semibold">{t("slashCommands.failHeading")}</h3>
         <p className="text-sm">{t("slashCommands.failIntro")}</p>
@@ -209,10 +209,10 @@ export default async function AdminHelpPage() {
           <li>{t("slashCommands.failStep1")}</li>
           <li>
             {t("slashCommands.failStep2Intro")}
-            <pre className="mt-2 overflow-x-auto rounded bg-gray-50 p-2 text-xs">
+            <pre className="mt-2 overflow-x-auto rounded bg-gray-50 p-2 text-xs dark:bg-gray-900 dark:text-gray-200">
               {FLUSH_COMMANDS_CURL}
             </pre>
-            <p className="mt-2 text-xs text-gray-600">
+            <p className="mt-2 text-xs text-gray-600 dark:text-gray-400">
               {t("slashCommands.failStep2Note")}
             </p>
           </li>

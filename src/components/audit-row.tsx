@@ -72,22 +72,22 @@ export function AuditRow({
   return (
     <>
       <tr
-        className={`border-t border-gray-100 ${isFlagged ? "bg-amber-50/50" : ""}`}
+        className={`border-t border-gray-100 dark:border-gray-800 ${isFlagged ? "bg-amber-50/50 dark:bg-amber-950/20" : ""}`}
       >
-        <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500">
+        <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
           <DateTime iso={row.createdAt} />
         </td>
-        <td className="px-3 py-2 font-medium text-gray-800">
+        <td className="px-3 py-2 font-medium text-gray-800 dark:text-gray-200">
           {row.actorDisplay}
         </td>
         <td className="px-3 py-2">
-          <code className="rounded bg-gray-100 px-1.5 py-0.5 text-xs font-mono text-gray-700">
+          <code className="rounded bg-gray-100 px-1.5 py-0.5 text-xs font-mono text-gray-700 dark:bg-gray-800 dark:text-gray-300">
             {row.action}
           </code>
         </td>
-        <td className="px-3 py-2 text-gray-700">
+        <td className="px-3 py-2 text-gray-700 dark:text-gray-300">
           <div className="flex items-center gap-2">
-            <span className="rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-500">
+            <span className="rounded border border-gray-200 bg-gray-50 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400">
               {row.entityType}
             </span>
             <span className="truncate">{row.entityLabel ?? "—"}</span>
@@ -95,7 +95,7 @@ export function AuditRow({
               <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                className="text-xs text-violet-600 hover:underline"
+                className="text-xs text-violet-600 hover:underline dark:text-violet-300"
               >
                 {open ? "Hide diff" : "Diff"}
               </button>
@@ -112,8 +112,8 @@ export function AuditRow({
             disabled={submitting}
             className={`rounded-md border px-2 py-1 text-xs font-semibold transition-colors disabled:opacity-50 ${
               isFlagged
-                ? "border-amber-300 bg-amber-100 text-amber-900 hover:bg-amber-200"
-                : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+                ? "border-amber-300 bg-amber-100 text-amber-900 hover:bg-amber-200 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200 dark:hover:bg-amber-900/50"
+                : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
             }`}
           >
             {isFlagged ? "★ Flagged" : "☆ Flag"}
@@ -121,8 +121,8 @@ export function AuditRow({
         </td>
       </tr>
       {isFlagged && (flaggerDisplay || flagNote) && (
-        <tr className="bg-amber-50/30">
-          <td colSpan={5} className="px-3 pb-2 text-xs text-amber-900">
+        <tr className="bg-amber-50/30 dark:bg-amber-950/10">
+          <td colSpan={5} className="px-3 pb-2 text-xs text-amber-900 dark:text-amber-200">
             Flagged
             {flaggerDisplay ? ` by ${flaggerDisplay}` : ""}
             {flagNote ? ` — “${flagNote}”` : ""}
@@ -130,7 +130,7 @@ export function AuditRow({
         </tr>
       )}
       {showNoteEditor && (
-        <tr className="bg-amber-50">
+        <tr className="bg-amber-50 dark:bg-amber-950/30">
           <td colSpan={5} className="px-3 py-2">
             <div className="flex flex-wrap items-center gap-2">
               <input
@@ -138,7 +138,7 @@ export function AuditRow({
                 value={noteDraft}
                 onChange={(e) => setNoteDraft(e.target.value)}
                 placeholder="Optional note (e.g. 'review on Mon')"
-                className="flex-1 min-w-48 rounded border px-2 py-1 text-sm"
+                className="flex-1 min-w-48 rounded border px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
                 autoFocus
               />
               <button
@@ -156,7 +156,7 @@ export function AuditRow({
                   setNoteDraft("");
                 }}
                 disabled={submitting}
-                className="text-sm text-gray-500 hover:underline"
+                className="text-sm text-gray-500 hover:underline dark:text-gray-400"
               >
                 Cancel
               </button>
@@ -165,9 +165,9 @@ export function AuditRow({
         </tr>
       )}
       {open && hasChanges && (
-        <tr className="bg-gray-50">
+        <tr className="bg-gray-50 dark:bg-gray-900">
           <td colSpan={5} className="px-3 py-2">
-            <pre className="max-h-64 overflow-auto rounded border border-gray-200 bg-white p-3 text-xs text-gray-700">
+            <pre className="max-h-64 overflow-auto rounded border border-gray-200 bg-white p-3 text-xs text-gray-700 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-300">
               {formatChanges(row.changes)}
             </pre>
           </td>

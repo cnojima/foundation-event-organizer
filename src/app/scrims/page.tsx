@@ -63,14 +63,14 @@ export default async function ScrimHistoryPage({
   return (
     <main className="mx-auto max-w-3xl p-6">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
-      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
+      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         {actingGuild ? `${actingGuild.name} — Scrimmages` : "Scrimmages"}
       </h1>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
         Guild-vs-guild matches your guild has played or has scheduled.
       </p>
 
@@ -115,12 +115,12 @@ function Section({
   return (
     <section className="mb-8">
       <h2
-        className={`mb-3 text-lg font-semibold ${muted ? "text-gray-500" : "text-gray-900"}`}
+        className={`mb-3 text-lg font-semibold ${muted ? "text-gray-500 dark:text-gray-400" : "text-gray-900 dark:text-gray-100"}`}
       >
         {title}
       </h2>
       {rows.length === 0 ? (
-        <p className="text-sm text-gray-500">{emptyMessage}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">{emptyMessage}</p>
       ) : (
         <div className="space-y-2">
           {rows.map((row) => {
@@ -144,21 +144,21 @@ function Section({
               side === "proposing" ? row.proposingEventId : row.opposingEventId;
             const Card = (
               <div
-                className={`rounded-lg border bg-white p-4 transition-colors ${
+                className={`rounded-lg border bg-white p-4 transition-colors dark:bg-gray-900 ${
                   muted
-                    ? "border-gray-200 opacity-80 hover:opacity-100"
-                    : "border-gray-200 hover:border-violet-400"
+                    ? "border-gray-200 opacity-80 hover:opacity-100 dark:border-gray-800"
+                    : "border-gray-200 hover:border-violet-400 dark:border-gray-800 dark:hover:border-violet-700"
                 }`}
               >
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-semibold text-gray-900">
+                      <span className="font-semibold text-gray-900 dark:text-gray-100">
                         vs {opponentLabel}
                       </span>
                       {outcome && <OutcomeChip outcome={outcome} />}
                     </div>
-                    <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500">
+                    <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500 dark:text-gray-400">
                       <span>
                         <DateTime
                           iso={row.proposedGameTime}
@@ -167,11 +167,11 @@ function Section({
                       </span>
                       <span>Location: {row.location}</span>
                     </div>
-                    <p className="mt-1 text-xs text-gray-600">
+                    <p className="mt-1 text-xs text-gray-600 dark:text-gray-400">
                       Win: {row.winCondition}
                     </p>
                     {row.resultNotes && (
-                      <p className="mt-1 text-xs italic text-gray-600">
+                      <p className="mt-1 text-xs italic text-gray-600 dark:text-gray-400">
                         &ldquo;{row.resultNotes}&rdquo;
                       </p>
                     )}
@@ -195,10 +195,10 @@ function Section({
 
 function OutcomeChip({ outcome }: { outcome: "W" | "L" | "D" | "NC" }) {
   const styles: Record<string, string> = {
-    W: "border-emerald-200 bg-emerald-50 text-emerald-700",
-    L: "border-red-200 bg-red-50 text-red-700",
-    D: "border-amber-200 bg-amber-50 text-amber-700",
-    NC: "border-gray-200 bg-gray-50 text-gray-600",
+    W: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300",
+    L: "border-red-200 bg-red-50 text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300",
+    D: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300",
+    NC: "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400",
   };
   const labels: Record<string, string> = {
     W: "Won",

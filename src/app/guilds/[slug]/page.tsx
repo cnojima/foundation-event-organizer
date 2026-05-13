@@ -33,29 +33,29 @@ export default async function GuildDetailPage({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="text-3xl font-bold tracking-tight text-gray-900">{guild.name}</h1>
-      <p className="mt-1 text-xs text-gray-500 font-mono">{guild.slug}</p>
+      <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">{guild.name}</h1>
+      <p className="mt-1 text-xs text-gray-500 font-mono dark:text-gray-400">{guild.slug}</p>
       {guild.description && (
-        <p className="mt-4 text-sm text-gray-700">{guild.description}</p>
+        <p className="mt-4 text-sm text-gray-700 dark:text-gray-300">{guild.description}</p>
       )}
-      <p className="mt-2 text-sm text-gray-500">
+      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
         {memberCount} member{memberCount === 1 ? "" : "s"}
       </p>
 
       <div className="mt-6">
         {isMember && (
-          <p className="rounded-md bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
+          <p className="rounded-md bg-emerald-50 px-4 py-3 text-sm text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300">
             You&apos;re a member.
           </p>
         )}
         {isInOtherGuild && (
-          <p className="rounded-md bg-gray-50 px-4 py-3 text-sm text-gray-700">
+          <p className="rounded-md bg-gray-50 px-4 py-3 text-sm text-gray-700 dark:bg-gray-900 dark:text-gray-300">
             You&apos;re already in another guild. Leave it first to join this one.
           </p>
         )}
         {canJoin && <JoinGuildButton guildId={guild.id} />}
         {!guild.isPublic && !isMember && (
-          <p className="rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-800">
+          <p className="rounded-md bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:bg-amber-950/40 dark:text-amber-300">
             This guild is invite-only.
           </p>
         )}

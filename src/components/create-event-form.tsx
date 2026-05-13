@@ -122,7 +122,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 border rounded-lg p-4">
+    <form onSubmit={handleSubmit} className="space-y-4 border rounded-lg p-4 dark:border-gray-800">
       <div>
         <label className="block text-sm font-medium mb-2">Event Type</label>
         <div className="grid grid-cols-2 gap-2">
@@ -151,7 +151,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
             required
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="w-full border rounded px-3 py-2"
+            className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
           <FieldHelp>Shown to players in the event list and roster.</FieldHelp>
         </div>
@@ -204,7 +204,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <input
                 name="squad1Name"
                 defaultValue="Squad 1"
-                className="w-full border rounded px-3 py-2"
+                className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>Display name for the first squad.</FieldHelp>
             </div>
@@ -223,7 +223,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <input
                 name="squad2Name"
                 defaultValue="Squad 2"
-                className="w-full border rounded px-3 py-2"
+                className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>Display name for the second squad.</FieldHelp>
             </div>
@@ -243,7 +243,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
                 name="maxPlayers"
                 type="number"
                 defaultValue={20}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>
                 Main roster size per squad. Includes leaders.
@@ -255,7 +255,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
                 name="maxBackups"
                 type="number"
                 defaultValue={10}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>
                 Backup slots per squad. Once main + backup are full, new
@@ -268,7 +268,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
                 name="leadershipSlots"
                 type="number"
                 defaultValue={3}
-                className="w-full border rounded px-3 py-2"
+                className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>
                 How many leader spots each squad has. Players request a leader
@@ -310,12 +310,12 @@ function KindOption({
       onClick={() => onSelect(value)}
       className={`rounded-md border px-3 py-2 text-left transition-colors ${
         active
-          ? "border-violet-500 bg-violet-50 ring-1 ring-violet-500"
-          : "border-gray-200 hover:border-gray-300"
+          ? "border-violet-500 bg-violet-50 ring-1 ring-violet-500 dark:bg-violet-950/40"
+          : "border-gray-200 hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700"
       }`}
     >
-      <div className="text-sm font-semibold text-gray-900">{title}</div>
-      <div className="text-xs text-gray-500">{description}</div>
+      <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">{title}</div>
+      <div className="text-xs text-gray-500 dark:text-gray-400">{description}</div>
     </button>
   );
 }

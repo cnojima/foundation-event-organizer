@@ -55,14 +55,14 @@ export function FeedbackMenu({ user }: { user: FeedbackUserContext }) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="text-xs font-semibold tracking-wider text-gray-500 hover:text-gray-900"
+        className="text-xs font-semibold tracking-wider text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
       >
         {tFooter("feedback")}
       </button>
       {open && (
         <div
           role="menu"
-          className="absolute bottom-full right-0 z-50 mb-2 w-64 rounded-lg border border-gray-200 bg-white p-1 shadow-lg"
+          className="absolute bottom-full right-0 z-50 mb-2 w-64 rounded-lg border border-gray-200 bg-white p-1 shadow-lg dark:border-gray-700 dark:bg-gray-900"
         >
           <MenuItem
             title={tFeedback("reportBug")}
@@ -78,11 +78,11 @@ export function FeedbackMenu({ user }: { user: FeedbackUserContext }) {
             href={FEEDBACK_ISSUES_URL}
             target="_blank"
             rel="noreferrer"
-            className="block rounded-md px-3 py-2 text-sm hover:bg-gray-50"
+            className="block rounded-md px-3 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800"
             onClick={() => setOpen(false)}
           >
-            <div className="font-semibold text-gray-900">{tFeedback("browseAll")}</div>
-            <div className="text-xs text-gray-500">
+            <div className="font-semibold text-gray-900 dark:text-gray-100">{tFeedback("browseAll")}</div>
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               {tFeedback("browseAllDescription")}
             </div>
           </a>
@@ -105,10 +105,10 @@ function MenuItem({
     <button
       type="button"
       onClick={onClick}
-      className="block w-full rounded-md px-3 py-2 text-left hover:bg-gray-50"
+      className="block w-full rounded-md px-3 py-2 text-left hover:bg-gray-50 dark:hover:bg-gray-800"
     >
-      <div className="text-sm font-semibold text-gray-900">{title}</div>
-      <div className="text-xs text-gray-500">{description}</div>
+      <div className="text-sm font-semibold text-gray-900 dark:text-gray-100">{title}</div>
+      <div className="text-xs text-gray-500 dark:text-gray-400">{description}</div>
     </button>
   );
 }

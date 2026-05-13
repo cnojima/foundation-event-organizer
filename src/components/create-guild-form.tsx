@@ -56,14 +56,14 @@ export function CreateGuildForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-white p-4">
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
       <div>
         <label className="block text-sm font-medium mb-1">Name *</label>
         <input
           required
           value={name}
           onChange={(e) => handleNameChange(e.target.value)}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
         <FieldHelp>Display name shown in the sidebar and discovery list.</FieldHelp>
       </div>
@@ -77,7 +77,7 @@ export function CreateGuildForm() {
             setSlugTouched(true);
           }}
           pattern="[a-z0-9\-]{3,40}"
-          className="w-full border rounded px-3 py-2 font-mono"
+          className="w-full border rounded px-3 py-2 font-mono dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
         <FieldHelp>
           URL-safe ID. 3-40 chars: a-z, 0-9, hyphens. Permanent — can&apos;t be
@@ -96,7 +96,7 @@ export function CreateGuildForm() {
             value={serverNumber}
             onChange={(e) => setServerNumber(e.target.value)}
             placeholder="e.g. 1234"
-            className="w-full border rounded px-3 py-2 font-mono"
+            className="w-full border rounded px-3 py-2 font-mono dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
           <FieldHelp>Game-server number (1001-9999).</FieldHelp>
         </div>
@@ -110,7 +110,7 @@ export function CreateGuildForm() {
             value={tag}
             onChange={(e) => setTag(e.target.value)}
             placeholder="e.g. SHFT"
-            className="w-full border rounded px-3 py-2 font-mono uppercase"
+            className="w-full border rounded px-3 py-2 font-mono uppercase dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
           <FieldHelp>
             2-4 characters. Prepended to every member&apos;s name as{" "}
@@ -120,7 +120,7 @@ export function CreateGuildForm() {
       </div>
       <div>
         <label className="block text-sm font-medium mb-1">Description</label>
-        <textarea name="description" rows={3} className="w-full border rounded px-3 py-2" />
+        <textarea name="description" rows={3} className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500" />
         <FieldHelp>Optional. Shown on the public guild page.</FieldHelp>
       </div>
       <div>
@@ -133,7 +133,7 @@ export function CreateGuildForm() {
           When off, only people with an invite link can join.
         </FieldHelp>
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
       <button
         type="submit"
         disabled={submitting}

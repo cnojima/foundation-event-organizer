@@ -55,29 +55,29 @@ export async function PlayerCard({
       : null;
 
   return (
-    <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3">
+    <div className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
       {/* Name + avatar area opens the public profile. Keeping Challenge as
           a separate adjacent button avoids accidental "open profile when
           you meant to challenge" misclicks. */}
       <Link
         href={`/players/${player.id}`}
-        className="flex min-w-0 flex-1 items-center gap-3 rounded-md -mx-1 -my-1 px-1 py-1 hover:bg-gray-50"
+        className="flex min-w-0 flex-1 items-center gap-3 rounded-md -mx-1 -my-1 px-1 py-1 hover:bg-gray-50 dark:hover:bg-gray-800"
       >
         <UserAvatar name={name} image={player.image} size="size-12" />
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="truncate font-semibold text-gray-900">{name}</span>
+            <span className="truncate font-semibold text-gray-900 dark:text-gray-100">{name}</span>
             {player.powerTier && <TierChip tier={player.powerTier} />}
             {sameGuild && (
-              <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700">
+              <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300">
                 {t("sameGuildBadge")}
               </span>
             )}
           </div>
-          <p className="truncate text-xs text-gray-500">{player.guildName}</p>
-          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-gray-600">
+          <p className="truncate text-xs text-gray-500 dark:text-gray-400">{player.guildName}</p>
+          <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-gray-600 dark:text-gray-400">
             <span title={t("ratingTooltip")}>
-              <span className="font-semibold text-gray-900">{player.duelRating}</span>{" "}
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{player.duelRating}</span>{" "}
               {t("rating")}
             </span>
             {totalDuels > 0 && (
@@ -92,7 +92,7 @@ export async function PlayerCard({
               </span>
             )}
             {player.lastDuelAt && (
-              <span className="text-gray-400">
+              <span className="text-gray-400 dark:text-gray-500">
                 {t("lastActiveLabel")}{" "}
                 <DateTime iso={player.lastDuelAt} mode="date" />
               </span>
@@ -102,7 +102,7 @@ export async function PlayerCard({
       </Link>
       {sameGuild ? (
         <span
-          className="shrink-0 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-400"
+          className="shrink-0 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-500"
           title={t("sameGuildChallengeHint")}
         >
           {t("challenge")}
@@ -121,7 +121,7 @@ export async function PlayerCard({
 
 function TierChip({ tier }: { tier: NonNullable<PlayerCardData["powerTier"]> }) {
   return (
-    <span className="rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-amber-700">
+    <span className="rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 font-mono text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
       {tier}
     </span>
   );

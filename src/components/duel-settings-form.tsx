@@ -87,7 +87,7 @@ export function DuelSettingsForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 rounded-lg border bg-white p-4"
+      className="space-y-4 rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
     >
       <div>
         <label className="block text-sm font-medium mb-1">
@@ -96,7 +96,7 @@ export function DuelSettingsForm({
         <select
           value={powerTier}
           onChange={(e) => setPowerTier(e.target.value as PowerTier | "")}
-          className="w-full border rounded px-3 py-2 font-mono"
+          className="w-full border rounded px-3 py-2 font-mono dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
         >
           <option value="">{t("duels.powerTierNotSet")}</option>
           {POWER_TIERS.map((tier) => (
@@ -130,7 +130,7 @@ export function DuelSettingsForm({
             disabled={!discordLinked}
             className="mt-0.5"
           />
-          <span className={discordLinked ? "" : "text-gray-400"}>
+          <span className={discordLinked ? "" : "text-gray-400 dark:text-gray-500"}>
             {t("duels.dmLabel")}
           </span>
         </label>
@@ -141,7 +141,7 @@ export function DuelSettingsForm({
         </FieldHelp>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
 
       <div className="flex items-center gap-3">
         <button
@@ -152,7 +152,7 @@ export function DuelSettingsForm({
           {submitting ? tCommon("saving") : tCommon("save")}
         </button>
         {savedAt && (
-          <span className="text-xs text-emerald-600">{tCommon("saved")}</span>
+          <span className="text-xs text-emerald-600 dark:text-emerald-300">{tCommon("saved")}</span>
         )}
       </div>
     </form>

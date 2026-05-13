@@ -60,7 +60,7 @@ export function MemberRowActions({
             type="button"
             onClick={() => setRole("admin")}
             disabled={busy}
-            className="rounded border border-violet-300 bg-violet-50 px-2 py-1 font-semibold text-violet-700 hover:bg-violet-100 disabled:opacity-50"
+            className="rounded border border-violet-300 bg-violet-50 px-2 py-1 font-semibold text-violet-700 hover:bg-violet-100 disabled:opacity-50 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
           >
             Promote
           </button>
@@ -78,7 +78,7 @@ export function MemberRowActions({
             type="button"
             onClick={() => setRole("member")}
             disabled={busy || isLastAdmin}
-            className="rounded border border-gray-300 bg-white px-2 py-1 font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+            className="rounded border border-gray-300 bg-white px-2 py-1 font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
           >
             Demote
           </button>
@@ -95,12 +95,12 @@ export function MemberRowActions({
           type="button"
           onClick={kick}
           disabled={busy || isLastAdmin}
-          className="rounded border border-red-300 bg-red-50 px-2 py-1 font-semibold text-red-700 hover:bg-red-100 disabled:opacity-50"
+          className="rounded border border-red-300 bg-red-50 px-2 py-1 font-semibold text-red-700 hover:bg-red-100 disabled:opacity-50 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300 dark:hover:bg-red-900/50"
         >
           Kick
         </button>
       </InfoTip>
-      {error && <span className="text-red-600">{error}</span>}
+      {error && <span className="text-red-600 dark:text-red-300">{error}</span>}
     </div>
   );
 }

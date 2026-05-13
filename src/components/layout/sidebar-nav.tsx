@@ -264,7 +264,7 @@ export function SidebarNav(props: SidebarNavProps) {
         if (categoryItems.length === 0) return null;
         return (
           <div key={category} className="flex flex-col gap-1">
-            <p className="mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400">
+            <p className="mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500">
               {t(`category.${category}`)}
             </p>
             {categoryItems.map((item) => {
@@ -282,11 +282,17 @@ export function SidebarNav(props: SidebarNavProps) {
                   href={href}
                   className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
                     active
-                      ? "bg-violet-50 text-violet-700"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                      ? "bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-200"
+                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100"
                   }`}
                 >
-                  <span className={active ? "text-violet-600" : "text-gray-400"}>
+                  <span
+                    className={
+                      active
+                        ? "text-violet-600 dark:text-violet-300"
+                        : "text-gray-400 dark:text-gray-500"
+                    }
+                  >
                     {item.icon}
                   </span>
                   <span className="uppercase">{t(item.labelKey)}</span>

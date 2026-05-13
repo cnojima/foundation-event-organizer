@@ -33,8 +33,8 @@ function PreferencePill({ label, pref }: { label: string; pref: number | null })
       <span
         className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium ${
           has
-            ? "border-violet-200 bg-violet-50 text-violet-700"
-            : "border-gray-200 bg-gray-50 text-gray-400"
+            ? "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300"
+            : "border-gray-200 bg-gray-50 text-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-500"
         }`}
       >
         <span className="text-[10px] uppercase tracking-wider">{label}</span>
@@ -54,16 +54,16 @@ const ROLE_TOOLTIPS: Record<string, string> = {
 function RoleBadge({ role }: { role: string | null }) {
   if (!role) return null;
   const styles: Record<string, string> = {
-    leader: "bg-amber-50 text-amber-700 border-amber-200",
-    player: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    backup: "bg-sky-50 text-sky-700 border-sky-200",
-    waitlist: "bg-orange-50 text-orange-700 border-orange-200",
+    leader: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-900/60",
+    player: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:border-emerald-900/60",
+    backup: "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-950/40 dark:text-sky-300 dark:border-sky-900/60",
+    waitlist: "bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950/40 dark:text-orange-300 dark:border-orange-900/60",
   };
   return (
     <InfoTip content={ROLE_TOOLTIPS[role] ?? `Assigned role: ${role}`}>
       <span
         className={`inline-flex rounded-md border px-2 py-0.5 text-xs font-semibold capitalize ${
-          styles[role] ?? "bg-gray-50 text-gray-700 border-gray-200"
+          styles[role] ?? "bg-gray-50 text-gray-700 border-gray-200 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-800"
         }`}
       >
         {role}
@@ -84,7 +84,7 @@ export default async function PlayersPage({
   if (!targetGuildId) {
     return (
       <div className="mx-auto max-w-6xl">
-        <p className="text-red-600">Guild not found.</p>
+        <p className="text-red-600 dark:text-red-300">Guild not found.</p>
       </div>
     );
   }
@@ -122,16 +122,16 @@ export default async function PlayersPage({
   return (
     <div className="mx-auto max-w-6xl">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
       <div className="mb-6 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
             {actingGuild ? `${actingGuild.name} — Players` : "Players"}
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             {playersWithSignups.length} of {guildUsers.length} guild members have signed up for events.
           </p>
         </div>
@@ -144,7 +144,7 @@ export default async function PlayersPage({
       </div>
 
       {guildUsers.length === 0 ? (
-        <p className="text-sm text-gray-500">No guild members yet.</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">No guild members yet.</p>
       ) : (
         <div className="space-y-4">
           {guildUsers.map((user) => {
@@ -168,9 +168,9 @@ export default async function PlayersPage({
 
 function Stat({ label, value }: { label: string; value: number }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white px-5 py-4">
-      <div className="text-2xl font-bold text-gray-900">{value}</div>
-      <div className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-500">{label}</div>
+    <div className="rounded-lg border border-gray-200 bg-white px-5 py-4 dark:border-gray-800 dark:bg-gray-900">
+      <div className="text-2xl font-bold text-gray-900 dark:text-gray-100">{value}</div>
+      <div className="mt-1 text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">{label}</div>
     </div>
   );
 }
@@ -189,35 +189,35 @@ function PlayerCard({
 }) {
   const linkSuffix = guildIdQuery ? `?guildId=${guildIdQuery}` : "";
   return (
-    <div className="rounded-lg border border-gray-200 bg-white">
-      <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-gray-100">
+    <div className="rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+      <div className="flex items-center justify-between gap-4 px-5 py-4 border-b border-gray-100 dark:border-gray-800">
         <div className="flex items-center gap-3">
           <UserAvatar name={displayName(user, guildTag)} image={user.image} />
           <div className="leading-tight">
             <div className="flex items-center gap-2">
-              <span className="font-semibold text-gray-900">{displayName(user, guildTag)}</span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{displayName(user, guildTag)}</span>
               {user.guildRole === "admin" && (
-                <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700">
+                <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300">
                   Admin
                 </span>
               )}
               {user.isSuperAdmin && (
-                <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700">
+                <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300">
                   Super
                 </span>
               )}
             </div>
           </div>
         </div>
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-500 dark:text-gray-400">
           {userSignups.length} signup{userSignups.length === 1 ? "" : "s"}
         </div>
       </div>
 
       {userSignups.length === 0 ? (
-        <div className="px-5 py-4 text-sm text-gray-500">No signups yet.</div>
+        <div className="px-5 py-4 text-sm text-gray-500 dark:text-gray-400">No signups yet.</div>
       ) : (
-        <ul className="divide-y divide-gray-100">
+        <ul className="divide-y divide-gray-100 dark:divide-gray-800">
           {userSignups.map(({ signup, event }) => (
             <li key={signup.id} className="px-5 py-3">
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -225,12 +225,12 @@ function PlayerCard({
                   {event ? (
                     <Link
                       href={`/admin/event/${event.id}${linkSuffix}`}
-                      className="text-sm font-semibold text-gray-900 hover:text-violet-700"
+                      className="text-sm font-semibold text-gray-900 hover:text-violet-700 dark:text-gray-100 dark:hover:text-violet-300"
                     >
                       {event.name}
                     </Link>
                   ) : (
-                    <span className="text-sm font-semibold text-gray-400 italic">
+                    <span className="text-sm font-semibold text-gray-400 italic dark:text-gray-500">
                       Deleted event
                     </span>
                   )}
@@ -257,7 +257,7 @@ function PlayerCard({
                     const iso = assigned ?? firstChoice ?? fallback;
                     if (!iso) return null;
                     return (
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-gray-500 dark:text-gray-400">
                         <DateTime iso={iso} showUTC={false} />
                       </div>
                     );
@@ -275,21 +275,21 @@ function PlayerCard({
                   />
                   {signup.willingBackup && (
                     <InfoTip content="Player accepted being a backup if the main roster fills up.">
-                      <span className="rounded border border-sky-200 bg-sky-50 px-2 py-0.5 text-xs font-medium text-sky-700">
+                      <span className="rounded border border-sky-200 bg-sky-50 px-2 py-0.5 text-xs font-medium text-sky-700 dark:border-sky-900/60 dark:bg-sky-950/40 dark:text-sky-300">
                         Backup OK
                       </span>
                     </InfoTip>
                   )}
                   {signup.requestLeadership && (
                     <InfoTip content="Player asked to be considered for a leader spot.">
-                      <span className="rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700">
+                      <span className="rounded border border-amber-200 bg-amber-50 px-2 py-0.5 text-xs font-medium text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
                         Leadership
                       </span>
                     </InfoTip>
                   )}
                   {signup.assignedSquad && (
                     <InfoTip content={`Admin manually assigned this player to Squad ${signup.assignedSquad}.`}>
-                      <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs font-medium text-gray-700">
+                      <span className="rounded border border-gray-200 bg-gray-50 px-2 py-0.5 text-xs font-medium text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         Assigned: Squad {signup.assignedSquad}
                       </span>
                     </InfoTip>
@@ -297,21 +297,21 @@ function PlayerCard({
                   <RoleBadge role={signup.assignedRole} />
                   {signup.attended === true && (
                     <InfoTip content="Admin marked this player as showing up for the match.">
-                      <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">
+                      <span className="rounded bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300">
                         Attended
                       </span>
                     </InfoTip>
                   )}
                   {signup.attended === false && (
                     <InfoTip content="Admin marked this player as a no-show.">
-                      <span className="rounded bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700">
+                      <span className="rounded bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700 dark:bg-red-950/40 dark:text-red-300">
                         No-show
                       </span>
                     </InfoTip>
                   )}
                   {signup.rating != null && (
                     <InfoTip content={`Admin rating: ${signup.rating} of 5.`}>
-                      <span className="rounded bg-yellow-50 px-2 py-0.5 text-xs font-medium text-yellow-800">
+                      <span className="rounded bg-yellow-50 px-2 py-0.5 text-xs font-medium text-yellow-800 dark:bg-yellow-950/40 dark:text-yellow-200">
                         ★ {signup.rating}
                       </span>
                     </InfoTip>
@@ -319,7 +319,7 @@ function PlayerCard({
                 </div>
               </div>
               {signup.leadershipNote && (
-                <div className="mt-2 text-xs text-gray-600">
+                <div className="mt-2 text-xs text-gray-600 dark:text-gray-400">
                   <span className="font-semibold">Leadership note: </span>
                   {signup.leadershipNote}
                 </div>

@@ -17,7 +17,7 @@ export default async function InvitesPage({
   const { guildId: requestedGuildId } = await searchParams;
   const targetGuildId = await resolveAdminGuildId(membership, requestedGuildId);
   if (!targetGuildId) {
-    return <p className="text-red-600">Guild not found.</p>;
+    return <p className="text-red-600 dark:text-red-300">Guild not found.</p>;
   }
 
   const actingGuild = await db.query.guilds.findFirst({
@@ -40,14 +40,14 @@ export default async function InvitesPage({
   return (
     <div className="mx-auto max-w-3xl">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
-      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
+      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         {actingGuild ? `${actingGuild.name} — Invites` : "Invites"}
       </h1>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
         Generate links to invite people to your guild. Anyone with the link
         joins immediately.
       </p>
@@ -60,7 +60,7 @@ export default async function InvitesPage({
       <section>
         <h2 className="mb-2 text-lg font-semibold">All Invites</h2>
         {invites.length === 0 ? (
-          <p className="text-sm text-gray-500">No invites yet.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">No invites yet.</p>
         ) : (
           <div className="space-y-2">
             {invites.map((inv) => (

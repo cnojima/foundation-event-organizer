@@ -41,7 +41,7 @@ export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-3 rounded-lg border bg-white p-4"
+      className="space-y-3 rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
     >
       <div>
         <label className="block text-sm font-medium mb-1">{t("inGameName")}</label>
@@ -51,11 +51,11 @@ export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
           onChange={(e) => setValue(e.target.value)}
           maxLength={MAX_NAME_LENGTH}
           required
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
         <FieldHelp>{t("inGameNameHelp", { max: MAX_NAME_LENGTH })}</FieldHelp>
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
       <div className="flex items-center gap-3">
         <button
           type="submit"
@@ -64,7 +64,7 @@ export function InGameNameForm({ defaultValue }: { defaultValue: string }) {
         >
           {submitting ? tCommon("saving") : tCommon("save")}
         </button>
-        {savedAt && <span className="text-xs text-emerald-600">{tCommon("saved")}</span>}
+        {savedAt && <span className="text-xs text-emerald-600 dark:text-emerald-300">{tCommon("saved")}</span>}
       </div>
     </form>
   );

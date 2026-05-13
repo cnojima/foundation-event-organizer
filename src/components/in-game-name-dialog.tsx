@@ -56,21 +56,21 @@ export function InGameNameDialog({ suggested }: { suggested?: string }) {
       aria-modal="true"
       aria-labelledby="ign-title"
     >
-      <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl">
-        <h2 id="ign-title" className="text-lg font-bold text-gray-900">
+      <div className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl dark:bg-gray-900">
+        <h2 id="ign-title" className="text-lg font-bold text-gray-900 dark:text-gray-100">
           {t("title")}
         </h2>
-        <p className="mt-1 text-sm text-gray-600">{t("explanation")}</p>
+        <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{t("explanation")}</p>
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-medium text-gray-700 mb-1 dark:text-gray-300">
               {t("languageLabel")}
             </label>
             <select
               value={currentLocale}
               onChange={handleLocaleChange}
               disabled={localeBusy}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 disabled:opacity-60"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 disabled:opacity-60 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
             >
               {locales.map((loc) => (
                 <option key={loc} value={loc}>
@@ -80,7 +80,7 @@ export function InGameNameDialog({ suggested }: { suggested?: string }) {
             </select>
           </div>
           <div>
-            <label className="block text-xs font-medium text-gray-700 mb-1">
+            <label className="block text-xs font-medium text-gray-700 mb-1 dark:text-gray-300">
               {t("nameLabel")}
             </label>
             <input
@@ -91,10 +91,10 @@ export function InGameNameDialog({ suggested }: { suggested?: string }) {
               maxLength={32}
               required
               autoFocus
-              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-violet-500 focus:outline-none focus:ring-1 focus:ring-violet-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
             />
           </div>
-          {error && <p className="text-xs text-red-600">{error}</p>}
+          {error && <p className="text-xs text-red-600 dark:text-red-300">{error}</p>}
           <button
             type="submit"
             disabled={submitting || !name.trim()}

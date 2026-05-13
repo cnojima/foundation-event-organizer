@@ -55,25 +55,25 @@ export function SquadRoster({
   return (
     <details
       open={defaultOpen}
-      className="group rounded-lg border border-gray-200 bg-white open:shadow-sm"
+      className="group rounded-lg border border-gray-200 bg-white open:shadow-sm dark:border-gray-800 dark:bg-gray-900"
     >
       <summary className="flex cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 [&::-webkit-details-marker]:hidden">
         <div className="flex items-center gap-2">
           <Chevron />
           <div>
-            <h3 className="font-semibold text-gray-900">{name}</h3>
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100">{name}</h3>
             {effectiveSubtitle && (
-              <p className="text-xs text-gray-500">{effectiveSubtitle}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">{effectiveSubtitle}</p>
             )}
           </div>
         </div>
-        <div className="text-right text-xs font-semibold text-gray-700">
+        <div className="text-right text-xs font-semibold text-gray-700 dark:text-gray-300">
           {rows.length} / {slotCap}
         </div>
       </summary>
-      <div className="border-t border-gray-100">
+      <div className="border-t border-gray-100 dark:border-gray-800">
         {rows.length === 0 ? (
-          <p className="px-4 py-6 text-center text-sm text-gray-400">
+          <p className="px-4 py-6 text-center text-sm text-gray-400 dark:text-gray-500">
             No signups yet.
           </p>
         ) : (
@@ -109,7 +109,7 @@ function Chevron() {
       viewBox="0 0 20 20"
       fill="none"
       aria-hidden
-      className="size-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90"
+      className="size-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90 dark:text-gray-500"
     >
       <path
         d="M7 5l5 5-5 5"
@@ -135,10 +135,10 @@ function RosterSection({
 }) {
   if (rows.length === 0) return null;
   return (
-    <div className="border-b border-gray-100 last:border-b-0">
-      <div className="flex items-center justify-between bg-gray-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500">
+    <div className="border-b border-gray-100 last:border-b-0 dark:border-gray-800">
+      <div className="flex items-center justify-between bg-gray-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 dark:bg-gray-800/50 dark:text-gray-400">
         <span>{title}</span>
-        <span className="text-gray-400">{rows.length}</span>
+        <span className="text-gray-400 dark:text-gray-500">{rows.length}</span>
       </div>
       <ul>
         {rows.map((row) => (
@@ -173,11 +173,11 @@ export function SignupListItem({
   return (
     <div
       className={`flex items-center gap-2 px-3 py-1.5 ${
-        isCurrentUser ? "bg-violet-50/50" : ""
+        isCurrentUser ? "bg-violet-50/50 dark:bg-violet-950/20" : ""
       }`}
     >
       {index !== undefined && (
-        <span className="w-5 text-right text-xs font-mono text-gray-400">
+        <span className="w-5 text-right text-xs font-mono text-gray-400 dark:text-gray-500">
           {index}
         </span>
       )}
@@ -186,10 +186,10 @@ export function SignupListItem({
         name={displayName(user, guildTag)}
         image={user?.image}
       />
-      <span className="flex-1 truncate text-sm text-gray-900">
+      <span className="flex-1 truncate text-sm text-gray-900 dark:text-gray-100">
         {displayName(user, guildTag)}
         {isCurrentUser && (
-          <span className="ml-1 text-xs text-violet-600">(you)</span>
+          <span className="ml-1 text-xs text-violet-600 dark:text-violet-300">(you)</span>
         )}
       </span>
       {showRoleBadge && (
@@ -212,7 +212,7 @@ function RoleBadge({
   if (role === "leader") {
     return (
       <InfoTip content="Leads the squad during the match. Assigned by an admin from leadership requests.">
-        <Pill className="border-amber-200 bg-amber-50 text-amber-700">
+        <Pill className="border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
           Leader
         </Pill>
       </InfoTip>
@@ -221,14 +221,14 @@ function RoleBadge({
   if (role === "backup") {
     return (
       <InfoTip content="On the backup roster. Plays only if a starting-roster player drops.">
-        <Pill className="border-sky-200 bg-sky-50 text-sky-700">Backup</Pill>
+        <Pill className="border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-900/60 dark:bg-sky-950/40 dark:text-sky-300">Backup</Pill>
       </InfoTip>
     );
   }
   if (role === "waitlist") {
     return (
       <InfoTip content="All squad and backup slots were full when this player signed up. Promoted to player/backup only if a slot opens.">
-        <Pill className="border-orange-200 bg-orange-50 text-orange-700">
+        <Pill className="border-orange-200 bg-orange-50 text-orange-700 dark:border-orange-900/60 dark:bg-orange-950/40 dark:text-orange-300">
           Waitlist
         </Pill>
       </InfoTip>
@@ -237,7 +237,7 @@ function RoleBadge({
   if (role === "player") {
     return (
       <InfoTip content="On the starting roster for the squad.">
-        <Pill className="border-emerald-200 bg-emerald-50 text-emerald-700">
+        <Pill className="border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
           Player
         </Pill>
       </InfoTip>
@@ -246,7 +246,7 @@ function RoleBadge({
   if (requestLeadership) {
     return (
       <InfoTip content="This player has requested a leadership role. Admins assign leaders from these requests.">
-        <Pill className="border-amber-200 bg-amber-50/60 text-amber-700">
+        <Pill className="border-amber-200 bg-amber-50/60 text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/30 dark:text-amber-300">
           Wants Leader
         </Pill>
       </InfoTip>

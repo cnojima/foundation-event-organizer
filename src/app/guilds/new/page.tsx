@@ -10,10 +10,10 @@ export default async function NewGuildPage() {
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+      <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         Create a Guild
       </h1>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
         You&apos;ll be the first admin. You can invite others once it&apos;s created.
       </p>
       <CreateGuildForm />

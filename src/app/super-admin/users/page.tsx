@@ -23,10 +23,10 @@ export default async function SuperAdminUsersPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900">
+      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         All Users
       </h1>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
         Toggle super-admin on any user. The last super-admin can&apos;t demote themselves.
       </p>
 
@@ -34,23 +34,23 @@ export default async function SuperAdminUsersPage() {
         {rows.map(({ user: u, guildName, guildTag }) => (
           <div
             key={u.id}
-            className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3"
+            className="flex items-center justify-between gap-4 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-900"
           >
             <div className="flex items-center gap-3">
               <UserAvatar name={displayName(u, guildTag)} image={u.image} />
               <div className="leading-tight">
                 <div className="flex items-center gap-2">
-                  <span className="font-semibold text-gray-900">{displayName(u, guildTag)}</span>
+                  <span className="font-semibold text-gray-900 dark:text-gray-100">{displayName(u, guildTag)}</span>
                   {u.isSuperAdmin && (
-                    <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700">
+                    <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300">
                       Super
                     </span>
                   )}
                   {u.id === me.userId && (
-                    <span className="text-xs text-gray-500">(you)</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">(you)</span>
                   )}
                 </div>
-                <div className="text-xs text-gray-500 font-mono">
+                <div className="text-xs text-gray-500 font-mono dark:text-gray-400">
                   ID {u.id.slice(0, 8)}
                   {guildName && ` · ${guildName} (${u.guildRole})`}
                 </div>

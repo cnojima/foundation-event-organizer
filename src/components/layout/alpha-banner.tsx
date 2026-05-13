@@ -23,8 +23,8 @@ export function AlphaBanner() {
   if (hidden) return null;
 
   return (
-    <div className="flex items-center justify-center gap-3 border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-900">
-      <span className="rounded border border-amber-300 bg-amber-100 px-1.5 py-0.5 font-bold uppercase tracking-wider">
+    <div className="flex items-center justify-center gap-3 border-b border-amber-200 bg-amber-50 px-4 py-2 text-xs text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
+      <span className="rounded border border-amber-300 bg-amber-100 px-1.5 py-0.5 font-bold uppercase tracking-wider dark:border-amber-700 dark:bg-amber-900/60 dark:text-amber-100">
         {t("tag")}
       </span>
       <span>
@@ -35,7 +35,7 @@ export function AlphaBanner() {
               href={FEEDBACK_ISSUES_URL}
               target="_blank"
               rel="noreferrer"
-              className="font-semibold underline hover:text-amber-700"
+              className="font-semibold underline hover:text-amber-700 dark:hover:text-amber-100"
             >
               {chunks}
             </a>
@@ -46,7 +46,7 @@ export function AlphaBanner() {
         type="button"
         onClick={dismiss}
         aria-label={t("dismiss")}
-        className="ml-2 rounded p-1 text-amber-700 hover:bg-amber-100"
+        className="ml-2 rounded p-1 text-amber-700 hover:bg-amber-100 dark:text-amber-300 dark:hover:bg-amber-900/60"
       >
         <svg viewBox="0 0 14 14" className="size-3" aria-hidden>
           <path

@@ -23,11 +23,11 @@ const STYLES: Record<Action, string> = {
   accept:
     "bg-violet-600 text-white hover:bg-violet-700 disabled:opacity-50",
   decline:
-    "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50",
+    "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800",
   withdraw:
-    "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50",
+    "border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800",
   cancel:
-    "border border-red-300 bg-white text-red-700 hover:bg-red-50 disabled:opacity-50",
+    "border border-red-300 bg-white text-red-700 hover:bg-red-50 disabled:opacity-50 dark:border-red-900/60 dark:bg-gray-900 dark:text-red-300 dark:hover:bg-red-950/30",
 };
 
 // Posts to /api/scrimmages/[id]/<action> and refreshes the page on success.
@@ -80,7 +80,7 @@ export function ScrimAction({
       >
         {pending ? "…" : LABELS[action]}
       </button>
-      {error && <span className="text-[10px] text-red-600">{error}</span>}
+      {error && <span className="text-[10px] text-red-600 dark:text-red-300">{error}</span>}
     </span>
   );
 }

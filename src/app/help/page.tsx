@@ -36,10 +36,10 @@ export default async function HelpPage() {
     <HelpLayout sections={sections}>
       <HelpViewedTracker />
       <header>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {t("title")}
         </h1>
-        <p className="mt-2 text-gray-600">{t("subtitle")}</p>
+        <p className="mt-2 text-gray-600 dark:text-gray-400">{t("subtitle")}</p>
       </header>
 
       <CollapsibleSection id="getting-in" title={t("sections.gettingIn")}>
@@ -48,7 +48,7 @@ export default async function HelpPage() {
           <li>
             {t.rich("gettingIn.step2", {
               discoveryLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline" href="/guilds">
+                <Link className="text-violet-700 underline dark:text-violet-300" href="/guilds">
                   {c}
                 </Link>
               ),
@@ -56,7 +56,7 @@ export default async function HelpPage() {
           </li>
           <li>{t("gettingIn.step3")}</li>
         </ol>
-        <p className="text-sm text-gray-600">{t("gettingIn.note")}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{t("gettingIn.note")}</p>
       </CollapsibleSection>
 
       <CollapsibleSection id="event-kinds" title={t("sections.eventKinds")}>
@@ -97,14 +97,14 @@ export default async function HelpPage() {
           <li>
             {t.rich("scrims.history", {
               scrimsLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline" href="/scrims">
+                <Link className="text-violet-700 underline dark:text-violet-300" href="/scrims">
                   {c}
                 </Link>
               ),
             })}
           </li>
         </ul>
-        <p className="text-sm text-gray-600">{t("scrims.note")}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">{t("scrims.note")}</p>
       </CollapsibleSection>
 
       <CollapsibleSection id="duels" title={t("sections.duels")}>
@@ -113,7 +113,7 @@ export default async function HelpPage() {
           <li>
             {t.rich("duels.find", {
               playersLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline" href="/players">
+                <Link className="text-violet-700 underline dark:text-violet-300" href="/players">
                   {c}
                 </Link>
               ),
@@ -128,7 +128,7 @@ export default async function HelpPage() {
           <li>
             {t.rich("duels.leaderboard", {
               leaderboardLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline" href="/leaderboard">
+                <Link className="text-violet-700 underline dark:text-violet-300" href="/leaderboard">
                   {c}
                 </Link>
               ),
@@ -138,7 +138,7 @@ export default async function HelpPage() {
           <li>
             {t.rich("duels.history", {
               duelsLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline" href="/duels">
+                <Link className="text-violet-700 underline dark:text-violet-300" href="/duels">
                   {c}
                 </Link>
               ),

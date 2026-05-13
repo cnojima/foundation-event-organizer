@@ -47,7 +47,7 @@ export function MobileNav({ signedIn, guildRole, isSuperAdmin, guildName }: Prop
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Open navigation"
-        className="grid size-9 place-items-center rounded-md text-gray-700 hover:bg-gray-100 lg:hidden"
+        className="grid size-9 place-items-center rounded-md text-gray-700 hover:bg-gray-100 lg:hidden dark:text-gray-300 dark:hover:bg-gray-900"
       >
         <svg viewBox="0 0 20 20" className="size-5" fill="none" aria-hidden>
           <path
@@ -70,16 +70,16 @@ export function MobileNav({ signedIn, guildRole, isSuperAdmin, guildName }: Prop
             role="dialog"
             aria-modal="true"
             aria-label="Navigation"
-            className="fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85%] flex-col border-r border-gray-200 bg-white shadow-xl"
+            className="fixed inset-y-0 left-0 z-50 flex w-72 max-w-[85%] flex-col border-r border-gray-200 bg-white shadow-xl dark:border-gray-800 dark:bg-gray-950"
           >
-            <div className="flex items-center justify-between border-b border-gray-200 px-5 py-5">
+            <div className="flex items-center justify-between border-b border-gray-200 px-5 py-5 dark:border-gray-800">
               <div className="flex items-center gap-3">
                 <BrandMark size={32} />
                 <div className="leading-tight">
-                  <div className="text-sm font-bold tracking-wider text-gray-900">
+                  <div className="text-sm font-bold tracking-wider text-gray-900 dark:text-gray-100">
                     FOUNDATION
                   </div>
-                  <div className="text-[10px] font-medium tracking-[0.2em] text-gray-500">
+                  <div className="text-[10px] font-medium tracking-[0.2em] text-gray-500 dark:text-gray-400">
                     EVENT ORGANIZER
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export function MobileNav({ signedIn, guildRole, isSuperAdmin, guildName }: Prop
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Close navigation"
-                className="grid size-8 place-items-center rounded-md text-gray-500 hover:bg-gray-100"
+                className="grid size-8 place-items-center rounded-md text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-900"
               >
                 <svg viewBox="0 0 20 20" className="size-4" fill="none" aria-hidden>
                   <path
@@ -111,11 +111,11 @@ export function MobileNav({ signedIn, guildRole, isSuperAdmin, guildName }: Prop
             </div>
 
             {guildName && (
-              <div className="m-4 rounded-lg border border-violet-200 bg-violet-50/60 p-3 text-center">
-                <div className="text-[10px] font-medium tracking-[0.2em] text-violet-600">
+              <div className="m-4 rounded-lg border border-violet-200 bg-violet-50/60 p-3 text-center dark:border-violet-900/60 dark:bg-violet-950/40">
+                <div className="text-[10px] font-medium tracking-[0.2em] text-violet-600 dark:text-violet-300">
                   GUILD
                 </div>
-                <div className="mt-1 text-sm font-bold tracking-wider text-violet-900">
+                <div className="mt-1 text-sm font-bold tracking-wider text-violet-900 dark:text-violet-100">
                   {guildName.toUpperCase()}
                 </div>
               </div>

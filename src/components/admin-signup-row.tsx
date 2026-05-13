@@ -112,7 +112,7 @@ export function AdminSignupRow({
     // column is too narrow to fit name + 2 buttons + role select + Attended
     // + 5 stars on one line. Trying to keep one row makes the badges and
     // avatar collide. Two-row layout is consistent at every breakpoint.
-    <div className="flex flex-col gap-2 rounded border p-3">
+    <div className="flex flex-col gap-2 rounded border p-3 dark:border-gray-800">
       <div className="flex min-w-0 items-center gap-3">
         {userImage && (
           // eslint-disable-next-line @next/next/no-img-element
@@ -123,7 +123,7 @@ export function AdminSignupRow({
             <span className="font-medium">{userName}</span>
             {signup.requestLeadership && (
               <InfoTip content="This player asked to be considered for a leader role.">
-                <span className="rounded bg-yellow-100 px-1.5 py-0.5 text-xs text-yellow-800">
+                <span className="rounded bg-yellow-100 px-1.5 py-0.5 text-xs text-yellow-800 dark:bg-yellow-950/40 dark:text-yellow-200">
                   Leader
                 </span>
               </InfoTip>
@@ -132,7 +132,7 @@ export function AdminSignupRow({
               <InfoTip
                 content={`Player's first choice was ${firstChoice === 1 ? squad1Name : squad2Name}, but an admin moved them.`}
               >
-                <span className="rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700">
+                <span className="rounded border border-amber-200 bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
                   Moved
                 </span>
               </InfoTip>
@@ -147,7 +147,7 @@ export function AdminSignupRow({
               type="button"
               onClick={handleMove}
               disabled={saving}
-              className="rounded border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-100 disabled:opacity-50"
+              className="rounded border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700 hover:bg-violet-100 disabled:opacity-50 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
             >
               → {otherSquadName}
             </button>
@@ -164,7 +164,7 @@ export function AdminSignupRow({
             type="button"
             onClick={handleToggleBackup}
             disabled={saving}
-            className="rounded border border-sky-300 bg-sky-50 px-2 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-100 disabled:opacity-50"
+            className="rounded border border-sky-300 bg-sky-50 px-2 py-1 text-xs font-semibold text-sky-700 hover:bg-sky-100 disabled:opacity-50 dark:border-sky-900/60 dark:bg-sky-950/40 dark:text-sky-300 dark:hover:bg-sky-900/50"
           >
             {isBackup ? "→ Roster" : "→ Backup"}
           </button>
@@ -178,7 +178,7 @@ export function AdminSignupRow({
               save({ assignedRole: next === "" ? null : next }, true);
             }}
             disabled={saving}
-            className="rounded border bg-white px-2 py-1 text-sm"
+            className="rounded border bg-white px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
           >
             {ROLE_OPTIONS.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -209,7 +209,7 @@ export function AdminSignupRow({
                   setRating(star);
                   save({ rating: star });
                 }}
-                className={`text-lg ${star <= rating ? "text-yellow-500" : "text-gray-300"}`}
+                className={`text-lg ${star <= rating ? "text-yellow-500" : "text-gray-300 dark:text-gray-600"}`}
                 disabled={saving}
               >
                 ★

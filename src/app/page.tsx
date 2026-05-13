@@ -111,12 +111,12 @@ export default async function Home({
   return (
     <div className="mx-auto max-w-3xl">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           {actingGuild ? `${actingGuild.name} — ${t("title")}` : t("title")}
         </h1>
         {hasAnyScheduled && !showPast && (
@@ -137,7 +137,7 @@ export default async function Home({
       />
 
       {guildEvents.length === 0 ? (
-        <p className="text-gray-500">
+        <p className="text-gray-500 dark:text-gray-400">
           {showPast ? t("noPastEvents") : t("noEvents")}
         </p>
       ) : (
@@ -156,49 +156,49 @@ export default async function Home({
               <Link
                 key={event.id}
                 href={`/event/${event.id}`}
-                className={`block rounded-lg border bg-white p-4 transition-colors ${
+                className={`block rounded-lg border bg-white p-4 transition-colors dark:bg-gray-900 ${
                   needsAction
-                    ? "border-violet-300 ring-1 ring-violet-200 hover:border-violet-500 hover:ring-violet-300"
+                    ? "border-violet-300 ring-1 ring-violet-200 hover:border-violet-500 hover:ring-violet-300 dark:border-violet-900/60 dark:ring-violet-900/60 dark:hover:border-violet-700 dark:hover:ring-violet-800"
                     : signedUp
-                      ? "border-gray-200 opacity-80 hover:opacity-100 hover:border-gray-300"
-                      : "border-gray-200 hover:border-violet-400"
+                      ? "border-gray-200 opacity-80 hover:opacity-100 hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700"
+                      : "border-gray-200 hover:border-violet-400 dark:border-gray-800 dark:hover:border-violet-700"
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h2 className="text-lg font-semibold text-gray-900">
+                      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                         {event.name}
                       </h2>
                       {isScrim && (
-                        <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700">
+                        <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300">
                           Scrim
                         </span>
                       )}
                     </div>
                     {event.description && !isScrim && (
-                      <p className="mt-1 text-sm text-gray-600">{event.description}</p>
+                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{event.description}</p>
                     )}
                     {event.kind === "simple" && event.gameTime && (
-                      <p className="mt-1 text-xs text-gray-500">
+                      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                         {t("starts")}: <DateTime iso={event.gameTime} showUTC={false} />
                       </p>
                     )}
                     {isScrim && event.gameTime && (
-                      <p className="mt-1 text-xs text-gray-500">
+                      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                         {t("starts")}:{" "}
                         <DateTime iso={event.gameTime} showUTC={false} />
                       </p>
                     )}
                     {isMatch && (
-                      <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500">
+                      <div className="mt-1 flex flex-wrap gap-x-3 text-xs text-gray-500 dark:text-gray-400">
                         {squadTimes(event).map((s) => (
                           <span key={s.name}>
                             {s.name}:{" "}
                             {s.startsAt ? (
                               <DateTime iso={s.startsAt} showUTC={false} />
                             ) : (
-                              <span className="font-mono text-gray-400">{t("tbd")}</span>
+                              <span className="font-mono text-gray-400 dark:text-gray-500">{t("tbd")}</span>
                             )}
                           </span>
                         ))}
@@ -207,20 +207,20 @@ export default async function Home({
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
                     {hasRoster && signedUp && (
-                      <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700">
+                      <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
                         {t("signedUp")}
                       </span>
                     )}
                     {hasRoster && !signedUp && isOpen && (
-                      <span className="rounded border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700">
+                      <span className="rounded border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300">
                         {t("signUp")}
                       </span>
                     )}
                     <span
                       className={`rounded px-2 py-1 text-xs font-medium ${
                         isOpen
-                          ? "bg-emerald-50 text-emerald-700"
-                          : "bg-gray-100 text-gray-600"
+                          ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
+                          : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
                       }`}
                     >
                       {isOpen ? t("open") : t("closed")}
@@ -256,7 +256,7 @@ function EventsTabs({
     ? `/?guildId=${guildIdParam}&past=1`
     : "/?past=1";
   return (
-    <div className="mb-4 flex gap-1 border-b border-gray-200 text-sm font-semibold">
+    <div className="mb-4 flex gap-1 border-b border-gray-200 text-sm font-semibold dark:border-gray-800">
       <Tab href={upcomingHref} active={!showPast}>
         {upcomingLabel} ({upcomingCount})
       </Tab>
@@ -281,8 +281,8 @@ function Tab({
       href={href}
       className={`-mb-px border-b-2 px-3 py-2 transition-colors ${
         active
-          ? "border-violet-600 text-violet-700"
-          : "border-transparent text-gray-500 hover:text-gray-700"
+          ? "border-violet-600 text-violet-700 dark:border-violet-500 dark:text-violet-300"
+          : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
       }`}
     >
       {children}

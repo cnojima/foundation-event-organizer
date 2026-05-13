@@ -18,7 +18,7 @@ export default async function NewScrimPage({
   if (!targetGuildId) {
     return (
       <main className="max-w-3xl mx-auto p-6">
-        <p className="text-red-600">Guild not found.</p>
+        <p className="text-red-600 dark:text-red-300">Guild not found.</p>
       </main>
     );
   }
@@ -50,20 +50,20 @@ export default async function NewScrimPage({
   return (
     <main className="max-w-3xl mx-auto p-6">
       {isImpersonating && actingGuild && (
-        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900">
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
       <Link
         href={`/admin/scrimmages${guildSuffix}`}
-        className="text-sm text-violet-700 hover:underline"
+        className="text-sm text-violet-700 hover:underline dark:text-violet-300"
       >
         ← Back to scrimmages
       </Link>
-      <h1 className="mt-2 mb-1 text-2xl font-bold tracking-tight text-gray-900">
+      <h1 className="mt-2 mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
         Propose a scrim
       </h1>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
         Send a guild-vs-guild challenge. The other guild&apos;s admin will see
         it in their scrimmages dashboard and can accept or decline.
         {actingGuild?.serverNumber ? (
@@ -71,7 +71,7 @@ export default async function NewScrimPage({
             {" "}Your server: <strong>#{actingGuild.serverNumber}</strong>.
           </>
         ) : (
-          <span className="text-amber-700">
+          <span className="text-amber-700 dark:text-amber-300">
             {" "}Set your Server # in{" "}
             <Link
               href={`/admin/settings${guildSuffix}`}

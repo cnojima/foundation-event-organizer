@@ -47,14 +47,14 @@ export function LocaleSwitcher({
   }
 
   return (
-    <label className={`flex items-center gap-2 text-xs text-gray-600 ${className}`}>
+    <label className={`flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 ${className}`}>
       <span className="sr-only">{t("ariaLabel")}</span>
       <select
         value={current}
         onChange={handleChange}
         disabled={submitting}
         aria-label={t("ariaLabel")}
-        className="rounded border border-gray-300 bg-white px-2 py-1 text-xs"
+        className="rounded border border-gray-300 bg-white px-2 py-1 text-xs dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
       >
         {locales.map((loc) => (
           <option key={loc} value={loc}>

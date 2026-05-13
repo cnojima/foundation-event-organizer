@@ -124,11 +124,11 @@ export function EditEventDatesForm({
         <button
           type="button"
           onClick={() => setEditing(true)}
-          className="rounded border border-gray-300 bg-white px-2 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50"
+          className="rounded border border-gray-300 bg-white px-2 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
         >
           Edit dates
         </button>
-        {savedAt && <span className="text-xs text-emerald-600">Saved.</span>}
+        {savedAt && <span className="text-xs text-emerald-600 dark:text-emerald-300">Saved.</span>}
       </div>
     );
   }
@@ -143,12 +143,12 @@ export function EditEventDatesForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-lg border border-gray-200 bg-white p-4 space-y-3"
+      className="rounded-lg border border-gray-200 bg-white p-4 space-y-3 dark:border-gray-800 dark:bg-gray-900"
     >
       <div className={`grid gap-3 ${colsClass}`}>
         {fields.map(({ key, label }) => (
           <div key={key}>
-            <label className="block text-xs font-medium text-gray-600 mb-1">
+            <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
               {label}
             </label>
             <input
@@ -162,14 +162,14 @@ export function EditEventDatesForm({
               // Render picker in 24-hour / DD-MM-YYYY format — see
               // DatetimeLocalField for the rationale.
               lang="en-GB"
-              className="w-full border rounded px-2 py-1 text-sm"
+              className="w-full border rounded px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
             />
             <DatetimeLocalHint value={values[key]} />
             <FieldHelp>{FIELD_HELP[key]}</FieldHelp>
           </div>
         ))}
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
       <div className="flex items-center gap-2">
         <button
           type="submit"
@@ -182,7 +182,7 @@ export function EditEventDatesForm({
           type="button"
           onClick={reset}
           disabled={submitting}
-          className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+          className="rounded-md border border-gray-300 bg-white px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
         >
           Cancel
         </button>

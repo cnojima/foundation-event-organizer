@@ -109,9 +109,9 @@ export function DuelEditForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-4 rounded-lg border border-violet-200 bg-violet-50/40 p-4"
+      className="space-y-4 rounded-lg border border-violet-200 bg-violet-50/40 p-4 dark:border-violet-900/60 dark:bg-violet-950/20"
     >
-      <p className="text-sm font-semibold text-gray-900">Edit duel proposal</p>
+      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">Edit duel proposal</p>
 
       <div>
         <label className="block text-sm font-medium mb-1">Game time *</label>
@@ -131,7 +131,7 @@ export function DuelEditForm({
         <select
           value={locationChoice}
           onChange={(e) => setLocationChoice(e.target.value)}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         >
           {DEFAULT_DUEL_LOCATIONS.map((loc) => (
             <option key={loc} value={loc}>
@@ -146,7 +146,7 @@ export function DuelEditForm({
             value={customLocation}
             onChange={(e) => setCustomLocation(e.target.value)}
             placeholder="Custom location"
-            className="mt-2 w-full border rounded px-3 py-2"
+            className="mt-2 w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
         )}
       </div>
@@ -159,7 +159,7 @@ export function DuelEditForm({
           value={winCondition}
           onChange={(e) => setWinCondition(e.target.value)}
           rows={2}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
       </div>
 
@@ -171,12 +171,12 @@ export function DuelEditForm({
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           rows={3}
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
       </div>
 
       {error && (
-        <p className="rounded border border-red-200 bg-red-50 p-2 text-sm text-red-700">
+        <p className="rounded border border-red-200 bg-red-50 p-2 text-sm text-red-700 dark:border-red-900/60 dark:bg-red-950/40 dark:text-red-300">
           {error}
         </p>
       )}
@@ -194,7 +194,7 @@ export function DuelEditForm({
             type="button"
             onClick={onClose}
             disabled={submitting}
-            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50"
+            className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
           >
             Cancel
           </button>
