@@ -373,8 +373,12 @@ export const auditLog = sqliteTable("audit_log", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
+  // SET NULL (not CASCADE) so audit history survives a guild hard-delete.
+  // Snapshot fields (actorDisplay, entityLabel, action, changes) keep the row
+  // readable; orphaned rows fall back to super-admin-only visibility via the
+  // `guildId IS NULL` filter.
   guildId: text("guild_id").references(() => guilds.id, {
-    onDelete: "cascade",
+    onDelete: "set null",
   }),
   actorUserId: text("actor_user_id").references(() => users.id, {
     onDelete: "set null",
