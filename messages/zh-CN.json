@@ -33,13 +33,21 @@
     "members": "成员",
     "invites": "邀请",
     "settings": "设置",
+    "auditLog": "审计日志",
     "superAdmin": "超级管理员",
     "browseGuilds": "浏览公会",
     "createGuild": "创建公会",
     "adminHelp": "管理员帮助",
     "help": "帮助",
-    "myAccount": "我的账户",
-    "auditLog": "审计日志"
+    "myAccount": "我的账户"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification}其他{# notifications} }",
+    "discord_unlinked": {
+      "title": "关联 Discord 以启用决斗私信功能",
+      "body": "您已使用 Google 帐户注册。请关联您的 Discord 帐户，以便机器人能在有人向您发起决斗挑战时私信您。",
+      "action": "Discord链接 →"
+    }
   },
   "topBar": {
     "notifications": "通知",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "活动",
+    "noEvents": "暂无活动安排。",
+    "noPastEvents": "目前还没有过往事件。",
+    "upcoming": "即将推出",
+    "past": "过去的",
     "starts": "开始",
     "addAllToCalendar": "全部添加到日历",
     "addToCalendar": "添加到日历",
@@ -92,11 +104,7 @@
     "startTime": "开始时间：",
     "signupCloses": "报名截止：",
     "slotsLabel": "插槽：",
-    "slotsValue": "{maxPlayers}玩家 + {maxBackups}备份每个",
-    "noEvents": "暂无活动安排。",
-    "noPastEvents": "目前还没有过往事件。",
-    "upcoming": "即将推出",
-    "past": "过去的"
+    "slotsValue": "{maxPlayers}玩家 + {maxBackups}备份每个"
   },
   "eventCard": {
     "deleted": "已删除",
@@ -421,6 +429,14 @@
       "dmHelp": "开启此功能后，当有人向你发起挑战、接受或拒绝你的提议、取消决斗或宣布决斗结果时，机器人会通过私信通知你。关闭此功能可完全屏蔽所有关于决斗的 Discord 私信。你仍然可以在网站上看到所有内容。",
       "dmHelpUnlinked": "请至少使用 Discord 登录一次，以启用决斗相关的私信功能。（退出 Discord 账号，然后重新登录。）"
     },
+    "discord": {
+      "heading": "Discord 私信",
+      "reachableTitle": "存档的 Discord 用户 ID",
+      "reachableBody": "机器人可以通过私信联系你进行决斗。你可以在下方更新或清除你的ID。",
+      "unreachableBody": "请在下方粘贴您的 Discord 用户 ID，以便机器人可以通过私信通知您决斗挑战、接受挑战、拒绝挑战以及挑战结果。如果您不粘贴，您仍然可以在网站上看到所有内容，只是无法收到 Discord 通知。",
+      "idLabel": "Discord 用户 ID",
+      "idHelp": "在 Discord 中，启用开发者模式（用户设置 → 高级），然后右键单击您的个人资料并选择“复制用户 ID”。这是一个 17 到 20 位数字。我们不验证所有权——如果您收到来自机器人的骚扰私信，请在 Discord 隐私设置中禁用“允许服务器成员发送私信”。"
+    },
     "guildMembership": "公会会员资格",
     "youreInGuild": "你是一名{role} {guildName} 。",
     "leaveExplanation": "离开此公会后，您将不再参与该公会的活动，并且您过去的报名记录将被软删除（公会会保留这些记录用于出勤报告）。",
@@ -433,15 +449,7 @@
     "deleteButton": "删除我的帐户",
     "deleting": "正在删除…",
     "deleteConfirm": "删除账号？这将使您从公会中移除，删除您的所有注册信息，并解除 Google/Discord 的关联。此操作无法撤销。",
-    "language": "语言",
-    "discord": {
-      "heading": "Discord 私信",
-      "reachableTitle": "存档的 Discord 用户 ID",
-      "reachableBody": "机器人可以通过私信联系你进行决斗。你可以在下方更新或清除你的ID。",
-      "unreachableBody": "请在下方粘贴您的 Discord 用户 ID，以便机器人可以通过私信通知您决斗挑战、接受挑战、拒绝挑战以及挑战结果。如果您不粘贴，您仍然可以在网站上看到所有内容，只是无法收到 Discord 通知。",
-      "idLabel": "Discord 用户 ID",
-      "idHelp": "在 Discord 中，启用开发者模式（用户设置 → 高级），然后右键单击您的个人资料并选择“复制用户 ID”。这是一个 17 到 20 位数字。我们不验证所有权——如果您收到来自机器人的骚扰私信，请在 Discord 隐私设置中禁用“允许服务器成员发送私信”。"
-    }
+    "language": "语言"
   },
   "errors": {
     "forbidden": "禁忌",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "提醒和斜杠命令依赖于运营者已部署的 Discord 机器人。要将其连接到您的 Discord 服务器：",
       "step1Intro": "从您的网站管理员处获取安装 URL。它看起来像这样：",
+      "step1Note": "权限 133120 涵盖了斜杠命令、发送消息和提及所有人这三个权限。这两项权限都是必需的——如果没有提及所有人的权限，提醒中的 @everyone 会以纯文本形式显示，不会通知任何人。",
       "step2": "在浏览器中打开安装链接。选择你想将机器人添加到的 Discord 服务器。你需要拥有该服务器的“管理服务器”权限。点击“授权”。",
-      "step3": "确认机器人出现在你的 Discord 服务器成员列表中。就这么简单——Discord 端无需对每个机器人进行单独配置。",
-      "step1Note": "权限 2147616768 涵盖了斜杠命令、发送消息和提及所有人这三个权限。这两项权限都是必需的——如果没有提及所有人的权限，提醒中的 @everyone 会以纯文本形式显示，不会通知任何人。"
+      "step3": "确认机器人出现在你的 Discord 服务器成员列表中。就这么简单——Discord 端无需对每个机器人进行单独配置。"
     },
     "discordChannel": {
       "intro": "机器人会将提醒信息发布到您选择的频道。配置方法如下：",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "基于 Next.js、Drizzle、Auth.js 和 Discord API 构建。免费开源。",
       "viewSource": "在 GitHub 上查看源代码",
-      "help": "帮助",
-      "discordSupport": "Discord 支持"
+      "discordSupport": "Discord 支持",
+      "help": "帮助"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Discord 斜杠命令：/upcoming 列出你公会的近期活动，/signup 允许你无需离开 Discord 即可注册。你必须先使用 Discord 登录网站至少一次，以便机器人匹配你的账号。"
     },
     "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。"
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification}其他{# notifications} }",
-    "discord_unlinked": {
-      "title": "关联 Discord 以启用决斗私信功能",
-      "body": "您已使用 Google 帐户注册。请关联您的 Discord 帐户，以便机器人能在有人向您发起决斗挑战时私信您。",
-      "action": "Discord链接 →"
-    }
   }
 }

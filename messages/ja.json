@@ -33,13 +33,21 @@
     "members": "メンバー",
     "invites": "招待状",
     "settings": "設定",
+    "auditLog": "監査ログ",
     "superAdmin": "スーパー管理者",
     "browseGuilds": "ギルドを閲覧する",
     "createGuild": "ギルドを作成する",
     "adminHelp": "管理者ヘルプ",
     "help": "ヘルプ",
-    "myAccount": "私のアカウント",
-    "auditLog": "監査ログ"
+    "myAccount": "私のアカウント"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification}その他の{# notifications} }",
+    "discord_unlinked": {
+      "title": "Discordをリンクして、デュエルDMを有効にします",
+      "body": "Googleアカウントで登録済みです。Discordアカウントを連携させると、誰かがあなたに決闘を挑んできた際に、ボットからダイレクトメッセージが届きます。",
+      "action": "Discordへのリンク →"
+    }
   },
   "topBar": {
     "notifications": "通知",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "イベント",
+    "noEvents": "今後のイベントはありません。",
+    "noPastEvents": "過去のイベントはまだありません。",
+    "upcoming": "近日公開",
+    "past": "過去",
     "starts": "開始",
     "addAllToCalendar": "カレンダーにすべて追加",
     "addToCalendar": "カレンダーに追加",
@@ -92,11 +104,7 @@
     "startTime": "開始時間:",
     "signupCloses": "登録締め切り：",
     "slotsLabel": "スロット：",
-    "slotsValue": "{maxPlayers}プレイヤー + {maxBackups}バックアップはそれぞれ",
-    "noEvents": "今後のイベントはありません。",
-    "noPastEvents": "過去のイベントはまだありません。",
-    "upcoming": "近日公開",
-    "past": "過去"
+    "slotsValue": "{maxPlayers}プレイヤー + {maxBackups}バックアップはそれぞれ"
   },
   "eventCard": {
     "deleted": "削除済み",
@@ -421,6 +429,14 @@
       "dmHelp": "有効にすると、誰かがあなたに挑戦したり、あなたの提案を承認または拒否したり、決闘をキャンセルしたり、結果を宣言したりすると、ボットがあなたにダイレクトメッセージ（DM）を送信します。無効にすると、決闘に関するDiscordのDMを完全に停止できます。ウェブサイト上では引き続きすべての情報が表示されます。",
       "dmHelpUnlinked": "決闘に関するダイレクトメッセージを有効にするには、少なくとも一度はDiscordにログインしてください。（一度ログアウトしてから、再度Discordにログインしてください。）"
     },
+    "discord": {
+      "heading": "Discordのダイレクトメッセージ",
+      "reachableTitle": "登録済みのDiscordユーザーID",
+      "reachableBody": "ボットは決闘についてDMで連絡してきます。下記からIDを更新または削除できます。",
+      "unreachableBody": "決闘の挑戦、承諾、拒否、結果に関する通知をボットから受け取るには、以下の欄にDiscordユーザーIDを貼り付けてください。IDがなくてもウェブサイト上の情報はすべて表示されますが、Discordからの通知は届きません。",
+      "idLabel": "DiscordユーザーID",
+      "idHelp": "Discordで開発者モードを有効にし（ユーザー設定 → 詳細設定）、自分のプロフィールを右クリックして「ユーザーIDをコピー」を選択してください。ユーザーIDは17～20桁の数字です。所有権の確認は行いません。もしボットから不要なダイレクトメッセージが届いた場合は、Discordのプライバシー設定で「サーバーメンバーからのダイレクトメッセージを許可する」を無効にしてください。"
+    },
     "guildMembership": "ギルド会員",
     "youreInGuild": "あなたは{role}です{role} {guildName}の{guildName} 。",
     "leaveExplanation": "このギルドを脱退すると、ギルドのイベントへの参加資格が失われ、過去の参加登録履歴も（ギルドの出席状況報告のために）削除されます。",
@@ -433,15 +449,7 @@
     "deleteButton": "アカウントを削除",
     "deleting": "削除中…",
     "deleteConfirm": "アカウントを削除しますか？削除すると、ギルドから除名され、すべての登録情報が削除され、Google/Discordとの連携も解除されます。この操作は元に戻せません。",
-    "language": "言語",
-    "discord": {
-      "heading": "Discordのダイレクトメッセージ",
-      "reachableTitle": "登録済みのDiscordユーザーID",
-      "reachableBody": "ボットは決闘についてDMで連絡してきます。下記からIDを更新または削除できます。",
-      "unreachableBody": "決闘の挑戦、承諾、拒否、結果に関する通知をボットから受け取るには、以下の欄にDiscordユーザーIDを貼り付けてください。IDがなくてもウェブサイト上の情報はすべて表示されますが、Discordからの通知は届きません。",
-      "idLabel": "DiscordユーザーID",
-      "idHelp": "Discordで開発者モードを有効にし（ユーザー設定 → 詳細設定）、自分のプロフィールを右クリックして「ユーザーIDをコピー」を選択してください。ユーザーIDは17～20桁の数字です。所有権の確認は行いません。もしボットから不要なダイレクトメッセージが届いた場合は、Discordのプライバシー設定で「サーバーメンバーからのダイレクトメッセージを許可する」を無効にしてください。"
-    }
+    "language": "言語"
   },
   "errors": {
     "forbidden": "禁断",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "リマインダーとスラッシュコマンドは、オペレーターが既にデプロイ済みのDiscordボットに依存しています。Discordサーバーに接続するには、以下の手順に従ってください。",
       "step1Intro": "サイト運営者からインストールURLを取得してください。URLは次のようになります。",
+      "step1Note": "permissions=133120 の部分は、スラッシュコマンド、メッセージの送信、および全員へのメンションを対象としています。どちらも必須です。全員へのメンションがないと、リマインダー内の @everyone はプレーンテキストとして表示され、誰にも通知されません。",
       "step2": "インストールURLをブラウザで開きます。ボットを導入したいDiscordサーバーを選択します。そのサーバーで「サーバー管理」権限が必要です。「承認」をクリックします。",
-      "step3": "ボットがDiscordサーバーのメンバーリストに表示されていることを確認してください。以上です。Discord側でボットごとに設定する必要はありません。",
-      "step1Note": "permissions=2147616768 の部分は、スラッシュコマンド、メッセージの送信、および全員へのメンションを対象としています。どちらも必須です。全員へのメンションがないと、リマインダー内の @everyone はプレーンテキストとして表示され、誰にも通知されません。"
+      "step3": "ボットがDiscordサーバーのメンバーリストに表示されていることを確認してください。以上です。Discord側でボットごとに設定する必要はありません。"
     },
     "discordChannel": {
       "intro": "このボットは、選択したチャンネルにリマインダーを投稿します。設定方法は以下のとおりです。",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Next.js、Drizzle、Auth.js、およびDiscord APIを使用して構築されています。無料かつオープンソースです。",
       "viewSource": "GitHubでソースコードを見る",
-      "help": "ヘルプ",
-      "discordSupport": "Discordサポート"
+      "discordSupport": "Discordサポート",
+      "help": "ヘルプ"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Discordのスラッシュコマンド：/upcomingでギルドの今後のイベント一覧が表示され、/signupでDiscordを離れることなく登録できます。ボットがあなたのアカウントを照合できるように、最初にDiscordでウェブサイトに少なくとも一度ログインする必要があります。"
     },
     "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。"
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification}その他の{# notifications} }",
-    "discord_unlinked": {
-      "title": "Discordをリンクして、デュエルDMを有効にします",
-      "body": "Googleアカウントで登録済みです。Discordアカウントを連携させると、誰かがあなたに決闘を挑んできた際に、ボットからダイレクトメッセージが届きます。",
-      "action": "Discordへのリンク →"
-    }
   }
 }

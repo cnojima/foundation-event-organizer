@@ -33,13 +33,21 @@
     "members": "Członkowie",
     "invites": "Zaproszenia",
     "settings": "Ustawienia",
+    "auditLog": "Dziennik audytu",
     "superAdmin": "Superadministrator",
     "browseGuilds": "Przeglądaj gildie",
     "createGuild": "Utwórz gildię",
     "adminHelp": "Pomoc administratora",
     "help": "Pomoc",
-    "myAccount": "Moje konto",
-    "auditLog": "Dziennik audytu"
+    "myAccount": "Moje konto"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} inne {# notifications} }",
+    "discord_unlinked": {
+      "title": "Połącz Discord, aby umożliwić pojedynki na DM",
+      "body": "Zarejestrowałeś się przez Google. Połącz konto Discord, aby bot mógł wysyłać Ci prywatne wiadomości, gdy ktoś wyzwie Cię na pojedynek.",
+      "action": "Link Discord →"
+    }
   },
   "topBar": {
     "notifications": "Powiadomienia",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Wydarzenia",
+    "noEvents": "Brak nadchodzących wydarzeń.",
+    "noPastEvents": "Brak minionych wydarzeń.",
+    "upcoming": "Nadchodzące",
+    "past": "Przeszłość",
     "starts": "Zaczyna się",
     "addAllToCalendar": "Dodaj wszystko do kalendarza",
     "addToCalendar": "Dodaj do kalendarza",
@@ -92,11 +104,7 @@
     "startTime": "Godzina rozpoczęcia:",
     "signupCloses": "Zapisy kończą się:",
     "slotsLabel": "Sloty:",
-    "slotsValue": "{maxPlayers} gracze + {maxBackups} kopie zapasowe każda",
-    "noEvents": "Brak nadchodzących wydarzeń.",
-    "noPastEvents": "Brak minionych wydarzeń.",
-    "upcoming": "Nadchodzące",
-    "past": "Przeszłość"
+    "slotsValue": "{maxPlayers} gracze + {maxBackups} kopie zapasowe każda"
   },
   "eventCard": {
     "deleted": "Usunięto",
@@ -421,6 +429,14 @@
       "dmHelp": "Po włączeniu bot wysyła Ci wiadomość prywatną, gdy ktoś rzuca Ci wyzwanie, akceptuje lub odrzuca Twoją propozycję, anuluje pojedynek lub ogłasza wynik. Wyłącz tę opcję, aby całkowicie wyciszyć wiadomości prywatne na Discordzie dotyczące pojedynków. Nadal będziesz widzieć wszystko na stronie.",
       "dmHelpUnlinked": "Zaloguj się do Discorda przynajmniej raz, aby włączyć bezpośrednie wiadomości o pojedynkach. (Wyloguj się, a następnie zaloguj ponownie do Discorda.)"
     },
+    "discord": {
+      "heading": "Wiadomości bezpośrednie Discord",
+      "reachableTitle": "Identyfikator użytkownika Discord w pliku",
+      "reachableBody": "Bot może wysyłać Ci wiadomości prywatne o pojedynkach. Możesz zaktualizować lub wyczyścić swój identyfikator poniżej.",
+      "unreachableBody": "Wklej poniżej swój identyfikator użytkownika Discord, aby bot mógł wysyłać Ci wiadomości prywatne o wyzwaniach pojedynkowych, akceptacjach, odrzuceniach i wynikach. Bez tego nadal będziesz widzieć wszystko na stronie – tylko bez powiadomień Discord.",
+      "idLabel": "Identyfikator użytkownika Discord",
+      "idHelp": "W Discordzie włącz tryb programisty (Ustawienia użytkownika → Zaawansowane), a następnie kliknij prawym przyciskiem myszy swój profil i wybierz „Kopiuj identyfikator użytkownika”. Jest to numer składający się z 17–20 cyfr. Nie weryfikujemy własności — jeśli kiedykolwiek otrzymasz niechcianą wiadomość prywatną od bota, wyłącz opcję „Zezwalaj na wiadomości prywatne od członków serwera” w ustawieniach prywatności Discorda."
+    },
     "guildMembership": "Członkostwo w gildii",
     "youreInGuild": "Jesteś {role} z {guildName} .",
     "leaveExplanation": "Opuszczenie gildii spowoduje usunięcie Cię z jej wydarzeń i trwałe usunięcie Twoich wcześniejszych zapisów (zachowanych w raportach frekwencji gildii).",
@@ -433,15 +449,7 @@
     "deleteButton": "Usuń moje konto",
     "deleting": "Usuwanie…",
     "deleteConfirm": "Usunąć konto? To spowoduje usunięcie Cię z gildii, usunięcie wszystkich Twoich rejestracji i odłączenie Google/Discord. Tego nie da się cofnąć.",
-    "language": "Język",
-    "discord": {
-      "heading": "Wiadomości bezpośrednie Discord",
-      "reachableTitle": "Identyfikator użytkownika Discord w pliku",
-      "reachableBody": "Bot może wysyłać Ci wiadomości prywatne o pojedynkach. Możesz zaktualizować lub wyczyścić swój identyfikator poniżej.",
-      "unreachableBody": "Wklej poniżej swój identyfikator użytkownika Discord, aby bot mógł wysyłać Ci wiadomości prywatne o wyzwaniach pojedynkowych, akceptacjach, odrzuceniach i wynikach. Bez tego nadal będziesz widzieć wszystko na stronie – tylko bez powiadomień Discord.",
-      "idLabel": "Identyfikator użytkownika Discord",
-      "idHelp": "W Discordzie włącz tryb programisty (Ustawienia użytkownika → Zaawansowane), a następnie kliknij prawym przyciskiem myszy swój profil i wybierz „Kopiuj identyfikator użytkownika”. Jest to numer składający się z 17–20 cyfr. Nie weryfikujemy własności — jeśli kiedykolwiek otrzymasz niechcianą wiadomość prywatną od bota, wyłącz opcję „Zezwalaj na wiadomości prywatne od członków serwera” w ustawieniach prywatności Discorda."
-    }
+    "language": "Język"
   },
   "errors": {
     "forbidden": "Zabroniony",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Przypomnienia i polecenia ukośnika opierają się na bocie Discord, którego operator już wdrożył. Aby połączyć go z serwerem Discord:",
       "step1Intro": "Uzyskaj adres URL instalacji od operatora witryny. Wygląda on następująco:",
+      "step1Note": "Część „permissions=133120” obejmuje polecenia ukośnika, wysyłanie wiadomości i wzmiankowanie o wszystkich. Oba są wymagane — bez wzmiankowania o wszystkich, @everyone w przypomnieniach jest renderowany jako zwykły tekst i nie pinguje nikogo.",
       "step2": "Otwórz adres URL instalacji w przeglądarce. Wybierz serwer Discord, na którym chcesz umieścić bota. Potrzebujesz uprawnienia „Zarządzaj serwerem” na tym serwerze. Kliknij „Autoryzuj”.",
-      "step3": "Potwierdź, że bot pojawia się na liście członków Twojego serwera Discord. To wszystko — brak konieczności konfigurowania botów po stronie Discord.",
-      "step1Note": "Część „permissions=2147616768” obejmuje polecenia ukośnika, wysyłanie wiadomości i wzmiankowanie o wszystkich. Oba są wymagane — bez wzmiankowania o wszystkich, @everyone w przypomnieniach jest renderowany jako zwykły tekst i nie pinguje nikogo."
+      "step3": "Potwierdź, że bot pojawia się na liście członków Twojego serwera Discord. To wszystko — brak konieczności konfigurowania botów po stronie Discord."
     },
     "discordChannel": {
       "intro": "Bot publikuje przypomnienia w jednym wybranym przez Ciebie kanale. Aby go skonfigurować:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Zbudowany z wykorzystaniem Next.js, Drizzle, Auth.js i API Discord. Darmowy i otwarty kod źródłowy.",
       "viewSource": "Zobacz źródło na GitHub",
-      "help": "Pomoc",
-      "discordSupport": "Wsparcie Discord"
+      "discordSupport": "Wsparcie Discord",
+      "help": "Pomoc"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
     },
     "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} inne {# notifications} }",
-    "discord_unlinked": {
-      "title": "Połącz Discord, aby umożliwić pojedynki na DM",
-      "body": "Zarejestrowałeś się przez Google. Połącz konto Discord, aby bot mógł wysyłać Ci prywatne wiadomości, gdy ktoś wyzwie Cię na pojedynek.",
-      "action": "Link Discord →"
-    }
   }
 }

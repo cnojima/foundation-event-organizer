@@ -33,13 +33,21 @@
     "members": "Membros",
     "invites": "Convites",
     "settings": "Configurações",
+    "auditLog": "Registro de auditoria",
     "superAdmin": "Superadministrador",
     "browseGuilds": "Navegue pelas guildas",
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta",
-    "auditLog": "Registro de auditoria"
+    "myAccount": "Minha conta"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} outras {# notifications} }",
+    "discord_unlinked": {
+      "title": "Conecte o Discord para habilitar mensagens diretas duplas.",
+      "body": "Você se cadastrou com o Google. Vincule uma conta do Discord para que o bot possa te enviar mensagens diretas quando alguém te desafiar para um duelo.",
+      "action": "Link do Discord →"
+    }
   },
   "topBar": {
     "notifications": "Notificações",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Eventos",
+    "noEvents": "Nenhum evento futuro.",
+    "noPastEvents": "Ainda não há eventos passados.",
+    "upcoming": "Por vir",
+    "past": "Passado",
     "starts": "Começa",
     "addAllToCalendar": "Adicionar tudo ao calendário",
     "addToCalendar": "Adicionar ao calendário",
@@ -92,11 +104,7 @@
     "startTime": "Horário de início:",
     "signupCloses": "As inscrições encerram em:",
     "slotsLabel": "Caça-níqueis:",
-    "slotsValue": "{maxPlayers} jogadores + {maxBackups} backups cada",
-    "noEvents": "Nenhum evento futuro.",
-    "noPastEvents": "Ainda não há eventos passados.",
-    "upcoming": "Por vir",
-    "past": "Passado"
+    "slotsValue": "{maxPlayers} jogadores + {maxBackups} backups cada"
   },
   "eventCard": {
     "deleted": "Excluído",
@@ -421,6 +429,14 @@
       "dmHelp": "Quando ativado, o bot envia mensagens diretas (DMs) quando alguém o desafia, aceita ou recusa sua proposta, cancela um duelo ou declara um resultado. Desative-o para silenciar completamente as DMs do Discord sobre duelos. Você ainda verá tudo no site.",
       "dmHelpUnlinked": "Faça login com sua conta do Discord pelo menos uma vez para habilitar o envio de mensagens diretas sobre duelos. (Saia da sua conta e faça login novamente com sua conta do Discord.)"
     },
+    "discord": {
+      "heading": "mensagens diretas do Discord",
+      "reachableTitle": "ID de usuário do Discord cadastrado",
+      "reachableBody": "O bot pode enviar mensagens privadas sobre duelos. Você pode atualizar ou limpar seu ID abaixo.",
+      "unreachableBody": "Cole seu ID de usuário do Discord abaixo para que o bot possa enviar mensagens diretas sobre desafios de duelo, aceitações, recusas e resultados. Sem ele, você ainda verá tudo no site — apenas não receberá notificações do Discord.",
+      "idLabel": "ID de usuário do Discord",
+      "idHelp": "No Discord, ative o Modo Desenvolvedor (Configurações do Usuário → Avançado), clique com o botão direito do mouse no seu perfil e escolha \"Copiar ID do Usuário\". É um número de 17 a 20 dígitos. Não verificamos a propriedade — se você receber uma mensagem direta indesejada do bot, desative a opção \"Permitir mensagens diretas de membros do servidor\" nas suas configurações de privacidade do Discord."
+    },
     "guildMembership": "Adesão à guilda",
     "youreInGuild": "Você é um(a) {role} de {guildName} .",
     "leaveExplanation": "Ao sair desta guilda, você será removido dos eventos dela e suas inscrições anteriores (mantidas para os relatórios de presença da guilda) serão excluídas temporariamente.",
@@ -433,15 +449,7 @@
     "deleteButton": "Excluir minha conta",
     "deleting": "Excluindo…",
     "deleteConfirm": "Excluir sua conta? Isso remove você da sua guilda, exclui todos os seus cadastros e desvincula sua conta do Google/Discord. Essa ação é irreversível.",
-    "language": "Linguagem",
-    "discord": {
-      "heading": "mensagens diretas do Discord",
-      "reachableTitle": "ID de usuário do Discord cadastrado",
-      "reachableBody": "O bot pode enviar mensagens privadas sobre duelos. Você pode atualizar ou limpar seu ID abaixo.",
-      "unreachableBody": "Cole seu ID de usuário do Discord abaixo para que o bot possa enviar mensagens diretas sobre desafios de duelo, aceitações, recusas e resultados. Sem ele, você ainda verá tudo no site — apenas não receberá notificações do Discord.",
-      "idLabel": "ID de usuário do Discord",
-      "idHelp": "No Discord, ative o Modo Desenvolvedor (Configurações do Usuário → Avançado), clique com o botão direito do mouse no seu perfil e escolha \"Copiar ID do Usuário\". É um número de 17 a 20 dígitos. Não verificamos a propriedade — se você receber uma mensagem direta indesejada do bot, desative a opção \"Permitir mensagens diretas de membros do servidor\" nas suas configurações de privacidade do Discord."
-    }
+    "language": "Linguagem"
   },
   "errors": {
     "forbidden": "Proibido",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Lembretes e comandos de barra dependem de um bot do Discord que o operador já tenha implementado. Para integrá-lo ao seu servidor do Discord:",
       "step1Intro": "Obtenha o URL de instalação com o administrador do seu site. Ele tem o seguinte formato:",
+      "step1Note": "A parte permissions=133120 abrange os comandos de barra, o envio de mensagens e a menção a todos. Ambos são necessários — sem a menção a todos, o @everyone nos lembretes é exibido como texto simples e não envia menções a ninguém.",
       "step2": "Abra o URL de instalação em um navegador. Selecione o servidor do Discord no qual deseja instalar o bot. Você precisa da permissão \"Gerenciar servidor\" nesse servidor. Clique em \"Autorizar\".",
-      "step3": "Confirme se o bot aparece na lista de membros do seu servidor Discord. É só isso — nenhuma configuração individual para o bot no Discord.",
-      "step1Note": "A parte permissions=2147616768 abrange os comandos de barra, o envio de mensagens e a menção a todos. Ambos são necessários — sem a menção a todos, o @everyone nos lembretes é exibido como texto simples e não envia menções a ninguém."
+      "step3": "Confirme se o bot aparece na lista de membros do seu servidor Discord. É só isso — nenhuma configuração individual para o bot no Discord."
     },
     "discordChannel": {
       "intro": "O bot publica lembretes em um canal de sua escolha. Para configurá-lo:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Desenvolvido com Next.js, Drizzle, Auth.js e a API do Discord. Gratuito e de código aberto.",
       "viewSource": "Ver código-fonte no GitHub",
-      "help": "Ajuda",
-      "discordSupport": "Suporte do Discord"
+      "discordSupport": "Suporte do Discord",
+      "help": "Ajuda"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Comandos de barra do Discord: /upcoming lista os próximos eventos da sua guilda e /signup permite que você se inscreva sem sair do Discord. Você precisa fazer login no site com o Discord pelo menos uma vez para que o bot possa associar sua conta."
     },
     "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} outras {# notifications} }",
-    "discord_unlinked": {
-      "title": "Conecte o Discord para habilitar mensagens diretas duplas.",
-      "body": "Você se cadastrou com o Google. Vincule uma conta do Discord para que o bot possa te enviar mensagens diretas quando alguém te desafiar para um duelo.",
-      "action": "Link do Discord →"
-    }
   }
 }

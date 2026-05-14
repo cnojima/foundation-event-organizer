@@ -33,13 +33,21 @@
     "members": "Üyeler",
     "invites": "Davetiyeler",
     "settings": "Ayarlar",
+    "auditLog": "Denetim Günlüğü",
     "superAdmin": "Süper Yönetici",
     "browseGuilds": "Loncalara Göz Atın",
     "createGuild": "Lonca Oluştur",
     "adminHelp": "Yönetici Yardımı",
     "help": "Yardım",
-    "myAccount": "Hesabım",
-    "auditLog": "Denetim Günlüğü"
+    "myAccount": "Hesabım"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} diğer {# notifications} }",
+    "discord_unlinked": {
+      "title": "Çift DM'leri etkinleştirmek için Discord bağlantısını ekleyin.",
+      "body": "Google ile kayıt oldunuz. Birisi sizi düelloya davet ettiğinde botun size özel mesaj gönderebilmesi için bir Discord hesabı bağlayın.",
+      "action": "Discord bağlantısı →"
+    }
   },
   "topBar": {
     "notifications": "Bildirimler",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Olaylar",
+    "noEvents": "Yakın zamanda herhangi bir etkinlik bulunmamaktadır.",
+    "noPastEvents": "Henüz geçmişe ait bir etkinlik yok.",
+    "upcoming": "Yakında",
+    "past": "Geçmiş",
     "starts": "Başlıyor",
     "addAllToCalendar": "Takvime Tümünü Ekle",
     "addToCalendar": "Takvime Ekle",
@@ -92,11 +104,7 @@
     "startTime": "Başlangıç Saati:",
     "signupCloses": "Kayıtlar Kapanıyor:",
     "slotsLabel": "Yuvalar:",
-    "slotsValue": "{maxPlayers} oyuncular + {maxBackups} her birinin yedeklemeleri",
-    "noEvents": "Yakın zamanda herhangi bir etkinlik bulunmamaktadır.",
-    "noPastEvents": "Henüz geçmişe ait bir etkinlik yok.",
-    "upcoming": "Yakında",
-    "past": "Geçmiş"
+    "slotsValue": "{maxPlayers} oyuncular + {maxBackups} her birinin yedeklemeleri"
   },
   "eventCard": {
     "deleted": "Silindi",
@@ -421,6 +429,14 @@
       "dmHelp": "Bot etkinleştirildiğinde, biri size meydan okuduğunda, teklifinizi kabul ettiğinde veya reddettiğinde, düelloyu iptal ettiğinde veya sonucu açıkladığında size özel mesaj gönderir. Düellolarla ilgili Discord özel mesajlarını tamamen susturmak için bu özelliği kapatın. Yine de her şeyi web sitesinde görebilirsiniz.",
       "dmHelpUnlinked": "Düellolar hakkında doğrudan mesajlaşmayı etkinleştirmek için en az bir kez Discord hesabınızla oturum açın. (Oturumunuzu kapatın, ardından Discord hesabınızla tekrar oturum açın.)"
     },
+    "discord": {
+      "heading": "Discord direkt mesajları",
+      "reachableTitle": "Dosyada Discord kullanıcı kimliği mevcut.",
+      "reachableBody": "Bot size düellolar hakkında özel mesaj gönderebilir. Kimliğinizi aşağıdan güncelleyebilir veya silebilirsiniz.",
+      "unreachableBody": "Botun düellolar, kabul edilen ve reddedilen teklifler ve sonuçlar hakkında size özel mesaj gönderebilmesi için Discord kullanıcı kimliğinizi aşağıya yapıştırın. Kullanıcı kimliğinizi eklemezseniz, her şeyi web sitesinde görebilirsiniz, ancak Discord bildirimleri alamazsınız.",
+      "idLabel": "Discord Kullanıcı Kimliği",
+      "idHelp": "Discord'da Geliştirici Modunu etkinleştirin (Kullanıcı Ayarları → Gelişmiş), ardından kendi profilinize sağ tıklayın ve \"Kullanıcı Kimliğini Kopyala\"yı seçin. Bu, 17-20 haneli bir sayıdır. Sahipliği doğrulamıyoruz — eğer bottan istenmeyen bir DM alırsanız, Discord gizlilik ayarlarınızda \"Sunucu üyelerinden gelen doğrudan mesajlara izin ver\" seçeneğini devre dışı bırakın."
+    },
     "guildMembership": "Lonca üyeliği",
     "youreInGuild": "Sen bir {role} sün. {role} {guildName} in {guildName} .",
     "leaveExplanation": "Bu loncadan ayrılmak sizi etkinliklerden çıkarır ve geçmiş kayıtlarınızı (loncanın katılım raporları için saklanır) geçici olarak siler.",
@@ -433,15 +449,7 @@
     "deleteButton": "Hesabımı sil",
     "deleting": "Siliniyor…",
     "deleteConfirm": "Hesabınızı silmek mi istiyorsunuz? Bu işlem sizi loncanızdan çıkarır, tüm kayıtlarınızı siler ve Google/Discord bağlantınızı keser. Bu işlem geri alınamaz.",
-    "language": "Dil",
-    "discord": {
-      "heading": "Discord direkt mesajları",
-      "reachableTitle": "Dosyada Discord kullanıcı kimliği mevcut.",
-      "reachableBody": "Bot size düellolar hakkında özel mesaj gönderebilir. Kimliğinizi aşağıdan güncelleyebilir veya silebilirsiniz.",
-      "unreachableBody": "Botun düellolar, kabul edilen ve reddedilen teklifler ve sonuçlar hakkında size özel mesaj gönderebilmesi için Discord kullanıcı kimliğinizi aşağıya yapıştırın. Kullanıcı kimliğinizi eklemezseniz, her şeyi web sitesinde görebilirsiniz, ancak Discord bildirimleri alamazsınız.",
-      "idLabel": "Discord Kullanıcı Kimliği",
-      "idHelp": "Discord'da Geliştirici Modunu etkinleştirin (Kullanıcı Ayarları → Gelişmiş), ardından kendi profilinize sağ tıklayın ve \"Kullanıcı Kimliğini Kopyala\"yı seçin. Bu, 17-20 haneli bir sayıdır. Sahipliği doğrulamıyoruz — eğer bottan istenmeyen bir DM alırsanız, Discord gizlilik ayarlarınızda \"Sunucu üyelerinden gelen doğrudan mesajlara izin ver\" seçeneğini devre dışı bırakın."
-    }
+    "language": "Dil"
   },
   "errors": {
     "forbidden": "Yasaklı",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Hatırlatmalar ve komut satırları, operatörün önceden kurduğu bir Discord botuna bağlıdır. Bunu Discord sunucunuza bağlamak için:",
       "step1Intro": "Sitenizin operatöründen kurulum URL'sini alın. Şöyle bir şey:",
+      "step1Note": "permissions=133120 kısmı, Slash Komutları, Mesaj Gönderme ve Herkese Etiketleme seçeneklerini kapsar. Her ikisi de gereklidir; Herkese Etiketleme seçeneği olmadan hatırlatıcılardaki @everyone ifadesi düz metin olarak görüntülenir ve kimseye bildirim göndermez.",
       "step2": "Kurulum URL'sini bir tarayıcıda açın. Botun kurulmasını istediğiniz Discord sunucusunu seçin. Bu sunucuda \"Sunucuyu Yönet\" iznine sahip olmanız gerekiyor. \"Yetkilendir\"e tıklayın.",
-      "step3": "Botun Discord sunucunuzun üye listesinde göründüğünü doğrulayın. Hepsi bu kadar; Discord tarafında bot başına herhangi bir yapılandırma yapmanıza gerek yok.",
-      "step1Note": "permissions=2147616768 kısmı, Slash Komutları, Mesaj Gönderme ve Herkese Etiketleme seçeneklerini kapsar. Her ikisi de gereklidir; Herkese Etiketleme seçeneği olmadan hatırlatıcılardaki @everyone ifadesi düz metin olarak görüntülenir ve kimseye bildirim göndermez."
+      "step3": "Botun Discord sunucunuzun üye listesinde göründüğünü doğrulayın. Hepsi bu kadar; Discord tarafında bot başına herhangi bir yapılandırma yapmanıza gerek yok."
     },
     "discordChannel": {
       "intro": "Bot, seçtiğiniz bir kanala hatırlatma mesajları gönderir. Yapılandırmak için:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Next.js, Drizzle, Auth.js ve Discord API kullanılarak geliştirilmiştir. Ücretsiz ve açık kaynaklıdır.",
       "viewSource": "GitHub'da kaynak kodunu görüntüle",
-      "help": "Yardım",
-      "discordSupport": "Discord desteği"
+      "discordSupport": "Discord desteği",
+      "help": "Yardım"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
     },
     "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} diğer {# notifications} }",
-    "discord_unlinked": {
-      "title": "Çift DM'leri etkinleştirmek için Discord bağlantısını ekleyin.",
-      "body": "Google ile kayıt oldunuz. Birisi sizi düelloya davet ettiğinde botun size özel mesaj gönderebilmesi için bir Discord hesabı bağlayın.",
-      "action": "Discord bağlantısı →"
-    }
   }
 }

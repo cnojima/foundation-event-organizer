@@ -33,13 +33,21 @@
     "members": "Membri",
     "invites": "Inviti",
     "settings": "Impostazioni",
+    "auditLog": "Registro di controllo",
     "superAdmin": "Super amministratore",
     "browseGuilds": "Esplora le gilde",
     "createGuild": "Crea gilda",
     "adminHelp": "Assistenza amministrativa",
     "help": "Aiuto",
-    "myAccount": "Il mio conto",
-    "auditLog": "Registro di controllo"
+    "myAccount": "Il mio conto"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} altre {# notifications} }",
+    "discord_unlinked": {
+      "title": "Collega Discord per abilitare i messaggi diretti doppi",
+      "body": "Ti sei registrato con Google. Collega un account Discord in modo che il bot possa inviarti un messaggio privato quando qualcuno ti sfida a duello.",
+      "action": "Link Discord →"
+    }
   },
   "topBar": {
     "notifications": "Notifiche",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Eventi",
+    "noEvents": "Nessun evento in programma.",
+    "noPastEvents": "Nessun evento passato finora.",
+    "upcoming": "Prossimamente",
+    "past": "Passato",
     "starts": "Inizi",
     "addAllToCalendar": "Aggiungi tutto al calendario",
     "addToCalendar": "Aggiungi al calendario",
@@ -92,11 +104,7 @@
     "startTime": "Ora di inizio:",
     "signupCloses": "Le iscrizioni chiudono:",
     "slotsLabel": "Slot:",
-    "slotsValue": "{maxPlayers} giocatori + {maxBackups} backup ciascuno",
-    "noEvents": "Nessun evento in programma.",
-    "noPastEvents": "Nessun evento passato finora.",
-    "upcoming": "Prossimamente",
-    "past": "Passato"
+    "slotsValue": "{maxPlayers} giocatori + {maxBackups} backup ciascuno"
   },
   "eventCard": {
     "deleted": "Eliminato",
@@ -421,6 +429,14 @@
       "dmHelp": "Quando è attivo, il bot ti invia un messaggio privato su Discord quando qualcuno ti sfida, accetta o rifiuta la tua proposta, annulla un duello o dichiara un risultato. Disattivalo per silenziare completamente i messaggi privati su Discord relativi ai duelli. Potrai comunque visualizzare tutto sul sito web.",
       "dmHelpUnlinked": "Accedi a Discord almeno una volta per abilitare i messaggi diretti relativi ai duelli. (Esci e poi accedi nuovamente a Discord.)"
     },
+    "discord": {
+      "heading": "messaggi diretti Discord",
+      "reachableTitle": "ID utente Discord registrato",
+      "reachableBody": "Il bot può contattarti tramite messaggio privato riguardo ai duelli. Puoi aggiornare o cancellare il tuo ID qui sotto.",
+      "unreachableBody": "Inserisci il tuo ID utente Discord qui sotto, così il bot potrà inviarti messaggi privati riguardo alle sfide a duello, alle accettazioni, ai rifiuti e ai risultati. Senza di esso, potrai comunque visualizzare tutti i contenuti del sito web, ma non riceverai notifiche da Discord.",
+      "idLabel": "ID utente Discord",
+      "idHelp": "Su Discord, abilita la Modalità sviluppatore (Impostazioni utente → Avanzate), quindi fai clic con il pulsante destro del mouse sul tuo profilo e scegli \"Copia ID utente\". Si tratta di un numero di 17-20 cifre. Non verifichiamo la proprietà: se dovessi mai ricevere un messaggio privato indesiderato dal bot, disattiva \"Consenti messaggi diretti dai membri del server\" nelle impostazioni della privacy di Discord."
+    },
     "guildMembership": "Iscrizione alla gilda",
     "youreInGuild": "Tu sei un {role} di {guildName} .",
     "leaveExplanation": "Abbandonare questa gilda comporta la rimozione dai suoi eventi e la cancellazione temporanea delle tue precedenti iscrizioni (conservate per i report di presenza della gilda).",
@@ -433,15 +449,7 @@
     "deleteButton": "Elimina il mio account",
     "deleting": "Eliminazione in corso…",
     "deleteConfirm": "Vuoi eliminare il tuo account? Questa operazione ti rimuove dalla gilda, cancella tutte le tue iscrizioni e scollega i tuoi account Google/Discord. È un'operazione irreversibile.",
-    "language": "Lingua",
-    "discord": {
-      "heading": "messaggi diretti Discord",
-      "reachableTitle": "ID utente Discord registrato",
-      "reachableBody": "Il bot può contattarti tramite messaggio privato riguardo ai duelli. Puoi aggiornare o cancellare il tuo ID qui sotto.",
-      "unreachableBody": "Inserisci il tuo ID utente Discord qui sotto, così il bot potrà inviarti messaggi privati riguardo alle sfide a duello, alle accettazioni, ai rifiuti e ai risultati. Senza di esso, potrai comunque visualizzare tutti i contenuti del sito web, ma non riceverai notifiche da Discord.",
-      "idLabel": "ID utente Discord",
-      "idHelp": "Su Discord, abilita la Modalità sviluppatore (Impostazioni utente → Avanzate), quindi fai clic con il pulsante destro del mouse sul tuo profilo e scegli \"Copia ID utente\". Si tratta di un numero di 17-20 cifre. Non verifichiamo la proprietà: se dovessi mai ricevere un messaggio privato indesiderato dal bot, disattiva \"Consenti messaggi diretti dai membri del server\" nelle impostazioni della privacy di Discord."
-    }
+    "language": "Lingua"
   },
   "errors": {
     "forbidden": "Vietato",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Promemoria e comandi slash si basano su un bot Discord già implementato dall'operatore. Per collegarlo al tuo server Discord:",
       "step1Intro": "Richiedi l'URL di installazione al gestore del tuo sito. Ha un aspetto simile a questo:",
+      "step1Note": "La parte permissions=133120 riguarda i comandi slash, l'invio di messaggi e la menzione di tutti. Entrambi sono necessari: senza la menzione di tutti, il tag @everyone nei promemoria viene visualizzato come testo normale e non menziona nessuno.",
       "step2": "Apri l'URL di installazione in un browser. Seleziona il server Discord in cui desideri installare il bot. Devi disporre dell'autorizzazione \"Gestisci server\" su quel server. Fai clic su \"Autorizza\".",
-      "step3": "Verifica che il bot compaia nell'elenco dei membri del tuo server Discord. Tutto qui: non è necessaria alcuna configurazione specifica per ogni bot sul lato Discord.",
-      "step1Note": "La parte permissions=2147616768 riguarda i comandi slash, l'invio di messaggi e la menzione di tutti. Entrambi sono necessari: senza la menzione di tutti, il tag @everyone nei promemoria viene visualizzato come testo normale e non menziona nessuno."
+      "step3": "Verifica che il bot compaia nell'elenco dei membri del tuo server Discord. Tutto qui: non è necessaria alcuna configurazione specifica per ogni bot sul lato Discord."
     },
     "discordChannel": {
       "intro": "Il bot pubblica promemoria in un canale a tua scelta. Per configurarlo:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Realizzato con Next.js, Drizzle, Auth.js e l'API di Discord. Gratuito e open source.",
       "viewSource": "Visualizza il codice sorgente su GitHub",
-      "help": "Aiuto",
-      "discordSupport": "Assistenza Discord"
+      "discordSupport": "Assistenza Discord",
+      "help": "Aiuto"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Comandi slash di Discord: /upcoming elenca gli eventi imminenti della tua gilda, mentre /signup ti permette di iscriverti senza uscire da Discord. Devi accedere al sito web tramite Discord almeno una volta, in modo che il bot possa associare il tuo account."
     },
     "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} altre {# notifications} }",
-    "discord_unlinked": {
-      "title": "Collega Discord per abilitare i messaggi diretti doppi",
-      "body": "Ti sei registrato con Google. Collega un account Discord in modo che il bot possa inviarti un messaggio privato quando qualcuno ti sfida a duello.",
-      "action": "Link Discord →"
-    }
   }
 }

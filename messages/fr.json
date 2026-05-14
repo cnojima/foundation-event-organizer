@@ -33,13 +33,21 @@
     "members": "Membres",
     "invites": "Invitations",
     "settings": "Paramètres",
+    "auditLog": "Journal d'audit",
     "superAdmin": "Super Administrateur",
     "browseGuilds": "Parcourir les guildes",
     "createGuild": "Créer une guilde",
     "adminHelp": "Aide administrative",
     "help": "Aide",
-    "myAccount": "Mon compte",
-    "auditLog": "Journal d'audit"
+    "myAccount": "Mon compte"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} autres {# notifications} }",
+    "discord_unlinked": {
+      "title": "Lier Discord pour activer les duels DM",
+      "body": "Vous vous êtes inscrit avec Google. Liez un compte Discord pour que le bot puisse vous envoyer un message privé lorsqu'une personne vous défie en duel.",
+      "action": "Lien Discord →"
+    }
   },
   "topBar": {
     "notifications": "Notifications",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Événements",
+    "noEvents": "Aucun événement à venir.",
+    "noPastEvents": "Aucun événement passé pour le moment.",
+    "upcoming": "Prochain",
+    "past": "Passé",
     "starts": "Début",
     "addAllToCalendar": "Ajouter tout au calendrier",
     "addToCalendar": "Ajouter au calendrier",
@@ -92,11 +104,7 @@
     "startTime": "Heure de début :",
     "signupCloses": "Les inscriptions se terminent le :",
     "slotsLabel": "Machines à sous :",
-    "slotsValue": "{maxPlayers} joueurs + {maxBackups} sauvegardes chaque",
-    "noEvents": "Aucun événement à venir.",
-    "noPastEvents": "Aucun événement passé pour le moment.",
-    "upcoming": "Prochain",
-    "past": "Passé"
+    "slotsValue": "{maxPlayers} joueurs + {maxBackups} sauvegardes chaque"
   },
   "eventCard": {
     "deleted": "Supprimé",
@@ -421,6 +429,14 @@
       "dmHelp": "Lorsque cette option est activée, le bot vous envoie un message privé lorsqu'une personne vous défie, accepte ou refuse votre proposition, annule un duel ou annonce un résultat. Désactivez-le pour ne plus recevoir aucune notification Discord concernant les duels. Vous pourrez toujours consulter toutes les informations sur le site web.",
       "dmHelpUnlinked": "Connectez-vous à Discord au moins une fois pour activer les messages directs concernant les duels. (Déconnectez-vous, puis reconnectez-vous à Discord.)"
     },
+    "discord": {
+      "heading": "Messages directs Discord",
+      "reachableTitle": "Identifiant utilisateur Discord enregistré",
+      "reachableBody": "Le bot peut vous contacter par message privé pour les duels. Vous pouvez mettre à jour ou supprimer votre identifiant ci-dessous.",
+      "unreachableBody": "Saisissez votre identifiant Discord ci-dessous pour que le bot puisse vous envoyer des messages privés concernant les défis de duel, les acceptations, les refus et les résultats. Sans cela, vous verrez toujours tout sur le site web, mais vous ne recevrez pas les notifications Discord.",
+      "idLabel": "Identifiant utilisateur Discord",
+      "idHelp": "Sur Discord, activez le mode développeur (Paramètres utilisateur → Avancé), puis faites un clic droit sur votre profil et choisissez « Copier l'identifiant utilisateur ». Il s'agit d'un numéro à 17 ou 20 chiffres. Nous ne vérifions pas la propriété des comptes. Si vous recevez un message privé indésirable du bot, désactivez l'option « Autoriser les messages directs des membres du serveur » dans vos paramètres de confidentialité Discord."
+    },
     "guildMembership": "adhésion à la guilde",
     "youreInGuild": "Vous êtes un {role} de {guildName} .",
     "leaveExplanation": "Quitter cette guilde vous retire de ses événements et supprime temporairement vos inscriptions précédentes (conservées pour les rapports de présence de la guilde).",
@@ -433,15 +449,7 @@
     "deleteButton": "Supprimer mon compte",
     "deleting": "Suppression…",
     "deleteConfirm": "Supprimer votre compte ? Cela vous retire de votre guilde, supprime tous vos comptes et dissocie votre compte Google/Discord. Cette action est irréversible.",
-    "language": "Langue",
-    "discord": {
-      "heading": "Messages directs Discord",
-      "reachableTitle": "Identifiant utilisateur Discord enregistré",
-      "reachableBody": "Le bot peut vous contacter par message privé pour les duels. Vous pouvez mettre à jour ou supprimer votre identifiant ci-dessous.",
-      "unreachableBody": "Saisissez votre identifiant Discord ci-dessous pour que le bot puisse vous envoyer des messages privés concernant les défis de duel, les acceptations, les refus et les résultats. Sans cela, vous verrez toujours tout sur le site web, mais vous ne recevrez pas les notifications Discord.",
-      "idLabel": "Identifiant utilisateur Discord",
-      "idHelp": "Sur Discord, activez le mode développeur (Paramètres utilisateur → Avancé), puis faites un clic droit sur votre profil et choisissez « Copier l'identifiant utilisateur ». Il s'agit d'un numéro à 17 ou 20 chiffres. Nous ne vérifions pas la propriété des comptes. Si vous recevez un message privé indésirable du bot, désactivez l'option « Autoriser les messages directs des membres du serveur » dans vos paramètres de confidentialité Discord."
-    }
+    "language": "Langue"
   },
   "errors": {
     "forbidden": "Interdit",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Les rappels et les commandes slash dépendent d'un bot Discord déjà déployé par l'opérateur. Pour le connecter à votre serveur Discord :",
       "step1Intro": "Obtenez l'URL d'installation auprès de l'administrateur de votre site. Elle ressemble à ceci :",
+      "step1Note": "L'autorisation 133120 autorise les commandes slash, l'envoi de messages et la mention de tous les utilisateurs. Ces deux autorisations sont requises : sans la mention de tous les utilisateurs, la mention @everyone dans les rappels s'affiche en texte brut et n'envoie aucune notification.",
       "step2": "Ouvrez l'URL d'installation dans un navigateur. Choisissez le serveur Discord sur lequel vous souhaitez installer le bot. Vous devez disposer de l'autorisation « Gérer le serveur » sur ce serveur. Cliquez sur « Autoriser ».",
-      "step3": "Vérifiez que le bot apparaît bien dans la liste des membres de votre serveur Discord. C'est tout ! Aucune configuration supplémentaire n'est nécessaire pour chaque bot côté Discord.",
-      "step1Note": "L'autorisation 2147616768 autorise les commandes slash, l'envoi de messages et la mention de tous les utilisateurs. Ces deux autorisations sont requises : sans la mention de tous les utilisateurs, la mention @everyone dans les rappels s'affiche en texte brut et n'envoie aucune notification."
+      "step3": "Vérifiez que le bot apparaît bien dans la liste des membres de votre serveur Discord. C'est tout ! Aucune configuration supplémentaire n'est nécessaire pour chaque bot côté Discord."
     },
     "discordChannel": {
       "intro": "Le bot publie des rappels dans un canal de votre choix. Pour le configurer :",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Conçu avec Next.js, Drizzle, Auth.js et l'API Discord. Gratuit et open source.",
       "viewSource": "Voir le code source sur GitHub",
-      "help": "Aide",
-      "discordSupport": "Assistance Discord"
+      "discordSupport": "Assistance Discord",
+      "help": "Aide"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Commandes Discord : /upcoming affiche la liste des événements à venir de votre guilde, et /signup vous permet de vous inscrire sans quitter Discord. Vous devez vous connecter au site web avec Discord au moins une fois au préalable afin que le bot puisse associer votre compte."
     },
     "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} autres {# notifications} }",
-    "discord_unlinked": {
-      "title": "Lier Discord pour activer les duels DM",
-      "body": "Vous vous êtes inscrit avec Google. Liez un compte Discord pour que le bot puisse vous envoyer un message privé lorsqu'une personne vous défie en duel.",
-      "action": "Lien Discord →"
-    }
   }
 }

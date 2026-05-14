@@ -33,13 +33,21 @@
     "members": "Anggota",
     "invites": "Undangan",
     "settings": "Pengaturan",
+    "auditLog": "Catatan Audit",
     "superAdmin": "Admin Super",
     "browseGuilds": "Jelajahi Persekutuan",
     "createGuild": "Buat Persekutuan",
     "adminHelp": "Bantuan Admin",
     "help": "Membantu",
-    "myAccount": "Akun Saya",
-    "auditLog": "Catatan Audit"
+    "myAccount": "Akun Saya"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} pemberitahuan lainnya {# notifications} }",
+    "discord_unlinked": {
+      "title": "Hubungkan Discord untuk mengaktifkan DM duel.",
+      "body": "Anda mendaftar menggunakan Google. Tautkan akun Discord agar bot dapat mengirim pesan pribadi kepada Anda ketika seseorang menantang Anda berduel.",
+      "action": "Tautan Discord →"
+    }
   },
   "topBar": {
     "notifications": "Pemberitahuan",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Acara",
+    "noEvents": "Tidak ada acara mendatang.",
+    "noPastEvents": "Belum ada acara sebelumnya.",
+    "upcoming": "Mendatang",
+    "past": "Masa lalu",
     "starts": "Mulai",
     "addAllToCalendar": "Tambahkan Semua ke Kalender",
     "addToCalendar": "Tambahkan ke Kalender",
@@ -92,11 +104,7 @@
     "startTime": "Waktu Mulai:",
     "signupCloses": "Pendaftaran Ditutup:",
     "slotsLabel": "Slot:",
-    "slotsValue": "{maxPlayers} pemain + {maxBackups} cadangan masing-masing",
-    "noEvents": "Tidak ada acara mendatang.",
-    "noPastEvents": "Belum ada acara sebelumnya.",
-    "upcoming": "Mendatang",
-    "past": "Masa lalu"
+    "slotsValue": "{maxPlayers} pemain + {maxBackups} cadangan masing-masing"
   },
   "eventCard": {
     "deleted": "Dihapus",
@@ -421,6 +429,14 @@
       "dmHelp": "Saat diaktifkan, bot akan mengirimkan pesan pribadi (DM) kepada Anda ketika seseorang menantang Anda, menerima atau menolak proposal Anda, membatalkan duel, atau mengumumkan hasilnya. Matikan untuk membisukan pesan pribadi Discord tentang duel sepenuhnya. Anda tetap dapat melihat semuanya di situs web.",
       "dmHelpUnlinked": "Masuk ke Discord setidaknya sekali untuk mengaktifkan pesan langsung tentang duel. (Keluar, lalu masuk kembali ke Discord.)"
     },
+    "discord": {
+      "heading": "Pesan langsung Discord",
+      "reachableTitle": "ID Pengguna Discord yang terdaftar",
+      "reachableBody": "Bot ini dapat mengirimkan pesan pribadi (DM) kepada Anda tentang duel. Anda dapat memperbarui atau menghapus ID Anda di bawah ini.",
+      "unreachableBody": "Tempelkan ID Pengguna Discord Anda di bawah ini agar bot dapat mengirimkan pesan pribadi kepada Anda tentang tantangan duel, penerimaan, penolakan, dan hasilnya. Tanpa itu, Anda tetap akan melihat semuanya di situs web — hanya saja tidak ada notifikasi Discord.",
+      "idLabel": "ID Pengguna Discord",
+      "idHelp": "Di Discord, aktifkan Mode Pengembang (Pengaturan Pengguna → Lanjutan), lalu klik kanan profil Anda sendiri dan pilih \"Salin ID Pengguna\". Ini adalah angka 17-20 digit. Kami tidak memverifikasi kepemilikan — jika Anda pernah menerima DM yang tidak diinginkan dari bot, nonaktifkan \"Izinkan pesan langsung dari anggota server\" di pengaturan privasi Discord Anda."
+    },
     "guildMembership": "Keanggotaan perkumpulan",
     "youreInGuild": "Kamu adalah seorang {role} dari {guildName} .",
     "leaveExplanation": "Keluar dari guild ini akan menghapus Anda dari acara-acaranya dan menghapus pendaftaran Anda sebelumnya (tetap disimpan untuk laporan kehadiran guild).",
@@ -433,15 +449,7 @@
     "deleteButton": "Hapus akun saya",
     "deleting": "Menghapus…",
     "deleteConfirm": "Menghapus akun Anda? Ini akan menghapus Anda dari guild, menghapus semua pendaftaran Anda, dan memutuskan tautan Google/Discord. Tindakan ini tidak dapat dibatalkan.",
-    "language": "Bahasa",
-    "discord": {
-      "heading": "Pesan langsung Discord",
-      "reachableTitle": "ID Pengguna Discord yang terdaftar",
-      "reachableBody": "Bot ini dapat mengirimkan pesan pribadi (DM) kepada Anda tentang duel. Anda dapat memperbarui atau menghapus ID Anda di bawah ini.",
-      "unreachableBody": "Tempelkan ID Pengguna Discord Anda di bawah ini agar bot dapat mengirimkan pesan pribadi kepada Anda tentang tantangan duel, penerimaan, penolakan, dan hasilnya. Tanpa itu, Anda tetap akan melihat semuanya di situs web — hanya saja tidak ada notifikasi Discord.",
-      "idLabel": "ID Pengguna Discord",
-      "idHelp": "Di Discord, aktifkan Mode Pengembang (Pengaturan Pengguna → Lanjutan), lalu klik kanan profil Anda sendiri dan pilih \"Salin ID Pengguna\". Ini adalah angka 17-20 digit. Kami tidak memverifikasi kepemilikan — jika Anda pernah menerima DM yang tidak diinginkan dari bot, nonaktifkan \"Izinkan pesan langsung dari anggota server\" di pengaturan privasi Discord Anda."
-    }
+    "language": "Bahasa"
   },
   "errors": {
     "forbidden": "Terlarang",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Pengingat dan perintah slash bergantung pada bot Discord yang sudah diimplementasikan oleh operator. Untuk menghubungkannya ke server Discord Anda:",
       "step1Intro": "Dapatkan URL instalasi dari operator situs Anda. URL-nya akan terlihat seperti ini:",
+      "step1Note": "Bagian permissions=133120 mencakup Perintah Garis Miring (Slash Commands), Kirim Pesan (Send Messages), dan Sebutkan Semua Orang (Mention Everyone). Keduanya diperlukan — tanpa Sebutkan Semua Orang, @everyone di pengingat (reminders) akan ditampilkan sebagai teks biasa dan tidak akan mengirimkan notifikasi kepada siapa pun.",
       "step2": "Buka URL instalasi di browser. Pilih server Discord tempat Anda ingin memasang bot. Anda memerlukan izin Kelola Server di server tersebut. Klik Otorisasi.",
-      "step3": "Konfirmasikan bahwa bot muncul di daftar anggota server Discord Anda. Selesai — tidak perlu konfigurasi per-bot di sisi Discord.",
-      "step1Note": "Bagian permissions=2147616768 mencakup Perintah Garis Miring (Slash Commands), Kirim Pesan (Send Messages), dan Sebutkan Semua Orang (Mention Everyone). Keduanya diperlukan — tanpa Sebutkan Semua Orang, @everyone di pengingat (reminders) akan ditampilkan sebagai teks biasa dan tidak akan mengirimkan notifikasi kepada siapa pun."
+      "step3": "Konfirmasikan bahwa bot muncul di daftar anggota server Discord Anda. Selesai — tidak perlu konfigurasi per-bot di sisi Discord."
     },
     "discordChannel": {
       "intro": "Bot ini akan mengirimkan pengingat ke salah satu saluran pilihan Anda. Untuk mengkonfigurasinya:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Dibangun dengan Next.js, Drizzle, Auth.js, dan API Discord. Gratis dan sumber terbuka.",
       "viewSource": "Lihat kode sumber di GitHub",
-      "help": "Membantu",
-      "discordSupport": "Dukungan Discord"
+      "discordSupport": "Dukungan Discord",
+      "help": "Membantu"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
     },
     "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} pemberitahuan lainnya {# notifications} }",
-    "discord_unlinked": {
-      "title": "Hubungkan Discord untuk mengaktifkan DM duel.",
-      "body": "Anda mendaftar menggunakan Google. Tautkan akun Discord agar bot dapat mengirim pesan pribadi kepada Anda ketika seseorang menantang Anda berduel.",
-      "action": "Tautan Discord →"
-    }
   }
 }

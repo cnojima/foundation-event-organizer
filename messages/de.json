@@ -33,13 +33,21 @@
     "members": "Mitglieder",
     "invites": "Einladungen",
     "settings": "Einstellungen",
+    "auditLog": "Audit-Protokoll",
     "superAdmin": "Super-Admin",
     "browseGuilds": "Gilden durchsuchen",
     "createGuild": "Gilde erstellen",
     "adminHelp": "Admin-Hilfe",
     "help": "Helfen",
-    "myAccount": "Mein Konto",
-    "auditLog": "Audit-Protokoll"
+    "myAccount": "Mein Konto"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} andere {# notifications} }",
+    "discord_unlinked": {
+      "title": "Verknüpfe Discord, um Dual-Direktnachrichten zu ermöglichen",
+      "body": "Du hast dich mit Google angemeldet. Verknüpfe ein Discord-Konto, damit der Bot dich per Direktnachricht kontaktieren kann, wenn dich jemand zu einem Duell herausfordert.",
+      "action": "Link zu Discord →"
+    }
   },
   "topBar": {
     "notifications": "Benachrichtigungen",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Veranstaltungen",
+    "noEvents": "Keine anstehenden Veranstaltungen.",
+    "noPastEvents": "Bisher keine vergangenen Ereignisse.",
+    "upcoming": "Demnächst",
+    "past": "Vergangenheit",
     "starts": "Beginnt",
     "addAllToCalendar": "Alle zum Kalender hinzufügen",
     "addToCalendar": "Zum Kalender hinzufügen",
@@ -92,11 +104,7 @@
     "startTime": "Startzeit:",
     "signupCloses": "Anmeldeschluss:",
     "slotsLabel": "Spielautomaten:",
-    "slotsValue": "{maxPlayers} Spieler + {maxBackups} Backups jeweils",
-    "noEvents": "Keine anstehenden Veranstaltungen.",
-    "noPastEvents": "Bisher keine vergangenen Ereignisse.",
-    "upcoming": "Demnächst",
-    "past": "Vergangenheit"
+    "slotsValue": "{maxPlayers} Spieler + {maxBackups} Backups jeweils"
   },
   "eventCard": {
     "deleted": "Gelöscht",
@@ -421,6 +429,14 @@
       "dmHelp": "Wenn der Bot aktiviert ist, benachrichtigt er dich per Direktnachricht, sobald dich jemand herausfordert, deinen Vorschlag annimmt oder ablehnt, ein Duell absagt oder ein Ergebnis verkündet. Deaktiviere ihn, um alle Direktnachrichten zu Duellen auf Discord zu stummzuschalten. Alle Inhalte auf der Website bleiben weiterhin sichtbar.",
       "dmHelpUnlinked": "Melde dich mindestens einmal mit Discord an, um Direktnachrichten zu Duellen zu aktivieren. (Melde dich ab und melde dich dann wieder mit Discord an.)"
     },
+    "discord": {
+      "heading": "Discord-Direktnachrichten",
+      "reachableTitle": "Discord-Benutzer-ID hinterlegt",
+      "reachableBody": "Der Bot kann dich per Direktnachricht zu Duellen herausfordern. Du kannst deine ID unten aktualisieren oder löschen.",
+      "unreachableBody": "Füge unten deine Discord-Benutzer-ID ein, damit der Bot dich per Direktnachricht über Duellherausforderungen, Annahmen, Ablehnungen und Ergebnisse informieren kann. Ohne deine ID siehst du weiterhin alles auf der Website – nur keine Discord-Benachrichtigungen.",
+      "idLabel": "Discord-Benutzer-ID",
+      "idHelp": "Aktiviere in Discord den Entwicklermodus (Benutzereinstellungen → Erweitert), klicke dann mit der rechten Maustaste auf dein Profil und wähle „Benutzer-ID kopieren“. Es handelt sich um eine 17- bis 20-stellige Zahl. Wir überprüfen nicht die Inhaberschaft. Solltest du unerwünschte Direktnachrichten vom Bot erhalten, deaktiviere in deinen Discord-Datenschutzeinstellungen die Option „Direktnachrichten von Servermitgliedern zulassen“."
+    },
     "guildMembership": "Gildenmitgliedschaft",
     "youreInGuild": "Du bist eine {role} von {guildName} Die",
     "leaveExplanation": "Wenn du diese Gilde verlässt, wirst du von ihren Veranstaltungen abgemeldet und deine bisherigen Anmeldungen (die für die Anwesenheitsberichte der Gilde aufbewahrt werden) werden vorläufig gelöscht.",
@@ -433,15 +449,7 @@
     "deleteButton": "Mein Konto löschen",
     "deleting": "Löschen…",
     "deleteConfirm": "Dein Konto löschen? Dadurch wirst du aus deiner Gilde entfernt, alle deine Anmeldungen werden gelöscht und die Verknüpfung mit Google/Discord wird aufgehoben. Dies kann nicht rückgängig gemacht werden.",
-    "language": "Sprache",
-    "discord": {
-      "heading": "Discord-Direktnachrichten",
-      "reachableTitle": "Discord-Benutzer-ID hinterlegt",
-      "reachableBody": "Der Bot kann dich per Direktnachricht zu Duellen herausfordern. Du kannst deine ID unten aktualisieren oder löschen.",
-      "unreachableBody": "Füge unten deine Discord-Benutzer-ID ein, damit der Bot dich per Direktnachricht über Duellherausforderungen, Annahmen, Ablehnungen und Ergebnisse informieren kann. Ohne deine ID siehst du weiterhin alles auf der Website – nur keine Discord-Benachrichtigungen.",
-      "idLabel": "Discord-Benutzer-ID",
-      "idHelp": "Aktiviere in Discord den Entwicklermodus (Benutzereinstellungen → Erweitert), klicke dann mit der rechten Maustaste auf dein Profil und wähle „Benutzer-ID kopieren“. Es handelt sich um eine 17- bis 20-stellige Zahl. Wir überprüfen nicht die Inhaberschaft. Solltest du unerwünschte Direktnachrichten vom Bot erhalten, deaktiviere in deinen Discord-Datenschutzeinstellungen die Option „Direktnachrichten von Servermitgliedern zulassen“."
-    }
+    "language": "Sprache"
   },
   "errors": {
     "forbidden": "Verboten",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Erinnerungen und Slash-Befehle benötigen einen Discord-Bot, den der Betreiber bereits eingerichtet hat. So verbinden Sie ihn mit Ihrem Discord-Server:",
       "step1Intro": "Die Installations-URL erhalten Sie von Ihrem Website-Betreiber. Sie sieht folgendermaßen aus:",
+      "step1Note": "Der Abschnitt „permissions=133120“ umfasst Slash-Befehle, das Senden von Nachrichten und das Erwähnen aller Personen. Beide sind erforderlich – ohne „Alle erwähnen“ wird die @everyone-Erwähnung in Erinnerungen als reiner Text dargestellt und niemand wird benachrichtigt.",
       "step2": "Öffne die Installations-URL in einem Browser. Wähle den Discord-Server aus, auf dem der Bot installiert werden soll. Du benötigst die Berechtigung „Server verwalten“ auf diesem Server. Klicke auf „Autorisieren“.",
-      "step3": "Vergewissern Sie sich, dass der Bot in der Mitgliederliste Ihres Discord-Servers angezeigt wird. Das ist alles – keine weiteren Konfigurationen pro Bot auf Discord-Seite erforderlich.",
-      "step1Note": "Der Abschnitt „permissions=2147616768“ umfasst Slash-Befehle, das Senden von Nachrichten und das Erwähnen aller Personen. Beide sind erforderlich – ohne „Alle erwähnen“ wird die @everyone-Erwähnung in Erinnerungen als reiner Text dargestellt und niemand wird benachrichtigt."
+      "step3": "Vergewissern Sie sich, dass der Bot in der Mitgliederliste Ihres Discord-Servers angezeigt wird. Das ist alles – keine weiteren Konfigurationen pro Bot auf Discord-Seite erforderlich."
     },
     "discordChannel": {
       "intro": "Der Bot postet Erinnerungen in einem Kanal Ihrer Wahl. So konfigurieren Sie ihn:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Entwickelt mit Next.js, Drizzle, Auth.js und der Discord-API. Kostenlos und Open Source.",
       "viewSource": "Quellcode auf GitHub ansehen",
-      "help": "Helfen",
-      "discordSupport": "Discord-Unterstützung"
+      "discordSupport": "Discord-Unterstützung",
+      "help": "Helfen"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Discord-Befehle: /upcoming listet die anstehenden Events eurer Gilde auf, und /signup ermöglicht die Anmeldung direkt in Discord. Ihr müsst euch zuvor mindestens einmal mit Discord auf der Website anmelden, damit der Bot euer Konto zuordnen kann."
     },
     "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} andere {# notifications} }",
-    "discord_unlinked": {
-      "title": "Verknüpfe Discord, um Dual-Direktnachrichten zu ermöglichen",
-      "body": "Du hast dich mit Google angemeldet. Verknüpfe ein Discord-Konto, damit der Bot dich per Direktnachricht kontaktieren kann, wenn dich jemand zu einem Duell herausfordert.",
-      "action": "Link zu Discord →"
-    }
   }
 }

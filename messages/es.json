@@ -33,13 +33,21 @@
     "members": "Miembros",
     "invites": "Invitaciones",
     "settings": "Ajustes",
+    "auditLog": "Registro de auditoría",
     "superAdmin": "Superadministrador",
     "browseGuilds": "Explorar gremios",
     "createGuild": "Crear gremio",
     "adminHelp": "Ayuda administrativa",
     "help": "Ayuda",
-    "myAccount": "Mi cuenta",
-    "auditLog": "Registro de auditoría"
+    "myAccount": "Mi cuenta"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} otras {# notifications} }",
+    "discord_unlinked": {
+      "title": "Enlace a Discord para habilitar los mensajes directos de duelo.",
+      "body": "Te registraste con Google. Vincula una cuenta de Discord para que el bot pueda enviarte un mensaje directo cuando alguien te desafíe a un duelo.",
+      "action": "Enlace a Discord →"
+    }
   },
   "topBar": {
     "notifications": "Notificaciones",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Eventos",
+    "noEvents": "No hay eventos próximos.",
+    "noPastEvents": "Aún no hay eventos pasados.",
+    "upcoming": "Próximamente",
+    "past": "Pasado",
     "starts": "Comienza",
     "addAllToCalendar": "Agregar todo al calendario",
     "addToCalendar": "Añadir al calendario",
@@ -92,11 +104,7 @@
     "startTime": "Hora de inicio:",
     "signupCloses": "Cierre de inscripciones:",
     "slotsLabel": "Ranuras:",
-    "slotsValue": "{maxPlayers} jugadores + {maxBackups} copias de seguridad cada",
-    "noEvents": "No hay eventos próximos.",
-    "noPastEvents": "Aún no hay eventos pasados.",
-    "upcoming": "Próximamente",
-    "past": "Pasado"
+    "slotsValue": "{maxPlayers} jugadores + {maxBackups} copias de seguridad cada"
   },
   "eventCard": {
     "deleted": "Eliminado",
@@ -421,6 +429,14 @@
       "dmHelp": "Cuando está activado, el bot te envía mensajes directos cuando alguien te desafía, acepta o rechaza tu propuesta, cancela un duelo o anuncia un resultado. Desactívalo para silenciar por completo los mensajes directos de Discord sobre duelos. Seguirás viendo todo en la página web.",
       "dmHelpUnlinked": "Inicia sesión en Discord al menos una vez para activar los mensajes directos sobre duelos. (Cierra sesión y vuelve a iniciarla en Discord)."
     },
+    "discord": {
+      "heading": "Mensajes directos de Discord",
+      "reachableTitle": "ID de usuario de Discord registrado",
+      "reachableBody": "El bot puede enviarte mensajes directos sobre duelos. Puedes actualizar o borrar tu ID a continuación.",
+      "unreachableBody": "Pega tu ID de usuario de Discord a continuación para que el bot pueda enviarte mensajes privados sobre desafíos de duelo, aceptaciones, rechazos y resultados. Sin él, seguirás viendo todo en el sitio web, pero no recibirás notificaciones de Discord.",
+      "idLabel": "ID de usuario de Discord",
+      "idHelp": "En Discord, activa el Modo desarrollador (Configuración de usuario → Avanzado), luego haz clic derecho en tu perfil y selecciona \"Copiar ID de usuario\". Es un número de entre 17 y 20 dígitos. No verificamos la propiedad; si recibes un mensaje directo no deseado del bot, desactiva la opción \"Permitir mensajes directos de miembros del servidor\" en la configuración de privacidad de Discord."
+    },
     "guildMembership": "Membresía del gremio",
     "youreInGuild": "Eres un {role} de {guildName} .",
     "leaveExplanation": "Si abandonas este gremio, se te excluirá de sus eventos y se borrarán temporalmente tus inscripciones anteriores (que se conservan para los informes de asistencia del gremio).",
@@ -433,15 +449,7 @@
     "deleteButton": "Eliminar mi cuenta",
     "deleting": "Eliminando…",
     "deleteConfirm": "¿Quieres eliminar tu cuenta? Esto te expulsará de tu gremio, borrará todos tus registros y desvinculará tu cuenta de Google/Discord. Esta acción es irreversible.",
-    "language": "Idioma",
-    "discord": {
-      "heading": "Mensajes directos de Discord",
-      "reachableTitle": "ID de usuario de Discord registrado",
-      "reachableBody": "El bot puede enviarte mensajes directos sobre duelos. Puedes actualizar o borrar tu ID a continuación.",
-      "unreachableBody": "Pega tu ID de usuario de Discord a continuación para que el bot pueda enviarte mensajes privados sobre desafíos de duelo, aceptaciones, rechazos y resultados. Sin él, seguirás viendo todo en el sitio web, pero no recibirás notificaciones de Discord.",
-      "idLabel": "ID de usuario de Discord",
-      "idHelp": "En Discord, activa el Modo desarrollador (Configuración de usuario → Avanzado), luego haz clic derecho en tu perfil y selecciona \"Copiar ID de usuario\". Es un número de entre 17 y 20 dígitos. No verificamos la propiedad; si recibes un mensaje directo no deseado del bot, desactiva la opción \"Permitir mensajes directos de miembros del servidor\" en la configuración de privacidad de Discord."
-    }
+    "language": "Idioma"
   },
   "errors": {
     "forbidden": "Prohibido",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Los recordatorios y los comandos de barra diagonal dependen de un bot de Discord que el operador ya ha implementado. Para conectarlo a tu servidor de Discord:",
       "step1Intro": "Obtén la URL de instalación de tu operador de sitio. Tiene este aspecto:",
+      "step1Note": "La parte permissions=133120 abarca los comandos de barra diagonal, el envío de mensajes y la mención a todos. Ambos son obligatorios; sin la mención a todos, el @everyone en los recordatorios se muestra como texto sin formato y no notifica a nadie.",
       "step2": "Abre la URL de instalación en un navegador. Selecciona el servidor de Discord donde quieres instalar el bot. Necesitas el permiso de \"Administrar servidor\" en ese servidor. Haz clic en \"Autorizar\".",
-      "step3": "Confirma que el bot aparece en la lista de miembros de tu servidor de Discord. Eso es todo; no se requiere ninguna configuración individual para cada bot en Discord.",
-      "step1Note": "La parte permissions=2147616768 abarca los comandos de barra diagonal, el envío de mensajes y la mención a todos. Ambos son obligatorios; sin la mención a todos, el @everyone en los recordatorios se muestra como texto sin formato y no notifica a nadie."
+      "step3": "Confirma que el bot aparece en la lista de miembros de tu servidor de Discord. Eso es todo; no se requiere ninguna configuración individual para cada bot en Discord."
     },
     "discordChannel": {
       "intro": "El bot publica recordatorios en el canal que elijas. Para configurarlo:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Desarrollado con Next.js, Drizzle, Auth.js y la API de Discord. Gratuito y de código abierto.",
       "viewSource": "Ver el código fuente en GitHub",
-      "help": "Ayuda",
-      "discordSupport": "Soporte de Discord"
+      "discordSupport": "Soporte de Discord",
+      "help": "Ayuda"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Comandos de barra de Discord: /upcoming muestra los próximos eventos de tu gremio, y /signup te permite registrarte sin salir de Discord. Debes iniciar sesión en el sitio web con Discord al menos una vez para que el bot pueda vincular tu cuenta."
     },
     "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} otras {# notifications} }",
-    "discord_unlinked": {
-      "title": "Enlace a Discord para habilitar los mensajes directos de duelo.",
-      "body": "Te registraste con Google. Vincula una cuenta de Discord para que el bot pueda enviarte un mensaje directo cuando alguien te desafíe a un duelo.",
-      "action": "Enlace a Discord →"
-    }
   }
 }

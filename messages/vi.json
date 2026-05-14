@@ -33,13 +33,21 @@
     "members": "Thành viên",
     "invites": "Lời mời",
     "settings": "Cài đặt",
+    "auditLog": "Nhật ký kiểm toán",
     "superAdmin": "Quản trị viên cấp cao",
     "browseGuilds": "Tìm kiếm hội nhóm",
     "createGuild": "Tạo Bang hội",
     "adminHelp": "Trợ giúp quản trị viên",
     "help": "Giúp đỡ",
-    "myAccount": "Tài khoản của tôi",
-    "auditLog": "Nhật ký kiểm toán"
+    "myAccount": "Tài khoản của tôi"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} thông báo khác {# notifications} }",
+    "discord_unlinked": {
+      "title": "Liên kết Discord để bật tin nhắn riêng (DM) đấu tay đôi.",
+      "body": "Bạn đã đăng ký bằng tài khoản Google. Hãy liên kết tài khoản Discord để bot có thể nhắn tin riêng cho bạn khi có người thách đấu.",
+      "action": "Link Discord →"
+    }
   },
   "topBar": {
     "notifications": "Thông báo",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Sự kiện",
+    "noEvents": "Không có sự kiện nào sắp diễn ra.",
+    "noPastEvents": "Chưa có sự kiện nào diễn ra trước đó.",
+    "upcoming": "Sắp tới",
+    "past": "Quá khứ",
     "starts": "Bắt đầu",
     "addAllToCalendar": "Thêm tất cả vào lịch",
     "addToCalendar": "Thêm vào lịch",
@@ -92,11 +104,7 @@
     "startTime": "Thời gian bắt đầu:",
     "signupCloses": "Thời gian đăng ký kết thúc:",
     "slotsLabel": "Các vị trí:",
-    "slotsValue": "{maxPlayers} người chơi + {maxBackups} sao lưu từng",
-    "noEvents": "Không có sự kiện nào sắp diễn ra.",
-    "noPastEvents": "Chưa có sự kiện nào diễn ra trước đó.",
-    "upcoming": "Sắp tới",
-    "past": "Quá khứ"
+    "slotsValue": "{maxPlayers} người chơi + {maxBackups} sao lưu từng"
   },
   "eventCard": {
     "deleted": "Đã xóa",
@@ -421,6 +429,14 @@
       "dmHelp": "Khi bật, bot sẽ gửi tin nhắn riêng cho bạn khi ai đó thách đấu, chấp nhận hoặc từ chối đề nghị của bạn, hủy bỏ một trận đấu tay đôi hoặc công bố kết quả. Tắt chức năng này để hoàn toàn im lặng khi nhận tin nhắn riêng trên Discord về các trận đấu. Bạn vẫn sẽ thấy mọi thứ trên trang web.",
       "dmHelpUnlinked": "Hãy đăng nhập vào Discord ít nhất một lần để có thể gửi tin nhắn trực tiếp về các trận đấu. (Đăng xuất rồi đăng nhập lại vào Discord.)"
     },
+    "discord": {
+      "heading": "Tin nhắn trực tiếp trên Discord",
+      "reachableTitle": "Thông tin người dùng Discord đã được lưu trữ.",
+      "reachableBody": "Bot có thể nhắn tin riêng cho bạn về các trận đấu. Bạn có thể cập nhật hoặc xóa ID của mình bên dưới.",
+      "unreachableBody": "Hãy dán ID người dùng Discord của bạn bên dưới để bot có thể nhắn tin riêng cho bạn về các thử thách đấu tay đôi, chấp nhận, từ chối và kết quả. Nếu không có ID này, bạn vẫn sẽ thấy mọi thứ trên trang web — chỉ là không nhận được thông báo trên Discord.",
+      "idLabel": "ID người dùng Discord",
+      "idHelp": "Trong Discord, hãy bật Chế độ nhà phát triển (Cài đặt người dùng → Nâng cao), sau đó nhấp chuột phải vào hồ sơ của bạn và chọn \"Sao chép ID người dùng\". Đó là một dãy số gồm 17-20 chữ số. Chúng tôi không xác minh quyền sở hữu — nếu bạn nhận được tin nhắn trực tiếp không mong muốn từ bot, hãy tắt \"Cho phép tin nhắn trực tiếp từ thành viên máy chủ\" trong cài đặt quyền riêng tư của Discord."
+    },
     "guildMembership": "Thành viên hội",
     "youreInGuild": "Bạn là một {role} của {guildName} .",
     "leaveExplanation": "Rời khỏi hội này sẽ khiến bạn không còn tham gia các sự kiện của hội và thông tin đăng ký trước đây của bạn sẽ bị xóa tạm thời (thông tin này được giữ lại để phục vụ báo cáo điểm danh của hội).",
@@ -433,15 +449,7 @@
     "deleteButton": "Xóa tài khoản của tôi",
     "deleting": "Đang xóa…",
     "deleteConfirm": "Xóa tài khoản của bạn? Thao tác này sẽ xóa bạn khỏi bang hội, xóa tất cả các tài khoản đã đăng ký và hủy liên kết với Google/Discord. Không thể hoàn tác.",
-    "language": "Ngôn ngữ",
-    "discord": {
-      "heading": "Tin nhắn trực tiếp trên Discord",
-      "reachableTitle": "Thông tin người dùng Discord đã được lưu trữ.",
-      "reachableBody": "Bot có thể nhắn tin riêng cho bạn về các trận đấu. Bạn có thể cập nhật hoặc xóa ID của mình bên dưới.",
-      "unreachableBody": "Hãy dán ID người dùng Discord của bạn bên dưới để bot có thể nhắn tin riêng cho bạn về các thử thách đấu tay đôi, chấp nhận, từ chối và kết quả. Nếu không có ID này, bạn vẫn sẽ thấy mọi thứ trên trang web — chỉ là không nhận được thông báo trên Discord.",
-      "idLabel": "ID người dùng Discord",
-      "idHelp": "Trong Discord, hãy bật Chế độ nhà phát triển (Cài đặt người dùng → Nâng cao), sau đó nhấp chuột phải vào hồ sơ của bạn và chọn \"Sao chép ID người dùng\". Đó là một dãy số gồm 17-20 chữ số. Chúng tôi không xác minh quyền sở hữu — nếu bạn nhận được tin nhắn trực tiếp không mong muốn từ bot, hãy tắt \"Cho phép tin nhắn trực tiếp từ thành viên máy chủ\" trong cài đặt quyền riêng tư của Discord."
-    }
+    "language": "Ngôn ngữ"
   },
   "errors": {
     "forbidden": "Cấm",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Các lời nhắc và lệnh gạch chéo dựa trên một bot Discord mà người điều hành đã triển khai. Để kết nối nó với máy chủ Discord của bạn:",
       "step1Intro": "Lấy URL cài đặt từ người quản trị trang web của bạn. URL đó có dạng như sau:",
+      "step1Note": "Phần permissions=133120 bao gồm Lệnh gạch chéo, Gửi tin nhắn và Nhắc đến mọi người. Cả hai đều bắt buộc — nếu không có phần Nhắc đến mọi người, @everyone trong lời nhắc sẽ hiển thị dưới dạng văn bản thuần và không nhắc đến ai cả.",
       "step2": "Mở URL cài đặt trong trình duyệt. Chọn máy chủ Discord mà bạn muốn cài đặt bot. Bạn cần quyền Quản lý máy chủ trong máy chủ đó. Nhấp vào Ủy quyền.",
-      "step3": "Hãy xác nhận rằng bot xuất hiện trong danh sách thành viên của máy chủ Discord của bạn. Vậy là xong — không cần cấu hình riêng cho từng bot ở phía Discord.",
-      "step1Note": "Phần permissions=2147616768 bao gồm Lệnh gạch chéo, Gửi tin nhắn và Nhắc đến mọi người. Cả hai đều bắt buộc — nếu không có phần Nhắc đến mọi người, @everyone trong lời nhắc sẽ hiển thị dưới dạng văn bản thuần và không nhắc đến ai cả."
+      "step3": "Hãy xác nhận rằng bot xuất hiện trong danh sách thành viên của máy chủ Discord của bạn. Vậy là xong — không cần cấu hình riêng cho từng bot ở phía Discord."
     },
     "discordChannel": {
       "intro": "Bot sẽ đăng lời nhắc vào một kênh mà bạn chọn. Để cấu hình:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Được xây dựng bằng Next.js, Drizzle, Auth.js và API của Discord. Miễn phí và mã nguồn mở.",
       "viewSource": "Xem mã nguồn trên GitHub",
-      "help": "Giúp đỡ",
-      "discordSupport": "Hỗ trợ Discord"
+      "discordSupport": "Hỗ trợ Discord",
+      "help": "Giúp đỡ"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Các lệnh slash trên Discord: /upcoming liệt kê các sự kiện sắp tới của bang hội bạn, và /signup cho phép bạn đăng ký mà không cần rời khỏi Discord. Bạn phải đăng nhập vào trang web bằng Discord ít nhất một lần trước, để bot có thể xác nhận tài khoản của bạn."
     },
     "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} thông báo khác {# notifications} }",
-    "discord_unlinked": {
-      "title": "Liên kết Discord để bật tin nhắn riêng (DM) đấu tay đôi.",
-      "body": "Bạn đã đăng ký bằng tài khoản Google. Hãy liên kết tài khoản Discord để bot có thể nhắn tin riêng cho bạn khi có người thách đấu.",
-      "action": "Link Discord →"
-    }
   }
 }

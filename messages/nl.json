@@ -33,13 +33,21 @@
     "members": "Leden",
     "invites": "Uitnodigingen",
     "settings": "Instellingen",
+    "auditLog": "Auditlogboek",
     "superAdmin": "Superbeheerder",
     "browseGuilds": "Bekijk gilden",
     "createGuild": "Maak een gilde aan",
     "adminHelp": "Admin Help",
     "help": "Hulp",
-    "myAccount": "Mijn account",
-    "auditLog": "Auditlogboek"
+    "myAccount": "Mijn account"
+  },
+  "alerts": {
+    "heading": "{count, plural, one {# notification} andere {# notifications} }",
+    "discord_unlinked": {
+      "title": "Link naar Discord om privéberichten tussen twee spelers mogelijk te maken.",
+      "body": "Je hebt je aangemeld met Google. Koppel een Discord-account zodat de bot je een privébericht kan sturen als iemand je uitdaagt voor een duel.",
+      "action": "Link naar Discord →"
+    }
   },
   "topBar": {
     "notifications": "Meldingen",
@@ -73,6 +81,10 @@
   },
   "events": {
     "title": "Evenementen",
+    "noEvents": "Geen aankomende evenementen.",
+    "noPastEvents": "Nog geen eerdere evenementen.",
+    "upcoming": "Aanstaande",
+    "past": "Verleden",
     "starts": "Begint",
     "addAllToCalendar": "Alles toevoegen aan de kalender",
     "addToCalendar": "Voeg toe aan agenda",
@@ -92,11 +104,7 @@
     "startTime": "Aanvangstijd:",
     "signupCloses": "Aanmelding sluit:",
     "slotsLabel": "Slots:",
-    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk",
-    "noEvents": "Geen aankomende evenementen.",
-    "noPastEvents": "Nog geen eerdere evenementen.",
-    "upcoming": "Aanstaande",
-    "past": "Verleden"
+    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk"
   },
   "eventCard": {
     "deleted": "Verwijderd",
@@ -421,6 +429,14 @@
       "dmHelp": "Wanneer deze functie is ingeschakeld, stuurt de bot je een privébericht wanneer iemand je uitdaagt, je voorstel accepteert of afwijst, een duel annuleert of een uitslag bekendmaakt. Schakel deze functie uit om alle privéberichten over duels op Discord te stoppen. Je ziet alles nog steeds op de website.",
       "dmHelpUnlinked": "Meld je minstens één keer aan bij Discord om directe berichten over duels te kunnen versturen. (Log uit en meld je vervolgens weer aan bij Discord.)"
     },
+    "discord": {
+      "heading": "Directe berichten via Discord",
+      "reachableTitle": "Discord-gebruikers-ID opgeslagen",
+      "reachableBody": "De bot kan je via DM berichten sturen over duels. Je kunt je ID hieronder bijwerken of verwijderen.",
+      "unreachableBody": "Plak hieronder je Discord-gebruikers-ID zodat de bot je via DM op de hoogte kan houden van dueluitdagingen, acceptaties, afwijzingen en uitslagen. Zonder je ID zie je alles nog steeds op de website, maar ontvang je geen meldingen van Discord.",
+      "idLabel": "Discord-gebruikers-ID",
+      "idHelp": "Schakel in Discord de ontwikkelaarsmodus in (Gebruikersinstellingen → Geavanceerd), klik vervolgens met de rechtermuisknop op je eigen profiel en kies 'Gebruikers-ID kopiëren'. Dit is een nummer van 17 tot 20 cijfers. We verifiëren het eigenaarschap niet. Als je ooit een ongewenst privébericht van de bot ontvangt, schakel dan 'Directe berichten van serverleden toestaan' uit in je privacyinstellingen van Discord."
+    },
     "guildMembership": "Gildelidmaatschap",
     "youreInGuild": "Jij bent een {role} van {guildName} .",
     "leaveExplanation": "Als je deze gilde verlaat, word je uitgesloten van de evenementen en worden je eerdere aanmeldingen (die bewaard blijven voor de aanwezigheidsrapporten van de gilde) tijdelijk verwijderd.",
@@ -433,15 +449,7 @@
     "deleteButton": "Mijn account verwijderen",
     "deleting": "Verwijderen…",
     "deleteConfirm": "Wil je je account verwijderen? Dan word je uit je gilde verwijderd, worden al je aanmeldingen gewist en wordt de koppeling met Google/Discord verbroken. Dit kan niet ongedaan worden gemaakt.",
-    "language": "Taal",
-    "discord": {
-      "heading": "Directe berichten via Discord",
-      "reachableTitle": "Discord-gebruikers-ID opgeslagen",
-      "reachableBody": "De bot kan je via DM berichten sturen over duels. Je kunt je ID hieronder bijwerken of verwijderen.",
-      "unreachableBody": "Plak hieronder je Discord-gebruikers-ID zodat de bot je via DM op de hoogte kan houden van dueluitdagingen, acceptaties, afwijzingen en uitslagen. Zonder je ID zie je alles nog steeds op de website, maar ontvang je geen meldingen van Discord.",
-      "idLabel": "Discord-gebruikers-ID",
-      "idHelp": "Schakel in Discord de ontwikkelaarsmodus in (Gebruikersinstellingen → Geavanceerd), klik vervolgens met de rechtermuisknop op je eigen profiel en kies 'Gebruikers-ID kopiëren'. Dit is een nummer van 17 tot 20 cijfers. We verifiëren het eigenaarschap niet. Als je ooit een ongewenst privébericht van de bot ontvangt, schakel dan 'Directe berichten van serverleden toestaan' uit in je privacyinstellingen van Discord."
-    }
+    "language": "Taal"
   },
   "errors": {
     "forbidden": "Verboden",
@@ -549,9 +557,9 @@
     "inviteBot": {
       "intro": "Herinneringen en slash-commando's zijn afhankelijk van een Discord-bot die de beheerder al heeft geïmplementeerd. Om deze te koppelen aan je Discord-server:",
       "step1Intro": "Vraag de installatie-URL aan uw websitebeheerder. Deze ziet er als volgt uit:",
+      "step1Note": "Het gedeelte permissions=133120 heeft betrekking op Slash Commands, Send Messages en Mention Everyone. Beide zijn vereist; zonder Mention Everyone wordt @everyone in herinneringen als platte tekst weergegeven en wordt niemand getagd.",
       "step2": "Open de installatie-URL in een browser. Kies de Discord-server waar je de bot wilt installeren. Je hebt de machtiging 'Server beheren' nodig voor die server. Klik op 'Autoriseren'.",
-      "step3": "Controleer of de bot in de ledenlijst van je Discord-server verschijnt. Dat is alles — er is geen configuratie per bot nodig aan de Discord-kant.",
-      "step1Note": "Het gedeelte permissions=2147616768 heeft betrekking op Slash Commands, Send Messages en Mention Everyone. Beide zijn vereist; zonder Mention Everyone wordt @everyone in herinneringen als platte tekst weergegeven en wordt niemand getagd."
+      "step3": "Controleer of de bot in de ledenlijst van je Discord-server verschijnt. Dat is alles — er is geen configuratie per bot nodig aan de Discord-kant."
     },
     "discordChannel": {
       "intro": "De bot plaatst herinneringen in een kanaal naar keuze. Om dit te configureren:",
@@ -654,8 +662,8 @@
     "footer": {
       "builtWith": "Ontwikkeld met Next.js, Drizzle, Auth.js en de Discord API. Gratis en open source.",
       "viewSource": "Bekijk de broncode op GitHub",
-      "help": "Hulp",
-      "discordSupport": "Discord-ondersteuning"
+      "discordSupport": "Discord-ondersteuning",
+      "help": "Hulp"
     }
   },
   "playerHelp": {
@@ -726,13 +734,5 @@
       "slashCommands": "Discord slash-commando's: /upcoming toont een lijst met aankomende evenementen van je gilde, en met /signup kun je je aanmelden zonder Discord te verlaten. Je moet je wel eerst minstens één keer aanmelden op de website met Discord, zodat de bot je account kan koppelen."
     },
     "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
-  },
-  "alerts": {
-    "heading": "{count, plural, one {# notification} andere {# notifications} }",
-    "discord_unlinked": {
-      "title": "Link naar Discord om privéberichten tussen twee spelers mogelijk te maken.",
-      "body": "Je hebt je aangemeld met Google. Koppel een Discord-account zodat de bot je een privébericht kan sturen als iemand je uitdaagt voor een duel.",
-      "action": "Link naar Discord →"
-    }
   }
 }
