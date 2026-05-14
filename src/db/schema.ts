@@ -68,6 +68,14 @@ export const users = sqliteTable("users", {
   duelDmEnabled: integer("duel_dm_enabled", { mode: "boolean" })
     .notNull()
     .default(true),
+  // When true (default), the bot DMs the user ~10 min before each squad
+  // start in a match they're assigned to with a clickable voice-channel
+  // join link. Per-user opt-out for players who find the personal ping
+  // intrusive — toggled from /me on the website or via /settings in
+  // Discord. The broader T-20 @everyone channel post is unaffected.
+  voiceDmEnabled: integer("voice_dm_enabled", { mode: "boolean" })
+    .notNull()
+    .default(true),
   // ELO-style PvP rating. Starts at 1000, mutated only on confirmed duel
   // results. Separate from powerTier — measures on-platform performance,
   // not character strength.
@@ -155,6 +163,12 @@ export const guilds = sqliteTable("guilds", {
   // (or when the admin clicks "Test integration"). Used to map slash-command
   // interactions back to the app guild.
   discordGuildId: text("discord_guild_id"),
+  // Optional per-squad voice channel IDs. When both are set, the bot DMs every
+  // signed-up + assigned squadmate ~10 min before that squad's start time with
+  // a clickable join link. Match events only. Either column nullable —
+  // unconfigured = no voice-DM reminder for that squad.
+  squad1VoiceChannelId: text("squad1_voice_channel_id"),
+  squad2VoiceChannelId: text("squad2_voice_channel_id"),
   // Game-server number (1001-9999). Optional; surfaced for ops display only.
   serverNumber: integer("server_number"),
   // Short 2-4 character guild tag. When set, prepended to every member's
@@ -345,7 +359,13 @@ export const eventNotifications = sqliteTable(
       .notNull()
       .references(() => events.id, { onDelete: "cascade" }),
     squad: integer("squad").notNull(),
-    kind: text("kind", { enum: ["day", "hour", "twenty_min"] }).notNull(),
+    // "voice_dm" is a separate reminder kind that fires ~10 min before a
+    // squad's start: instead of a channel post, the bot DMs each assigned
+    // squadmate a clickable voice-channel link. Stored on the same table so
+    // (eventId, squad, kind) gives us one idempotency row per squad-kind.
+    kind: text("kind", {
+      enum: ["day", "hour", "twenty_min", "voice_dm"],
+    }).notNull(),
     sentAt: text("sent_at").notNull(),
   },
   (t) => ({

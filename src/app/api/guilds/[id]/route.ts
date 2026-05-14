@@ -23,15 +23,21 @@ export async function PATCH(
     updates.description = body.description ? String(body.description).trim() : null;
   }
   if (typeof body.isPublic === "boolean") updates.isPublic = body.isPublic;
-  if ("discordChannelId" in body) {
-    const raw = body.discordChannelId;
+  const channelFields = [
+    { key: "discordChannelId", label: "Discord channel ID" },
+    { key: "squad1VoiceChannelId", label: "Squad 1 voice channel ID" },
+    { key: "squad2VoiceChannelId", label: "Squad 2 voice channel ID" },
+  ] as const;
+  for (const f of channelFields) {
+    if (!(f.key in body)) continue;
+    const raw = (body as Record<string, unknown>)[f.key];
     if (raw === null || raw === "") {
-      updates.discordChannelId = null;
+      updates[f.key] = null;
     } else if (typeof raw === "string" && /^\d{17,20}$/.test(raw.trim())) {
-      updates.discordChannelId = raw.trim();
+      updates[f.key] = raw.trim();
     } else {
       return NextResponse.json(
-        { error: "Invalid Discord channel ID (expected a 17-20 digit number)" },
+        { error: `Invalid ${f.label} (expected a 17-20 digit number)` },
         { status: 400 }
       );
     }

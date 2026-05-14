@@ -13,10 +13,11 @@ import {
 } from "discord.js";
 import { randomBytes } from "node:crypto";
 import { db } from "@/db";
-import { accounts, events, guildInvites, guilds, users } from "@/db/schema";
+import { accounts, events, guildInvites, guilds, signups, users } from "@/db/schema";
 import { and, eq, gt, inArray, isNull, or, sql } from "drizzle-orm";
 import {
   buildMessage,
+  buildVoiceDmMessage,
   findPending,
   recordSent,
   type NotificationTarget,
@@ -26,6 +27,7 @@ import {
   recordSentDuel,
 } from "@/lib/duel-notifications";
 import { createSignup } from "@/lib/signups";
+import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
 // 5-minute poll cadence — small enough to never miss a notification window
 // (smallest window is 25 min wide), large enough that DB pressure is trivial.
@@ -72,6 +74,34 @@ function getState(): BotState {
   return g[STATE_KEY]!;
 }
 
+// Per-user boolean preferences exposed by /settings. Adding a new toggle is
+// (a) a new entry here, (b) a new column on the users table, (c) the
+// downstream code reading it. The slash command registration and the
+// view/set handlers are driven by this list.
+type BoolSettingKey = "voiceDmEnabled";
+
+type BoolSetting = {
+  // /settings <subcommand> — lowercase, underscore-separated.
+  subcommand: string;
+  // Human label rendered in /settings view.
+  label: string;
+  // users-table column name (Drizzle property).
+  key: BoolSettingKey;
+  // One-line description for command registration. Discord shows this in
+  // the autocomplete / help UI.
+  description: string;
+};
+
+const BOOL_SETTINGS: readonly BoolSetting[] = [
+  {
+    subcommand: "voice_invites",
+    label: "Voice channel invites for matches",
+    key: "voiceDmEnabled",
+    description:
+      "Receive a DM ~10 min before each match with a join link to your squad's voice channel",
+  },
+];
+
 const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
   {
     name: "upcoming",
@@ -106,6 +136,31 @@ const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
         type: ApplicationCommandOptionType.Boolean,
         required: false,
       },
+    ],
+  },
+  {
+    name: "settings",
+    description: "View or change your notification preferences",
+    type: ApplicationCommandType.ChatInput,
+    options: [
+      {
+        name: "view",
+        description: "Show your current notification preferences",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      ...BOOL_SETTINGS.map((s) => ({
+        name: s.subcommand,
+        description: s.description,
+        type: ApplicationCommandOptionType.Subcommand as const,
+        options: [
+          {
+            name: "enabled",
+            description: "true = receive; false = mute",
+            type: ApplicationCommandOptionType.Boolean as const,
+            required: true,
+          },
+        ],
+      })),
     ],
   },
 ];
@@ -269,6 +324,22 @@ async function runOnce(): Promise<PollMetrics> {
   let failed = 0;
   for (const p of pending) {
     if (!recordSent(p.eventId, p.squadNumber, p.kind)) continue;
+    if (p.kind === "voice_dm") {
+      try {
+        const outcome = await dispatchVoiceDms(p);
+        sent++;
+        console.log(
+          `[bot] voice_dm event=${p.eventId} squad=${p.squadNumber} assigned=${outcome.assigned} dmEligible=${outcome.eligible} dmSent=${outcome.dmSent} dmFailed=${outcome.dmFailed}`
+        );
+      } catch (err) {
+        failed++;
+        console.error(
+          `[bot] voice_dm dispatch failed event=${p.eventId} squad=${p.squadNumber}:`,
+          err
+        );
+      }
+      continue;
+    }
     try {
       const channel = await client.channels.fetch(p.channelId);
       await persistDiscordGuildIdIfNeeded(p.guildId, channel);
@@ -505,6 +576,53 @@ export async function sendTestMessage(
   return { ok: true, link };
 }
 
+// ---- Voice-DM test (admin-triggered from Guild Settings) ----
+
+export type VoiceTestResult =
+  | { ok: true; discordUserId: string }
+  | { ok: false; reason: string };
+
+// Sends a one-off DM to the caller (the admin clicking "Test DM" in Guild
+// Settings) containing a clickable join link to the supplied voice channel.
+// Two-purpose: verifies (a) the channel ID renders to something joinable and
+// (b) the bot can DM this admin (= they have a linked Discord account and
+// haven't blocked DMs from server members). Both are preconditions for the
+// production voice_dm reminder, so a successful test means the real reminder
+// will at least reach this admin.
+export async function sendVoiceTestDm(args: {
+  adminUserId: string;
+  channelId: string;
+  squadLabel: string;
+}): Promise<VoiceTestResult> {
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
+  if (!token) {
+    return {
+      ok: false,
+      reason: "The Discord bot isn't running on this server (DISCORD_BOT_TOKEN not set).",
+    };
+  }
+
+  const discordUserId = await resolveDiscordUserId(args.adminUserId);
+  if (!discordUserId) {
+    return {
+      ok: false,
+      reason:
+        "You don't have a Discord account linked. Sign in with Discord on the website (or enter your Discord user ID on the /me page), then try again.",
+    };
+  }
+
+  const content = `Test voice DM from **Foundation Event Organizer** — **${args.squadLabel}**. Click to join: <#${args.channelId}>`;
+  const ok = await sendDirectMessage(token, discordUserId, content);
+  if (!ok) {
+    return {
+      ok: false,
+      reason:
+        "Discord refused to deliver the DM. Common causes: you haven't joined the Discord server with the bot, or you've disabled DMs from server members (User Settings → Privacy & Safety).",
+    };
+  }
+  return { ok: true, discordUserId };
+}
+
 // ---- Scrim lifecycle notifications ----
 
 export type ScrimNotifyAction =
@@ -709,6 +827,65 @@ async function sendDirectMessage(
     console.warn(`[bot] DM fetch threw user=${discordUserId}:`, err);
     return false;
   }
+}
+
+// Sends per-user voice-channel DMs for one squad of one match event. Called
+// from runOnce after the (eventId, squad, "voice_dm") idempotency row is
+// reserved — that reservation is one-shot, so a transient Discord outage
+// will not retry. Failures are per-user and only logged; the broader poll
+// loop is unaffected.
+//
+// Skips silently when:
+//   - No one is assigned to the squad yet (admin hasn't run squad assignment).
+//   - A signed-up user has no linked Discord account (DM target unknown).
+//   - DISCORD_BOT_TOKEN isn't configured on this machine.
+async function dispatchVoiceDms(p: NotificationTarget): Promise<{
+  assigned: number;
+  eligible: number;
+  dmSent: number;
+  dmFailed: number;
+}> {
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
+  if (!token || !p.voiceChannelId) {
+    return { assigned: 0, eligible: 0, dmSent: 0, dmFailed: 0 };
+  }
+
+  // Join users so we can respect the per-user voiceDmEnabled opt-out
+  // without an extra round-trip per signup. We still count the full
+  // assigned squad in metrics so admins can spot "everyone opted out"
+  // separately from "no one assigned yet".
+  const rows = await db
+    .select({
+      userId: signups.userId,
+      voiceDmEnabled: users.voiceDmEnabled,
+    })
+    .from(signups)
+    .innerJoin(users, eq(users.id, signups.userId))
+    .where(
+      and(
+        eq(signups.eventId, p.eventId),
+        eq(signups.assignedSquad, p.squadNumber),
+        isNull(signups.deletedAt)
+      )
+    );
+
+  const assigned = rows.length;
+  const content = buildVoiceDmMessage(p);
+  let eligible = 0;
+  let dmSent = 0;
+  let dmFailed = 0;
+
+  for (const r of rows) {
+    if (!r.voiceDmEnabled) continue; // opted out — silent skip
+    const discordUserId = await resolveDiscordUserId(r.userId);
+    if (!discordUserId) continue; // not Discord-linked — silent skip
+    eligible++;
+    const ok = await sendDirectMessage(token, discordUserId, content);
+    if (ok) dmSent++;
+    else dmFailed++;
+  }
+
+  return { assigned, eligible, dmSent, dmFailed };
 }
 
 // Looks up the Discord user ID for an app user. Prefers users.discord_user_id
@@ -1236,6 +1413,8 @@ async function handleChatCommand(
       await handleUpcoming(interaction);
     } else if (cmd === "signup") {
       await handleSignup(interaction);
+    } else if (cmd === "settings") {
+      await handleSettings(interaction);
     }
     console.log(
       `[bot] command ${cmd} done user=${userId} in ${Date.now() - startMs}ms`
@@ -1425,6 +1604,88 @@ async function handleSignup(
       ? "You're on the waitlist — squads were full when you signed up. You'll be promoted automatically if a slot opens."
       : "You're signed up. See you on the field."
   );
+}
+
+// Driven by the BOOL_SETTINGS registry — adding a new toggle there auto-
+// extends both the command registration and the view/set flow here. The
+// caller is authenticated by Discord (interaction.user.id is signed) and
+// resolved to an app user via the OAuth-linked accounts table only, so
+// someone who manually entered another user's Discord ID on /me can't
+// invoke /settings as that user.
+async function handleSettings(
+  interaction: ChatInputCommandInteraction
+): Promise<void> {
+  const appUser = await resolveAppUserFromDiscord(interaction.user.id);
+  if (!appUser) {
+    await interaction.editReply(
+      "Your Discord account isn't linked to the website yet. Sign in to the website with Discord first, then try `/settings` again."
+    );
+    return;
+  }
+
+  const sub = interaction.options.getSubcommand(true);
+  if (sub === "view") {
+    await handleSettingsView(interaction, appUser.id);
+    return;
+  }
+
+  const setting = BOOL_SETTINGS.find((s) => s.subcommand === sub);
+  if (!setting) {
+    await interaction.editReply("Unknown setting.");
+    return;
+  }
+
+  const enabled = interaction.options.getBoolean("enabled", true);
+  const before = await db.query.users.findFirst({
+    where: eq(users.id, appUser.id),
+    columns: { guildId: true, voiceDmEnabled: true },
+  });
+
+  await db
+    .update(users)
+    .set({ [setting.key]: enabled })
+    .where(eq(users.id, appUser.id));
+
+  await interaction.editReply(
+    `**${setting.label}** is now **${enabled ? "ON" : "OFF"}**.`
+  );
+
+  // Audit log for parity with the website /api/me path — preference flips
+  // are user-level, so guildId is best-effort (their current guild if any).
+  void logAudit({
+    guildId: before?.guildId ?? null,
+    actorUserId: appUser.id,
+    actorDisplay: await resolveActorDisplay(appUser.id),
+    action: "user.update",
+    entityType: "user",
+    entityId: appUser.id,
+    entityLabel: appUser.id,
+    changes: {
+      before: { [setting.key]: (before as Record<string, unknown> | undefined)?.[setting.key] },
+      after: { [setting.key]: enabled },
+    },
+  });
+}
+
+async function handleSettingsView(
+  interaction: ChatInputCommandInteraction,
+  appUserId: string
+): Promise<void> {
+  const row = await db.query.users.findFirst({
+    where: eq(users.id, appUserId),
+    columns: { voiceDmEnabled: true },
+  });
+  if (!row) {
+    await interaction.editReply("Couldn't load your settings.");
+    return;
+  }
+  const lines = ["**Your notification preferences**"];
+  for (const s of BOOL_SETTINGS) {
+    const v = (row as Record<string, unknown>)[s.key] as boolean | undefined;
+    lines.push(`• ${s.label}: **${v ? "ON" : "OFF"}**`);
+  }
+  lines.push("", "Use `/settings <name> enabled:true` or `false` to change a setting.");
+  await interaction.editReply(lines.join("\n"));
 }
 
 // ---- Helpers ----

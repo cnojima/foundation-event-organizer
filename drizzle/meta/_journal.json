@@ -50,6 +50,20 @@
       "when": 1778789513592,
       "tag": "0006_audit_log_guild_set_null",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1778790482374,
+      "tag": "0007_voice_dm_reminders",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1778793518086,
+      "tag": "0008_add_voice_dm_enabled",
+      "breakpoints": true
     }
   ]
 }

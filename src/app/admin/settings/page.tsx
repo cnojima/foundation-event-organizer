@@ -55,6 +55,8 @@ export default async function GuildSettingsPage({
         <DiscordSettingsForm
           guildId={guild.id}
           defaultDiscordChannelId={guild.discordChannelId ?? ""}
+          defaultSquad1VoiceChannelId={guild.squad1VoiceChannelId ?? ""}
+          defaultSquad2VoiceChannelId={guild.squad2VoiceChannelId ?? ""}
         />
       </div>
 

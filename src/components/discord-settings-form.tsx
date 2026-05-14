@@ -17,15 +17,51 @@ const BOT_INVITE_URL =
 export function DiscordSettingsForm({
   guildId,
   defaultDiscordChannelId,
+  defaultSquad1VoiceChannelId,
+  defaultSquad2VoiceChannelId,
 }: {
   guildId: string;
   defaultDiscordChannelId: string;
+  defaultSquad1VoiceChannelId: string;
+  defaultSquad2VoiceChannelId: string;
 }) {
   const router = useRouter();
   const [channelId, setChannelId] = useState(defaultDiscordChannelId);
+  const [squad1VoiceId, setSquad1VoiceId] = useState(defaultSquad1VoiceChannelId);
+  const [squad2VoiceId, setSquad2VoiceId] = useState(defaultSquad2VoiceChannelId);
   const [submitting, setSubmitting] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  type VoiceTestState =
+    | { status: "idle" }
+    | { status: "testing" }
+    | { status: "ok" }
+    | { status: "error"; reason: string };
+  const [voice1Test, setVoice1Test] = useState<VoiceTestState>({ status: "idle" });
+  const [voice2Test, setVoice2Test] = useState<VoiceTestState>({ status: "idle" });
+
+  async function handleVoiceTest(
+    squadNumber: 1 | 2,
+    value: string,
+    set: (s: VoiceTestState) => void
+  ) {
+    set({ status: "testing" });
+    const res = await fetch(`/api/guilds/${guildId}/discord/voice-test`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        channelId: value.trim(),
+        squadLabel: `Squad ${squadNumber}`,
+      }),
+    });
+    if (res.ok) {
+      set({ status: "ok" });
+    } else {
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      set({ status: "error", reason: data.error ?? "Test failed." });
+    }
+  }
 
   const [testing, setTesting] = useState(false);
   type LinkResult =
@@ -46,6 +82,8 @@ export function DiscordSettingsForm({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         discordChannelId: channelId.trim() || null,
+        squad1VoiceChannelId: squad1VoiceId.trim() || null,
+        squad2VoiceChannelId: squad2VoiceId.trim() || null,
       }),
     });
     if (res.ok) {
@@ -164,6 +202,33 @@ export function DiscordSettingsForm({
         )}
       </div>
 
+      <div className="space-y-3 rounded-md border border-gray-200 bg-gray-50/60 p-3 dark:border-gray-800 dark:bg-gray-900/40">
+        <div>
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
+            Squad voice channels <span className="font-normal text-gray-500 dark:text-gray-400">(match events only)</span>
+          </h3>
+          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+            Optional. When set, the bot DMs each assigned squadmate ~10
+            minutes before kickoff with a clickable join link. Only users who
+            have signed in with Discord will receive a DM. Click <strong>Test DM</strong> to send yourself a sample join link — verifies the channel ID and your own DM deliverability.
+          </p>
+        </div>
+        <VoiceChannelRow
+          squadNumber={1}
+          value={squad1VoiceId}
+          onChange={setSquad1VoiceId}
+          testState={voice1Test}
+          onTest={() => handleVoiceTest(1, squad1VoiceId, setVoice1Test)}
+        />
+        <VoiceChannelRow
+          squadNumber={2}
+          value={squad2VoiceId}
+          onChange={setSquad2VoiceId}
+          testState={voice2Test}
+          onTest={() => handleVoiceTest(2, squad2VoiceId, setVoice2Test)}
+        />
+      </div>
+
       {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
       <div className="flex items-center gap-3">
         <button
@@ -171,11 +236,64 @@ export function DiscordSettingsForm({
           disabled={submitting}
           className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
         >
-          {submitting ? "Saving..." : "Save channel"}
+          {submitting ? "Saving..." : "Save Discord settings"}
         </button>
         {savedAt && <span className="text-xs text-emerald-600 dark:text-emerald-300">Saved.</span>}
       </div>
     </form>
+  );
+}
+
+function VoiceChannelRow({
+  squadNumber,
+  value,
+  onChange,
+  testState,
+  onTest,
+}: {
+  squadNumber: 1 | 2;
+  value: string;
+  onChange: (v: string) => void;
+  testState:
+    | { status: "idle" }
+    | { status: "testing" }
+    | { status: "ok" }
+    | { status: "error"; reason: string };
+  onTest: () => void;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">
+        Squad {squadNumber} voice channel ID
+      </label>
+      <div className="flex items-center gap-2">
+        <input
+          name={`squad${squadNumber}VoiceChannelId`}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder="e.g. 123456789012345678"
+          className="flex-1 border rounded px-3 py-2 font-mono text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
+        />
+        <button
+          type="button"
+          onClick={onTest}
+          disabled={testState.status === "testing" || !value.trim()}
+          className="rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 disabled:opacity-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
+        >
+          {testState.status === "testing" ? "Sending..." : "Test DM"}
+        </button>
+      </div>
+      {testState.status === "ok" && (
+        <p className="mt-1 text-sm text-emerald-700 dark:text-emerald-300">
+          Test DM sent — check your Discord direct messages from the bot.
+        </p>
+      )}
+      {testState.status === "error" && (
+        <p className="mt-1 text-sm text-red-600 dark:text-red-300">
+          {testState.reason}
+        </p>
+      )}
+    </div>
   );
 }
 

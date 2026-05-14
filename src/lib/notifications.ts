@@ -2,23 +2,31 @@ import { db } from "@/db";
 import { events, eventNotifications, guilds } from "@/db/schema";
 import { and, eq, gt, inArray, isNotNull, isNull, lte, or } from "drizzle-orm";
 
-export type NotificationKind = "day" | "hour" | "twenty_min";
+export type NotificationKind = "day" | "hour" | "twenty_min" | "voice_dm";
 
-// Window upper-bounds (ms before startsAt). The poll picks the *smallest*
-// kind that still fits — so an event 10 min away is reported as "twenty_min"
-// not "hour". Generous upper bounds let us catch events even after a missed
-// tick (e.g. bot was offline through the exact 24h mark).
-const WINDOW_MS: Record<NotificationKind, number> = {
+// "Chat" kinds post into the guild's text channel; the poller picks the
+// *smallest* fitting chat kind per cycle (so T-10 reports "twenty_min", not
+// "hour"). "voice_dm" is independent — see findPending(): a single squad at
+// T-10 can emit both a twenty_min channel post AND a voice_dm at the same
+// time, gated by separate idempotency rows.
+type ChatKind = Exclude<NotificationKind, "voice_dm">;
+
+const CHAT_WINDOW_MS: Record<ChatKind, number> = {
   twenty_min: 25 * 60 * 1000,
   hour: 75 * 60 * 1000,
   day: 25 * 60 * 60 * 1000,
 };
+// Voice DMs aim for T-10; we accept anywhere in [0, 15] min so a missed poll
+// (bot restart) still fires the reminder before kickoff rather than dropping
+// it. Window is intentionally narrow — the T-20 channel post already gave
+// broad notice; this one is a last-minute personal nudge.
+const VOICE_DM_WINDOW_MS = 15 * 60 * 1000;
 
-export function pickKind(msUntilStart: number): NotificationKind | null {
+export function pickKind(msUntilStart: number): ChatKind | null {
   if (msUntilStart <= 0) return null;
-  if (msUntilStart <= WINDOW_MS.twenty_min) return "twenty_min";
-  if (msUntilStart <= WINDOW_MS.hour) return "hour";
-  if (msUntilStart <= WINDOW_MS.day) return "day";
+  if (msUntilStart <= CHAT_WINDOW_MS.twenty_min) return "twenty_min";
+  if (msUntilStart <= CHAT_WINDOW_MS.hour) return "hour";
+  if (msUntilStart <= CHAT_WINDOW_MS.day) return "day";
   return null;
 }
 
@@ -34,7 +42,10 @@ export function formatTimeUntil(msUntilStart: number): string {
 }
 
 // One reminder we owe Discord. Match events emit one target per squad; simple
-// events emit a single target with squadNumber=0 / squadLabel=null.
+// events emit a single target with squadNumber=0 / squadLabel=null. For
+// kind === "voice_dm", voiceChannelId is set (the per-squad VC the bot DMs
+// squadmates to join) and the bot dispatches per-user DMs instead of a
+// channel post. For all other kinds voiceChannelId is null.
 export type NotificationTarget = {
   eventId: string;
   eventName: string;
@@ -44,6 +55,7 @@ export type NotificationTarget = {
   guildId: string;
   channelId: string;
   kind: NotificationKind;
+  voiceChannelId: string | null;
 };
 
 type CandidateRow = {
@@ -57,10 +69,12 @@ type CandidateRow = {
   squad2Name: string;
   squad1StartsAt: string | null;
   squad2StartsAt: string | null;
+  squad1VoiceChannelId: string | null;
+  squad2VoiceChannelId: string | null;
 };
 
 export async function findPending(now = new Date()): Promise<NotificationTarget[]> {
-  const horizonIso = new Date(now.getTime() + WINDOW_MS.day).toISOString();
+  const horizonIso = new Date(now.getTime() + CHAT_WINDOW_MS.day).toISOString();
   const nowIso = now.toISOString();
 
   const rows: CandidateRow[] = await db
@@ -75,6 +89,8 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
       squad2Name: events.squad2Name,
       squad1StartsAt: events.squad1StartsAt,
       squad2StartsAt: events.squad2StartsAt,
+      squad1VoiceChannelId: guilds.squad1VoiceChannelId,
+      squad2VoiceChannelId: guilds.squad2VoiceChannelId,
     })
     .from(events)
     .innerJoin(guilds, eq(events.guildId, guilds.id))
@@ -141,31 +157,71 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
   for (const row of rows) {
     if (!row.channelId) continue;
 
-    const candidates: { squadNumber: 0 | 1 | 2; squadLabel: string | null; startsAt: string | null }[] =
+    const candidates: {
+      squadNumber: 0 | 1 | 2;
+      squadLabel: string | null;
+      startsAt: string | null;
+      voiceChannelId: string | null;
+    }[] =
       row.kind === "match"
         ? [
-            { squadNumber: 1, squadLabel: row.squad1Name, startsAt: row.squad1StartsAt },
-            { squadNumber: 2, squadLabel: row.squad2Name, startsAt: row.squad2StartsAt },
+            {
+              squadNumber: 1,
+              squadLabel: row.squad1Name,
+              startsAt: row.squad1StartsAt,
+              voiceChannelId: row.squad1VoiceChannelId,
+            },
+            {
+              squadNumber: 2,
+              squadLabel: row.squad2Name,
+              startsAt: row.squad2StartsAt,
+              voiceChannelId: row.squad2VoiceChannelId,
+            },
           ]
         : // simple & scrim share one start time and one announcement.
-          [{ squadNumber: 0, squadLabel: null, startsAt: row.gameTime }];
+          [{ squadNumber: 0, squadLabel: null, startsAt: row.gameTime, voiceChannelId: null }];
 
     for (const c of candidates) {
       if (!c.startsAt) continue;
       const ms = new Date(c.startsAt).getTime() - now.getTime();
-      const kind = pickKind(ms);
-      if (!kind) continue;
-      if (alreadySent(row.eventId, c.squadNumber, kind)) continue;
-      targets.push({
-        eventId: row.eventId,
-        eventName: row.eventName,
-        squadNumber: c.squadNumber,
-        squadLabel: c.squadLabel,
-        startsAt: c.startsAt,
-        guildId: row.guildId,
-        channelId: row.channelId,
-        kind,
-      });
+
+      const chatKind = pickKind(ms);
+      if (chatKind && !alreadySent(row.eventId, c.squadNumber, chatKind)) {
+        targets.push({
+          eventId: row.eventId,
+          eventName: row.eventName,
+          squadNumber: c.squadNumber,
+          squadLabel: c.squadLabel,
+          startsAt: c.startsAt,
+          guildId: row.guildId,
+          channelId: row.channelId,
+          kind: chatKind,
+          voiceChannelId: null,
+        });
+      }
+
+      // Voice DM: match events only, voice channel must be configured, and the
+      // start must fall inside the [0, 15] min window. Independent of the
+      // chat kind — both can fire on the same poll tick.
+      if (
+        row.kind === "match" &&
+        c.voiceChannelId &&
+        ms > 0 &&
+        ms <= VOICE_DM_WINDOW_MS &&
+        !alreadySent(row.eventId, c.squadNumber, "voice_dm")
+      ) {
+        targets.push({
+          eventId: row.eventId,
+          eventName: row.eventName,
+          squadNumber: c.squadNumber,
+          squadLabel: c.squadLabel,
+          startsAt: c.startsAt,
+          guildId: row.guildId,
+          channelId: row.channelId,
+          kind: "voice_dm",
+          voiceChannelId: c.voiceChannelId,
+        });
+      }
     }
   }
   return targets;
@@ -213,4 +269,24 @@ export function buildMessage(t: NotificationTarget, now = new Date()): string {
     ? `${t.eventName} — ${t.squadLabel}`
     : t.eventName;
   return `@everyone **${subject}** ${when}.`;
+}
+
+// Per-user DM body for the voice_dm reminder. `<#channelId>` renders as a
+// clickable join link in Discord. Plain text — no embeds — to match the rest
+// of the bot's voice. The trailing hint surfaces the opt-out path so this
+// DM is never a dead-end for players who find it intrusive.
+export function buildVoiceDmMessage(
+  t: NotificationTarget,
+  now = new Date()
+): string {
+  const ms = new Date(t.startsAt).getTime() - now.getTime();
+  const when = formatTimeUntil(ms);
+  const subject = t.squadLabel
+    ? `${t.eventName} — ${t.squadLabel}`
+    : t.eventName;
+  const link = t.voiceChannelId ? `<#${t.voiceChannelId}>` : "";
+  return [
+    `**${subject}** ${when}. Join the squad voice channel: ${link}`,
+    "_To disable future voice invites, use `/settings voice_invites enabled:false` in Discord._",
+  ].join("\n");
 }

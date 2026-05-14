@@ -116,6 +116,16 @@ export async function PATCH(req: Request) {
     updates.duelDmEnabled = body.duelDmEnabled;
   }
 
+  if ("voiceDmEnabled" in body) {
+    if (typeof body.voiceDmEnabled !== "boolean") {
+      return NextResponse.json(
+        { error: "voiceDmEnabled must be a boolean" },
+        { status: 400 }
+      );
+    }
+    updates.voiceDmEnabled = body.voiceDmEnabled;
+  }
+
   if ("discordUserId" in body) {
     const raw = body.discordUserId;
     if (raw === null || raw === "") {
