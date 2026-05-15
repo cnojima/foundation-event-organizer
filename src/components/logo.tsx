@@ -30,10 +30,10 @@ export function Logo({
       <span className={`inline-flex items-center gap-3 ${className}`}>
         <LogoMark className="size-10 shrink-0" />
         <span className="flex flex-col leading-tight">
-          <span className="text-sm font-bold tracking-wider text-gray-900">
+          <span className="text-sm font-bold tracking-wider text-gray-900 dark:text-gray-100">
             RALLY UP
           </span>
-          <span className="text-[10px] font-medium tracking-[0.2em] text-gray-500">
+          <span className="text-[10px] font-medium tracking-[0.2em] text-gray-500 dark:text-gray-400">
             FOUNDATION GALACTIC FRONTIER
           </span>
         </span>

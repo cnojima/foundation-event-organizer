@@ -82,10 +82,18 @@ export default async function RootLayout({
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <div className="flex min-h-screen">
-              <Sidebar {...sidebarProps} />
+              {/* Signed-out visitors only see public pages (splash, help,
+                  tos, privacy) — the sidebar's nav targets all require auth,
+                  so it's noise on those routes. Suppress it (and the mobile
+                  nav drawer) when there's no session so the marketing flow
+                  gets a clean full-width canvas. */}
+              {session?.user && <Sidebar {...sidebarProps} />}
               <div className="flex min-w-0 flex-1 flex-col">
                 <AlphaBanner />
-                <TopBar leftSlot={<MobileNav {...sidebarProps} />} guildTag={guildTag} />
+                <TopBar
+                  leftSlot={session?.user ? <MobileNav {...sidebarProps} /> : null}
+                  guildTag={guildTag}
+                />
                 <main className="flex-1 px-4 py-6 sm:px-6">{children}</main>
                 <Footer user={feedbackUser} />
               </div>
