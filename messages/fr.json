@@ -803,6 +803,16 @@
     },
     "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Votre guilde",
+      "players": "Trouver des adversaires",
+      "leaderboard": "Classement des serveurs",
+      "members": "Liste des membres de la guilde",
+      "duels": "Vos duels",
+      "me": "Compte"
+    }
+  },
   "signin": {
     "kicker": "Connectez-vous à",
     "subtitle": "Connectez-vous avec Google ou Discord pour rejoindre votre guilde.",
@@ -883,16 +893,6 @@
       "ctaResult": "Voir à < {duelUrl} >",
       "ctaEdited": "Examinez et acceptez ou refusez à < {duelUrl} >",
       "ctaReminder": "Détails : < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Votre guilde",
-      "players": "Trouver des adversaires",
-      "leaderboard": "Classement des serveurs",
-      "members": "Liste des membres de la guilde",
-      "duels": "Vos duels",
-      "me": "Compte"
     }
   }
 }

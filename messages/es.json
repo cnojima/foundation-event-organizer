@@ -803,6 +803,16 @@
     },
     "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Tu gremio",
+      "players": "Encuentra oponentes",
+      "leaderboard": "Clasificación de servidores",
+      "members": "Lista de miembros del gremio",
+      "duels": "Tus duelos",
+      "me": "Cuenta"
+    }
+  },
   "signin": {
     "kicker": "Iniciar sesión en",
     "subtitle": "Inicia sesión con Google o Discord para unirte a tu gremio.",
@@ -883,16 +893,6 @@
       "ctaResult": "Véalo en < {duelUrl} >",
       "ctaEdited": "Revisa y acepta o rechaza en < {duelUrl} >",
       "ctaReminder": "Detalles: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Tu gremio",
-      "players": "Encuentra oponentes",
-      "leaderboard": "Clasificación de servidores",
-      "members": "Lista de miembros del gremio",
-      "duels": "Tus duelos",
-      "me": "Cuenta"
     }
   }
 }

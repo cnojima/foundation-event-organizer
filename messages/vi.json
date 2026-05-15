@@ -803,6 +803,16 @@
     },
     "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Hội của bạn",
+      "players": "Tìm đối thủ",
+      "leaderboard": "Xếp hạng máy chủ",
+      "members": "Danh sách bang hội",
+      "duels": "Các trận đấu của bạn",
+      "me": "Tài khoản"
+    }
+  },
   "signin": {
     "kicker": "Đăng nhập vào",
     "subtitle": "Đăng nhập bằng Google hoặc Discord để tham gia bang hội của bạn.",
@@ -883,16 +893,6 @@
       "ctaResult": "Xem tại < {duelUrl} >",
       "ctaEdited": "Xem xét và chấp nhận hoặc từ chối tại < {duelUrl} >",
       "ctaReminder": "Chi tiết: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Hội của bạn",
-      "players": "Tìm đối thủ",
-      "leaderboard": "Xếp hạng máy chủ",
-      "members": "Danh sách bang hội",
-      "duels": "Các trận đấu của bạn",
-      "me": "Tài khoản"
     }
   }
 }

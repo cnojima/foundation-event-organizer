@@ -803,6 +803,16 @@
     },
     "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Ditt gille",
+      "players": "Hitta motståndare",
+      "leaderboard": "Serverrankningar",
+      "members": "Gildets lista",
+      "duels": "Dina dueller",
+      "me": "Konto"
+    }
+  },
   "signin": {
     "kicker": "Logga in på",
     "subtitle": "Logga in med Google eller Discord för att gå med i din gille.",
@@ -883,16 +893,6 @@
       "ctaResult": "Se den på < {duelUrl} >",
       "ctaEdited": "Granska och acceptera eller avböj på < {duelUrl} >",
       "ctaReminder": "Detaljer: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Ditt gille",
-      "players": "Hitta motståndare",
-      "leaderboard": "Serverrankningar",
-      "members": "Gildets lista",
-      "duels": "Dina dueller",
-      "me": "Konto"
     }
   }
 }

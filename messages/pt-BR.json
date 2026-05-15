@@ -803,6 +803,16 @@
     },
     "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Sua guilda",
+      "players": "Encontre oponentes",
+      "leaderboard": "Classificação dos servidores",
+      "members": "Lista de membros da guilda",
+      "duels": "Seus duelos",
+      "me": "Conta"
+    }
+  },
   "signin": {
     "kicker": "Faça login em",
     "subtitle": "Faça login com sua conta do Google ou Discord para entrar na sua guilda.",
@@ -883,16 +893,6 @@
       "ctaResult": "Veja em < {duelUrl} >",
       "ctaEdited": "Analise e aceite ou recuse em < {duelUrl} >",
       "ctaReminder": "Detalhes: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Sua guilda",
-      "players": "Encontre oponentes",
-      "leaderboard": "Classificação dos servidores",
-      "members": "Lista de membros da guilda",
-      "duels": "Seus duelos",
-      "me": "Conta"
     }
   }
 }

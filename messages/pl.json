@@ -803,6 +803,16 @@
     },
     "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Twoja gildia",
+      "players": "Znajdź przeciwników",
+      "leaderboard": "Rankingi serwerów",
+      "members": "Skład gildii",
+      "duels": "Twoje pojedynki",
+      "me": "Konto"
+    }
+  },
   "signin": {
     "kicker": "Zaloguj się do",
     "subtitle": "Zaloguj się za pomocą konta Google lub Discord, aby dołączyć do gildii.",
@@ -883,16 +893,6 @@
       "ctaResult": "Zobacz na < {duelUrl} >",
       "ctaEdited": "Przejrzyj i zaakceptuj lub odrzuć na < {duelUrl} >",
       "ctaReminder": "Szczegóły: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Twoja gildia",
-      "players": "Znajdź przeciwników",
-      "leaderboard": "Rankingi serwerów",
-      "members": "Skład gildii",
-      "duels": "Twoje pojedynki",
-      "me": "Konto"
     }
   }
 }

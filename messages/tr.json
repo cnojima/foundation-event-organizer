@@ -803,6 +803,16 @@
     },
     "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Loncanız",
+      "players": "Rakipleri bulun",
+      "leaderboard": "Sunucu sıralamaları",
+      "members": "Lonca kadrosu",
+      "duels": "Sizin düellolarınız",
+      "me": "Hesap"
+    }
+  },
   "signin": {
     "kicker": "Giriş yap",
     "subtitle": "Loncanıza katılmak için Google veya Discord ile giriş yapın.",
@@ -883,16 +893,6 @@
       "ctaResult": "Şurada görebilirsiniz: < {duelUrl} >",
       "ctaEdited": "Şu adresten inceleyin ve kabul edin veya reddedin: < {duelUrl} >",
       "ctaReminder": "Ayrıntılar: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Loncanız",
-      "players": "Rakipleri bulun",
-      "leaderboard": "Sunucu sıralamaları",
-      "members": "Lonca kadrosu",
-      "duels": "Sizin düellolarınız",
-      "me": "Hesap"
     }
   }
 }

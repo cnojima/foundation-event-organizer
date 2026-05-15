@@ -803,6 +803,16 @@
     },
     "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Deine Gilde",
+      "players": "Finde Gegner",
+      "leaderboard": "Server-Rangliste",
+      "members": "Gildenliste",
+      "duels": "Deine Duelle",
+      "me": "Konto"
+    }
+  },
   "signin": {
     "kicker": "Anmelden",
     "subtitle": "Melde dich mit Google oder Discord an, um deiner Gilde beizutreten.",
@@ -883,16 +893,6 @@
       "ctaResult": "Siehe es unter < {duelUrl} >",
       "ctaEdited": "Prüfen und annehmen oder ablehnen unter < {duelUrl} >",
       "ctaReminder": "Details: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Deine Gilde",
-      "players": "Finde Gegner",
-      "leaderboard": "Server-Rangliste",
-      "members": "Gildenliste",
-      "duels": "Deine Duelle",
-      "me": "Konto"
     }
   }
 }

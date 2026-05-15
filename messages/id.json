@@ -803,6 +803,16 @@
     },
     "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Persekutuanmu",
+      "players": "Cari lawan",
+      "leaderboard": "Peringkat server",
+      "members": "Daftar anggota guild",
+      "duels": "Duel Anda",
+      "me": "Akun"
+    }
+  },
   "signin": {
     "kicker": "Masuk ke",
     "subtitle": "Masuk menggunakan Google atau Discord untuk bergabung dengan guild Anda.",
@@ -883,16 +893,6 @@
       "ctaResult": "Lihat di < {duelUrl} >",
       "ctaEdited": "Tinjau dan terima atau tolak di < {duelUrl} >",
       "ctaReminder": "Detail: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Persekutuanmu",
-      "players": "Cari lawan",
-      "leaderboard": "Peringkat server",
-      "members": "Daftar anggota guild",
-      "duels": "Duel Anda",
-      "me": "Akun"
     }
   }
 }

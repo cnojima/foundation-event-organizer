@@ -803,6 +803,16 @@
     },
     "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "La tua gilda",
+      "players": "Trova avversari",
+      "leaderboard": "Classifica dei server",
+      "members": "Elenco della gilda",
+      "duels": "I tuoi duelli",
+      "me": "Account"
+    }
+  },
   "signin": {
     "kicker": "Accedi",
     "subtitle": "Accedi con Google o Discord per unirti alla tua gilda.",
@@ -883,16 +893,6 @@
       "ctaResult": "Guardalo su < {duelUrl} >",
       "ctaEdited": "Esamina e accetta o rifiuta su < {duelUrl} >",
       "ctaReminder": "Dettagli: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "La tua gilda",
-      "players": "Trova avversari",
-      "leaderboard": "Classifica dei server",
-      "members": "Elenco della gilda",
-      "duels": "I tuoi duelli",
-      "me": "Account"
     }
   }
 }

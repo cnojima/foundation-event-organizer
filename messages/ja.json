@@ -803,6 +803,16 @@
     },
     "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。"
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "あなたのギルド",
+      "players": "対戦相手を探す",
+      "leaderboard": "サーバーランキング",
+      "members": "ギルド名簿",
+      "duels": "あなたの決闘",
+      "me": "アカウント"
+    }
+  },
   "signin": {
     "kicker": "サインインして",
     "subtitle": "ギルドに参加するには、GoogleアカウントまたはDiscordアカウントでログインしてください。",
@@ -883,16 +893,6 @@
       "ctaResult": "< {duelUrl}でご覧ください。 {duelUrl} >",
       "ctaEdited": "< {duelUrl}で確認して承認または拒否してください。 {duelUrl} >",
       "ctaReminder": "詳細: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "あなたのギルド",
-      "players": "対戦相手を探す",
-      "leaderboard": "サーバーランキング",
-      "members": "ギルド名簿",
-      "duels": "あなたの決闘",
-      "me": "アカウント"
     }
   }
 }

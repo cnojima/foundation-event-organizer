@@ -803,6 +803,16 @@
     },
     "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Jouw gilde",
+      "players": "Zoek tegenstanders",
+      "leaderboard": "Serverranglijsten",
+      "members": "Gildeledenlijst",
+      "duels": "Jouw duels",
+      "me": "Rekening"
+    }
+  },
   "signin": {
     "kicker": "Meld u aan bij",
     "subtitle": "Meld je aan met Google of Discord om lid te worden van je gilde.",
@@ -883,16 +893,6 @@
       "ctaResult": "Bekijk het op < {duelUrl} >",
       "ctaEdited": "Bekijk en accepteer of weiger op < {duelUrl} >",
       "ctaReminder": "Details: < {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "Jouw gilde",
-      "players": "Zoek tegenstanders",
-      "leaderboard": "Serverranglijsten",
-      "members": "Gildeledenlijst",
-      "duels": "Jouw duels",
-      "me": "Rekening"
     }
   }
 }

@@ -803,6 +803,16 @@
     },
     "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。"
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "你的公会",
+      "players": "寻找对手",
+      "leaderboard": "服务器排名",
+      "members": "公会成员名单",
+      "duels": "你的决斗",
+      "me": "帐户"
+    }
+  },
   "signin": {
     "kicker": "登录",
     "subtitle": "使用 Google 或 Discord 登录即可加入公会。",
@@ -883,16 +893,6 @@
       "ctaResult": "请访问 < {duelUrl} >",
       "ctaEdited": "查看并接受或拒绝，网址为 < {duelUrl} >",
       "ctaReminder": "详情：< {duelUrl} >"
-    }
-  },
-  "pageHeader": {
-    "kicker": {
-      "events": "你的公会",
-      "players": "寻找对手",
-      "leaderboard": "服务器排名",
-      "members": "公会成员名单",
-      "duels": "你的决斗",
-      "me": "帐户"
     }
   }
 }
