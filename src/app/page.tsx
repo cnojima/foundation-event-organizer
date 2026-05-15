@@ -15,6 +15,7 @@ import {
   squadTimes,
 } from "@/lib/event-times";
 import { LandingPage } from "@/components/landing-page";
+import { PageHeader } from "@/components/page-header";
 
 export default async function Home({
   searchParams,
@@ -99,6 +100,7 @@ export default async function Home({
 
   const nowIso = now.toISOString();
   const t = await getTranslations("events");
+  const tHeader = await getTranslations("pageHeader.kicker");
 
   // Only offer the bulk calendar export when at least one event actually has
   // a scheduled time — otherwise the .ics endpoint would 404.
@@ -115,17 +117,18 @@ export default async function Home({
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          {actingGuild ? `${actingGuild.name} — ${t("title")}` : t("title")}
-        </h1>
-        {hasAnyScheduled && !showPast && (
-          <CalendarDownloadLink
-            href="/api/events/all/ics"
-            label={t("addAllToCalendar")}
-          />
-        )}
-      </div>
+      <PageHeader
+        kicker={tHeader("events")}
+        title={actingGuild ? `${actingGuild.name} — ${t("title")}` : t("title")}
+        rightSlot={
+          hasAnyScheduled && !showPast ? (
+            <CalendarDownloadLink
+              href="/api/events/all/ics"
+              label={t("addAllToCalendar")}
+            />
+          ) : null
+        }
+      />
 
       <EventsTabs
         showPast={showPast}
@@ -156,7 +159,7 @@ export default async function Home({
               <Link
                 key={event.id}
                 href={`/event/${event.id}`}
-                className={`block rounded-lg border bg-white p-4 transition-colors dark:bg-gray-900 ${
+                className={`group block rounded-lg border bg-white p-4 transition-all duration-150 hover:-translate-y-px hover:shadow-md dark:bg-gray-900 dark:hover:shadow-violet-950/40 ${
                   needsAction
                     ? "border-violet-300 ring-1 ring-violet-200 hover:border-violet-500 hover:ring-violet-300 dark:border-violet-900/60 dark:ring-violet-900/60 dark:hover:border-violet-700 dark:hover:ring-violet-800"
                     : signedUp

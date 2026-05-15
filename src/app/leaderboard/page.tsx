@@ -7,6 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { requireAnyGuildPage } from "@/lib/rbac";
 import { PlayerCard, type PlayerCardData } from "@/components/player-card";
 import { PlayerSearchForm } from "@/components/player-search-form";
+import { PageHeader } from "@/components/page-header";
 
 const PAGE_SIZE = 25;
 
@@ -33,6 +34,7 @@ export default async function LeaderboardPage({
   const session = await auth();
   const membership = requireAnyGuildPage(session);
   const t = await getTranslations("leaderboard");
+  const tHeader = await getTranslations("pageHeader.kicker");
 
   const params = await searchParams;
   const page = Math.max(1, Number(params.page) || 1);
@@ -48,9 +50,7 @@ export default async function LeaderboardPage({
   if (!viewerServerNumber) {
     return (
       <main className="mx-auto max-w-4xl p-6">
-        <h1 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          {t("title")}
-        </h1>
+        <PageHeader kicker={tHeader("leaderboard")} title={t("title")} />
         <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           {t.rich("needsServerNumber", {
             settingsLink: (c) => (
@@ -217,22 +217,22 @@ export default async function LeaderboardPage({
 
   return (
     <main className="mx-auto max-w-4xl p-6">
-      <div className="mb-1 flex items-baseline justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          {t("title")}
-        </h1>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          {t("serverLabel", { serverNumber: viewerServerNumber })}
-        </span>
-      </div>
-      <p className="mb-1 text-sm text-gray-500 dark:text-gray-400">
-        {t("subtitle", { count: total })}
-      </p>
-      <p className="mb-4 text-xs">
-        <Link href="/help#duels" className="text-violet-700 hover:underline dark:text-violet-300">
-          {t("howItWorks")}
-        </Link>
-      </p>
+      <PageHeader
+        kicker={tHeader("leaderboard")}
+        title={t("title")}
+        subtitle={t("subtitle", { count: total })}
+        rightSlot={
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {t("serverLabel", { serverNumber: viewerServerNumber })}
+          </span>
+        }
+      >
+        <p className="mt-2 text-xs">
+          <Link href="/help#duels" className="text-violet-700 hover:underline dark:text-violet-300">
+            {t("howItWorks")}
+          </Link>
+        </p>
+      </PageHeader>
 
       {/* Your-rank callout — separate from filters because filters don't
           change your global rank. */}

@@ -80,8 +80,34 @@ export default async function RootLayout({
     >
       <body className="min-h-full bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100">
         <ThemeProvider>
+          {/* Ambient brand backdrop — same radial-glow + hex-grid motif as
+              the splash/signin hero, dialed way down so it reads as
+              atmosphere on every signed-in page. Signed-out routes (splash,
+              signin) skip this since they ship their own self-contained
+              hero treatment that we don't want to double-stack. */}
+          {session?.user && (
+            <>
+              <div
+                aria-hidden="true"
+                className="pointer-events-none fixed inset-0"
+                style={{
+                  background:
+                    "radial-gradient(ellipse 80% 50% at 50% 0%, rgba(167, 139, 250, 0.12), transparent 65%)",
+                }}
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none fixed inset-0 opacity-[0.04] dark:opacity-[0.06]"
+                style={{
+                  backgroundImage:
+                    "repeating-linear-gradient(60deg, currentColor 0 1px, transparent 1px 28px), repeating-linear-gradient(-60deg, currentColor 0 1px, transparent 1px 28px)",
+                  color: "rgb(124 58 237)",
+                }}
+              />
+            </>
+          )}
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <div className="flex min-h-screen">
+            <div className="relative flex min-h-screen">
               {/* Signed-out visitors only see public pages (splash, help,
                   tos, privacy) — the sidebar's nav targets all require auth,
                   so it's noise on those routes. Suppress it (and the mobile

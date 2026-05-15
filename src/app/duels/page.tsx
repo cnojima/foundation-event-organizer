@@ -3,11 +3,13 @@ import { auth } from "@/auth";
 import { db } from "@/db";
 import { duelProposals, guilds, users } from "@/db/schema";
 import { desc, eq, inArray, or } from "drizzle-orm";
+import { getTranslations } from "next-intl/server";
 import { requireAnyGuildPage } from "@/lib/rbac";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
 import { DuelAction } from "@/components/duel-row-actions";
 import { duelSideFor, viewerOutcome } from "@/lib/duels";
+import { PageHeader } from "@/components/page-header";
 
 export const metadata = {
   title: "Duels",
@@ -28,6 +30,7 @@ export default async function DuelsPage() {
   const session = await auth();
   const membership = requireAnyGuildPage(session);
   const meUserId = membership.userId;
+  const tHeader = await getTranslations("pageHeader.kicker");
 
   const rows = await db
     .select()
@@ -74,22 +77,24 @@ export default async function DuelsPage() {
 
   return (
     <main className="mx-auto max-w-4xl p-6">
-      <div className="mb-1 flex items-center justify-between gap-4">
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          Duels
-        </h1>
-        <Link
-          href="/players"
-          className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700"
-        >
-          + Find a player to challenge
-        </Link>
-      </div>
-      <p className="mb-6 text-xs">
-        <Link href="/help#duels" className="text-violet-700 hover:underline dark:text-violet-300">
-          How duels work →
-        </Link>
-      </p>
+      <PageHeader
+        kicker={tHeader("duels")}
+        title="Duels"
+        rightSlot={
+          <Link
+            href="/players"
+            className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700"
+          >
+            + Find a player to challenge
+          </Link>
+        }
+      >
+        <p className="mt-2 text-xs">
+          <Link href="/help#duels" className="text-violet-700 hover:underline dark:text-violet-300">
+            How duels work →
+          </Link>
+        </p>
+      </PageHeader>
 
       <Section
         title="Incoming challenges"
@@ -215,7 +220,7 @@ function DuelCard({
 
   return (
     <div
-      className={`rounded-lg border bg-white p-4 dark:bg-gray-900 ${muted ? "border-gray-200 opacity-80 dark:border-gray-800" : "border-gray-200 dark:border-gray-800"}`}
+      className={`rounded-lg border bg-white p-4 transition-all duration-150 hover:-translate-y-px hover:shadow-sm dark:bg-gray-900 dark:hover:shadow-violet-950/40 ${muted ? "border-gray-200 opacity-80 hover:opacity-100 dark:border-gray-800" : "border-gray-200 hover:border-violet-300 dark:border-gray-800 dark:hover:border-violet-800"}`}
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0 flex-1">

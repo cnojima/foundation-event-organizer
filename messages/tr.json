@@ -66,11 +66,11 @@
     "dismiss": "Alfa bildirimini kapat"
   },
   "footer": {
+    "tagline": "BİRLİKTE HAREKETE GEÇELİM. BİRLİKTE CEVAP VERELİM.",
     "feedback": "GERİ BİLDİRİM",
     "discordSupport": "DISCORD DESTEĞİ",
     "terms": "ŞARTLAR",
-    "privacy": "MAHREMİYET",
-    "tagline": "BİRLİKTE HAREKETE GEÇELİM. BİRLİKTE CEVAP VERELİM."
+    "privacy": "MAHREMİYET"
   },
   "feedback": {
     "reportBug": "Hata bildir",
@@ -91,6 +91,7 @@
     "addToCalendar": "Takvime Ekle",
     "open": "Açık",
     "closed": "Kapalı",
+    "signUp": "Toplanın",
     "signedUp": "✓ Kayıt oldum",
     "signupCount": "{count, plural, =0 {No signups} bir {# signup} diğer {# signups} }",
     "youreSignedUp": "Kaydınız tamamlandı!",
@@ -104,8 +105,7 @@
     "startTime": "Başlangıç Saati:",
     "signupCloses": "Kayıtlar Kapanıyor:",
     "slotsLabel": "Yuvalar:",
-    "slotsValue": "{maxPlayers} oyuncular + {maxBackups} her birinin yedeklemeleri",
-    "signUp": "Toplanın"
+    "slotsValue": "{maxPlayers} oyuncular + {maxBackups} her birinin yedeklemeleri"
   },
   "eventCard": {
     "deleted": "Silindi",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Liderlik pozisyonu talep edin ( {slots} (takım başına)",
     "leadershipHelp": "Liderler maç sırasında takımlarını koordine eder. Yöneticiler ise istekler arasından kimin rol alacağını belirler.",
     "leadershipNotePlaceholder": "Neden liderlik rolü üstlenmek istersiniz? (isteğe bağlı)",
+    "submit": "Toplanın",
     "submitUpdate": "Kayıt Ol'u Güncelle",
-    "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
-    "submit": "Toplanın"
+    "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin."
   },
   "createEventForm": {
     "eventType": "Etkinlik Türü",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Çözdüğümüz sorun",
       "heading": "Loncalar sürtüşmeler nedeniyle üye kaybeder.",
+      "body": "Etkinlik planlaması Discord mesajlarının arasında kaybolmuş durumda. Kayıtlar, birinin güncellemeyi unuttuğu bir elektronik tabloda takip ediliyor. Tetiklenmeyen hatırlatmalar. Hiçbir şey onları geri çekmediği için gelmeyi bırakan oyuncular. Rally Up tüm bunları düzeltiyor.",
       "beforeTitle": "Önce",
       "beforeBody": "Dağınık Discord sohbetleri, kayıp kayıtlar, kaçırılan hatırlatmalar, kimin gerçekten katıldığına dair hiçbir kayıt olmaması ve üyelerin yavaş yavaş uzaklaşması.",
       "afterTitle": "Sonrasında",
       "afterBody": "Her etkinlik için bir kayıt formu. Otomatik 1 günlük, 1 saatlik ve 20 dakikalık Discord hatırlatıcıları. Katılım ve puanlama takibi. Liderlik tabloları ve ELO puanlarıyla antrenman maçları ve düellolar. Giriş yapmak için net bir neden.",
       "outcomeTitle": "Sonuç",
-      "outcomeBody": "Tam kadrolu daha fazla etkinlik. Loncalar arası daha fazla rekabet. Üyelerinizin geri dönmesi için daha fazla neden ve kimin gerçekten üzerine düşeni yaptığının kaydı.",
-      "body": "Etkinlik planlaması Discord mesajlarının arasında kaybolmuş durumda. Kayıtlar, birinin güncellemeyi unuttuğu bir elektronik tabloda takip ediliyor. Tetiklenmeyen hatırlatmalar. Hiçbir şey onları geri çekmediği için gelmeyi bırakan oyuncular. Rally Up tüm bunları düzeltiyor."
+      "outcomeBody": "Tam kadrolu daha fazla etkinlik. Loncalar arası daha fazla rekabet. Üyelerinizin geri dönmesi için daha fazla neden ve kimin gerçekten üzerine düşeni yaptığının kaydı."
     },
     "features": {
       "heading": "İçindekiler",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Rally Up'a hoş geldiniz",
     "subtitle": "Loncanız burada etkinliklere kaydolur: Shadowfront maçları, antrenman karşılaşmaları ve liderliğin takvime eklemek istediği diğer her şey.",
     "sections": {
       "gettingIn": "İçeri girmek",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Alt komutlar:",
       "propagationNote": "Yeni slash komutlarının, bot bir sunucuya eklendikten sonra Discord'da ilk kez görünmesi yaklaşık 1 saat sürebilir. Ondan sonra ise anında görünürler."
     },
-    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler.",
-    "title": "Rally Up'a hoş geldiniz"
+    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
+  },
+  "signin": {
+    "kicker": "Giriş yap",
+    "subtitle": "Loncanıza katılmak için Google veya Discord ile giriş yapın.",
+    "google": "Google ile devam edin",
+    "discord": "Discord ile devam edin",
+    "errorHeading": "Giriş başarısız oldu.",
+    "errorBody": "Discord ve Google, OAuth gidiş-dönüş sürecinde zaman zaman aksaklıklar yaşayabiliyor. Tekrar deneyin ve sorun devam ederse, alt kısımdaki Discord destek bağlantısı aracılığıyla bize ulaşın."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Ekip sesli kanalına katılın: {link}",
       "optOutHint": "Gelecekteki sesli davetleri devre dışı bırakmak için Discord'da `/settings voice_invites enabled:false` komutunu kullanın.",
+      "test": "**Rally Up**'tan test sesli DM'si — ** {squadLabel} **. Katılmak için tıklayın: <# {channelId} >",
       "leadStartingNow": "şimdi başlıyor",
       "leadMinutes": "{minutes} sonra başlayacak {minutes} dakika",
       "leadOneHour": "1 saat sonra başlıyor",
       "leadHours": "{hours} sonra başlayacak {hours} saat",
-      "leadTomorrow": "Yarın başlıyor",
-      "test": "**Rally Up**'tan test sesli DM'si — ** {squadLabel} **. Katılmak için tıklayın: <# {channelId} >"
+      "leadTomorrow": "Yarın başlıyor"
     },
     "duel": {
       "proposedHeading": "**Düello teklif edildi** — {proposer} {opposer} 1'e 1'e.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Ayrıntılar: < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Giriş yap",
-    "subtitle": "Loncanıza katılmak için Google veya Discord ile giriş yapın.",
-    "google": "Google ile devam edin",
-    "discord": "Discord ile devam edin",
-    "errorHeading": "Giriş başarısız oldu.",
-    "errorBody": "Discord ve Google, OAuth gidiş-dönüş sürecinde zaman zaman aksaklıklar yaşayabiliyor. Tekrar deneyin ve sorun devam ederse, alt kısımdaki Discord destek bağlantısı aracılığıyla bize ulaşın."
+  "pageHeader": {
+    "kicker": {
+      "events": "Loncanız",
+      "players": "Rakipleri bulun",
+      "leaderboard": "Sunucu sıralamaları",
+      "members": "Lonca kadrosu",
+      "duels": "Sizin düellolarınız",
+      "me": "Hesap"
+    }
   }
 }

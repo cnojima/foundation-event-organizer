@@ -7,6 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { requireAnyGuildPage } from "@/lib/rbac";
 import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
+import { PageHeader } from "@/components/page-header";
 
 export const metadata = {
   title: "Members",
@@ -19,6 +20,7 @@ export default async function MembersPage() {
   const session = await auth();
   const membership = requireAnyGuildPage(session);
   const t = await getTranslations("membersPage");
+  const tHeader = await getTranslations("pageHeader.kicker");
 
   const guild = await db.query.guilds.findFirst({
     where: eq(guilds.id, membership.guildId!),
@@ -38,19 +40,18 @@ export default async function MembersPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-        {t("titleNamed", { guildName: guild.name })}
-      </h1>
-      <p className="mb-6 text-sm text-gray-500 dark:text-gray-400">
-        {t("summary", { count: members.length, admins: adminCount })}
-      </p>
+      <PageHeader
+        kicker={tHeader("members")}
+        title={t("titleNamed", { guildName: guild.name })}
+        subtitle={t("summary", { count: members.length, admins: adminCount })}
+      />
 
       <div className="space-y-2">
         {members.map((m) => (
           <Link
             key={m.id}
             href={`/players/${m.id}`}
-            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 transition-colors hover:border-violet-400 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-violet-700 dark:hover:bg-gray-800"
+            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 transition-all duration-150 hover:-translate-y-px hover:border-violet-400 hover:bg-gray-50 hover:shadow-sm dark:border-gray-800 dark:bg-gray-900 dark:hover:border-violet-700 dark:hover:bg-gray-800 dark:hover:shadow-violet-950/40"
           >
             <UserAvatar name={displayName(m, guild.tag)} image={m.image} />
             <div className="leading-tight">

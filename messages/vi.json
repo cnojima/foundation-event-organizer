@@ -66,11 +66,11 @@
     "dismiss": "Bỏ qua thông báo alpha"
   },
   "footer": {
+    "tagline": "TẬP HỢP LẠI. CÙNG NHAU TRẢ LỜI.",
     "feedback": "NHẬN XÉT",
     "discordSupport": "HỖ TRỢ DISCORD",
     "terms": "ĐIỀU KHOẢN",
-    "privacy": "SỰ RIÊNG TƯ",
-    "tagline": "TẬP HỢP LẠI. CÙNG NHAU TRẢ LỜI."
+    "privacy": "SỰ RIÊNG TƯ"
   },
   "feedback": {
     "reportBug": "Báo cáo lỗi",
@@ -91,6 +91,7 @@
     "addToCalendar": "Thêm vào lịch",
     "open": "Mở",
     "closed": "Đóng cửa",
+    "signUp": "Hãy tập hợp lại!",
     "signedUp": "✓ Đã đăng ký",
     "signupCount": "{count, plural, =0 {No signups} một {# signup} các {# signups} khác {# signups} }",
     "youreSignedUp": "Bạn đã đăng ký thành công!",
@@ -104,8 +105,7 @@
     "startTime": "Thời gian bắt đầu:",
     "signupCloses": "Thời gian đăng ký kết thúc:",
     "slotsLabel": "Các vị trí:",
-    "slotsValue": "{maxPlayers} người chơi + {maxBackups} sao lưu từng",
-    "signUp": "Hãy tập hợp lại!"
+    "slotsValue": "{maxPlayers} người chơi + {maxBackups} sao lưu từng"
   },
   "eventCard": {
     "deleted": "Đã xóa",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Yêu cầu một vị trí lãnh đạo ( {slots} (mỗi đội)",
     "leadershipHelp": "Các đội trưởng điều phối đội của mình trong suốt trận đấu. Quản trị viên chọn người được giao vai trò từ các yêu cầu.",
     "leadershipNotePlaceholder": "Tại sao bạn muốn đảm nhận vai trò lãnh đạo? (tùy chọn)",
+    "submit": "Hãy tập hợp lại!",
     "submitUpdate": "Cập nhật đăng ký",
-    "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
-    "submit": "Hãy tập hợp lại!"
+    "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại."
   },
   "createEventForm": {
     "eventType": "Loại sự kiện",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Vấn đề chúng ta giải quyết",
       "heading": "Các hội nhóm mất thành viên do mâu thuẫn.",
+      "body": "Lịch trình sự kiện bị chôn vùi trong các cuộc trò chuyện trên Discord. Việc đăng ký được theo dõi trong một bảng tính mà ai đó quên cập nhật. Các lời nhắc không được gửi đi. Người chơi ngừng tham gia vì không có gì kéo họ trở lại. Rally Up khắc phục tất cả những vấn đề đó.",
       "beforeTitle": "Trước",
       "beforeBody": "Các cuộc trò chuyện trên Discord lộn xộn, thông tin đăng ký bị mất, lời nhắc bị bỏ lỡ, không có ghi chép về những người thực sự tham dự — và các thành viên dần dần rời bỏ nhóm.",
       "afterTitle": "Sau đó",
       "afterBody": "Một mẫu đăng ký duy nhất cho mỗi sự kiện. Tự động nhắc nhở trên Discord trước 1 ngày, 1 giờ và 20 phút. Theo dõi điểm danh và xếp hạng. Các trận đấu tập và đấu tay đôi với bảng xếp hạng và điểm ELO. Một lý do rõ ràng để đăng nhập.",
       "outcomeTitle": "Kết quả",
-      "outcomeBody": "Nhiều sự kiện hơn với đầy đủ người tham gia. Nhiều cuộc cạnh tranh giữa các bang hội hơn. Nhiều lý do hơn để các thành viên quay lại — và ghi nhận ai thực sự đóng góp hết mình.",
-      "body": "Lịch trình sự kiện bị chôn vùi trong các cuộc trò chuyện trên Discord. Việc đăng ký được theo dõi trong một bảng tính mà ai đó quên cập nhật. Các lời nhắc không được gửi đi. Người chơi ngừng tham gia vì không có gì kéo họ trở lại. Rally Up khắc phục tất cả những vấn đề đó."
+      "outcomeBody": "Nhiều sự kiện hơn với đầy đủ người tham gia. Nhiều cuộc cạnh tranh giữa các bang hội hơn. Nhiều lý do hơn để các thành viên quay lại — và ghi nhận ai thực sự đóng góp hết mình."
     },
     "features": {
       "heading": "Bên trong có gì?",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Chào mừng đến với Rally Up!",
     "subtitle": "Đây là nơi bang hội của bạn đăng ký tham gia các sự kiện — các trận đấu Shadowfront, các trận tập luyện và bất cứ sự kiện nào khác mà ban lãnh đạo muốn đưa vào lịch.",
     "sections": {
       "gettingIn": "Vào cửa",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Lệnh phụ:",
       "propagationNote": "Các lệnh gạch chéo mới cần khoảng 1 giờ để xuất hiện trong Discord lần đầu tiên sau khi bot được thêm vào máy chủ. Sau đó, chúng sẽ xuất hiện ngay lập tức."
     },
-    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công.",
-    "title": "Chào mừng đến với Rally Up!"
+    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
+  },
+  "signin": {
+    "kicker": "Đăng nhập vào",
+    "subtitle": "Đăng nhập bằng Google hoặc Discord để tham gia bang hội của bạn.",
+    "google": "Tiếp tục với Google",
+    "discord": "Tiếp tục với Discord",
+    "errorHeading": "Đăng nhập không thành công.",
+    "errorBody": "Discord và Google đôi khi gặp trục trặc trong quá trình xác thực OAuth. Hãy thử lại, và nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi qua đường dẫn hỗ trợ Discord ở cuối trang."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Tham gia kênh thoại của nhóm: {link}",
       "optOutHint": "Để tắt lời mời thoại trong tương lai, hãy sử dụng lệnh `/settings voice_invites enabled:false` trong Discord.",
+      "test": "Kiểm tra tin nhắn thoại DM từ **Rally Up** — ** {squadLabel} **. Nhấp để tham gia: <# {channelId} >",
       "leadStartingNow": "bắt đầu từ bây giờ",
       "leadMinutes": "Bắt đầu sau {minutes} phút",
       "leadOneHour": "Bắt đầu sau 1 giờ",
       "leadHours": "Bắt đầu sau {hours} giờ",
-      "leadTomorrow": "bắt đầu từ ngày mai",
-      "test": "Kiểm tra tin nhắn thoại DM từ **Rally Up** — ** {squadLabel} **. Nhấp để tham gia: <# {channelId} >"
+      "leadTomorrow": "bắt đầu từ ngày mai"
     },
     "duel": {
       "proposedHeading": "**Đề xuất đấu tay đôi** — {proposer} đã thách thức {opposer} vào trận đấu 1 chọi 1.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Chi tiết: < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Đăng nhập vào",
-    "subtitle": "Đăng nhập bằng Google hoặc Discord để tham gia bang hội của bạn.",
-    "google": "Tiếp tục với Google",
-    "discord": "Tiếp tục với Discord",
-    "errorHeading": "Đăng nhập không thành công.",
-    "errorBody": "Discord và Google đôi khi gặp trục trặc trong quá trình xác thực OAuth. Hãy thử lại, và nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi qua đường dẫn hỗ trợ Discord ở cuối trang."
+  "pageHeader": {
+    "kicker": {
+      "events": "Hội của bạn",
+      "players": "Tìm đối thủ",
+      "leaderboard": "Xếp hạng máy chủ",
+      "members": "Danh sách bang hội",
+      "duels": "Các trận đấu của bạn",
+      "me": "Tài khoản"
+    }
   }
 }

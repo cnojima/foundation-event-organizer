@@ -66,11 +66,11 @@
     "dismiss": "Alpha-Benachrichtigung verwerfen"
   },
   "footer": {
+    "tagline": "KLAPPT EUCH ZUSAMMEN. ANTWORTET GEMEINSAM.",
     "feedback": "RÜCKMELDUNG",
     "discordSupport": "DISCORD-UNTERSTÜTZUNG",
     "terms": "BEDINGUNGEN",
-    "privacy": "Datenschutz",
-    "tagline": "KLAPPT EUCH ZUSAMMEN. ANTWORTET GEMEINSAM."
+    "privacy": "Datenschutz"
   },
   "feedback": {
     "reportBug": "Fehler melden",
@@ -91,6 +91,7 @@
     "addToCalendar": "Zum Kalender hinzufügen",
     "open": "Offen",
     "closed": "Geschlossen",
+    "signUp": "Zusammenhalten",
     "signedUp": "✓ Angemeldet",
     "signupCount": "{count, plural, =0 {No signups} eins {# signup} andere {# signups} }",
     "youreSignedUp": "Du bist angemeldet!",
@@ -104,8 +105,7 @@
     "startTime": "Startzeit:",
     "signupCloses": "Anmeldeschluss:",
     "slotsLabel": "Spielautomaten:",
-    "slotsValue": "{maxPlayers} Spieler + {maxBackups} Backups jeweils",
-    "signUp": "Zusammenhalten"
+    "slotsValue": "{maxPlayers} Spieler + {maxBackups} Backups jeweils"
   },
   "eventCard": {
     "deleted": "Gelöscht",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Bewerben Sie sich um eine Führungsposition ( {slots} pro Mannschaft)",
     "leadershipHelp": "Die Anführer koordinieren ihr Team während des Spiels. Die Administratoren wählen die Rollen anhand der Anfragen aus.",
     "leadershipNotePlaceholder": "Warum möchten Sie eine Führungsrolle übernehmen? (optional)",
+    "submit": "Zusammenhalten",
     "submitUpdate": "Anmeldung aktualisieren",
-    "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
-    "submit": "Zusammenhalten"
+    "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
   },
   "createEventForm": {
     "eventType": "Ereignistyp",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Das Problem, das wir lösen",
       "heading": "Gilden verlieren Mitglieder durch interne Konflikte.",
+      "body": "Eventplanung, versteckt in Discord-Threads. Anmeldungen in einer Tabelle, die jemand vergessen hat zu aktualisieren. Erinnerungen, die nicht versendet wurden. Spieler, die einfach nicht mehr kamen, weil sie nichts mehr motivierte. Rally Up löst all diese Probleme.",
       "beforeTitle": "Vor",
       "beforeBody": "Unübersichtliche Discord-Threads, verlorene Anmeldungen, verpasste Erinnerungen, keine Aufzeichnungen darüber, wer tatsächlich erschienen ist – und Mitglieder, die sich langsam zurückziehen.",
       "afterTitle": "Nach",
       "afterBody": "Ein Anmeldeformular pro Event. Automatische Discord-Erinnerungen (1 Tag, 1 Stunde, 20 Minuten). Anwesenheit und Wertung werden erfasst. Trainingsspiele und Duelle mit Ranglisten und ELO-Wertung. Ein guter Grund, sich einzuloggen.",
       "outcomeTitle": "Ergebnis",
-      "outcomeBody": "Mehr Events mit vollen Teilnehmerlisten. Mehr gildenübergreifender Wettbewerb. Mehr Gründe für eure Mitglieder, wiederzukommen – und ein Nachweis darüber, wer wirklich seinen Beitrag leistet.",
-      "body": "Eventplanung, versteckt in Discord-Threads. Anmeldungen in einer Tabelle, die jemand vergessen hat zu aktualisieren. Erinnerungen, die nicht versendet wurden. Spieler, die einfach nicht mehr kamen, weil sie nichts mehr motivierte. Rally Up löst all diese Probleme."
+      "outcomeBody": "Mehr Events mit vollen Teilnehmerlisten. Mehr gildenübergreifender Wettbewerb. Mehr Gründe für eure Mitglieder, wiederzukommen – und ein Nachweis darüber, wer wirklich seinen Beitrag leistet."
     },
     "features": {
       "heading": "Was ist drin?",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Willkommen bei Rally Up",
     "subtitle": "Hier meldet sich eure Gilde für Events an – Shadowfront-Matches, Scrims und alles andere, was die Gildenleitung im Kalender haben möchte.",
     "sections": {
       "gettingIn": "Einlass",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Unterbefehle:",
       "propagationNote": "Neue Slash-Befehle benötigen beim ersten Hinzufügen des Bots zu einem Server etwa eine Stunde, um in Discord angezeigt zu werden. Danach sind sie sofort verfügbar."
     },
-    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen.",
-    "title": "Willkommen bei Rally Up"
+    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
+  },
+  "signin": {
+    "kicker": "Anmelden",
+    "subtitle": "Melde dich mit Google oder Discord an, um deiner Gilde beizutreten.",
+    "google": "Mit Google fortfahren",
+    "discord": "Weiter mit Discord",
+    "errorHeading": "Anmeldung fehlgeschlagen.",
+    "errorBody": "Bei der OAuth-Authentifizierung zwischen Discord und Google kann es gelegentlich zu Problemen kommen. Versuchen Sie es erneut. Sollte das Problem weiterhin bestehen, kontaktieren Sie uns bitte über den Discord-Support-Link in der Fußzeile."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Tritt dem Sprachkanal des Teams bei: {link}",
       "optOutHint": "Um zukünftige Sprach-Einladungen zu deaktivieren, verwenden Sie in Discord den Befehl `/settings voice_invites enabled:false`.",
+      "test": "Test-Sprach-DM von **Rally Up** — ** {squadLabel} **. Klicken Sie hier, um beizutreten: <# {channelId} >",
       "leadStartingNow": "ab sofort",
       "leadMinutes": "Beginnt in {minutes} Minuten",
       "leadOneHour": "Beginnt in 1 Stunde",
       "leadHours": "Beginnt in {hours} Std.",
-      "leadTomorrow": "beginnt morgen",
-      "test": "Test-Sprach-DM von **Rally Up** — ** {squadLabel} **. Klicken Sie hier, um beizutreten: <# {channelId} >"
+      "leadTomorrow": "beginnt morgen"
     },
     "duel": {
       "proposedHeading": "**Duell vorgeschlagen** – {proposer} hat {opposer} herausgefordert {opposer} zu einem 1-gegen-1-Spiel.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Details: < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Anmelden",
-    "subtitle": "Melde dich mit Google oder Discord an, um deiner Gilde beizutreten.",
-    "google": "Mit Google fortfahren",
-    "discord": "Weiter mit Discord",
-    "errorHeading": "Anmeldung fehlgeschlagen.",
-    "errorBody": "Bei der OAuth-Authentifizierung zwischen Discord und Google kann es gelegentlich zu Problemen kommen. Versuchen Sie es erneut. Sollte das Problem weiterhin bestehen, kontaktieren Sie uns bitte über den Discord-Support-Link in der Fußzeile."
+  "pageHeader": {
+    "kicker": {
+      "events": "Deine Gilde",
+      "players": "Finde Gegner",
+      "leaderboard": "Server-Rangliste",
+      "members": "Gildenliste",
+      "duels": "Deine Duelle",
+      "me": "Konto"
+    }
   }
 }

@@ -66,11 +66,11 @@
     "dismiss": "Odrzuć powiadomienie alfa"
   },
   "footer": {
+    "tagline": "ZBIERZMY SIĘ. ODPOWIEDZMY RAZEM.",
     "feedback": "INFORMACJA ZWROTNA",
     "discordSupport": "WSPARCIE DISCORD",
     "terms": "WARUNKI",
-    "privacy": "PRYWATNOŚĆ",
-    "tagline": "ZBIERZMY SIĘ. ODPOWIEDZMY RAZEM."
+    "privacy": "PRYWATNOŚĆ"
   },
   "feedback": {
     "reportBug": "Zgłoś błąd",
@@ -91,6 +91,7 @@
     "addToCalendar": "Dodaj do kalendarza",
     "open": "Otwarte",
     "closed": "Zamknięte",
+    "signUp": "Zbierz się",
     "signedUp": "✓ Zarejestrowano",
     "signupCount": "{count, plural, =0 {No signups} jeden {# signup} inne {# signups} }",
     "youreSignedUp": "Zapisałeś się!",
@@ -104,8 +105,7 @@
     "startTime": "Godzina rozpoczęcia:",
     "signupCloses": "Zapisy kończą się:",
     "slotsLabel": "Sloty:",
-    "slotsValue": "{maxPlayers} gracze + {maxBackups} kopie zapasowe każda",
-    "signUp": "Zbierz się"
+    "slotsValue": "{maxPlayers} gracze + {maxBackups} kopie zapasowe każda"
   },
   "eventCard": {
     "deleted": "Usunięto",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Poproś o stanowisko kierownicze ( {slots} na drużynę)",
     "leadershipHelp": "Liderzy koordynują swoją drużynę podczas meczu. Administratorzy wybierają, kto otrzyma rolę na podstawie próśb.",
     "leadershipNotePlaceholder": "Dlaczego chciałbyś pełnić rolę lidera? (opcjonalnie)",
+    "submit": "Zbierz się",
     "submitUpdate": "Aktualizacja rejestracji",
-    "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
-    "submit": "Zbierz się"
+    "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie."
   },
   "createEventForm": {
     "eventType": "Typ zdarzenia",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Problem, który rozwiązujemy",
       "heading": "Gildie tracą członków z powodu tarć.",
+      "body": "Harmonogram wydarzeń zakopany w wątkach na Discordzie. Zapisy śledzone w arkuszu kalkulacyjnym, którego ktoś zapomniał zaktualizować. Przypomnienia, które się nie uruchomiły. Gracze, którzy przestali się pojawiać, bo nic ich do tego nie skłoniło. Rally Up rozwiązuje ten problem.",
       "beforeTitle": "Zanim",
       "beforeBody": "Nieuporządkowane wątki na Discordzie, utracone zapisy, pominięte przypomnienia, brak informacji o tym, kto się faktycznie pojawił — i powolne odchodzenie członków.",
       "afterTitle": "Po",
       "afterBody": "Jeden formularz rejestracyjny na wydarzenie. Automatyczne przypomnienia na Discordzie (co 1 dzień, godzinę i 20 minut). Monitorowana frekwencja i oceny. Pojedynki i scrimy z rankingami i ELO. Jasny powód, żeby się zalogować.",
       "outcomeTitle": "Wynik",
-      "outcomeBody": "Więcej wydarzeń z pełnymi składami. Większa rywalizacja międzygildyjna. Więcej powodów, dla których Twoi członkowie będą wracać — i lista osób, które faktycznie mają na to wpływ.",
-      "body": "Harmonogram wydarzeń zakopany w wątkach na Discordzie. Zapisy śledzone w arkuszu kalkulacyjnym, którego ktoś zapomniał zaktualizować. Przypomnienia, które się nie uruchomiły. Gracze, którzy przestali się pojawiać, bo nic ich do tego nie skłoniło. Rally Up rozwiązuje ten problem."
+      "outcomeBody": "Więcej wydarzeń z pełnymi składami. Większa rywalizacja międzygildyjna. Więcej powodów, dla których Twoi członkowie będą wracać — i lista osób, które faktycznie mają na to wpływ."
     },
     "features": {
       "heading": "Co jest w środku",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Witamy w Rally Up",
     "subtitle": "W tym miejscu Twoja gildia zapisuje się na wydarzenia — mecze Shadowfront, treningi i inne wydarzenia, które przywódcy zaplanowali na ten rok.",
     "sections": {
       "gettingIn": "Wsiadanie",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Podpolecenia:",
       "propagationNote": "Nowe komendy ukośnika pojawiają się na Discordzie po około godzinie od pierwszego dodania bota do serwera. Później są już dostępne natychmiast."
     },
-    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy.",
-    "title": "Witamy w Rally Up"
+    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
+  },
+  "signin": {
+    "kicker": "Zaloguj się do",
+    "subtitle": "Zaloguj się za pomocą konta Google lub Discord, aby dołączyć do gildii.",
+    "google": "Kontynuuj z Google",
+    "discord": "Kontynuuj z Discordem",
+    "errorHeading": "Logowanie nie powiodło się.",
+    "errorBody": "Discord i Google czasami mają problemy z uwierzytelnianiem OAuth. Spróbuj ponownie, a jeśli problem będzie się powtarzał, skontaktuj się z nami za pomocą linku pomocy technicznej Discord w stopce."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Dołącz do kanału głosowego drużyny: {link}",
       "optOutHint": "_Aby wyłączyć przyszłe zaproszenia głosowe, użyj `/settings voice_invites enabled:false` w Discordzie._",
+      "test": "Test głosu DM z **Rally Up** — ** {squadLabel} **. Kliknij, aby dołączyć: <# {channelId} >",
       "leadStartingNow": "zaczynając teraz",
       "leadMinutes": "zaczyna się za {minutes} protokół",
       "leadOneHour": "zaczyna się za 1 godzinę",
       "leadHours": "zaczyna się za {hours} godziny",
-      "leadTomorrow": "zaczyna się jutro",
-      "test": "Test głosu DM z **Rally Up** — ** {squadLabel} **. Kliknij, aby dołączyć: <# {channelId} >"
+      "leadTomorrow": "zaczyna się jutro"
     },
     "duel": {
       "proposedHeading": "**Zaproponowano pojedynek** — {proposer} rzucił wyzwanie {opposer} do 1 na 1.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Szczegóły: < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Zaloguj się do",
-    "subtitle": "Zaloguj się za pomocą konta Google lub Discord, aby dołączyć do gildii.",
-    "google": "Kontynuuj z Google",
-    "discord": "Kontynuuj z Discordem",
-    "errorHeading": "Logowanie nie powiodło się.",
-    "errorBody": "Discord i Google czasami mają problemy z uwierzytelnianiem OAuth. Spróbuj ponownie, a jeśli problem będzie się powtarzał, skontaktuj się z nami za pomocą linku pomocy technicznej Discord w stopce."
+  "pageHeader": {
+    "kicker": {
+      "events": "Twoja gildia",
+      "players": "Znajdź przeciwników",
+      "leaderboard": "Rankingi serwerów",
+      "members": "Skład gildii",
+      "duels": "Twoje pojedynki",
+      "me": "Konto"
+    }
   }
 }

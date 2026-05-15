@@ -803,6 +803,16 @@
     },
     "closed": "The form turns into a \"Signups are closed\" message. Reach out to a guild admin if you need to be added late — they can adjust signups manually."
   },
+  "pageHeader": {
+    "kicker": {
+      "events": "Your guild",
+      "players": "Find opponents",
+      "leaderboard": "Server rankings",
+      "members": "Guild roster",
+      "duels": "Your duels",
+      "me": "Account"
+    }
+  },
   "signin": {
     "kicker": "Sign in to",
     "subtitle": "Sign in with Google or Discord to join your guild.",

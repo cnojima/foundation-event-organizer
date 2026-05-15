@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "it",
-  "translatedAt": "2026-05-15T19:47:11.570Z",
+  "translatedAt": "2026-05-15T20:26:57.989Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -667,6 +667,12 @@
     "playerHelp.slashCommands.subcommandsLabel": "Subcommands:",
     "playerHelp.slashCommands.propagationNote": "New slash commands take up to about 1 hour to appear in Discord the first time after the bot is added to a server. After that, they're instant.",
     "playerHelp.closed": "The form turns into a \"Signups are closed\" message. Reach out to a guild admin if you need to be added late — they can adjust signups manually.",
+    "pageHeader.kicker.events": "Your guild",
+    "pageHeader.kicker.players": "Find opponents",
+    "pageHeader.kicker.leaderboard": "Server rankings",
+    "pageHeader.kicker.members": "Guild roster",
+    "pageHeader.kicker.duels": "Your duels",
+    "pageHeader.kicker.me": "Account",
     "signin.kicker": "Sign in to",
     "signin.subtitle": "Sign in with Google or Discord to join your guild.",
     "signin.google": "Continue with Google",

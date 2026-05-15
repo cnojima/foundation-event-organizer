@@ -66,11 +66,11 @@
     "dismiss": "Ignora l'avviso alpha"
   },
   "footer": {
+    "tagline": "UNIAMOCI. RISPONDIAMO INSIEME.",
     "feedback": "FEEDBACK",
     "discordSupport": "SUPPORTO DISCORD",
     "terms": "TERMINI",
-    "privacy": "PRIVACY",
-    "tagline": "UNIAMOCI. RISPONDIAMO INSIEME."
+    "privacy": "PRIVACY"
   },
   "feedback": {
     "reportBug": "Segnala un bug",
@@ -91,6 +91,7 @@
     "addToCalendar": "Aggiungi al calendario",
     "open": "Aprire",
     "closed": "Chiuso",
+    "signUp": "Radunatevi",
     "signedUp": "✓ Iscritto",
     "signupCount": "{count, plural, =0 {No signups} uno {# signup} altri {# signups} }",
     "youreSignedUp": "La registrazione è andata a buon fine!",
@@ -104,8 +105,7 @@
     "startTime": "Ora di inizio:",
     "signupCloses": "Le iscrizioni chiudono:",
     "slotsLabel": "Slot:",
-    "slotsValue": "{maxPlayers} giocatori + {maxBackups} backup ciascuno",
-    "signUp": "Radunatevi"
+    "slotsValue": "{maxPlayers} giocatori + {maxBackups} backup ciascuno"
   },
   "eventCard": {
     "deleted": "Eliminato",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Richiedi una posizione di leadership ( {slots} per squadra)",
     "leadershipHelp": "I leader coordinano la propria squadra durante la partita. Gli amministratori scelgono chi riceve il ruolo in base alle richieste.",
     "leadershipNotePlaceholder": "Perché ti piacerebbe ricoprire un ruolo di leadership? (facoltativo)",
+    "submit": "Rally Up",
     "submitUpdate": "Aggiorna la registrazione",
-    "errorGeneric": "Si è verificato un errore. Riprova.",
-    "submit": "Rally Up"
+    "errorGeneric": "Si è verificato un errore. Riprova."
   },
   "createEventForm": {
     "eventType": "Tipo di evento",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Il problema che risolviamo",
       "heading": "Le corporazioni perdono membri a causa dei conflitti.",
+      "body": "Pianificazione degli eventi sepolta nei thread di Discord. Iscrizioni tracciate in un foglio di calcolo che qualcuno si è dimenticato di aggiornare. Promemoria che non si attivano. Giocatori che hanno smesso di partecipare perché nulla li ha invogliati a tornare. Rally Up risolve tutti questi problemi.",
       "beforeTitle": "Prima",
       "beforeBody": "Discussioni disordinate su Discord, iscrizioni perse, promemoria non inviati, nessuna traccia di chi si è effettivamente presentato e membri che si allontanano lentamente.",
       "afterTitle": "Dopo",
       "afterBody": "Un modulo di iscrizione per ogni evento. Promemoria automatici su Discord a 1 giorno, 1 ora e 20 minuti. Monitoraggio delle presenze e delle valutazioni. Partite di allenamento e duelli con classifiche e punteggio ELO. Un motivo valido per accedere.",
       "outcomeTitle": "Risultato",
-      "outcomeBody": "Più eventi con partecipanti al completo. Più competizione tra gilde. Più motivi per cui i tuoi membri torneranno e una registrazione di chi effettivamente si impegna a fondo.",
-      "body": "Pianificazione degli eventi sepolta nei thread di Discord. Iscrizioni tracciate in un foglio di calcolo che qualcuno si è dimenticato di aggiornare. Promemoria che non si attivano. Giocatori che hanno smesso di partecipare perché nulla li ha invogliati a tornare. Rally Up risolve tutti questi problemi."
+      "outcomeBody": "Più eventi con partecipanti al completo. Più competizione tra gilde. Più motivi per cui i tuoi membri torneranno e una registrazione di chi effettivamente si impegna a fondo."
     },
     "features": {
       "heading": "Cosa c'è dentro?",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Benvenuti a Rally Up",
     "subtitle": "Qui la tua gilda si iscrive agli eventi: partite di Shadowfront, allenamenti e qualsiasi altra attività che la leadership voglia inserire in calendario.",
     "sections": {
       "gettingIn": "Entrare",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Sottocomandi:",
       "propagationNote": "I nuovi comandi slash impiegano fino a circa un'ora per apparire su Discord la prima volta che il bot viene aggiunto a un server. Dopodiché, sono istantanei."
     },
-    "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni.",
-    "title": "Benvenuti a Rally Up"
+    "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni."
+  },
+  "signin": {
+    "kicker": "Accedi",
+    "subtitle": "Accedi con Google o Discord per unirti alla tua gilda.",
+    "google": "Continua con Google",
+    "discord": "Continua con Discord",
+    "errorHeading": "Accesso non riuscito.",
+    "errorBody": "A volte Discord e Google riscontrano problemi durante lo scambio di dati OAuth. Riprova e, se il problema persiste, contattaci tramite il link di supporto di Discord che trovi nel piè di pagina."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Unisciti al canale vocale della squadra: {link}",
       "optOutHint": "_Per disabilitare i futuri inviti vocali, usa `/settings voice_invites enabled:false` in Discord._",
+      "test": "Messaggio vocale di prova da **Rally Up** — ** {squadLabel} **. Fai clic per unirti: <# {channelId} >",
       "leadStartingNow": "a partire da adesso",
       "leadMinutes": "inizia tra {minutes} minuti",
       "leadOneHour": "inizia tra 1 ora",
       "leadHours": "inizia tra {hours} ore",
-      "leadTomorrow": "inizia domani",
-      "test": "Messaggio vocale di prova da **Rally Up** — ** {squadLabel} **. Fai clic per unirti: <# {channelId} >"
+      "leadTomorrow": "inizia domani"
     },
     "duel": {
       "proposedHeading": "**Duello proposto** — {proposer} ha sfidato {opposer} in un 1 contro 1.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Dettagli: < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Accedi",
-    "subtitle": "Accedi con Google o Discord per unirti alla tua gilda.",
-    "google": "Continua con Google",
-    "discord": "Continua con Discord",
-    "errorHeading": "Accesso non riuscito.",
-    "errorBody": "A volte Discord e Google riscontrano problemi durante lo scambio di dati OAuth. Riprova e, se il problema persiste, contattaci tramite il link di supporto di Discord che trovi nel piè di pagina."
+  "pageHeader": {
+    "kicker": {
+      "events": "La tua gilda",
+      "players": "Trova avversari",
+      "leaderboard": "Classifica dei server",
+      "members": "Elenco della gilda",
+      "duels": "I tuoi duelli",
+      "me": "Account"
+    }
   }
 }

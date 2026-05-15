@@ -11,6 +11,7 @@ import { LocaleSwitcher } from "@/components/locale-switcher";
 import { DuelSettingsForm } from "@/components/duel-settings-form";
 import { DiscordIdForm } from "@/components/discord-id-form";
 import { MatchNotificationsForm } from "@/components/match-notifications-form";
+import { PageHeader } from "@/components/page-header";
 
 export const metadata = {
   title: "My Account",
@@ -21,6 +22,7 @@ export default async function MePage() {
   const membership = requireSignedInPage(session);
   const t = await getTranslations("myAccount");
   const tMembers = await getTranslations("membersPage");
+  const tHeader = await getTranslations("pageHeader.kicker");
 
   const me = await db.query.users.findFirst({
     where: eq(users.id, membership.userId),
@@ -61,12 +63,11 @@ export default async function MePage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-8">
-      <header>
-        <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          {t("title")}
-        </h1>
-        <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t("subtitle")}</p>
-      </header>
+      <PageHeader
+        kicker={tHeader("me")}
+        title={t("title")}
+        subtitle={t("subtitle")}
+      />
 
       <section>
         <h2 className="mb-3 text-lg font-semibold">{t("inGameName")}</h2>

@@ -66,11 +66,11 @@
     "dismiss": "Alpha-melding negeren"
   },
   "footer": {
+    "tagline": "VERZAMEL JEZELF. ANTWOORD SAMEN.",
     "feedback": "FEEDBACK",
     "discordSupport": "DISCORD-ONDERSTEUNING",
     "terms": "VOORWAARDEN",
-    "privacy": "PRIVACY",
-    "tagline": "VERZAMEL JEZELF. ANTWOORD SAMEN."
+    "privacy": "PRIVACY"
   },
   "feedback": {
     "reportBug": "Een bug melden",
@@ -91,6 +91,7 @@
     "addToCalendar": "Voeg toe aan agenda",
     "open": "Open",
     "closed": "Gesloten",
+    "signUp": "Kom in actie!",
     "signedUp": "✓ Aangemeld",
     "signupCount": "{count, plural, =0 {No signups} één {# signup} andere {# signups} }",
     "youreSignedUp": "Je bent aangemeld!",
@@ -104,8 +105,7 @@
     "startTime": "Aanvangstijd:",
     "signupCloses": "Aanmelding sluit:",
     "slotsLabel": "Slots:",
-    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk",
-    "signUp": "Kom in actie!"
+    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk"
   },
   "eventCard": {
     "deleted": "Verwijderd",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Vraag een leidinggevende functie aan ( {slots} per team)",
     "leadershipHelp": "De leiders coördineren hun team tijdens de wedstrijd. De beheerders kiezen wie de rol krijgt op basis van de aanvragen.",
     "leadershipNotePlaceholder": "Waarom zou u graag een leidinggevende rol willen? (optioneel)",
+    "submit": "Kom in actie!",
     "submitUpdate": "Update aanmelden",
-    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
-    "submit": "Kom in actie!"
+    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw."
   },
   "createEventForm": {
     "eventType": "Gebeurtenistype",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Het probleem dat we oplossen",
       "heading": "Gilden verliezen leden door onderlinge conflicten.",
+      "body": "Evenementenplanning verborgen in Discord-threads. Aanmeldingen bijgehouden in een spreadsheet die iemand vergeten is bij te werken. Herinneringen die niet werden verzonden. Spelers die niet meer kwamen opdagen omdat er niets was om ze terug te halen. Rally Up lost dit allemaal op.",
       "beforeTitle": "Voor",
       "beforeBody": "Rommelige Discord-gesprekken, verloren aanmeldingen, gemiste herinneringen, geen overzicht van wie er daadwerkelijk aanwezig was — en leden die langzaam afhaken.",
       "afterTitle": "Na",
       "afterBody": "Eén inschrijfformulier per evenement. Automatische Discord-herinneringen 1 dag, 1 uur en 20 minuten van tevoren. Aanwezigheid en beoordelingen worden bijgehouden. Oefenwedstrijden en duels met scoreborden en ELO-punten. Een duidelijke reden om in te loggen.",
       "outcomeTitle": "Resultaat",
-      "outcomeBody": "Meer evenementen met volledige deelnemerslijsten. Meer competitie tussen verschillende gilden. Meer redenen voor je leden om terug te komen – en een overzicht van wie daadwerkelijk zijn steentje bijdraagt.",
-      "body": "Evenementenplanning verborgen in Discord-threads. Aanmeldingen bijgehouden in een spreadsheet die iemand vergeten is bij te werken. Herinneringen die niet werden verzonden. Spelers die niet meer kwamen opdagen omdat er niets was om ze terug te halen. Rally Up lost dit allemaal op."
+      "outcomeBody": "Meer evenementen met volledige deelnemerslijsten. Meer competitie tussen verschillende gilden. Meer redenen voor je leden om terug te komen – en een overzicht van wie daadwerkelijk zijn steentje bijdraagt."
     },
     "features": {
       "heading": "Wat zit erin?",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Welkom bij Rally Up",
     "subtitle": "Hier kan je gilde zich aanmelden voor evenementen: Shadowfront-wedstrijden, oefenwedstrijden en alles wat de leiding verder op de kalender wil zetten.",
     "sections": {
       "gettingIn": "Instappen",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Subopdrachten:",
       "propagationNote": "Nieuwe slash-commando's verschijnen pas na ongeveer een uur in Discord nadat de bot aan een server is toegevoegd. Daarna zijn ze direct beschikbaar."
     },
-    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen.",
-    "title": "Welkom bij Rally Up"
+    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
+  },
+  "signin": {
+    "kicker": "Meld u aan bij",
+    "subtitle": "Meld je aan met Google of Discord om lid te worden van je gilde.",
+    "google": "Ga verder met Google",
+    "discord": "Ga verder met Discord",
+    "errorHeading": "Aanmelden mislukt.",
+    "errorBody": "Discord en Google ondervinden soms problemen met de OAuth-uitwisseling. Probeer het opnieuw, en als het probleem zich blijft voordoen, neem dan contact met ons op via de Discord-ondersteuningslink in de voettekst."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Word lid van het spraakkanaal van het team: {link}",
       "optOutHint": "_Om toekomstige spraakuitnodigingen uit te schakelen, gebruik je `/settings voice_invites enabled:false` in Discord._",
+      "test": "Test spraak-DM van **Rally Up** — ** {squadLabel} **. Klik om deel te nemen: <# {channelId} >",
       "leadStartingNow": "vanaf nu",
       "leadMinutes": "begint over {minutes} notulen",
       "leadOneHour": "begint over 1 uur",
       "leadHours": "begint over {hours} uren",
-      "leadTomorrow": "begint morgen",
-      "test": "Test spraak-DM van **Rally Up** — ** {squadLabel} **. Klik om deel te nemen: <# {channelId} >"
+      "leadTomorrow": "begint morgen"
     },
     "duel": {
       "proposedHeading": "**Duel voorgesteld** — {proposer} heeft {opposer} naar een 1-tegen-1 gevecht.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Details: < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Meld u aan bij",
-    "subtitle": "Meld je aan met Google of Discord om lid te worden van je gilde.",
-    "google": "Ga verder met Google",
-    "discord": "Ga verder met Discord",
-    "errorHeading": "Aanmelden mislukt.",
-    "errorBody": "Discord en Google ondervinden soms problemen met de OAuth-uitwisseling. Probeer het opnieuw, en als het probleem zich blijft voordoen, neem dan contact met ons op via de Discord-ondersteuningslink in de voettekst."
+  "pageHeader": {
+    "kicker": {
+      "events": "Jouw gilde",
+      "players": "Zoek tegenstanders",
+      "leaderboard": "Serverranglijsten",
+      "members": "Gildeledenlijst",
+      "duels": "Jouw duels",
+      "me": "Rekening"
+    }
   }
 }

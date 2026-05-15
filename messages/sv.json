@@ -66,11 +66,11 @@
     "dismiss": "Stäng alfameddelande"
   },
   "footer": {
+    "tagline": "SAMLAS. SVARA TILLSAMMANS.",
     "feedback": "FEED-BACK",
     "discordSupport": "DISCORD-STÖD",
     "terms": "VILLKOR",
-    "privacy": "PRIVATLIV",
-    "tagline": "SAMLAS. SVARA TILLSAMMANS."
+    "privacy": "PRIVATLIV"
   },
   "feedback": {
     "reportBug": "Rapportera ett fel",
@@ -91,6 +91,7 @@
     "addToCalendar": "Lägg till i kalendern",
     "open": "Öppna",
     "closed": "Stängd",
+    "signUp": "Samla upp",
     "signedUp": "✓ Registrerad",
     "signupCount": "{count, plural, =0 {No signups} en {# signup} andra {# signups} }",
     "youreSignedUp": "Du är anmäld!",
@@ -104,8 +105,7 @@
     "startTime": "Starttid:",
     "signupCloses": "Anmälan stänger:",
     "slotsLabel": "Slots:",
-    "slotsValue": "{maxPlayers} spelare + {maxBackups} säkerhetskopior varje",
-    "signUp": "Samla upp"
+    "slotsValue": "{maxPlayers} spelare + {maxBackups} säkerhetskopior varje"
   },
   "eventCard": {
     "deleted": "Borttagen",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Ansök om en ledarposition ( {slots} per lag)",
     "leadershipHelp": "Ledarna koordinerar sin trupp under matchen. Administratörerna väljer vem som får rollen utifrån förfrågningarna.",
     "leadershipNotePlaceholder": "Varför skulle du vilja ha en ledarroll? (valfritt)",
+    "submit": "Samla upp",
     "submitUpdate": "Uppdatera registrering",
-    "errorGeneric": "Något gick fel. Försök igen.",
-    "submit": "Samla upp"
+    "errorGeneric": "Något gick fel. Försök igen."
   },
   "createEventForm": {
     "eventType": "Händelsetyp",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Problemet vi löser",
       "heading": "Gillen förlorar medlemmar på grund av friktion.",
+      "body": "Evenemangsschemaläggning begravd i Discord-trådar. Registreringar som spåras i ett kalkylblad som någon glömt att uppdatera. Påminnelser som inte aktiverades. Spelare som slutade dyka upp eftersom ingenting lockade dem tillbaka. Rally Up fixar allt det där.",
       "beforeTitle": "Före",
       "beforeBody": "Röriga Discord-trådar, förlorade registreringar, missade påminnelser, ingen registrering av vilka som faktiskt dök upp – och medlemmar som sakta försvinner.",
       "afterTitle": "Efter",
       "afterBody": "Ett anmälningsformulär per evenemang. Automatiska Discord-påminnelser för 1 dag, 1 timme och 20 minuter. Närvaro + betyg spåras. Träningsmatcher och dueller med topplistor och ELO. En tydlig anledning att logga in.",
       "outcomeTitle": "Resultat",
-      "outcomeBody": "Fler evenemang med fullständiga laguppställningar. Mer konkurrens mellan olika gille. Fler anledningar för dina medlemmar att komma tillbaka – och en översikt över vilka som faktiskt bär sin vikt.",
-      "body": "Evenemangsschemaläggning begravd i Discord-trådar. Registreringar som spåras i ett kalkylblad som någon glömt att uppdatera. Påminnelser som inte aktiverades. Spelare som slutade dyka upp eftersom ingenting lockade dem tillbaka. Rally Up fixar allt det där."
+      "outcomeBody": "Fler evenemang med fullständiga laguppställningar. Mer konkurrens mellan olika gille. Fler anledningar för dina medlemmar att komma tillbaka – och en översikt över vilka som faktiskt bär sin vikt."
     },
     "features": {
       "heading": "Vad som finns inuti",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Välkommen till Rally Up",
     "subtitle": "Det är här din gille anmäler sig till evenemang — Shadowfront-matcher, träningsmatcher och allt annat som ledningen vill ha i kalendern.",
     "sections": {
       "gettingIn": "Att komma in",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Delkommandon:",
       "propagationNote": "Det tar upp till ungefär en timme innan nya slash-kommandon visas i Discord första gången efter att boten har lagts till på en server. Därefter är de omedelbart tillgängliga."
     },
-    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt.",
-    "title": "Välkommen till Rally Up"
+    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
+  },
+  "signin": {
+    "kicker": "Logga in på",
+    "subtitle": "Logga in med Google eller Discord för att gå med i din gille.",
+    "google": "Fortsätt med Google",
+    "discord": "Fortsätt med Discord",
+    "errorHeading": "Inloggningen misslyckades.",
+    "errorBody": "Discord och Google har ibland problem med OAuth-returen. Försök igen, och om det fortsätter att hända, kontakta oss via Discord-supportlänken i sidfoten."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Gå med i truppens röstkanal: {link}",
       "optOutHint": "_För att inaktivera framtida röstinbjudningar, använd `/settings voice_invites enabled:false` i Discord._",
+      "test": "Testa röstmeddelande från **Rally Up** — ** {squadLabel} **. Klicka för att gå med: <# {channelId} >",
       "leadStartingNow": "börjar nu",
       "leadMinutes": "börjar om {minutes} minuter",
       "leadOneHour": "börjar om 1 timme",
       "leadHours": "börjar om {hours} timmar",
-      "leadTomorrow": "börjar imorgon",
-      "test": "Testa röstmeddelande från **Rally Up** — ** {squadLabel} **. Klicka för att gå med: <# {channelId} >"
+      "leadTomorrow": "börjar imorgon"
     },
     "duel": {
       "proposedHeading": "**Duell föreslagen** — {proposer} har utmanat {opposer} till en 1v1.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Detaljer: < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Logga in på",
-    "subtitle": "Logga in med Google eller Discord för att gå med i din gille.",
-    "google": "Fortsätt med Google",
-    "discord": "Fortsätt med Discord",
-    "errorHeading": "Inloggningen misslyckades.",
-    "errorBody": "Discord och Google har ibland problem med OAuth-returen. Försök igen, och om det fortsätter att hända, kontakta oss via Discord-supportlänken i sidfoten."
+  "pageHeader": {
+    "kicker": {
+      "events": "Ditt gille",
+      "players": "Hitta motståndare",
+      "leaderboard": "Serverrankningar",
+      "members": "Gildets lista",
+      "duels": "Dina dueller",
+      "me": "Konto"
+    }
   }
 }

@@ -66,11 +66,11 @@
     "dismiss": "Avis de rejet alpha"
   },
   "footer": {
+    "tagline": "RASSEMBLONS-NOUS. RÉPONDONS ENSEMBLE.",
     "feedback": "RETOUR",
     "discordSupport": "ASSISTANCE DISCORD",
     "terms": "TERMES",
-    "privacy": "CONFIDENTIALITÉ",
-    "tagline": "RASSEMBLONS-NOUS. RÉPONDONS ENSEMBLE."
+    "privacy": "CONFIDENTIALITÉ"
   },
   "feedback": {
     "reportBug": "Signaler un bug",
@@ -91,6 +91,7 @@
     "addToCalendar": "Ajouter au calendrier",
     "open": "Ouvrir",
     "closed": "Fermé",
+    "signUp": "Rassemblement",
     "signedUp": "✓ Inscription",
     "signupCount": "{count, plural, =0 {No signups} un {# signup} autres {# signups} }",
     "youreSignedUp": "Vous êtes inscrit !",
@@ -104,8 +105,7 @@
     "startTime": "Heure de début :",
     "signupCloses": "Les inscriptions se terminent le :",
     "slotsLabel": "Machines à sous :",
-    "slotsValue": "{maxPlayers} joueurs + {maxBackups} sauvegardes chaque",
-    "signUp": "Rassemblement"
+    "slotsValue": "{maxPlayers} joueurs + {maxBackups} sauvegardes chaque"
   },
   "eventCard": {
     "deleted": "Supprimé",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Demander un poste de direction ( {slots} par équipe)",
     "leadershipHelp": "Les chefs d'équipe coordonnent leurs joueurs pendant le match. Les administrateurs choisissent les joueurs qui obtiennent ce rôle parmi les demandes reçues.",
     "leadershipNotePlaceholder": "Pourquoi souhaiteriez-vous occuper un poste de direction ? (facultatif)",
+    "submit": "Rassemblement",
     "submitUpdate": "Mettre à jour l'inscription",
-    "errorGeneric": "Une erreur s'est produite. Veuillez réessayer.",
-    "submit": "Rassemblement"
+    "errorGeneric": "Une erreur s'est produite. Veuillez réessayer."
   },
   "createEventForm": {
     "eventType": "Type d'événement",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Le problème que nous résolvons",
       "heading": "Les guildes perdent des membres à cause des frictions.",
+      "body": "Planification d'événements enfouie dans des discussions Discord. Inscriptions suivies dans un tableur oublié à jour. Rappels non envoyés. Joueurs qui ont cessé de participer faute de motivation. Rally Up résout tous ces problèmes.",
       "beforeTitle": "Avant",
       "beforeBody": "Des fils de discussion Discord désordonnés, des inscriptions perdues, des rappels manqués, aucune trace de qui s'est réellement présenté — et des membres qui s'en vont petit à petit.",
       "afterTitle": "Après",
       "afterBody": "Une seule inscription par événement. Rappels automatiques sur Discord à 1 jour, 1 heure et 20 minutes. Suivi des présences et des classements. Matchs d'entraînement et duels avec classements et ELO. Une excellente raison de se connecter.",
       "outcomeTitle": "Résultat",
-      "outcomeBody": "Plus d'événements avec des effectifs complets. Plus de compétitions inter-guildes. Plus de raisons pour vos membres de revenir — et un historique de ceux qui contribuent réellement.",
-      "body": "Planification d'événements enfouie dans des discussions Discord. Inscriptions suivies dans un tableur oublié à jour. Rappels non envoyés. Joueurs qui ont cessé de participer faute de motivation. Rally Up résout tous ces problèmes."
+      "outcomeBody": "Plus d'événements avec des effectifs complets. Plus de compétitions inter-guildes. Plus de raisons pour vos membres de revenir — et un historique de ceux qui contribuent réellement."
     },
     "features": {
       "heading": "Qu'y a-t-il à l'intérieur ?",
@@ -721,6 +721,7 @@
     }
   },
   "playerHelp": {
+    "title": "Bienvenue à Rally Up",
     "subtitle": "C'est ici que votre guilde s'inscrit aux événements : matchs de Shadowfront, entraînements et tout autre événement que les dirigeants souhaitent ajouter au calendrier.",
     "sections": {
       "gettingIn": "Entrer",
@@ -800,8 +801,15 @@
       "subcommandsLabel": "Sous-commandes :",
       "propagationNote": "Les nouvelles commandes slash peuvent mettre jusqu'à une heure environ pour apparaître sur Discord la première fois après l'ajout du bot à un serveur. Ensuite, elles sont instantanées."
     },
-    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement.",
-    "title": "Bienvenue à Rally Up"
+    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
+  },
+  "signin": {
+    "kicker": "Connectez-vous à",
+    "subtitle": "Connectez-vous avec Google ou Discord pour rejoindre votre guilde.",
+    "google": "Continuer avec Google",
+    "discord": "Continuez avec Discord",
+    "errorHeading": "Échec de la connexion.",
+    "errorBody": "Il arrive parfois que Discord et Google rencontrent des problèmes lors de l'authentification OAuth. Veuillez réessayer. Si le problème persiste, contactez-nous via le lien d'assistance Discord en bas de page."
   },
   "bot": {
     "common": {
@@ -845,12 +853,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Rejoignez le canal vocal de l'équipe : {link}",
       "optOutHint": "Pour désactiver les futures invitations vocales, utilisez la commande `/settings voice_invites enabled:false` dans Discord.",
+      "test": "Test vocal DM de **Rally Up** — ** {squadLabel} **. Cliquez pour rejoindre : <# {channelId} >",
       "leadStartingNow": "à partir de maintenant",
       "leadMinutes": "commence dans {minutes} minutes",
       "leadOneHour": "commence dans 1 heure",
       "leadHours": "commence dans {hours} heures",
-      "leadTomorrow": "commence demain",
-      "test": "Test vocal DM de **Rally Up** — ** {squadLabel} **. Cliquez pour rejoindre : <# {channelId} >"
+      "leadTomorrow": "commence demain"
     },
     "duel": {
       "proposedHeading": "**Duel proposé** — {proposer} a contesté {opposer} en 1v1.",
@@ -877,12 +885,14 @@
       "ctaReminder": "Détails : < {duelUrl} >"
     }
   },
-  "signin": {
-    "kicker": "Connectez-vous à",
-    "subtitle": "Connectez-vous avec Google ou Discord pour rejoindre votre guilde.",
-    "google": "Continuer avec Google",
-    "discord": "Continuez avec Discord",
-    "errorHeading": "Échec de la connexion.",
-    "errorBody": "Il arrive parfois que Discord et Google rencontrent des problèmes lors de l'authentification OAuth. Veuillez réessayer. Si le problème persiste, contactez-nous via le lien d'assistance Discord en bas de page."
+  "pageHeader": {
+    "kicker": {
+      "events": "Votre guilde",
+      "players": "Trouver des adversaires",
+      "leaderboard": "Classement des serveurs",
+      "members": "Liste des membres de la guilde",
+      "duels": "Vos duels",
+      "me": "Compte"
+    }
   }
 }
