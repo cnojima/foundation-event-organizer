@@ -95,6 +95,16 @@ export const users = sqliteTable("users", {
   // ratings live on the duel_proposals row; these are denormalized totals.
   feedbackUpCount: integer("feedback_up_count").notNull().default(sql`0`),
   feedbackDownCount: integer("feedback_down_count").notNull().default(sql`0`),
+  // Admin-managed "stub" players. Set when a guild admin pre-creates a
+  // member row before that player has signed in via OAuth. Both columns
+  // cleared the first time the player signs in and the row is claimed (see
+  // auth.ts signIn event). While set, the row functions as a regular guild
+  // member for rostering/notifications but has no `accounts` row.
+  stubCreatedByUserId: text("stub_created_by_user_id").references(
+    (): AnySQLiteColumn => users.id,
+    { onDelete: "set null" }
+  ),
+  stubCreatedAt: text("stub_created_at"),
 });
 
 export const accounts = sqliteTable(

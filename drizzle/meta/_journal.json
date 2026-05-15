@@ -85,6 +85,13 @@
       "when": 1778877613289,
       "tag": "0011_nullable_guild_creator",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "6",
+      "when": 1778878976887,
+      "tag": "0012_add_stub_users",
+      "breakpoints": true
     }
   ]
 }

@@ -5,6 +5,10 @@ import { auth } from "@/auth";
 import { requireGuildAdminPage } from "@/lib/rbac";
 import { notFound, redirect } from "next/navigation";
 import { AdminSignupRow } from "@/components/admin-signup-row";
+import {
+  AdminSignupOnBehalfForm,
+  type EligibleMember,
+} from "@/components/admin-signup-on-behalf-form";
 import { computeStanding, WAITLIST_ROLE } from "@/lib/waitlist";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { DeleteEventButton } from "@/components/delete-event-button";
@@ -132,6 +136,26 @@ export default async function AdminEventPage({
     event,
     eventSignups.map((s) => ({ assignedRole: s.signup.assignedRole }))
   );
+
+  // Members of this event's guild who haven't already signed up — fuel
+  // for the "Sign up player on behalf of" picker. Includes stubs.
+  const signedUpUserIds = new Set(eventSignups.map((s) => s.signup.userId));
+  const eligibleMembers: EligibleMember[] =
+    hasRoster && !event.deletedAt
+      ? (
+          await db
+            .select()
+            .from(users)
+            .where(eq(users.guildId, event.guildId))
+            .orderBy(users.inGameName, users.name)
+        )
+          .filter((u) => !signedUpUserIds.has(u.id))
+          .map((u) => ({
+            id: u.id,
+            display: displayName(u, guildTag),
+            isStub: !!u.stubCreatedAt,
+          }))
+      : [];
 
   return (
     <main className="max-w-6xl mx-auto p-6">
@@ -333,6 +357,19 @@ export default async function AdminEventPage({
               <div className="text-sm text-gray-500 dark:text-gray-400">Attended</div>
             </div>
           </div>
+
+          {!event.deletedAt && (
+            <div className="mb-6">
+              <AdminSignupOnBehalfForm
+                eventId={event.id}
+                squad1Name={event.squad1Name}
+                squad2Name={event.squad2Name}
+                leadershipSlots={event.leadershipSlots}
+                singleSquad={isScrim}
+                members={eligibleMembers}
+              />
+            </div>
+          )}
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <section>

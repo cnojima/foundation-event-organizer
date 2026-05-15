@@ -14,6 +14,7 @@ export type AuditAction =
   // Signups
   | "signup.create"
   | "signup.update"
+  | "signup.admin.create"
   | "signup.admin.update"
   | "signup.delete"
   // Members
@@ -22,6 +23,8 @@ export type AuditAction =
   | "member.kick"
   | "member.leave"
   | "member.join"
+  | "member.stub_create"
+  | "member.stub_claim"
   // Invites
   | "invite.create"
   | "invite.revoke"
