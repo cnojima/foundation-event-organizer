@@ -10,7 +10,7 @@ import { DuelAction } from "@/components/duel-row-actions";
 import { duelSideFor, viewerOutcome } from "@/lib/duels";
 
 export const metadata = {
-  title: "Duels — Foundation Event Organizer",
+  title: "Duels",
 };
 
 type DuelRow = typeof duelProposals.$inferSelect;

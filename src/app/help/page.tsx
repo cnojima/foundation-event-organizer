@@ -8,7 +8,7 @@ import {
 } from "@/components/help-layout";
 
 export const metadata = {
-  title: "Help — Foundation Event Organizer",
+  title: "Help",
 };
 
 // Translation strings are kept formatting-free; visual hierarchy

@@ -8,7 +8,7 @@ import { AuditRow } from "@/components/audit-row";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Audit Log — Foundation Event Organizer",
+  title: "Audit Log",
 };
 
 const PAGE_SIZE = 50;

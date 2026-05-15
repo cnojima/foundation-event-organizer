@@ -9,7 +9,7 @@ import {
 } from "@/components/help-layout";
 
 export const metadata = {
-  title: "Admin Help — Foundation Event Organizer",
+  title: "Admin Help",
 };
 
 // Same i18n approach as /help: translation strings hold only prose.

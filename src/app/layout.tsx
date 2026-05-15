@@ -26,8 +26,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FGF Event Organizer",
-  description: "Squad signup and management",
+  // Title template wraps child-page titles as "Page — Rally Up". Child
+  // pages set just the page-specific part (e.g. title: "Members"); the
+  // homepage uses `default` directly.
+  title: {
+    default: "Rally Up",
+    template: "%s — Rally Up",
+  },
+  description: "Squad signup and management for Foundation Galactic Frontier",
 };
 
 export default async function RootLayout({

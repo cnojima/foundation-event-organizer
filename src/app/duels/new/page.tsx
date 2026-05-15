@@ -8,7 +8,7 @@ import { displayName } from "@/lib/display";
 import { ProposeDuelForm } from "@/components/propose-duel-form";
 
 export const metadata = {
-  title: "Propose a Duel — Foundation Event Organizer",
+  title: "Propose a Duel",
 };
 
 export default async function NewDuelPage({

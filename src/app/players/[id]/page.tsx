@@ -26,7 +26,7 @@ const AUDIT_SLICE_LIMIT = 20;
 const HISTORY_PAGE_SIZE = 25;
 
 export const metadata = {
-  title: "Player profile — Foundation Event Organizer",
+  title: "Player profile",
 };
 
 // Public per-player profile: header (avatar/name/guild/tier), stats stripe

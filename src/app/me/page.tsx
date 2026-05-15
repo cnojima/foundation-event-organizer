@@ -13,7 +13,7 @@ import { DiscordIdForm } from "@/components/discord-id-form";
 import { MatchNotificationsForm } from "@/components/match-notifications-form";
 
 export const metadata = {
-  title: "My Account — Foundation Event Organizer",
+  title: "My Account",
 };
 
 export default async function MePage() {

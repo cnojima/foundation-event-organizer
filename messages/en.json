@@ -66,7 +66,7 @@
     "dismiss": "Dismiss alpha notice"
   },
   "footer": {
-    "tagline": "THE FOUNDATION CALLS. ANSWER TOGETHER.",
+    "tagline": "RALLY UP. ANSWER TOGETHER.",
     "feedback": "FEEDBACK",
     "discordSupport": "DISCORD SUPPORT",
     "terms": "TERMS",
@@ -91,7 +91,7 @@
     "addToCalendar": "Add to Calendar",
     "open": "Open",
     "closed": "Closed",
-    "signUp": "Sign up",
+    "signUp": "Rally up",
     "signedUp": "✓ Signed up",
     "signupCount": "{count, plural, =0 {No signups} one {# signup} other {# signups}}",
     "youreSignedUp": "You're signed up!",
@@ -138,7 +138,7 @@
     "leadershipLabel": "Request a leadership position ({slots} per squad)",
     "leadershipHelp": "Leaders coordinate their squad during the match. Admins choose who gets the role from the requests.",
     "leadershipNotePlaceholder": "Why would you like a leadership role? (optional)",
-    "submit": "Sign Up",
+    "submit": "Rally Up",
     "submitUpdate": "Update Signup",
     "errorGeneric": "Something went wrong. Please try again."
   },
@@ -667,7 +667,7 @@
     "engagement": {
       "kicker": "The problem we solve",
       "heading": "Guilds lose members to friction.",
-      "body": "Event scheduling buried in Discord threads. Signups tracked in a spreadsheet someone forgot to update. Reminders that didn't fire. Players who stopped showing up because nothing pulled them back. Foundation Event Organizer fixes all of that.",
+      "body": "Event scheduling buried in Discord threads. Signups tracked in a spreadsheet someone forgot to update. Reminders that didn't fire. Players who stopped showing up because nothing pulled them back. Rally Up fixes all of that.",
       "beforeTitle": "Before",
       "beforeBody": "Messy Discord threads, lost signups, missed reminders, no record of who actually showed up — and members slowly drifting away.",
       "afterTitle": "After",
@@ -721,7 +721,7 @@
     }
   },
   "playerHelp": {
-    "title": "Welcome to Foundation Event Organizer",
+    "title": "Welcome to Rally Up",
     "subtitle": "This is where your guild signs up for events — Shadowfront matches, scrims, and anything else the leadership wants on the calendar.",
     "sections": {
       "gettingIn": "Getting in",
@@ -821,8 +821,8 @@
     "signup": {
       "eventNotFound": "Event not found.",
       "failed": "Couldn't sign you up: {reason}",
-      "waitlisted": "You're on the waitlist — squads were full when you signed up. You'll be promoted automatically if a slot opens.",
-      "success": "You're signed up. See you on the field."
+      "waitlisted": "Standing reserve — squads were full when you signed up. You'll be promoted automatically if a slot opens.",
+      "success": "Rally locked in. See you on the field."
     },
     "settings": {
       "unknown": "Unknown setting.",
@@ -845,7 +845,7 @@
     "voiceDm": {
       "body": "**{subject}** {when}. Join the squad voice channel: {link}",
       "optOutHint": "_To disable future voice invites, use `/settings voice_invites enabled:false` in Discord._",
-      "test": "Test voice DM from **Foundation Event Organizer** — **{squadLabel}**. Click to join: <#{channelId}>",
+      "test": "Test voice DM from **Rally Up** — **{squadLabel}**. Click to join: <#{channelId}>",
       "leadStartingNow": "starting now",
       "leadMinutes": "starts in {minutes} minutes",
       "leadOneHour": "starts in 1 hour",

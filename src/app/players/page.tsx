@@ -11,7 +11,7 @@ import { PlayerSearchForm } from "@/components/player-search-form";
 const PAGE_SIZE = 25;
 
 export const metadata = {
-  title: "Players — Foundation Event Organizer",
+  title: "Players",
 };
 
 // Cross-guild player discovery, scoped to the viewer's own Server #.

@@ -508,7 +508,7 @@ function MockDiscord() {
         <div className="min-w-0 flex-1">
           <div className="flex items-baseline gap-2">
             <span className="font-semibold text-white">
-              Foundation Event Organizer
+              Rally Up
             </span>
             <span className="rounded bg-violet-500 px-1 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white">
               Bot

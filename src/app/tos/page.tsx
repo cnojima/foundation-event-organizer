@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Terms of Service — Foundation Event Organizer",
+  title: "Terms of Service",
 };
 
 const LAST_UPDATED = "2026-05-12";
@@ -20,11 +20,10 @@ export default function TermsOfServicePage() {
 
       <Section title="1. What this is">
         <p>
-          Foundation Event Organizer (&ldquo;the Service&rdquo;) is a free
-          fan-made tool for organizing squad-based event signups, scrimmages,
-          and 1-vs-1 duels for the Foundation Galactic Frontier community. It
-          is not affiliated with, endorsed by, or operated by the game&rsquo;s
-          publisher.
+          Rally Up (&ldquo;the Service&rdquo;) is a free fan-made tool for
+          organizing squad-based event signups, scrimmages, and 1-vs-1 duels
+          for the Foundation Galactic Frontier community. It is not affiliated
+          with, endorsed by, or operated by the game&rsquo;s publisher.
         </p>
       </Section>
 

@@ -16,7 +16,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 
 export const metadata = {
-  title: "Duel — Foundation Event Organizer",
+  title: "Duel",
 };
 
 // Duel detail page — accessible to either participant (and super-admins).

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 export const metadata = {
-  title: "Privacy Policy — Foundation Event Organizer",
+  title: "Privacy Policy",
 };
 
 const LAST_UPDATED = "2026-05-12";

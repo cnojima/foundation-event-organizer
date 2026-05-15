@@ -9,7 +9,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
 
 export const metadata = {
-  title: "Members — Foundation Event Organizer",
+  title: "Members",
 };
 
 // Read-only roster for any guild member. Same data as /admin/members but

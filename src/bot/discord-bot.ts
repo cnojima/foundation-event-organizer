@@ -550,7 +550,7 @@ export async function sendTestMessage(
     };
   }
 
-  const content = `Test message from **Foundation Event Organizer** — guild **${guildName}**. Your Discord integration is working. Event reminders will be sent here.`;
+  const content = `Test message from **Rally Up** — guild **${guildName}**. Your Discord integration is working. Event reminders will be sent here.`;
 
   // Post the message.
   const postRes = await fetch(

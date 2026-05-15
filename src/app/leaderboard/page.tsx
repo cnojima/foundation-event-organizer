@@ -17,7 +17,7 @@ const PAGE_SIZE = 25;
 const MIN_DUELS_FOR_LEADERBOARD = 3;
 
 export const metadata = {
-  title: "Leaderboard — Foundation Event Organizer",
+  title: "Leaderboard",
 };
 
 export default async function LeaderboardPage({

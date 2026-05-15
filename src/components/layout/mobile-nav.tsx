@@ -77,10 +77,10 @@ export function MobileNav({ signedIn, guildRole, isSuperAdmin, guildName }: Prop
                 <BrandMark size={32} />
                 <div className="leading-tight">
                   <div className="text-sm font-bold tracking-wider text-gray-900 dark:text-gray-100">
-                    FOUNDATION
+                    RALLY UP
                   </div>
                   <div className="text-[10px] font-medium tracking-[0.2em] text-gray-500 dark:text-gray-400">
-                    EVENT ORGANIZER
+                    FOUNDATION GALACTIC FRONTIER
                   </div>
                 </div>
               </div>
