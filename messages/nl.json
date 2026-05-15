@@ -731,8 +731,8 @@
       "scrims": "Oefenwedstrijden",
       "duels": "1-tegen-1 duels",
       "reminders": "Herinneringen en agenda",
-      "closed": "Als de inschrijvingen gesloten zijn",
-      "slashCommands": "Discord slash-commando's"
+      "slashCommands": "Discord slash-commando's",
+      "closed": "Als de inschrijvingen gesloten zijn"
     },
     "gettingIn": {
       "step1": "Meld je aan met Google of Discord op de homepage.",
@@ -788,7 +788,6 @@
       "ics": "Op elke evenementpagina vind je een link om het .ics-bestand te downloaden, waarmee je het evenement aan je agenda kunt toevoegen.",
       "slashCommands": "Discord slash-commando's: /upcoming toont een lijst met aankomende evenementen van je gilde, en met /signup kun je je aanmelden zonder Discord te verlaten. Je moet je wel eerst minstens één keer aanmelden op de website met Discord, zodat de bot je account kan koppelen."
     },
-    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen.",
     "slashCommands": {
       "intro": "Als je gilde de Discord-bot op je server heeft, kun je deze commando's gebruiken vanuit elk tekstkanaal waar de bot berichten mag zien en plaatsen.",
       "linkAccount": "Eerste gebruik: je moet minstens één keer ingelogd zijn op de website met Discord, zodat de bot je Discord-ID aan je gildeaccount kan koppelen. Als je dat nog niet hebt gedaan, zal de bot je vertellen wat je moet doen.",
@@ -801,7 +800,8 @@
       "settingsBody": "Bekijk of wijzig je notificatievoorkeuren zonder naar de website te hoeven gaan. Handig als de spraakberichten van de T-10 veel lawaai maken en je ze snel wilt dempen.",
       "subcommandsLabel": "Subopdrachten:",
       "propagationNote": "Nieuwe slash-commando's verschijnen pas na ongeveer een uur in Discord nadat de bot aan een server is toegevoegd. Daarna zijn ze direct beschikbaar."
-    }
+    },
+    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Taal bijgewerkt naar ** {label} ** (` {code} Toekomstige botreacties en DM's zullen in deze taal zijn.",
       "cleared": "Taalvoorkeur gewist. Automatische detectie wordt gebruikt.",
       "unsupported": "` {code} ` is geen ondersteunde taal."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Word lid van het spraakkanaal van het team: {link}",
+      "optOutHint": "_Om toekomstige spraakuitnodigingen uit te schakelen, gebruik je `/settings voice_invites enabled:false` in Discord._",
+      "test": "Test-DM van **Organisator van stichtingsevenementen** — ** {squadLabel} **. Klik om deel te nemen: <# {channelId} >",
+      "leadStartingNow": "vanaf nu",
+      "leadMinutes": "begint over {minutes} notulen",
+      "leadOneHour": "begint over 1 uur",
+      "leadHours": "begint over {hours} uren",
+      "leadTomorrow": "begint morgen"
+    },
+    "duel": {
+      "proposedHeading": "**Duel voorgesteld** — {proposer} heeft {opposer} naar een 1-tegen-1 gevecht.",
+      "acceptedHeading": "**Duel geaccepteerd** — {opposer} geaccepteerd {proposer} 's 1v1-uitdaging.",
+      "cancelled": "**Duel afgelast** — Het 1-tegen-1 duel tussen {proposer} en {opposer} (gepland voor {when} ) is geannuleerd.",
+      "resultDeclaredHeading": "**Uitslag van het duel bekendgemaakt** — De 1 tegen 1 tussen {proposer} en {opposer} ( {when} ) heeft een eindresultaat.",
+      "withdrawnHeading": "**Duel ingetrokken** — {proposer} hebben hun 1-tegen-1-uitdaging tegen {opposer} ingetrokken. {opposer} .",
+      "editedHeading": "**Duel bijgewerkt** — {proposer} hun 1-tegen-1-uitdaging tegen {opposer} bijgewerkt. {opposer} .",
+      "reminderHeading": "**Herinnering duel** — Jouw 1-tegen-1 duel met {proposer} en {opposer} {lead} .",
+      "declinedHeading": "**Duel geweigerd** — {opposer} afgewezen {proposer} 's 1v1-uitdaging.",
+      "leadDay": "begint morgen",
+      "leadHour": "begint over ongeveer 1 uur",
+      "leadTwentyMin": "begint over 20 minuten",
+      "leadDefault": "begint {relative}",
+      "timeLine": "Tijd: {when} ( {relative} )",
+      "timeLineNoRelative": "Tijd: {when}",
+      "locationLine": "Locatie: {location}",
+      "winConditionLine": "Winstvoorwaarde: {winCondition}",
+      "wasProposedFor": "Werd voorgesteld voor {when} .",
+      "ctaProposed": "{opposer} Je kunt het duel accepteren of afwijzen via < {duelUrl} >",
+      "ctaAccepted": "Details: < {duelUrl} >",
+      "ctaResult": "Bekijk het op < {duelUrl} >",
+      "ctaEdited": "Bekijk en accepteer of weiger op < {duelUrl} >",
+      "ctaReminder": "Details: < {duelUrl} >"
     }
   }
 }

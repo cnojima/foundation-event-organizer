@@ -731,8 +731,8 @@
       "scrims": "Các sự kiện giao hữu",
       "duels": "đấu tay đôi 1v1",
       "reminders": "Lời nhắc và lịch",
-      "closed": "Nếu việc đăng ký đã đóng",
-      "slashCommands": "Lệnh gạch chéo Discord"
+      "slashCommands": "Lệnh gạch chéo Discord",
+      "closed": "Nếu việc đăng ký đã đóng"
     },
     "gettingIn": {
       "step1": "Đăng nhập bằng tài khoản Google hoặc Discord trên trang chủ.",
@@ -788,7 +788,6 @@
       "ics": "Mỗi trang sự kiện đều có liên kết \"Tải xuống tệp .ics\" để thêm sự kiện vào lịch của bạn.",
       "slashCommands": "Các lệnh slash trên Discord: /upcoming liệt kê các sự kiện sắp tới của bang hội bạn, và /signup cho phép bạn đăng ký mà không cần rời khỏi Discord. Bạn phải đăng nhập vào trang web bằng Discord ít nhất một lần trước, để bot có thể xác nhận tài khoản của bạn."
     },
-    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công.",
     "slashCommands": {
       "intro": "Nếu máy chủ Discord của bang hội bạn có cài đặt bot, bạn có thể sử dụng các lệnh này từ bất kỳ kênh văn bản nào mà bot được phép xem và đăng bài.",
       "linkAccount": "Lần sử dụng đầu tiên: bạn cần đăng nhập vào trang web bằng Discord ít nhất một lần để bot có thể liên kết ID Discord của bạn với tài khoản guild. Nếu chưa, bot sẽ hướng dẫn bạn các bước cần thực hiện.",
@@ -801,7 +800,8 @@
       "settingsBody": "Xem hoặc thay đổi tùy chọn thông báo của bạn mà không cần truy cập trang web. Hữu ích khi tin nhắn thoại T-10 quá ồn và bạn muốn tắt tiếng nhanh chóng.",
       "subcommandsLabel": "Lệnh phụ:",
       "propagationNote": "Các lệnh gạch chéo mới cần khoảng 1 giờ để xuất hiện trong Discord lần đầu tiên sau khi bot được thêm vào máy chủ. Sau đó, chúng sẽ xuất hiện ngay lập tức."
-    }
+    },
+    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Ngôn ngữ đã được cập nhật thành ** {label} ** (` {code} `). Các phản hồi và tin nhắn riêng từ bot trong tương lai sẽ được viết bằng ngôn ngữ này.",
       "cleared": "Tùy chọn ngôn ngữ đã bị xóa. Chức năng tự động nhận diện sẽ được sử dụng.",
       "unsupported": "` {code} ` không phải là ngôn ngữ được hỗ trợ."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Tham gia kênh thoại của nhóm: {link}",
+      "optOutHint": "Để tắt lời mời thoại trong tương lai, hãy sử dụng lệnh `/settings voice_invites enabled:false` trong Discord.",
+      "test": "Tin nhắn thoại thử nghiệm từ **Người tổ chức sự kiện của Quỹ** — ** {squadLabel} **. Nhấp để tham gia: <# {channelId} >",
+      "leadStartingNow": "bắt đầu từ bây giờ",
+      "leadMinutes": "Bắt đầu sau {minutes} phút",
+      "leadOneHour": "Bắt đầu sau 1 giờ",
+      "leadHours": "Bắt đầu sau {hours} giờ",
+      "leadTomorrow": "bắt đầu từ ngày mai"
+    },
+    "duel": {
+      "proposedHeading": "**Đề xuất đấu tay đôi** — {proposer} đã thách thức {opposer} vào trận đấu 1 chọi 1.",
+      "acceptedHeading": "**Chấp nhận đấu tay đôi** — {opposer} đã chấp nhận {proposer} Thử thách 1 chọi 1 của 's.",
+      "cancelled": "**Trận đấu bị hủy bỏ** — Trận đấu 1 chọi 1 giữa {proposer} và {opposer} (dự kiến vào {when} (Đã bị hủy bỏ.)",
+      "resultDeclaredHeading": "**Kết quả trận đấu đã được công bố** — Trận đấu 1 chọi 1 giữa {proposer} và {opposer} ( {when} ) có kết quả cuối cùng.",
+      "withdrawnHeading": "**Trận đấu bị hủy bỏ** — {proposer} Họ đã rút lại lời thách đấu 1 chọi 1 với {opposer} .",
+      "editedHeading": "**Bản cập nhật đấu tay đôi** — {proposer} đã cập nhật thử thách 1v1 của họ với {opposer} .",
+      "reminderHeading": "**Nhắc nhở về trận đấu tay đôi** — Trận đấu 1v1 giữa bạn và {proposer} và {opposer} {lead} .",
+      "declinedHeading": "**Trận đấu bị từ chối** — {opposer} bị từ chối {proposer} Thử thách 1 chọi 1 của 's.",
+      "leadDay": "bắt đầu từ ngày mai",
+      "leadHour": "Bắt đầu sau khoảng 1 tiếng nữa",
+      "leadTwentyMin": "Bắt đầu sau 20 phút",
+      "leadDefault": "bắt đầu {relative}",
+      "timeLine": "Thời gian: {when} ( {relative} )",
+      "timeLineNoRelative": "Thời gian: {when}",
+      "locationLine": "Địa điểm: {location}",
+      "winConditionLine": "Điều kiện thắng: {winCondition}",
+      "wasProposedFor": "Đã được đề xuất vào thời điểm {when} .",
+      "ctaProposed": "{opposer} có thể chấp nhận hoặc từ chối tại < {duelUrl} >",
+      "ctaAccepted": "Chi tiết: < {duelUrl} >",
+      "ctaResult": "Xem tại < {duelUrl} >",
+      "ctaEdited": "Xem xét và chấp nhận hoặc từ chối tại < {duelUrl} >",
+      "ctaReminder": "Chi tiết: < {duelUrl} >"
     }
   }
 }

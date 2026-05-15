@@ -841,6 +841,40 @@
       "set": "Language updated to **{label}** (`{code}`). Future bot replies and DMs will be in this language.",
       "cleared": "Language preference cleared. Auto-detect will be used.",
       "unsupported": "`{code}` isn't a supported language."
+    },
+    "voiceDm": {
+      "body": "**{subject}** {when}. Join the squad voice channel: {link}",
+      "optOutHint": "_To disable future voice invites, use `/settings voice_invites enabled:false` in Discord._",
+      "test": "Test voice DM from **Foundation Event Organizer** — **{squadLabel}**. Click to join: <#{channelId}>",
+      "leadStartingNow": "starting now",
+      "leadMinutes": "starts in {minutes} minutes",
+      "leadOneHour": "starts in 1 hour",
+      "leadHours": "starts in {hours} hours",
+      "leadTomorrow": "starts tomorrow"
+    },
+    "duel": {
+      "proposedHeading": "**Duel proposed** — {proposer} has challenged {opposer} to a 1v1.",
+      "acceptedHeading": "**Duel accepted** — {opposer} accepted {proposer}'s 1v1 challenge.",
+      "cancelled": "**Duel cancelled** — The 1v1 between {proposer} and {opposer} (scheduled for {when}) has been cancelled.",
+      "resultDeclaredHeading": "**Duel result declared** — The 1v1 between {proposer} and {opposer} ({when}) has a final result.",
+      "withdrawnHeading": "**Duel withdrawn** — {proposer} withdrew their 1v1 challenge against {opposer}.",
+      "editedHeading": "**Duel updated** — {proposer} updated their 1v1 challenge against {opposer}.",
+      "reminderHeading": "**Duel reminder** — Your 1v1 between {proposer} and {opposer} {lead}.",
+      "declinedHeading": "**Duel declined** — {opposer} declined {proposer}'s 1v1 challenge.",
+      "leadDay": "starts tomorrow",
+      "leadHour": "starts in about 1 hour",
+      "leadTwentyMin": "starts in 20 minutes",
+      "leadDefault": "starts {relative}",
+      "timeLine": "Time: {when} ({relative})",
+      "timeLineNoRelative": "Time: {when}",
+      "locationLine": "Location: {location}",
+      "winConditionLine": "Condition of Win: {winCondition}",
+      "wasProposedFor": "Was proposed for {when}.",
+      "ctaProposed": "{opposer} can accept or decline at <{duelUrl}>",
+      "ctaAccepted": "Details: <{duelUrl}>",
+      "ctaResult": "See it at <{duelUrl}>",
+      "ctaEdited": "Review and accept or decline at <{duelUrl}>",
+      "ctaReminder": "Details: <{duelUrl}>"
     }
   }
 }

@@ -271,22 +271,51 @@ export function buildMessage(t: NotificationTarget, now = new Date()): string {
   return `@everyone **${subject}** ${when}.`;
 }
 
+// Generic translator callback (decoupled from any specific i18n backend).
+// The bot supplies a closure backed by src/bot/i18n.ts; tests can stub it
+// with `(k) => k`. Keys are relative to the `bot` namespace.
+export type LocalizedTranslator = (
+  key: string,
+  values?: Record<string, string | number>
+) => string;
+
 // Per-user DM body for the voice_dm reminder. `<#channelId>` renders as a
 // clickable join link in Discord. Plain text — no embeds — to match the rest
 // of the bot's voice. The trailing hint surfaces the opt-out path so this
 // DM is never a dead-end for players who find it intrusive.
+//
+// Per-recipient locale is supplied via the translator — the caller looks up
+// each recipient's users.locale and constructs a translator scoped to it
+// before calling here.
 export function buildVoiceDmMessage(
-  t: NotificationTarget,
+  target: NotificationTarget,
+  t: LocalizedTranslator,
   now = new Date()
 ): string {
-  const ms = new Date(t.startsAt).getTime() - now.getTime();
-  const when = formatTimeUntil(ms);
-  const subject = t.squadLabel
-    ? `${t.eventName} — ${t.squadLabel}`
-    : t.eventName;
-  const link = t.voiceChannelId ? `<#${t.voiceChannelId}>` : "";
+  const ms = new Date(target.startsAt).getTime() - now.getTime();
+  const when = formatVoiceDmLead(ms, t);
+  const subject = target.squadLabel
+    ? `${target.eventName} — ${target.squadLabel}`
+    : target.eventName;
+  const link = target.voiceChannelId ? `<#${target.voiceChannelId}>` : "";
   return [
-    `**${subject}** ${when}. Join the squad voice channel: ${link}`,
-    "_To disable future voice invites, use `/settings voice_invites enabled:false` in Discord._",
+    t("voiceDm.body", { subject, when, link }),
+    t("voiceDm.optOutHint"),
   ].join("\n");
+}
+
+// Mirrors the boundaries in formatTimeUntil() but emits localized strings
+// through the translator instead of fixed English. Kept here (rather than
+// in src/bot/i18n.ts) so the voice DM builder owns its full output shape.
+function formatVoiceDmLead(
+  msUntilStart: number,
+  t: LocalizedTranslator
+): string {
+  const minutes = Math.round(msUntilStart / (60 * 1000));
+  if (minutes <= 1) return t("voiceDm.leadStartingNow");
+  if (minutes < 60) return t("voiceDm.leadMinutes", { minutes });
+  const hours = Math.round(msUntilStart / (60 * 60 * 1000));
+  if (hours === 1) return t("voiceDm.leadOneHour");
+  if (hours < 20) return t("voiceDm.leadHours", { hours });
+  return t("voiceDm.leadTomorrow");
 }

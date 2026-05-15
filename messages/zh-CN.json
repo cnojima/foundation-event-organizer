@@ -731,8 +731,8 @@
       "scrims": "对抗赛",
       "duels": "1对1决斗",
       "reminders": "提醒和日历",
-      "closed": "如果报名已关闭",
-      "slashCommands": "Discord 斜杠命令"
+      "slashCommands": "Discord 斜杠命令",
+      "closed": "如果报名已关闭"
     },
     "gettingIn": {
       "step1": "在首页使用 Google 或 Discord 登录。",
@@ -788,7 +788,6 @@
       "ics": "每个活动页面都有一个“下载 .ics”链接，用于将活动添加到您的日历中。",
       "slashCommands": "Discord 斜杠命令：/upcoming 列出你公会的近期活动，/signup 允许你无需离开 Discord 即可注册。你必须先使用 Discord 登录网站至少一次，以便机器人匹配你的账号。"
     },
-    "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。",
     "slashCommands": {
       "intro": "如果你的公会服务器里有 Discord 机器人，你就可以在机器人可以查看和发布内容的任何文本频道中使用这些命令。",
       "linkAccount": "首次使用：您需要至少使用 Discord 登录过一次网站，以便机器人将您的 Discord ID 与您的公会账号关联起来。如果您尚未登录，机器人会指导您如何操作。",
@@ -801,7 +800,8 @@
       "settingsBody": "无需访问网站即可查看或更改您的通知偏好设置。当 T-10 语音私信过多，您想要快速将其静音时，此功能非常有用。",
       "subcommandsLabel": "子命令：",
       "propagationNote": "新的斜杠命令在机器人添加到服务器后，首次在 Discord 中显示大约需要 1 小时。之后，它们将立即生效。"
-    }
+    },
+    "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。"
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "语言已更新为 ** {label} ** (` {code}以后机器人回复和私信都将使用这种语言。",
       "cleared": "语言偏好设置已清除。将使用自动检测功能。",
       "unsupported": "` {code} ` 不是受支持的语言。"
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when}加入小队语音频道： {link}",
+      "optOutHint": "要禁用未来的语音邀请，请在 Discord 中使用 `/settings voice_invites enabled:false` 命令。",
+      "test": "来自 **基金会活动组织者** 的测试语音私信 — ** {squadLabel}点击加入：<# {channelId} >",
+      "leadStartingNow": "从现在开始",
+      "leadMinutes": "将于{minutes}后开始{minutes}分钟",
+      "leadOneHour": "1小时后开始",
+      "leadHours": "将于{hours}小时",
+      "leadTomorrow": "从明天开始"
+    },
+    "duel": {
+      "proposedHeading": "**提议决斗** — {proposer}已向{opposer}提出挑战{opposer}一对一单挑。",
+      "acceptedHeading": "**接受决斗** — {opposer}已接受{proposer}的 1v1 挑战。",
+      "cancelled": "**决斗取消** — {proposer}之间的 1v1 对决{proposer}和{opposer} （计划于{when} ）已被取消。",
+      "resultDeclaredHeading": "**决斗结果已公布** — {proposer}之间的 1v1 对决{proposer}和{opposer} （ {when} ) 有最终结果。",
+      "withdrawnHeading": "**决斗取消** — {proposer}撤回了对{opposer}的 1v1 挑战。 {opposer} 。",
+      "editedHeading": "**决斗已更新** — {proposer}更新了他们与{opposer}的 1v1 挑战。 {opposer} 。",
+      "reminderHeading": "**决斗提醒** — 你和{proposer}之间的 1v1 决斗{proposer}和{opposer} {lead} 。",
+      "declinedHeading": "**决斗被拒绝** — {opposer}拒绝了{proposer}的 1v1 挑战。",
+      "leadDay": "从明天开始",
+      "leadHour": "大约1小时后开始",
+      "leadTwentyMin": "20分钟后开始",
+      "leadDefault": "以{relative}开头{relative}",
+      "timeLine": "时间： {when} （ {relative} ）",
+      "timeLineNoRelative": "时间： {when}",
+      "locationLine": "位置： {location}",
+      "winConditionLine": "获胜条件： {winCondition}",
+      "wasProposedFor": "提议用于{when} 。",
+      "ctaProposed": "{opposer}可以在 < {duelUrl}接受或拒绝{duelUrl} >",
+      "ctaAccepted": "详情：< {duelUrl} >",
+      "ctaResult": "请访问 < {duelUrl} >",
+      "ctaEdited": "查看并接受或拒绝，网址为 < {duelUrl} >",
+      "ctaReminder": "详情：< {duelUrl} >"
     }
   }
 }

@@ -20,6 +20,7 @@ import {
   buildVoiceDmMessage,
   findPending,
   recordSent,
+  type LocalizedTranslator,
   type NotificationTarget,
 } from "@/lib/notifications";
 import {
@@ -656,7 +657,20 @@ export async function sendVoiceTestDm(args: {
     };
   }
 
-  const content = `Test voice DM from **Foundation Event Organizer** — **${args.squadLabel}**. Click to join: <#${args.channelId}>`;
+  // Render the DM body in the admin's selected language. Falls back to
+  // English if they haven't set one — Discord's interaction.locale isn't
+  // available here (this path is fired from the website, not Discord).
+  const adminLocaleRow = await db.query.users.findFirst({
+    where: eq(users.id, args.adminUserId),
+    columns: { locale: true },
+  });
+  const adminLocale = resolveBotLocale(adminLocaleRow?.locale ?? null, null);
+  const t = await getBotTranslator(adminLocale);
+
+  const content = t("voiceDm.test", {
+    squadLabel: args.squadLabel,
+    channelId: args.channelId,
+  });
   const ok = await sendDirectMessage(token, discordUserId, content);
   if (!ok) {
     return {
@@ -895,14 +909,15 @@ async function dispatchVoiceDms(p: NotificationTarget): Promise<{
     return { assigned: 0, eligible: 0, dmSent: 0, dmFailed: 0 };
   }
 
-  // Join users so we can respect the per-user voiceDmEnabled opt-out
-  // without an extra round-trip per signup. We still count the full
-  // assigned squad in metrics so admins can spot "everyone opted out"
-  // separately from "no one assigned yet".
+  // Join users so we can respect the per-user voiceDmEnabled opt-out and
+  // pick up users.locale (for DM localization) without extra round-trips.
+  // We still count the full assigned squad in metrics so admins can spot
+  // "everyone opted out" separately from "no one assigned yet".
   const rows = await db
     .select({
       userId: signups.userId,
       voiceDmEnabled: users.voiceDmEnabled,
+      locale: users.locale,
     })
     .from(signups)
     .innerJoin(users, eq(users.id, signups.userId))
@@ -915,7 +930,6 @@ async function dispatchVoiceDms(p: NotificationTarget): Promise<{
     );
 
   const assigned = rows.length;
-  const content = buildVoiceDmMessage(p);
   let eligible = 0;
   let dmSent = 0;
   let dmFailed = 0;
@@ -925,6 +939,11 @@ async function dispatchVoiceDms(p: NotificationTarget): Promise<{
     const discordUserId = await resolveDiscordUserId(r.userId);
     if (!discordUserId) continue; // not Discord-linked — silent skip
     eligible++;
+    // Per-recipient localization. The translator is cached inside
+    // src/bot/i18n.ts so repeat locales don't re-load the bundle.
+    const recipientLocale = resolveBotLocale(r.locale, null);
+    const t = await getBotTranslator(recipientLocale);
+    const content = buildVoiceDmMessage(p, t);
     const ok = await sendDirectMessage(token, discordUserId, content);
     if (ok) dmSent++;
     else dmFailed++;
@@ -1083,18 +1102,6 @@ export async function sendDuelNotification(
     return { failedPlayerNames: [] };
   }
 
-  const content = buildDuelMessage({
-    action: input.action,
-    proposingName: proposing.inGameName ?? "A player",
-    opposingName: opposing.inGameName ?? "Another player",
-    proposedGameTime: input.proposedGameTime,
-    location: input.location,
-    winCondition: input.winCondition,
-    duelId: input.duelId,
-    appBaseUrl: input.appBaseUrl,
-    reminderKind: input.reminderKind,
-  });
-
   // Resolve both players' Discord IDs in parallel. Same player on both
   // sides is impossible (API rejects self-duels), so no dedup needed.
   // When targetUserId is set, we filter down to just that side.
@@ -1112,6 +1119,24 @@ export async function sendDuelNotification(
       if (!player.duelDmEnabled) return; // opted out, silent
       const discordUserId = await resolveDiscordUserId(player.id);
       if (!discordUserId) return; // no linked Discord, silent
+      // Per-recipient locale: build the body in each player's language.
+      // The translator cache amortizes repeated lookups.
+      const recipientLocale = resolveBotLocale(player.locale, null);
+      const tDuel = await getBotTranslator(recipientLocale);
+      const content = buildDuelMessage(
+        {
+          action: input.action,
+          proposingName: proposing.inGameName ?? "A player",
+          opposingName: opposing.inGameName ?? "Another player",
+          proposedGameTime: input.proposedGameTime,
+          location: input.location,
+          winCondition: input.winCondition,
+          duelId: input.duelId,
+          appBaseUrl: input.appBaseUrl,
+          reminderKind: input.reminderKind,
+        },
+        tDuel
+      );
       const ok = await sendDirectMessage(token, discordUserId, content);
       if (!ok) failures.push(label);
     })
@@ -1120,17 +1145,20 @@ export async function sendDuelNotification(
   return { failedPlayerNames: failures };
 }
 
-function buildDuelMessage(args: {
-  action: DuelNotifyAction;
-  proposingName: string;
-  opposingName: string;
-  proposedGameTime: string;
-  location: string;
-  winCondition: string;
-  duelId: string;
-  appBaseUrl?: string;
-  reminderKind?: "day" | "hour" | "twenty_min";
-}): string {
+function buildDuelMessage(
+  args: {
+    action: DuelNotifyAction;
+    proposingName: string;
+    opposingName: string;
+    proposedGameTime: string;
+    location: string;
+    winCondition: string;
+    duelId: string;
+    appBaseUrl?: string;
+    reminderKind?: "day" | "hour" | "twenty_min";
+  },
+  t: LocalizedTranslator
+): string {
   const when = discordTimestamp(args.proposedGameTime, "F");
   const relative = discordTimestamp(args.proposedGameTime, "R");
   const proposer = `**${args.proposingName}**`;
@@ -1141,54 +1169,46 @@ function buildDuelMessage(args: {
 
   if (args.action === "proposed") {
     const lines = [
-      `**Duel proposed** — ${proposer} has challenged ${opposer} to a 1v1.`,
-      `Time: ${when} (${relative})`,
-      `Location: ${args.location}`,
-      `Condition of Win: ${args.winCondition}`,
+      t("duel.proposedHeading", { proposer, opposer }),
+      t("duel.timeLine", { when, relative }),
+      t("duel.locationLine", { location: args.location }),
+      t("duel.winConditionLine", { winCondition: args.winCondition }),
     ];
-    if (duelUrl) {
-      lines.push(`${opposer} can accept or decline at <${duelUrl}>`);
-    }
+    if (duelUrl) lines.push(t("duel.ctaProposed", { opposer, duelUrl }));
     return lines.join("\n");
   }
   if (args.action === "accepted") {
     const lines = [
-      `**Duel accepted** — ${opposer} accepted ${proposer}'s 1v1 challenge.`,
-      `Time: ${when} (${relative})`,
-      `Location: ${args.location}`,
-      `Condition of Win: ${args.winCondition}`,
+      t("duel.acceptedHeading", { proposer, opposer }),
+      t("duel.timeLine", { when, relative }),
+      t("duel.locationLine", { location: args.location }),
+      t("duel.winConditionLine", { winCondition: args.winCondition }),
     ];
-    if (duelUrl) lines.push(`Details: <${duelUrl}>`);
+    if (duelUrl) lines.push(t("duel.ctaAccepted", { duelUrl }));
     return lines.join("\n");
   }
   if (args.action === "cancelled") {
-    return [
-      `**Duel cancelled** — The 1v1 between ${proposer} and ${opposer} (scheduled for ${when}) has been cancelled.`,
-    ].join("\n");
+    return t("duel.cancelled", { proposer, opposer, when });
   }
   if (args.action === "result_declared") {
-    const lines = [
-      `**Duel result declared** — The 1v1 between ${proposer} and ${opposer} (${when}) has a final result.`,
-    ];
-    if (duelUrl) lines.push(`See it at <${duelUrl}>`);
+    const lines = [t("duel.resultDeclaredHeading", { proposer, opposer, when })];
+    if (duelUrl) lines.push(t("duel.ctaResult", { duelUrl }));
     return lines.join("\n");
   }
   if (args.action === "withdrawn") {
     return [
-      `**Duel withdrawn** — ${proposer} withdrew their 1v1 challenge against ${opposer}.`,
-      `Was proposed for ${when}.`,
+      t("duel.withdrawnHeading", { proposer, opposer }),
+      t("duel.wasProposedFor", { when }),
     ].join("\n");
   }
   if (args.action === "edited") {
     const lines = [
-      `**Duel updated** — ${proposer} updated their 1v1 challenge against ${opposer}.`,
-      `Time: ${when} (${relative})`,
-      `Location: ${args.location}`,
-      `Condition of Win: ${args.winCondition}`,
+      t("duel.editedHeading", { proposer, opposer }),
+      t("duel.timeLine", { when, relative }),
+      t("duel.locationLine", { location: args.location }),
+      t("duel.winConditionLine", { winCondition: args.winCondition }),
     ];
-    if (duelUrl) {
-      lines.push(`Review and accept or decline at <${duelUrl}>`);
-    }
+    if (duelUrl) lines.push(t("duel.ctaEdited", { duelUrl }));
     return lines.join("\n");
   }
   if (args.action === "reminder") {
@@ -1196,25 +1216,25 @@ function buildDuelMessage(args: {
     // Falls back to the relative timestamp if no bucket was provided.
     const lead =
       args.reminderKind === "twenty_min"
-        ? "starts in 20 minutes"
+        ? t("duel.leadTwentyMin")
         : args.reminderKind === "hour"
-          ? "starts in about 1 hour"
+          ? t("duel.leadHour")
           : args.reminderKind === "day"
-            ? "starts tomorrow"
-            : `starts ${relative}`;
+            ? t("duel.leadDay")
+            : t("duel.leadDefault", { relative });
     const lines = [
-      `**Duel reminder** — Your 1v1 between ${proposer} and ${opposer} ${lead}.`,
-      `Time: ${when}`,
-      `Location: ${args.location}`,
-      `Condition of Win: ${args.winCondition}`,
+      t("duel.reminderHeading", { proposer, opposer, lead }),
+      t("duel.timeLineNoRelative", { when }),
+      t("duel.locationLine", { location: args.location }),
+      t("duel.winConditionLine", { winCondition: args.winCondition }),
     ];
-    if (duelUrl) lines.push(`Details: <${duelUrl}>`);
+    if (duelUrl) lines.push(t("duel.ctaReminder", { duelUrl }));
     return lines.join("\n");
   }
   // declined
   return [
-    `**Duel declined** — ${opposer} declined ${proposer}'s 1v1 challenge.`,
-    `Was proposed for ${when}.`,
+    t("duel.declinedHeading", { proposer, opposer }),
+    t("duel.wasProposedFor", { when }),
   ].join("\n");
 }
 

@@ -731,8 +731,8 @@
       "scrims": "練習試合",
       "duels": "1対1の決闘",
       "reminders": "リマインダーとカレンダー",
-      "closed": "登録受付が終了している場合",
-      "slashCommands": "Discordのスラッシュコマンド"
+      "slashCommands": "Discordのスラッシュコマンド",
+      "closed": "登録受付が終了している場合"
     },
     "gettingIn": {
       "step1": "ホームページでGoogleアカウントまたはDiscordアカウントでログインしてください。",
@@ -788,7 +788,6 @@
       "ics": "各イベントページには、イベントをカレンダーに追加するための「.icsファイルをダウンロード」リンクがあります。",
       "slashCommands": "Discordのスラッシュコマンド：/upcomingでギルドの今後のイベント一覧が表示され、/signupでDiscordを離れることなく登録できます。ボットがあなたのアカウントを照合できるように、最初にDiscordでウェブサイトに少なくとも一度ログインする必要があります。"
     },
-    "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。",
     "slashCommands": {
       "intro": "ギルドのサーバーにDiscordボットが導入されている場合、ボットが閲覧および投稿を許可されているテキストチャンネルであれば、どのチャンネルからでもこれらのコマンドを使用できます。",
       "linkAccount": "初回利用時：ボットがあなたのDiscord IDをギルドアカウントにリンクできるように、ウェブサイトにDiscordで一度以上ログインしておく必要があります。ログインしていない場合は、ボットが手順を案内します。",
@@ -801,7 +800,8 @@
       "settingsBody": "ウェブサイトにアクセスすることなく、通知設定を表示または変更できます。T-10の音声ダイレクトメッセージがうるさくて、すぐにミュートしたい場合に便利です。",
       "subcommandsLabel": "サブコマンド:",
       "propagationNote": "新しいスラッシュコマンドは、ボットがサーバーに追加されてから初めてDiscordに表示されるまで、約1時間かかる場合があります。その後は、すぐに表示されます。"
-    }
+    },
+    "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。"
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "言語が** {label}に更新されました{label} ** (` {code} `). 今後のボットの返信やDMはこの言語で行われます。",
       "cleared": "言語設定がクリアされました。自動検出が使用されます。",
       "unsupported": "` {code} ` はサポートされていない言語です。"
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when}チームのボイスチャンネルに参加しよう： {link}",
+      "optOutHint": "今後の音声招待を無効にするには、Discordで`/settings voice_invites enabled:false`を使用してください。",
+      "test": "**Foundation Event Organizer**からのテスト音声DM — ** {squadLabel} **. クリックして参加: <# {channelId} >",
+      "leadStartingNow": "今すぐ開始",
+      "leadMinutes": "開始まで{minutes}分",
+      "leadOneHour": "1時間後に開始",
+      "leadHours": "{hours}後に開始します{hours}営業時間",
+      "leadTomorrow": "明日から始まる"
+    },
+    "duel": {
+      "proposedHeading": "**決闘が提案されました** — {proposer} {opposer}に挑戦した{opposer} 1対1で。",
+      "acceptedHeading": "**決闘が受け入れられました** — {opposer}承認済み{proposer}の1対1チャレンジ。",
+      "cancelled": "**決闘中止** — {proposer} と{proposer}の 1 対 1 の決闘は中止となりました。 {proposer}そして{opposer} （予定日時： {when} ）はキャンセルされました。",
+      "resultDeclaredHeading": "**決闘結果発表** — {proposer} と{proposer}の 1 対 1 の決闘結果{proposer}そして{opposer} （ {when} ）には最終結果があります。",
+      "withdrawnHeading": "**決闘は取り下げられました** — {proposer} {opposer}に対する1対1の挑戦を取り下げました。 {opposer} 。",
+      "editedHeading": "**デュエルが更新されました** — {proposer} {opposer}との1対1チャレンジを更新しました。 {opposer} 。",
+      "reminderHeading": "**決闘リマインダー** — {proposer}との1対1の決闘{proposer}そして{opposer} {lead} 。",
+      "declinedHeading": "**決闘は辞退しました** — {opposer} {proposer}が辞退しました{proposer}の1対1チャレンジ。",
+      "leadDay": "明日から始まる",
+      "leadHour": "約1時間後に開始",
+      "leadTwentyMin": "20分後に開始",
+      "leadDefault": "開始{relative}",
+      "timeLine": "時間: {when} （ {relative} ）",
+      "timeLineNoRelative": "時間: {when}",
+      "locationLine": "場所: {location}",
+      "winConditionLine": "勝利条件: {winCondition}",
+      "wasProposedFor": "{when}に提案されました{when} 。",
+      "ctaProposed": "{opposer} < {duelUrl}で承諾または拒否できます。 {duelUrl} >",
+      "ctaAccepted": "詳細: < {duelUrl} >",
+      "ctaResult": "< {duelUrl}でご覧ください。 {duelUrl} >",
+      "ctaEdited": "< {duelUrl}で確認して承認または拒否してください。 {duelUrl} >",
+      "ctaReminder": "詳細: < {duelUrl} >"
     }
   }
 }

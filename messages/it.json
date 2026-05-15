@@ -731,8 +731,8 @@
       "scrims": "Eventi di allenamento",
       "duels": "duelli 1 contro 1",
       "reminders": "Promemoria e calendario",
-      "closed": "Se le iscrizioni sono chiuse",
-      "slashCommands": "Comandi slash di Discord"
+      "slashCommands": "Comandi slash di Discord",
+      "closed": "Se le iscrizioni sono chiuse"
     },
     "gettingIn": {
       "step1": "Accedi con Google o Discord dalla pagina principale.",
@@ -788,7 +788,6 @@
       "ics": "Ogni pagina evento contiene un link per scaricare il file .ics e aggiungerlo al calendario.",
       "slashCommands": "Comandi slash di Discord: /upcoming elenca gli eventi imminenti della tua gilda, mentre /signup ti permette di iscriverti senza uscire da Discord. Devi accedere al sito web tramite Discord almeno una volta, in modo che il bot possa associare il tuo account."
     },
-    "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni.",
     "slashCommands": {
       "intro": "Se la tua gilda ha il bot Discord sul server, puoi usare questi comandi da qualsiasi canale di testo in cui il bot è autorizzato a visualizzare e pubblicare messaggi.",
       "linkAccount": "Primo utilizzo: è necessario aver effettuato l'accesso al sito web con Discord almeno una volta, in modo che il bot possa collegare il tuo ID Discord al tuo account di gilda. In caso contrario, il bot ti spiegherà cosa fare.",
@@ -801,7 +800,8 @@
       "settingsBody": "Consente di visualizzare o modificare le preferenze di notifica senza dover accedere al sito web. Utile quando i messaggi diretti vocali del T-10 sono troppo frequenti e si desidera disattivarli rapidamente.",
       "subcommandsLabel": "Sottocomandi:",
       "propagationNote": "I nuovi comandi slash impiegano fino a circa un'ora per apparire su Discord la prima volta che il bot viene aggiunto a un server. Dopodiché, sono istantanei."
-    }
+    },
+    "closed": "Il modulo si trasforma in un messaggio \"Iscrizioni chiuse\". Contatta un amministratore della gilda se hai bisogno di essere aggiunto in un secondo momento: potrà modificare manualmente le iscrizioni."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Lingua aggiornata a ** {label} ** (` {code} `). Le future risposte del bot e i messaggi diretti saranno in questa lingua.",
       "cleared": "Preferenza lingua cancellata. Verrà utilizzato il rilevamento automatico.",
       "unsupported": "` {code} ` non è una lingua supportata."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Unisciti al canale vocale della squadra: {link}",
+      "optOutHint": "_Per disabilitare i futuri inviti vocali, usa `/settings voice_invites enabled:false` in Discord._",
+      "test": "Messaggio vocale di prova inviato da **Organizzatore di eventi della Fondazione** — ** {squadLabel} **. Fai clic per unirti: <# {channelId} >",
+      "leadStartingNow": "a partire da adesso",
+      "leadMinutes": "inizia tra {minutes} minuti",
+      "leadOneHour": "inizia tra 1 ora",
+      "leadHours": "inizia tra {hours} ore",
+      "leadTomorrow": "inizia domani"
+    },
+    "duel": {
+      "proposedHeading": "**Duello proposto** — {proposer} ha sfidato {opposer} in un 1 contro 1.",
+      "acceptedHeading": "**Duello accettato** — {opposer} accettato {proposer} La sfida 1 contro 1 di .",
+      "cancelled": "**Duello annullato** — Il duello 1 contro 1 tra {proposer} e {opposer} (previsto per {when} ) è stato annullato.",
+      "resultDeclaredHeading": "**Risultato del duello dichiarato** — Il duello 1 contro 1 tra {proposer} e {opposer} ( {when} ) ha un risultato finale.",
+      "withdrawnHeading": "**Duello ritirato** — {proposer} hanno ritirato la loro sfida 1 contro 1 contro {opposer} .",
+      "editedHeading": "**Duello aggiornato** — {proposer} hanno aggiornato la loro sfida 1 contro 1 contro {opposer} .",
+      "reminderHeading": "**Promemoria del duello** — Il tuo 1 contro 1 tra {proposer} e {opposer} {lead} .",
+      "declinedHeading": "**Duello rifiutato** — {opposer} ha rifiutato {proposer} La sfida 1 contro 1 di .",
+      "leadDay": "inizia domani",
+      "leadHour": "inizia tra circa 1 ora",
+      "leadTwentyMin": "inizia tra 20 minuti",
+      "leadDefault": "inizia {relative}",
+      "timeLine": "Ora: {when} ( {relative} )",
+      "timeLineNoRelative": "Ora: {when}",
+      "locationLine": "Posizione: {location}",
+      "winConditionLine": "Condizione di vittoria: {winCondition}",
+      "wasProposedFor": "È stato proposto per {when} .",
+      "ctaProposed": "{opposer} è possibile accettare o rifiutare all'indirizzo < {duelUrl} >",
+      "ctaAccepted": "Dettagli: < {duelUrl} >",
+      "ctaResult": "Guardalo su < {duelUrl} >",
+      "ctaEdited": "Esamina e accetta o rifiuta su < {duelUrl} >",
+      "ctaReminder": "Dettagli: < {duelUrl} >"
     }
   }
 }

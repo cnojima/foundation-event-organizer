@@ -731,8 +731,8 @@
       "scrims": "Événements d'entraînement",
       "duels": "duels 1v1",
       "reminders": "Rappels et calendrier",
-      "closed": "Si les inscriptions sont fermées",
-      "slashCommands": "Commandes slash Discord"
+      "slashCommands": "Commandes slash Discord",
+      "closed": "Si les inscriptions sont fermées"
     },
     "gettingIn": {
       "step1": "Connectez-vous avec Google ou Discord sur la page d'accueil.",
@@ -788,7 +788,6 @@
       "ics": "Chaque page d'événement comporte un lien de téléchargement .ics permettant d'ajouter l'événement à votre calendrier.",
       "slashCommands": "Commandes Discord : /upcoming affiche la liste des événements à venir de votre guilde, et /signup vous permet de vous inscrire sans quitter Discord. Vous devez vous connecter au site web avec Discord au moins une fois au préalable afin que le bot puisse associer votre compte."
     },
-    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement.",
     "slashCommands": {
       "intro": "Si votre guilde possède le bot Discord sur votre serveur, vous pouvez utiliser ces commandes depuis n'importe quel canal textuel où le bot est autorisé à voir et à publier.",
       "linkAccount": "Première utilisation : vous devez vous être connecté(e) au site web avec Discord au moins une fois afin que le bot puisse associer votre identifiant Discord à votre compte de guilde. Si ce n’est pas le cas, le bot vous indiquera la marche à suivre.",
@@ -801,7 +800,8 @@
       "settingsBody": "Consultez ou modifiez vos préférences de notification sans accéder au site web. Pratique lorsque les messages vocaux du T-10 sont trop bruyants et que vous souhaitez les désactiver rapidement.",
       "subcommandsLabel": "Sous-commandes :",
       "propagationNote": "Les nouvelles commandes slash peuvent mettre jusqu'à une heure environ pour apparaître sur Discord la première fois après l'ajout du bot à un serveur. Ensuite, elles sont instantanées."
-    }
+    },
+    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Langue mise à jour en ** {label} ** (` {code} Les futures réponses et messages privés du bot seront dans cette langue.",
       "cleared": "Préférence de langue effacée. La détection automatique sera utilisée.",
       "unsupported": "` {code} ` n'est pas une langue prise en charge."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Rejoignez le canal vocal de l'équipe : {link}",
+      "optOutHint": "Pour désactiver les futures invitations vocales, utilisez la commande `/settings voice_invites enabled:false` dans Discord.",
+      "test": "Message vocal test de **l'organisateur d'événements de la Fondation** — ** {squadLabel} **. Cliquez pour rejoindre : <# {channelId} >",
+      "leadStartingNow": "à partir de maintenant",
+      "leadMinutes": "commence dans {minutes} minutes",
+      "leadOneHour": "commence dans 1 heure",
+      "leadHours": "commence dans {hours} heures",
+      "leadTomorrow": "commence demain"
+    },
+    "duel": {
+      "proposedHeading": "**Duel proposé** — {proposer} a contesté {opposer} en 1v1.",
+      "acceptedHeading": "**Duel accepté** — {opposer} accepté {proposer} Défi 1v1 de .",
+      "cancelled": "**Duel annulé** — Le duel entre {proposer} et {opposer} (prévu pour {when} ) a été annulée.",
+      "resultDeclaredHeading": "**Résultat du duel déclaré** — Le duel 1v1 entre {proposer} et {opposer} ( {when} ) a un résultat final.",
+      "withdrawnHeading": "**Duel annulé** — {proposer} ont retiré leur défi 1v1 contre {opposer} .",
+      "editedHeading": "**Duel mis à jour** — {proposer} ont mis à jour leur défi 1v1 contre {opposer} .",
+      "reminderHeading": "**Rappel du duel** — Votre duel 1v1 contre {proposer} et {opposer} {lead} .",
+      "declinedHeading": "**Duel refusé** — {opposer} refusé {proposer} Défi 1v1 de .",
+      "leadDay": "commence demain",
+      "leadHour": "commence dans environ 1 heure",
+      "leadTwentyMin": "commence dans 20 minutes",
+      "leadDefault": "commence {relative}",
+      "timeLine": "Heure : {when} ( {relative} )",
+      "timeLineNoRelative": "Heure : {when}",
+      "locationLine": "Lieu : {location}",
+      "winConditionLine": "Condition de victoire : {winCondition}",
+      "wasProposedFor": "A été proposé pour {when} .",
+      "ctaProposed": "{opposer} peut accepter ou refuser à < {duelUrl} >",
+      "ctaAccepted": "Détails : < {duelUrl} >",
+      "ctaResult": "Voir à < {duelUrl} >",
+      "ctaEdited": "Examinez et acceptez ou refusez à < {duelUrl} >",
+      "ctaReminder": "Détails : < {duelUrl} >"
     }
   }
 }

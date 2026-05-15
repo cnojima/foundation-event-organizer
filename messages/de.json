@@ -731,8 +731,8 @@
       "scrims": "Trainingsspiele",
       "duels": "1-gegen-1-Duelle",
       "reminders": "Erinnerungen und Kalender",
-      "closed": "Wenn die Anmeldung geschlossen ist",
-      "slashCommands": "Discord-Slash-Befehle"
+      "slashCommands": "Discord-Slash-Befehle",
+      "closed": "Wenn die Anmeldung geschlossen ist"
     },
     "gettingIn": {
       "step1": "Melde dich auf der Startseite mit Google oder Discord an.",
@@ -788,7 +788,6 @@
       "ics": "Auf jeder Veranstaltungsseite finden Sie einen Download-Link für die .ics-Datei, über den Sie die Veranstaltung zu Ihrem Kalender hinzufügen können.",
       "slashCommands": "Discord-Befehle: /upcoming listet die anstehenden Events eurer Gilde auf, und /signup ermöglicht die Anmeldung direkt in Discord. Ihr müsst euch zuvor mindestens einmal mit Discord auf der Website anmelden, damit der Bot euer Konto zuordnen kann."
     },
-    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen.",
     "slashCommands": {
       "intro": "Wenn eure Gilde den Discord-Bot auf eurem Server hat, könnt ihr diese Befehle von jedem Textkanal aus verwenden, in dem der Bot Nachrichten sehen und posten darf.",
       "linkAccount": "Erstmalige Nutzung: Du musst dich mindestens einmal mit Discord auf der Website angemeldet haben, damit der Bot deine Discord-ID mit deinem Gildenkonto verknüpfen kann. Falls du das noch nicht getan hast, erklärt dir der Bot, was zu tun ist.",
@@ -801,7 +800,8 @@
       "settingsBody": "Sie können Ihre Benachrichtigungseinstellungen einsehen oder ändern, ohne die Website aufrufen zu müssen. Dies ist besonders nützlich, wenn die Sprachnachrichten Ihres T-10 häufig auftreten und Sie diese schnell stummschalten möchten.",
       "subcommandsLabel": "Unterbefehle:",
       "propagationNote": "Neue Slash-Befehle benötigen beim ersten Hinzufügen des Bots zu einem Server etwa eine Stunde, um in Discord angezeigt zu werden. Danach sind sie sofort verfügbar."
-    }
+    },
+    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Sprache aktualisiert auf ** {label} ** (` {code} `). Zukünftige Bot-Antworten und Direktnachrichten werden in dieser Sprache verfasst sein.",
       "cleared": "Spracheinstellungen gelöscht. Automatische Erkennung wird verwendet.",
       "unsupported": "` {code} ` ist keine unterstützte Sprache."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Tritt dem Sprachkanal des Teams bei: {link}",
+      "optOutHint": "Um zukünftige Sprach-Einladungen zu deaktivieren, verwenden Sie in Discord den Befehl `/settings voice_invites enabled:false`.",
+      "test": "Test-Sprach-DM von **Stiftungsveranstaltungsorganisator** — ** {squadLabel} **. Klicken Sie hier, um beizutreten: <# {channelId} >",
+      "leadStartingNow": "ab sofort",
+      "leadMinutes": "Beginnt in {minutes} Minuten",
+      "leadOneHour": "Beginnt in 1 Stunde",
+      "leadHours": "Beginnt in {hours} Std.",
+      "leadTomorrow": "beginnt morgen"
+    },
+    "duel": {
+      "proposedHeading": "**Duell vorgeschlagen** – {proposer} hat {opposer} herausgefordert {opposer} zu einem 1-gegen-1-Spiel.",
+      "acceptedHeading": "**Duell angenommen** – {opposer} akzeptiert {proposer} 's 1v1 Herausforderung.",
+      "cancelled": "**Duell abgesagt** — Das 1-gegen-1 zwischen {proposer} und {opposer} (geplant für {when} wurde abgesagt.",
+      "resultDeclaredHeading": "**Ergebnis des Duells verkündet** — Das 1-gegen-1-Duell zwischen {proposer} und {opposer} ( {when} ) hat ein Endergebnis.",
+      "withdrawnHeading": "**Duell zurückgezogen** — {proposer} haben ihre 1-gegen-1-Herausforderung gegen {opposer} zurückgezogen {opposer} Die",
+      "editedHeading": "**Duell aktualisiert** — {proposer} aktualisierte ihre 1v1-Herausforderung gegen {opposer} Die",
+      "reminderHeading": "**Duell-Erinnerung** — Dein 1-gegen-1 gegen {proposer} und {opposer} {lead} Die",
+      "declinedHeading": "**Duell abgelehnt** – {opposer} abgelehnt {proposer} 's 1v1 Herausforderung.",
+      "leadDay": "beginnt morgen",
+      "leadHour": "Beginnt in etwa 1 Stunde",
+      "leadTwentyMin": "Beginnt in 20 Minuten",
+      "leadDefault": "beginnt {relative}",
+      "timeLine": "Zeitpunkt: {when} ( {relative} )",
+      "timeLineNoRelative": "Zeitpunkt: {when}",
+      "locationLine": "Standort: {location}",
+      "winConditionLine": "Gewinnbedingung: {winCondition}",
+      "wasProposedFor": "Wurde vorgeschlagen für {when} Die",
+      "ctaProposed": "{opposer} kann unter < {duelUrl} angenommen oder abgelehnt werden {duelUrl} >",
+      "ctaAccepted": "Details: < {duelUrl} >",
+      "ctaResult": "Siehe es unter < {duelUrl} >",
+      "ctaEdited": "Prüfen und annehmen oder ablehnen unter < {duelUrl} >",
+      "ctaReminder": "Details: < {duelUrl} >"
     }
   }
 }

@@ -731,8 +731,8 @@
       "scrims": "연습 경기",
       "duels": "1대1 결투",
       "reminders": "알림 및 캘린더",
-      "closed": "등록이 마감된 경우",
-      "slashCommands": "디스코드 슬래시 명령어"
+      "slashCommands": "디스코드 슬래시 명령어",
+      "closed": "등록이 마감된 경우"
     },
     "gettingIn": {
       "step1": "홈페이지에서 Google 또는 Discord로 로그인하세요.",
@@ -788,7 +788,6 @@
       "ics": "모든 이벤트 페이지에는 이벤트를 캘린더에 추가할 수 있는 .ics 파일 다운로드 링크가 있습니다.",
       "slashCommands": "디스코드 슬래시 명령어: /upcoming은 길드의 예정된 이벤트를 보여주고, /signup은 디스코드를 나가지 않고 가입할 수 있게 해줍니다. 봇이 계정을 연결할 수 있도록 웹사이트에 디스코드 계정으로 최소 한 번 이상 로그인해야 합니다."
     },
-    "closed": "신청서가 \"신청 마감\" 메시지로 바뀝니다. 늦게 신청해야 하는 경우 길드 관리자에게 문의하세요. 관리자가 수동으로 신청을 조정해 드릴 수 있습니다.",
     "slashCommands": {
       "intro": "길드 서버에 디스코드 봇이 설치되어 있다면, 봇이 보고 게시할 수 있도록 허용된 모든 텍스트 채널에서 다음 명령어를 사용할 수 있습니다.",
       "linkAccount": "처음 사용 시: 봇이 길드 계정에 Discord ID를 연결할 수 있도록 Discord 계정으로 웹사이트에 최소 한 번 이상 로그인해야 합니다. 로그인한 적이 없다면 봇이 방법을 안내해 드립니다.",
@@ -801,7 +800,8 @@
       "settingsBody": "웹사이트에 접속하지 않고도 알림 설정을 확인하거나 변경할 수 있습니다. T-10 음성 DM 알림이 너무 많아 빠르게 음소거하고 싶을 때 유용합니다.",
       "subcommandsLabel": "하위 명령:",
       "propagationNote": "새로운 슬래시 명령어는 봇을 서버에 추가한 후 처음 디스코드에 표시되기까지 최대 1시간 정도 소요될 수 있습니다. 이후에는 즉시 표시됩니다."
-    }
+    },
+    "closed": "신청서가 \"신청 마감\" 메시지로 바뀝니다. 늦게 신청해야 하는 경우 길드 관리자에게 문의하세요. 관리자가 수동으로 신청을 조정해 드릴 수 있습니다."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "언어가 ** {label} 로 업데이트되었습니다. {label} ** (` {code} `). 향후 봇의 답변 및 DM은 이 언어로 제공됩니다.",
       "cleared": "언어 설정이 초기화되었습니다. 자동 감지 기능이 사용됩니다.",
       "unsupported": "` {code} `는 지원되지 않는 언어입니다."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} 팀 음성 채널에 참여하세요: {link}",
+      "optOutHint": "향후 음성 초대 기능을 비활성화하려면 Discord에서 `/settings voice_invites enabled:false` 명령어를 사용하세요.",
+      "test": "**재단 행사 주최자**로부터 온 음성 DM 테스트 — ** {squadLabel} **. 참여하려면 클릭하세요: <# {channelId} >",
+      "leadStartingNow": "지금 시작",
+      "leadMinutes": "{minutes} 후에 시작합니다 {minutes} 분",
+      "leadOneHour": "1시간 후에 시작합니다",
+      "leadHours": "{hours} 후에 시작합니다 {hours} 시간",
+      "leadTomorrow": "내일부터 시작합니다"
+    },
+    "duel": {
+      "proposedHeading": "**결투 제안** — {proposer} {opposer} 에게 도전했습니다. {opposer} 1대1 대결로.",
+      "acceptedHeading": "**결투 허용** — {opposer} {proposer} 의 1대1 도전.",
+      "cancelled": "**결투 취소** — {proposer} 간의 1대1 대결 {proposer} 그리고 {opposer} ( {when} 에 예정됨) {when} ) 취소되었습니다.",
+      "resultDeclaredHeading": "**결투 결과 발표** — {proposer} 간의 1대1 대결 {proposer} 그리고 {opposer} ( {when} ) 최종 결과가 있습니다.",
+      "withdrawnHeading": "**결투 철회됨** — {proposer} {opposer} 과의 1대1 대결을 철회했습니다. {opposer} .",
+      "editedHeading": "**결투 업데이트됨** — {proposer} {opposer} .",
+      "reminderHeading": "**결투 알림** — {proposer} 님과의 1대1 대결입니다. {proposer} 그리고 {opposer} {lead} .",
+      "declinedHeading": "**결투가 거부되었습니다** — {opposer} {proposer} 의 1대1 도전.",
+      "leadDay": "내일부터 시작합니다",
+      "leadHour": "약 1시간 후에 시작합니다",
+      "leadTwentyMin": "20분 후에 시작합니다",
+      "leadDefault": "{relative} 시작 {relative}",
+      "timeLine": "시간: {when} ( {relative} )",
+      "timeLineNoRelative": "시간: {when}",
+      "locationLine": "위치: {location}",
+      "winConditionLine": "승리 조건: {winCondition}",
+      "wasProposedFor": "{when} 에 제안되었습니다. {when} .",
+      "ctaProposed": "{opposer} < {duelUrl} 에서 수락 또는 거절할 수 있습니다. {duelUrl} >",
+      "ctaAccepted": "세부 정보: < {duelUrl} >",
+      "ctaResult": "< {duelUrl} 에서 확인하세요 {duelUrl} >",
+      "ctaEdited": "검토 후 수락 또는 거절하려면 < {duelUrl} 방문하세요. {duelUrl} >",
+      "ctaReminder": "세부 정보: < {duelUrl} >"
     }
   }
 }

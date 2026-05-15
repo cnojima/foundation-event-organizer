@@ -731,8 +731,8 @@
       "scrims": "Pertandingan uji coba",
       "duels": "duel 1 lawan 1",
       "reminders": "Pengingat dan kalender",
-      "closed": "Jika pendaftaran sudah ditutup",
-      "slashCommands": "Perintah slash Discord"
+      "slashCommands": "Perintah slash Discord",
+      "closed": "Jika pendaftaran sudah ditutup"
     },
     "gettingIn": {
       "step1": "Masuk menggunakan Google atau Discord di halaman utama.",
@@ -788,7 +788,6 @@
       "ics": "Setiap halaman acara memiliki tautan Unduh .ics untuk menambahkan acara tersebut ke kalender Anda.",
       "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
     },
-    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual.",
     "slashCommands": {
       "intro": "Jika guild Anda memiliki bot Discord di server Anda, Anda dapat menggunakan perintah-perintah ini dari saluran teks mana pun tempat bot diizinkan untuk melihat dan memposting.",
       "linkAccount": "Penggunaan pertama kali: Anda perlu masuk ke situs web menggunakan Discord setidaknya sekali agar bot dapat menautkan ID Discord Anda ke akun guild Anda. Jika belum, bot akan memberi tahu Anda apa yang harus dilakukan.",
@@ -801,7 +800,8 @@
       "settingsBody": "Melihat atau mengubah preferensi notifikasi Anda tanpa perlu membuka situs web. Berguna saat pesan suara T-10 berisik dan Anda ingin membisukannya dengan cepat.",
       "subcommandsLabel": "Subperintah:",
       "propagationNote": "Perintah slash baru membutuhkan waktu hingga sekitar 1 jam untuk muncul di Discord pertama kali setelah bot ditambahkan ke server. Setelah itu, perintah akan muncul secara instan."
-    }
+    },
+    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Bahasa diperbarui menjadi ** {label} ** (` {code} `). Balasan bot dan pesan pribadi di masa mendatang akan menggunakan bahasa ini.",
       "cleared": "Pengaturan preferensi bahasa telah dihapus. Deteksi otomatis akan digunakan.",
       "unsupported": "` {code} ` bukan bahasa yang didukung."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Gabung ke saluran suara tim: {link}",
+      "optOutHint": "Untuk menonaktifkan undangan suara di masa mendatang, gunakan `/settings voice_invites enabled:false` di Discord.",
+      "test": "Pesan suara uji coba dari **Penyelenggara Acara Yayasan** — ** {squadLabel} **. Klik untuk bergabung: <# {channelId} >",
+      "leadStartingNow": "mulai sekarang",
+      "leadMinutes": "dimulai dalam {minutes} menit",
+      "leadOneHour": "dimulai dalam 1 jam",
+      "leadHours": "dimulai dalam {hours} jam",
+      "leadTomorrow": "dimulai besok"
+    },
+    "duel": {
+      "proposedHeading": "**Duel diusulkan** — {proposer} telah menantang {opposer} menjadi pertarungan 1 lawan 1.",
+      "acceptedHeading": "**Duel diterima** — {opposer} {proposer} diterima {proposer} tantangan 1 lawan 1.",
+      "cancelled": "**Duel dibatalkan** — Pertandingan 1 lawan 1 antara {proposer} dan {opposer} (dijadwalkan untuk {when} ) telah dibatalkan.",
+      "resultDeclaredHeading": "**Hasil duel diumumkan** — Duel 1 lawan 1 antara {proposer} dan {opposer} ( {when} ) memiliki hasil akhir.",
+      "withdrawnHeading": "**Duel dibatalkan** — {proposer} mereka membatalkan tantangan 1v1 melawan {opposer} .",
+      "editedHeading": "**Duel diperbarui** — {proposer} Mereka memperbarui tantangan 1v1 mereka melawan {opposer} .",
+      "reminderHeading": "**Pengingat duel** — Duel 1 lawan 1 Anda antara {proposer} dan {opposer} {lead} .",
+      "declinedHeading": "**Duel ditolak** — {opposer} menolak {proposer} tantangan 1 lawan 1.",
+      "leadDay": "dimulai besok",
+      "leadHour": "dimulai sekitar 1 jam lagi",
+      "leadTwentyMin": "dimulai dalam 20 menit",
+      "leadDefault": "dimulai {relative}",
+      "timeLine": "Waktu: {when} ( {relative} )",
+      "timeLineNoRelative": "Waktu: {when}",
+      "locationLine": "Lokasi: {location}",
+      "winConditionLine": "Kondisi Kemenangan: {winCondition}",
+      "wasProposedFor": "Diusulkan untuk {when} .",
+      "ctaProposed": "{opposer} dapat menerima atau menolak di < {duelUrl} >",
+      "ctaAccepted": "Detail: < {duelUrl} >",
+      "ctaResult": "Lihat di < {duelUrl} >",
+      "ctaEdited": "Tinjau dan terima atau tolak di < {duelUrl} >",
+      "ctaReminder": "Detail: < {duelUrl} >"
     }
   }
 }

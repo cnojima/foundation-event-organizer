@@ -731,8 +731,8 @@
       "scrims": "Wydarzenia treningowe",
       "duels": "Pojedynki 1 na 1",
       "reminders": "Przypomnienia i kalendarz",
-      "closed": "Jeśli zapisy są zamknięte",
-      "slashCommands": "Polecenia ukośnika Discord"
+      "slashCommands": "Polecenia ukośnika Discord",
+      "closed": "Jeśli zapisy są zamknięte"
     },
     "gettingIn": {
       "step1": "Zaloguj się za pomocą konta Google lub Discord na stronie głównej.",
@@ -788,7 +788,6 @@
       "ics": "Na każdej stronie wydarzenia znajduje się link do pobrania pliku .ics umożliwiający dodanie wydarzenia do kalendarza.",
       "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
     },
-    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy.",
     "slashCommands": {
       "intro": "Jeśli na serwerze Twojej gildii znajduje się bot Discord, możesz używać tych poleceń z dowolnego kanału tekstowego, który bot może widzieć i publikować.",
       "linkAccount": "Pierwsze użycie: musisz zalogować się na stronie za pomocą Discorda przynajmniej raz, aby bot mógł połączyć Twój identyfikator Discord z kontem gildii. Jeśli tego nie zrobiłeś, bot podpowie Ci, co zrobić.",
@@ -801,7 +800,8 @@
       "settingsBody": "Wyświetla lub zmienia preferencje powiadomień bez wchodzenia na stronę internetową. Przydatne, gdy wiadomości głosowe T-10 są głośne i chcesz je szybko wyciszyć.",
       "subcommandsLabel": "Podpolecenia:",
       "propagationNote": "Nowe komendy ukośnika pojawiają się na Discordzie po około godzinie od pierwszego dodania bota do serwera. Później są już dostępne natychmiast."
-    }
+    },
+    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Język zaktualizowany do ** {label} ** (` {code} `). Przyszłe odpowiedzi botów i wiadomości prywatne będą wysyłane w tym języku.",
       "cleared": "Preferencje językowe zostały wyczyszczone. Zostanie użyte automatyczne wykrywanie.",
       "unsupported": "` {code} ` nie jest obsługiwanym językiem."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Dołącz do kanału głosowego drużyny: {link}",
+      "optOutHint": "_Aby wyłączyć przyszłe zaproszenia głosowe, użyj `/settings voice_invites enabled:false` w Discordzie._",
+      "test": "Test głosu DM od **Organizatora wydarzeń fundacji** — ** {squadLabel} **. Kliknij, aby dołączyć: <# {channelId} >",
+      "leadStartingNow": "zaczynając teraz",
+      "leadMinutes": "zaczyna się za {minutes} protokół",
+      "leadOneHour": "zaczyna się za 1 godzinę",
+      "leadHours": "zaczyna się za {hours} godziny",
+      "leadTomorrow": "zaczyna się jutro"
+    },
+    "duel": {
+      "proposedHeading": "**Zaproponowano pojedynek** — {proposer} rzucił wyzwanie {opposer} do 1 na 1.",
+      "acceptedHeading": "**Pojedynek zaakceptowany** — {opposer} zaakceptowano {proposer} Wyzwanie 1 na 1.",
+      "cancelled": "**Pojedynek anulowany** — pojedynek 1 na 1 pomiędzy {proposer} i {opposer} (zaplanowane na {when} ) zostało anulowane.",
+      "resultDeclaredHeading": "**Ogłoszono wynik pojedynku** — 1 na 1 pomiędzy {proposer} i {opposer} ( {when} ) ma wynik końcowy.",
+      "withdrawnHeading": "**Pojedynek wycofany** — {proposer} wycofali swoje wyzwanie 1 na 1 przeciwko {opposer} .",
+      "editedHeading": "**Pojedynek zaktualizowany** — {proposer} zaktualizował(a) swoje wyzwanie 1 na 1 przeciwko {opposer} .",
+      "reminderHeading": "**Przypomnienie o pojedynku** — Twój pojedynek 1 na 1 pomiędzy {proposer} i {opposer} {lead} .",
+      "declinedHeading": "**Pojedynek odrzucony** — {opposer} odrzucił {proposer} Wyzwanie 1 na 1.",
+      "leadDay": "zaczyna się jutro",
+      "leadHour": "zaczyna się za około 1 godzinę",
+      "leadTwentyMin": "zaczyna się za 20 minut",
+      "leadDefault": "zaczyna się {relative}",
+      "timeLine": "Czas: {when} ( {relative} )",
+      "timeLineNoRelative": "Czas: {when}",
+      "locationLine": "Lokalizacja: {location}",
+      "winConditionLine": "Warunek wygranej: {winCondition}",
+      "wasProposedFor": "Został zaproponowany na {when} .",
+      "ctaProposed": "{opposer} możesz zaakceptować lub odrzucić na < {duelUrl} >",
+      "ctaAccepted": "Szczegóły: < {duelUrl} >",
+      "ctaResult": "Zobacz na < {duelUrl} >",
+      "ctaEdited": "Przejrzyj i zaakceptuj lub odrzuć na < {duelUrl} >",
+      "ctaReminder": "Szczegóły: < {duelUrl} >"
     }
   }
 }

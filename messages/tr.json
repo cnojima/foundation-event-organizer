@@ -731,8 +731,8 @@
       "scrims": "Hazırlık maçları",
       "duels": "1'e 1 düellolar",
       "reminders": "Hatırlatıcılar ve takvim",
-      "closed": "Kayıtlar kapalıysa",
-      "slashCommands": "Discord slash komutları"
+      "slashCommands": "Discord slash komutları",
+      "closed": "Kayıtlar kapalıysa"
     },
     "gettingIn": {
       "step1": "Ana sayfada Google veya Discord ile giriş yapın.",
@@ -788,7 +788,6 @@
       "ics": "Her etkinlik sayfasında, etkinliği takviminize eklemek için bir .ics dosyasını indirme bağlantısı bulunur.",
       "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
     },
-    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler.",
     "slashCommands": {
       "intro": "Eğer sunucunuzda Discord botu varsa, botun görmesine ve mesaj göndermesine izin verilen herhangi bir metin kanalından bu komutları kullanabilirsiniz.",
       "linkAccount": "İlk kullanım: Botun Discord kimliğinizi lonca hesabınızla ilişkilendirebilmesi için en az bir kez Discord ile web sitesine giriş yapmış olmanız gerekir. Giriş yapmadıysanız, bot size ne yapmanız gerektiğini söyleyecektir.",
@@ -801,7 +800,8 @@
       "settingsBody": "Web sitesine gitmeden bildirim tercihlerinizi görüntüleyebilir veya değiştirebilirsiniz. T-10 sesli DM'leri gürültülü olduğunda ve bunları hızlıca sessize almak istediğinizde kullanışlıdır.",
       "subcommandsLabel": "Alt komutlar:",
       "propagationNote": "Yeni slash komutlarının, bot bir sunucuya eklendikten sonra Discord'da ilk kez görünmesi yaklaşık 1 saat sürebilir. Ondan sonra ise anında görünürler."
-    }
+    },
+    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Dil ** {label} olarak güncellendi {label} ** (` {code} Gelecekteki bot yanıtları ve özel mesajlar bu dilde olacaktır.",
       "cleared": "Dil tercihi sıfırlandı. Otomatik algılama kullanılacaktır.",
       "unsupported": "` {code} ` desteklenmeyen bir dildir."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Ekip sesli kanalına katılın: {link}",
+      "optOutHint": "Gelecekteki sesli davetleri devre dışı bırakmak için Discord'da `/settings voice_invites enabled:false` komutunu kullanın.",
+      "test": "**Vakıf Etkinlik Organizatörü**'nden gelen sesli test mesajı — ** {squadLabel} **. Katılmak için tıklayın: <# {channelId} >",
+      "leadStartingNow": "şimdi başlıyor",
+      "leadMinutes": "{minutes} sonra başlayacak {minutes} dakika",
+      "leadOneHour": "1 saat sonra başlıyor",
+      "leadHours": "{hours} sonra başlayacak {hours} saat",
+      "leadTomorrow": "Yarın başlıyor"
+    },
+    "duel": {
+      "proposedHeading": "**Düello teklif edildi** — {proposer} {opposer} 1'e 1'e.",
+      "acceptedHeading": "**Düello kabul edildi** — {opposer} {proposer} kabul edildi {proposer} 'nin 1'e 1 mücadelesi.",
+      "cancelled": "**Düello iptal edildi** — {proposer} arasındaki 1v1 düellosu {proposer} ve {opposer} (planlanan tarih: {when} ) iptal edildi.",
+      "resultDeclaredHeading": "**Düello sonucu açıklandı** — {proposer} arasındaki 1v1 düellosu {proposer} ve {opposer} ( {when} ) nihai bir sonuca sahiptir.",
+      "withdrawnHeading": "**Düello geri çekildi** — {proposer} {opposer} ile olan bire bir mücadelelerini geri çektiler. {opposer} .",
+      "editedHeading": "**Düello güncellendi** — {proposer} {opposer} .",
+      "reminderHeading": "**Düello hatırlatıcısı** — {proposer} ile aranızdaki 1v1 düellosu {proposer} ve {opposer} {lead} .",
+      "declinedHeading": "**Düello reddedildi** — {opposer} {proposer} reddetti {proposer} 'nin 1'e 1 mücadelesi.",
+      "leadDay": "Yarın başlıyor",
+      "leadHour": "Yaklaşık 1 saat sonra başlıyor",
+      "leadTwentyMin": "20 dakika sonra başlıyor",
+      "leadDefault": "başlar {relative}",
+      "timeLine": "Zaman: {when} ( {relative} )",
+      "timeLineNoRelative": "Zaman: {when}",
+      "locationLine": "Konum: {location}",
+      "winConditionLine": "Kazanma Koşulu: {winCondition}",
+      "wasProposedFor": "{when} için önerildi? {when} .",
+      "ctaProposed": "{opposer} Kabul veya reddetme işlemi şu adreste yapılabilir: < {duelUrl} >",
+      "ctaAccepted": "Ayrıntılar: < {duelUrl} >",
+      "ctaResult": "Şurada görebilirsiniz: < {duelUrl} >",
+      "ctaEdited": "Şu adresten inceleyin ve kabul edin veya reddedin: < {duelUrl} >",
+      "ctaReminder": "Ayrıntılar: < {duelUrl} >"
     }
   }
 }

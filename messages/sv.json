@@ -731,8 +731,8 @@
       "scrims": "Scrimmage-evenemang",
       "duels": "1v1-dueller",
       "reminders": "Påminnelser och kalender",
-      "closed": "Om anmälningarna är stängda",
-      "slashCommands": "Discord slash-kommandon"
+      "slashCommands": "Discord slash-kommandon",
+      "closed": "Om anmälningarna är stängda"
     },
     "gettingIn": {
       "step1": "Logga in med Google eller Discord på startsidan.",
@@ -788,7 +788,6 @@
       "ics": "Varje evenemangssida har en nedladdningslänk för .ics för att lägga till evenemanget i din kalender.",
       "slashCommands": "Discord-kommandon med snedstreck: /upcoming listar din gilles kommande evenemang, och /signup låter dig registrera dig utan att lämna Discord. Du måste logga in på webbplatsen med Discord minst en gång först, så att boten kan matcha ditt konto."
     },
-    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt.",
     "slashCommands": {
       "intro": "Om din gille har Discord-boten på din server kan du använda dessa kommandon från vilken textkanal som helst där boten har tillåtelse att se och posta.",
       "linkAccount": "Första användningen: du måste ha loggat in på webbplatsen med Discord minst en gång så att boten kan länka ditt Discord-ID till ditt gillekonto. Om du inte har det kommer boten att berätta vad du ska göra.",
@@ -801,7 +800,8 @@
       "settingsBody": "Visar eller ändrar dina aviseringsinställningar utan att gå till webbplatsen. Användbart när T-10:s röst-DM är bullriga och du vill stänga av dem snabbt.",
       "subcommandsLabel": "Delkommandon:",
       "propagationNote": "Det tar upp till ungefär en timme innan nya slash-kommandon visas i Discord första gången efter att boten har lagts till på en server. Därefter är de omedelbart tillgängliga."
-    }
+    },
+    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
   },
   "bot": {
     "common": {
@@ -841,6 +841,40 @@
       "set": "Språk uppdaterat till ** {label} ** (` {code} Framtida botsvar och direktmeddelanden kommer att vara på detta språk.",
       "cleared": "Språkinställningar har rensats. Automatisk identifiering kommer att användas.",
       "unsupported": "` {code} ` är inte ett språk som stöds."
+    },
+    "voiceDm": {
+      "body": "** {subject} ** {when} Gå med i truppens röstkanal: {link}",
+      "optOutHint": "_För att inaktivera framtida röstinbjudningar, använd `/settings voice_invites enabled:false` i Discord._",
+      "test": "Testa röstmeddelande från **Stiftelsens evenemangsorganisatör** — ** {squadLabel} **. Klicka för att gå med: <# {channelId} >",
+      "leadStartingNow": "börjar nu",
+      "leadMinutes": "börjar om {minutes} minuter",
+      "leadOneHour": "börjar om 1 timme",
+      "leadHours": "börjar om {hours} timmar",
+      "leadTomorrow": "börjar imorgon"
+    },
+    "duel": {
+      "proposedHeading": "**Duell föreslagen** — {proposer} har utmanat {opposer} till en 1v1.",
+      "acceptedHeading": "**Duell accepterad** — {opposer} accepterad {proposer} s 1v1-utmaning.",
+      "cancelled": "**Duell inställd** — 1v1 mellan {proposer} och {opposer} (schemalagd för {when} ) har avbrutits.",
+      "resultDeclaredHeading": "**Duellresultatet är klart** — 1v1 mellan {proposer} och {opposer} ( {when} ) har ett slutresultat.",
+      "withdrawnHeading": "**Duellen återkallad** — {proposer} drog tillbaka sin 1v1-utmaning mot {opposer} .",
+      "editedHeading": "**Duell uppdaterad** — {proposer} uppdaterade sin 1v1-utmaning mot {opposer} .",
+      "reminderHeading": "**Påminnelse om duell** — Din 1v1 mellan {proposer} och {opposer} {lead} .",
+      "declinedHeading": "**Duell avvisad** – {opposer} avböjde {proposer} s 1v1-utmaning.",
+      "leadDay": "börjar imorgon",
+      "leadHour": "börjar om ungefär 1 timme",
+      "leadTwentyMin": "börjar om 20 minuter",
+      "leadDefault": "börjar {relative}",
+      "timeLine": "Tid: {when} ( {relative} )",
+      "timeLineNoRelative": "Tid: {when}",
+      "locationLine": "Plats: {location}",
+      "winConditionLine": "Vinstvillkor: {winCondition}",
+      "wasProposedFor": "Föreslogs för {when} .",
+      "ctaProposed": "{opposer} kan acceptera eller avböja på < {duelUrl} >",
+      "ctaAccepted": "Detaljer: < {duelUrl} >",
+      "ctaResult": "Se den på < {duelUrl} >",
+      "ctaEdited": "Granska och acceptera eller avböj på < {duelUrl} >",
+      "ctaReminder": "Detaljer: < {duelUrl} >"
     }
   }
 }
