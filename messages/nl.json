@@ -32,6 +32,7 @@
     "players": "Spelers",
     "members": "Leden",
     "invites": "Uitnodigingen",
+    "templates": "Sjablonen voor evenementen",
     "settings": "Instellingen",
     "auditLog": "Auditlogboek",
     "superAdmin": "Superbeheerder",
@@ -39,8 +40,7 @@
     "createGuild": "Maak een gilde aan",
     "adminHelp": "Admin Help",
     "help": "Hulp",
-    "myAccount": "Mijn account",
-    "templates": "Sjablonen voor evenementen"
+    "myAccount": "Mijn account"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} andere {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Oefenwedstrijden",
       "duels": "1-tegen-1 duels",
       "reminders": "Herinneringen en agenda",
-      "closed": "Als de inschrijvingen gesloten zijn"
+      "closed": "Als de inschrijvingen gesloten zijn",
+      "slashCommands": "Discord slash-commando's"
     },
     "gettingIn": {
       "step1": "Meld je aan met Google of Discord op de homepage.",
@@ -787,6 +788,59 @@
       "ics": "Op elke evenementpagina vind je een link om het .ics-bestand te downloaden, waarmee je het evenement aan je agenda kunt toevoegen.",
       "slashCommands": "Discord slash-commando's: /upcoming toont een lijst met aankomende evenementen van je gilde, en met /signup kun je je aanmelden zonder Discord te verlaten. Je moet je wel eerst minstens één keer aanmelden op de website met Discord, zodat de bot je account kan koppelen."
     },
-    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
+    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen.",
+    "slashCommands": {
+      "intro": "Als je gilde de Discord-bot op je server heeft, kun je deze commando's gebruiken vanuit elk tekstkanaal waar de bot berichten mag zien en plaatsen.",
+      "linkAccount": "Eerste gebruik: je moet minstens één keer ingelogd zijn op de website met Discord, zodat de bot je Discord-ID aan je gildeaccount kan koppelen. Als je dat nog niet hebt gedaan, zal de bot je vertellen wat je moet doen.",
+      "upcomingHeading": "/aanstaande",
+      "upcomingBody": "Hier wordt een lijst weergegeven met de aankomende wedstrijden en oefenwedstrijden van je gilde, inclusief de aanvangstijden. Het antwoord is tijdelijk zichtbaar — alleen jij ziet het, dus het zal het kanaal niet volspammen.",
+      "signupHeading": "/aanmelden",
+      "signupBody": "Hiermee kun je je aanmelden voor een evenement zonder Discord te verlaten. Het evenementveld heeft een automatische aanvulling; 'squad' en 'willing_backup' zijn optioneel. Voor scrim-evenementen wordt 'squad' genegeerd (er is er maar één).",
+      "examplesLabel": "Voorbeelden:",
+      "settingsHeading": "/instellingen",
+      "settingsBody": "Bekijk of wijzig je notificatievoorkeuren zonder naar de website te hoeven gaan. Handig als de spraakberichten van de T-10 veel lawaai maken en je ze snel wilt dempen.",
+      "subcommandsLabel": "Subopdrachten:",
+      "propagationNote": "Nieuwe slash-commando's verschijnen pas na ongeveer een uur in Discord nadat de bot aan een server is toegevoegd. Daarna zijn ze direct beschikbaar."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Er is iets misgegaan.",
+      "notConfigured": "Deze Discord-server is nog niet gekoppeld aan een gilde. Een app-beheerder moet het volgende doen: 1. Open de gilde-instellingen op de website. 2. Plak de Discord-kanaal-ID van dit kanaal. 3. Klik op **Integratie testen**. De server wordt dan automatisch gekoppeld.",
+      "notLinked": "Verbind eerst je Discord-account door in te loggen op de website met Discord, en probeer daarna `/ {command} ` opnieuw.",
+      "on": "OP",
+      "off": "UIT",
+      "tbd": "Nog te bepalen"
+    },
+    "upcoming": {
+      "empty": "Geen aankomende evenementen.",
+      "heading": "**Aankomende evenementen**",
+      "scrimLine": "• ** {name} ** (scherm) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Evenement niet gevonden.",
+      "failed": "Je kon niet worden aangemeld: {reason}",
+      "waitlisted": "Je staat op de wachtlijst — de teams waren vol toen je je aanmeldde. Je wordt automatisch toegevoegd aan het team zodra er een plek vrijkomt.",
+      "success": "Je bent ingeschreven. Tot ziens op het veld."
+    },
+    "settings": {
+      "unknown": "Onbekende instelling.",
+      "loadFailed": "Je instellingen konden niet worden geladen.",
+      "viewHeading": "**Uw meldingsvoorkeuren**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Gebruik `/settings`<name> `enabled:true` of `false` om een instelling te wijzigen.",
+      "changed": "** {label} ** is nu ** {state} **.",
+      "labels": {
+        "voiceInvites": "Uitnodigingen voor wedstrijden via het spraakkanaal"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Je taal is ingesteld op ** {label} ** (` {code} `).",
+      "viewAuto": "Je taal is ingesteld op **automatische detectie**. De website gebruikt de Accept-Language-header van je browser; de bot gebruikt de taal van je Discord-client.",
+      "set": "Taal bijgewerkt naar ** {label} ** (` {code} Toekomstige botreacties en DM's zullen in deze taal zijn.",
+      "cleared": "Taalvoorkeur gewist. Automatische detectie wordt gebruikt.",
+      "unsupported": "` {code} ` is geen ondersteunde taal."
+    }
   }
 }

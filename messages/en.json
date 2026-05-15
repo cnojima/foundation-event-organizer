@@ -802,5 +802,45 @@
       "propagationNote": "New slash commands take up to about 1 hour to appear in Discord the first time after the bot is added to a server. After that, they're instant."
     },
     "closed": "The form turns into a \"Signups are closed\" message. Reach out to a guild admin if you need to be added late — they can adjust signups manually."
+  },
+  "bot": {
+    "common": {
+      "error": "Something went wrong.",
+      "notConfigured": "This Discord server isn't linked to a guild yet. An app admin needs to:\n1. Open Guild Settings on the website.\n2. Paste this channel's Discord channel ID.\n3. Click **Test integration**. That auto-links the server.",
+      "notLinked": "Connect your Discord account first by signing in to the website with Discord, then try `/{command}` again.",
+      "on": "ON",
+      "off": "OFF",
+      "tbd": "TBD"
+    },
+    "upcoming": {
+      "empty": "No upcoming events.",
+      "heading": "**Upcoming events**",
+      "scrimLine": "• **{name}** (scrim) — {when}",
+      "matchLine": "• **{name}** — {squad1Name}: {s1} · {squad2Name}: {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Event not found.",
+      "failed": "Couldn't sign you up: {reason}",
+      "waitlisted": "You're on the waitlist — squads were full when you signed up. You'll be promoted automatically if a slot opens.",
+      "success": "You're signed up. See you on the field."
+    },
+    "settings": {
+      "unknown": "Unknown setting.",
+      "loadFailed": "Couldn't load your settings.",
+      "viewHeading": "**Your notification preferences**",
+      "viewLine": "• {label}: **{state}**",
+      "viewFooter": "Use `/settings <name> enabled:true` or `false` to change a setting.",
+      "changed": "**{label}** is now **{state}**.",
+      "labels": {
+        "voiceInvites": "Voice channel invites for matches"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Your language is set to **{label}** (`{code}`).",
+      "viewAuto": "Your language is set to **auto-detect**. The website uses your browser's Accept-Language header; the bot uses your Discord client's language.",
+      "set": "Language updated to **{label}** (`{code}`). Future bot replies and DMs will be in this language.",
+      "cleared": "Language preference cleared. Auto-detect will be used.",
+      "unsupported": "`{code}` isn't a supported language."
+    }
   }
 }

@@ -32,6 +32,7 @@
     "players": "Oyuncular",
     "members": "Üyeler",
     "invites": "Davetiyeler",
+    "templates": "Etkinlik Şablonları",
     "settings": "Ayarlar",
     "auditLog": "Denetim Günlüğü",
     "superAdmin": "Süper Yönetici",
@@ -39,8 +40,7 @@
     "createGuild": "Lonca Oluştur",
     "adminHelp": "Yönetici Yardımı",
     "help": "Yardım",
-    "myAccount": "Hesabım",
-    "templates": "Etkinlik Şablonları"
+    "myAccount": "Hesabım"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} diğer {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Hazırlık maçları",
       "duels": "1'e 1 düellolar",
       "reminders": "Hatırlatıcılar ve takvim",
-      "closed": "Kayıtlar kapalıysa"
+      "closed": "Kayıtlar kapalıysa",
+      "slashCommands": "Discord slash komutları"
     },
     "gettingIn": {
       "step1": "Ana sayfada Google veya Discord ile giriş yapın.",
@@ -787,6 +788,59 @@
       "ics": "Her etkinlik sayfasında, etkinliği takviminize eklemek için bir .ics dosyasını indirme bağlantısı bulunur.",
       "slashCommands": "Discord slash komutları: /upcoming komutu loncanızın yaklaşan etkinliklerini listeler ve /signup komutu Discord'dan çıkmadan kayıt olmanızı sağlar. Botun hesabınızı eşleştirebilmesi için önce en az bir kez Discord ile web sitesine giriş yapmanız gerekir."
     },
-    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler."
+    "closed": "Formda \"Kayıtlar kapatıldı\" mesajı görünecektir. Geç eklenmeniz gerekiyorsa, bir lonca yöneticisiyle iletişime geçin; onlar kayıtları manuel olarak düzenleyebilirler.",
+    "slashCommands": {
+      "intro": "Eğer sunucunuzda Discord botu varsa, botun görmesine ve mesaj göndermesine izin verilen herhangi bir metin kanalından bu komutları kullanabilirsiniz.",
+      "linkAccount": "İlk kullanım: Botun Discord kimliğinizi lonca hesabınızla ilişkilendirebilmesi için en az bir kez Discord ile web sitesine giriş yapmış olmanız gerekir. Giriş yapmadıysanız, bot size ne yapmanız gerektiğini söyleyecektir.",
+      "upcomingHeading": "/yakında",
+      "upcomingBody": "Loncanızın yaklaşan maç ve antrenman etkinliklerini başlangıç saatleriyle birlikte listeler. Bu yanıt geçicidir; yalnızca siz görürsünüz, bu nedenle kanalı meşgul etmez.",
+      "signupHeading": "/üye olmak",
+      "signupBody": "Discord'dan çıkmadan bir etkinliğe kaydolmanızı sağlar. Etkinlik alanı otomatik tamamlama özelliğine sahiptir; takım ve yedek oyuncu seçenekleri isteğe bağlıdır. Antrenman etkinliklerinde takım bilgisi dikkate alınmaz (sadece bir takım vardır).",
+      "examplesLabel": "Örnekler:",
+      "settingsHeading": "/ayarlar",
+      "settingsBody": "Web sitesine gitmeden bildirim tercihlerinizi görüntüleyebilir veya değiştirebilirsiniz. T-10 sesli DM'leri gürültülü olduğunda ve bunları hızlıca sessize almak istediğinizde kullanışlıdır.",
+      "subcommandsLabel": "Alt komutlar:",
+      "propagationNote": "Yeni slash komutlarının, bot bir sunucuya eklendikten sonra Discord'da ilk kez görünmesi yaklaşık 1 saat sürebilir. Ondan sonra ise anında görünürler."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Bir şeyler ters gitti.",
+      "notConfigured": "Bu Discord sunucusu henüz bir loncaya bağlı değil. Uygulama yöneticisinin yapması gerekenler: 1. Web sitesinde Lonca Ayarları'nı açın. 2. Bu kanalın Discord kanal kimliğini yapıştırın. 3. **Entegrasyonu test et** seçeneğine tıklayın. Bu, sunucuyu otomatik olarak bağlayacaktır.",
+      "notLinked": "Öncelikle Discord hesabınızla web sitesine giriş yaparak Discord hesabınızı bağlayın, ardından `/ {command} komutunu deneyin. {command} ` tekrar.",
+      "on": "AÇIK",
+      "off": "KAPALI",
+      "tbd": "Henüz belirlenmedi."
+    },
+    "upcoming": {
+      "empty": "Yakın zamanda herhangi bir etkinlik bulunmamaktadır.",
+      "heading": "**Yaklaşan etkinlikler**",
+      "scrimLine": "• ** {name} ** (perde) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Etkinlik bulunamadı.",
+      "failed": "Sizi kayıt edemedik: {reason}",
+      "waitlisted": "Bekleme listesindesiniz; kayıt olduğunuzda takımlar doluydu. Yer açılırsa otomatik olarak bir üst takıma yükseltileceksiniz.",
+      "success": "Kaydınız tamamlandı. Sahada görüşmek üzere."
+    },
+    "settings": {
+      "unknown": "Bilinmeyen ayar.",
+      "loadFailed": "Ayarlarınız yüklenemedi.",
+      "viewHeading": "**Bildirim tercihleriniz**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "`/settings` komutunu kullanın.<name> Bir ayarı değiştirmek için `enabled:true` veya `false` kullanın.",
+      "changed": "** {label} **şu anda** {state} **.",
+      "labels": {
+        "voiceInvites": "Sesli kanal üzerinden maçlara davet"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Diliniz ** {label} olarak ayarlanmıştır. {label} ** (` {code} `).",
+      "viewAuto": "Diliniz **otomatik algılama** olarak ayarlanmıştır. Web sitesi tarayıcınızın Accept-Language başlığını kullanır; bot ise Discord istemcinizin dilini kullanır.",
+      "set": "Dil ** {label} olarak güncellendi {label} ** (` {code} Gelecekteki bot yanıtları ve özel mesajlar bu dilde olacaktır.",
+      "cleared": "Dil tercihi sıfırlandı. Otomatik algılama kullanılacaktır.",
+      "unsupported": "` {code} ` desteklenmeyen bir dildir."
+    }
   }
 }

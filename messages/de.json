@@ -32,6 +32,7 @@
     "players": "Spieler",
     "members": "Mitglieder",
     "invites": "Einladungen",
+    "templates": "Ereignisvorlagen",
     "settings": "Einstellungen",
     "auditLog": "Audit-Protokoll",
     "superAdmin": "Super-Admin",
@@ -39,8 +40,7 @@
     "createGuild": "Gilde erstellen",
     "adminHelp": "Admin-Hilfe",
     "help": "Helfen",
-    "myAccount": "Mein Konto",
-    "templates": "Ereignisvorlagen"
+    "myAccount": "Mein Konto"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} andere {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Trainingsspiele",
       "duels": "1-gegen-1-Duelle",
       "reminders": "Erinnerungen und Kalender",
-      "closed": "Wenn die Anmeldung geschlossen ist"
+      "closed": "Wenn die Anmeldung geschlossen ist",
+      "slashCommands": "Discord-Slash-Befehle"
     },
     "gettingIn": {
       "step1": "Melde dich auf der Startseite mit Google oder Discord an.",
@@ -787,6 +788,59 @@
       "ics": "Auf jeder Veranstaltungsseite finden Sie einen Download-Link für die .ics-Datei, über den Sie die Veranstaltung zu Ihrem Kalender hinzufügen können.",
       "slashCommands": "Discord-Befehle: /upcoming listet die anstehenden Events eurer Gilde auf, und /signup ermöglicht die Anmeldung direkt in Discord. Ihr müsst euch zuvor mindestens einmal mit Discord auf der Website anmelden, damit der Bot euer Konto zuordnen kann."
     },
-    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen."
+    "closed": "Das Formular zeigt die Meldung „Anmeldungen geschlossen“ an. Wenden Sie sich an einen Gildenadministrator, falls Sie nachträglich hinzugefügt werden möchten – dieser kann die Anmeldungen manuell anpassen.",
+    "slashCommands": {
+      "intro": "Wenn eure Gilde den Discord-Bot auf eurem Server hat, könnt ihr diese Befehle von jedem Textkanal aus verwenden, in dem der Bot Nachrichten sehen und posten darf.",
+      "linkAccount": "Erstmalige Nutzung: Du musst dich mindestens einmal mit Discord auf der Website angemeldet haben, damit der Bot deine Discord-ID mit deinem Gildenkonto verknüpfen kann. Falls du das noch nicht getan hast, erklärt dir der Bot, was zu tun ist.",
+      "upcomingHeading": "/demnächst",
+      "upcomingBody": "Hier werden die anstehenden Matches und Trainingsspiele eurer Gilde mit ihren Startzeiten aufgelistet. Die Antwort ist nur für dich sichtbar, sodass der Kanal nicht unnötig belastet wird.",
+      "signupHeading": "/Melden Sie sich an",
+      "signupBody": "Meldet dich direkt aus Discord für ein Event an. Das Event-Feld verfügt über eine Autovervollständigung; „Squad“ und „willing_backup“ sind optional. Bei Scrim-Events wird „Squad“ ignoriert (es gibt nur einen).",
+      "examplesLabel": "Beispiele:",
+      "settingsHeading": "/Einstellungen",
+      "settingsBody": "Sie können Ihre Benachrichtigungseinstellungen einsehen oder ändern, ohne die Website aufrufen zu müssen. Dies ist besonders nützlich, wenn die Sprachnachrichten Ihres T-10 häufig auftreten und Sie diese schnell stummschalten möchten.",
+      "subcommandsLabel": "Unterbefehle:",
+      "propagationNote": "Neue Slash-Befehle benötigen beim ersten Hinzufügen des Bots zu einem Server etwa eine Stunde, um in Discord angezeigt zu werden. Danach sind sie sofort verfügbar."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Etwas ist schiefgelaufen.",
+      "notConfigured": "Dieser Discord-Server ist noch keiner Gilde zugeordnet. Ein App-Administrator muss Folgendes tun: 1. Die Gildeneinstellungen auf der Website öffnen. 2. Die Discord-Kanal-ID dieses Kanals einfügen. 3. Auf **Integration testen** klicken. Dadurch wird der Server automatisch verknüpft.",
+      "notLinked": "Verbinde zuerst dein Discord-Konto, indem du dich mit Discord auf der Website anmeldest, und versuche dann `/ {command} ` wieder.",
+      "on": "AN",
+      "off": "AUS",
+      "tbd": "TBD"
+    },
+    "upcoming": {
+      "empty": "Keine anstehenden Veranstaltungen.",
+      "heading": "**Anstehende Veranstaltungen**",
+      "scrimLine": "• ** {name} ** (Scrim) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Veranstaltung nicht gefunden.",
+      "failed": "Anmeldung fehlgeschlagen: {reason}",
+      "waitlisted": "Du stehst auf der Warteliste – die Teams waren bei deiner Anmeldung bereits voll. Du rückst automatisch nach, sobald ein Platz frei wird.",
+      "success": "Du bist angemeldet. Wir sehen uns auf dem Spielfeld."
+    },
+    "settings": {
+      "unknown": "Unbekannte Einstellung.",
+      "loadFailed": "Ihre Einstellungen konnten nicht geladen werden.",
+      "viewHeading": "**Ihre Benachrichtigungseinstellungen**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Verwenden Sie `/settings`<name> Mit `enabled:true` oder `false` kann eine Einstellung geändert werden.",
+      "changed": "** {label} ** ist jetzt ** {state} **.",
+      "labels": {
+        "voiceInvites": "Einladungen zum Sprachkanal für Spiele"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Ihre Sprache ist auf ** {label} eingestellt. {label} ** (` {code} `).",
+      "viewAuto": "Deine Sprache ist auf **automatische Erkennung** eingestellt. Die Website verwendet den Accept-Language-Header deines Browsers; der Bot verwendet die Sprache deines Discord-Clients.",
+      "set": "Sprache aktualisiert auf ** {label} ** (` {code} `). Zukünftige Bot-Antworten und Direktnachrichten werden in dieser Sprache verfasst sein.",
+      "cleared": "Spracheinstellungen gelöscht. Automatische Erkennung wird verwendet.",
+      "unsupported": "` {code} ` ist keine unterstützte Sprache."
+    }
   }
 }

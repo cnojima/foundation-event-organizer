@@ -32,6 +32,7 @@
     "players": "Jugadores",
     "members": "Miembros",
     "invites": "Invitaciones",
+    "templates": "Plantillas de eventos",
     "settings": "Ajustes",
     "auditLog": "Registro de auditoría",
     "superAdmin": "Superadministrador",
@@ -39,8 +40,7 @@
     "createGuild": "Crear gremio",
     "adminHelp": "Ayuda administrativa",
     "help": "Ayuda",
-    "myAccount": "Mi cuenta",
-    "templates": "Plantillas de eventos"
+    "myAccount": "Mi cuenta"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} otras {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Eventos de entrenamiento",
       "duels": "duelos 1 contra 1",
       "reminders": "Recordatorios y calendario",
-      "closed": "Si las inscripciones están cerradas"
+      "closed": "Si las inscripciones están cerradas",
+      "slashCommands": "Comandos de barra de Discord"
     },
     "gettingIn": {
       "step1": "Inicia sesión con Google o Discord en la página principal.",
@@ -787,6 +788,59 @@
       "ics": "Cada página de evento tiene un enlace para descargar el archivo .ics y así poder añadir el evento a tu calendario.",
       "slashCommands": "Comandos de barra de Discord: /upcoming muestra los próximos eventos de tu gremio, y /signup te permite registrarte sin salir de Discord. Debes iniciar sesión en el sitio web con Discord al menos una vez para que el bot pueda vincular tu cuenta."
     },
-    "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente."
+    "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente.",
+    "slashCommands": {
+      "intro": "Si tu clan tiene el bot de Discord en tu servidor, puedes usar estos comandos desde cualquier canal de texto donde el bot tenga permiso para ver y publicar.",
+      "linkAccount": "Primer uso: debes haber iniciado sesión en el sitio web con Discord al menos una vez para que el bot pueda vincular tu ID de Discord con tu cuenta de gremio. Si no lo has hecho, el bot te indicará qué debes hacer.",
+      "upcomingHeading": "/próximamente",
+      "upcomingBody": "Muestra los próximos partidos y entrenamientos de tu clan con sus horarios de inicio. La respuesta es efímera: solo tú la verás, así que no saturará el canal.",
+      "signupHeading": "/inscribirse",
+      "signupBody": "Te inscribe en un evento sin salir de Discord. El campo de evento tiene autocompletado; squad y willing_backup son opcionales. Para eventos de scrim, squad se ignora (solo hay uno).",
+      "examplesLabel": "Ejemplos:",
+      "settingsHeading": "/ajustes",
+      "settingsBody": "Consulta o cambia tus preferencias de notificaciones sin necesidad de acceder al sitio web. Resulta útil cuando los mensajes de voz del T-10 son muy molestos y quieres silenciarlos rápidamente.",
+      "subcommandsLabel": "Subcomandos:",
+      "propagationNote": "Los nuevos comandos de barra diagonal tardan aproximadamente una hora en aparecer en Discord la primera vez que se agrega el bot a un servidor. Después de eso, son instantáneos."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Algo salió mal.",
+      "notConfigured": "Este servidor de Discord aún no está vinculado a un clan. El administrador de la aplicación debe: 1. Abrir la configuración del clan en el sitio web. 2. Pegar el ID del canal de Discord de este canal. 3. Hacer clic en **Probar integración**. Esto vinculará automáticamente el servidor.",
+      "notLinked": "Primero conecta tu cuenta de Discord iniciando sesión en el sitio web con Discord, luego intenta `/ {command} ` otra vez.",
+      "on": "EN",
+      "off": "APAGADO",
+      "tbd": "Por determinar"
+    },
+    "upcoming": {
+      "empty": "No hay eventos próximos.",
+      "heading": "**Próximos eventos**",
+      "scrimLine": "• ** {name} ** (scrim) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Evento no encontrado.",
+      "failed": "No pudimos registrarte: {reason}",
+      "waitlisted": "Estás en la lista de espera; los equipos estaban completos cuando te registraste. Si se libera un cupo, se te asignará automáticamente un puesto.",
+      "success": "Ya estás inscrito. Nos vemos en el campo."
+    },
+    "settings": {
+      "unknown": "Configuración desconocida.",
+      "loadFailed": "No se pudo cargar tu configuración.",
+      "viewHeading": "**Tus preferencias de notificación**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Utilice `/settings`<name> enabled:true o `false` para cambiar una configuración.",
+      "changed": "** {label} ** ahora es ** {state} **.",
+      "labels": {
+        "voiceInvites": "Invitaciones por canal de voz para partidos"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Tu idioma está configurado en ** {label} ** (` {code} `).",
+      "viewAuto": "Tu idioma está configurado en **detección automática**. El sitio web utiliza el encabezado Accept-Language de tu navegador; el bot utiliza el idioma de tu cliente de Discord.",
+      "set": "Idioma actualizado a ** {label} ** (` {code} `). Las futuras respuestas del bot y los mensajes directos estarán en este idioma.",
+      "cleared": "Se ha borrado la preferencia de idioma. Se utilizará la detección automática.",
+      "unsupported": "` {code} ` no es un idioma compatible."
+    }
   }
 }

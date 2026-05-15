@@ -28,6 +28,12 @@ import {
 } from "@/lib/duel-notifications";
 import { createSignup } from "@/lib/signups";
 import { logAudit, resolveActorDisplay } from "@/lib/audit";
+import {
+  getBotTranslator,
+  resolveBotLocale,
+  type BotTranslator,
+} from "@/bot/i18n";
+import { isSupportedLocale, locales, localeLabels } from "@/i18n/config";
 
 // 5-minute poll cadence — small enough to never miss a notification window
 // (smallest window is 25 min wide), large enough that DB pressure is trivial.
@@ -83,19 +89,22 @@ type BoolSettingKey = "voiceDmEnabled";
 type BoolSetting = {
   // /settings <subcommand> — lowercase, underscore-separated.
   subcommand: string;
-  // Human label rendered in /settings view.
-  label: string;
+  // i18n key (relative to the `bot` namespace) for the human label shown in
+  // /settings replies. Localized per caller via the bot translator.
+  labelKey: string;
   // users-table column name (Drizzle property).
   key: BoolSettingKey;
-  // One-line description for command registration. Discord shows this in
-  // the autocomplete / help UI.
+  // One-line description for command registration. English-only — Discord's
+  // command schema is registered once at startup and isn't re-localized per
+  // user. (Discord supports description_localizations but that's not wired
+  // up yet.)
   description: string;
 };
 
 const BOOL_SETTINGS: readonly BoolSetting[] = [
   {
     subcommand: "voice_invites",
-    label: "Voice channel invites for matches",
+    labelKey: "settings.labels.voiceInvites",
     key: "voiceDmEnabled",
     description:
       "Receive a DM ~10 min before each match with a join link to your squad's voice channel",
@@ -161,6 +170,42 @@ const SLASH_COMMANDS: RESTPostAPIApplicationCommandsJSONBody[] = [
           },
         ],
       })),
+    ],
+  },
+  {
+    name: "locale",
+    description: "View or change the language the bot uses to talk to you",
+    type: ApplicationCommandType.ChatInput,
+    options: [
+      {
+        name: "view",
+        description: "Show your current language preference",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
+      {
+        name: "set",
+        description: "Set your preferred language",
+        type: ApplicationCommandOptionType.Subcommand,
+        options: [
+          {
+            name: "code",
+            description: "Language to use",
+            type: ApplicationCommandOptionType.String,
+            required: true,
+            // Choices fit within Discord's 25-per-option cap (we currently
+            // support 17 locales — see src/i18n/config.ts).
+            choices: locales.map((code) => ({
+              name: localeLabels[code],
+              value: code,
+            })),
+          },
+        ],
+      },
+      {
+        name: "clear",
+        description: "Clear your language preference (auto-detect will be used)",
+        type: ApplicationCommandOptionType.Subcommand,
+      },
     ],
   },
 ];
@@ -1408,13 +1453,33 @@ async function handleChatCommand(
     return;
   }
 
+  // Resolve the caller's locale once per invocation: users.locale (set on
+  // the website) wins, falling back to Discord's interaction.locale (their
+  // Discord client language), then to English. A single small lookup —
+  // missing on first-time Discord users is fine, just hits the fallback.
+  const localeRow = await db
+    .select({ locale: users.locale })
+    .from(accounts)
+    .innerJoin(users, eq(users.id, accounts.userId))
+    .where(
+      and(
+        eq(accounts.provider, "discord"),
+        eq(accounts.providerAccountId, userId)
+      )
+    )
+    .get();
+  const locale = resolveBotLocale(localeRow?.locale ?? null, interaction.locale);
+  const t = await getBotTranslator(locale);
+
   try {
     if (cmd === "upcoming") {
-      await handleUpcoming(interaction);
+      await handleUpcoming(interaction, t);
     } else if (cmd === "signup") {
-      await handleSignup(interaction);
+      await handleSignup(interaction, t);
     } else if (cmd === "settings") {
-      await handleSettings(interaction);
+      await handleSettings(interaction, t);
+    } else if (cmd === "locale") {
+      await handleLocale(interaction, t);
     }
     console.log(
       `[bot] command ${cmd} done user=${userId} in ${Date.now() - startMs}ms`
@@ -1424,7 +1489,7 @@ async function handleChatCommand(
       `[bot] command error ${cmd} user=${userId} after ${Date.now() - startMs}ms:`,
       err
     );
-    await interaction.editReply("Something went wrong.").catch(() => {});
+    await interaction.editReply(t("common.error")).catch(() => {});
   }
 }
 
@@ -1507,40 +1572,49 @@ function truncateChoice(s: string): string {
 }
 
 async function handleUpcoming(
-  interaction: ChatInputCommandInteraction
+  interaction: ChatInputCommandInteraction,
+  t: BotTranslator
 ): Promise<void> {
   const appGuildId = await resolveAppGuildId(interaction.guildId);
   if (!appGuildId) {
     console.warn(
       `[bot] /upcoming: no app guild linked to discord guild ${interaction.guildId} (user=${interaction.user.id})`
     );
-    await interaction.editReply(notConfiguredMessage());
+    await interaction.editReply(t("common.notConfigured"));
     return;
   }
 
   const upcoming = await loadUpcomingEvents(appGuildId);
   if (upcoming.length === 0) {
-    await interaction.editReply("No upcoming events.");
+    await interaction.editReply(t("upcoming.empty"));
     return;
   }
 
+  const tbd = t("common.tbd");
   const lines = upcoming
     .slice(0, 10)
     .map((e) => {
       if (e.kind === "scrim") {
-        const when = e.gameTime ? formatShort(e.gameTime) : "TBD";
-        return `• **${e.name}** (scrim) — ${when}`;
+        const when = e.gameTime ? formatShort(e.gameTime) : tbd;
+        return t("upcoming.scrimLine", { name: e.name, when });
       }
-      const s1 = e.squad1StartsAt ? formatShort(e.squad1StartsAt) : "TBD";
-      const s2 = e.squad2StartsAt ? formatShort(e.squad2StartsAt) : "TBD";
-      return `• **${e.name}** — ${e.squad1Name}: ${s1} · ${e.squad2Name}: ${s2}`;
+      const s1 = e.squad1StartsAt ? formatShort(e.squad1StartsAt) : tbd;
+      const s2 = e.squad2StartsAt ? formatShort(e.squad2StartsAt) : tbd;
+      return t("upcoming.matchLine", {
+        name: e.name,
+        squad1Name: e.squad1Name,
+        s1,
+        squad2Name: e.squad2Name,
+        s2,
+      });
     })
     .join("\n");
-  await interaction.editReply(`**Upcoming events**\n${lines}`);
+  await interaction.editReply(`${t("upcoming.heading")}\n${lines}`);
 }
 
 async function handleSignup(
-  interaction: ChatInputCommandInteraction
+  interaction: ChatInputCommandInteraction,
+  t: BotTranslator
 ): Promise<void> {
   const eventId = interaction.options.getString("event", true);
   // Squad is now optional — defaults to Squad 1 if omitted, and is ignored
@@ -1553,15 +1627,13 @@ async function handleSignup(
     console.warn(
       `[bot] /signup: no app guild linked to discord guild ${interaction.guildId} (user=${interaction.user.id})`
     );
-    await interaction.editReply(notConfiguredMessage());
+    await interaction.editReply(t("common.notConfigured"));
     return;
   }
 
   const appUser = await resolveAppUserFromDiscord(interaction.user.id);
   if (!appUser) {
-    await interaction.editReply(
-      "Connect your Discord account first by signing in to the website with Discord, then try `/signup` again."
-    );
+    await interaction.editReply(t("common.notLinked", { command: "signup" }));
     return;
   }
 
@@ -1572,7 +1644,7 @@ async function handleSignup(
     where: eq(events.id, eventId),
   });
   if (!event) {
-    await interaction.editReply("Event not found.");
+    await interaction.editReply(t("signup.eventNotFound"));
     return;
   }
   const isScrim = event.kind === "scrim";
@@ -1595,14 +1667,12 @@ async function handleSignup(
   });
 
   if (!result.ok) {
-    await interaction.editReply(`Couldn't sign you up: ${result.reason}`);
+    await interaction.editReply(t("signup.failed", { reason: result.reason }));
     return;
   }
 
   await interaction.editReply(
-    result.waitlisted
-      ? "You're on the waitlist — squads were full when you signed up. You'll be promoted automatically if a slot opens."
-      : "You're signed up. See you on the field."
+    result.waitlisted ? t("signup.waitlisted") : t("signup.success")
   );
 }
 
@@ -1613,25 +1683,24 @@ async function handleSignup(
 // someone who manually entered another user's Discord ID on /me can't
 // invoke /settings as that user.
 async function handleSettings(
-  interaction: ChatInputCommandInteraction
+  interaction: ChatInputCommandInteraction,
+  t: BotTranslator
 ): Promise<void> {
   const appUser = await resolveAppUserFromDiscord(interaction.user.id);
   if (!appUser) {
-    await interaction.editReply(
-      "Your Discord account isn't linked to the website yet. Sign in to the website with Discord first, then try `/settings` again."
-    );
+    await interaction.editReply(t("common.notLinked", { command: "settings" }));
     return;
   }
 
   const sub = interaction.options.getSubcommand(true);
   if (sub === "view") {
-    await handleSettingsView(interaction, appUser.id);
+    await handleSettingsView(interaction, appUser.id, t);
     return;
   }
 
   const setting = BOOL_SETTINGS.find((s) => s.subcommand === sub);
   if (!setting) {
-    await interaction.editReply("Unknown setting.");
+    await interaction.editReply(t("settings.unknown"));
     return;
   }
 
@@ -1647,7 +1716,10 @@ async function handleSettings(
     .where(eq(users.id, appUser.id));
 
   await interaction.editReply(
-    `**${setting.label}** is now **${enabled ? "ON" : "OFF"}**.`
+    t("settings.changed", {
+      label: t(setting.labelKey),
+      state: t(enabled ? "common.on" : "common.off"),
+    })
   );
 
   // Audit log for parity with the website /api/me path — preference flips
@@ -1669,23 +1741,138 @@ async function handleSettings(
 
 async function handleSettingsView(
   interaction: ChatInputCommandInteraction,
-  appUserId: string
+  appUserId: string,
+  t: BotTranslator
 ): Promise<void> {
   const row = await db.query.users.findFirst({
     where: eq(users.id, appUserId),
     columns: { voiceDmEnabled: true },
   });
   if (!row) {
-    await interaction.editReply("Couldn't load your settings.");
+    await interaction.editReply(t("settings.loadFailed"));
     return;
   }
-  const lines = ["**Your notification preferences**"];
+  const lines = [t("settings.viewHeading")];
   for (const s of BOOL_SETTINGS) {
     const v = (row as Record<string, unknown>)[s.key] as boolean | undefined;
-    lines.push(`• ${s.label}: **${v ? "ON" : "OFF"}**`);
+    lines.push(
+      t("settings.viewLine", {
+        label: t(s.labelKey),
+        state: t(v ? "common.on" : "common.off"),
+      })
+    );
   }
-  lines.push("", "Use `/settings <name> enabled:true` or `false` to change a setting.");
+  lines.push("", t("settings.viewFooter"));
   await interaction.editReply(lines.join("\n"));
+}
+
+// /locale — view / set / clear the user's stored language preference. Set
+// replies in the *new* locale so users get instant confirmation in the
+// language they just picked. Audit-logged for parity with the website's
+// /api/me path.
+async function handleLocale(
+  interaction: ChatInputCommandInteraction,
+  t: BotTranslator
+): Promise<void> {
+  const appUser = await resolveAppUserFromDiscord(interaction.user.id);
+  if (!appUser) {
+    await interaction.editReply(t("common.notLinked", { command: "locale" }));
+    return;
+  }
+
+  const sub = interaction.options.getSubcommand(true);
+
+  if (sub === "view") {
+    const row = await db.query.users.findFirst({
+      where: eq(users.id, appUser.id),
+      columns: { locale: true },
+    });
+    const stored = row?.locale ?? null;
+    if (stored && isSupportedLocale(stored)) {
+      await interaction.editReply(
+        t("locale.viewCurrent", { label: localeLabels[stored], code: stored })
+      );
+    } else {
+      await interaction.editReply(t("locale.viewAuto"));
+    }
+    return;
+  }
+
+  if (sub === "set") {
+    const code = interaction.options.getString("code", true);
+    if (!isSupportedLocale(code)) {
+      // Discord enforces the choice list, but defend against a stale client
+      // sending an old code we've since dropped.
+      await interaction.editReply(t("locale.unsupported", { code }));
+      return;
+    }
+
+    const before = await db.query.users.findFirst({
+      where: eq(users.id, appUser.id),
+      columns: { guildId: true, locale: true },
+    });
+
+    await db
+      .update(users)
+      .set({ locale: code })
+      .where(eq(users.id, appUser.id));
+
+    // Reply in the new locale so users get instant feedback in the language
+    // they just picked.
+    const newT = await getBotTranslator(code);
+    await interaction.editReply(
+      newT("locale.set", { label: localeLabels[code], code })
+    );
+
+    void logAudit({
+      guildId: before?.guildId ?? null,
+      actorUserId: appUser.id,
+      actorDisplay: await resolveActorDisplay(appUser.id),
+      action: "user.update",
+      entityType: "user",
+      entityId: appUser.id,
+      entityLabel: appUser.id,
+      changes: {
+        before: { locale: before?.locale ?? null },
+        after: { locale: code },
+      },
+    });
+    return;
+  }
+
+  if (sub === "clear") {
+    const before = await db.query.users.findFirst({
+      where: eq(users.id, appUser.id),
+      columns: { guildId: true, locale: true },
+    });
+
+    await db
+      .update(users)
+      .set({ locale: null })
+      .where(eq(users.id, appUser.id));
+
+    // After clearing, resolveBotLocale falls back to interaction.locale,
+    // then to English. Render the confirmation in that fallback so we don't
+    // confirm the change in a language the user can't read.
+    const fallbackLocale = resolveBotLocale(null, interaction.locale);
+    const newT = await getBotTranslator(fallbackLocale);
+    await interaction.editReply(newT("locale.cleared"));
+
+    void logAudit({
+      guildId: before?.guildId ?? null,
+      actorUserId: appUser.id,
+      actorDisplay: await resolveActorDisplay(appUser.id),
+      action: "user.update",
+      entityType: "user",
+      entityId: appUser.id,
+      entityLabel: appUser.id,
+      changes: {
+        before: { locale: before?.locale ?? null },
+        after: { locale: null },
+      },
+    });
+    return;
+  }
 }
 
 // ---- Helpers ----
@@ -1803,11 +1990,3 @@ function formatShort(iso: string): string {
   });
 }
 
-function notConfiguredMessage(): string {
-  return [
-    "This Discord server isn't linked to a guild yet. An app admin needs to:",
-    "1. Open Guild Settings on the website.",
-    "2. Paste this channel's Discord channel ID.",
-    "3. Click **Test integration**. That auto-links the server.",
-  ].join("\n");
-}

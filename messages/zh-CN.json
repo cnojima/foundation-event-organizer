@@ -32,6 +32,7 @@
     "players": "球员",
     "members": "成员",
     "invites": "邀请",
+    "templates": "活动模板",
     "settings": "设置",
     "auditLog": "审计日志",
     "superAdmin": "超级管理员",
@@ -39,8 +40,7 @@
     "createGuild": "创建公会",
     "adminHelp": "管理员帮助",
     "help": "帮助",
-    "myAccount": "我的账户",
-    "templates": "活动模板"
+    "myAccount": "我的账户"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification}其他{# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "对抗赛",
       "duels": "1对1决斗",
       "reminders": "提醒和日历",
-      "closed": "如果报名已关闭"
+      "closed": "如果报名已关闭",
+      "slashCommands": "Discord 斜杠命令"
     },
     "gettingIn": {
       "step1": "在首页使用 Google 或 Discord 登录。",
@@ -787,6 +788,59 @@
       "ics": "每个活动页面都有一个“下载 .ics”链接，用于将活动添加到您的日历中。",
       "slashCommands": "Discord 斜杠命令：/upcoming 列出你公会的近期活动，/signup 允许你无需离开 Discord 即可注册。你必须先使用 Discord 登录网站至少一次，以便机器人匹配你的账号。"
     },
-    "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。"
+    "closed": "表单会显示“报名已关闭”的消息。如果您需要稍后加入，请联系公会管理员——他们可以手动调整报名情况。",
+    "slashCommands": {
+      "intro": "如果你的公会服务器里有 Discord 机器人，你就可以在机器人可以查看和发布内容的任何文本频道中使用这些命令。",
+      "linkAccount": "首次使用：您需要至少使用 Discord 登录过一次网站，以便机器人将您的 Discord ID 与您的公会账号关联起来。如果您尚未登录，机器人会指导您如何操作。",
+      "upcomingHeading": "即将推出",
+      "upcomingBody": "列出公会即将举行的比赛和训练赛活动及其开始时间。回复内容仅您可见，不会占用频道空间。",
+      "signupHeading": "/报名",
+      "signupBody": "无需离开 Discord 即可报名参加活动。活动字段支持自动补全；小队和备选队员为可选。对于训练赛，小队信息将被忽略（因为只有一个小队）。",
+      "examplesLabel": "例如：",
+      "settingsHeading": "/设置",
+      "settingsBody": "无需访问网站即可查看或更改您的通知偏好设置。当 T-10 语音私信过多，您想要快速将其静音时，此功能非常有用。",
+      "subcommandsLabel": "子命令：",
+      "propagationNote": "新的斜杠命令在机器人添加到服务器后，首次在 Discord 中显示大约需要 1 小时。之后，它们将立即生效。"
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "出问题了。",
+      "notConfigured": "此 Discord 服务器尚未关联到公会。应用管理员需要：1. 打开网站上的公会设置。2. 粘贴此频道的 Discord 频道 ID。3. 点击“测试集成”。这将自动关联服务器。",
+      "notLinked": "首先使用 Discord 登录网站并连接您的 Discord 帐户，然后尝试 `/ {command}再次。",
+      "on": "在",
+      "off": "离开",
+      "tbd": "待定"
+    },
+    "upcoming": {
+      "empty": "暂无活动安排。",
+      "heading": "**近期活动**",
+      "scrimLine": "• ** {name} **（scrim）— {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} ： {s1} · {squad2Name} ： {s2}"
+    },
+    "signup": {
+      "eventNotFound": "未找到事件。",
+      "failed": "注册失败： {reason}",
+      "waitlisted": "您目前在候补名单上——您报名时队伍已满。如有空位，您将自动晋升。",
+      "success": "你已报名。球场上见。"
+    },
+    "settings": {
+      "unknown": "设置未知。",
+      "loadFailed": "无法加载您的设置。",
+      "viewHeading": "**您的通知偏好设置**",
+      "viewLine": "• {label} ： ** {state} **",
+      "viewFooter": "使用 `/settings`<name>启用：true 或 false 以更改设置。",
+      "changed": "** {label} **现在是** {state} **。",
+      "labels": {
+        "voiceInvites": "比赛语音频道邀请"
+      }
+    },
+    "locale": {
+      "viewCurrent": "您的语言设置为 ** {label} ** (` {code} `）。",
+      "viewAuto": "您的语言设置为**自动检测**。网站使用您浏览器的 Accept-Language 标头；机器人使用您 Discord 客户端的语言。",
+      "set": "语言已更新为 ** {label} ** (` {code}以后机器人回复和私信都将使用这种语言。",
+      "cleared": "语言偏好设置已清除。将使用自动检测功能。",
+      "unsupported": "` {code} ` 不是受支持的语言。"
+    }
   }
 }

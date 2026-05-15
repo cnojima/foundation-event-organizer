@@ -32,6 +32,7 @@
     "players": "Spelare",
     "members": "Medlemmar",
     "invites": "Inbjudningar",
+    "templates": "Händelsemallar",
     "settings": "Inställningar",
     "auditLog": "Granskningslogg",
     "superAdmin": "Superadministratör",
@@ -39,8 +40,7 @@
     "createGuild": "Skapa gille",
     "adminHelp": "Administratörshjälp",
     "help": "Hjälp",
-    "myAccount": "Mitt konto",
-    "templates": "Händelsemallar"
+    "myAccount": "Mitt konto"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} andra {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Scrimmage-evenemang",
       "duels": "1v1-dueller",
       "reminders": "Påminnelser och kalender",
-      "closed": "Om anmälningarna är stängda"
+      "closed": "Om anmälningarna är stängda",
+      "slashCommands": "Discord slash-kommandon"
     },
     "gettingIn": {
       "step1": "Logga in med Google eller Discord på startsidan.",
@@ -787,6 +788,59 @@
       "ics": "Varje evenemangssida har en nedladdningslänk för .ics för att lägga till evenemanget i din kalender.",
       "slashCommands": "Discord-kommandon med snedstreck: /upcoming listar din gilles kommande evenemang, och /signup låter dig registrera dig utan att lämna Discord. Du måste logga in på webbplatsen med Discord minst en gång först, så att boten kan matcha ditt konto."
     },
-    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt."
+    "closed": "Formuläret ändras till meddelandet \"Anmälningar är stängda\". Kontakta en gillesadministratör om du behöver läggas till sent – de kan justera anmälningarna manuellt.",
+    "slashCommands": {
+      "intro": "Om din gille har Discord-boten på din server kan du använda dessa kommandon från vilken textkanal som helst där boten har tillåtelse att se och posta.",
+      "linkAccount": "Första användningen: du måste ha loggat in på webbplatsen med Discord minst en gång så att boten kan länka ditt Discord-ID till ditt gillekonto. Om du inte har det kommer boten att berätta vad du ska göra.",
+      "upcomingHeading": "/kommande",
+      "upcomingBody": "Listar din gilles kommande match- och övningsevenemang med deras starttider. Svaret är kortlivat – bara du ser det, så det kommer inte att skräpa in kanalen.",
+      "signupHeading": "/registrera dig",
+      "signupBody": "Registrerar dig för ett evenemang utan att lämna Discord. Evenemangsfältet har autokomplettering; squad och willing_backup är valfria. För scrim-evenemang ignoreras squad (det finns bara ett).",
+      "examplesLabel": "Exempel:",
+      "settingsHeading": "/inställningar",
+      "settingsBody": "Visar eller ändrar dina aviseringsinställningar utan att gå till webbplatsen. Användbart när T-10:s röst-DM är bullriga och du vill stänga av dem snabbt.",
+      "subcommandsLabel": "Delkommandon:",
+      "propagationNote": "Det tar upp till ungefär en timme innan nya slash-kommandon visas i Discord första gången efter att boten har lagts till på en server. Därefter är de omedelbart tillgängliga."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Något gick fel.",
+      "notConfigured": "Den här Discord-servern är ännu inte länkad till ett gille. En appadministratör behöver: 1. Öppna gilleinställningarna på webbplatsen. 2. Klistra in den här kanalens Discord-kanal-ID. 3. Klicka på **Testa integration**. Det länkar automatiskt servern.",
+      "notLinked": "Anslut ditt Discord-konto först genom att logga in på webbplatsen med Discord, och försök sedan med `/ {command} ` igen.",
+      "on": "PÅ",
+      "off": "AV",
+      "tbd": "Ännu ej fastställd"
+    },
+    "upcoming": {
+      "empty": "Inga kommande evenemang.",
+      "heading": "**Kommande evenemang**",
+      "scrimLine": "• ** {name} ** (snärfilm) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Händelsen hittades inte.",
+      "failed": "Kunde inte registrera dig: {reason}",
+      "waitlisted": "Du står på väntelistan – lagen var fulla när du anmälde dig. Du blir automatiskt uppflyttad om en plats blir ledig.",
+      "success": "Du är anmäld. Vi ses på planen."
+    },
+    "settings": {
+      "unknown": "Okänd inställning.",
+      "loadFailed": "Det gick inte att ladda dina inställningar.",
+      "viewHeading": "**Dina aviseringsinställningar**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Använd `/inställningar<name> enabled:true` eller `false` för att ändra en inställning.",
+      "changed": "** {label} ** är nu ** {state} **.",
+      "labels": {
+        "voiceInvites": "Röstkanalinbjudningar till matcher"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Ditt språk är inställt på ** {label} ** (` {code} `).",
+      "viewAuto": "Ditt språk är inställt på **autodetektering**. Webbplatsen använder din webbläsares Accept-Language-rubrik; boten använder din Discord-klients språk.",
+      "set": "Språk uppdaterat till ** {label} ** (` {code} Framtida botsvar och direktmeddelanden kommer att vara på detta språk.",
+      "cleared": "Språkinställningar har rensats. Automatisk identifiering kommer att användas.",
+      "unsupported": "` {code} ` är inte ett språk som stöds."
+    }
   }
 }

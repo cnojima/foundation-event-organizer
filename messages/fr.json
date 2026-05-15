@@ -32,6 +32,7 @@
     "players": "Joueurs",
     "members": "Membres",
     "invites": "Invitations",
+    "templates": "Modèles d'événements",
     "settings": "Paramètres",
     "auditLog": "Journal d'audit",
     "superAdmin": "Super Administrateur",
@@ -39,8 +40,7 @@
     "createGuild": "Créer une guilde",
     "adminHelp": "Aide administrative",
     "help": "Aide",
-    "myAccount": "Mon compte",
-    "templates": "Modèles d'événements"
+    "myAccount": "Mon compte"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} autres {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Événements d'entraînement",
       "duels": "duels 1v1",
       "reminders": "Rappels et calendrier",
-      "closed": "Si les inscriptions sont fermées"
+      "closed": "Si les inscriptions sont fermées",
+      "slashCommands": "Commandes slash Discord"
     },
     "gettingIn": {
       "step1": "Connectez-vous avec Google ou Discord sur la page d'accueil.",
@@ -787,6 +788,59 @@
       "ics": "Chaque page d'événement comporte un lien de téléchargement .ics permettant d'ajouter l'événement à votre calendrier.",
       "slashCommands": "Commandes Discord : /upcoming affiche la liste des événements à venir de votre guilde, et /signup vous permet de vous inscrire sans quitter Discord. Vous devez vous connecter au site web avec Discord au moins une fois au préalable afin que le bot puisse associer votre compte."
     },
-    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement."
+    "closed": "Le formulaire affiche alors le message « Inscriptions closes ». Si vous souhaitez vous inscrire tardivement, veuillez contacter un administrateur de guilde ; il pourra modifier les inscriptions manuellement.",
+    "slashCommands": {
+      "intro": "Si votre guilde possède le bot Discord sur votre serveur, vous pouvez utiliser ces commandes depuis n'importe quel canal textuel où le bot est autorisé à voir et à publier.",
+      "linkAccount": "Première utilisation : vous devez vous être connecté(e) au site web avec Discord au moins une fois afin que le bot puisse associer votre identifiant Discord à votre compte de guilde. Si ce n’est pas le cas, le bot vous indiquera la marche à suivre.",
+      "upcomingHeading": "/prochain",
+      "upcomingBody": "Affiche la liste des matchs et entraînements à venir de votre guilde, ainsi que leurs horaires. La réponse est éphémère : vous seul la verrez, elle n'encombrera donc pas le canal.",
+      "signupHeading": "/s'inscrire",
+      "signupBody": "Vous inscrivez à un événement sans quitter Discord. Le champ « Événement » est doté de la saisie semi-automatique ; les champs « Squad » et « Wilding_Backup » sont facultatifs. Pour les scrims, le champ « Squad » est ignoré (il n'y en a qu'un).",
+      "examplesLabel": "Exemples :",
+      "settingsHeading": "/paramètres",
+      "settingsBody": "Consultez ou modifiez vos préférences de notification sans accéder au site web. Pratique lorsque les messages vocaux du T-10 sont trop bruyants et que vous souhaitez les désactiver rapidement.",
+      "subcommandsLabel": "Sous-commandes :",
+      "propagationNote": "Les nouvelles commandes slash peuvent mettre jusqu'à une heure environ pour apparaître sur Discord la première fois après l'ajout du bot à un serveur. Ensuite, elles sont instantanées."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Quelque chose a mal fonctionné.",
+      "notConfigured": "Ce serveur Discord n'est pas encore lié à une guilde. Un administrateur de l'application doit : 1. Ouvrir les paramètres de guilde sur le site web. 2. Coller l'identifiant Discord de ce canal. 3. Cliquer sur **Tester l'intégration**. Le serveur sera alors automatiquement lié.",
+      "notLinked": "Connectez-vous d'abord à votre compte Discord en vous connectant au site web avec Discord, puis essayez `/ {command} ` encore.",
+      "on": "SUR",
+      "off": "DÉSACTIVÉ",
+      "tbd": "À déterminer"
+    },
+    "upcoming": {
+      "empty": "Aucun événement à venir.",
+      "heading": "**Événements à venir**",
+      "scrimLine": "• ** {name} ** (scrim) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Événement introuvable.",
+      "failed": "Impossible de vous inscrire : {reason}",
+      "waitlisted": "Vous êtes sur liste d'attente : les équipes étaient complètes lors de votre inscription. Vous serez automatiquement promu(e) si une place se libère.",
+      "success": "Vous êtes inscrit. À bientôt sur le terrain !"
+    },
+    "settings": {
+      "unknown": "Paramètre inconnu.",
+      "loadFailed": "Impossible de charger vos paramètres.",
+      "viewHeading": "**Vos préférences de notification**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Utilisez `/settings`<name> `enabled:true` ou `false` pour modifier un paramètre.",
+      "changed": "** {label} ** est maintenant ** {state} **.",
+      "labels": {
+        "voiceInvites": "Invitations vocales pour les matchs"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Votre langue est définie sur ** {label} ** (` {code} `).",
+      "viewAuto": "Votre langue est configurée en **détection automatique**. Le site web utilise l'en-tête Accept-Language de votre navigateur ; le bot utilise la langue de votre client Discord.",
+      "set": "Langue mise à jour en ** {label} ** (` {code} Les futures réponses et messages privés du bot seront dans cette langue.",
+      "cleared": "Préférence de langue effacée. La détection automatique sera utilisée.",
+      "unsupported": "` {code} ` n'est pas une langue prise en charge."
+    }
   }
 }

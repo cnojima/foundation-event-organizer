@@ -32,6 +32,7 @@
     "players": "Jogadores",
     "members": "Membros",
     "invites": "Convites",
+    "templates": "Modelos de eventos",
     "settings": "Configurações",
     "auditLog": "Registro de auditoria",
     "superAdmin": "Superadministrador",
@@ -39,8 +40,7 @@
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta",
-    "templates": "Modelos de eventos"
+    "myAccount": "Minha conta"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} outras {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Eventos de treino",
       "duels": "duelos 1v1",
       "reminders": "Lembretes e calendário",
-      "closed": "Se as inscrições estiverem encerradas"
+      "closed": "Se as inscrições estiverem encerradas",
+      "slashCommands": "comandos de barra do Discord"
     },
     "gettingIn": {
       "step1": "Faça login com o Google ou o Discord na página inicial.",
@@ -787,6 +788,59 @@
       "ics": "Cada página de evento possui um link para baixar o arquivo .ics e adicioná-lo ao seu calendário.",
       "slashCommands": "Comandos de barra do Discord: /upcoming lista os próximos eventos da sua guilda e /signup permite que você se inscreva sem sair do Discord. Você precisa fazer login no site com o Discord pelo menos uma vez para que o bot possa associar sua conta."
     },
-    "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
+    "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente.",
+    "slashCommands": {
+      "intro": "Se a sua guilda tiver o bot do Discord no servidor, você pode usar esses comandos em qualquer canal de texto onde o bot tenha permissão para ver e postar.",
+      "linkAccount": "Primeiro acesso: você precisa ter feito login no site com o Discord pelo menos uma vez para que o bot possa vincular seu ID do Discord à sua conta da guilda. Caso contrário, o bot lhe dirá o que fazer.",
+      "upcomingHeading": "/por vir",
+      "upcomingBody": "Lista os próximos eventos de partidas e treinos da sua guilda com seus respectivos horários de início. A resposta é efêmera — somente você a vê, então não irá poluir o canal.",
+      "signupHeading": "/inscrever-se",
+      "signupBody": "Inscreve você em um evento sem sair do Discord. O campo do evento possui preenchimento automático; esquadrão e apoio voluntário são opcionais. Para eventos de scrim, o esquadrão é ignorado (só há um).",
+      "examplesLabel": "Exemplos:",
+      "settingsHeading": "/configurações",
+      "settingsBody": "Permite visualizar ou alterar suas preferências de notificação sem precisar acessar o site. Útil quando as mensagens diretas de voz do T-10 estão muito altas e você quer silenciá-las rapidamente.",
+      "subcommandsLabel": "Subcomandos:",
+      "propagationNote": "Os novos comandos de barra podem demorar até uma hora para aparecer no Discord pela primeira vez após o bot ser adicionado a um servidor. Depois disso, eles aparecem instantaneamente."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Algo deu errado.",
+      "notConfigured": "Este servidor do Discord ainda não está vinculado a uma guilda. Um administrador do aplicativo precisa: 1. Abrir as Configurações da Guilda no site. 2. Colar o ID do canal do Discord deste servidor. 3. Clicar em **Testar integração**. Isso vinculará o servidor automaticamente.",
+      "notLinked": "Primeiro, conecte sua conta do Discord fazendo login no site com o Discord e, em seguida, tente `/ {command} ` de novo.",
+      "on": "SOBRE",
+      "off": "DESLIGADO",
+      "tbd": "A definir"
+    },
+    "upcoming": {
+      "empty": "Nenhum evento futuro.",
+      "heading": "**Próximos eventos**",
+      "scrimLine": "• ** {name} ** (tela) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Evento não encontrado.",
+      "failed": "Não foi possível cadastrá-lo(a): {reason}",
+      "waitlisted": "Você está na lista de espera — as vagas estavam preenchidas quando você se inscreveu. Você será promovido automaticamente se uma vaga for aberta.",
+      "success": "Você está inscrito. Nos vemos em campo."
+    },
+    "settings": {
+      "unknown": "Cenário desconhecido.",
+      "loadFailed": "Não foi possível carregar suas configurações.",
+      "viewHeading": "**Suas preferências de notificação**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Use `/settings<name> `enabled:true` ou `false` para alterar uma configuração.",
+      "changed": "** {label} ** agora é ** {state} **.",
+      "labels": {
+        "voiceInvites": "Convites para partidas no canal de voz"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Seu idioma está definido como ** {label} ** (` {code} `).",
+      "viewAuto": "Seu idioma está configurado para **detecção automática**. O site usa o cabeçalho Accept-Language do seu navegador; o bot usa o idioma do seu cliente Discord.",
+      "set": "Idioma atualizado para ** {label} ** (` {code} As futuras respostas do bot e mensagens diretas serão neste idioma.",
+      "cleared": "Preferência de idioma apagada. A detecção automática será utilizada.",
+      "unsupported": "` {code} ` não é um idioma suportado."
+    }
   }
 }

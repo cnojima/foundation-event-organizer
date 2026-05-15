@@ -32,6 +32,7 @@
     "players": "Pemain",
     "members": "Anggota",
     "invites": "Undangan",
+    "templates": "Templat Acara",
     "settings": "Pengaturan",
     "auditLog": "Catatan Audit",
     "superAdmin": "Admin Super",
@@ -39,8 +40,7 @@
     "createGuild": "Buat Persekutuan",
     "adminHelp": "Bantuan Admin",
     "help": "Membantu",
-    "myAccount": "Akun Saya",
-    "templates": "Templat Acara"
+    "myAccount": "Akun Saya"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} pemberitahuan lainnya {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Pertandingan uji coba",
       "duels": "duel 1 lawan 1",
       "reminders": "Pengingat dan kalender",
-      "closed": "Jika pendaftaran sudah ditutup"
+      "closed": "Jika pendaftaran sudah ditutup",
+      "slashCommands": "Perintah slash Discord"
     },
     "gettingIn": {
       "step1": "Masuk menggunakan Google atau Discord di halaman utama.",
@@ -787,6 +788,59 @@
       "ics": "Setiap halaman acara memiliki tautan Unduh .ics untuk menambahkan acara tersebut ke kalender Anda.",
       "slashCommands": "Perintah slash Discord: /upcoming menampilkan daftar acara mendatang guild Anda, dan /signup memungkinkan Anda mendaftar tanpa meninggalkan Discord. Anda harus masuk ke situs web dengan Discord setidaknya sekali terlebih dahulu, agar bot dapat mencocokkan akun Anda."
     },
-    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
+    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual.",
+    "slashCommands": {
+      "intro": "Jika guild Anda memiliki bot Discord di server Anda, Anda dapat menggunakan perintah-perintah ini dari saluran teks mana pun tempat bot diizinkan untuk melihat dan memposting.",
+      "linkAccount": "Penggunaan pertama kali: Anda perlu masuk ke situs web menggunakan Discord setidaknya sekali agar bot dapat menautkan ID Discord Anda ke akun guild Anda. Jika belum, bot akan memberi tahu Anda apa yang harus dilakukan.",
+      "upcomingHeading": "/mendatang",
+      "upcomingBody": "Menampilkan daftar pertandingan dan latihan tanding guild Anda yang akan datang beserta waktu mulainya. Balasan ini bersifat sementara — hanya Anda yang dapat melihatnya, sehingga tidak akan memenuhi saluran obrolan.",
+      "signupHeading": "/mendaftar",
+      "signupBody": "Mendaftarkan Anda untuk sebuah acara tanpa meninggalkan Discord. Kolom acara memiliki fitur pelengkapan otomatis; squad dan willing_backup bersifat opsional. Untuk acara scrim, squad diabaikan (hanya ada satu).",
+      "examplesLabel": "Contoh:",
+      "settingsHeading": "/pengaturan",
+      "settingsBody": "Melihat atau mengubah preferensi notifikasi Anda tanpa perlu membuka situs web. Berguna saat pesan suara T-10 berisik dan Anda ingin membisukannya dengan cepat.",
+      "subcommandsLabel": "Subperintah:",
+      "propagationNote": "Perintah slash baru membutuhkan waktu hingga sekitar 1 jam untuk muncul di Discord pertama kali setelah bot ditambahkan ke server. Setelah itu, perintah akan muncul secara instan."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Terjadi kesalahan.",
+      "notConfigured": "Server Discord ini belum terhubung ke guild. Admin aplikasi perlu: 1. Membuka Pengaturan Guild di situs web. 2. Menempelkan ID saluran Discord ini. 3. Klik **Uji integrasi**. Ini akan secara otomatis menghubungkan server.",
+      "notLinked": "Hubungkan akun Discord Anda terlebih dahulu dengan masuk ke situs web menggunakan Discord, lalu coba `/ {command} ` lagi.",
+      "on": "PADA",
+      "off": "MATI",
+      "tbd": "Akan ditentukan kemudian"
+    },
+    "upcoming": {
+      "empty": "Tidak ada acara mendatang.",
+      "heading": "**Acara mendatang**",
+      "scrimLine": "• ** {name} ** (scrim) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Acara tidak ditemukan.",
+      "failed": "Anda tidak dapat mendaftar: {reason}",
+      "waitlisted": "Anda berada dalam daftar tunggu — tim sudah penuh saat Anda mendaftar. Anda akan dipromosikan secara otomatis jika ada slot yang kosong.",
+      "success": "Anda sudah terdaftar. Sampai jumpa di lapangan."
+    },
+    "settings": {
+      "unknown": "Pengaturan tidak diketahui.",
+      "loadFailed": "Pengaturan Anda tidak dapat dimuat.",
+      "viewHeading": "**Preferensi notifikasi Anda**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Gunakan `/settings`<name> Gunakan `enabled:true` atau `false` untuk mengubah pengaturan.",
+      "changed": "** {label} ** sekarang ** {state} **.",
+      "labels": {
+        "voiceInvites": "Undangan pertandingan melalui saluran suara"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Bahasa Anda diatur ke ** {label} ** (` {code} `).",
+      "viewAuto": "Bahasa Anda diatur ke **deteksi otomatis**. Situs web menggunakan header Accept-Language dari browser Anda; bot menggunakan bahasa klien Discord Anda.",
+      "set": "Bahasa diperbarui menjadi ** {label} ** (` {code} `). Balasan bot dan pesan pribadi di masa mendatang akan menggunakan bahasa ini.",
+      "cleared": "Pengaturan preferensi bahasa telah dihapus. Deteksi otomatis akan digunakan.",
+      "unsupported": "` {code} ` bukan bahasa yang didukung."
+    }
   }
 }

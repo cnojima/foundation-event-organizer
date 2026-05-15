@@ -32,6 +32,7 @@
     "players": "Người chơi",
     "members": "Thành viên",
     "invites": "Lời mời",
+    "templates": "Mẫu sự kiện",
     "settings": "Cài đặt",
     "auditLog": "Nhật ký kiểm toán",
     "superAdmin": "Quản trị viên cấp cao",
@@ -39,8 +40,7 @@
     "createGuild": "Tạo Bang hội",
     "adminHelp": "Trợ giúp quản trị viên",
     "help": "Giúp đỡ",
-    "myAccount": "Tài khoản của tôi",
-    "templates": "Mẫu sự kiện"
+    "myAccount": "Tài khoản của tôi"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} thông báo khác {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Các sự kiện giao hữu",
       "duels": "đấu tay đôi 1v1",
       "reminders": "Lời nhắc và lịch",
-      "closed": "Nếu việc đăng ký đã đóng"
+      "closed": "Nếu việc đăng ký đã đóng",
+      "slashCommands": "Lệnh gạch chéo Discord"
     },
     "gettingIn": {
       "step1": "Đăng nhập bằng tài khoản Google hoặc Discord trên trang chủ.",
@@ -787,6 +788,59 @@
       "ics": "Mỗi trang sự kiện đều có liên kết \"Tải xuống tệp .ics\" để thêm sự kiện vào lịch của bạn.",
       "slashCommands": "Các lệnh slash trên Discord: /upcoming liệt kê các sự kiện sắp tới của bang hội bạn, và /signup cho phép bạn đăng ký mà không cần rời khỏi Discord. Bạn phải đăng nhập vào trang web bằng Discord ít nhất một lần trước, để bot có thể xác nhận tài khoản của bạn."
     },
-    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công."
+    "closed": "Biểu mẫu sẽ hiển thị thông báo \"Việc đăng ký đã đóng\". Hãy liên hệ với quản trị viên bang hội nếu bạn cần được thêm vào muộn — họ có thể điều chỉnh việc đăng ký thủ công.",
+    "slashCommands": {
+      "intro": "Nếu máy chủ Discord của bang hội bạn có cài đặt bot, bạn có thể sử dụng các lệnh này từ bất kỳ kênh văn bản nào mà bot được phép xem và đăng bài.",
+      "linkAccount": "Lần sử dụng đầu tiên: bạn cần đăng nhập vào trang web bằng Discord ít nhất một lần để bot có thể liên kết ID Discord của bạn với tài khoản guild. Nếu chưa, bot sẽ hướng dẫn bạn các bước cần thực hiện.",
+      "upcomingHeading": "/sắp tới",
+      "upcomingBody": "Liệt kê các trận đấu và trận tập sắp tới của bang hội bạn cùng với thời gian bắt đầu. Tin nhắn trả lời chỉ hiển thị trong thời gian ngắn — chỉ bạn mới thấy, vì vậy nó sẽ không làm rối kênh chat.",
+      "signupHeading": "/đăng ký",
+      "signupBody": "Đăng ký tham gia sự kiện mà không cần rời khỏi Discord. Trường sự kiện có tính năng tự động điền; squad và willing_backup là tùy chọn. Đối với các sự kiện scrim, squad sẽ bị bỏ qua (chỉ có một squad).",
+      "examplesLabel": "Ví dụ:",
+      "settingsHeading": "/cài đặt",
+      "settingsBody": "Xem hoặc thay đổi tùy chọn thông báo của bạn mà không cần truy cập trang web. Hữu ích khi tin nhắn thoại T-10 quá ồn và bạn muốn tắt tiếng nhanh chóng.",
+      "subcommandsLabel": "Lệnh phụ:",
+      "propagationNote": "Các lệnh gạch chéo mới cần khoảng 1 giờ để xuất hiện trong Discord lần đầu tiên sau khi bot được thêm vào máy chủ. Sau đó, chúng sẽ xuất hiện ngay lập tức."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Đã xảy ra lỗi.",
+      "notConfigured": "Máy chủ Discord này chưa được liên kết với máy chủ nào. Quản trị viên ứng dụng cần thực hiện các bước sau: 1. Mở Cài đặt Máy chủ trên trang web. 2. Dán ID kênh Discord này vào. 3. Nhấp vào **Kiểm tra tích hợp**. Thao tác này sẽ tự động liên kết máy chủ.",
+      "notLinked": "Trước tiên, hãy kết nối tài khoản Discord của bạn bằng cách đăng nhập vào trang web bằng Discord, sau đó thử `/ {command} ` một lần nữa.",
+      "on": "TRÊN",
+      "off": "TẮT",
+      "tbd": "Sẽ được xác định sau."
+    },
+    "upcoming": {
+      "empty": "Không có sự kiện nào sắp diễn ra.",
+      "heading": "**Các sự kiện sắp tới**",
+      "scrimLine": "• ** {name} ** (tập trận) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Không tìm thấy sự kiện.",
+      "failed": "Không thể đăng ký cho bạn: {reason}",
+      "waitlisted": "Bạn đang trong danh sách chờ — các đội đã đầy khi bạn đăng ký. Bạn sẽ được chuyển lên đội chính thức nếu có chỗ trống.",
+      "success": "Bạn đã đăng ký thành công. Hẹn gặp bạn trên sân."
+    },
+    "settings": {
+      "unknown": "Cài đặt không xác định.",
+      "loadFailed": "Không thể tải cài đặt của bạn.",
+      "viewHeading": "**Tùy chọn thông báo của bạn**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Sử dụng `/settings`<name> Sử dụng `enabled:true` hoặc `false` để thay đổi cài đặt.",
+      "changed": "** {label} ** hiện nay là ** {state} **",
+      "labels": {
+        "voiceInvites": "Mời tham gia trận đấu qua kênh thoại"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Ngôn ngữ của bạn được đặt thành ** {label} ** (` {code} `).",
+      "viewAuto": "Ngôn ngữ của bạn được đặt ở chế độ **tự động phát hiện**. Trang web sử dụng tiêu đề Accept-Language của trình duyệt; bot sử dụng ngôn ngữ của ứng dụng Discord mà bạn đang dùng.",
+      "set": "Ngôn ngữ đã được cập nhật thành ** {label} ** (` {code} `). Các phản hồi và tin nhắn riêng từ bot trong tương lai sẽ được viết bằng ngôn ngữ này.",
+      "cleared": "Tùy chọn ngôn ngữ đã bị xóa. Chức năng tự động nhận diện sẽ được sử dụng.",
+      "unsupported": "` {code} ` không phải là ngôn ngữ được hỗ trợ."
+    }
   }
 }

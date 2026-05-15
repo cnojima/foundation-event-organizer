@@ -32,6 +32,7 @@
     "players": "Gracze",
     "members": "Członkowie",
     "invites": "Zaproszenia",
+    "templates": "Szablony wydarzeń",
     "settings": "Ustawienia",
     "auditLog": "Dziennik audytu",
     "superAdmin": "Superadministrator",
@@ -39,8 +40,7 @@
     "createGuild": "Utwórz gildię",
     "adminHelp": "Pomoc administratora",
     "help": "Pomoc",
-    "myAccount": "Moje konto",
-    "templates": "Szablony wydarzeń"
+    "myAccount": "Moje konto"
   },
   "alerts": {
     "heading": "{count, plural, one {# notification} inne {# notifications} }",
@@ -731,7 +731,8 @@
       "scrims": "Wydarzenia treningowe",
       "duels": "Pojedynki 1 na 1",
       "reminders": "Przypomnienia i kalendarz",
-      "closed": "Jeśli zapisy są zamknięte"
+      "closed": "Jeśli zapisy są zamknięte",
+      "slashCommands": "Polecenia ukośnika Discord"
     },
     "gettingIn": {
       "step1": "Zaloguj się za pomocą konta Google lub Discord na stronie głównej.",
@@ -787,6 +788,59 @@
       "ics": "Na każdej stronie wydarzenia znajduje się link do pobrania pliku .ics umożliwiający dodanie wydarzenia do kalendarza.",
       "slashCommands": "Komendy ukośnikowe Discord: /upcoming wyświetla listę nadchodzących wydarzeń Twojej gildii, a /signup pozwala zarejestrować się bez opuszczania Discorda. Musisz najpierw zalogować się na stronie Discord co najmniej raz, aby bot mógł dopasować Twoje konto."
     },
-    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
+    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy.",
+    "slashCommands": {
+      "intro": "Jeśli na serwerze Twojej gildii znajduje się bot Discord, możesz używać tych poleceń z dowolnego kanału tekstowego, który bot może widzieć i publikować.",
+      "linkAccount": "Pierwsze użycie: musisz zalogować się na stronie za pomocą Discorda przynajmniej raz, aby bot mógł połączyć Twój identyfikator Discord z kontem gildii. Jeśli tego nie zrobiłeś, bot podpowie Ci, co zrobić.",
+      "upcomingHeading": "/nadchodzące",
+      "upcomingBody": "Wyświetla listę nadchodzących meczów i sparingów Twojej gildii wraz z godzinami ich rozpoczęcia. Odpowiedź jest ulotna — widzisz ją tylko Ty, więc nie będzie zaśmiecać kanału.",
+      "signupHeading": "/zapisać się",
+      "signupBody": "Zapisuje Cię na wydarzenie bez wychodzenia z Discorda. Pole wydarzenia ma funkcję autouzupełniania; pola squad i willing_backup są opcjonalne. W przypadku spotkań treningowych pole squad jest ignorowane (jest tylko jedno).",
+      "examplesLabel": "Przykłady:",
+      "settingsHeading": "/ustawienia",
+      "settingsBody": "Wyświetla lub zmienia preferencje powiadomień bez wchodzenia na stronę internetową. Przydatne, gdy wiadomości głosowe T-10 są głośne i chcesz je szybko wyciszyć.",
+      "subcommandsLabel": "Podpolecenia:",
+      "propagationNote": "Nowe komendy ukośnika pojawiają się na Discordzie po około godzinie od pierwszego dodania bota do serwera. Później są już dostępne natychmiast."
+    }
+  },
+  "bot": {
+    "common": {
+      "error": "Coś poszło nie tak.",
+      "notConfigured": "Ten serwer Discord nie jest jeszcze połączony z żadną gildią. Administrator aplikacji musi: 1. Otworzyć Ustawienia gildii na stronie internetowej. 2. Wkleić identyfikator kanału Discord tego kanału. 3. Kliknąć **Testuj integrację**. To automatycznie połączy serwer.",
+      "notLinked": "Najpierw połącz swoje konto Discord, logując się na stronie za pomocą Discorda, a następnie wypróbuj `/ {command} ` ponownie.",
+      "on": "NA",
+      "off": "WYŁĄCZONY",
+      "tbd": "Do ustalenia"
+    },
+    "upcoming": {
+      "empty": "Brak nadchodzących wydarzeń.",
+      "heading": "**Nadchodzące wydarzenia**",
+      "scrimLine": "• ** {name} ** (scrim) — {when}",
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+    },
+    "signup": {
+      "eventNotFound": "Wydarzenie nie zostało znalezione.",
+      "failed": "Nie udało się zapisać: {reason}",
+      "waitlisted": "Jesteś na liście oczekujących – drużyny były pełne, kiedy się rejestrowałeś. Awans zostanie automatycznie przyznany, jeśli zwolni się miejsce.",
+      "success": "Jesteś zapisany. Do zobaczenia na boisku."
+    },
+    "settings": {
+      "unknown": "Nieznane ustawienie.",
+      "loadFailed": "Nie udało się załadować ustawień.",
+      "viewHeading": "**Twoje preferencje dotyczące powiadomień**",
+      "viewLine": "• {label} : ** {state} **",
+      "viewFooter": "Użyj `/settings<name> enabled:true` lub `false`, aby zmienić ustawienie.",
+      "changed": "** {label} ** jest teraz ** {state} **.",
+      "labels": {
+        "voiceInvites": "Zaproszenia głosowe do meczów"
+      }
+    },
+    "locale": {
+      "viewCurrent": "Twój język jest ustawiony na ** {label} ** (` {code} `).",
+      "viewAuto": "Twój język jest ustawiony na **automatyczne wykrywanie**. Strona korzysta z nagłówka Accept-Language w Twojej przeglądarce; bot korzysta z języka Twojego klienta Discord.",
+      "set": "Język zaktualizowany do ** {label} ** (` {code} `). Przyszłe odpowiedzi botów i wiadomości prywatne będą wysyłane w tym języku.",
+      "cleared": "Preferencje językowe zostały wyczyszczone. Zostanie użyte automatyczne wykrywanie.",
+      "unsupported": "` {code} ` nie jest obsługiwanym językiem."
+    }
   }
 }
