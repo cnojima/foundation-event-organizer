@@ -2,8 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { db } from "@/db";
-import { duelProposals, events, guilds, signups, users } from "@/db/schema";
-import { and, desc, eq, isNotNull, isNull, or, sql } from "drizzle-orm";
+import {
+  auditLog,
+  duelProposals,
+  events,
+  guilds,
+  signups,
+  users,
+} from "@/db/schema";
+import { and, desc, eq, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
 import { getTranslations } from "next-intl/server";
 import { requireAnyGuildPage } from "@/lib/rbac";
 import { UserAvatar } from "@/components/user-avatar";
@@ -13,6 +20,8 @@ import { duelSideFor, viewerOutcome } from "@/lib/duels";
 import { WAITLIST_ROLE } from "@/lib/waitlist";
 
 const RECENT_EVENTS_LIMIT = 10;
+const ADMIN_NOTES_LIMIT = 10;
+const AUDIT_SLICE_LIMIT = 20;
 
 const HISTORY_PAGE_SIZE = 25;
 
@@ -49,6 +58,10 @@ export default async function PlayerProfilePage({
       inGameName: users.inGameName,
       image: users.image,
       powerTier: users.powerTier,
+      locale: users.locale,
+      discordUserId: users.discordUserId,
+      duelDmEnabled: users.duelDmEnabled,
+      voiceDmEnabled: users.voiceDmEnabled,
       duelRating: users.duelRating,
       duelWins: users.duelWins,
       duelLosses: users.duelLosses,
@@ -58,6 +71,7 @@ export default async function PlayerProfilePage({
       lastDuelAt: users.lastDuelAt,
       discoverableForDuels: users.discoverableForDuels,
       guildId: users.guildId,
+      guildRole: users.guildRole,
       guildName: guilds.name,
       guildTag: guilds.tag,
       guildServerNumber: guilds.serverNumber,
@@ -76,13 +90,44 @@ export default async function PlayerProfilePage({
     : null;
   const viewerServer = viewerGuild?.serverNumber ?? null;
   const isSelf = profile.id === membership.userId;
+  // Same-guild views bypass discoverableForDuels — that flag controls
+  // cross-guild duel discovery, not whether your own guildmates can see
+  // your profile (e.g. via /members).
+  const isSameGuildView =
+    profile.guildId !== null && profile.guildId === membership.guildId;
   const canView =
     isSelf ||
     membership.isSuperAdmin ||
+    isSameGuildView ||
     (profile.discoverableForDuels &&
       viewerServer !== null &&
       profile.guildServerNumber === viewerServer);
   if (!canView) return notFound();
+
+  // Reachability/DM badges are admin-grade signals — same-guild members and
+  // cross-guild viewers don't see them per issue #9's access matrix. Self,
+  // super-admin, and the player's own guild admin do.
+  const canSeeBadges =
+    isSelf ||
+    membership.isSuperAdmin ||
+    (membership.guildRole === "admin" &&
+      profile.guildId !== null &&
+      profile.guildId === membership.guildId);
+
+  // "Last seen" merges signup + duel activity. Login isn't tracked
+  // server-side, so this is the best proxy we have.
+  const lastSignupRow = await db
+    .select({ maxAt: sql<string | null>`MAX(${signups.createdAt})` })
+    .from(signups)
+    .where(and(eq(signups.userId, profile.id), isNull(signups.deletedAt)))
+    .get();
+  const lastSignupAt = lastSignupRow?.maxAt ?? null;
+  const lastSeenAt =
+    lastSignupAt && profile.lastDuelAt
+      ? lastSignupAt > profile.lastDuelAt
+        ? lastSignupAt
+        : profile.lastDuelAt
+      : (lastSignupAt ?? profile.lastDuelAt);
 
   const name = displayName(
     { inGameName: profile.inGameName },
@@ -251,6 +296,127 @@ export default async function PlayerProfilePage({
   ).length;
   const recentEvents = attendanceRows.slice(0, RECENT_EVENTS_LIMIT);
 
+  // Admin block: ratings histogram + recent activity (audit slice) are
+  // visible to self, super-admin, or the player's own guild admin.
+  // Admin notes are stricter — guild admins / super-admins only, never to
+  // the player themselves: admins write observations they don't expect the
+  // player to read. Requires the player to be in a guild for scope.
+  const canSeeAdminBlock =
+    !!profile.guildId &&
+    (isSelf ||
+      membership.isSuperAdmin ||
+      (membership.guildRole === "admin" &&
+        profile.guildId === membership.guildId));
+  const canSeeAdminNotes =
+    !!profile.guildId &&
+    (membership.isSuperAdmin ||
+      (membership.guildRole === "admin" &&
+        profile.guildId === membership.guildId));
+
+  const ratingBuckets = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 } as Record<
+    1 | 2 | 3 | 4 | 5,
+    number
+  >;
+  let ratingTotal = 0;
+  let ratingSum = 0;
+  type AdminNoteRow = {
+    notes: string;
+    eventId: string;
+    eventName: string;
+    squad1StartsAt: string | null;
+  };
+  let adminNoteRows: AdminNoteRow[] = [];
+  type AuditSliceRow = {
+    id: string;
+    createdAt: string;
+    action: string;
+    entityType: string;
+    entityLabel: string | null;
+  };
+  let auditSliceRows: AuditSliceRow[] = [];
+
+  if (canSeeAdminBlock && profile.guildId) {
+    const ratingRows = await db
+      .select({ rating: signups.rating })
+      .from(signups)
+      .innerJoin(events, eq(signups.eventId, events.id))
+      .where(
+        and(
+          eq(signups.userId, profile.id),
+          isNull(signups.deletedAt),
+          isNotNull(signups.rating),
+          eq(events.guildId, profile.guildId)
+        )
+      );
+    for (const r of ratingRows) {
+      const v = r.rating;
+      if (v === 1 || v === 2 || v === 3 || v === 4 || v === 5) {
+        ratingBuckets[v] += 1;
+        ratingTotal += 1;
+        ratingSum += v;
+      }
+    }
+
+    if (canSeeAdminNotes) {
+      adminNoteRows = await db
+        .select({
+          notes: signups.adminNotes,
+          eventId: events.id,
+          eventName: events.name,
+          squad1StartsAt: events.squad1StartsAt,
+        })
+        .from(signups)
+        .innerJoin(events, eq(signups.eventId, events.id))
+        .where(
+          and(
+            eq(signups.userId, profile.id),
+            isNull(signups.deletedAt),
+            isNotNull(signups.adminNotes),
+            ne(signups.adminNotes, ""),
+            eq(events.guildId, profile.guildId)
+          )
+        )
+        .orderBy(
+          sql`${events.squad1StartsAt} IS NULL`,
+          desc(events.squad1StartsAt),
+          desc(events.createdAt)
+        )
+        .limit(ADMIN_NOTES_LIMIT)
+        .then((rows) =>
+          // Drizzle's column type for adminNotes is nullable, but the
+          // isNotNull + ne filters guarantee a non-empty string here.
+          rows.map((r) => ({
+            notes: r.notes as string,
+            eventId: r.eventId,
+            eventName: r.eventName,
+            squad1StartsAt: r.squad1StartsAt,
+          }))
+        );
+    }
+
+    auditSliceRows = await db
+      .select({
+        id: auditLog.id,
+        createdAt: auditLog.createdAt,
+        action: auditLog.action,
+        entityType: auditLog.entityType,
+        entityLabel: auditLog.entityLabel,
+      })
+      .from(auditLog)
+      .where(
+        and(
+          eq(auditLog.actorUserId, profile.id),
+          eq(auditLog.guildId, profile.guildId)
+        )
+      )
+      .orderBy(desc(auditLog.createdAt))
+      .limit(AUDIT_SLICE_LIMIT);
+  }
+
+  const ratingAvg =
+    ratingTotal > 0 ? Math.round((ratingSum / ratingTotal) * 10) / 10 : null;
+  const ratingMax = Math.max(...Object.values(ratingBuckets), 1);
+
   // Pulled out as a local so TS narrowing carries through `historyHref`'s
   // closure (the `if (!profile) return notFound()` guard above doesn't
   // automatically narrow inside nested functions).
@@ -277,6 +443,19 @@ export default async function PlayerProfilePage({
                 {profile.powerTier}
               </span>
             )}
+            {profile.guildRole && (
+              <span
+                className={`rounded border px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                  profile.guildRole === "admin"
+                    ? "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300"
+                    : "border-gray-200 bg-gray-50 text-gray-600 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400"
+                }`}
+              >
+                {profile.guildRole === "admin"
+                  ? t("guildRoleAdmin")
+                  : t("guildRoleMember")}
+              </span>
+            )}
             {isSelf && (
               <span className="rounded border border-violet-200 bg-violet-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300">
                 {t("youBadge")}
@@ -288,7 +467,56 @@ export default async function PlayerProfilePage({
             {profile.guildServerNumber
               ? ` · ${t("serverLabel", { serverNumber: profile.guildServerNumber })}`
               : ""}
+            {profile.locale
+              ? ` · ${t("localeLabel", { locale: profile.locale })}`
+              : ""}
           </p>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-500">
+            {t("lastSeenLabel")}:{" "}
+            {lastSeenAt ? (
+              <DateTime iso={lastSeenAt} mode="date" />
+            ) : (
+              t("lastSeenNever")
+            )}
+          </p>
+          {canSeeBadges && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              <StatusBadge
+                on={!!profile.discordUserId}
+                onLabel={t("badgeDiscordLinked")}
+                offLabel={t("badgeDiscordNotLinked")}
+              />
+              {profile.discordUserId && (
+                <>
+                  <StatusBadge
+                    on={profile.voiceDmEnabled}
+                    onLabel={t("badgeVoiceDmsOn")}
+                    offLabel={t("badgeVoiceDmsOff")}
+                  />
+                  <StatusBadge
+                    on={profile.duelDmEnabled}
+                    onLabel={t("badgeDuelDmsOn")}
+                    offLabel={t("badgeDuelDmsOff")}
+                  />
+                </>
+              )}
+              <StatusBadge
+                on={profile.discoverableForDuels}
+                onLabel={t("badgeDiscoverable")}
+                offLabel={t("badgeNotDiscoverable")}
+              />
+            </div>
+          )}
+          {isSelf && (
+            <p className="mt-2 text-xs">
+              <Link
+                href="/me"
+                className="text-violet-700 hover:underline dark:text-violet-300"
+              >
+                {t("editProfileLink")}
+              </Link>
+            </p>
+          )}
         </div>
         <div className="shrink-0">
           {canChallenge && (
@@ -486,6 +714,134 @@ export default async function PlayerProfilePage({
         </section>
       )}
 
+      {canSeeAdminBlock && (
+        <section className="mb-8 rounded-lg border border-amber-200 bg-amber-50/40 p-4 dark:border-amber-900/60 dark:bg-amber-950/20">
+          <h2 className="mb-4 text-lg font-semibold text-gray-900 dark:text-gray-100">
+            {t("adminBlockHeading")}
+          </h2>
+
+          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            {t("ratingsHeading")}
+          </h3>
+          {ratingTotal === 0 ? (
+            <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+              {t("ratingsEmpty")}
+            </p>
+          ) : (
+            <div className="mb-4">
+              <p className="mb-2 text-xs text-gray-600 dark:text-gray-400">
+                {t("ratingsAverage", { avg: ratingAvg ?? 0 })} ·{" "}
+                {t("ratingsCount", { count: ratingTotal })}
+              </p>
+              <div className="space-y-1">
+                {([5, 4, 3, 2, 1] as const).map((stars) => {
+                  const count = ratingBuckets[stars];
+                  const widthPct = Math.round((count / ratingMax) * 100);
+                  return (
+                    <div key={stars} className="flex items-center gap-2 text-xs">
+                      <span className="w-8 shrink-0 font-mono text-gray-500 dark:text-gray-400">
+                        {t("ratingsBucketLabel", { stars })}
+                      </span>
+                      <div className="relative h-3 flex-1 rounded bg-gray-200 dark:bg-gray-800">
+                        <div
+                          className="absolute inset-y-0 left-0 rounded bg-violet-500"
+                          style={{ width: `${widthPct}%` }}
+                        />
+                      </div>
+                      <span className="w-6 shrink-0 text-right font-mono text-gray-600 dark:text-gray-400">
+                        {count}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {canSeeAdminNotes && (
+            <>
+              <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                {t("adminNotesHeading")}
+              </h3>
+              {adminNoteRows.length === 0 ? (
+                <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
+                  {t("adminNotesEmpty")}
+                </p>
+              ) : (
+                <ul className="mb-4 space-y-2">
+                  {adminNoteRows.map((row) => (
+                    <li
+                      key={row.eventId}
+                      className="rounded border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900"
+                    >
+                      <div className="mb-1 flex flex-wrap gap-x-3 text-xs text-gray-500 dark:text-gray-400">
+                        <Link
+                          href={`/event/${row.eventId}`}
+                          className="font-semibold text-gray-700 hover:text-violet-700 dark:text-gray-300 dark:hover:text-violet-300"
+                        >
+                          {row.eventName}
+                        </Link>
+                        {row.squad1StartsAt && (
+                          <span>
+                            <DateTime iso={row.squad1StartsAt} mode="date" />
+                          </span>
+                        )}
+                      </div>
+                      <p className="whitespace-pre-wrap text-sm text-gray-700 dark:text-gray-300">
+                        {row.notes}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+            {t("auditSliceHeading")}
+          </h3>
+          {auditSliceRows.length === 0 ? (
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              {t("auditSliceEmpty")}
+            </p>
+          ) : (
+            <>
+              <ul className="space-y-1">
+                {auditSliceRows.map((row) => (
+                  <li
+                    key={row.id}
+                    className="flex flex-wrap items-center gap-2 rounded border border-gray-200 bg-white px-3 py-2 text-xs dark:border-gray-800 dark:bg-gray-900"
+                  >
+                    <span className="text-gray-500 dark:text-gray-400">
+                      <DateTime iso={row.createdAt} mode="date" />
+                    </span>
+                    <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-[10px] text-gray-700 dark:bg-gray-800 dark:text-gray-300">
+                      {row.action}
+                    </code>
+                    {row.entityLabel && (
+                      <span className="truncate text-gray-700 dark:text-gray-300">
+                        {row.entityLabel}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+              {(membership.guildRole === "admin" ||
+                membership.isSuperAdmin) && (
+                <p className="mt-2 text-xs">
+                  <Link
+                    href="/admin/audit"
+                    className="text-violet-700 hover:underline dark:text-violet-300"
+                  >
+                    {t("auditSliceSeeMore")}
+                  </Link>
+                </p>
+              )}
+            </>
+          )}
+        </section>
+      )}
+
       <section>
         <h2 className="mb-3 text-lg font-semibold text-gray-900 dark:text-gray-100">
           {t("historyHeading")}
@@ -600,6 +956,32 @@ function Stat({
       <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">{value}</p>
       {sub && <p className="text-[11px] text-gray-500 dark:text-gray-400">{sub}</p>}
     </div>
+  );
+}
+
+function StatusBadge({
+  on,
+  onLabel,
+  offLabel,
+}: {
+  on: boolean;
+  onLabel: string;
+  offLabel: string;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${
+        on
+          ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300"
+          : "border-gray-200 bg-gray-50 text-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-400"
+      }`}
+    >
+      <span
+        aria-hidden="true"
+        className={`size-1.5 rounded-full ${on ? "bg-emerald-500" : "bg-gray-400"}`}
+      />
+      {on ? onLabel : offLabel}
+    </span>
   );
 }
 

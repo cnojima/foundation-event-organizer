@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { db } from "@/db";
 import { users, guilds } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -46,9 +47,10 @@ export default async function MembersPage() {
 
       <div className="space-y-2">
         {members.map((m) => (
-          <div
+          <Link
             key={m.id}
-            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 dark:border-gray-800 dark:bg-gray-900"
+            href={`/players/${m.id}`}
+            className="flex items-center gap-3 rounded-lg border border-gray-200 bg-white px-4 py-3 transition-colors hover:border-violet-400 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-violet-700 dark:hover:bg-gray-800"
           >
             <UserAvatar name={displayName(m, guild.tag)} image={m.image} />
             <div className="leading-tight">
@@ -71,7 +73,7 @@ export default async function MembersPage() {
                   : t("memberLabel")}
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
