@@ -71,6 +71,20 @@
       "when": 1778810612859,
       "tag": "0009_event_templates",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1778877455019,
+      "tag": "0010_fix_user_fk_cascades",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "6",
+      "when": 1778877613289,
+      "tag": "0011_nullable_guild_creator",
+      "breakpoints": true
     }
   ]
 }

@@ -151,9 +151,13 @@ export const guilds = sqliteTable("guilds", {
   slug: text("slug").notNull().unique(),
   description: text("description"),
   isPublic: integer("is_public", { mode: "boolean" }).notNull().default(true),
-  createdByUserId: text("created_by_user_id")
-    .notNull()
-    .references((): AnySQLiteColumn => users.id),
+  // Nullable: the creator may delete their account while the guild still
+  // has members. We set this to null on user-delete rather than cascading,
+  // since the guild belongs to its membership, not its founder.
+  createdByUserId: text("created_by_user_id").references(
+    (): AnySQLiteColumn => users.id,
+    { onDelete: "set null" }
+  ),
   createdAt: text("created_at").notNull(),
   deletedAt: text("deleted_at"),
   // Discord channel the bot posts event reminders into. Null = notifications disabled.
@@ -186,7 +190,7 @@ export const guildInvites = sqliteTable("guild_invites", {
   code: text("code").notNull().unique(),
   createdByUserId: text("created_by_user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   expiresAt: text("expires_at"),
   maxUses: integer("max_uses"),
   usesCount: integer("uses_count").notNull().default(0),
@@ -282,7 +286,7 @@ export const scrimProposals = sqliteTable("scrim_proposals", {
     .references(() => guilds.id, { onDelete: "cascade" }),
   proposedByUserId: text("proposed_by_user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => users.id, { onDelete: "cascade" }),
   proposedGameTime: text("proposed_game_time").notNull(),
   location: text("location").notNull(),
   winCondition: text("win_condition").notNull(),
@@ -292,7 +296,9 @@ export const scrimProposals = sqliteTable("scrim_proposals", {
   })
     .notNull()
     .default("pending"),
-  respondedByUserId: text("responded_by_user_id").references(() => users.id),
+  respondedByUserId: text("responded_by_user_id").references(() => users.id, {
+    onDelete: "set null",
+  }),
   respondedAt: text("responded_at"),
   proposingEventId: text("proposing_event_id").references(() => events.id, {
     onDelete: "set null",
@@ -306,7 +312,8 @@ export const scrimProposals = sqliteTable("scrim_proposals", {
   }),
   resultNotes: text("result_notes"),
   resultDeclaredByUserId: text("result_declared_by_user_id").references(
-    () => users.id
+    () => users.id,
+    { onDelete: "set null" }
   ),
   resultDeclaredAt: text("result_declared_at"),
   createdAt: text("created_at").notNull(),
@@ -338,14 +345,18 @@ export const duelProposals = sqliteTable("duel_proposals", {
   })
     .notNull()
     .default("pending"),
-  respondedByUserId: text("responded_by_user_id").references(() => users.id),
+  respondedByUserId: text("responded_by_user_id").references(() => users.id, {
+    onDelete: "set null",
+  }),
   respondedAt: text("responded_at"),
   // Who most recently edited the proposal while pending. Null means no
   // edits have happened yet — treated as if the proposer made the
   // original offer (so the opposer is the one who can accept). Used to
   // enforce "you can't accept your own latest terms" for bidirectional
   // counter-proposals during negotiation.
-  lastEditedByUserId: text("last_edited_by_user_id").references(() => users.id),
+  lastEditedByUserId: text("last_edited_by_user_id").references(() => users.id, {
+    onDelete: "set null",
+  }),
   // Result lives on the same row (no events table for duels). Filled by
   // Phase 4 result-declaration flow; null until then.
   result: text("result", {
@@ -353,7 +364,8 @@ export const duelProposals = sqliteTable("duel_proposals", {
   }),
   resultNotes: text("result_notes"),
   resultDeclaredByUserId: text("result_declared_by_user_id").references(
-    () => users.id
+    () => users.id,
+    { onDelete: "set null" }
   ),
   resultDeclaredAt: text("result_declared_at"),
   // Per-side post-duel feedback (thumbs up/down). Aggregates are

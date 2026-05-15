@@ -1290,10 +1290,12 @@ export async function sendGuildJoinAnnouncement(input: {
 // Returns a usable invite code for the guild. If no existing invite is
 // usable (expired, revoked, maxed out, or none at all), generates a new
 // permanent one (never-expires, unlimited uses) attributed to the guild
-// creator.
+// creator. If the creator's account was deleted (`createdByUserId` null),
+// falls back to any current admin so we still have a valid FK target;
+// if no admin exists, skips generation and returns null.
 async function resolveOrCreatePermanentInvite(
   guildId: string,
-  createdByUserId: string
+  createdByUserId: string | null
 ): Promise<string | null> {
   const nowIso = new Date().toISOString();
 
@@ -1324,14 +1326,28 @@ async function resolveOrCreatePermanentInvite(
   if (usable) return usable.code;
 
   // None usable — generate a permanent invite. Same code shape as the
-  // admin-created invites (8 random bytes → base64url ≈ 11 chars).
+  // admin-created invites (8 random bytes → base64url ≈ 11 chars). The
+  // FK on guild_invites.created_by_user_id is NOT NULL, so if the founder
+  // is gone we pick any current admin as the attribution; if none, skip.
+  let attributedUserId = createdByUserId;
+  if (!attributedUserId) {
+    const fallbackAdmin = await db
+      .select({ id: users.id })
+      .from(users)
+      .where(and(eq(users.guildId, guildId), eq(users.guildRole, "admin")))
+      .limit(1)
+      .get();
+    attributedUserId = fallbackAdmin?.id ?? null;
+  }
+  if (!attributedUserId) return null;
+
   try {
     const code = randomBytes(8).toString("base64url");
     await db.insert(guildInvites).values({
       id: crypto.randomUUID(),
       guildId,
       code,
-      createdByUserId,
+      createdByUserId: attributedUserId,
       expiresAt: null,
       maxUses: null,
       usesCount: 0,

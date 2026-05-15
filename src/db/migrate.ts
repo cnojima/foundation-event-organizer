@@ -21,6 +21,18 @@ export function runMigrations(): void {
   const sqlite = new Database(dbPath);
   try {
     sqlite.pragma("journal_mode = WAL");
+    // Disable FK enforcement for the duration of migrations. Drizzle's
+    // SQLite migrator wraps each migration file in a BEGIN/COMMIT, and
+    // `PRAGMA foreign_keys` is a no-op inside a transaction — so the
+    // `PRAGMA foreign_keys=OFF` baked into Drizzle-Kit's rebuild migrations
+    // never actually applies. Without this connection-level toggle, any
+    // table-recreation migration (the SQLite "create __new_X, copy, drop
+    // old, rename" pattern Drizzle emits for FK or column changes) fires
+    // cascades on the DROP and silently wipes child rows in referring
+    // tables (events, signups, scrim_proposals, guild_invites, …) and
+    // nulls FK columns in others (users.guild_id). Set BEFORE migrate()
+    // because pragmas are per-connection. See: https://www.sqlite.org/foreignkeys.html
+    sqlite.pragma("foreign_keys = OFF");
     const db = drizzle(sqlite);
     drizzleMigrate(db, { migrationsFolder });
   } finally {
