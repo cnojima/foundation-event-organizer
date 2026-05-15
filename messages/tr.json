@@ -512,7 +512,6 @@
     "eventNotFound": "Etkinlik bulunamadı.",
     "memberNotFound": "Üye bulunamadı.",
     "inviteNotFound": "Davetiye bulunamadı.",
-    "alreadySignedUp": "Zaten kayıt oldum.",
     "notForThisEvent": "Bu etkinliğe kayıt kabul edilmemektedir.",
     "failed": "Arızalı",
     "somethingWentWrong": "Bir şeyler ters gitti.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Son yöneticiyi atamıyorum. Önce başka birini terfi ettirin.",
     "lastAdminLeave": "Tek yönetici sizsiniz. Ayrılmadan önce başka bir üyeyi yönetici yapın.",
     "lastAdminDelete": "Loncanızın tek yöneticisi sizsiniz. Önce başka birini terfi ettirin veya süper yöneticinin yönetimi devralmasını sağlayın.",
-    "lastSuperAdminDelete": "Son süper yönetici sizsiniz. Hesabınızı silmeden önce başka birini süper yönetici yapın."
+    "lastSuperAdminDelete": "Son süper yönetici sizsiniz. Hesabınızı silmeden önce başka birini süper yönetici yapın.",
+    "alreadySignedUp": "Zaten kayıt oldunuz."
   },
   "ingameNameDialog": {
     "title": "Hoş geldin",

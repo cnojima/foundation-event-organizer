@@ -512,7 +512,6 @@
     "eventNotFound": "未找到事件。",
     "memberNotFound": "未找到成员",
     "inviteNotFound": "未找到邀请",
-    "alreadySignedUp": "已注册",
     "notForThisEvent": "本次活动不接受报名。",
     "failed": "失败的",
     "somethingWentWrong": "出问题了。",
@@ -521,7 +520,8 @@
     "lastAdminKick": "不能踢掉上一任管理员。先提拔其他人。",
     "lastAdminLeave": "你是唯一的管理员。离开前请将其他成员晋升为管理员。",
     "lastAdminDelete": "你是公会的唯一管理员。先提拔其他人，或者让超级管理员接管。",
-    "lastSuperAdminDelete": "你是最后一个超级管理员。在删除你的账号之前，请将其他人晋升为超级管理员。"
+    "lastSuperAdminDelete": "你是最后一个超级管理员。在删除你的账号之前，请将其他人晋升为超级管理员。",
+    "alreadySignedUp": "您已注册。"
   },
   "ingameNameDialog": {
     "title": "欢迎",

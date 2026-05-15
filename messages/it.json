@@ -512,7 +512,6 @@
     "eventNotFound": "Evento non trovato.",
     "memberNotFound": "Membro non trovato",
     "inviteNotFound": "Invito non trovato",
-    "alreadySignedUp": "Già iscritto",
     "notForThisEvent": "Per questo evento non sono ammesse iscrizioni.",
     "failed": "Fallito",
     "somethingWentWrong": "Qualcosa è andato storto.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Non è possibile rimuovere l'ultimo amministratore. Prima promuovi qualcun altro.",
     "lastAdminLeave": "Sei l'unico amministratore. Promuovi un altro membro ad amministratore prima di uscire.",
     "lastAdminDelete": "Sei l'unico amministratore della tua gilda. Promuovi prima qualcun altro, oppure lascia che un super-amministratore prenda il controllo.",
-    "lastSuperAdminDelete": "Sei l'ultimo super-amministratore. Promuovi qualcun altro a super-amministratore prima di eliminare il tuo account."
+    "lastSuperAdminDelete": "Sei l'ultimo super-amministratore. Promuovi qualcun altro a super-amministratore prima di eliminare il tuo account.",
+    "alreadySignedUp": "Ti sei già registrato"
   },
   "ingameNameDialog": {
     "title": "Benvenuto",

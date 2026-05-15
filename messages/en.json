@@ -512,7 +512,7 @@
     "eventNotFound": "Event not found.",
     "memberNotFound": "Member not found",
     "inviteNotFound": "Invite not found",
-    "alreadySignedUp": "Already signed up",
+    "alreadySignedUp": "You have already signed up",
     "notForThisEvent": "This event does not accept signups",
     "failed": "Failed",
     "somethingWentWrong": "Something went wrong.",

@@ -512,7 +512,6 @@
     "eventNotFound": "Événement introuvable.",
     "memberNotFound": "Membre introuvable",
     "inviteNotFound": "Invitation introuvable",
-    "alreadySignedUp": "Déjà inscrit",
     "notForThisEvent": "Les inscriptions ne sont pas acceptées pour cet événement.",
     "failed": "Échoué",
     "somethingWentWrong": "Quelque chose a mal fonctionné.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Impossible de destituer le dernier administrateur. Veuillez d'abord promouvoir quelqu'un d'autre.",
     "lastAdminLeave": "Vous êtes le seul administrateur. Veuillez nommer un autre membre administrateur avant de partir.",
     "lastAdminDelete": "Vous êtes le seul administrateur de votre guilde. Veuillez d'abord promouvoir quelqu'un d'autre ou désigner un super-administrateur.",
-    "lastSuperAdminDelete": "Vous êtes le dernier super-administrateur. Veuillez nommer quelqu'un d'autre super-administrateur avant de supprimer votre compte."
+    "lastSuperAdminDelete": "Vous êtes le dernier super-administrateur. Veuillez nommer quelqu'un d'autre super-administrateur avant de supprimer votre compte.",
+    "alreadySignedUp": "Vous vous êtes déjà inscrit."
   },
   "ingameNameDialog": {
     "title": "Accueillir",

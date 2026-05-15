@@ -512,7 +512,6 @@
     "eventNotFound": "Acara tidak ditemukan.",
     "memberNotFound": "Anggota tidak ditemukan",
     "inviteNotFound": "Undangan tidak ditemukan",
-    "alreadySignedUp": "Sudah terdaftar",
     "notForThisEvent": "Acara ini tidak menerima pendaftaran.",
     "failed": "Gagal",
     "somethingWentWrong": "Terjadi kesalahan.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Tidak bisa mengeluarkan admin terakhir. Promosikan orang lain terlebih dahulu.",
     "lastAdminLeave": "Anda satu-satunya admin. Promosikan anggota lain menjadi admin sebelum Anda keluar.",
     "lastAdminDelete": "Anda adalah satu-satunya admin di guild Anda. Promosikan orang lain terlebih dahulu, atau minta super-admin untuk mengambil alih.",
-    "lastSuperAdminDelete": "Anda adalah super-admin terakhir. Promosikan orang lain menjadi super-admin sebelum menghapus akun Anda."
+    "lastSuperAdminDelete": "Anda adalah super-admin terakhir. Promosikan orang lain menjadi super-admin sebelum menghapus akun Anda.",
+    "alreadySignedUp": "Anda sudah mendaftar"
   },
   "ingameNameDialog": {
     "title": "Selamat datang",

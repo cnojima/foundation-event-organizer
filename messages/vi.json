@@ -512,7 +512,6 @@
     "eventNotFound": "Không tìm thấy sự kiện.",
     "memberNotFound": "Không tìm thấy thành viên",
     "inviteNotFound": "Không tìm thấy lời mời",
-    "alreadySignedUp": "Đã đăng ký",
     "notForThisEvent": "Sự kiện này không chấp nhận đăng ký.",
     "failed": "Thất bại",
     "somethingWentWrong": "Đã xảy ra lỗi.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Không thể sa thải quản trị viên cũ. Hãy thăng chức cho người khác trước.",
     "lastAdminLeave": "Bạn là quản trị viên duy nhất. Hãy thăng chức cho một thành viên khác lên làm quản trị viên trước khi rời đi.",
     "lastAdminDelete": "Bạn là quản trị viên duy nhất của bang hội. Hãy thăng chức cho người khác trước, hoặc để một quản trị viên cấp cao hơn tiếp quản.",
-    "lastSuperAdminDelete": "Bạn là người quản trị cấp cao cuối cùng. Hãy thăng chức cho người khác lên vị trí quản trị cấp cao trước khi xóa tài khoản của bạn."
+    "lastSuperAdminDelete": "Bạn là người quản trị cấp cao cuối cùng. Hãy thăng chức cho người khác lên vị trí quản trị cấp cao trước khi xóa tài khoản của bạn.",
+    "alreadySignedUp": "Bạn đã đăng ký thành công"
   },
   "ingameNameDialog": {
     "title": "Chào mừng",

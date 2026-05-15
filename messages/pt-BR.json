@@ -512,7 +512,6 @@
     "eventNotFound": "Evento não encontrado.",
     "memberNotFound": "Membro não encontrado",
     "inviteNotFound": "Convite não encontrado",
-    "alreadySignedUp": "Já se inscreveu?",
     "notForThisEvent": "Este evento não aceita inscrições.",
     "failed": "Fracassado",
     "somethingWentWrong": "Algo deu errado.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Não é possível demitir o último administrador. Promova outra pessoa primeiro.",
     "lastAdminLeave": "Você é o único administrador. Promova outro membro a administrador antes de sair.",
     "lastAdminDelete": "Você é o único administrador da sua guilda. Promova outra pessoa primeiro ou peça para um superadministrador assumir o cargo.",
-    "lastSuperAdminDelete": "Você é o último superadministrador. Promova outra pessoa a superadministrador antes de excluir sua conta."
+    "lastSuperAdminDelete": "Você é o último superadministrador. Promova outra pessoa a superadministrador antes de excluir sua conta.",
+    "alreadySignedUp": "Você já se cadastrou."
   },
   "ingameNameDialog": {
     "title": "Bem-vindo",

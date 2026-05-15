@@ -512,7 +512,6 @@
     "eventNotFound": "Händelsen hittades inte.",
     "memberNotFound": "Medlem hittades inte",
     "inviteNotFound": "Inbjudan hittades inte",
-    "alreadySignedUp": "Redan anmäld",
     "notForThisEvent": "Detta evenemang accepterar inte anmälningar",
     "failed": "Misslyckades",
     "somethingWentWrong": "Något gick fel.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Kan inte sparka den senaste administratören. Befordra någon annan först.",
     "lastAdminLeave": "Du är den enda administratören. Befordra en annan medlem till administratör innan du lämnar.",
     "lastAdminDelete": "Du är den enda administratören i ditt gille. Befordra någon annan först, eller låt en superadministratör ta över.",
-    "lastSuperAdminDelete": "Du är den sista superadministratören. Befordra någon annan till superadministratör innan du tar bort ditt konto."
+    "lastSuperAdminDelete": "Du är den sista superadministratören. Befordra någon annan till superadministratör innan du tar bort ditt konto.",
+    "alreadySignedUp": "Du har redan registrerat dig"
   },
   "ingameNameDialog": {
     "title": "Välkomna",

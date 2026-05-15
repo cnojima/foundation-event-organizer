@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "ko",
-  "translatedAt": "2026-05-15T06:43:32.672Z",
+  "translatedAt": "2026-05-15T06:54:13.616Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -455,7 +455,7 @@
     "errors.eventNotFound": "Event not found.",
     "errors.memberNotFound": "Member not found",
     "errors.inviteNotFound": "Invite not found",
-    "errors.alreadySignedUp": "Already signed up",
+    "errors.alreadySignedUp": "You have already signed up",
     "errors.notForThisEvent": "This event does not accept signups",
     "errors.failed": "Failed",
     "errors.somethingWentWrong": "Something went wrong.",

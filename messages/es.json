@@ -512,7 +512,6 @@
     "eventNotFound": "Evento no encontrado.",
     "memberNotFound": "Miembro no encontrado",
     "inviteNotFound": "No se encontró la invitación.",
-    "alreadySignedUp": "Ya me registré",
     "notForThisEvent": "Este evento no acepta inscripciones.",
     "failed": "Fallido",
     "somethingWentWrong": "Algo salió mal.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "No se puede expulsar al último administrador. Asciende primero a otra persona.",
     "lastAdminLeave": "Eres el único administrador. Asciende a otro miembro a administrador antes de irte.",
     "lastAdminDelete": "Eres el único administrador de tu gremio. Asciende primero a otra persona o deja que un superadministrador se haga cargo.",
-    "lastSuperAdminDelete": "Eres el último superadministrador. Nombra a otra persona como superadministrador antes de eliminar tu cuenta."
+    "lastSuperAdminDelete": "Eres el último superadministrador. Nombra a otra persona como superadministrador antes de eliminar tu cuenta.",
+    "alreadySignedUp": "Ya te has registrado"
   },
   "ingameNameDialog": {
     "title": "Bienvenido",

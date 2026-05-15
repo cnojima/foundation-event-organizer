@@ -512,7 +512,6 @@
     "eventNotFound": "Evenement niet gevonden.",
     "memberNotFound": "Lid niet gevonden",
     "inviteNotFound": "Uitnodiging niet gevonden",
-    "alreadySignedUp": "Al aangemeld",
     "notForThisEvent": "Voor dit evenement is aanmelden niet mogelijk.",
     "failed": "Mislukt",
     "somethingWentWrong": "Er is iets misgegaan.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Je kunt de vorige beheerder niet verwijderen. Je moet eerst iemand anders promoveren.",
     "lastAdminLeave": "Jij bent de enige beheerder. Benoem een ander lid tot beheerder voordat je vertrekt.",
     "lastAdminDelete": "Jij bent de enige beheerder van je gilde. Bevorder eerst iemand anders, of laat een superbeheerder het overnemen.",
-    "lastSuperAdminDelete": "Jij bent de laatste superbeheerder. Benoem iemand anders tot superbeheerder voordat je je account verwijdert."
+    "lastSuperAdminDelete": "Jij bent de laatste superbeheerder. Benoem iemand anders tot superbeheerder voordat je je account verwijdert.",
+    "alreadySignedUp": "Je hebt je al aangemeld."
   },
   "ingameNameDialog": {
     "title": "Welkom",

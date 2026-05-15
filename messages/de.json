@@ -512,7 +512,6 @@
     "eventNotFound": "Veranstaltung nicht gefunden.",
     "memberNotFound": "Mitglied nicht gefunden",
     "inviteNotFound": "Einladung nicht gefunden",
-    "alreadySignedUp": "Bereits angemeldet",
     "notForThisEvent": "Für diese Veranstaltung werden keine Anmeldungen angenommen.",
     "failed": "Fehlgeschlagen",
     "somethingWentWrong": "Etwas ist schiefgelaufen.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Der letzte Administrator kann nicht entfernt werden. Zuerst muss jemand anderes befördert werden.",
     "lastAdminLeave": "Du bist der einzige Administrator. Befördere ein anderes Mitglied zum Administrator, bevor du gehst.",
     "lastAdminDelete": "Du bist der einzige Administrator deiner Gilde. Befördere zuerst jemand anderen oder lass einen Super-Administrator die Verwaltung übernehmen.",
-    "lastSuperAdminDelete": "Du bist der letzte Super-Admin. Befördere jemand anderen zum Super-Admin, bevor du dein Konto löschst."
+    "lastSuperAdminDelete": "Du bist der letzte Super-Admin. Befördere jemand anderen zum Super-Admin, bevor du dein Konto löschst.",
+    "alreadySignedUp": "Sie haben sich bereits angemeldet."
   },
   "ingameNameDialog": {
     "title": "Willkommen",

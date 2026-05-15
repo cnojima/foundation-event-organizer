@@ -512,7 +512,6 @@
     "eventNotFound": "Wydarzenie nie zostało znalezione.",
     "memberNotFound": "Członek nie znaleziony",
     "inviteNotFound": "Zaproszenie nie zostało znalezione",
-    "alreadySignedUp": "Już zapisany",
     "notForThisEvent": "Na to wydarzenie nie można się zapisywać",
     "failed": "Przegrany",
     "somethingWentWrong": "Coś poszło nie tak.",
@@ -521,7 +520,8 @@
     "lastAdminKick": "Nie możesz wyrzucić ostatniego administratora. Awansuj najpierw kogoś innego.",
     "lastAdminLeave": "Jesteś jedynym administratorem. Awansuj innego użytkownika na administratora, zanim odejdziesz.",
     "lastAdminDelete": "Jesteś jedynym administratorem swojej gildii. Awansuj najpierw kogoś innego albo poproś superadministratora o przejęcie funkcji.",
-    "lastSuperAdminDelete": "Jesteś ostatnim superadministratorem. Awansuj kogoś innego na superadministratora, zanim usuniesz swoje konto."
+    "lastSuperAdminDelete": "Jesteś ostatnim superadministratorem. Awansuj kogoś innego na superadministratora, zanim usuniesz swoje konto.",
+    "alreadySignedUp": "Już się zapisałeś"
   },
   "ingameNameDialog": {
     "title": "Powitanie",

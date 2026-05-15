@@ -512,7 +512,6 @@
     "eventNotFound": "イベントが見つかりませんでした。",
     "memberNotFound": "メンバーが見つかりません",
     "inviteNotFound": "招待状が見つかりません",
-    "alreadySignedUp": "既に登録済み",
     "notForThisEvent": "このイベントは参加登録を受け付けていません。",
     "failed": "失敗した",
     "somethingWentWrong": "何かがおかしくなりました。",
@@ -521,7 +520,8 @@
     "lastAdminKick": "前の管理者を追放することはできません。まずは他の人を昇格させてください。",
     "lastAdminLeave": "あなたは唯一の管理者です。退会する前に、他のメンバーを管理者に昇格させてください。",
     "lastAdminDelete": "あなたはギルドの唯一の管理者です。まずは他の人を昇格させるか、スーパー管理者に引き継いでもらいましょう。",
-    "lastSuperAdminDelete": "あなたは最後のスーパー管理者です。アカウントを削除する前に、他の人をスーパー管理者に昇格させてください。"
+    "lastSuperAdminDelete": "あなたは最後のスーパー管理者です。アカウントを削除する前に、他の人をスーパー管理者に昇格させてください。",
+    "alreadySignedUp": "既に登録済みです"
   },
   "ingameNameDialog": {
     "title": "いらっしゃいませ",
