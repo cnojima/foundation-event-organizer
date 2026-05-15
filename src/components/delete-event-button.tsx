@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { headerActionClasses } from "@/components/header-action-button";
 
 export function DeleteEventButton({
   eventId,
@@ -39,7 +40,7 @@ export function DeleteEventButton({
       type="button"
       onClick={handleDelete}
       disabled={deleting}
-      className="inline-flex items-center gap-2 rounded-md border border-red-200 bg-red-50 px-3 py-1.5 text-sm font-medium text-red-700 hover:bg-red-100 disabled:opacity-60"
+      className={headerActionClasses("red", "disabled:opacity-60")}
     >
       <svg viewBox="0 0 20 20" fill="none" className="size-4" aria-hidden>
         <path

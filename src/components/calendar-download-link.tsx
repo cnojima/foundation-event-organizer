@@ -1,3 +1,5 @@
+import { headerActionClasses } from "@/components/header-action-button";
+
 type Props = {
   href: string;
   label?: string;
@@ -15,10 +17,7 @@ export function CalendarDownloadLink({
     <a
       href={href}
       download={filename}
-      className={
-        className ??
-        "inline-flex items-center gap-2 rounded-md border border-violet-200 bg-violet-50 px-3 py-1.5 text-sm font-medium text-violet-700 hover:bg-violet-100"
-      }
+      className={className ?? headerActionClasses("violet")}
     >
       <svg viewBox="0 0 20 20" fill="none" className="size-4" aria-hidden>
         <rect

@@ -1,9 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 import { DatetimeLocalHint } from "@/components/datetime-local-hint";
+import { headerActionClasses } from "@/components/header-action-button";
+
+// Window-level event so the trigger button (rendered in the page header
+// alongside Add-to-Calendar / Delete-Event) and the form panel (rendered
+// further down the page) can communicate without lifting state into the
+// async server component or threading a React context through the page.
+const EDIT_DATES_EVENT = "edit-event-dates:open";
+
+// Header-row trigger. Place this next to the other event-action buttons in
+// the admin event page; clicking it expands the EditEventDatesForm panel
+// below and scrolls it into view.
+export function EditEventDatesButton() {
+  return (
+    <button
+      type="button"
+      onClick={() => window.dispatchEvent(new CustomEvent(EDIT_DATES_EVENT))}
+      className={headerActionClasses("violet")}
+    >
+      <CalendarEditIcon />
+      Edit dates
+    </button>
+  );
+}
 
 type DateField =
   | "gameTime"
@@ -64,6 +87,23 @@ export function EditEventDatesForm({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [savedAt, setSavedAt] = useState<number | null>(null);
+  // Typed broadly because the same ref attaches to the collapsed wrapper
+  // <div> and the expanded <form>, depending on `editing`.
+  const wrapperRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    function onOpen() {
+      setEditing(true);
+    }
+    window.addEventListener(EDIT_DATES_EVENT, onOpen);
+    return () => window.removeEventListener(EDIT_DATES_EVENT, onOpen);
+  }, []);
+
+  useEffect(() => {
+    if (editing) {
+      wrapperRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [editing]);
 
   const initial = {
     gameTime: isoToUtcInput(gameTime),
@@ -118,17 +158,22 @@ export function EditEventDatesForm({
     setSubmitting(false);
   }
 
+  // When collapsed, render only an anchor div so the header-triggered
+  // scrollIntoView lands at the right vertical position, plus the
+  // post-save confirmation pill if applicable. The trigger button itself
+  // lives in the page header via <EditEventDatesButton />.
   if (!editing) {
     return (
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={() => setEditing(true)}
-          className="rounded border border-gray-300 bg-white px-2 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-        >
-          Edit dates
-        </button>
-        {savedAt && <span className="text-xs text-emerald-600 dark:text-emerald-300">Saved.</span>}
+      <div
+        ref={(el) => {
+          wrapperRef.current = el;
+        }}
+      >
+        {savedAt && (
+          <span className="text-xs text-emerald-600 dark:text-emerald-300">
+            Dates saved.
+          </span>
+        )}
       </div>
     );
   }
@@ -142,6 +187,9 @@ export function EditEventDatesForm({
 
   return (
     <form
+      ref={(el) => {
+        wrapperRef.current = el;
+      }}
       onSubmit={handleSubmit}
       className="rounded-lg border border-gray-200 bg-white p-4 space-y-3 dark:border-gray-800 dark:bg-gray-900"
     >
@@ -188,5 +236,24 @@ export function EditEventDatesForm({
         </button>
       </div>
     </form>
+  );
+}
+
+function CalendarEditIcon() {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      fill="none"
+      aria-hidden
+      className="size-4"
+    >
+      <path
+        d="M3 5h10M5 2v2M11 2v2M3 5v8a1 1 0 001 1h5M13 5v3M14 10l-4 4-2 .5.5-2 4-4 1.5 1.5z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

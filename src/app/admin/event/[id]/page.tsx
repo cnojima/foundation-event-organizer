@@ -8,7 +8,7 @@ import { AdminSignupRow } from "@/components/admin-signup-row";
 import { computeStanding, WAITLIST_ROLE } from "@/lib/waitlist";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { DeleteEventButton } from "@/components/delete-event-button";
-import { EditEventDatesForm } from "@/components/edit-event-dates-form";
+import { EditEventDatesButton, EditEventDatesForm } from "@/components/edit-event-dates-form";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
 import { ScrimResultForm } from "@/components/scrim-result-form";
@@ -150,6 +150,7 @@ export default async function AdminEventPage({
           )}
         </div>
         <div className="flex items-center gap-2">
+          {!event.deletedAt && !isScrim && <EditEventDatesButton />}
           {(event.gameTime || event.squad1StartsAt || event.squad2StartsAt) && (
             <CalendarDownloadLink href={`/api/events/${event.id}/ics`} />
           )}
