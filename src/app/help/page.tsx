@@ -29,6 +29,7 @@ export default async function HelpPage() {
     { id: "scrims", title: t("sections.scrims") },
     { id: "duels", title: t("sections.duels") },
     { id: "reminders", title: t("sections.reminders") },
+    { id: "slash-commands", title: t("sections.slashCommands") },
     { id: "closed", title: t("sections.closed") },
   ];
 
@@ -155,6 +156,78 @@ export default async function HelpPage() {
           <li>{t("reminders.ics")}</li>
           <li>{t("reminders.slashCommands")}</li>
         </ul>
+      </CollapsibleSection>
+
+      <CollapsibleSection
+        id="slash-commands"
+        title={t("sections.slashCommands")}
+      >
+        <p>{t("slashCommands.intro")}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {t("slashCommands.linkAccount")}
+        </p>
+
+        <div className="space-y-5">
+          <div>
+            <h3 className="font-mono text-sm font-bold text-violet-700 dark:text-violet-300">
+              {t("slashCommands.upcomingHeading")}
+            </h3>
+            <p className="mt-1">{t("slashCommands.upcomingBody")}</p>
+          </div>
+
+          <div>
+            <h3 className="font-mono text-sm font-bold text-violet-700 dark:text-violet-300">
+              {t("slashCommands.signupHeading")}
+            </h3>
+            <p className="mt-1">{t("slashCommands.signupBody")}</p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              {t("slashCommands.examplesLabel")}
+            </p>
+            <ul className="mt-1 space-y-1">
+              <li>
+                <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                  /signup event:Shadowfront May 16
+                </code>
+              </li>
+              <li>
+                <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                  /signup event:Shadowfront May 16 squad:1
+                </code>
+              </li>
+              <li>
+                <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                  /signup event:Shadowfront May 16 squad:2 willing_backup:false
+                </code>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-mono text-sm font-bold text-violet-700 dark:text-violet-300">
+              {t("slashCommands.settingsHeading")}
+            </h3>
+            <p className="mt-1">{t("slashCommands.settingsBody")}</p>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+              {t("slashCommands.subcommandsLabel")}
+            </p>
+            <ul className="mt-1 space-y-1">
+              <li>
+                <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                  /settings view
+                </code>
+              </li>
+              <li>
+                <code className="rounded bg-gray-100 px-1.5 py-0.5 font-mono text-xs text-gray-800 dark:bg-gray-800 dark:text-gray-200">
+                  /settings voice_invites enabled:false
+                </code>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <p className="text-sm text-gray-600 dark:text-gray-400">
+          {t("slashCommands.propagationNote")}
+        </p>
       </CollapsibleSection>
 
       <CollapsibleSection id="closed" title={t("sections.closed")}>

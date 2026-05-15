@@ -731,6 +731,7 @@
       "scrims": "Scrimmage events",
       "duels": "1v1 duels",
       "reminders": "Reminders and calendar",
+      "slashCommands": "Discord slash commands",
       "closed": "If signups are closed"
     },
     "gettingIn": {
@@ -786,6 +787,19 @@
       "bot": "If your guild has the Discord bot set up, the bot posts reminders 1 day, 1 hour, and 20 minutes before each event in your guild's chosen channel.",
       "ics": "Every event page has a Download .ics link for adding the event to your calendar.",
       "slashCommands": "Discord slash commands: /upcoming lists your guild's upcoming events, and /signup lets you sign up without leaving Discord. You have to sign in to the website with Discord at least once first, so the bot can match your account."
+    },
+    "slashCommands": {
+      "intro": "If your guild has the Discord bot in your server, you can use these commands from any text channel where the bot is allowed to see and post.",
+      "linkAccount": "First-time use: you need to have signed in to the website with Discord at least once so the bot can link your Discord ID to your guild account. If you haven't, the bot will tell you what to do.",
+      "upcomingHeading": "/upcoming",
+      "upcomingBody": "Lists your guild's upcoming match and scrim events with their start times. The reply is ephemeral — only you see it, so it won't clutter the channel.",
+      "signupHeading": "/signup",
+      "signupBody": "Signs you up for an event without leaving Discord. The event field has autocomplete; squad and willing_backup are optional. For scrim events, squad is ignored (there's only one).",
+      "examplesLabel": "Examples:",
+      "settingsHeading": "/settings",
+      "settingsBody": "Views or changes your notification preferences without going to the website. Useful when the T-10 voice DMs are noisy and you want to mute them quickly.",
+      "subcommandsLabel": "Subcommands:",
+      "propagationNote": "New slash commands take up to about 1 hour to appear in Discord the first time after the bot is added to a server. After that, they're instant."
     },
     "closed": "The form turns into a \"Signups are closed\" message. Reach out to a guild admin if you need to be added late — they can adjust signups manually."
   }
