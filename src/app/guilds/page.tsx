@@ -55,13 +55,13 @@ export default async function GuildsPage() {
           {rows.map((guild) => (
             <div
               key={guild.id}
-              className="rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-violet-400 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-violet-700"
+              className="relative rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-violet-400 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-violet-700"
             >
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <Link
                     href={`/guilds/${guild.slug}`}
-                    className="text-lg font-semibold text-gray-900 hover:text-violet-700 dark:text-gray-100 dark:hover:text-violet-300"
+                    className="text-lg font-semibold text-gray-900 hover:text-violet-700 before:absolute before:inset-0 before:rounded-lg dark:text-gray-100 dark:hover:text-violet-300"
                   >
                     {guild.name}
                   </Link>
@@ -72,7 +72,11 @@ export default async function GuildsPage() {
                     {guild.memberCount} member{guild.memberCount === 1 ? "" : "s"}
                   </p>
                 </div>
-                {!inAGuild && <JoinGuildButton guildId={guild.id} />}
+                {!inAGuild && (
+                  <div className="relative z-10">
+                    <JoinGuildButton guildId={guild.id} />
+                  </div>
+                )}
               </div>
             </div>
           ))}

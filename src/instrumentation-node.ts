@@ -28,6 +28,23 @@ export async function registerNode(): Promise<void> {
     // operator can investigate via logs.
   }
 
+  // Backfill canonical event templates for guilds that predate the
+  // event_templates table. Idempotent — skips any guild that already has
+  // at least one template row, so re-running on boot is a near-no-op.
+  try {
+    const { seedDefaultTemplatesForAllGuilds } = await import(
+      "@/lib/event-templates"
+    );
+    const result = seedDefaultTemplatesForAllGuilds();
+    if (result.guildsSeeded > 0) {
+      console.log(
+        `[boot] event templates seeded for ${result.guildsSeeded}/${result.guildsScanned} guilds`
+      );
+    }
+  } catch (err) {
+    console.error("[boot] event template seed failed:", err);
+  }
+
   const { startBot } = await import("@/bot/discord-bot");
   startBot();
 }

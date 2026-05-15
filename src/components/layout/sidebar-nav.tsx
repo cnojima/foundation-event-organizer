@@ -153,17 +153,18 @@ const ICONS = {
 const NAV_ITEMS: NavItem[] = [
   // ---- Play: what you do as a member of a guild ----
   { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild", category: "play" },
-  { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild", category: "play" },
-  { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild", category: "play" },
   { labelKey: "duels", href: "/duels", icon: ICONS.swords, visibility: "signedInWithGuild", category: "play" },
+  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin", category: "play" },
+  { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild", category: "play" },
   { labelKey: "leaderboard", href: "/leaderboard", icon: ICONS.trophy, visibility: "signedInWithGuild", category: "play" },
   { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly", category: "play" },
-
+  
   // ---- Manage: guild discovery (everyone) + guild-admin tools ----
-  { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "signedIn", category: "manage" },
-  { labelKey: "createGuild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless", category: "manage" },
   { labelKey: "manageEvents", href: "/admin", icon: ICONS.dashboard, visibility: "guildAdmin", category: "manage" },
-  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "templates", href: "/admin/templates", icon: ICONS.dashboard, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "signedIn", category: "manage" },
+  { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild", category: "manage" },
+  { labelKey: "createGuild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless", category: "manage" },
   { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin", category: "manage" },
   { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin", category: "manage" },
   { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin", category: "manage" },

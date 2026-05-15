@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { guilds, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { logAudit, resolveActorDisplay } from "@/lib/audit";
+import { seedDefaultTemplates } from "@/lib/event-templates";
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -81,6 +82,16 @@ export async function POST(req: Request) {
       .where(eq(users.id, membership.userId))
       .run();
   });
+
+  // Seed canonical templates (Paths to Dominance + 2-Squad Shadowfront).
+  // Best-effort — a seed failure shouldn't roll back guild creation. The
+  // startup backfill in instrumentation-node will catch any guild that
+  // ends up template-less.
+  try {
+    seedDefaultTemplates(guildId);
+  } catch (err) {
+    console.error("[guilds.create] template seed failed:", err);
+  }
 
   void logAudit({
     guildId,

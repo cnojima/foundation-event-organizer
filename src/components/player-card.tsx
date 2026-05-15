@@ -34,18 +34,25 @@ export type PlayerCardData = {
   guildTag: string | null;
 };
 
-// Single-player display used on /players discovery and /leaderboard.
-// Server component — no Challenge handler yet (Phase 3 wires that up).
-// `sameGuild=true` labels guildmates with a hint and skips the Challenge
-// affordance since cross-guild discovery is for finding new opponents.
+// Single-player display used on /players discovery, /leaderboard, and the
+// public guild roster. `sameGuild=true` labels guildmates with a hint and,
+// by default, also suppresses the Challenge button (since cross-guild
+// discovery is for finding new opponents). Pass an explicit `canChallenge`
+// to override that default — e.g. on a guild profile where Challenge should
+// be hidden when the viewer's server # doesn't match the target guild's.
 export async function PlayerCard({
   player,
   sameGuild = false,
+  canChallenge,
+  challengeDisabledHint,
 }: {
   player: PlayerCardData;
   sameGuild?: boolean;
+  canChallenge?: boolean;
+  challengeDisabledHint?: string;
 }) {
   const t = await getTranslations("players");
+  const effectiveCanChallenge = canChallenge ?? !sameGuild;
   const name = displayName({ inGameName: player.inGameName }, player.guildTag);
   const totalDuels = player.duelWins + player.duelLosses + player.duelDraws;
   const totalFeedback = player.feedbackUpCount + player.feedbackDownCount;
@@ -100,20 +107,20 @@ export async function PlayerCard({
           </div>
         </div>
       </Link>
-      {sameGuild ? (
-        <span
-          className="shrink-0 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-500"
-          title={t("sameGuildChallengeHint")}
-        >
-          {t("challenge")}
-        </span>
-      ) : (
+      {effectiveCanChallenge ? (
         <Link
           href={`/duels/new?opponent=${player.id}`}
           className="shrink-0 rounded-md bg-violet-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-violet-700"
         >
           {t("challenge")}
         </Link>
+      ) : (
+        <span
+          className="shrink-0 rounded-md border border-gray-200 bg-gray-50 px-3 py-1.5 text-xs font-semibold text-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-500"
+          title={challengeDisabledHint ?? t("sameGuildChallengeHint")}
+        >
+          {t("challenge")}
+        </span>
       )}
     </div>
   );

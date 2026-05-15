@@ -52,7 +52,11 @@ export type AuditAction =
   | "guild.super_admin.delete"
   | "guild.super_admin.restore"
   // Bot
-  | "bot.poll_now";
+  | "bot.poll_now"
+  // Event templates
+  | "event_template.create"
+  | "event_template.update"
+  | "event_template.delete";
 
 export type AuditEntityType =
   | "event"
@@ -63,7 +67,8 @@ export type AuditEntityType =
   | "scrim"
   | "duel"
   | "user"
-  | "bot";
+  | "bot"
+  | "event_template";
 
 export type AuditChange = Record<string, unknown>;
 

@@ -1,39 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 import { DatetimeLocalField } from "@/components/datetime-local-field";
+import type { AdminTemplate } from "@/components/templates-admin";
+import { snapSignupTime } from "@/lib/event-templates-shared";
 
 type EventKind = "match" | "simple";
 
-// Per-kind defaults for the most common workflows. Match events get the
-// Shadowfront-on-the-next-Saturday template; simple events default to the
-// Paths to Dominance lore line. Admins switching kind get the new kind's
-// defaults *only if they haven't edited the field* — otherwise their input
-// is preserved (see handleKindChange below).
-function matchDefaultName(saturdayIso: string): string {
-  const d = new Date(saturdayIso);
-  const month = d.toLocaleString("en-US", { month: "short", timeZone: "UTC" });
-  const day = d.toLocaleString("en-US", { day: "numeric", timeZone: "UTC" });
-  return `Shadowfront ${month} ${day}`;
-}
-
-const KIND_DEFAULTS = {
-  match: {
-    description:
-      "Win the battle and occupy the Drifting Vaults. Lead your Guild to victory!",
-  },
-  simple: {
-    name: "Paths to Dominance",
-    description:
-      "The Ascendancy Fortress is changing hands. Korell's trade throne awaits a new ruler! Seize the Ascendancy Fortress, control trade, and earn glory. Forge your legend!",
-  },
-} as const;
-
-// The next upcoming Saturday at 14:00 UTC. If today is Saturday and 14:00 UTC
-// has already passed, returns the following Saturday. Pure UTC math, so the
-// answer is the same regardless of the caller's timezone.
+// The next upcoming Saturday at 14:00 UTC. If today is Saturday and 14:00
+// UTC has already passed, returns the following Saturday. Pure UTC math,
+// so the answer is the same regardless of the caller's timezone.
 function nextSaturdayAt14UtcIso(now = new Date()): string {
   const sat = new Date(
     Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 14, 0, 0, 0)
@@ -44,35 +23,83 @@ function nextSaturdayAt14UtcIso(now = new Date()): string {
   return sat.toISOString();
 }
 
-export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string } = {}) {
+// Pick a template to auto-select on mount: prefer the first match-kind
+// template (most guilds run primarily matches), otherwise the first
+// template of any kind, otherwise null.
+function pickInitialTemplate(templates: AdminTemplate[]): AdminTemplate | null {
+  if (templates.length === 0) return null;
+  return templates.find((t) => t.kind === "match") ?? templates[0];
+}
+
+export function CreateEventForm({
+  guildIdOverride,
+  templates,
+  templatesEditHref,
+}: {
+  guildIdOverride?: string;
+  // Per-guild presets that drive the form's initial values. Empty when the
+  // guild has no templates yet — the form still works, just with no
+  // preset prefill.
+  templates: AdminTemplate[];
+  // Link target for the "Edit templates" affordance below the picker.
+  // Carries the super-admin impersonation guildId when applicable.
+  templatesEditHref: string;
+}) {
   const router = useRouter();
   const [submitting, setSubmitting] = useState(false);
-  const [kind, setKind] = useState<EventKind>("match");
-  // Computed once per mount so it doesn't drift if the user leaves the form
-  // open across midnight UTC. Pure UTC math — same value on server and
-  // client, so it's safe to read during render.
+
+  // Computed once per mount — pure UTC math, so safe to read during render.
   const [defaultStartUtc] = useState(() => nextSaturdayAt14UtcIso());
 
-  // Controlled name + description so we can swap defaults when the admin
-  // toggles between match and simple. Only swap when the field still holds
-  // the *previous* kind's default — if the admin typed something custom,
-  // we preserve it across the toggle.
-  const matchDefaultsByDate = {
-    name: matchDefaultName(defaultStartUtc),
-    description: KIND_DEFAULTS.match.description,
-  };
-  const [name, setName] = useState<string>(matchDefaultsByDate.name);
-  const [description, setDescription] = useState<string>(matchDefaultsByDate.description);
+  const initial = pickInitialTemplate(templates);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>(
+    initial?.id ?? ""
+  );
+  const [kind, setKind] = useState<EventKind>(initial?.kind ?? "match");
+  const [name, setName] = useState(initial?.eventName ?? "");
+  const [description, setDescription] = useState(initial?.description ?? "");
+  const [squad1Name, setSquad1Name] = useState(initial?.squad1Name ?? "Squad 1");
+  const [squad2Name, setSquad2Name] = useState(initial?.squad2Name ?? "Squad 2");
+  const [maxPlayers, setMaxPlayers] = useState(String(initial?.maxPlayers ?? 20));
+  const [maxBackups, setMaxBackups] = useState(String(initial?.maxBackups ?? 10));
+  const [leadershipSlots, setLeadershipSlots] = useState(
+    String(initial?.leadershipSlots ?? 3)
+  );
 
-  function handleKindChange(next: EventKind) {
-    if (next === kind) return;
-    const oldDefaults =
-      kind === "match" ? matchDefaultsByDate : KIND_DEFAULTS.simple;
-    const newDefaults =
-      next === "match" ? matchDefaultsByDate : KIND_DEFAULTS.simple;
-    if (name === oldDefaults.name) setName(newDefaults.name);
-    if (description === oldDefaults.description) setDescription(newDefaults.description);
-    setKind(next);
+  // Snapped signup window values, computed from the initial template's
+  // weekday+time-of-day against defaultStartUtc. Recomputed when a different
+  // template is selected. null → no pre-fill (DatetimeLocalField empty).
+  const initialOpens = initial
+    ? snapWindow(initial.signupOpensWeekday, initial.signupOpensTimeUtc, defaultStartUtc)
+    : null;
+  const initialCloses = initial
+    ? snapWindow(initial.signupClosesWeekday, initial.signupClosesTimeUtc, defaultStartUtc)
+    : null;
+  const [signupOpensUtc, setSignupOpensUtc] = useState<string | null>(initialOpens);
+  const [signupClosesUtc, setSignupClosesUtc] = useState<string | null>(initialCloses);
+
+  // Bumped each time a template is selected so the DatetimeLocalField
+  // components remount with the new defaultUtcIso. They manage their own
+  // internal state, so a key-change is the simplest way to "reset" them.
+  const [templateVersion, setTemplateVersion] = useState(0);
+
+  function applyTemplate(t: AdminTemplate) {
+    setSelectedTemplateId(t.id);
+    setKind(t.kind);
+    setName(t.eventName);
+    setDescription(t.description ?? "");
+    setSquad1Name(t.squad1Name);
+    setSquad2Name(t.squad2Name);
+    setMaxPlayers(String(t.maxPlayers));
+    setMaxBackups(String(t.maxBackups));
+    setLeadershipSlots(String(t.leadershipSlots));
+    setSignupOpensUtc(
+      snapWindow(t.signupOpensWeekday, t.signupOpensTimeUtc, defaultStartUtc)
+    );
+    setSignupClosesUtc(
+      snapWindow(t.signupClosesWeekday, t.signupClosesTimeUtc, defaultStartUtc)
+    );
+    setTemplateVersion((v) => v + 1);
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -110,9 +137,6 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
 
     if (res.ok) {
       const data = (await res.json()) as { id: string };
-      // After creation, jump to the event's admin detail page so the user
-      // can immediately review/edit. Preserve the super-admin impersonation
-      // query param if it was passed in.
       const suffix = guildIdOverride ? `?guildId=${guildIdOverride}` : "";
       router.push(`/admin/event/${data.id}${suffix}`);
       router.refresh();
@@ -123,20 +147,54 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 border rounded-lg p-4 dark:border-gray-800">
+      {templates.length > 0 && (
+        <div className="rounded-md border border-violet-200 bg-violet-50/60 p-3 dark:border-violet-900/60 dark:bg-violet-950/30">
+          <label className="block text-sm font-medium mb-1 text-gray-900 dark:text-gray-100">
+            Start from template
+          </label>
+          <div className="flex flex-wrap items-center gap-3">
+            <select
+              value={selectedTemplateId}
+              onChange={(e) => {
+                const t = templates.find((x) => x.id === e.target.value);
+                if (t) applyTemplate(t);
+              }}
+              className="flex-1 min-w-[12rem] border rounded px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+            >
+              {templates.map((t) => (
+                <option key={t.id} value={t.id}>
+                  {t.templateName} ({t.kind})
+                </option>
+              ))}
+            </select>
+            <Link
+              href={templatesEditHref}
+              className="text-xs font-semibold text-violet-700 hover:underline dark:text-violet-300"
+            >
+              Edit templates →
+            </Link>
+          </div>
+          <FieldHelp>
+            Picking a template fills the form with that preset&apos;s defaults.
+            You can still edit any field before creating the event.
+          </FieldHelp>
+        </div>
+      )}
+
       <div>
         <label className="block text-sm font-medium mb-2">Event Type</label>
         <div className="grid grid-cols-2 gap-2">
           <KindOption
             value="match"
             current={kind}
-            onSelect={handleKindChange}
+            onSelect={setKind}
             title="Match"
             description="Two squads, signups, and waitlist"
           />
           <KindOption
             value="simple"
             current={kind}
-            onSelect={handleKindChange}
+            onSelect={setKind}
             title="Simple Event"
             description="Info-only — no squads or signups"
           />
@@ -158,7 +216,11 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
         {kind === "simple" && (
           <div>
             <label className="block text-sm font-medium mb-1">Start Time</label>
-            <DatetimeLocalField name="gameTime" defaultUtcIso={defaultStartUtc} />
+            <DatetimeLocalField
+              key={`gameTime-${templateVersion}`}
+              name="gameTime"
+              defaultUtcIso={defaultStartUtc}
+            />
             <FieldHelp>
               When the event starts. Used for the calendar download.
             </FieldHelp>
@@ -183,14 +245,22 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Signup Opens</label>
-              <DatetimeLocalField name="signupOpens" />
+              <DatetimeLocalField
+                key={`signupOpens-${templateVersion}`}
+                name="signupOpens"
+                defaultUtcIso={signupOpensUtc ?? undefined}
+              />
               <FieldHelp>
                 When players can start signing up. Leave blank to open immediately.
               </FieldHelp>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Signup Closes</label>
-              <DatetimeLocalField name="signupCloses" />
+              <DatetimeLocalField
+                key={`signupCloses-${templateVersion}`}
+                name="signupCloses"
+                defaultUtcIso={signupClosesUtc ?? undefined}
+              />
               <FieldHelp>
                 When the signup form locks. Existing signups can still be edited
                 by admins. Leave blank for no deadline.
@@ -203,7 +273,8 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <label className="block text-sm font-medium mb-1">Squad 1 Name</label>
               <input
                 name="squad1Name"
-                defaultValue="Squad 1"
+                value={squad1Name}
+                onChange={(e) => setSquad1Name(e.target.value)}
                 className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>Display name for the first squad.</FieldHelp>
@@ -211,6 +282,7 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
             <div>
               <label className="block text-sm font-medium mb-1">Squad 1 Starts At</label>
               <DatetimeLocalField
+                key={`squad1StartsAt-${templateVersion}`}
                 name="squad1StartsAt"
                 defaultUtcIso={defaultStartUtc}
               />
@@ -222,14 +294,18 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <label className="block text-sm font-medium mb-1">Squad 2 Name</label>
               <input
                 name="squad2Name"
-                defaultValue="Squad 2"
+                value={squad2Name}
+                onChange={(e) => setSquad2Name(e.target.value)}
                 className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>Display name for the second squad.</FieldHelp>
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Squad 2 Starts At</label>
-              <DatetimeLocalField name="squad2StartsAt" />
+              <DatetimeLocalField
+                key={`squad2StartsAt-${templateVersion}`}
+                name="squad2StartsAt"
+              />
               <FieldHelp>
                 When Squad 2 plays. Optional — can be set later.
               </FieldHelp>
@@ -242,7 +318,8 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <input
                 name="maxPlayers"
                 type="number"
-                defaultValue={20}
+                value={maxPlayers}
+                onChange={(e) => setMaxPlayers(e.target.value)}
                 className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>
@@ -254,7 +331,8 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <input
                 name="maxBackups"
                 type="number"
-                defaultValue={10}
+                value={maxBackups}
+                onChange={(e) => setMaxBackups(e.target.value)}
                 className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>
@@ -267,7 +345,8 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
               <input
                 name="leadershipSlots"
                 type="number"
-                defaultValue={3}
+                value={leadershipSlots}
+                onChange={(e) => setLeadershipSlots(e.target.value)}
                 className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
               />
               <FieldHelp>
@@ -288,6 +367,18 @@ export function CreateEventForm({ guildIdOverride }: { guildIdOverride?: string 
       </button>
     </form>
   );
+}
+
+// Convenience wrapper around snapSignupTime — returns null if either half
+// of the (weekday, time) pair is missing. The template UI enforces "both
+// or neither", but be defensive.
+function snapWindow(
+  weekday: number | null,
+  timeUtc: string | null,
+  anchorIso: string
+): string | null {
+  if (weekday == null || !timeUtc) return null;
+  return snapSignupTime(anchorIso, weekday, timeUtc);
 }
 
 function KindOption({

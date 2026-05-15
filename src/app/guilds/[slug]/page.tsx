@@ -1,10 +1,11 @@
 import { db } from "@/db";
 import { guilds, users } from "@/db/schema";
-import { and, eq, isNull, sql } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { auth } from "@/auth";
 import { requireSignedInPage } from "@/lib/rbac";
 import { JoinGuildButton } from "@/components/join-guild-button";
+import { PlayerCard, type PlayerCardData } from "@/components/player-card";
 
 export default async function GuildDetailPage({
   params,
@@ -20,16 +21,33 @@ export default async function GuildDetailPage({
   });
   if (!guild) return notFound();
 
-  const memberCountRow = await db
-    .select({ count: sql<number>`count(*)` })
+  const members = await db
+    .select()
     .from(users)
     .where(eq(users.guildId, guild.id))
-    .get();
-  const memberCount = Number(memberCountRow?.count ?? 0);
+    .orderBy(users.guildRole, users.name);
+  const memberCount = members.length;
+  const adminCount = members.filter((m) => m.guildRole === "admin").length;
 
   const isMember = membership.guildId === guild.id;
   const isInOtherGuild = !!membership.guildId && !isMember;
   const canJoin = guild.isPublic && !membership.guildId;
+
+  // Challenge is only viable when the viewer's guild shares a server # with
+  // the displayed guild — duels are scoped per-server. Viewers without a
+  // guild (or with no server # set) can't challenge anyone here.
+  const viewerGuild = membership.guildId
+    ? await db.query.guilds.findFirst({ where: eq(guilds.id, membership.guildId) })
+    : null;
+  const sameServer =
+    !!viewerGuild?.serverNumber &&
+    !!guild.serverNumber &&
+    viewerGuild.serverNumber === guild.serverNumber;
+  const challengeDisabledHint = !viewerGuild?.serverNumber
+    ? "Set a Server # for your guild in Guild Settings to challenge players."
+    : !guild.serverNumber
+      ? "This guild hasn't set a Server # yet."
+      : `You can only challenge players on Server #${viewerGuild.serverNumber}.`;
 
   return (
     <div className="mx-auto max-w-2xl">
@@ -39,7 +57,8 @@ export default async function GuildDetailPage({
         <p className="mt-4 text-sm text-gray-700 dark:text-gray-300">{guild.description}</p>
       )}
       <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-        {memberCount} member{memberCount === 1 ? "" : "s"}
+        {memberCount} member{memberCount === 1 ? "" : "s"} · {adminCount} admin
+        {adminCount === 1 ? "" : "s"}
       </p>
 
       <div className="mt-6">
@@ -60,6 +79,38 @@ export default async function GuildDetailPage({
           </p>
         )}
       </div>
+
+      {members.length > 0 && (
+        <div className="mt-8 space-y-2">
+          {members.map((m) => {
+            const card: PlayerCardData = {
+              id: m.id,
+              inGameName: m.inGameName,
+              image: m.image,
+              powerTier: m.powerTier,
+              duelRating: m.duelRating,
+              duelWins: m.duelWins,
+              duelLosses: m.duelLosses,
+              duelDraws: m.duelDraws,
+              feedbackUpCount: m.feedbackUpCount,
+              feedbackDownCount: m.feedbackDownCount,
+              lastDuelAt: m.lastDuelAt,
+              guildName: guild.name,
+              guildTag: guild.tag,
+            };
+            const isSelf = m.id === membership.userId;
+            return (
+              <PlayerCard
+                key={m.id}
+                player={card}
+                sameGuild={isMember}
+                canChallenge={!isMember && !isSelf && sameServer}
+                challengeDisabledHint={challengeDisabledHint}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

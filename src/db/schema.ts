@@ -194,6 +194,41 @@ export const guildInvites = sqliteTable("guild_invites", {
   createdAt: text("created_at").notNull(),
 });
 
+// Per-guild presets that pre-populate the create-event form. Replaces the
+// hardcoded KIND_DEFAULTS in create-event-form.tsx with editable rows.
+// Date/time itself is never stored — varies per occurrence — but the signup
+// window encodes a UTC weekday + time-of-day that snaps to the event's
+// start time when the template is applied (e.g. "previous Monday 00:00 UTC
+// relative to Saturday's match"). All four window columns nullable: null =
+// template doesn't pre-fill the signup window.
+export const eventTemplates = sqliteTable("event_templates", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  guildId: text("guild_id")
+    .notNull()
+    .references(() => guilds.id, { onDelete: "cascade" }),
+  // Shown in the template picker — distinct from `eventName`, which is the
+  // default value pre-filled into the event's `name` field when applied.
+  templateName: text("template_name").notNull(),
+  eventName: text("event_name").notNull(),
+  description: text("description"),
+  kind: text("kind", { enum: ["match", "simple"] }).notNull(),
+  squad1Name: text("squad1_name").notNull().default("Squad 1"),
+  squad2Name: text("squad2_name").notNull().default("Squad 2"),
+  maxPlayers: integer("max_players").notNull().default(20),
+  maxBackups: integer("max_backups").notNull().default(10),
+  leadershipSlots: integer("leadership_slots").notNull().default(3),
+  // 0=Sunday, 1=Monday, ..., 6=Saturday. UTC.
+  signupOpensWeekday: integer("signup_opens_weekday"),
+  // "HH:MM" 24h UTC, e.g. "00:00".
+  signupOpensTimeUtc: text("signup_opens_time_utc"),
+  signupClosesWeekday: integer("signup_closes_weekday"),
+  signupClosesTimeUtc: text("signup_closes_time_utc"),
+  createdAt: text("created_at").notNull(),
+  deletedAt: text("deleted_at"),
+});
+
 export const events = sqliteTable("events", {
   id: text("id").primaryKey(),
   guildId: text("guild_id")

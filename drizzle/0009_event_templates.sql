@@ -1,0 +1,20 @@
+CREATE TABLE `event_templates` (
+	`id` text PRIMARY KEY NOT NULL,
+	`guild_id` text NOT NULL,
+	`template_name` text NOT NULL,
+	`event_name` text NOT NULL,
+	`description` text,
+	`kind` text NOT NULL,
+	`squad1_name` text DEFAULT 'Squad 1' NOT NULL,
+	`squad2_name` text DEFAULT 'Squad 2' NOT NULL,
+	`max_players` integer DEFAULT 20 NOT NULL,
+	`max_backups` integer DEFAULT 10 NOT NULL,
+	`leadership_slots` integer DEFAULT 3 NOT NULL,
+	`signup_opens_weekday` integer,
+	`signup_opens_time_utc` text,
+	`signup_closes_weekday` integer,
+	`signup_closes_time_utc` text,
+	`created_at` text NOT NULL,
+	`deleted_at` text,
+	FOREIGN KEY (`guild_id`) REFERENCES `guilds`(`id`) ON UPDATE no action ON DELETE cascade
+);
