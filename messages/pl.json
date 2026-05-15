@@ -66,11 +66,11 @@
     "dismiss": "Odrzuć powiadomienie alfa"
   },
   "footer": {
-    "tagline": "FUNDACJA WZYWA. ODPOWIADAMY RAZEM.",
     "feedback": "INFORMACJA ZWROTNA",
     "discordSupport": "WSPARCIE DISCORD",
     "terms": "WARUNKI",
-    "privacy": "PRYWATNOŚĆ"
+    "privacy": "PRYWATNOŚĆ",
+    "tagline": "ZBIERZMY SIĘ. ODPOWIEDZMY RAZEM."
   },
   "feedback": {
     "reportBug": "Zgłoś błąd",
@@ -91,7 +91,6 @@
     "addToCalendar": "Dodaj do kalendarza",
     "open": "Otwarte",
     "closed": "Zamknięte",
-    "signUp": "Zapisać się",
     "signedUp": "✓ Zarejestrowano",
     "signupCount": "{count, plural, =0 {No signups} jeden {# signup} inne {# signups} }",
     "youreSignedUp": "Zapisałeś się!",
@@ -105,7 +104,8 @@
     "startTime": "Godzina rozpoczęcia:",
     "signupCloses": "Zapisy kończą się:",
     "slotsLabel": "Sloty:",
-    "slotsValue": "{maxPlayers} gracze + {maxBackups} kopie zapasowe każda"
+    "slotsValue": "{maxPlayers} gracze + {maxBackups} kopie zapasowe każda",
+    "signUp": "Zbierz się"
   },
   "eventCard": {
     "deleted": "Usunięto",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Poproś o stanowisko kierownicze ( {slots} na drużynę)",
     "leadershipHelp": "Liderzy koordynują swoją drużynę podczas meczu. Administratorzy wybierają, kto otrzyma rolę na podstawie próśb.",
     "leadershipNotePlaceholder": "Dlaczego chciałbyś pełnić rolę lidera? (opcjonalnie)",
-    "submit": "Zapisać się",
     "submitUpdate": "Aktualizacja rejestracji",
-    "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie."
+    "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
+    "submit": "Zbierz się"
   },
   "createEventForm": {
     "eventType": "Typ zdarzenia",
@@ -512,6 +512,7 @@
     "eventNotFound": "Wydarzenie nie zostało znalezione.",
     "memberNotFound": "Członek nie znaleziony",
     "inviteNotFound": "Zaproszenie nie zostało znalezione",
+    "alreadySignedUp": "Już się zapisałeś",
     "notForThisEvent": "Na to wydarzenie nie można się zapisywać",
     "failed": "Przegrany",
     "somethingWentWrong": "Coś poszło nie tak.",
@@ -520,8 +521,7 @@
     "lastAdminKick": "Nie możesz wyrzucić ostatniego administratora. Awansuj najpierw kogoś innego.",
     "lastAdminLeave": "Jesteś jedynym administratorem. Awansuj innego użytkownika na administratora, zanim odejdziesz.",
     "lastAdminDelete": "Jesteś jedynym administratorem swojej gildii. Awansuj najpierw kogoś innego albo poproś superadministratora o przejęcie funkcji.",
-    "lastSuperAdminDelete": "Jesteś ostatnim superadministratorem. Awansuj kogoś innego na superadministratora, zanim usuniesz swoje konto.",
-    "alreadySignedUp": "Już się zapisałeś"
+    "lastSuperAdminDelete": "Jesteś ostatnim superadministratorem. Awansuj kogoś innego na superadministratora, zanim usuniesz swoje konto."
   },
   "ingameNameDialog": {
     "title": "Powitanie",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Problem, który rozwiązujemy",
       "heading": "Gildie tracą członków z powodu tarć.",
-      "body": "Harmonogram wydarzeń zakopany w wątkach na Discordzie. Zapisy śledzone w arkuszu kalkulacyjnym, którego ktoś zapomniał zaktualizować. Przypomnienia, które się nie uruchomiły. Gracze, którzy przestali się pojawiać, bo nic ich nie przyciągnęło. Organizator wydarzeń Foundation rozwiązuje ten problem.",
       "beforeTitle": "Zanim",
       "beforeBody": "Nieuporządkowane wątki na Discordzie, utracone zapisy, pominięte przypomnienia, brak informacji o tym, kto się faktycznie pojawił — i powolne odchodzenie członków.",
       "afterTitle": "Po",
       "afterBody": "Jeden formularz rejestracyjny na wydarzenie. Automatyczne przypomnienia na Discordzie (co 1 dzień, godzinę i 20 minut). Monitorowana frekwencja i oceny. Pojedynki i scrimy z rankingami i ELO. Jasny powód, żeby się zalogować.",
       "outcomeTitle": "Wynik",
-      "outcomeBody": "Więcej wydarzeń z pełnymi składami. Większa rywalizacja międzygildyjna. Więcej powodów, dla których Twoi członkowie będą wracać — i lista osób, które faktycznie mają na to wpływ."
+      "outcomeBody": "Więcej wydarzeń z pełnymi składami. Większa rywalizacja międzygildyjna. Więcej powodów, dla których Twoi członkowie będą wracać — i lista osób, które faktycznie mają na to wpływ.",
+      "body": "Harmonogram wydarzeń zakopany w wątkach na Discordzie. Zapisy śledzone w arkuszu kalkulacyjnym, którego ktoś zapomniał zaktualizować. Przypomnienia, które się nie uruchomiły. Gracze, którzy przestali się pojawiać, bo nic ich do tego nie skłoniło. Rally Up rozwiązuje ten problem."
     },
     "features": {
       "heading": "Co jest w środku",
@@ -721,7 +721,6 @@
     }
   },
   "playerHelp": {
-    "title": "Witamy w Foundation Event Organizer",
     "subtitle": "W tym miejscu Twoja gildia zapisuje się na wydarzenia — mecze Shadowfront, treningi i inne wydarzenia, które przywódcy zaplanowali na ten rok.",
     "sections": {
       "gettingIn": "Wsiadanie",
@@ -801,7 +800,8 @@
       "subcommandsLabel": "Podpolecenia:",
       "propagationNote": "Nowe komendy ukośnika pojawiają się na Discordzie po około godzinie od pierwszego dodania bota do serwera. Później są już dostępne natychmiast."
     },
-    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy."
+    "closed": "Formularz wyświetla komunikat „Rejestracja zamknięta”. Jeśli chcesz zostać dodany później, skontaktuj się z administratorem gildii — może on ręcznie dostosować zapisy.",
+    "title": "Witamy w Rally Up"
   },
   "bot": {
     "common": {
@@ -821,8 +821,8 @@
     "signup": {
       "eventNotFound": "Wydarzenie nie zostało znalezione.",
       "failed": "Nie udało się zapisać: {reason}",
-      "waitlisted": "Jesteś na liście oczekujących – drużyny były pełne, kiedy się rejestrowałeś. Awans zostanie automatycznie przyznany, jeśli zwolni się miejsce.",
-      "success": "Jesteś zapisany. Do zobaczenia na boisku."
+      "waitlisted": "Rezerwowy – drużyny były pełne, gdy się zapisywałeś. Awans zostanie automatycznie zdobyty, jeśli zwolni się miejsce.",
+      "success": "Zbiórka zakończona. Do zobaczenia na boisku."
     },
     "settings": {
       "unknown": "Nieznane ustawienie.",
@@ -845,12 +845,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Dołącz do kanału głosowego drużyny: {link}",
       "optOutHint": "_Aby wyłączyć przyszłe zaproszenia głosowe, użyj `/settings voice_invites enabled:false` w Discordzie._",
-      "test": "Test głosu DM od **Organizatora wydarzeń fundacji** — ** {squadLabel} **. Kliknij, aby dołączyć: <# {channelId} >",
       "leadStartingNow": "zaczynając teraz",
       "leadMinutes": "zaczyna się za {minutes} protokół",
       "leadOneHour": "zaczyna się za 1 godzinę",
       "leadHours": "zaczyna się za {hours} godziny",
-      "leadTomorrow": "zaczyna się jutro"
+      "leadTomorrow": "zaczyna się jutro",
+      "test": "Test głosu DM z **Rally Up** — ** {squadLabel} **. Kliknij, aby dołączyć: <# {channelId} >"
     },
     "duel": {
       "proposedHeading": "**Zaproponowano pojedynek** — {proposer} rzucił wyzwanie {opposer} do 1 na 1.",
@@ -876,5 +876,13 @@
       "ctaEdited": "Przejrzyj i zaakceptuj lub odrzuć na < {duelUrl} >",
       "ctaReminder": "Szczegóły: < {duelUrl} >"
     }
+  },
+  "signin": {
+    "kicker": "Zaloguj się do",
+    "subtitle": "Zaloguj się za pomocą konta Google lub Discord, aby dołączyć do gildii.",
+    "google": "Kontynuuj z Google",
+    "discord": "Kontynuuj z Discordem",
+    "errorHeading": "Logowanie nie powiodło się.",
+    "errorBody": "Discord i Google czasami mają problemy z uwierzytelnianiem OAuth. Spróbuj ponownie, a jeśli problem będzie się powtarzał, skontaktuj się z nami za pomocą linku pomocy technicznej Discord w stopce."
   }
 }

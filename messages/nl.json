@@ -66,11 +66,11 @@
     "dismiss": "Alpha-melding negeren"
   },
   "footer": {
-    "tagline": "DE STICHTING ROEPT OP. GEEF SAMEN ANTWOORD.",
     "feedback": "FEEDBACK",
     "discordSupport": "DISCORD-ONDERSTEUNING",
     "terms": "VOORWAARDEN",
-    "privacy": "PRIVACY"
+    "privacy": "PRIVACY",
+    "tagline": "VERZAMEL JEZELF. ANTWOORD SAMEN."
   },
   "feedback": {
     "reportBug": "Een bug melden",
@@ -91,7 +91,6 @@
     "addToCalendar": "Voeg toe aan agenda",
     "open": "Open",
     "closed": "Gesloten",
-    "signUp": "Aanmelden",
     "signedUp": "✓ Aangemeld",
     "signupCount": "{count, plural, =0 {No signups} één {# signup} andere {# signups} }",
     "youreSignedUp": "Je bent aangemeld!",
@@ -105,7 +104,8 @@
     "startTime": "Aanvangstijd:",
     "signupCloses": "Aanmelding sluit:",
     "slotsLabel": "Slots:",
-    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk"
+    "slotsValue": "{maxPlayers} spelers + {maxBackups} back-ups elk",
+    "signUp": "Kom in actie!"
   },
   "eventCard": {
     "deleted": "Verwijderd",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Vraag een leidinggevende functie aan ( {slots} per team)",
     "leadershipHelp": "De leiders coördineren hun team tijdens de wedstrijd. De beheerders kiezen wie de rol krijgt op basis van de aanvragen.",
     "leadershipNotePlaceholder": "Waarom zou u graag een leidinggevende rol willen? (optioneel)",
-    "submit": "Aanmelden",
     "submitUpdate": "Update aanmelden",
-    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw."
+    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
+    "submit": "Kom in actie!"
   },
   "createEventForm": {
     "eventType": "Gebeurtenistype",
@@ -512,6 +512,7 @@
     "eventNotFound": "Evenement niet gevonden.",
     "memberNotFound": "Lid niet gevonden",
     "inviteNotFound": "Uitnodiging niet gevonden",
+    "alreadySignedUp": "Je hebt je al aangemeld.",
     "notForThisEvent": "Voor dit evenement is aanmelden niet mogelijk.",
     "failed": "Mislukt",
     "somethingWentWrong": "Er is iets misgegaan.",
@@ -520,8 +521,7 @@
     "lastAdminKick": "Je kunt de vorige beheerder niet verwijderen. Je moet eerst iemand anders promoveren.",
     "lastAdminLeave": "Jij bent de enige beheerder. Benoem een ander lid tot beheerder voordat je vertrekt.",
     "lastAdminDelete": "Jij bent de enige beheerder van je gilde. Bevorder eerst iemand anders, of laat een superbeheerder het overnemen.",
-    "lastSuperAdminDelete": "Jij bent de laatste superbeheerder. Benoem iemand anders tot superbeheerder voordat je je account verwijdert.",
-    "alreadySignedUp": "Je hebt je al aangemeld."
+    "lastSuperAdminDelete": "Jij bent de laatste superbeheerder. Benoem iemand anders tot superbeheerder voordat je je account verwijdert."
   },
   "ingameNameDialog": {
     "title": "Welkom",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Het probleem dat we oplossen",
       "heading": "Gilden verliezen leden door onderlinge conflicten.",
-      "body": "Evenementenplanning verborgen in Discord-threads. Aanmeldingen bijgehouden in een spreadsheet die iemand vergeten is bij te werken. Herinneringen die niet werden verzonden. Spelers die niet meer opdoken omdat er niets was dat hen teruglokte. Foundation Event Organizer lost dit allemaal op.",
       "beforeTitle": "Voor",
       "beforeBody": "Rommelige Discord-gesprekken, verloren aanmeldingen, gemiste herinneringen, geen overzicht van wie er daadwerkelijk aanwezig was — en leden die langzaam afhaken.",
       "afterTitle": "Na",
       "afterBody": "Eén inschrijfformulier per evenement. Automatische Discord-herinneringen 1 dag, 1 uur en 20 minuten van tevoren. Aanwezigheid en beoordelingen worden bijgehouden. Oefenwedstrijden en duels met scoreborden en ELO-punten. Een duidelijke reden om in te loggen.",
       "outcomeTitle": "Resultaat",
-      "outcomeBody": "Meer evenementen met volledige deelnemerslijsten. Meer competitie tussen verschillende gilden. Meer redenen voor je leden om terug te komen – en een overzicht van wie daadwerkelijk zijn steentje bijdraagt."
+      "outcomeBody": "Meer evenementen met volledige deelnemerslijsten. Meer competitie tussen verschillende gilden. Meer redenen voor je leden om terug te komen – en een overzicht van wie daadwerkelijk zijn steentje bijdraagt.",
+      "body": "Evenementenplanning verborgen in Discord-threads. Aanmeldingen bijgehouden in een spreadsheet die iemand vergeten is bij te werken. Herinneringen die niet werden verzonden. Spelers die niet meer kwamen opdagen omdat er niets was om ze terug te halen. Rally Up lost dit allemaal op."
     },
     "features": {
       "heading": "Wat zit erin?",
@@ -721,7 +721,6 @@
     }
   },
   "playerHelp": {
-    "title": "Welkom bij de evenementenorganisator van de Stichting.",
     "subtitle": "Hier kan je gilde zich aanmelden voor evenementen: Shadowfront-wedstrijden, oefenwedstrijden en alles wat de leiding verder op de kalender wil zetten.",
     "sections": {
       "gettingIn": "Instappen",
@@ -801,7 +800,8 @@
       "subcommandsLabel": "Subopdrachten:",
       "propagationNote": "Nieuwe slash-commando's verschijnen pas na ongeveer een uur in Discord nadat de bot aan een server is toegevoegd. Daarna zijn ze direct beschikbaar."
     },
-    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen."
+    "closed": "Het formulier verandert in een bericht met de tekst \"Aanmeldingen zijn gesloten\". Neem contact op met een gildebeheerder als je alsnog wilt worden toegevoegd; zij kunnen de aanmeldingen handmatig aanpassen.",
+    "title": "Welkom bij Rally Up"
   },
   "bot": {
     "common": {
@@ -821,8 +821,8 @@
     "signup": {
       "eventNotFound": "Evenement niet gevonden.",
       "failed": "Je kon niet worden aangemeld: {reason}",
-      "waitlisted": "Je staat op de wachtlijst — de teams waren vol toen je je aanmeldde. Je wordt automatisch toegevoegd aan het team zodra er een plek vrijkomt.",
-      "success": "Je bent ingeschreven. Tot ziens op het veld."
+      "waitlisted": "Stagiair in de reserve — de selecties waren vol toen je je aanmeldde. Je wordt automatisch gepromoveerd als er een plek vrijkomt.",
+      "success": "De rally is in volle gang. Tot ziens op het veld."
     },
     "settings": {
       "unknown": "Onbekende instelling.",
@@ -845,12 +845,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Word lid van het spraakkanaal van het team: {link}",
       "optOutHint": "_Om toekomstige spraakuitnodigingen uit te schakelen, gebruik je `/settings voice_invites enabled:false` in Discord._",
-      "test": "Test-DM van **Organisator van stichtingsevenementen** — ** {squadLabel} **. Klik om deel te nemen: <# {channelId} >",
       "leadStartingNow": "vanaf nu",
       "leadMinutes": "begint over {minutes} notulen",
       "leadOneHour": "begint over 1 uur",
       "leadHours": "begint over {hours} uren",
-      "leadTomorrow": "begint morgen"
+      "leadTomorrow": "begint morgen",
+      "test": "Test spraak-DM van **Rally Up** — ** {squadLabel} **. Klik om deel te nemen: <# {channelId} >"
     },
     "duel": {
       "proposedHeading": "**Duel voorgesteld** — {proposer} heeft {opposer} naar een 1-tegen-1 gevecht.",
@@ -876,5 +876,13 @@
       "ctaEdited": "Bekijk en accepteer of weiger op < {duelUrl} >",
       "ctaReminder": "Details: < {duelUrl} >"
     }
+  },
+  "signin": {
+    "kicker": "Meld u aan bij",
+    "subtitle": "Meld je aan met Google of Discord om lid te worden van je gilde.",
+    "google": "Ga verder met Google",
+    "discord": "Ga verder met Discord",
+    "errorHeading": "Aanmelden mislukt.",
+    "errorBody": "Discord en Google ondervinden soms problemen met de OAuth-uitwisseling. Probeer het opnieuw, en als het probleem zich blijft voordoen, neem dan contact met ons op via de Discord-ondersteuningslink in de voettekst."
   }
 }

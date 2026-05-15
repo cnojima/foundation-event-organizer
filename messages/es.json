@@ -66,11 +66,11 @@
     "dismiss": "Descartar aviso alfa"
   },
   "footer": {
-    "tagline": "LA FUNDACIÓN HACE UN LLAMADO. RESPONDAMOS JUNTOS.",
     "feedback": "COMENTARIO",
     "discordSupport": "SOPORTE DE DISCORD",
     "terms": "TÉRMINOS",
-    "privacy": "PRIVACIDAD"
+    "privacy": "PRIVACIDAD",
+    "tagline": "¡UNÁMONOS! ¡RESPONDAMOS JUNTOS!"
   },
   "feedback": {
     "reportBug": "Informar de un error",
@@ -91,7 +91,6 @@
     "addToCalendar": "Añadir al calendario",
     "open": "Abierto",
     "closed": "Cerrado",
-    "signUp": "Inscribirse",
     "signedUp": "✓ Registrado",
     "signupCount": "{count, plural, =0 {No signups} uno {# signup} otros {# signups} }",
     "youreSignedUp": "¡Estás registrado!",
@@ -105,7 +104,8 @@
     "startTime": "Hora de inicio:",
     "signupCloses": "Cierre de inscripciones:",
     "slotsLabel": "Ranuras:",
-    "slotsValue": "{maxPlayers} jugadores + {maxBackups} copias de seguridad cada"
+    "slotsValue": "{maxPlayers} jugadores + {maxBackups} copias de seguridad cada",
+    "signUp": "¡Reúnanse!"
   },
   "eventCard": {
     "deleted": "Eliminado",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Solicitar un puesto de liderazgo ( {slots} por escuadrón)",
     "leadershipHelp": "Los líderes coordinan a su equipo durante el partido. Los administradores eligen quién obtiene el rol entre las solicitudes.",
     "leadershipNotePlaceholder": "¿Por qué te gustaría desempeñar un rol de liderazgo? (opcional)",
-    "submit": "Inscribirse",
     "submitUpdate": "Actualizar registro",
-    "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo."
+    "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
+    "submit": "¡Manifiéstense!"
   },
   "createEventForm": {
     "eventType": "Tipo de evento",
@@ -512,6 +512,7 @@
     "eventNotFound": "Evento no encontrado.",
     "memberNotFound": "Miembro no encontrado",
     "inviteNotFound": "No se encontró la invitación.",
+    "alreadySignedUp": "Ya te has registrado",
     "notForThisEvent": "Este evento no acepta inscripciones.",
     "failed": "Fallido",
     "somethingWentWrong": "Algo salió mal.",
@@ -520,8 +521,7 @@
     "lastAdminKick": "No se puede expulsar al último administrador. Asciende primero a otra persona.",
     "lastAdminLeave": "Eres el único administrador. Asciende a otro miembro a administrador antes de irte.",
     "lastAdminDelete": "Eres el único administrador de tu gremio. Asciende primero a otra persona o deja que un superadministrador se haga cargo.",
-    "lastSuperAdminDelete": "Eres el último superadministrador. Nombra a otra persona como superadministrador antes de eliminar tu cuenta.",
-    "alreadySignedUp": "Ya te has registrado"
+    "lastSuperAdminDelete": "Eres el último superadministrador. Nombra a otra persona como superadministrador antes de eliminar tu cuenta."
   },
   "ingameNameDialog": {
     "title": "Bienvenido",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "El problema que resolvemos",
       "heading": "Los gremios pierden miembros debido a las fricciones.",
-      "body": "La planificación de eventos queda oculta entre hilos de Discord. Las inscripciones se registran en una hoja de cálculo que alguien olvidó actualizar. Los recordatorios no se enviaron. Jugadores que dejaron de asistir porque nada los motivó a regresar. Foundation Event Organizer soluciona todo eso.",
       "beforeTitle": "Antes",
       "beforeBody": "Hilos de Discord desorganizados, inscripciones perdidas, recordatorios omitidos, sin registro de quién asistió realmente, y miembros que se van alejando poco a poco.",
       "afterTitle": "Después",
       "afterBody": "Un formulario de inscripción por evento. Recordatorios automáticos en Discord cada 1 día, 1 hora y 20 minutos. Seguimiento de asistencia y puntuaciones. Partidas de práctica y duelos con tablas de clasificación y ELO. Un motivo claro para conectarse.",
       "outcomeTitle": "Resultado",
-      "outcomeBody": "Más eventos con listas de participantes completas. Más competencia entre gremios. Más razones para que tus miembros regresen, y un registro de quién realmente cumple con su cometido."
+      "outcomeBody": "Más eventos con listas de participantes completas. Más competencia entre gremios. Más razones para que tus miembros regresen, y un registro de quién realmente cumple con su cometido.",
+      "body": "La planificación de eventos queda oculta entre hilos de Discord. Las inscripciones se registran en una hoja de cálculo que alguien olvidó actualizar. Los recordatorios no se enviaron. Jugadores que dejaron de asistir porque nada los motivó a regresar. Rally Up soluciona todo eso."
     },
     "features": {
       "heading": "¿Qué hay dentro?",
@@ -721,7 +721,6 @@
     }
   },
   "playerHelp": {
-    "title": "Bienvenido al organizador de eventos de la Fundación",
     "subtitle": "Aquí es donde tu gremio se inscribe en los eventos: partidas de Shadowfront, entrenamientos y cualquier otra cosa que la directiva quiera incluir en el calendario.",
     "sections": {
       "gettingIn": "Cómo entrar",
@@ -801,7 +800,8 @@
       "subcommandsLabel": "Subcomandos:",
       "propagationNote": "Los nuevos comandos de barra diagonal tardan aproximadamente una hora en aparecer en Discord la primera vez que se agrega el bot a un servidor. Después de eso, son instantáneos."
     },
-    "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente."
+    "closed": "El formulario se convierte en un mensaje de \"Inscripciones cerradas\". Si necesitas que te añadan tarde, ponte en contacto con un administrador del gremio; ellos pueden ajustar las inscripciones manualmente.",
+    "title": "Bienvenidos a Rally Up"
   },
   "bot": {
     "common": {
@@ -821,8 +821,8 @@
     "signup": {
       "eventNotFound": "Evento no encontrado.",
       "failed": "No pudimos registrarte: {reason}",
-      "waitlisted": "Estás en la lista de espera; los equipos estaban completos cuando te registraste. Si se libera un cupo, se te asignará automáticamente un puesto.",
-      "success": "Ya estás inscrito. Nos vemos en el campo."
+      "waitlisted": "Reserva permanente: los equipos estaban completos cuando te inscribiste. Serás ascendido automáticamente si se libera un puesto.",
+      "success": "Rally confirmado. Nos vemos en el campo."
     },
     "settings": {
       "unknown": "Configuración desconocida.",
@@ -845,12 +845,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Únete al canal de voz del equipo: {link}",
       "optOutHint": "_Para desactivar las futuras invitaciones de voz, usa `/settings voice_invites enabled:false` en Discord._",
-      "test": "Mensaje directo de prueba de voz de **Organizador de eventos de la Fundación** — ** {squadLabel} **. Haz clic para unirte: <# {channelId} >",
       "leadStartingNow": "Comenzando ahora",
       "leadMinutes": "comienza en {minutes} minutos",
       "leadOneHour": "Comienza en 1 hora",
       "leadHours": "comienza en {hours} horas",
-      "leadTomorrow": "Empieza mañana"
+      "leadTomorrow": "Empieza mañana",
+      "test": "Mensaje directo de voz de prueba de **Rally Up** — ** {squadLabel} **. Haz clic para unirte: <# {channelId} >"
     },
     "duel": {
       "proposedHeading": "**Duelo propuesto** — {proposer} ha desafiado {opposer} a un 1 contra 1.",
@@ -876,5 +876,13 @@
       "ctaEdited": "Revisa y acepta o rechaza en < {duelUrl} >",
       "ctaReminder": "Detalles: < {duelUrl} >"
     }
+  },
+  "signin": {
+    "kicker": "Iniciar sesión en",
+    "subtitle": "Inicia sesión con Google o Discord para unirte a tu gremio.",
+    "google": "Continuar con Google",
+    "discord": "Continuar con Discord",
+    "errorHeading": "Error al iniciar sesión.",
+    "errorBody": "En ocasiones, Discord y Google presentan problemas durante la autenticación OAuth. Inténtalo de nuevo y, si el problema persiste, contáctanos a través del enlace de soporte de Discord que encontrarás en el pie de página."
   }
 }

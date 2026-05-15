@@ -57,41 +57,75 @@ export async function LandingPage() {
         <LocaleSwitcher signedIn={false} />
       </div>
 
-      {/* ---- Hero ---- */}
-      <section className="text-center">
-        <Logo variant="icon" className="mx-auto mb-6 size-20" />
-        <p className="mb-3 text-xs font-bold uppercase tracking-[0.2em] text-violet-700 dark:text-violet-300">
-          {t("hero.kicker")}
-        </p>
-        <h1 className="mx-auto max-w-3xl text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-gray-100">
-          {t("hero.headline")}
-        </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-base text-gray-600 sm:text-lg dark:text-gray-400">
-          {t("hero.subhead")}
-        </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/api/auth/signin"
-            className="rounded-md bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-violet-700"
-          >
-            {t("hero.signIn")}
-          </Link>
-          <Link
-            href="/guilds"
-            className="rounded-md border border-gray-300 bg-white px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
-          >
-            {t("hero.browseGuilds")}
-          </Link>
+      {/* ---- Hero ----
+          Atmospheric backdrop: a radial violet glow centered behind the
+          headline plus a faint hex grid texture, both CSS-only so no image
+          assets ship. The hero copy + buttons sit above on `relative z-10`. */}
+      <section className="relative isolate overflow-hidden rounded-3xl px-4 py-12 text-center sm:py-16">
+        {/* Radial glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 50% at 50% 30%, rgba(167, 139, 250, 0.35), transparent 70%)",
+          }}
+        />
+        {/* Faint hex grid pattern — repeating diagonal lines approximate the
+            hexagon motif from the logo without shipping an SVG asset. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06] dark:opacity-[0.08]"
+          style={{
+            backgroundImage:
+              "repeating-linear-gradient(60deg, currentColor 0 1px, transparent 1px 24px), repeating-linear-gradient(-60deg, currentColor 0 1px, transparent 1px 24px)",
+            color: "rgb(124 58 237)",
+          }}
+        />
+
+        <div className="relative">
+          <Logo variant="icon" className="mx-auto mb-6 size-28 drop-shadow-[0_0_24px_rgba(167,139,250,0.45)]" />
+          <p className="text-[10px] font-bold uppercase tracking-[0.4em] text-violet-700 dark:text-violet-300">
+            {t("hero.kicker")}
+          </p>
+          <h2 className="mt-3 bg-gradient-to-br from-violet-700 to-indigo-500 bg-clip-text text-5xl font-bold tracking-tight text-transparent sm:text-7xl dark:from-violet-300 dark:to-indigo-300">
+            RALLY UP
+          </h2>
+          <h1 className="mx-auto mt-4 max-w-3xl text-2xl font-semibold tracking-tight text-gray-900 sm:text-3xl dark:text-gray-100">
+            {t("hero.headline")}
+          </h1>
+          <p className="mx-auto mt-3 max-w-2xl text-base text-gray-600 sm:text-lg dark:text-gray-400">
+            {t("hero.subhead")}
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/signin"
+              className="rounded-md bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-[0_8px_24px_-8px_rgba(124,58,237,0.6)] hover:bg-violet-700"
+            >
+              {t("hero.signIn")}
+            </Link>
+            <Link
+              href="/guilds"
+              className="rounded-md border border-gray-300 bg-white/70 px-5 py-2.5 text-sm font-semibold text-gray-700 backdrop-blur hover:bg-white dark:border-gray-700 dark:bg-gray-900/60 dark:text-gray-200 dark:hover:bg-gray-900"
+            >
+              {t("hero.browseGuilds")}
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* ---- Stats strip (only when there's something to show) ---- */}
+      {/* ---- Stats strip ----
+          Lives in a violet-tinted band so it reads as a visual breath
+          between hero and engagement section, not another flat row of
+          cards. Only shown when at least one number is non-zero. */}
       {showStats && (
-        <section className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <Stat value={stats.guilds} label={t("stats.guilds")} />
-          <Stat value={stats.events} label={t("stats.events")} />
-          <Stat value={stats.duels} label={t("stats.duels")} />
-          <Stat value={stats.players} label={t("stats.players")} />
+        <section className="mt-10 rounded-2xl border border-violet-200/60 bg-gradient-to-r from-violet-50 via-indigo-50 to-violet-50 p-4 dark:border-violet-900/60 dark:from-violet-950/30 dark:via-indigo-950/30 dark:to-violet-950/30">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <Stat value={stats.guilds} label={t("stats.guilds")} />
+            <Stat value={stats.events} label={t("stats.events")} />
+            <Stat value={stats.duels} label={t("stats.duels")} />
+            <Stat value={stats.players} label={t("stats.players")} />
+          </div>
         </section>
       )}
 
@@ -238,11 +272,11 @@ export async function LandingPage() {
 
 function Stat({ value, label }: { value: number; label: string }) {
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-4 text-center dark:border-gray-800 dark:bg-gray-900">
-      <p className="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+    <div className="rounded-lg p-4 text-center">
+      <p className="bg-gradient-to-br from-violet-700 to-indigo-500 bg-clip-text text-3xl font-bold tracking-tight text-transparent dark:from-violet-300 dark:to-indigo-300">
         {value.toLocaleString()}
       </p>
-      <p className="mt-1 text-xs font-bold uppercase tracking-[0.15em] text-gray-500 dark:text-gray-400">
+      <p className="mt-1 text-xs font-bold uppercase tracking-[0.15em] text-gray-600 dark:text-gray-400">
         {label}
       </p>
     </div>

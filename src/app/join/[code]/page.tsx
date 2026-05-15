@@ -13,7 +13,7 @@ export default async function JoinByCodePage({
   const { code } = await params;
   const session = await auth();
   if (!session?.user?.id) {
-    redirect(`/api/auth/signin?callbackUrl=${encodeURIComponent(`/join/${code}`)}`);
+    redirect(`/signin?callbackUrl=${encodeURIComponent(`/join/${code}`)}`);
   }
 
   const invite = await db.query.guildInvites.findFirst({

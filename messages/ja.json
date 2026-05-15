@@ -66,11 +66,11 @@
     "dismiss": "アルファ通知を非表示にする"
   },
   "footer": {
-    "tagline": "財団が呼びかけています。共に応えましょう。",
     "feedback": "フィードバック",
     "discordSupport": "DISCORDサポート",
     "terms": "条項",
-    "privacy": "プライバシー"
+    "privacy": "プライバシー",
+    "tagline": "団結しよう。共に答えを見つけよう。"
   },
   "feedback": {
     "reportBug": "バグを報告する",
@@ -91,7 +91,6 @@
     "addToCalendar": "カレンダーに追加",
     "open": "開ける",
     "closed": "閉店",
-    "signUp": "サインアップ",
     "signedUp": "✓ 登録済み",
     "signupCount": "{count, plural, =0 {No signups} 1つの{# signup}その他の{# signups} }",
     "youreSignedUp": "登録完了です！",
@@ -105,7 +104,8 @@
     "startTime": "開始時間:",
     "signupCloses": "登録締め切り：",
     "slotsLabel": "スロット：",
-    "slotsValue": "{maxPlayers}プレイヤー + {maxBackups}バックアップはそれぞれ"
+    "slotsValue": "{maxPlayers}プレイヤー + {maxBackups}バックアップはそれぞれ",
+    "signUp": "集結せよ"
   },
   "eventCard": {
     "deleted": "削除済み",
@@ -138,9 +138,9 @@
     "leadershipLabel": "リーダーシップポジションをリクエストする（ {slots} （チームあたり）",
     "leadershipHelp": "リーダーは試合中にチームを統率します。管理者はリクエストの中から誰に役割を割り当てるかを決定します。",
     "leadershipNotePlaceholder": "なぜリーダーシップの役割を担いたいのですか？（任意）",
-    "submit": "サインアップ",
     "submitUpdate": "サインアップを更新する",
-    "errorGeneric": "エラーが発生しました。もう一度お試しください。"
+    "errorGeneric": "エラーが発生しました。もう一度お試しください。",
+    "submit": "集まれ"
   },
   "createEventForm": {
     "eventType": "イベントタイプ",
@@ -512,6 +512,7 @@
     "eventNotFound": "イベントが見つかりませんでした。",
     "memberNotFound": "メンバーが見つかりません",
     "inviteNotFound": "招待状が見つかりません",
+    "alreadySignedUp": "既に登録済みです",
     "notForThisEvent": "このイベントは参加登録を受け付けていません。",
     "failed": "失敗した",
     "somethingWentWrong": "何かがおかしくなりました。",
@@ -520,8 +521,7 @@
     "lastAdminKick": "前の管理者を追放することはできません。まずは他の人を昇格させてください。",
     "lastAdminLeave": "あなたは唯一の管理者です。退会する前に、他のメンバーを管理者に昇格させてください。",
     "lastAdminDelete": "あなたはギルドの唯一の管理者です。まずは他の人を昇格させるか、スーパー管理者に引き継いでもらいましょう。",
-    "lastSuperAdminDelete": "あなたは最後のスーパー管理者です。アカウントを削除する前に、他の人をスーパー管理者に昇格させてください。",
-    "alreadySignedUp": "既に登録済みです"
+    "lastSuperAdminDelete": "あなたは最後のスーパー管理者です。アカウントを削除する前に、他の人をスーパー管理者に昇格させてください。"
   },
   "ingameNameDialog": {
     "title": "いらっしゃいませ",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "私たちが解決する問題",
       "heading": "ギルドは摩擦によってメンバーを失う。",
-      "body": "イベントのスケジュール管理はDiscordのスレッドに埋もれ、参加者登録は誰かが更新を忘れたスプレッドシートで管理され、リマインダーは送信されず、参加を諦めたプレイヤーは何もきっかけがなく、結局参加しなくなってしまう。Foundation Event Organizerは、こうした問題をすべて解決します。",
       "beforeTitle": "前に",
       "beforeBody": "混乱したDiscordスレッド、紛失した登録情報、見逃されたリマインダー、実際に参加した人の記録なし、そして徐々に離れていくメンバーたち。",
       "afterTitle": "後",
       "afterBody": "イベントごとに登録フォームは1つ。Discordで1日前、1時間前、20分前に自動リマインダー。出席状況とレーティングを追跡。リーダーボードとELO付きのスクリムとデュエル。ログインする明確な理由。",
       "outcomeTitle": "結果",
-      "outcomeBody": "より多くのイベントでフルメンバーが参加できるようにする。ギルド間の競争を増やす。メンバーが何度も参加したくなる理由を増やし、実際に貢献しているメンバーの記録を残す。"
+      "outcomeBody": "より多くのイベントでフルメンバーが参加できるようにする。ギルド間の競争を増やす。メンバーが何度も参加したくなる理由を増やし、実際に貢献しているメンバーの記録を残す。",
+      "body": "イベントのスケジュール管理はDiscordのスレッドに埋もれ、参加者の登録状況は誰かが更新を忘れたスプレッドシートで管理され、リマインダーは作動せず、プレイヤーは何もきっかけがないため参加しなくなってしまう。Rally Upは、こうした問題をすべて解決します。"
     },
     "features": {
       "heading": "中身は？",
@@ -721,7 +721,6 @@
     }
   },
   "playerHelp": {
-    "title": "財団イベントオーガナイザーへようこそ",
     "subtitle": "ここは、ギルドがイベント（シャドウフロントの試合、練習試合、その他リーダーシップがカレンダーに追加したいものすべて）に申し込む場所です。",
     "sections": {
       "gettingIn": "入場する",
@@ -801,7 +800,8 @@
       "subcommandsLabel": "サブコマンド:",
       "propagationNote": "新しいスラッシュコマンドは、ボットがサーバーに追加されてから初めてDiscordに表示されるまで、約1時間かかる場合があります。その後は、すぐに表示されます。"
     },
-    "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。"
+    "closed": "フォームが「登録受付は終了しました」というメッセージに変わります。遅れて登録する必要がある場合は、ギルド管理者に連絡してください。管理者が手動で登録状況を調整できます。",
+    "title": "ラリーアップへようこそ"
   },
   "bot": {
     "common": {
@@ -821,8 +821,8 @@
     "signup": {
       "eventNotFound": "イベントが見つかりませんでした。",
       "failed": "登録できませんでした： {reason}",
-      "waitlisted": "あなたはウェイティングリストに登録されています。お申し込みいただいた時点でチームが満員だったためです。空きが出次第、自動的に昇格となります。",
-      "success": "登録完了です。グラウンドでお会いしましょう。"
+      "waitlisted": "待機要員 ― あなたが登録した時点では、各チームの定員がいっぱいでした。空きが出れば自動的に昇格します。",
+      "success": "ラリーは決着済み。フィールドで会おう。"
     },
     "settings": {
       "unknown": "不明な設定。",
@@ -845,12 +845,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when}チームのボイスチャンネルに参加しよう： {link}",
       "optOutHint": "今後の音声招待を無効にするには、Discordで`/settings voice_invites enabled:false`を使用してください。",
-      "test": "**Foundation Event Organizer**からのテスト音声DM — ** {squadLabel} **. クリックして参加: <# {channelId} >",
       "leadStartingNow": "今すぐ開始",
       "leadMinutes": "開始まで{minutes}分",
       "leadOneHour": "1時間後に開始",
       "leadHours": "{hours}後に開始します{hours}営業時間",
-      "leadTomorrow": "明日から始まる"
+      "leadTomorrow": "明日から始まる",
+      "test": "**Rally Up**からのテスト音声DM — ** {squadLabel} **. クリックして参加: <# {channelId} >"
     },
     "duel": {
       "proposedHeading": "**決闘が提案されました** — {proposer} {opposer}に挑戦した{opposer} 1対1で。",
@@ -876,5 +876,13 @@
       "ctaEdited": "< {duelUrl}で確認して承認または拒否してください。 {duelUrl} >",
       "ctaReminder": "詳細: < {duelUrl} >"
     }
+  },
+  "signin": {
+    "kicker": "サインインして",
+    "subtitle": "ギルドに参加するには、GoogleアカウントまたはDiscordアカウントでログインしてください。",
+    "google": "Googleで続行",
+    "discord": "Discordで続行",
+    "errorHeading": "ログインに失敗しました。",
+    "errorBody": "DiscordとGoogle間のOAuth通信で、時折不具合が発生することがあります。もう一度お試しください。それでも問題が解決しない場合は、ページ下部のDiscordサポートリンクからご連絡ください。"
   }
 }

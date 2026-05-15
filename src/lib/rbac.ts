@@ -46,7 +46,7 @@ export function getMembership(session: Session | null): Membership | null {
 
 export function requireSignedInPage(session: Session | null): Membership {
   const m = getMembership(session);
-  if (!m) redirect("/api/auth/signin");
+  if (!m) redirect("/signin");
   return m;
 }
 

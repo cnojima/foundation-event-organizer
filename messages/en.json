@@ -803,6 +803,14 @@
     },
     "closed": "The form turns into a \"Signups are closed\" message. Reach out to a guild admin if you need to be added late — they can adjust signups manually."
   },
+  "signin": {
+    "kicker": "Sign in to",
+    "subtitle": "Sign in with Google or Discord to join your guild.",
+    "google": "Continue with Google",
+    "discord": "Continue with Discord",
+    "errorHeading": "Sign-in failed.",
+    "errorBody": "Discord and Google occasionally hiccup on the OAuth round-trip. Try again, and if it keeps happening, ping us via the Discord support link in the footer."
+  },
   "bot": {
     "common": {
       "error": "Something went wrong.",

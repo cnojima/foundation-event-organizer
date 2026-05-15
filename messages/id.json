@@ -66,11 +66,11 @@
     "dismiss": "Abaikan pemberitahuan alpha"
   },
   "footer": {
-    "tagline": "YAYASAN MENGHIMBAU. BERSAMA-SAMA BERSAMBUNG.",
     "feedback": "MASUKAN",
     "discordSupport": "DUKUNGAN DISCORD",
     "terms": "KETENTUAN",
-    "privacy": "PRIBADI"
+    "privacy": "PRIBADI",
+    "tagline": "BERSATULAH. JAWABLAH BERSAMA."
   },
   "feedback": {
     "reportBug": "Laporkan bug",
@@ -91,7 +91,6 @@
     "addToCalendar": "Tambahkan ke Kalender",
     "open": "Membuka",
     "closed": "Tertutup",
-    "signUp": "Mendaftar",
     "signedUp": "✓ Terdaftar",
     "signupCount": "{count, plural, =0 {No signups} satu {# signup} {# signups} }",
     "youreSignedUp": "Anda sudah terdaftar!",
@@ -105,7 +104,8 @@
     "startTime": "Waktu Mulai:",
     "signupCloses": "Pendaftaran Ditutup:",
     "slotsLabel": "Slot:",
-    "slotsValue": "{maxPlayers} pemain + {maxBackups} cadangan masing-masing"
+    "slotsValue": "{maxPlayers} pemain + {maxBackups} cadangan masing-masing",
+    "signUp": "Bersatu"
   },
   "eventCard": {
     "deleted": "Dihapus",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Ajukan permohonan posisi kepemimpinan ( {slots} per regu)",
     "leadershipHelp": "Para pemimpin mengoordinasikan regu mereka selama pertandingan. Admin memilih siapa yang mendapatkan peran tersebut dari permintaan yang masuk.",
     "leadershipNotePlaceholder": "Mengapa Anda menginginkan peran kepemimpinan? (opsional)",
-    "submit": "Mendaftar",
     "submitUpdate": "Perbarui Pendaftaran",
-    "errorGeneric": "Terjadi kesalahan. Silakan coba lagi."
+    "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
+    "submit": "Bersatulah"
   },
   "createEventForm": {
     "eventType": "Jenis Acara",
@@ -512,6 +512,7 @@
     "eventNotFound": "Acara tidak ditemukan.",
     "memberNotFound": "Anggota tidak ditemukan",
     "inviteNotFound": "Undangan tidak ditemukan",
+    "alreadySignedUp": "Anda sudah mendaftar",
     "notForThisEvent": "Acara ini tidak menerima pendaftaran.",
     "failed": "Gagal",
     "somethingWentWrong": "Terjadi kesalahan.",
@@ -520,8 +521,7 @@
     "lastAdminKick": "Tidak bisa mengeluarkan admin terakhir. Promosikan orang lain terlebih dahulu.",
     "lastAdminLeave": "Anda satu-satunya admin. Promosikan anggota lain menjadi admin sebelum Anda keluar.",
     "lastAdminDelete": "Anda adalah satu-satunya admin di guild Anda. Promosikan orang lain terlebih dahulu, atau minta super-admin untuk mengambil alih.",
-    "lastSuperAdminDelete": "Anda adalah super-admin terakhir. Promosikan orang lain menjadi super-admin sebelum menghapus akun Anda.",
-    "alreadySignedUp": "Anda sudah mendaftar"
+    "lastSuperAdminDelete": "Anda adalah super-admin terakhir. Promosikan orang lain menjadi super-admin sebelum menghapus akun Anda."
   },
   "ingameNameDialog": {
     "title": "Selamat datang",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "Masalah yang kita selesaikan",
       "heading": "Serikat pekerja kehilangan anggotanya karena gesekan.",
-      "body": "Penjadwalan acara terkubur dalam utas Discord. Pendaftaran dilacak dalam spreadsheet yang lupa diperbarui oleh seseorang. Pengingat yang tidak terpicu. Pemain yang berhenti hadir karena tidak ada yang menarik mereka kembali. Foundation Event Organizer memperbaiki semua itu.",
       "beforeTitle": "Sebelum",
       "beforeBody": "Diskusi Discord yang berantakan, pendaftaran yang hilang, pengingat yang terlewat, tidak ada catatan siapa yang benar-benar hadir — dan anggota perlahan-lahan menjauh.",
       "afterTitle": "Setelah",
       "afterBody": "Satu formulir pendaftaran per acara. Pengingat Discord otomatis 1 hari, 1 jam, dan 20 menit. Kehadiran + peringkat dilacak. Scrim dan duel dengan papan peringkat dan ELO. Alasan yang jelas untuk masuk.",
       "outcomeTitle": "Hasil",
-      "outcomeBody": "Lebih banyak acara dengan daftar pemain lengkap. Lebih banyak kompetisi antar guild. Lebih banyak alasan bagi anggota Anda untuk kembali — dan catatan tentang siapa yang benar-benar menjalankan tugasnya dengan baik."
+      "outcomeBody": "Lebih banyak acara dengan daftar pemain lengkap. Lebih banyak kompetisi antar guild. Lebih banyak alasan bagi anggota Anda untuk kembali — dan catatan tentang siapa yang benar-benar menjalankan tugasnya dengan baik.",
+      "body": "Penjadwalan acara terkubur dalam utas Discord. Pendaftaran dilacak dalam spreadsheet yang lupa diperbarui oleh seseorang. Pengingat yang tidak terpicu. Pemain yang berhenti hadir karena tidak ada yang menarik mereka kembali. Rally Up memperbaiki semua itu."
     },
     "features": {
       "heading": "Apa yang ada di dalamnya",
@@ -721,7 +721,6 @@
     }
   },
   "playerHelp": {
-    "title": "Selamat datang di Penyelenggara Acara Yayasan",
     "subtitle": "Di sinilah guild Anda mendaftar untuk berbagai acara — pertandingan Shadowfront, latihan tanding, dan apa pun yang diinginkan pimpinan untuk dimasukkan ke dalam kalender.",
     "sections": {
       "gettingIn": "Masuk",
@@ -801,7 +800,8 @@
       "subcommandsLabel": "Subperintah:",
       "propagationNote": "Perintah slash baru membutuhkan waktu hingga sekitar 1 jam untuk muncul di Discord pertama kali setelah bot ditambahkan ke server. Setelah itu, perintah akan muncul secara instan."
     },
-    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual."
+    "closed": "Formulir akan berubah menjadi pesan \"Pendaftaran telah ditutup\". Hubungi admin guild jika Anda perlu ditambahkan di menit-menit terakhir — mereka dapat menyesuaikan pendaftaran secara manual.",
+    "title": "Selamat datang di Rally Up"
   },
   "bot": {
     "common": {
@@ -821,8 +821,8 @@
     "signup": {
       "eventNotFound": "Acara tidak ditemukan.",
       "failed": "Anda tidak dapat mendaftar: {reason}",
-      "waitlisted": "Anda berada dalam daftar tunggu — tim sudah penuh saat Anda mendaftar. Anda akan dipromosikan secara otomatis jika ada slot yang kosong.",
-      "success": "Anda sudah terdaftar. Sampai jumpa di lapangan."
+      "waitlisted": "Cadangan tetap — skuad sudah penuh saat Anda mendaftar. Anda akan dipromosikan secara otomatis jika ada slot yang kosong.",
+      "success": "Siap bertanding. Sampai jumpa di lapangan."
     },
     "settings": {
       "unknown": "Pengaturan tidak diketahui.",
@@ -845,12 +845,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Gabung ke saluran suara tim: {link}",
       "optOutHint": "Untuk menonaktifkan undangan suara di masa mendatang, gunakan `/settings voice_invites enabled:false` di Discord.",
-      "test": "Pesan suara uji coba dari **Penyelenggara Acara Yayasan** — ** {squadLabel} **. Klik untuk bergabung: <# {channelId} >",
       "leadStartingNow": "mulai sekarang",
       "leadMinutes": "dimulai dalam {minutes} menit",
       "leadOneHour": "dimulai dalam 1 jam",
       "leadHours": "dimulai dalam {hours} jam",
-      "leadTomorrow": "dimulai besok"
+      "leadTomorrow": "dimulai besok",
+      "test": "Uji suara DM dari **Rally Up** — ** {squadLabel} **. Klik untuk bergabung: <# {channelId} >"
     },
     "duel": {
       "proposedHeading": "**Duel diusulkan** — {proposer} telah menantang {opposer} menjadi pertarungan 1 lawan 1.",
@@ -876,5 +876,13 @@
       "ctaEdited": "Tinjau dan terima atau tolak di < {duelUrl} >",
       "ctaReminder": "Detail: < {duelUrl} >"
     }
+  },
+  "signin": {
+    "kicker": "Masuk ke",
+    "subtitle": "Masuk menggunakan Google atau Discord untuk bergabung dengan guild Anda.",
+    "google": "Lanjutkan dengan Google",
+    "discord": "Lanjutkan dengan Discord",
+    "errorHeading": "Login gagal.",
+    "errorBody": "Discord dan Google terkadang mengalami kendala pada proses otentikasi OAuth. Coba lagi, dan jika masalah terus berlanjut, hubungi kami melalui tautan dukungan Discord di bagian bawah halaman."
   }
 }

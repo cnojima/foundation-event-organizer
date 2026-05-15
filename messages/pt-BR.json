@@ -66,11 +66,11 @@
     "dismiss": "Descartar notificação alfa"
   },
   "footer": {
-    "tagline": "A FUNDAÇÃO CONVOCA. ATENDAMOS JUNTOS.",
     "feedback": "OPINIÃO",
     "discordSupport": "SUPORTE NO DISCORD",
     "terms": "TERMOS",
-    "privacy": "PRIVACIDADE"
+    "privacy": "PRIVACIDADE",
+    "tagline": "UNAM-SE. RESPONDAMOS JUNTOS."
   },
   "feedback": {
     "reportBug": "Reportar um bug",
@@ -91,7 +91,6 @@
     "addToCalendar": "Adicionar ao calendário",
     "open": "Abrir",
     "closed": "Fechado",
-    "signUp": "Inscrever-se",
     "signedUp": "✓ Cadastrado",
     "signupCount": "{count, plural, =0 {No signups} um {# signup} outros {# signups} }",
     "youreSignedUp": "Você está cadastrado!",
@@ -105,7 +104,8 @@
     "startTime": "Horário de início:",
     "signupCloses": "As inscrições encerram em:",
     "slotsLabel": "Caça-níqueis:",
-    "slotsValue": "{maxPlayers} jogadores + {maxBackups} backups cada"
+    "slotsValue": "{maxPlayers} jogadores + {maxBackups} backups cada",
+    "signUp": "Reúnam-se!"
   },
   "eventCard": {
     "deleted": "Excluído",
@@ -138,9 +138,9 @@
     "leadershipLabel": "Solicite uma posição de liderança ( {slots} por esquadrão)",
     "leadershipHelp": "Os líderes coordenam suas equipes durante a partida. Os administradores escolhem quem assume a função dentre as solicitações.",
     "leadershipNotePlaceholder": "Por que você gostaria de ocupar um cargo de liderança? (opcional)",
-    "submit": "Inscrever-se",
     "submitUpdate": "Atualizar cadastro",
-    "errorGeneric": "Algo deu errado. Por favor, tente novamente."
+    "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
+    "submit": "Reúnam-se!"
   },
   "createEventForm": {
     "eventType": "Tipo de evento",
@@ -512,6 +512,7 @@
     "eventNotFound": "Evento não encontrado.",
     "memberNotFound": "Membro não encontrado",
     "inviteNotFound": "Convite não encontrado",
+    "alreadySignedUp": "Você já se cadastrou.",
     "notForThisEvent": "Este evento não aceita inscrições.",
     "failed": "Fracassado",
     "somethingWentWrong": "Algo deu errado.",
@@ -520,8 +521,7 @@
     "lastAdminKick": "Não é possível demitir o último administrador. Promova outra pessoa primeiro.",
     "lastAdminLeave": "Você é o único administrador. Promova outro membro a administrador antes de sair.",
     "lastAdminDelete": "Você é o único administrador da sua guilda. Promova outra pessoa primeiro ou peça para um superadministrador assumir o cargo.",
-    "lastSuperAdminDelete": "Você é o último superadministrador. Promova outra pessoa a superadministrador antes de excluir sua conta.",
-    "alreadySignedUp": "Você já se cadastrou."
+    "lastSuperAdminDelete": "Você é o último superadministrador. Promova outra pessoa a superadministrador antes de excluir sua conta."
   },
   "ingameNameDialog": {
     "title": "Bem-vindo",
@@ -667,13 +667,13 @@
     "engagement": {
       "kicker": "O problema que resolvemos",
       "heading": "Guildas perdem membros devido a atritos.",
-      "body": "Agendamento de eventos perdido em tópicos do Discord. Inscrições registradas em uma planilha esquecida. Lembretes que não funcionavam. Jogadores que paravam de aparecer porque nada os fazia voltar. O Foundation Event Organizer resolve tudo isso.",
       "beforeTitle": "Antes",
       "beforeBody": "Tópicos confusos no Discord, inscrições perdidas, lembretes ignorados, nenhum registro de quem realmente compareceu — e membros se afastando aos poucos.",
       "afterTitle": "Depois",
       "afterBody": "Um formulário de inscrição por evento. Lembretes automáticos no Discord com 1 dia, 1 hora e 20 minutos de antecedência. Presença e avaliações registradas. Treinos e duelos com placares e ELO. Um motivo claro para entrar.",
       "outcomeTitle": "Resultado",
-      "outcomeBody": "Mais eventos com listas completas de participantes. Mais competições entre guildas. Mais motivos para seus membros voltarem — e um registro de quem realmente cumpre sua parte."
+      "outcomeBody": "Mais eventos com listas completas de participantes. Mais competições entre guildas. Mais motivos para seus membros voltarem — e um registro de quem realmente cumpre sua parte.",
+      "body": "Agendamento de eventos perdido em tópicos do Discord. Inscrições registradas em uma planilha esquecida. Lembretes que não funcionavam. Jogadores que paravam de aparecer porque nada os motivava a voltar. O Rally Up resolve tudo isso."
     },
     "features": {
       "heading": "O que tem dentro?",
@@ -721,7 +721,6 @@
     }
   },
   "playerHelp": {
-    "title": "Bem-vindo(a) à Fundação Organizadora de Eventos",
     "subtitle": "É aqui que sua guilda se inscreve para eventos — partidas de Shadowfront, treinos e qualquer outra coisa que a liderança queira incluir no calendário.",
     "sections": {
       "gettingIn": "Entrando",
@@ -801,7 +800,8 @@
       "subcommandsLabel": "Subcomandos:",
       "propagationNote": "Os novos comandos de barra podem demorar até uma hora para aparecer no Discord pela primeira vez após o bot ser adicionado a um servidor. Depois disso, eles aparecem instantaneamente."
     },
-    "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente."
+    "closed": "O formulário exibe a mensagem \"Inscrições encerradas\". Caso precise ser adicionado(a) após o prazo, entre em contato com um administrador da guilda — eles podem ajustar as inscrições manualmente.",
+    "title": "Bem-vindo(a) ao Rally Up"
   },
   "bot": {
     "common": {
@@ -821,8 +821,8 @@
     "signup": {
       "eventNotFound": "Evento não encontrado.",
       "failed": "Não foi possível cadastrá-lo(a): {reason}",
-      "waitlisted": "Você está na lista de espera — as vagas estavam preenchidas quando você se inscreveu. Você será promovido automaticamente se uma vaga for aberta.",
-      "success": "Você está inscrito. Nos vemos em campo."
+      "waitlisted": "Reserva permanente — as equipes estavam completas quando você se inscreveu. Você será promovido automaticamente se uma vaga for aberta.",
+      "success": "A reunião está confirmada. Vejo vocês em campo."
     },
     "settings": {
       "unknown": "Cenário desconhecido.",
@@ -845,12 +845,12 @@
     "voiceDm": {
       "body": "** {subject} ** {when} Entre no canal de voz do esquadrão: {link}",
       "optOutHint": "Para desativar convites de voz futuros, use `/settings voice_invites enabled:false` no Discord.",
-      "test": "Teste de voz DM do **Organizador de Eventos da Fundação** — ** {squadLabel} **. Clique para participar: <# {channelId} >",
       "leadStartingNow": "começando agora",
       "leadMinutes": "Começa em {minutes} minutos",
       "leadOneHour": "Começa em 1 hora",
       "leadHours": "Começa em {hours} horas",
-      "leadTomorrow": "começa amanhã"
+      "leadTomorrow": "começa amanhã",
+      "test": "Teste de voz DM de **Rally Up** — ** {squadLabel} **. Clique para participar: <# {channelId} >"
     },
     "duel": {
       "proposedHeading": "**Duelo proposto** — {proposer} desafiou {opposer} para um 1 contra 1.",
@@ -876,5 +876,13 @@
       "ctaEdited": "Analise e aceite ou recuse em < {duelUrl} >",
       "ctaReminder": "Detalhes: < {duelUrl} >"
     }
+  },
+  "signin": {
+    "kicker": "Faça login em",
+    "subtitle": "Faça login com sua conta do Google ou Discord para entrar na sua guilda.",
+    "google": "Continuar com o Google",
+    "discord": "Continuar com o Discord",
+    "errorHeading": "Falha no login.",
+    "errorBody": "O Discord e o Google ocasionalmente apresentam problemas na comunicação OAuth. Tente novamente e, se o problema persistir, entre em contato conosco pelo link de suporte do Discord no rodapé."
   }
 }

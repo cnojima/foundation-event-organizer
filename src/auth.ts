@@ -24,6 +24,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
     }),
   ],
+  // Custom signin page overrides Auth.js's built-in /api/auth/signin route
+  // so the brand chrome (atmospheric hero, wordmark) carries through the
+  // auth flow. Links to /api/auth/signin still resolve — Auth.js redirects
+  // them here.
+  pages: {
+    signIn: "/signin",
+  },
   events: {
     // When a user signs in via Discord OAuth, mirror their Discord user
     // ID (the snowflake stored as `account.providerAccountId`) onto the
@@ -52,7 +59,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     // public surfaces to this list when they're built.
     authorized({ auth, request }) {
       const pathname = request.nextUrl.pathname;
-      const PUBLIC_PATHS = new Set(["/", "/tos", "/privacy"]);
+      const PUBLIC_PATHS = new Set(["/", "/tos", "/privacy", "/signin"]);
       if (PUBLIC_PATHS.has(pathname)) return true;
       return !!auth;
     },
