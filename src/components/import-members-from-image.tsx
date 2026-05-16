@@ -81,6 +81,45 @@ function ImportFromImageModal({
     return () => URL.revokeObjectURL(previewUrl);
   }, [previewUrl]);
 
+  // Clipboard paste: when the modal is open, ⌘V/Ctrl+V anywhere outside an
+  // editable input grabs an image from the clipboard. Skip paste if the
+  // user is focused on a text field — they probably mean to paste text.
+  useEffect(() => {
+    function onPaste(e: ClipboardEvent) {
+      if (extracting || importing) return;
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (const item of Array.from(items)) {
+        if (item.kind === "file" && item.type.startsWith("image/")) {
+          const blob = item.getAsFile();
+          if (blob) {
+            e.preventDefault();
+            // Give pasted blobs a stable filename so the upload form-data
+            // field looks reasonable in server logs. Browsers default to
+            // "image.png" / blank.
+            const ext = blob.type.split("/")[1] ?? "png";
+            const renamed = new File([blob], `clipboard.${ext}`, {
+              type: blob.type,
+            });
+            pickFile(renamed);
+            return;
+          }
+        }
+      }
+    }
+    window.addEventListener("paste", onPaste);
+    return () => window.removeEventListener("paste", onPaste);
+  }, [extracting, importing]);
+
   function pickFile(f: File | null) {
     setFile(f);
     setNames([]);
@@ -239,6 +278,17 @@ function ImportFromImageModal({
             <label className="block text-sm font-medium mb-1">
               Screenshot (PNG, JPEG, or WebP — max 10 MB)
             </label>
+            <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
+              Tip: you can also paste an image with{" "}
+              <kbd className="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 font-mono text-[10px] dark:border-gray-700 dark:bg-gray-800">
+                ⌘V
+              </kbd>{" "}
+              /{" "}
+              <kbd className="rounded border border-gray-300 bg-gray-100 px-1 py-0.5 font-mono text-[10px] dark:border-gray-700 dark:bg-gray-800">
+                Ctrl+V
+              </kbd>
+              .
+            </p>
             <input
               ref={fileInputRef}
               type="file"
