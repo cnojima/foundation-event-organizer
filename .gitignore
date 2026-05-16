@@ -25,6 +25,7 @@
 *.pem
 app.db*
 i18n-key.json
+sample/
 
 # debug
 npm-debug.log*

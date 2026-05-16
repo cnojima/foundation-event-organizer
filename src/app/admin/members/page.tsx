@@ -7,6 +7,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
 import { MemberRowActions } from "@/components/member-row-actions";
 import { CreateStubMemberForm } from "@/components/create-stub-member-form";
+import { ImportMembersFromImageButton } from "@/components/import-members-from-image";
 
 export default async function MembersPage({
   searchParams,
@@ -50,8 +51,9 @@ export default async function MembersPage({
         {adminCount === 1 ? "" : "s"}
       </p>
 
-      <div className="mb-6">
+      <div className="mb-6 flex flex-wrap items-start gap-2">
         <CreateStubMemberForm guildId={targetGuildId} />
+        <ImportMembersFromImageButton guildId={targetGuildId} />
       </div>
 
       <div className="space-y-2">
