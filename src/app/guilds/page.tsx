@@ -16,6 +16,7 @@ export default async function GuildsPage() {
       name: guilds.name,
       slug: guilds.slug,
       description: guilds.description,
+      serverNumber: guilds.serverNumber,
       // Hard-coded qualified names: Drizzle's sql template renders column
       // references unqualified, so the subquery would compare users.guild_id
       // to users.id and always return 0. See super-admin/page.tsx for context.
@@ -23,7 +24,7 @@ export default async function GuildsPage() {
     })
     .from(guilds)
     .where(and(eq(guilds.isPublic, true), isNull(guilds.deletedAt)))
-    .orderBy(guilds.name);
+    .orderBy(guilds.serverNumber, guilds.name);
 
   const inAGuild = !!membership.guildId;
 
@@ -63,6 +64,11 @@ export default async function GuildsPage() {
                     href={`/guilds/${guild.slug}`}
                     className="text-lg font-semibold text-gray-900 hover:text-violet-700 before:absolute before:inset-0 before:rounded-lg dark:text-gray-100 dark:hover:text-violet-300"
                   >
+                    {guild.serverNumber && (
+                      <span className="mr-2 font-mono text-gray-500 dark:text-gray-400">
+                        #{guild.serverNumber}
+                      </span>
+                    )}
                     {guild.name}
                   </Link>
                   {guild.description && (

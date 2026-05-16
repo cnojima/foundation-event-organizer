@@ -3,10 +3,26 @@ import type { Adapter, AdapterUser } from "next-auth/adapters";
 import Google from "next-auth/providers/google";
 import Discord from "next-auth/providers/discord";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { users, accounts, sessions, verificationTokens, guilds } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { logAudit } from "@/lib/audit";
+
+// Canonical public hostname. Requests arriving on any other Host get
+// 308-redirected here so OAuth callbacks, cookies, and absolute URLs all
+// resolve consistently. Local development hostnames are exempt.
+const CANONICAL_HOST = "rallyup.win";
+
+function isLocalHost(host: string): boolean {
+  const bare = host.split(":")[0];
+  return (
+    bare === "localhost" ||
+    bare === "127.0.0.1" ||
+    bare === "0.0.0.0" ||
+    bare.endsWith(".local")
+  );
+}
 
 const baseAdapter = DrizzleAdapter(db, {
   usersTable: users,
@@ -133,12 +149,27 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
   },
   callbacks: {
-    // Public-path allowlist. Auth.js's default behavior on `false` is to
-    // bounce signed-out users to /api/auth/signin BEFORE the page
-    // component runs — which means a signed-out landing page never gets a
-    // chance to render unless we whitelist its route here. Add new
-    // public surfaces to this list when they're built.
+    // Runs from src/proxy.ts (the Next.js 16 proxy/middleware entrypoint).
+    // Two concerns:
+    //   1. Host canonicalization — redirect anything that isn't rallyup.win
+    //      or a local-dev hostname to the canonical domain. Belt-and-
+    //      suspenders for stray traffic on fly.dev or stale bookmarks.
+    //   2. Public-path allowlist. Auth.js's default behavior on `false` is
+    //      to bounce signed-out users to /api/auth/signin BEFORE the page
+    //      component runs — so a signed-out landing page never gets a
+    //      chance to render unless we whitelist its route here. Add new
+    //      public surfaces to this list when they're built.
     authorized({ auth, request }) {
+      const host = request.headers.get("host") ?? "";
+      if (host !== CANONICAL_HOST && !isLocalHost(host)) {
+        const url = request.nextUrl.clone();
+        url.host = CANONICAL_HOST;
+        url.protocol = "https:";
+        url.port = "";
+        // 308 preserves method + body so misrouted POSTs follow through
+        // instead of silently dropping data.
+        return NextResponse.redirect(url, 308);
+      }
       const pathname = request.nextUrl.pathname;
       const PUBLIC_PATHS = new Set(["/", "/tos", "/privacy", "/signin"]);
       if (PUBLIC_PATHS.has(pathname)) return true;
