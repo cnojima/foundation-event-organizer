@@ -65,8 +65,18 @@ export function createSignup({
       }
     }
 
+    // If an active row already exists for this (event, user) pair:
+    //   - regular signup row → "Already signed up" (existing behavior).
+    //   - attendance-only walk-in → upgrade in place. The admin had
+    //     previously marked them attended ad-hoc; now the user wants
+    //     to fill in real signup preferences. Preserve `attended=true`
+    //     so the walk-in fact survives the upgrade.
     const existing = tx
-      .select({ id: signups.id })
+      .select({
+        id: signups.id,
+        attendanceOnly: signups.attendanceOnly,
+        attended: signups.attended,
+      })
       .from(signups)
       .where(
         and(
@@ -76,19 +86,48 @@ export function createSignup({
         )
       )
       .get();
-    if (existing) {
+    if (existing && !existing.attendanceOnly) {
       return { ok: false as const, reason: "Already signed up", status: 409 };
     }
 
+    // Capacity tally excludes attendance-only rows (they aren't roster
+    // slots), so the upgrade path doesn't double-count this user when
+    // computing standing.
     const currentSignups = tx
       .select({ assignedRole: signups.assignedRole })
       .from(signups)
       .where(
-        and(eq(signups.eventId, input.eventId), isNull(signups.deletedAt))
+        and(
+          eq(signups.eventId, input.eventId),
+          isNull(signups.deletedAt),
+          eq(signups.attendanceOnly, false)
+        )
       )
       .all();
     const standing = computeStanding(event, currentSignups);
     const assignedRole = standing.isFull ? WAITLIST_ROLE : null;
+
+    if (existing) {
+      // Upgrade the walk-in row in place.
+      tx.update(signups)
+        .set({
+          squad1Preference: input.squad1Preference,
+          squad2Preference: input.squad2Preference,
+          willingBackup: input.willingBackup,
+          requestLeadership: input.requestLeadership,
+          leadershipNote: input.leadershipNote,
+          assignedRole,
+          attendanceOnly: false,
+          // attended is preserved as-is — the walk-in fact stands.
+        })
+        .where(eq(signups.id, existing.id))
+        .run();
+      return {
+        ok: true as const,
+        waitlisted: assignedRole === WAITLIST_ROLE,
+        signupId: existing.id,
+      };
+    }
 
     const signupId = generateId();
     tx.insert(signups)

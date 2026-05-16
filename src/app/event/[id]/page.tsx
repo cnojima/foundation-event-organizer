@@ -1,6 +1,10 @@
 import { db } from "@/db";
 import { events, guilds, scrimProposals, signups, users } from "@/db/schema";
 import { eq, and, asc, isNull } from "drizzle-orm";
+import { UserAvatar } from "@/components/user-avatar";
+import { displayName } from "@/lib/display";
+import { AddWalkInsButton } from "@/components/attendance-section";
+import { type EligibleMember } from "@/components/admin-signup-on-behalf-form";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
@@ -92,18 +96,21 @@ export default async function EventPage({
 
   const standing = hasRoster ? await getEventStanding(event.id) : null;
 
-  const eventSignups: SignupRow[] = hasRoster
-    ? await db
-        .select({ signup: signups, user: users })
-        .from(signups)
-        .leftJoin(users, eq(signups.userId, users.id))
-        .where(and(eq(signups.eventId, event.id), isNull(signups.deletedAt)))
-        .orderBy(asc(signups.createdAt))
-    : [];
+  // Always load — match/scrim feed the squad rosters + waitlist below;
+  // simple events use it for the attendee list. Cheap join either way.
+  const eventSignups: SignupRow[] = await db
+    .select({ signup: signups, user: users })
+    .from(signups)
+    .leftJoin(users, eq(signups.userId, users.id))
+    .where(and(eq(signups.eventId, event.id), isNull(signups.deletedAt)))
+    .orderBy(asc(signups.createdAt));
 
   const squad1 = sortRoster(eventSignups.filter((s) => bucketSquad(s) === 1));
   const squad2 = sortRoster(eventSignups.filter((s) => bucketSquad(s) === 2));
   const waitlist = eventSignups.filter((s) => bucketSquad(s) === "waitlist");
+  // Attendees = anyone marked attended (signup-bound players + ad-hoc
+  // walk-ins). Ordered by signup createdAt (insertion order) — stable.
+  const attendees = eventSignups.filter((s) => s.signup.attended);
 
   // Scrim — pull the opposing guild's mirrored event + roster so both
   // sides' lineups render on the same page. Admin internals (attended,
@@ -147,11 +154,40 @@ export default async function EventPage({
   const isWaitlisted = existingSignup?.assignedRole === WAITLIST_ROLE;
   const currentUserId = membership.userId;
 
-  const adminEventHref =
+  // Admin links from the player view:
+  //   - "Edit event" → the dedicated edit form for fields (name, dates, etc).
+  //   - "Manage event" → the full roster/attendance dashboard, which is
+  //     where walk-in attendance and squad management live.
+  // The impersonation hint (?guildId=) is preserved when a super-admin
+  // acts on a foreign guild so /admin pages can pin the correct context.
+  const impersonatingSuffix =
     membership.isSuperAdmin && event.guildId !== membership.guildId
-      ? `/admin/event/${event.id}?guildId=${event.guildId}`
-      : `/admin/event/${event.id}`;
+      ? `?guildId=${event.guildId}`
+      : "";
+  const adminEditHref = `/admin/event/${event.id}/edit${impersonatingSuffix}`;
+  const adminManageHref = `/admin/event/${event.id}${impersonatingSuffix}`;
   const tAdmin = await getTranslations("admin");
+
+  // Admins can mark walk-ins directly from this page. Load the picker's
+  // eligible-member list — guild members not already in an active row.
+  // Cheaper than the manage page version since we only need id+display.
+  const signedUpUserIds = new Set(eventSignups.map((s) => s.signup.userId));
+  const eligibleMembers: EligibleMember[] =
+    isAdminForThisEvent && !isDeleted
+      ? (
+          await db
+            .select()
+            .from(users)
+            .where(eq(users.guildId, event.guildId))
+            .orderBy(users.inGameName, users.name)
+        )
+          .filter((u) => !signedUpUserIds.has(u.id))
+          .map((u) => ({
+            id: u.id,
+            display: displayName(u, guildTag),
+            isStub: !!u.stubCreatedAt,
+          }))
+      : [];
 
   return (
     <main className="max-w-5xl mx-auto p-6">
@@ -163,36 +199,48 @@ export default async function EventPage({
         </div>
       )}
 
-      {/* Overview card — title, badges, CTAs, description, event metadata.
+      {/* Overview card — CTA row, then title row, then description + metadata.
           Card chrome matches the listing cards on / so the detail view reads
           like a "zoomed-in" version of the listing. */}
       <div className="mb-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-        <div className="mb-2 flex items-start justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <EventKindHero kind={event.kind} size="lg" />
-            <h1 className={`text-3xl font-bold ${isDeleted ? "line-through" : ""}`}>
-              {event.name}
-            </h1>
-            {isDeleted && (
-              <span className="rounded border border-gray-300 bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
-                Deleted
-              </span>
-            )}
-          </div>
-          <div className="flex items-center gap-2">
+        {/* CTA row — sits at the top, aligned right, on its own line so the
+            title underneath gets its own breathing room. */}
+        {(isAdminForThisEvent ||
+          (!isDeleted &&
+            (event.gameTime || event.squad1StartsAt || event.squad2StartsAt))) && (
+          <div className="mb-4 flex flex-wrap items-center justify-end gap-2">
             {!isDeleted &&
               (event.gameTime || event.squad1StartsAt || event.squad2StartsAt) && (
                 <CalendarDownloadLink href={`/api/events/${event.id}/ics`} />
               )}
+            {isAdminForThisEvent && !isDeleted && (
+              <Link
+                href={adminManageHref}
+                className="rounded-md border border-violet-300 bg-violet-50 px-3 py-1.5 text-sm font-semibold text-violet-700 hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
+              >
+                Manage event
+              </Link>
+            )}
             {isAdminForThisEvent && (
               <Link
-                href={adminEventHref}
+                href={adminEditHref}
                 className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700"
               >
                 {tAdmin("editEvent")}
               </Link>
             )}
           </div>
+        )}
+        <div className="mb-2 flex items-center gap-3">
+          <EventKindHero kind={event.kind} size="lg" />
+          <h1 className={`text-3xl font-bold ${isDeleted ? "line-through" : ""}`}>
+            {event.name}
+          </h1>
+          {isDeleted && (
+            <span className="rounded border border-gray-300 bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
+              Deleted
+            </span>
+          )}
         </div>
         {event.description && (
           <p className="text-gray-600 mb-4 dark:text-gray-400">{event.description}</p>
@@ -265,6 +313,61 @@ export default async function EventPage({
             </div>
           )}
         </div>
+      </div>
+
+      {/* Attendees — anyone with `attended = true` (signup-bound players +
+          ad-hoc walk-ins). Always renders so the count is visible even
+          when zero. Admins also get the "+ Add walk-ins" picker inline. */}
+      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+        <div className="mb-3 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              Attendees
+            </h2>
+            <span className="rounded-full bg-violet-100 px-2 py-0.5 text-xs font-bold text-violet-700 dark:bg-violet-950/40 dark:text-violet-300">
+              {attendees.length}
+            </span>
+          </div>
+          {isAdminForThisEvent && !isDeleted && (
+            <AddWalkInsButton eventId={event.id} members={eligibleMembers} />
+          )}
+        </div>
+        {attendees.length === 0 ? (
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            No one marked attended yet.
+          </p>
+        ) : (
+          <div className="flex flex-wrap gap-2">
+            {attendees.map((a) => {
+              const name = displayName(a.user, guildTag);
+              // a.user can be null if the underlying user row was hard-
+              // deleted (rare — signups normally cascade or soft-delete).
+              // Fall back to a plain pill in that case.
+              const userId = a.user?.id;
+              const pillClass =
+                "flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-2 py-1 text-sm dark:border-gray-800 dark:bg-gray-800";
+              const inner = (
+                <>
+                  <UserAvatar size="size-6" name={name} image={a.user?.image} />
+                  <span className="text-gray-900 dark:text-gray-100">{name}</span>
+                </>
+              );
+              return userId ? (
+                <Link
+                  key={a.signup.id}
+                  href={`/players/${userId}`}
+                  className={`${pillClass} transition-colors hover:border-violet-400 hover:bg-violet-50 dark:hover:border-violet-700 dark:hover:bg-violet-950/40`}
+                >
+                  {inner}
+                </Link>
+              ) : (
+                <div key={a.signup.id} className={pillClass}>
+                  {inner}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {isScrim && scrim && (

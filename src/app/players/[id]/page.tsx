@@ -218,6 +218,8 @@ export default async function PlayerProfilePage({
   type AttendanceRow = {
     eventId: string;
     eventName: string;
+    kind: "match" | "scrim" | "simple";
+    gameTime: string | null;
     squad1Name: string;
     squad2Name: string;
     squad1StartsAt: string | null;
@@ -225,6 +227,7 @@ export default async function PlayerProfilePage({
     assignedSquad: number | null;
     assignedRole: string | null;
     attended: boolean | null;
+    attendanceOnly: boolean;
     requestLeadership: boolean | null;
   };
   let attendanceRows: AttendanceRow[] = [];
@@ -233,6 +236,8 @@ export default async function PlayerProfilePage({
       .select({
         eventId: events.id,
         eventName: events.name,
+        kind: events.kind,
+        gameTime: events.gameTime,
         squad1Name: events.squad1Name,
         squad2Name: events.squad2Name,
         squad1StartsAt: events.squad1StartsAt,
@@ -240,6 +245,7 @@ export default async function PlayerProfilePage({
         assignedSquad: signups.assignedSquad,
         assignedRole: signups.assignedRole,
         attended: signups.attended,
+        attendanceOnly: signups.attendanceOnly,
         requestLeadership: signups.requestLeadership,
       })
       .from(signups)
@@ -248,16 +254,18 @@ export default async function PlayerProfilePage({
         and(
           eq(signups.userId, profile.id),
           isNull(signups.deletedAt),
-          eq(events.kind, "match"),
+          // All kinds included — match/scrim contribute signup-bound rows,
+          // simple contributes ad-hoc attendance-only rows. The recent list
+          // and totals span everything; bucket distribution stays match-only.
           eq(events.guildId, profile.guildId)
         )
       )
-      // Order by squad1StartsAt — match events leave gameTime null and use
-      // squad1StartsAt as the canonical reference time. Unscheduled events
-      // (null) sort last via the explicit IS NULL flag.
+      // Reference time: matches use squad1StartsAt (gameTime is null for them);
+      // simple + scrim use gameTime. COALESCE so the unified sort lines up.
+      // Unscheduled rows (both null) sort last via the explicit IS NULL flag.
       .orderBy(
-        sql`${events.squad1StartsAt} IS NULL`,
-        desc(events.squad1StartsAt),
+        sql`COALESCE(${events.squad1StartsAt}, ${events.gameTime}) IS NULL`,
+        sql`COALESCE(${events.squad1StartsAt}, ${events.gameTime}) DESC`,
         desc(events.createdAt)
       );
   }
@@ -266,6 +274,8 @@ export default async function PlayerProfilePage({
   // Squad assignment buckets are mutually exclusive: waitlist beats squad
   // (a waitlisted signup may also have a stale assignedSquad). Backup is a
   // role on a squad. Unassigned = no squad and no special role yet.
+  // Only match rows contribute — buckets describe squad distribution, which
+  // is meaningless for simple events and ambiguous for scrim's single squad.
   const buckets = {
     squad1: 0,
     squad2: 0,
@@ -274,12 +284,14 @@ export default async function PlayerProfilePage({
     unassigned: 0,
   };
   for (const row of attendanceRows) {
+    if (row.kind !== "match") continue;
     if (row.assignedRole === WAITLIST_ROLE) buckets.waitlist += 1;
     else if (row.assignedRole === "backup") buckets.backup += 1;
     else if (row.assignedSquad === 1) buckets.squad1 += 1;
     else if (row.assignedSquad === 2) buckets.squad2 += 1;
     else buckets.unassigned += 1;
   }
+  const matchCount = attendanceRows.filter((r) => r.kind === "match").length;
   const attendanceRecorded = attendanceRows.filter(
     (r) => r.attended !== null
   ).length;
@@ -611,41 +623,53 @@ export default async function PlayerProfilePage({
                 />
               </div>
 
-              <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                {t("attendanceBreakdownHeading")}
-              </h3>
-              <div className="mb-4 flex flex-wrap gap-2">
-                <BucketChip
-                  label={t("attendanceBucketSquad1")}
-                  count={buckets.squad1}
-                />
-                <BucketChip
-                  label={t("attendanceBucketSquad2")}
-                  count={buckets.squad2}
-                />
-                <BucketChip
-                  label={t("attendanceBucketBackup")}
-                  count={buckets.backup}
-                />
-                <BucketChip
-                  label={t("attendanceBucketWaitlist")}
-                  count={buckets.waitlist}
-                />
-                {buckets.unassigned > 0 && (
-                  <BucketChip
-                    label={t("attendanceBucketUnassigned")}
-                    count={buckets.unassigned}
-                  />
-                )}
-              </div>
+              {/* Squad-distribution chips only render when the player has
+                  match signups — for a player with only simple-event
+                  attendance the chips would all read zero, which is noise. */}
+              {matchCount > 0 && (
+                <>
+                  <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    {t("attendanceBreakdownHeading")}
+                  </h3>
+                  <div className="mb-4 flex flex-wrap gap-2">
+                    <BucketChip
+                      label={t("attendanceBucketSquad1")}
+                      count={buckets.squad1}
+                    />
+                    <BucketChip
+                      label={t("attendanceBucketSquad2")}
+                      count={buckets.squad2}
+                    />
+                    <BucketChip
+                      label={t("attendanceBucketBackup")}
+                      count={buckets.backup}
+                    />
+                    <BucketChip
+                      label={t("attendanceBucketWaitlist")}
+                      count={buckets.waitlist}
+                    />
+                    {buckets.unassigned > 0 && (
+                      <BucketChip
+                        label={t("attendanceBucketUnassigned")}
+                        count={buckets.unassigned}
+                      />
+                    )}
+                  </div>
+                </>
+              )}
 
               <h3 className="mb-2 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
                 {t("attendanceRecentHeading")}
               </h3>
               <ol className="space-y-2">
                 {recentEvents.map((row) => {
-                  let assignmentLabel: string;
-                  if (row.assignedRole === WAITLIST_ROLE) {
+                  // Assignment label only makes sense for match (squad/role)
+                  // and scrim (single squad). For simple events, we surface
+                  // "Walk-in" when the row is attendance-only, else nothing.
+                  let assignmentLabel: string | null;
+                  if (row.kind === "simple") {
+                    assignmentLabel = row.attendanceOnly ? "Walk-in" : null;
+                  } else if (row.assignedRole === WAITLIST_ROLE) {
                     assignmentLabel = t("attendanceAssignedWaitlist");
                   } else if (row.assignedRole === "backup") {
                     assignmentLabel = t("attendanceAssignedBackup");
@@ -659,10 +683,14 @@ export default async function PlayerProfilePage({
                   } else {
                     assignmentLabel = t("attendanceAssignedUnassigned");
                   }
+                  // Match events use per-squad start times; simple + scrim
+                  // events store their single start in gameTime.
                   const eventTime =
-                    row.assignedSquad === 2
-                      ? (row.squad2StartsAt ?? row.squad1StartsAt)
-                      : row.squad1StartsAt;
+                    row.kind === "match"
+                      ? row.assignedSquad === 2
+                        ? (row.squad2StartsAt ?? row.squad1StartsAt)
+                        : row.squad1StartsAt
+                      : row.gameTime;
                   // attended: true=showed, false=no-show, null=not recorded yet.
                   let chipLabel: string;
                   let chipStyle: string;
@@ -697,7 +725,7 @@ export default async function PlayerProfilePage({
                               <DateTime iso={eventTime} mode="date" />
                             </span>
                           )}
-                          <span>{assignmentLabel}</span>
+                          {assignmentLabel && <span>{assignmentLabel}</span>}
                         </div>
                       </div>
                       <span

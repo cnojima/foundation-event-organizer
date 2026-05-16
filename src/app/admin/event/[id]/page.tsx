@@ -9,11 +9,15 @@ import {
   AdminSignupOnBehalfForm,
   type EligibleMember,
 } from "@/components/admin-signup-on-behalf-form";
+import {
+  AttendanceSection,
+  type AdhocAttendee,
+} from "@/components/attendance-section";
 import { computeStanding, WAITLIST_ROLE } from "@/lib/waitlist";
+import Link from "next/link";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { EventKindHero } from "@/components/event-kind-icon";
 import { DeleteEventButton } from "@/components/delete-event-button";
-import { EditEventDatesButton, EditEventDatesForm } from "@/components/edit-event-dates-form";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
 import { ScrimResultForm } from "@/components/scrim-result-form";
@@ -74,13 +78,13 @@ export default async function AdminEventPage({
     : null;
   const scrimOutcome = scrim ? viewerOutcome(scrimSide!, scrim.result) : null;
 
-  const eventSignups = hasRoster
-    ? await db
-        .select({ signup: signups, user: users })
-        .from(signups)
-        .leftJoin(users, eq(signups.userId, users.id))
-        .where(and(eq(signups.eventId, id), isNull(signups.deletedAt)))
-    : [];
+  // Always load active rows: match/scrim need them for squad rosters; simple
+  // needs them for the attendance section. Cheap join either way.
+  const eventSignups = await db
+    .select({ signup: signups, user: users })
+    .from(signups)
+    .leftJoin(users, eq(signups.userId, users.id))
+    .where(and(eq(signups.eventId, id), isNull(signups.deletedAt)));
 
   // Scrim — load the opposing guild's mirrored event + roster so the admin
   // sees both lineups side by side. Opposing roster is rendered read-only
@@ -133,30 +137,48 @@ export default async function AdminEventPage({
   const waitlistSignups = eventSignups
     .filter((s) => s.signup.assignedRole === WAITLIST_ROLE)
     .sort((a, b) => a.signup.createdAt.localeCompare(b.signup.createdAt));
+  // Attendance-only rows aren't roster slots — exclude them from the
+  // capacity tally so they don't prematurely "fill" the event and block
+  // real signups.
   const standing = computeStanding(
     event,
-    eventSignups.map((s) => ({ assignedRole: s.signup.assignedRole }))
+    eventSignups
+      .filter((s) => !s.signup.attendanceOnly)
+      .map((s) => ({ assignedRole: s.signup.assignedRole }))
   );
 
-  // Members of this event's guild who haven't already signed up — fuel
-  // for the "Sign up player on behalf of" picker. Includes stubs.
+  // Members of this event's guild who don't already have an active row —
+  // fuel for both the signup-on-behalf picker (match/scrim only) and the
+  // attendance picker (all kinds). Includes stubs.
   const signedUpUserIds = new Set(eventSignups.map((s) => s.signup.userId));
-  const eligibleMembers: EligibleMember[] =
-    hasRoster && !event.deletedAt
-      ? (
-          await db
-            .select()
-            .from(users)
-            .where(eq(users.guildId, event.guildId))
-            .orderBy(users.inGameName, users.name)
-        )
-          .filter((u) => !signedUpUserIds.has(u.id))
-          .map((u) => ({
-            id: u.id,
-            display: displayName(u, guildTag),
-            isStub: !!u.stubCreatedAt,
-          }))
-      : [];
+  const eligibleMembers: EligibleMember[] = !event.deletedAt
+    ? (
+        await db
+          .select()
+          .from(users)
+          .where(eq(users.guildId, event.guildId))
+          .orderBy(users.inGameName, users.name)
+      )
+        .filter((u) => !signedUpUserIds.has(u.id))
+        .map((u) => ({
+          id: u.id,
+          display: displayName(u, guildTag),
+          isStub: !!u.stubCreatedAt,
+        }))
+    : [];
+
+  // Ad-hoc attendees: signups created post-event for walk-ins / simple
+  // events. Rendered in a dedicated section so they're distinguishable
+  // from real signups (no squad preference, no leadership request).
+  const adhocAttendees: AdhocAttendee[] = eventSignups
+    .filter((s) => s.signup.attendanceOnly)
+    .sort((a, b) => a.signup.createdAt.localeCompare(b.signup.createdAt))
+    .map((s) => ({
+      signupId: s.signup.id,
+      userId: s.signup.userId,
+      display: displayName(s.user, guildTag),
+      image: s.user?.image ?? null,
+    }));
 
   return (
     <main className="max-w-6xl mx-auto p-6">
@@ -176,7 +198,14 @@ export default async function AdminEventPage({
           )}
         </div>
         <div className="flex items-center gap-2">
-          {!event.deletedAt && !isScrim && <EditEventDatesButton />}
+          {!event.deletedAt && !isScrim && (
+            <Link
+              href={`/admin/event/${event.id}/edit${isImpersonating ? `?guildId=${event.guildId}` : ""}`}
+              className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700"
+            >
+              Edit event
+            </Link>
+          )}
           {(event.gameTime || event.squad1StartsAt || event.squad2StartsAt) && (
             <CalendarDownloadLink href={`/api/events/${event.id}/ics`} />
           )}
@@ -315,22 +344,6 @@ export default async function AdminEventPage({
           )}
         </div>
       )}
-      {!event.deletedAt && !isScrim && (
-        <div className="mb-6">
-          <EditEventDatesForm
-            eventId={event.id}
-            kind={isMatch ? "match" : "simple"}
-            squad1Name={event.squad1Name}
-            squad2Name={event.squad2Name}
-            gameTime={event.gameTime}
-            signupOpens={event.signupOpens}
-            signupCloses={event.signupCloses}
-            squad1StartsAt={event.squad1StartsAt}
-            squad2StartsAt={event.squad2StartsAt}
-          />
-        </div>
-      )}
-
       {event.description && (
         <p className="mb-6 text-sm text-gray-700 dark:text-gray-300">{event.description}</p>
       )}
@@ -480,6 +493,16 @@ export default async function AdminEventPage({
           )}
         </>
       )}
+
+      {/* Attendance section — always renders. For match/scrim it sits
+          below the squad rosters as a walk-ins addendum; for simple
+          events it's the primary management surface (no rosters above). */}
+      <AttendanceSection
+        eventId={event.id}
+        eventDeleted={!!event.deletedAt}
+        attendees={adhocAttendees}
+        eligibleMembers={eligibleMembers}
+      />
     </main>
   );
 }

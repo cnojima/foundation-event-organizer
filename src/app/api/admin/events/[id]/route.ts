@@ -26,6 +26,22 @@ const NOTIFICATION_TRIGGERS: DateField[] = [
   "squad2StartsAt",
 ];
 
+// Scalar (non-date) fields accepted by the edit form. `kind` is deliberately
+// excluded — switching kind post-creation has cascading effects on signups
+// + scrim lifecycle that this surface doesn't model. Callers who want a
+// different kind delete + recreate.
+const STRING_FIELD_LIMITS: Record<string, { min: number; max: number }> = {
+  name: { min: 1, max: 100 },
+  squad1Name: { min: 1, max: 40 },
+  squad2Name: { min: 1, max: 40 },
+};
+const NULLABLE_STRING_FIELDS = new Set(["description"]);
+const INT_FIELD_LIMITS: Record<string, { min: number; max: number }> = {
+  maxPlayers: { min: 1, max: 100 },
+  maxBackups: { min: 0, max: 100 },
+  leadershipSlots: { min: 0, max: 20 },
+};
+
 function parseDateInput(value: unknown): string | null | undefined {
   if (value === undefined) return undefined;
   if (value === null || value === "") return null;
@@ -45,7 +61,16 @@ export async function PATCH(
   if (!guard.ok) return guard.response;
 
   const body = await req.json().catch(() => ({}));
-  const updates: Partial<Record<DateField, string | null>> = {};
+  // Reject silent kind changes — see note above. Loud so it's obvious if a
+  // client ever tries.
+  if ("kind" in body) {
+    return NextResponse.json(
+      { error: "Event kind cannot be changed after creation." },
+      { status: 400 }
+    );
+  }
+
+  const updates: Record<string, string | number | null> = {};
   for (const field of DATE_FIELDS) {
     if (field in body) {
       const parsed = parseDateInput(body[field]);
@@ -57,6 +82,58 @@ export async function PATCH(
       }
       updates[field] = parsed;
     }
+  }
+
+  for (const [field, limits] of Object.entries(STRING_FIELD_LIMITS)) {
+    if (!(field in body)) continue;
+    const raw = body[field];
+    if (typeof raw !== "string") {
+      return NextResponse.json(
+        { error: `${field} must be a string` },
+        { status: 400 }
+      );
+    }
+    const trimmed = raw.trim();
+    if (trimmed.length < limits.min || trimmed.length > limits.max) {
+      return NextResponse.json(
+        {
+          error: `${field} must be ${limits.min}–${limits.max} characters.`,
+        },
+        { status: 400 }
+      );
+    }
+    updates[field] = trimmed;
+  }
+
+  for (const field of NULLABLE_STRING_FIELDS) {
+    if (!(field in body)) continue;
+    const raw = body[field];
+    if (raw === null || raw === "") {
+      updates[field] = null;
+      continue;
+    }
+    if (typeof raw !== "string") {
+      return NextResponse.json(
+        { error: `${field} must be a string or null` },
+        { status: 400 }
+      );
+    }
+    updates[field] = raw.trim();
+  }
+
+  for (const [field, limits] of Object.entries(INT_FIELD_LIMITS)) {
+    if (!(field in body)) continue;
+    const raw = body[field];
+    const n = typeof raw === "number" ? raw : Number(raw);
+    if (!Number.isInteger(n) || n < limits.min || n > limits.max) {
+      return NextResponse.json(
+        {
+          error: `${field} must be an integer in [${limits.min}, ${limits.max}].`,
+        },
+        { status: 400 }
+      );
+    }
+    updates[field] = n;
   }
 
   if (Object.keys(updates).length === 0) {
@@ -74,13 +151,23 @@ export async function PATCH(
 
   await db.update(events).set(updates).where(eq(events.id, id));
 
-  const before: Record<string, string | null> = {};
-  for (const f of Object.keys(updates) as DateField[]) before[f] = event[f];
+  // Two action codes for log clarity: pure date-window edits keep the
+  // existing `event.dates.update` action (used today by the inline date
+  // form); broader edits land under `event.update`. The audit-viewer
+  // already renders both since they share the entity type.
+  const changedKeys = Object.keys(updates);
+  const onlyDateFields = changedKeys.every((k) =>
+    (DATE_FIELDS as readonly string[]).includes(k)
+  );
+  const before: Record<string, string | number | null> = {};
+  for (const f of changedKeys) {
+    before[f] = (event as Record<string, unknown>)[f] as string | number | null;
+  }
   void logAudit({
     guildId: event.guildId,
     actorUserId: guard.value.membership.userId,
     actorDisplay: await resolveActorDisplay(guard.value.membership.userId),
-    action: "event.dates.update",
+    action: onlyDateFields ? "event.dates.update" : "event.update",
     entityType: "event",
     entityId: event.id,
     entityLabel: event.name,

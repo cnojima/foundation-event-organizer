@@ -16,6 +16,8 @@ export type AuditAction =
   | "signup.update"
   | "signup.admin.create"
   | "signup.admin.update"
+  | "signup.admin.attendance.add"
+  | "signup.admin.attendance.remove"
   | "signup.delete"
   // Members
   | "member.promote"

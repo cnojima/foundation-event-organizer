@@ -1,0 +1,1 @@
+ALTER TABLE `signups` ADD `attendance_only` integer DEFAULT false NOT NULL;

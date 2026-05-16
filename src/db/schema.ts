@@ -506,4 +506,13 @@ export const signups = sqliteTable("signups", {
   // Soft-delete on guild leave/kick. Reads filter `deletedAt IS NULL`; admin
   // attendance reports may opt-in to include soft-deleted rows for history.
   deletedAt: text("deleted_at"),
+  // True when the row was created post-event by an admin solely to track
+  // attendance — the player never went through the signup flow. Used for
+  // walk-ins, simple events (no signup), and "forgot to sign up but showed
+  // up" cases. Reports still query `attended = TRUE`; this flag lets the
+  // UI render these rows distinctly (no squad preference, no leadership
+  // request) and skips them from waitlist / capacity calculations.
+  attendanceOnly: integer("attendance_only", { mode: "boolean" })
+    .notNull()
+    .default(false),
 });
