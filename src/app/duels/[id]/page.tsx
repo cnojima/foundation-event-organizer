@@ -6,6 +6,7 @@ import { duelProposals, guilds, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { requireSignedInPage } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
+import { EventKindHero } from "@/components/event-kind-icon";
 import { DuelAction } from "@/components/duel-row-actions";
 import { DuelResultForm } from "@/components/duel-result-form";
 import { DuelFeedbackForm } from "@/components/duel-feedback-form";
@@ -87,10 +88,13 @@ export default async function DuelDetailPage({
         ← Back to duels
       </Link>
 
-      <div className="mt-2 flex items-baseline justify-between gap-3">
-        <h1 className="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          Duel
-        </h1>
+      <div className="mt-2 flex items-center justify-between gap-3">
+        <div className="flex items-center gap-3">
+          <EventKindHero kind="duel" size="lg" label="Duel" />
+          <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+            Duel
+          </h1>
+        </div>
         <Link
           href="/help#duels"
           className="text-xs text-violet-700 hover:underline dark:text-violet-300"

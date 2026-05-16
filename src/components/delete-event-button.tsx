@@ -31,7 +31,7 @@ export function DeleteEventButton({
       alert(body.error ?? "Failed to delete event.");
       return;
     }
-    router.push("/admin");
+    router.push("/");
     router.refresh();
   }
 

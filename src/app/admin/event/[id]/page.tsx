@@ -11,6 +11,7 @@ import {
 } from "@/components/admin-signup-on-behalf-form";
 import { computeStanding, WAITLIST_ROLE } from "@/lib/waitlist";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
+import { EventKindHero } from "@/components/event-kind-icon";
 import { DeleteEventButton } from "@/components/delete-event-button";
 import { EditEventDatesButton, EditEventDatesForm } from "@/components/edit-event-dates-form";
 import { displayName } from "@/lib/display";
@@ -166,6 +167,7 @@ export default async function AdminEventPage({
       )}
       <div className="mb-2 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
+          <EventKindHero kind={event.kind} size="lg" />
           <h1 className="text-3xl font-bold">{event.name}</h1>
           {event.deletedAt && (
             <span className="rounded border border-gray-300 bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">

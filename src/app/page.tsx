@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { events, guilds, signups } from "@/db/schema";
-import { and, eq, inArray, isNull } from "drizzle-orm";
+import { and, eq, inArray, isNotNull, isNull } from "drizzle-orm";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -16,11 +16,12 @@ import {
 } from "@/lib/event-times";
 import { LandingPage } from "@/components/landing-page";
 import { PageHeader } from "@/components/page-header";
+import { EventKindHero } from "@/components/event-kind-icon";
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ guildId?: string; past?: string }>;
+  searchParams: Promise<{ guildId?: string; tab?: string }>;
 }) {
   const session = await auth();
   // Signed-out visitors get the public marketing landing instead of being
@@ -36,8 +37,9 @@ export default async function Home({
 
   // Super-admins can pin a target guild via ?guildId=. Regular users always
   // resolve back to their own guildId.
-  const { guildId: requestedGuildId, past: pastParam } = await searchParams;
-  const showPast = pastParam === "1";
+  const { guildId: requestedGuildId, tab: tabParam } = await searchParams;
+  const tab: "upcoming" | "past" | "deleted" =
+    tabParam === "past" ? "past" : tabParam === "deleted" ? "deleted" : "upcoming";
   const targetGuildId = await resolveAdminGuildId(membership, requestedGuildId);
   if (!targetGuildId) redirect("/guilds");
 
@@ -47,10 +49,30 @@ export default async function Home({
     ? await db.query.guilds.findFirst({ where: eq(guilds.id, targetGuildId) })
     : null;
 
+  // Admin of the *target* guild. Super-admins are implicitly admin everywhere
+  // (matches the rbac.ts page-guard convention). Drives:
+  //   - +New event button visibility
+  //   - kind badge + Created-on metadata on cards
+  //   - Deleted tab visibility + query
+  const isAdmin =
+    membership.isSuperAdmin ||
+    (membership.guildRole === "admin" && membership.guildId === targetGuildId);
+
   const allGuildEvents = await db
     .select()
     .from(events)
     .where(and(eq(events.guildId, targetGuildId), isNull(events.deletedAt)));
+
+  // Deleted events: queried lazily — only admins ever see them, only when the
+  // Deleted tab is active (or to compute the tab badge count).
+  const deletedEvents = isAdmin
+    ? await db
+        .select()
+        .from(events)
+        .where(
+          and(eq(events.guildId, targetGuildId), isNotNull(events.deletedAt))
+        )
+    : [];
 
   // Partition by derived end time (latest scheduled time + 6h padding —
   // see effectiveEndIso). Events with nothing scheduled are treated as
@@ -73,7 +95,17 @@ export default async function Home({
     (a, b) =>
       (effectiveStartIso(b) ?? "").localeCompare(effectiveStartIso(a) ?? "")
   );
-  const guildEvents = showPast ? pastEvents : upcomingEvents;
+  // Deleted: sort by deletedAt desc (most recently deleted first).
+  deletedEvents.sort((a, b) =>
+    (b.deletedAt ?? "").localeCompare(a.deletedAt ?? "")
+  );
+
+  const guildEvents =
+    tab === "deleted"
+      ? deletedEvents
+      : tab === "past"
+        ? pastEvents
+        : upcomingEvents;
 
   // Which of those events has the current user already signed up for? Drives
   // the "needs your attention" emphasis on cards below. Includes scrim events
@@ -100,6 +132,7 @@ export default async function Home({
 
   const nowIso = now.toISOString();
   const t = await getTranslations("events");
+  const tAdmin = await getTranslations("admin");
   const tHeader = await getTranslations("pageHeader.kicker");
 
   // Only offer the bulk calendar export when at least one event actually has
@@ -109,6 +142,18 @@ export default async function Home({
       ? !!e.squad1StartsAt || !!e.squad2StartsAt
       : !!e.gameTime
   );
+
+  // Preserve the impersonation pin across links emitted on this page so a
+  // super-admin "Acting as X" doesn't jump back to their own guild on the
+  // next click.
+  const guildIdParam = isImpersonating ? targetGuildId : null;
+  const queryString = (extra: Record<string, string>) => {
+    const parts: string[] = [];
+    if (guildIdParam) parts.push(`guildId=${guildIdParam}`);
+    for (const [k, v] of Object.entries(extra)) parts.push(`${k}=${v}`);
+    return parts.length > 0 ? `?${parts.join("&")}` : "";
+  };
+  const newEventHref = `/admin/event/new${queryString({})}`;
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -121,68 +166,105 @@ export default async function Home({
         kicker={tHeader("events")}
         title={actingGuild ? `${actingGuild.name} — ${t("title")}` : t("title")}
         rightSlot={
-          hasAnyScheduled && !showPast ? (
-            <CalendarDownloadLink
-              href="/api/events/all/ics"
-              label={t("addAllToCalendar")}
-            />
-          ) : null
+          <div className="flex items-center gap-2">
+            {hasAnyScheduled && tab === "upcoming" && (
+              <CalendarDownloadLink
+                href="/api/events/all/ics"
+                label={t("addAllToCalendar")}
+              />
+            )}
+            {isAdmin && (
+              <Link
+                href={newEventHref}
+                className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700"
+              >
+                {tAdmin("newEvent")}
+              </Link>
+            )}
+          </div>
         }
       />
 
       <EventsTabs
-        showPast={showPast}
+        tab={tab}
         upcomingCount={upcomingEvents.length}
         pastCount={pastEvents.length}
-        guildIdParam={isImpersonating ? targetGuildId : null}
+        showDeleted={isAdmin}
+        guildIdParam={guildIdParam}
         upcomingLabel={t("upcoming")}
         pastLabel={t("past")}
+        deletedLabel={tAdmin("deleted", { count: deletedEvents.length })}
       />
 
       {guildEvents.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-400">
-          {showPast ? t("noPastEvents") : t("noEvents")}
+          {tab === "deleted"
+            ? tAdmin("deletedKept")
+            : tab === "past"
+              ? t("noPastEvents")
+              : t("noEvents")}
         </p>
       ) : (
         <div className="space-y-3">
           {guildEvents.map((event) => {
+            const isDeleted = !!event.deletedAt;
             const isOpen =
+              !isDeleted &&
               (!event.signupOpens || event.signupOpens <= nowIso) &&
               (!event.signupCloses || event.signupCloses > nowIso);
             const isMatch = event.kind === "match";
             const isScrim = event.kind === "scrim";
+            const isSimple = event.kind === "simple";
             const hasRoster = isMatch || isScrim;
             const signedUp = signedUpEventIds.has(event.id);
-            const needsAction = hasRoster && isOpen && !signedUp;
+            // Highlight "needs action" only for non-admins — admins are
+            // browsing to manage, not to sign themselves up.
+            const needsAction =
+              !isAdmin && !isDeleted && hasRoster && isOpen && !signedUp;
 
             return (
               <Link
                 key={event.id}
                 href={`/event/${event.id}`}
                 className={`group block rounded-lg border bg-white p-4 transition-all duration-150 hover:-translate-y-px hover:shadow-md dark:bg-gray-900 dark:hover:shadow-violet-950/40 ${
-                  needsAction
-                    ? "border-violet-300 ring-1 ring-violet-200 hover:border-violet-500 hover:ring-violet-300 dark:border-violet-900/60 dark:ring-violet-900/60 dark:hover:border-violet-700 dark:hover:ring-violet-800"
-                    : signedUp
-                      ? "border-gray-200 opacity-80 hover:opacity-100 hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700"
-                      : "border-gray-200 hover:border-violet-400 dark:border-gray-800 dark:hover:border-violet-700"
+                  isDeleted
+                    ? "border-gray-200 opacity-60 hover:opacity-100 hover:border-gray-400 dark:border-gray-800 dark:hover:border-gray-700"
+                    : needsAction
+                      ? "border-violet-300 ring-1 ring-violet-200 hover:border-violet-500 hover:ring-violet-300 dark:border-violet-900/60 dark:ring-violet-900/60 dark:hover:border-violet-700 dark:hover:ring-violet-800"
+                      : signedUp
+                        ? "border-gray-200 opacity-80 hover:opacity-100 hover:border-gray-300 dark:border-gray-800 dark:hover:border-gray-700"
+                        : "border-gray-200 hover:border-violet-400 dark:border-gray-800 dark:hover:border-violet-700"
                 }`}
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                        {event.name}
-                      </h2>
-                      {isScrim && (
-                        <span className="rounded border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-rose-700 dark:border-rose-900/60 dark:bg-rose-950/40 dark:text-rose-300">
-                          Scrim
-                        </span>
-                      )}
-                    </div>
+                  <div className="flex items-start gap-3">
+                    {/* Kind icon tile carries the same visual signal as the
+                        large hero on the detail view, so the listing card
+                        feels like a preview of where the click lands. The
+                        previous text kind-badges (Scrim/Match/Simple) are
+                        dropped in favor of this single icon. */}
+                    <EventKindHero
+                      kind={event.kind}
+                      size="sm"
+                      label={`${event.kind} event`}
+                    />
+                    <div>
+                      <div className="flex items-center gap-2">
+                        <h2
+                          className={`text-lg font-semibold text-gray-900 dark:text-gray-100 ${isDeleted ? "line-through" : ""}`}
+                        >
+                          {event.name}
+                        </h2>
+                        {isDeleted && (
+                          <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
+                            Deleted
+                          </span>
+                        )}
+                      </div>
                     {event.description && !isScrim && (
                       <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{event.description}</p>
                     )}
-                    {event.kind === "simple" && event.gameTime && (
+                    {isSimple && event.gameTime && (
                       <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
                         {t("starts")}: <DateTime iso={event.gameTime} showUTC={false} />
                       </p>
@@ -207,27 +289,37 @@ export default async function Home({
                         ))}
                       </div>
                     )}
+                    {isAdmin && (
+                      <p className="mt-2 text-[11px] text-gray-400 dark:text-gray-500">
+                        {tAdmin("createdOn", {
+                          date: new Date(event.createdAt).toLocaleDateString(),
+                        })}
+                      </p>
+                    )}
+                    </div>
                   </div>
                   <div className="flex shrink-0 items-center gap-2">
-                    {hasRoster && signedUp && (
+                    {!isDeleted && hasRoster && signedUp && (
                       <span className="rounded border border-emerald-200 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
                         {t("signedUp")}
                       </span>
                     )}
-                    {hasRoster && !signedUp && isOpen && (
+                    {!isDeleted && !isAdmin && hasRoster && !signedUp && isOpen && (
                       <span className="rounded border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300">
                         {t("signUp")}
                       </span>
                     )}
-                    <span
-                      className={`rounded px-2 py-1 text-xs font-medium ${
-                        isOpen
-                          ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
-                          : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
-                      }`}
-                    >
-                      {isOpen ? t("open") : t("closed")}
-                    </span>
+                    {!isDeleted && (
+                      <span
+                        className={`rounded px-2 py-1 text-xs font-medium ${
+                          isOpen
+                            ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300"
+                            : "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400"
+                        }`}
+                      >
+                        {isOpen ? t("open") : t("closed")}
+                      </span>
+                    )}
                   </div>
                 </div>
               </Link>
@@ -240,32 +332,44 @@ export default async function Home({
 }
 
 function EventsTabs({
-  showPast,
+  tab,
   upcomingCount,
   pastCount,
+  showDeleted,
   guildIdParam,
   upcomingLabel,
   pastLabel,
+  deletedLabel,
 }: {
-  showPast: boolean;
+  tab: "upcoming" | "past" | "deleted";
   upcomingCount: number;
   pastCount: number;
+  showDeleted: boolean;
   guildIdParam: string | null;
   upcomingLabel: string;
   pastLabel: string;
+  // Already formatted as "Deleted (N)" by the caller via tAdmin("deleted", { count }).
+  deletedLabel: string;
 }) {
-  const upcomingHref = guildIdParam ? `/?guildId=${guildIdParam}` : "/";
-  const pastHref = guildIdParam
-    ? `/?guildId=${guildIdParam}&past=1`
-    : "/?past=1";
+  const tabHref = (which: "upcoming" | "past" | "deleted") => {
+    const parts: string[] = [];
+    if (guildIdParam) parts.push(`guildId=${guildIdParam}`);
+    if (which !== "upcoming") parts.push(`tab=${which}`);
+    return parts.length > 0 ? `/?${parts.join("&")}` : "/";
+  };
   return (
     <div className="mb-4 flex gap-1 border-b border-gray-200 text-sm font-semibold dark:border-gray-800">
-      <Tab href={upcomingHref} active={!showPast}>
+      <Tab href={tabHref("upcoming")} active={tab === "upcoming"}>
         {upcomingLabel} ({upcomingCount})
       </Tab>
-      <Tab href={pastHref} active={showPast}>
+      <Tab href={tabHref("past")} active={tab === "past"}>
         {pastLabel} ({pastCount})
       </Tab>
+      {showDeleted && (
+        <Tab href={tabHref("deleted")} active={tab === "deleted"}>
+          {deletedLabel}
+        </Tab>
+      )}
     </div>
   );
 }

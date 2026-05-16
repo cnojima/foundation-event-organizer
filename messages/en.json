@@ -195,6 +195,7 @@
     "manageEventsTitle": "Manage Events",
     "manageEventsTitleNamed": "{guildName} — Manage Events",
     "newEvent": "+ New event",
+    "editEvent": "Edit event",
     "newEventTitle": "New Event",
     "newEventTitleNamed": "{guildName} — New Event",
     "backToEvents": "← Back to events",

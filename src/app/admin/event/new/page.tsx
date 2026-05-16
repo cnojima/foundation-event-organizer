@@ -30,8 +30,8 @@ export default async function NewEventPage({
   const isImpersonating =
     membership.isSuperAdmin && targetGuildId !== membership.guildId;
   const adminListHref = isImpersonating
-    ? `/admin?guildId=${targetGuildId}`
-    : "/admin";
+    ? `/?guildId=${targetGuildId}`
+    : "/";
 
   const templateRows = await db
     .select()

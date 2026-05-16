@@ -1,6 +1,8 @@
 import { db } from "@/db";
 import { events, guilds, scrimProposals, signups, users } from "@/db/schema";
 import { eq, and, asc, isNull } from "drizzle-orm";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireAnyGuildPage } from "@/lib/rbac";
 import { notFound, redirect } from "next/navigation";
@@ -8,6 +10,7 @@ import { SignupForm } from "@/components/signup-form";
 import { getEventStanding, WAITLIST_ROLE } from "@/lib/waitlist";
 import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { DateTime } from "@/components/date-time";
+import { EventKindHero } from "@/components/event-kind-icon";
 import { scrimSideFor, viewerOutcome } from "@/lib/scrims";
 import {
   bucketSquad,
@@ -32,13 +35,27 @@ export default async function EventPage({
     where: eq(events.id, id),
   });
 
-  if (!event || event.deletedAt) return notFound();
+  if (!event) return notFound();
+
+  // Admin-of-this-event check used by both the deleted-event guard below
+  // and the "Edit event" CTA further down. Super-admins are implicitly
+  // admin everywhere.
+  const isAdminForThisEvent =
+    membership.isSuperAdmin ||
+    (membership.guildRole === "admin" && membership.guildId === event.guildId);
+
+  // Soft-deleted events are visible to admins of that guild (so they can
+  // pull up attendance history from the Deleted tab on /) but 404 for
+  // everyone else.
+  if (event.deletedAt && !isAdminForThisEvent) return notFound();
 
   // Members-only: super-admins may view any guild's event; everyone else must
   // be in the event's guild.
   if (!membership.isSuperAdmin && membership.guildId !== event.guildId) {
     redirect("/");
   }
+
+  const isDeleted = !!event.deletedAt;
 
   const eventGuild = await db.query.guilds.findFirst({
     where: eq(guilds.id, event.guildId),
@@ -130,84 +147,124 @@ export default async function EventPage({
   const isWaitlisted = existingSignup?.assignedRole === WAITLIST_ROLE;
   const currentUserId = membership.userId;
 
+  const adminEventHref =
+    membership.isSuperAdmin && event.guildId !== membership.guildId
+      ? `/admin/event/${event.id}?guildId=${event.guildId}`
+      : `/admin/event/${event.id}`;
+  const tAdmin = await getTranslations("admin");
+
   return (
     <main className="max-w-5xl mx-auto p-6">
-      <div className="mb-2 flex items-start justify-between gap-4">
-        <h1 className="text-3xl font-bold">{event.name}</h1>
-        {(event.gameTime || event.squad1StartsAt || event.squad2StartsAt) && (
-          <CalendarDownloadLink href={`/api/events/${event.id}/ics`} />
-        )}
-      </div>
-      {event.description && (
-        <p className="text-gray-600 mb-4 dark:text-gray-400">{event.description}</p>
+      {isDeleted && event.deletedAt && (
+        <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
+          This event was deleted on{" "}
+          <DateTime iso={event.deletedAt} />. Signup data is retained for
+          attendance reports.
+        </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4 mb-6 text-sm">
-        {!isMatch && !isScrim && event.gameTime && (
-          <div>
-            <span className="font-medium">Start Time:</span>{" "}
-            <DateTime iso={event.gameTime} />
+      {/* Overview card — title, badges, CTAs, description, event metadata.
+          Card chrome matches the listing cards on / so the detail view reads
+          like a "zoomed-in" version of the listing. */}
+      <div className="mb-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+        <div className="mb-2 flex items-start justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <EventKindHero kind={event.kind} size="lg" />
+            <h1 className={`text-3xl font-bold ${isDeleted ? "line-through" : ""}`}>
+              {event.name}
+            </h1>
+            {isDeleted && (
+              <span className="rounded border border-gray-300 bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
+                Deleted
+              </span>
+            )}
           </div>
-        )}
-        {isScrim && (
-          <>
-            {event.gameTime && (
-              <div>
-                <span className="font-medium">Start Time:</span>{" "}
-                <DateTime iso={event.gameTime} />
-              </div>
-            )}
-            {opposingGuild && (
-              <div>
-                <span className="font-medium">Opponent:</span>{" "}
-                {opposingGuild.tag
-                  ? `[${opposingGuild.tag}] ${opposingGuild.name}`
-                  : opposingGuild.name}
-              </div>
-            )}
-            {scrim && (
-              <div>
-                <span className="font-medium">Location:</span> {scrim.location}
-              </div>
-            )}
-            <div>
-              <span className="font-medium">Slots:</span> {event.maxPlayers}{" "}
-              players + {event.maxBackups} backups
-            </div>
-          </>
-        )}
-        {isMatch && (
-          <>
-            <div>
-              <span className="font-medium">{event.squad1Name}:</span>{" "}
-              {event.squad1StartsAt ? (
-                <DateTime iso={event.squad1StartsAt} />
-              ) : (
-                <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
+          <div className="flex items-center gap-2">
+            {!isDeleted &&
+              (event.gameTime || event.squad1StartsAt || event.squad2StartsAt) && (
+                <CalendarDownloadLink href={`/api/events/${event.id}/ics`} />
               )}
-            </div>
+            {isAdminForThisEvent && (
+              <Link
+                href={adminEventHref}
+                className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700"
+              >
+                {tAdmin("editEvent")}
+              </Link>
+            )}
+          </div>
+        </div>
+        {event.description && (
+          <p className="text-gray-600 mb-4 dark:text-gray-400">{event.description}</p>
+        )}
+
+        <div className="grid grid-cols-2 gap-4 text-sm">
+          {!isMatch && !isScrim && event.gameTime && (
             <div>
-              <span className="font-medium">{event.squad2Name}:</span>{" "}
-              {event.squad2StartsAt ? (
-                <DateTime iso={event.squad2StartsAt} />
-              ) : (
-                <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
-              )}
+              <span className="font-medium">Start Time:</span>{" "}
+              <DateTime iso={event.gameTime} />
             </div>
-          </>
-        )}
-        {isMatch && event.signupCloses && (
-          <div>
-            <span className="font-medium">Signup Closes:</span>{" "}
-            <DateTime iso={event.signupCloses} />
-          </div>
-        )}
-        {isMatch && (
-          <div>
-            <span className="font-medium">Slots:</span> {event.maxPlayers} players
-            + {event.maxBackups} backups each
-          </div>
-        )}
+          )}
+          {isScrim && (
+            <>
+              {event.gameTime && (
+                <div>
+                  <span className="font-medium">Start Time:</span>{" "}
+                  <DateTime iso={event.gameTime} />
+                </div>
+              )}
+              {opposingGuild && (
+                <div>
+                  <span className="font-medium">Opponent:</span>{" "}
+                  {opposingGuild.tag
+                    ? `[${opposingGuild.tag}] ${opposingGuild.name}`
+                    : opposingGuild.name}
+                </div>
+              )}
+              {scrim && (
+                <div>
+                  <span className="font-medium">Location:</span> {scrim.location}
+                </div>
+              )}
+              <div>
+                <span className="font-medium">Slots:</span> {event.maxPlayers}{" "}
+                players + {event.maxBackups} backups
+              </div>
+            </>
+          )}
+          {isMatch && (
+            <>
+              <div>
+                <span className="font-medium">{event.squad1Name}:</span>{" "}
+                {event.squad1StartsAt ? (
+                  <DateTime iso={event.squad1StartsAt} />
+                ) : (
+                  <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
+                )}
+              </div>
+              <div>
+                <span className="font-medium">{event.squad2Name}:</span>{" "}
+                {event.squad2StartsAt ? (
+                  <DateTime iso={event.squad2StartsAt} />
+                ) : (
+                  <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
+                )}
+              </div>
+            </>
+          )}
+          {isMatch && event.signupCloses && (
+            <div>
+              <span className="font-medium">Signup Closes:</span>{" "}
+              <DateTime iso={event.signupCloses} />
+            </div>
+          )}
+          {isMatch && (
+            <div>
+              <span className="font-medium">Slots:</span> {event.maxPlayers} players
+              + {event.maxBackups} backups each
+            </div>
+          )}
+        </div>
       </div>
 
       {isScrim && scrim && (
@@ -277,41 +334,38 @@ export default async function EventPage({
         </div>
       )}
 
-      {hasRoster && (
-        <div className="mb-6">
+      {hasRoster && !isDeleted && (
+        <div className="mb-6 rounded-lg border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
           {!isOpen ? (
-            <div className="bg-gray-100 rounded-lg p-4 text-center text-gray-600 dark:bg-gray-800 dark:text-gray-400">
+            <p className="text-center text-gray-600 dark:text-gray-400">
               Signups are currently closed for this event.
-            </div>
+            </p>
           ) : existingSignup ? (
-            isWaitlisted ? (
-              <div className="rounded-lg border border-amber-200 bg-amber-50 p-4 dark:border-amber-900/60 dark:bg-amber-950/40">
-                <p className="mb-2 font-semibold text-amber-900 dark:text-amber-200">
-                  You&apos;re on the waitlist
-                </p>
-                <p className="mb-3 text-sm text-amber-800 dark:text-amber-300">
-                  All squad and backup slots are currently full. We&apos;ll let
-                  you know if a spot opens up. You can still update your
-                  preferences below.
-                </p>
-                <SignupForm
-                  event={event}
-                  existing={existingSignup}
-                  singleSquad={isScrim}
-                />
-              </div>
-            ) : (
-              <div className="bg-green-50 rounded-lg p-4 dark:bg-emerald-950/40">
-                <p className="font-medium text-green-800 mb-2 dark:text-emerald-300">
-                  You&apos;re signed up!
-                </p>
-                <SignupForm
-                  event={event}
-                  existing={existingSignup}
-                  singleSquad={isScrim}
-                />
-              </div>
-            )
+            <>
+              {isWaitlisted ? (
+                <div className="mb-4 rounded-md border border-amber-200 bg-amber-50 p-3 dark:border-amber-900/60 dark:bg-amber-950/40">
+                  <p className="mb-1 font-semibold text-amber-900 dark:text-amber-200">
+                    You&apos;re on the waitlist
+                  </p>
+                  <p className="text-sm text-amber-800 dark:text-amber-300">
+                    All squad and backup slots are currently full. We&apos;ll
+                    let you know if a spot opens up. You can still update your
+                    preferences below.
+                  </p>
+                </div>
+              ) : (
+                <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 dark:border-emerald-900/60 dark:bg-emerald-950/40">
+                  <p className="font-semibold text-emerald-900 dark:text-emerald-200">
+                    You&apos;re signed up!
+                  </p>
+                </div>
+              )}
+              <SignupForm
+                event={event}
+                existing={existingSignup}
+                singleSquad={isScrim}
+              />
+            </>
           ) : (
             <SignupForm event={event} existing={null} singleSquad={isScrim} />
           )}
