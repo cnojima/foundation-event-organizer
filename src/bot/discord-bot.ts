@@ -1550,7 +1550,7 @@ async function handleAutocomplete(
     const appGuildId = await resolveAppGuildId(interaction.guildId);
     if (!appGuildId) {
       console.log(
-        `[bot] autocomplete: no app guild linked to discord guild ${interaction.guildId}`
+        `[bot] autocomplete: no app guild linked — ${discordCtx(interaction)}`
       );
       await interaction.respond([]);
       return;
@@ -1559,7 +1559,9 @@ async function handleAutocomplete(
     // Race the load against Discord's budget. If the DB is slow (e.g. WAL
     // recovery on cold start, disk I/O lag), we still respond within budget.
     const upcoming = await Promise.race([
-      loadUpcomingEvents(appGuildId),
+      // Autocomplete only suggests signable events — picking a simple event
+      // here would fail downstream in createSignup.
+      loadUpcomingEvents(appGuildId, ["match", "scrim"]),
       new Promise<"timeout">((resolve) =>
         setTimeout(() => resolve("timeout"), AUTOCOMPLETE_BUDGET_MS)
       ),
@@ -1614,7 +1616,7 @@ async function handleUpcoming(
   const appGuildId = await resolveAppGuildId(interaction.guildId);
   if (!appGuildId) {
     console.warn(
-      `[bot] /upcoming: no app guild linked to discord guild ${interaction.guildId} (user=${interaction.user.id})`
+      `[bot] /upcoming: no app guild linked — ${discordCtx(interaction)}`
     );
     await interaction.editReply(t("common.notConfigured"));
     return;
@@ -1622,6 +1624,26 @@ async function handleUpcoming(
 
   const upcoming = await loadUpcomingEvents(appGuildId);
   if (upcoming.length === 0) {
+    // Diagnostic breakdown: distinguishes "guild has no events at all" from
+    // "guild has events but none are upcoming match/scrim" so operators can
+    // tell whether the user needs to create an event or set a start time.
+    const guild = await db.query.guilds.findFirst({
+      where: eq(guilds.id, appGuildId),
+      columns: { slug: true, name: true },
+    });
+    const totalsRow = await db
+      .select({
+        total: sql<number>`count(*)`,
+        liveMatchOrScrim: sql<number>`sum(case when ${events.deletedAt} is null and ${events.kind} in ('match','scrim') then 1 else 0 end)`,
+      })
+      .from(events)
+      .where(eq(events.guildId, appGuildId))
+      .get();
+    console.warn(
+      `[bot] /upcoming: empty — ${discordCtx(interaction)} ` +
+        `app_guild=${appGuildId} slug=${guild?.slug ?? "?"} "${guild?.name ?? "?"}" ` +
+        `events_total=${totalsRow?.total ?? 0} live_match_or_scrim=${totalsRow?.liveMatchOrScrim ?? 0}`
+    );
     await interaction.editReply(t("upcoming.empty"));
     return;
   }
@@ -1633,6 +1655,10 @@ async function handleUpcoming(
       if (e.kind === "scrim") {
         const when = e.gameTime ? formatShort(e.gameTime) : tbd;
         return t("upcoming.scrimLine", { name: e.name, when });
+      }
+      if (e.kind === "simple") {
+        const when = e.gameTime ? formatShort(e.gameTime) : tbd;
+        return t("upcoming.simpleLine", { name: e.name, when });
       }
       const s1 = e.squad1StartsAt ? formatShort(e.squad1StartsAt) : tbd;
       const s2 = e.squad2StartsAt ? formatShort(e.squad2StartsAt) : tbd;
@@ -1661,7 +1687,7 @@ async function handleSignup(
   const appGuildId = await resolveAppGuildId(interaction.guildId);
   if (!appGuildId) {
     console.warn(
-      `[bot] /signup: no app guild linked to discord guild ${interaction.guildId} (user=${interaction.user.id})`
+      `[bot] /signup: no app guild linked — ${discordCtx(interaction)}`
     );
     await interaction.editReply(t("common.notConfigured"));
     return;
@@ -1913,6 +1939,18 @@ async function handleLocale(
 
 // ---- Helpers ----
 
+// Compact identifier block for bot log lines. Always includes the Discord
+// guild snowflake + name (when available) and the invoking user's snowflake
+// so an operator can map a "no events for my guild" report back to a row
+// in the DB without rerunning the command.
+function discordCtx(
+  interaction: ChatInputCommandInteraction | AutocompleteInteraction
+): string {
+  const dGuildId = interaction.guildId ?? "(dm)";
+  const dGuildName = interaction.guild?.name ?? "(unknown)";
+  return `discord_guild=${dGuildId} "${dGuildName}" user=${interaction.user.id}`;
+}
+
 async function resolveAppGuildId(
   discordGuildId: string | null
 ): Promise<string | null> {
@@ -1952,10 +1990,12 @@ async function resolveAppUserFromDiscord(
   };
 }
 
+type EventKind = "match" | "scrim" | "simple";
+
 type UpcomingSignupEvent = {
   id: string;
   name: string;
-  kind: "match" | "scrim";
+  kind: EventKind;
   squad1Name: string;
   squad2Name: string;
   squad1StartsAt: string | null;
@@ -1968,8 +2008,12 @@ type UpcomingSignupEvent = {
 // is in the future. Sorted by earliest start ascending. Used by /upcoming
 // and /signup autocomplete. Simple events are excluded — they have no
 // signup form.
+// `/upcoming` displays all event kinds for the guild; `/signup`'s autocomplete
+// narrows to signable kinds (match + scrim) so users can't pick an info-only
+// event and hit the "this event does not accept signups" error.
 async function loadUpcomingEvents(
-  appGuildId: string
+  appGuildId: string,
+  kinds: readonly EventKind[] = ["match", "scrim", "simple"]
 ): Promise<UpcomingSignupEvent[]> {
   const nowIso = new Date().toISOString();
   const rows = await db
@@ -1987,16 +2031,16 @@ async function loadUpcomingEvents(
     .where(
       and(
         eq(events.guildId, appGuildId),
-        inArray(events.kind, ["match", "scrim"]),
+        inArray(events.kind, kinds),
         isNull(events.deletedAt)
       )
     );
 
   const upcoming: UpcomingSignupEvent[] = [];
   for (const r of rows) {
-    // Scrim events carry a single start in gameTime (matches set
-    // squad1StartsAt / squad2StartsAt). Consider all available timestamps so
-    // a missing one doesn't drop the event.
+    // Scrim + simple events carry a single start in gameTime; matches use
+    // squad1StartsAt / squad2StartsAt. Consider all available timestamps so a
+    // missing one doesn't drop the event.
     const futureStarts = [
       r.squad1StartsAt,
       r.squad2StartsAt,
@@ -2006,7 +2050,7 @@ async function loadUpcomingEvents(
     const earliestStart = futureStarts.reduce((a, b) => (a < b ? a : b));
     upcoming.push({
       ...r,
-      kind: r.kind as "match" | "scrim",
+      kind: r.kind as EventKind,
       earliestStart,
     });
   }

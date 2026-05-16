@@ -834,7 +834,8 @@
       "empty": "No upcoming events.",
       "heading": "**Upcoming events**",
       "scrimLine": "• **{name}** (scrim) — {when}",
-      "matchLine": "• **{name}** — {squad1Name}: {s1} · {squad2Name}: {s2}"
+      "matchLine": "• **{name}** — {squad1Name}: {s1} · {squad2Name}: {s2}",
+      "simpleLine": "• **{name}** — {when}"
     },
     "signup": {
       "eventNotFound": "Event not found.",
