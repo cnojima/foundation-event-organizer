@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Translate messages/en.json into the other supported locales using Google
 // Cloud Translation v3.
 //
