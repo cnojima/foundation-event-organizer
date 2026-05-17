@@ -1,7 +1,10 @@
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 import { auth } from "@/auth";
-import { requireGuildAdminApi } from "@/lib/rbac";
+import { requireGuildAdminApi, resolveAdminGuildId } from "@/lib/rbac";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { and, eq, isNotNull } from "drizzle-orm";
 
 // Limit image uploads to 10MB — a phone screenshot is typically 2-5MB.
 // Larger uploads are almost always a mistake (wrong file picked, full-res
@@ -37,8 +40,6 @@ Return the names as a JSON array, ordered top-to-bottom as they appear.`;
 
 export async function POST(req: Request) {
   const session = await auth();
-  const guard = requireGuildAdminApi(session);
-  if (!guard.ok) return guard.response;
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json(
@@ -59,6 +60,20 @@ export async function POST(req: Request) {
       { error: "Expected multipart/form-data with an image file." },
       { status: 400 }
     );
+  }
+
+  // Optional `guildId` form field — super-admins acting on a foreign guild
+  // pass the impersonation target here so duplicate-name matching runs
+  // against the correct member list.
+  const rawGuildId = formData.get("guildId");
+  const requestedGuildId =
+    typeof rawGuildId === "string" && rawGuildId !== "" ? rawGuildId : undefined;
+
+  const guard = requireGuildAdminApi(session, requestedGuildId);
+  if (!guard.ok) return guard.response;
+  const targetGuildId = await resolveAdminGuildId(guard.value, requestedGuildId);
+  if (!targetGuildId) {
+    return NextResponse.json({ error: "Guild not found" }, { status: 404 });
   }
 
   const file = formData.get("image");
@@ -155,10 +170,32 @@ export async function POST(req: Request) {
       );
     }
 
-    const names = parsed.names
+    const rawNames = parsed.names
       .filter((n): n is string => typeof n === "string")
       .map((n) => n.trim())
       .filter((n) => n.length > 0 && n.length <= 40);
+
+    // Cross-reference each extracted name against the guild's existing
+    // members so the client can flag/uncheck duplicates. Match is
+    // case-insensitive on `inGameName` after trimming — same normalization
+    // the bot uses elsewhere. We only match against in-game names (not the
+    // OAuth `name` field) because the screenshot shows game-side identities.
+    const existingRows = await db
+      .select({ inGameName: users.inGameName })
+      .from(users)
+      .where(
+        and(eq(users.guildId, targetGuildId), isNotNull(users.inGameName))
+      );
+    const existingSet = new Set(
+      existingRows
+        .map((r) => r.inGameName?.trim().toLowerCase())
+        .filter((n): n is string => !!n && n.length > 0)
+    );
+
+    const names = rawNames.map((value) => ({
+      value,
+      duplicate: existingSet.has(value.toLowerCase()),
+    }));
 
     return NextResponse.json({ names });
   } catch (err) {

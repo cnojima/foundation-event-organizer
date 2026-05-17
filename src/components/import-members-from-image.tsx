@@ -14,6 +14,10 @@ type ExtractedName = {
   id: string; // local-only id for React keys (we re-key on each extract)
   value: string;
   selected: boolean;
+  // True when the server detected an existing guild member with the same
+  // in-game name (case-insensitive). Drives the "Duplicate" badge and
+  // makes the row default to unchecked.
+  duplicate: boolean;
   status: "pending" | "saving" | "saved" | "error";
   error?: string;
 };
@@ -133,6 +137,7 @@ function ImportFromImageModal({
     setExtracting(true);
     const fd = new FormData();
     fd.append("image", file);
+    fd.append("guildId", guildId);
     const res = await fetch("/api/admin/members/import-from-image", {
       method: "POST",
       body: fd,
@@ -143,12 +148,18 @@ function ImportFromImageModal({
       setExtracting(false);
       return;
     }
-    const data = (await res.json()) as { names: string[] };
+    const data = (await res.json()) as {
+      names: { value: string; duplicate: boolean }[];
+    };
     setNames(
-      data.names.map((name, i) => ({
+      data.names.map((n, i) => ({
         id: `${Date.now()}-${i}`,
-        value: name,
-        selected: true,
+        value: n.value,
+        // Duplicates default to unchecked — admin has to opt in if they
+        // really want a duplicate row (rare, but possible if the existing
+        // member is a stub the admin meant to replace).
+        selected: !n.duplicate,
+        duplicate: n.duplicate,
         status: "pending",
       }))
     );
@@ -329,6 +340,14 @@ function ImportFromImageModal({
               <div className="mb-2 flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Detected {names.length} name{names.length === 1 ? "" : "s"}
+                  {(() => {
+                    const dupes = names.filter(
+                      (n) => n.duplicate && n.status !== "saved"
+                    ).length;
+                    return dupes > 0
+                      ? ` · ${dupes} duplicate${dupes === 1 ? "" : "s"}`
+                      : "";
+                  })()}
                 </h3>
                 <button
                   type="button"
@@ -341,7 +360,12 @@ function ImportFromImageModal({
               </div>
               <p className="mb-3 text-xs text-gray-500 dark:text-gray-400">
                 Edit names inline to fix any OCR errors. Uncheck rows you
-                don&apos;t want to import.
+                don&apos;t want to import. Rows that match an existing
+                guild member are flagged{" "}
+                <span className="rounded border border-amber-300 bg-amber-100 px-1 text-[10px] font-bold uppercase tracking-wider text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/60 dark:text-amber-300">
+                  Duplicate
+                </span>{" "}
+                and default to unchecked.
               </p>
 
               <div className="space-y-1.5">
@@ -353,7 +377,9 @@ function ImportFromImageModal({
                         ? "border-emerald-200 bg-emerald-50 dark:border-emerald-900/60 dark:bg-emerald-950/40"
                         : n.status === "error"
                           ? "border-red-200 bg-red-50 dark:border-red-900/60 dark:bg-red-950/40"
-                          : "border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
+                          : n.duplicate && n.status === "pending"
+                            ? "border-amber-200 bg-amber-50 dark:border-amber-900/60 dark:bg-amber-950/40"
+                            : "border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
                     }`}
                   >
                     <input
@@ -370,7 +396,15 @@ function ImportFromImageModal({
                       maxLength={40}
                       className="flex-1 rounded border-0 bg-transparent px-1 py-0 text-sm focus:outline-none focus:ring-1 focus:ring-violet-400 disabled:opacity-70 dark:text-gray-100"
                     />
-                    <span className="shrink-0 text-xs">
+                    <span className="flex shrink-0 items-center gap-1.5 text-xs">
+                      {n.duplicate && n.status === "pending" && (
+                        <span
+                          className="rounded border border-amber-300 bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/60 dark:text-amber-300"
+                          title="A member with this in-game name already exists in this guild. Imported by default unchecked — re-check only if you want a duplicate row."
+                        >
+                          Duplicate
+                        </span>
+                      )}
                       {n.status === "saving" && (
                         <span className="text-gray-500 dark:text-gray-400">Saving…</span>
                       )}
