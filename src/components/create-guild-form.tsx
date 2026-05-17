@@ -46,7 +46,9 @@ export function CreateGuildForm() {
       }),
     });
     if (res.ok) {
-      router.push("/");
+      // Land new admins on the setup checklist rather than the empty
+      // event listing — first-time creators have 5+ required steps left.
+      router.push("/admin/setup");
       router.refresh();
       return;
     }

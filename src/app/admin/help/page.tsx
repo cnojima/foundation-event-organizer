@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireGuildAdminPage } from "@/lib/rbac";
+import { BOT_INSTALL_URL } from "@/lib/bot-install-url";
 import {
   CollapsibleSection,
   HelpLayout,
@@ -20,11 +21,8 @@ export const metadata = {
 // visual emphasis.
 type Chunks = React.ReactNode;
 
-// Hard-coded operator-shared snippets — never translated. The bot install
-// URL is shown verbatim to the admin who copies it into Discord; the curl
-// snippet is operator-only ops glue.
-const INSTALL_URL =
-  "https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=133120";
+// Hard-coded operator-shared snippet — never translated. The curl snippet
+// is operator-only ops glue. (BOT_INSTALL_URL is shared from lib/.)
 const FLUSH_COMMANDS_CURL = `# wipe global commands so the bot re-registers fresh on next startup
 curl -X PUT -H "Authorization: Bot $DISCORD_BOT_TOKEN" \\
   -H "Content-Type: application/json" \\
@@ -170,7 +168,7 @@ export default async function AdminHelpPage() {
           <li>
             {t("inviteBot.step1Intro")}
             <pre className="mt-2 overflow-x-auto rounded bg-gray-50 p-2 text-xs dark:bg-gray-900 dark:text-gray-200">
-              {INSTALL_URL}
+              {BOT_INSTALL_URL}
             </pre>
             <span className="mt-2 block">{t("inviteBot.step1Note")}</span>
           </li>

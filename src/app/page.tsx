@@ -17,6 +17,7 @@ import {
 import { LandingPage } from "@/components/landing-page";
 import { PageHeader } from "@/components/page-header";
 import { EventKindHero } from "@/components/event-kind-icon";
+import { loadSetupState } from "@/lib/setup-state";
 
 export default async function Home({
   searchParams,
@@ -155,12 +156,33 @@ export default async function Home({
   };
   const newEventHref = `/admin/event/new${queryString({})}`;
 
+  // Setup-progress banner: only shown to admins, only while required steps
+  // remain. Computed from current DB state so it auto-disappears when the
+  // last required item is satisfied.
+  const setupState = isAdmin ? await loadSetupState(targetGuildId) : null;
+  const showSetupBanner = setupState !== null && !setupState.isComplete;
+
   return (
     <div className="mx-auto max-w-3xl">
       {isImpersonating && actingGuild && (
         <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
+      )}
+      {showSetupBanner && setupState && (
+        <Link
+          href={`/admin/setup${queryString({})}`}
+          className="mb-4 flex items-center justify-between gap-3 rounded-md border border-violet-300 bg-violet-50 px-4 py-3 text-sm text-violet-900 transition-colors hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-200 dark:hover:bg-violet-900/40"
+        >
+          <span>
+            <strong>Guild setup</strong>: {setupState.requiredDone} /{" "}
+            {setupState.requiredTotal} required steps complete. Finish the
+            checklist to enable Discord reminders + voice DMs.
+          </span>
+          <span aria-hidden className="shrink-0 font-semibold">
+            Continue →
+          </span>
+        </Link>
       )}
       <PageHeader
         kicker={tHeader("events")}

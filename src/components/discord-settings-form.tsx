@@ -3,13 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
-
-// Discord OAuth install URL for the Event Organizer bot. The client_id is the
-// app's Discord application ID — fixed per deployment, embedded here so the
-// CTA works without a per-guild env lookup. permissions=133120 covers
-// Send Messages + Mention Everyone (required for @everyone reminders).
-const BOT_INVITE_URL =
-  "https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=133120";
+import { BOT_INSTALL_URL } from "@/lib/bot-install-url";
 
 // Standalone card for Discord integration: bot-invite CTA, channel ID,
 // test-integration button. Saves the channel ID independently of the main
@@ -136,7 +130,7 @@ export function DiscordSettingsForm({
           the <em>Manage Server</em> permission there.
         </p>
         <a
-          href={BOT_INVITE_URL}
+          href={BOT_INSTALL_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-3 inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700"

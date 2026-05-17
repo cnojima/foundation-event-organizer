@@ -163,6 +163,7 @@ const NAV_ITEMS: NavItem[] = [
   // Event management lives on the merged "/" listing now — admins get
   // role-based CTAs there (+ New event, kind badges, Deleted tab) instead of
   // a separate /admin landing.
+  { labelKey: "setup", href: "/admin/setup", icon: ICONS.dashboard, visibility: "guildAdmin", category: "manage" },
   { labelKey: "templates", href: "/admin/templates", icon: ICONS.dashboard, visibility: "guildAdmin", category: "manage" },
   { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "signedIn", category: "manage" },
   { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild", category: "manage" },
@@ -222,6 +223,7 @@ function isVisible(item: NavItem, p: SidebarNavProps): boolean {
 const IMPERSONATION_AWARE_PREFIXES = [
   "/",
   "/scrims",
+  "/admin/setup",
   "/admin/event",
   "/admin/players",
   "/admin/members",
