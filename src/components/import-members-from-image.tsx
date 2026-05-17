@@ -10,6 +10,14 @@ import { useRouter } from "next/navigation";
 // on uniqueness conflicts (Discord ID + email), so per-row failures
 // surface inline without breaking the batch.
 
+type DiscordMatch = {
+  userId: string;
+  handle: string;
+  avatarUrl: string | null;
+  confidence: "exact" | "fuzzy";
+  matchedOn: "username" | "globalName" | "nick";
+};
+
 type ExtractedName = {
   id: string; // local-only id for React keys (we re-key on each extract)
   value: string;
@@ -18,8 +26,17 @@ type ExtractedName = {
   // in-game name (case-insensitive). Drives the "Duplicate" badge and
   // makes the row default to unchecked.
   duplicate: boolean;
-  status: "pending" | "saving" | "saved" | "error";
+  // Server-side Discord-bot match. When present, the stub gets a
+  // pre-filled discord_user_id on create, and `sendDm` defaults to true
+  // so the user receives an onboarding DM right after import.
+  discordMatch: DiscordMatch | null;
+  sendDm: boolean;
+  status: "pending" | "saving" | "saved" | "dm-sending" | "dm-sent" | "dm-failed" | "error";
   error?: string;
+  dmError?: string;
+  // Once the stub has been created, the server-returned user id — needed
+  // for the per-row DM call.
+  createdUserId?: string;
 };
 
 export function ImportMembersFromImageButton({
@@ -69,6 +86,9 @@ function ImportFromImageModal({
   const [progress, setProgress] = useState<{ done: number; total: number } | null>(
     null
   );
+  // Server-emitted soft warning when Discord matching couldn't run (no
+  // intent, bot not in server, etc). Surfaced once near the result list.
+  const [discordWarning, setDiscordWarning] = useState<string | null>(null);
 
   // Esc to close (when not mid-request).
   useEffect(() => {
@@ -149,8 +169,14 @@ function ImportFromImageModal({
       return;
     }
     const data = (await res.json()) as {
-      names: { value: string; duplicate: boolean }[];
+      names: {
+        value: string;
+        duplicate: boolean;
+        discordMatch: DiscordMatch | null;
+      }[];
+      discordWarning: string | null;
     };
+    setDiscordWarning(data.discordWarning ?? null);
     setNames(
       data.names.map((n, i) => ({
         id: `${Date.now()}-${i}`,
@@ -160,6 +186,10 @@ function ImportFromImageModal({
         // member is a stub the admin meant to replace).
         selected: !n.duplicate,
         duplicate: n.duplicate,
+        discordMatch: n.discordMatch,
+        // Auto-DM defaults to ON for matched rows. Admins can untick per
+        // row before clicking Import.
+        sendDm: !!n.discordMatch,
         status: "pending",
       }))
     );
@@ -178,17 +208,33 @@ function ImportFromImageModal({
     );
   }
 
-  function toggleAll() {
-    const anyUnselected = names.some((n) => !n.selected && n.status !== "saved");
+  function toggleSendDm(id: string) {
     setNames((prev) =>
-      prev.map((n) =>
-        n.status === "saved" ? n : { ...n, selected: anyUnselected }
-      )
+      prev.map((n) => (n.id === id ? { ...n, sendDm: !n.sendDm } : n))
+    );
+  }
+
+  // Any post-create status counts as "done — don't re-import" for the
+  // import-loop and toggle-all logic. The DM lifecycle (sending / sent /
+  // failed) doesn't change whether the stub itself exists.
+  function isDone(n: ExtractedName): boolean {
+    return (
+      n.status === "saved" ||
+      n.status === "dm-sending" ||
+      n.status === "dm-sent" ||
+      n.status === "dm-failed"
+    );
+  }
+
+  function toggleAll() {
+    const anyUnselected = names.some((n) => !n.selected && !isDone(n));
+    setNames((prev) =>
+      prev.map((n) => (isDone(n) ? n : { ...n, selected: anyUnselected }))
     );
   }
 
   async function importSelected() {
-    const toImport = names.filter((n) => n.selected && n.status !== "saved");
+    const toImport = names.filter((n) => n.selected && !isDone(n));
     if (toImport.length === 0) return;
     setImportError(null);
     setImporting(true);
@@ -197,25 +243,82 @@ function ImportFromImageModal({
     // Sequential POSTs. POST /api/admin/members is the existing stub-create
     // endpoint; it validates each row server-side (length, collisions).
     // We mark per-row status so the admin can fix and retry just the failures.
+    //
+    // For rows with a Discord match, we pass `discordUserId` so the stub
+    // is created with the snowflake pre-filled — the existing auto-claim
+    // flow then merges on the user's first Discord OAuth sign-in. After
+    // each successful create, if `sendDm` is set, we POST to the new
+    // /onboarding-dm endpoint to ask the bot to DM the user.
     let done = 0;
     for (const row of toImport) {
       setNames((prev) =>
         prev.map((n) => (n.id === row.id ? { ...n, status: "saving" } : n))
       );
+      const createBody: Record<string, string | null> = {
+        guildId,
+        inGameName: row.value.trim(),
+      };
+      if (row.discordMatch) {
+        createBody.discordUserId = row.discordMatch.userId;
+      }
       const res = await fetch("/api/admin/members", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          guildId,
-          inGameName: row.value.trim(),
-        }),
+        body: JSON.stringify(createBody),
       });
       if (res.ok) {
+        const data = (await res.json().catch(() => ({}))) as {
+          userId?: string;
+        };
+        const newUserId = data.userId;
         setNames((prev) =>
           prev.map((n) =>
-            n.id === row.id ? { ...n, status: "saved", error: undefined } : n
+            n.id === row.id
+              ? {
+                  ...n,
+                  status: "saved",
+                  error: undefined,
+                  createdUserId: newUserId,
+                }
+              : n
           )
         );
+
+        // Bundled auto-DM: fires only when the row had a Discord match
+        // AND the admin left `sendDm` checked. Failure here is per-row
+        // and non-fatal — the stub already exists; admin can hit
+        // "Resend onboarding DM" later on /admin/members.
+        if (row.sendDm && row.discordMatch && newUserId) {
+          setNames((prev) =>
+            prev.map((n) =>
+              n.id === row.id ? { ...n, status: "dm-sending" } : n
+            )
+          );
+          const dmRes = await fetch(
+            `/api/admin/members/${newUserId}/onboarding-dm`,
+            { method: "POST" }
+          );
+          if (dmRes.ok) {
+            setNames((prev) =>
+              prev.map((n) =>
+                n.id === row.id ? { ...n, status: "dm-sent" } : n
+              )
+            );
+          } else {
+            const dmData = await dmRes.json().catch(() => ({}));
+            setNames((prev) =>
+              prev.map((n) =>
+                n.id === row.id
+                  ? {
+                      ...n,
+                      status: "dm-failed",
+                      dmError: dmData?.error ?? "DM failed",
+                    }
+                  : n
+              )
+            );
+          }
+        }
       } else {
         const data = await res.json().catch(() => ({}));
         setNames((prev) =>
@@ -236,9 +339,9 @@ function ImportFromImageModal({
   }
 
   const allSaved =
-    names.length > 0 && names.every((n) => n.status === "saved" || !n.selected);
-  const selectedCount = names.filter((n) => n.selected && n.status !== "saved").length;
-  const savedCount = names.filter((n) => n.status === "saved").length;
+    names.length > 0 && names.every((n) => isDone(n) || !n.selected);
+  const selectedCount = names.filter((n) => n.selected && !isDone(n)).length;
+  const savedCount = names.filter((n) => isDone(n)).length;
 
   return (
     <div
@@ -337,16 +440,29 @@ function ImportFromImageModal({
 
           {names.length > 0 && (
             <>
+              {discordWarning && (
+                <p className="mb-3 rounded border border-amber-200 bg-amber-50 p-2 text-xs text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
+                  {discordWarning}
+                </p>
+              )}
               <div className="mb-2 flex items-center justify-between">
                 <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                   Detected {names.length} name{names.length === 1 ? "" : "s"}
                   {(() => {
                     const dupes = names.filter(
-                      (n) => n.duplicate && n.status !== "saved"
+                      (n) => n.duplicate && !isDone(n)
                     ).length;
-                    return dupes > 0
-                      ? ` · ${dupes} duplicate${dupes === 1 ? "" : "s"}`
-                      : "";
+                    const matches = names.filter(
+                      (n) => n.discordMatch && !isDone(n)
+                    ).length;
+                    const parts: string[] = [];
+                    if (dupes > 0)
+                      parts.push(`${dupes} duplicate${dupes === 1 ? "" : "s"}`);
+                    if (matches > 0)
+                      parts.push(
+                        `${matches} Discord match${matches === 1 ? "" : "es"}`
+                      );
+                    return parts.length > 0 ? ` · ${parts.join(" · ")}` : "";
                   })()}
                 </h3>
                 <button
@@ -372,8 +488,8 @@ function ImportFromImageModal({
                 {names.map((n) => (
                   <div
                     key={n.id}
-                    className={`flex items-center gap-2 rounded border px-2 py-1.5 text-sm ${
-                      n.status === "saved"
+                    className={`flex flex-col gap-1 rounded border px-2 py-1.5 text-sm ${
+                      isDone(n)
                         ? "border-emerald-200 bg-emerald-50 dark:border-emerald-900/60 dark:bg-emerald-950/40"
                         : n.status === "error"
                           ? "border-red-200 bg-red-50 dark:border-red-900/60 dark:bg-red-950/40"
@@ -382,46 +498,107 @@ function ImportFromImageModal({
                             : "border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
                     }`}
                   >
-                    <input
-                      type="checkbox"
-                      checked={n.selected}
-                      onChange={() => toggleSelected(n.id)}
-                      disabled={importing || n.status === "saved"}
-                    />
-                    <input
-                      type="text"
-                      value={n.value}
-                      onChange={(e) => updateName(n.id, e.target.value)}
-                      disabled={importing || n.status === "saved"}
-                      maxLength={40}
-                      className="flex-1 rounded border-0 bg-transparent px-1 py-0 text-sm focus:outline-none focus:ring-1 focus:ring-violet-400 disabled:opacity-70 dark:text-gray-100"
-                    />
-                    <span className="flex shrink-0 items-center gap-1.5 text-xs">
-                      {n.duplicate && n.status === "pending" && (
-                        <span
-                          className="rounded border border-amber-300 bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/60 dark:text-amber-300"
-                          title="A member with this in-game name already exists in this guild. Imported by default unchecked — re-check only if you want a duplicate row."
-                        >
-                          Duplicate
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        checked={n.selected}
+                        onChange={() => toggleSelected(n.id)}
+                        disabled={importing || isDone(n)}
+                      />
+                      <input
+                        type="text"
+                        value={n.value}
+                        onChange={(e) => updateName(n.id, e.target.value)}
+                        disabled={importing || isDone(n)}
+                        maxLength={40}
+                        className="flex-1 rounded border-0 bg-transparent px-1 py-0 text-sm focus:outline-none focus:ring-1 focus:ring-violet-400 disabled:opacity-70 dark:text-gray-100"
+                      />
+                      <span className="flex shrink-0 items-center gap-1.5 text-xs">
+                        {n.duplicate && n.status === "pending" && (
+                          <span
+                            className="rounded border border-amber-300 bg-amber-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/60 dark:text-amber-300"
+                            title="A member with this in-game name already exists in this guild. Imported by default unchecked — re-check only if you want a duplicate row."
+                          >
+                            Duplicate
+                          </span>
+                        )}
+                        {n.status === "saving" && (
+                          <span className="text-gray-500 dark:text-gray-400">Saving…</span>
+                        )}
+                        {n.status === "saved" && (
+                          <span className="font-semibold text-emerald-700 dark:text-emerald-300">
+                            ✓ Saved
+                          </span>
+                        )}
+                        {n.status === "dm-sending" && (
+                          <span className="text-gray-500 dark:text-gray-400">DMing…</span>
+                        )}
+                        {n.status === "dm-sent" && (
+                          <span className="font-semibold text-emerald-700 dark:text-emerald-300">
+                            ✓ Saved + DM sent
+                          </span>
+                        )}
+                        {n.status === "dm-failed" && (
+                          <span
+                            className="font-semibold text-amber-700 dark:text-amber-300"
+                            title={n.dmError}
+                          >
+                            ✓ Saved · DM failed
+                          </span>
+                        )}
+                        {n.status === "error" && (
+                          <span
+                            className="font-semibold text-red-700 dark:text-red-300"
+                            title={n.error}
+                          >
+                            ✗ {n.error ?? "Failed"}
+                          </span>
+                        )}
+                      </span>
+                    </div>
+                    {/* Sub-row: Discord match metadata + auto-DM toggle. Only
+                        rendered when we found a match; otherwise the parent
+                        row stays single-line. */}
+                    {n.discordMatch && (
+                      <div className="ml-7 flex flex-wrap items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                        <span className="flex items-center gap-1.5">
+                          {n.discordMatch.avatarUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={n.discordMatch.avatarUrl}
+                              alt=""
+                              className="size-4 rounded-full"
+                            />
+                          ) : (
+                            <span className="inline-block size-4 rounded-full bg-violet-200 dark:bg-violet-900" />
+                          )}
+                          <span className="font-medium text-gray-800 dark:text-gray-200">
+                            @{n.discordMatch.handle}
+                          </span>
+                          <span
+                            className={`rounded border px-1 py-0.5 text-[9px] font-bold uppercase tracking-wider ${
+                              n.discordMatch.confidence === "exact"
+                                ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300"
+                                : "border-violet-200 bg-violet-50 text-violet-700 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300"
+                            }`}
+                            title={`Matched on Discord ${n.discordMatch.matchedOn}`}
+                          >
+                            {n.discordMatch.confidence}
+                          </span>
                         </span>
-                      )}
-                      {n.status === "saving" && (
-                        <span className="text-gray-500 dark:text-gray-400">Saving…</span>
-                      )}
-                      {n.status === "saved" && (
-                        <span className="font-semibold text-emerald-700 dark:text-emerald-300">
-                          ✓ Saved
-                        </span>
-                      )}
-                      {n.status === "error" && (
-                        <span
-                          className="font-semibold text-red-700 dark:text-red-300"
-                          title={n.error}
-                        >
-                          ✗ {n.error ?? "Failed"}
-                        </span>
-                      )}
-                    </span>
+                        {!isDone(n) && (
+                          <label className="ml-auto flex items-center gap-1">
+                            <input
+                              type="checkbox"
+                              checked={n.sendDm}
+                              onChange={() => toggleSendDm(n.id)}
+                              disabled={importing}
+                            />
+                            <span>DM onboarding link</span>
+                          </label>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>

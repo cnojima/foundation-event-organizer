@@ -15,10 +15,13 @@ This guide is for **guild admins** who want their Discord server to receive even
 Before you start, the **site operator** must have already deployed the app and configured the Discord bot. Ask them for:
 
 - The **bot install URL**. It looks like:
-  ```
-  https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=133120
-  ```
-  (`133120` = Slash Commands + Send Messages + Mention Everyone — both required so `@everyone` reminders actually ping members.)
+
+```
+https://discord.com/oauth2/authorize?client_id=1502013027858387054&scope=bot+applications.commands&permissions=133120
+```
+
+(`133120` = Slash Commands + Send Messages + Mention Everyone — both required so `@everyone` reminders actually ping members.)
+
 - (Optionally) the bot's display name, so you can recognize it in your server.
 
 If you're the site operator, see [CLAUDE.md](CLAUDE.md) → **Discord bot** for one-time setup (creating a Discord application, setting the `DISCORD_BOT_TOKEN` secret, etc.).
@@ -59,8 +62,7 @@ You'll get a long number like `123456789012345678`.
 4. Click **Test integration**.
 
 If everything is wired up, you'll see ✅ in the UI and a test message in your Discord channel:
-
-> Test message from **Foundation Event Organizer** — guild **<your guild>**. Your Discord integration is working. Event reminders will be sent here.
+> Test message from **Foundation Event Organizer** — guild &lt;name&gt;. Your Discord integration is working. Event reminders will be sent here.
 
 The Test step also auto-links your Discord server to the app guild — this is what makes the slash commands work.
 
@@ -111,19 +113,53 @@ Then restart the bot (`fly machine restart -a <app-name>`) — the `clientReady`
 
 ---
 
+## Importing guild members from game screenshots
+
+Guild admins can bulk-seed their member roster by uploading screenshots taken directly from the game's member list UI. The importer uses AI vision to extract in-game names, then cross-references them against your Discord server to pre-populate member records before anyone has signed into the site.
+
+### How it works
+
+1. Navigate to **Admin → Members → Import from Screenshots**.
+2. Drag-and-drop or paste (Ctrl/Cmd+V) one or more screenshots of your in-game guild roster. Multiple images are treated as one batch — useful when the in-game list is paginated.
+3. The app sends the images to Claude's vision API, which extracts every visible member name and deduplicates across images.
+4. For each extracted name the bot queries your linked Discord server (`GET /guilds/{id}/members/search`) to resolve the Discord user ID. This works because in-game names are assumed to match Discord usernames.
+5. A reconciliation table is shown with three buckets:
+
+| Status | Meaning | Available actions |
+| --- | --- | --- |
+| ✅ **Linked** | Name matched an existing app account | None needed |
+| ⚠️ **Pre-claimed** | Found on Discord, not yet in the app | Record created; they claim it on first sign-in |
+| ❌ **Not in Discord** | Name extracted but no Discord match | Copy invite link, or dismiss |
+
+6. Confirm to write the results. Pre-claimed members appear in the member list immediately and will automatically merge with their real account the first time they sign in via Discord OAuth.
+
+### Requirements
+
+- Your guild must have Discord integration enabled (Guild Settings → Discord channel ID → Test integration) so the bot knows which Discord server to search.
+- The site operator must have enabled the **Server Members Intent** in the Discord Developer Portal (see [CLAUDE.md](CLAUDE.md) → **Discord bot** → Member import). Without it, the Discord lookup step is skipped and unmatched names are created as invite-only stubs with no Discord ID.
+- `ANTHROPIC_API_KEY` must be set in the operator's environment (see [CLAUDE.md](CLAUDE.md) → **Environment variables**).
+
+### Pre-claim accounts
+
+A pre-claimed account is a lightweight placeholder row: it has a Discord ID and guild membership but no email or OAuth credentials. It is invisible to the pre-claimed user until they sign in. On first Discord sign-in the app detects the matching Discord ID, upgrades the placeholder to a full account, and preserves all existing guild membership data.
+
+Pre-claimed accounts can sign up for events via the `/signup` Discord slash command before they ever visit the site, because the slash command matches on Discord ID.
+
+---
+
 ## For operators / contributors
 
 See [CLAUDE.md](CLAUDE.md) for:
 
 - Project architecture (Next.js 16, SQLite + Drizzle, Auth.js, RBAC model).
 - Local dev setup (`npm run dev`, OAuth credentials, schema push, super-admin bootstrap).
-- Discord bot one-time setup (creating the Discord application, setting the `DISCORD_BOT_TOKEN` Fly secret).
+- Discord bot one-time setup (creating the Discord application, setting the `DISCORD_BOT_TOKEN` Fly secret, enabling the Server Members Intent for member import).
 - Routes, API surface, and key design decisions.
 
 ### Quick local dev
 
 ```bash
-cp .env.local.example .env.local   # fill in OAuth + AUTH_SECRET
+cp .env.local.example .env.local   # fill in OAuth + AUTH_SECRET + ANTHROPIC_API_KEY
 npx auth secret                    # generates AUTH_SECRET
 npm install
 npm run db:push                    # initialize SQLite

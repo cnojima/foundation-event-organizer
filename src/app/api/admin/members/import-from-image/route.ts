@@ -3,8 +3,10 @@ import Anthropic from "@anthropic-ai/sdk";
 import { auth } from "@/auth";
 import { requireGuildAdminApi, resolveAdminGuildId } from "@/lib/rbac";
 import { db } from "@/db";
-import { users } from "@/db/schema";
+import { guilds, users } from "@/db/schema";
 import { and, eq, isNotNull } from "drizzle-orm";
+import { fetchGuildMembers } from "@/bot/discord-bot";
+import { findBestMatch } from "@/lib/discord-match";
 
 // Limit image uploads to 10MB — a phone screenshot is typically 2-5MB.
 // Larger uploads are almost always a mistake (wrong file picked, full-res
@@ -192,12 +194,75 @@ export async function POST(req: Request) {
         .filter((n): n is string => !!n && n.length > 0)
     );
 
+    // Discord-side matching: if this guild has a linked Discord server,
+    // pull the member list and fuzzy-match each extracted name. The match
+    // becomes `discordMatch` on each row, which the client uses to:
+    //   - pre-fill `discord_user_id` when the admin imports the stub
+    //   - default a "send onboarding DM after import" checkbox to ON
+    // If the bot isn't running, the intent's disabled, or the guild
+    // isn't Discord-linked yet, we skip silently and clients fall back
+    // to name-only stubs.
+    const guildRow = await db.query.guilds.findFirst({
+      where: eq(guilds.id, targetGuildId),
+      columns: { discordGuildId: true },
+    });
+
+    type DiscordMatchPayload = {
+      userId: string;
+      handle: string;
+      avatarUrl: string | null;
+      confidence: "exact" | "fuzzy";
+      matchedOn: "username" | "globalName" | "nick";
+    };
+    const matchByName = new Map<string, DiscordMatchPayload>();
+    let discordWarning: string | null = null;
+
+    if (guildRow?.discordGuildId) {
+      const result = await fetchGuildMembers(guildRow.discordGuildId);
+      if (result.ok) {
+        // Track which Discord user IDs are already assigned so we don't
+        // surface the same Discord member twice across multiple in-game
+        // rows. The first row to match "wins" — second match is dropped.
+        const claimedUserIds = new Set<string>();
+        for (const name of rawNames) {
+          const hit = findBestMatch(name, result.members);
+          if (!hit) continue;
+          if (claimedUserIds.has(hit.member.userId)) continue;
+          claimedUserIds.add(hit.member.userId);
+          matchByName.set(name, {
+            userId: hit.member.userId,
+            handle:
+              hit.member.nick ??
+              hit.member.globalName ??
+              hit.member.username,
+            avatarUrl: hit.member.avatarUrl,
+            confidence: hit.confidence,
+            matchedOn: hit.matchedOn,
+          });
+        }
+      } else {
+        // Soft-fail: caller still gets names + duplicate flags; the
+        // Discord-match column just stays empty. Surface the reason on
+        // the response so the UI can hint the admin (e.g. "enable the
+        // Server Members Intent in the Developer Portal").
+        discordWarning =
+          result.reason === "intent-disabled"
+            ? "Discord matching is disabled — enable the bot's 'Server Members Intent' in the Discord Developer Portal to auto-match by username."
+            : result.reason === "bot-not-in-server"
+              ? "Discord matching skipped — bot isn't a member of the linked Discord server."
+              : result.reason === "no-token"
+                ? "Discord matching skipped — bot not configured on this server."
+                : "Discord matching skipped — couldn't reach Discord.";
+      }
+    }
+
     const names = rawNames.map((value) => ({
       value,
       duplicate: existingSet.has(value.toLowerCase()),
+      discordMatch: matchByName.get(value) ?? null,
     }));
 
-    return NextResponse.json({ names });
+    return NextResponse.json({ names, discordWarning });
   } catch (err) {
     // Use typed exception classes from the SDK — never string-match error
     // messages (per the Claude API skill guidance).

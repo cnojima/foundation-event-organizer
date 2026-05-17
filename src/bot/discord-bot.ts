@@ -221,7 +221,16 @@ export function startBot(): void {
   }
   state.started = true;
 
-  const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+  // `GuildMembers` is a privileged intent — must also be toggled ON in the
+  // Discord Developer Portal (your bot → Bot → "Server Members Intent").
+  // Required for the onboarding-import flow that lists server members so
+  // admins can match in-game names to Discord accounts. If the toggle is
+  // off, the gateway connection fails at identify-time with "Disallowed
+  // intent" — surface as a clear startup error rather than silently broken
+  // member-list features.
+  const client = new Client({
+    intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
+  });
   state.client = client;
 
   client.once("clientReady", () => {
@@ -886,6 +895,150 @@ async function sendDirectMessage(
     console.warn(`[bot] DM fetch threw user=${discordUserId}:`, err);
     return false;
   }
+}
+
+// Shape of a Discord server member as returned from the list endpoint.
+// `nick` is the server-specific nickname (often null); `global_name` is
+// the user's account-wide display name (formerly known as the username
+// post-pomelo migration). All three identity fields may be considered
+// when fuzzy-matching to in-game names.
+export type DiscordGuildMember = {
+  userId: string;
+  username: string;
+  globalName: string | null;
+  nick: string | null;
+  avatarUrl: string | null;
+};
+
+export type FetchMembersResult =
+  | { ok: true; members: DiscordGuildMember[] }
+  | {
+      ok: false;
+      reason:
+        | "no-token"
+        | "intent-disabled"
+        | "bot-not-in-server"
+        | "http-error";
+      detail?: string;
+    };
+
+// Lists every member of a Discord server via the REST API. Requires the
+// app to have the privileged `Server Members Intent` enabled in the
+// Discord Developer Portal — without it, Discord returns 403 / 400 with a
+// `code: 50000`-family error. We don't lean on the gateway cache because
+// (a) the cache is only populated after gateway-side member chunks arrive,
+// which is a separate flow, and (b) the REST path works statelessly.
+//
+// Pagination: Discord caps each page at 1000 members. We loop with the
+// `?after=<lastId>` cursor until a short page comes back. For >5000-member
+// servers this could be slow but is still bounded — and the use case
+// (small-to-medium gaming guilds) sits well below that.
+export async function fetchGuildMembers(
+  discordGuildId: string
+): Promise<FetchMembersResult> {
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
+  if (!token) return { ok: false, reason: "no-token" };
+
+  const members: DiscordGuildMember[] = [];
+  let after: string | null = null;
+  const PAGE_SIZE = 1000;
+
+  // Hard ceiling so a misconfigured server can't pull us into an infinite
+  // loop. 50K members covers every realistic Rally Up customer.
+  const MAX_MEMBERS = 50_000;
+
+  while (members.length < MAX_MEMBERS) {
+    const url = new URL(
+      `https://discord.com/api/v10/guilds/${discordGuildId}/members`
+    );
+    url.searchParams.set("limit", String(PAGE_SIZE));
+    if (after) url.searchParams.set("after", after);
+
+    let res: Response;
+    try {
+      res = await fetch(url.toString(), {
+        headers: { Authorization: `Bot ${token}` },
+      });
+    } catch (err) {
+      console.warn(
+        `[bot] fetchGuildMembers threw guild=${discordGuildId}:`,
+        err
+      );
+      return { ok: false, reason: "http-error", detail: String(err) };
+    }
+
+    if (res.status === 404) {
+      return { ok: false, reason: "bot-not-in-server" };
+    }
+    if (res.status === 403 || res.status === 401) {
+      const body = await res.text().catch(() => "");
+      // Discord doesn't expose a clean error code for "you forgot to
+      // enable the privileged intent" — surface a friendly hint.
+      console.warn(
+        `[bot] fetchGuildMembers ${res.status} guild=${discordGuildId} body=${body.slice(0, 200)}`
+      );
+      return {
+        ok: false,
+        reason: "intent-disabled",
+        detail: "Enable 'Server Members Intent' in the Discord Developer Portal for this bot, then redeploy.",
+      };
+    }
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.warn(
+        `[bot] fetchGuildMembers ${res.status} guild=${discordGuildId} body=${body.slice(0, 200)}`
+      );
+      return { ok: false, reason: "http-error", detail: body.slice(0, 200) };
+    }
+
+    type RawMember = {
+      user: {
+        id: string;
+        username: string;
+        global_name: string | null;
+        avatar: string | null;
+      };
+      nick: string | null;
+    };
+    const page = (await res.json()) as RawMember[];
+    for (const m of page) {
+      if (!m.user) continue;
+      members.push({
+        userId: m.user.id,
+        username: m.user.username,
+        globalName: m.user.global_name,
+        nick: m.nick,
+        avatarUrl: m.user.avatar
+          ? `https://cdn.discordapp.com/avatars/${m.user.id}/${m.user.avatar}.png?size=64`
+          : null,
+      });
+    }
+    if (page.length < PAGE_SIZE) break;
+    after = page[page.length - 1].user.id;
+  }
+
+  return { ok: true, members };
+}
+
+// Sends an onboarding DM to a Discord user who's been added as a stub
+// member by an admin. The recipient clicks the sign-in link, OAuths via
+// Discord, and the existing auto-claim flow in src/auth.ts merges the
+// stub by matching their snowflake. Returns true on success.
+export async function sendOnboardingDm(args: {
+  discordUserId: string;
+  guildName: string;
+  signInUrl: string;
+}): Promise<boolean> {
+  const token = process.env.DISCORD_BETA_BOT_TOKEN || process.env.DISCORD_BOT_TOKEN;
+  if (!token) return false;
+  const content = [
+    `Hey — an admin from **${args.guildName}** added you to their Rally Up roster.`,
+    ``,
+    `Sign in with Discord to claim your account and join match nights: <${args.signInUrl}>`,
+    ``,
+    `_If you weren't expecting this, you can ignore the message — nothing happens until you sign in._`,
+  ].join("\n");
+  return sendDirectMessage(token, args.discordUserId, content);
 }
 
 // Sends per-user voice-channel DMs for one squad of one match event. Called

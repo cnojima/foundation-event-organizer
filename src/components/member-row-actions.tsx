@@ -9,15 +9,22 @@ export function MemberRowActions({
   userId,
   role,
   isLastAdmin,
+  // True when this member is a pre-claim stub with a Discord ID set.
+  // Surfaces the "Resend onboarding DM" button, which asks the bot to DM
+  // a sign-in link to that Discord user. Stays hidden for already-claimed
+  // members and for stubs without a Discord ID (nothing to DM).
+  canResendOnboarding = false,
 }: {
   guildId: string;
   userId: string;
   role: "admin" | "member" | null;
   isLastAdmin: boolean;
+  canResendOnboarding?: boolean;
 }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [dmStatus, setDmStatus] = useState<"idle" | "sending" | "sent">("idle");
 
   async function setRole(newRole: "admin" | "member") {
     setError(null);
@@ -34,6 +41,25 @@ export function MemberRowActions({
       setError(data?.error ?? "Failed");
     }
     setBusy(false);
+  }
+
+  async function resendOnboarding() {
+    setError(null);
+    setDmStatus("sending");
+    const res = await fetch(
+      `/api/admin/members/${userId}/onboarding-dm`,
+      { method: "POST" }
+    );
+    if (res.ok) {
+      setDmStatus("sent");
+      // Reset the visual cue after a short pause so the admin can resend
+      // again if the user reports not receiving it.
+      setTimeout(() => setDmStatus("idle"), 3000);
+    } else {
+      const data = await res.json().catch(() => ({}));
+      setError(data?.error ?? "DM failed");
+      setDmStatus("idle");
+    }
   }
 
   async function kick() {
@@ -54,6 +80,22 @@ export function MemberRowActions({
 
   return (
     <div className="flex items-center gap-2 text-xs">
+      {canResendOnboarding && (
+        <InfoTip content="Send the onboarding DM (sign-in link) to this pre-claim member's Discord account. They'll claim the row by signing in via Discord OAuth.">
+          <button
+            type="button"
+            onClick={resendOnboarding}
+            disabled={busy || dmStatus === "sending"}
+            className="rounded border border-violet-300 bg-violet-50 px-2 py-1 font-semibold text-violet-700 hover:bg-violet-100 disabled:opacity-50 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
+          >
+            {dmStatus === "sending"
+              ? "DMing…"
+              : dmStatus === "sent"
+                ? "✓ DM sent"
+                : "Resend onboarding DM"}
+          </button>
+        </InfoTip>
+      )}
       {role === "member" && (
         <InfoTip content="Promote this member to guild admin. Admins can create events, manage signups, invite members, and edit guild settings.">
           <button

@@ -97,6 +97,7 @@ export default async function MembersPage({
               userId={m.id}
               role={m.guildRole}
               isLastAdmin={m.guildRole === "admin" && adminCount <= 1}
+              canResendOnboarding={!!m.stubCreatedAt && !!m.discordUserId}
             />
           </div>
         ))}
