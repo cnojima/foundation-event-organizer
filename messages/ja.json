@@ -32,6 +32,7 @@
     "players": "選手たち",
     "members": "メンバー",
     "invites": "招待状",
+    "setup": "設定",
     "templates": "イベントテンプレート",
     "settings": "設定",
     "auditLog": "監査ログ",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "イベントの管理",
     "manageEventsTitleNamed": "{guildName} — イベントの管理",
     "newEvent": "+ 新しいイベント",
+    "editEvent": "イベントを編集",
     "newEventTitle": "新イベント",
     "newEventTitleNamed": "{guildName} — 新しいイベント",
     "backToEvents": "← イベントに戻る",
@@ -252,8 +254,8 @@
     "pageOf": "ページ{page} {total}の{total}",
     "attendanceHeading": "試合観戦",
     "attendanceEmpty": "このギルドではまだ試合登録がありません。",
-    "attendanceTotalSignups": "登録者総数",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} 1つの{# match signup}その他{# match signups} }",
+    "attendanceTotalSignups": "総イベント数",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} 1つの{# event}その他の{# events} }",
     "attendanceRate": "出席",
     "attendanceRateValue": "{pct} ％",
     "attendanceRateSub": "{attended} / {recorded}記録された",
@@ -834,7 +836,8 @@
       "empty": "今後のイベントはありません。",
       "heading": "**今後のイベント**",
       "scrimLine": "• ** {name} **（スクリム）— {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1}・{squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1}・{squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "イベントが見つかりませんでした。",

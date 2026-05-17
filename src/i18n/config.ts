@@ -19,6 +19,7 @@ export const locales = [
   "pl",
   "vi",
   "sv",
+  "nb",
 ] as const;
 
 export type Locale = (typeof locales)[number];
@@ -46,6 +47,7 @@ export const localeLabels: Record<Locale, string> = {
   pl: "Polski",
   vi: "Tiếng Việt",
   sv: "Svenska",
+  nb: "Norsk bokmål",
 };
 
 export function isSupportedLocale(value: unknown): value is Locale {

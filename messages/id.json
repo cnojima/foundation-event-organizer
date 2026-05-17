@@ -32,6 +32,7 @@
     "players": "Pemain",
     "members": "Anggota",
     "invites": "Undangan",
+    "setup": "Pengaturan",
     "templates": "Templat Acara",
     "settings": "Pengaturan",
     "auditLog": "Catatan Audit",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Kelola Acara",
     "manageEventsTitleNamed": "{guildName} — Mengelola Acara",
     "newEvent": "+ Acara baru",
+    "editEvent": "Edit acara",
     "newEventTitle": "Acara Baru",
     "newEventTitleNamed": "{guildName} — Acara Baru",
     "backToEvents": "← Kembali ke acara",
@@ -252,8 +254,8 @@
     "pageOf": "Halaman {page} dari {total}",
     "attendanceHeading": "Jumlah penonton pertandingan",
     "attendanceEmpty": "Belum ada pendaftaran pertandingan di guild ini.",
-    "attendanceTotalSignups": "Jumlah pendaftar",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} satu {# match signup} {# match signups} }",
+    "attendanceTotalSignups": "Jumlah total kejadian",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} satu {# event} acara lainnya {# events} }",
     "attendanceRate": "Kehadiran",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} tercatat",
@@ -834,7 +836,8 @@
       "empty": "Tidak ada acara mendatang.",
       "heading": "**Acara mendatang**",
       "scrimLine": "• ** {name} ** (scrim) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "Acara tidak ditemukan.",

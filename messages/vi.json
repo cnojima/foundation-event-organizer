@@ -32,6 +32,7 @@
     "players": "Người chơi",
     "members": "Thành viên",
     "invites": "Lời mời",
+    "setup": "Cài đặt",
     "templates": "Mẫu sự kiện",
     "settings": "Cài đặt",
     "auditLog": "Nhật ký kiểm toán",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Quản lý sự kiện",
     "manageEventsTitleNamed": "{guildName} — Quản lý sự kiện",
     "newEvent": "+ Sự kiện mới",
+    "editEvent": "Chỉnh sửa sự kiện",
     "newEventTitle": "Sự kiện mới",
     "newEventTitleNamed": "{guildName} — Sự kiện mới",
     "backToEvents": "← Trở lại sự kiện",
@@ -252,8 +254,8 @@
     "pageOf": "Trang {page} của {total}",
     "attendanceHeading": "Số khán giả đến xem trận đấu",
     "attendanceEmpty": "Hiện chưa có ai đăng ký tham gia trận đấu nào trong bang hội này.",
-    "attendanceTotalSignups": "Tổng số lượt đăng ký",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} một {# match signup} {# match signups} }",
+    "attendanceTotalSignups": "Tổng số sự kiện",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} một {# event} các sự kiện khác {# events} }",
     "attendanceRate": "Sự tham dự",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} đã ghi âm",
@@ -834,7 +836,8 @@
       "empty": "Không có sự kiện nào sắp diễn ra.",
       "heading": "**Các sự kiện sắp tới**",
       "scrimLine": "• ** {name} ** (tập trận) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "Không tìm thấy sự kiện.",

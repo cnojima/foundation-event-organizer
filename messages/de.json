@@ -32,6 +32,7 @@
     "players": "Spieler",
     "members": "Mitglieder",
     "invites": "Einladungen",
+    "setup": "Aufstellen",
     "templates": "Ereignisvorlagen",
     "settings": "Einstellungen",
     "auditLog": "Audit-Protokoll",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Veranstaltungen verwalten",
     "manageEventsTitleNamed": "{guildName} — Veranstaltungen verwalten",
     "newEvent": "+ Neues Event",
+    "editEvent": "Bearbeitungsereignis",
     "newEventTitle": "Neues Ereignis",
     "newEventTitleNamed": "{guildName} — Neues Ereignis",
     "backToEvents": "← Zurück zu den Veranstaltungen",
@@ -252,8 +254,8 @@
     "pageOf": "Seite {page} von {total}",
     "attendanceHeading": "Spielbesuch",
     "attendanceEmpty": "In dieser Gilde gibt es noch keine Spieleranmeldungen.",
-    "attendanceTotalSignups": "Gesamtzahl der Anmeldungen",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} eins {# match signup} andere {# match signups} }",
+    "attendanceTotalSignups": "Gesamtzahl der Ereignisse",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} ein {# event} andere {# events} }",
     "attendanceRate": "Teilnahme",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} aufgezeichnet",
@@ -834,7 +836,8 @@
       "empty": "Keine anstehenden Veranstaltungen.",
       "heading": "**Anstehende Veranstaltungen**",
       "scrimLine": "• ** {name} ** (Scrim) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "Veranstaltung nicht gefunden.",

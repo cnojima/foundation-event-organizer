@@ -32,6 +32,7 @@
     "players": "Gracze",
     "members": "Członkowie",
     "invites": "Zaproszenia",
+    "setup": "Organizować coś",
     "templates": "Szablony wydarzeń",
     "settings": "Ustawienia",
     "auditLog": "Dziennik audytu",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Zarządzaj wydarzeniami",
     "manageEventsTitleNamed": "{guildName} — Zarządzaj wydarzeniami",
     "newEvent": "+ Nowe wydarzenie",
+    "editEvent": "Edytuj wydarzenie",
     "newEventTitle": "Nowe wydarzenie",
     "newEventTitleNamed": "{guildName} — Nowe wydarzenie",
     "backToEvents": "← Powrót do wydarzeń",
@@ -252,8 +254,8 @@
     "pageOf": "Strona {page} z {total}",
     "attendanceHeading": "Frekwencja na meczach",
     "attendanceEmpty": "W tej gildii nie ma jeszcze zapisów na mecze.",
-    "attendanceTotalSignups": "Łączna liczba rejestracji",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} jeden {# match signup} inne {# match signups} }",
+    "attendanceTotalSignups": "Całkowita liczba zdarzeń",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} jedno {# event} inne {# events} }",
     "attendanceRate": "Frekwencja",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} nagrany",
@@ -834,7 +836,8 @@
       "empty": "Brak nadchodzących wydarzeń.",
       "heading": "**Nadchodzące wydarzenia**",
       "scrimLine": "• ** {name} ** (scrim) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "Wydarzenie nie zostało znalezione.",

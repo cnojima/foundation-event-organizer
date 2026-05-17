@@ -72,6 +72,7 @@ const TARGET_LOCALES = [
   "pl",
   "vi",
   "sv",
+  "nb"
 ];
 
 // Google's expected codes are mostly the same as BCP-47, with a few

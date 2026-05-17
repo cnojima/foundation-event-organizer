@@ -32,6 +32,7 @@
     "players": "Jogadores",
     "members": "Membros",
     "invites": "Convites",
+    "setup": "Configurar",
     "templates": "Modelos de eventos",
     "settings": "Configurações",
     "auditLog": "Registro de auditoria",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Gerenciar eventos",
     "manageEventsTitleNamed": "{guildName} — Gerenciar eventos",
     "newEvent": "+ Novo evento",
+    "editEvent": "Editar evento",
     "newEventTitle": "Novo evento",
     "newEventTitleNamed": "{guildName} — Novo evento",
     "backToEvents": "← Voltar aos eventos",
@@ -252,8 +254,8 @@
     "pageOf": "Página {page} de {total}",
     "attendanceHeading": "Público aos jogos",
     "attendanceEmpty": "Ainda não há inscrições para partidas nesta guilda.",
-    "attendanceTotalSignups": "Total de inscrições",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} um {# match signup} outros {# match signups} }",
+    "attendanceTotalSignups": "Total de eventos",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} um {# event} outros {# events} }",
     "attendanceRate": "Presença",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} gravado",
@@ -834,7 +836,8 @@
       "empty": "Nenhum evento futuro.",
       "heading": "**Próximos eventos**",
       "scrimLine": "• ** {name} ** (tela) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "Evento não encontrado.",

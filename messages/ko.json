@@ -32,6 +32,7 @@
     "players": "플레이어",
     "members": "회원들",
     "invites": "초대",
+    "setup": "설정",
     "templates": "이벤트 템플릿",
     "settings": "설정",
     "auditLog": "감사 로그",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "이벤트 관리",
     "manageEventsTitleNamed": "{guildName} — 이벤트 관리",
     "newEvent": "+ 새로운 이벤트",
+    "editEvent": "이벤트 편집",
     "newEventTitle": "새로운 이벤트",
     "newEventTitleNamed": "{guildName} — 새로운 이벤트",
     "backToEvents": "← 이벤트 목록으로 돌아가기",
@@ -252,8 +254,8 @@
     "pageOf": "페이지 {page} {total}",
     "attendanceHeading": "경기 관람",
     "attendanceEmpty": "이 길드에는 아직 매치 신청이 없습니다.",
-    "attendanceTotalSignups": "총 가입자 수",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} 하나 {# match signup} 기타 {# match signups} }",
+    "attendanceTotalSignups": "총 이벤트 수",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} 하나의 {# event} 기타 {# events} }",
     "attendanceRate": "출석",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} 녹음됨",
@@ -834,7 +836,8 @@
       "empty": "예정된 이벤트가 없습니다.",
       "heading": "**다가오는 행사**",
       "scrimLine": "• ** {name} ** (스크림) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "이벤트를 찾을 수 없습니다.",

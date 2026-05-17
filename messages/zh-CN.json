@@ -32,6 +32,7 @@
     "players": "球员",
     "members": "成员",
     "invites": "邀请",
+    "setup": "设置",
     "templates": "活动模板",
     "settings": "设置",
     "auditLog": "审计日志",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "管理事件",
     "manageEventsTitleNamed": "{guildName} — 管理事件",
     "newEvent": "+ 新活动",
+    "editEvent": "编辑事件",
     "newEventTitle": "新活动",
     "newEventTitleNamed": "{guildName} — 新活动",
     "backToEvents": "← 返回活动",
@@ -252,8 +254,8 @@
     "pageOf": "页{page} {total}",
     "attendanceHeading": "比赛出席人数",
     "attendanceEmpty": "该公会目前还没有人报名参加比赛。",
-    "attendanceTotalSignups": "注册总人数",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups}一个{# match signup}其他{# match signups} }",
+    "attendanceTotalSignups": "总事件数",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events}一个{# event}其他{# events} }",
     "attendanceRate": "出勤率",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded}记录",
@@ -834,7 +836,8 @@
       "empty": "暂无活动安排。",
       "heading": "**近期活动**",
       "scrimLine": "• ** {name} **（scrim）— {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} ： {s1} · {squad2Name} ： {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} ： {s1} · {squad2Name} ： {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "未找到事件。",

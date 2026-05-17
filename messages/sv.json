@@ -32,6 +32,7 @@
     "players": "Spelare",
     "members": "Medlemmar",
     "invites": "Inbjudningar",
+    "setup": "Installation",
     "templates": "Händelsemallar",
     "settings": "Inställningar",
     "auditLog": "Granskningslogg",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Hantera händelser",
     "manageEventsTitleNamed": "{guildName} — Hantera händelser",
     "newEvent": "+ Nytt evenemang",
+    "editEvent": "Redigera händelse",
     "newEventTitle": "Ny händelse",
     "newEventTitleNamed": "{guildName} — Nytt evenemang",
     "backToEvents": "← Tillbaka till händelserna",
@@ -252,8 +254,8 @@
     "pageOf": "Sida {page} av {total}",
     "attendanceHeading": "Matchnärvaro",
     "attendanceEmpty": "Inga matchanmälningar i detta gille ännu.",
-    "attendanceTotalSignups": "Totalt antal registreringar",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} en {# match signup} andra {# match signups} }",
+    "attendanceTotalSignups": "Totalt antal händelser",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} en {# event} andra {# events} }",
     "attendanceRate": "Närvaro",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} inspelad",
@@ -834,7 +836,8 @@
       "empty": "Inga kommande evenemang.",
       "heading": "**Kommande evenemang**",
       "scrimLine": "• ** {name} ** (snärfilm) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** — {when}"
     },
     "signup": {
       "eventNotFound": "Händelsen hittades inte.",

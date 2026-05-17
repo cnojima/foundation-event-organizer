@@ -32,6 +32,7 @@
     "players": "Гравці",
     "members": "Члени",
     "invites": "Запрошення",
+    "setup": "Налаштування",
     "templates": "Шаблони подій",
     "settings": "Налаштування",
     "auditLog": "Журнал аудиту",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Керування подіями",
     "manageEventsTitleNamed": "{guildName} — Керування подіями",
     "newEvent": "+ Нова подія",
+    "editEvent": "Редагувати подію",
     "newEventTitle": "Нова подія",
     "newEventTitleNamed": "{guildName} — Нова подія",
     "backToEvents": "← Назад до подій",
@@ -252,8 +254,8 @@
     "pageOf": "Сторінка {page} з {total}",
     "attendanceHeading": "Відвідуваність матчів",
     "attendanceEmpty": "У цій гільдії ще немає реєстрацій на матчі.",
-    "attendanceTotalSignups": "Загальна кількість реєстрацій",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} один {# match signup} інші {# match signups} }",
+    "attendanceTotalSignups": "Загальна кількість подій",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} одна {# event} інші {# events} }",
     "attendanceRate": "Відвідуваність",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} записаний",
@@ -834,7 +836,8 @@
       "empty": "Немає майбутніх подій.",
       "heading": "**Майбутні події**",
       "scrimLine": "• ** {name} ** (скрім) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** — {when}"
     },
     "signup": {
       "eventNotFound": "Подія не знайдена.",

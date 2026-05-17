@@ -32,6 +32,7 @@
     "players": "Oyuncular",
     "members": "Üyeler",
     "invites": "Davetiyeler",
+    "setup": "Kurmak",
     "templates": "Etkinlik Şablonları",
     "settings": "Ayarlar",
     "auditLog": "Denetim Günlüğü",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Etkinlikleri Yönetin",
     "manageEventsTitleNamed": "{guildName} — Etkinlikleri Yönet",
     "newEvent": "+ Yeni etkinlik",
+    "editEvent": "Etkinliği düzenle",
     "newEventTitle": "Yeni Etkinlik",
     "newEventTitleNamed": "{guildName} — Yeni Etkinlik",
     "backToEvents": "← Etkinliklere geri dön",
@@ -252,8 +254,8 @@
     "pageOf": "Sayfa {page} {total}",
     "attendanceHeading": "Maç seyirci sayısı",
     "attendanceEmpty": "Bu loncada henüz hiçbir maç kaydı yapılmadı.",
-    "attendanceTotalSignups": "Toplam kayıtlar",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} bir {# match signup} diğer {# match signups} }",
+    "attendanceTotalSignups": "Toplam etkinlikler",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} bir {# event} diğer {# events} }",
     "attendanceRate": "Katılım",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} kaydedildi",
@@ -834,7 +836,8 @@
       "empty": "Yakın zamanda herhangi bir etkinlik bulunmamaktadır.",
       "heading": "**Yaklaşan etkinlikler**",
       "scrimLine": "• ** {name} ** (perde) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "Etkinlik bulunamadı.",

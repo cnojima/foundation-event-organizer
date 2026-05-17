@@ -32,6 +32,7 @@
     "players": "Игроки",
     "members": "Члены",
     "invites": "Приглашения",
+    "setup": "Настраивать",
     "templates": "Шаблоны мероприятий",
     "settings": "Настройки",
     "auditLog": "Журнал аудита",
@@ -195,6 +196,7 @@
     "manageEventsTitle": "Управление мероприятиями",
     "manageEventsTitleNamed": "{guildName} — Управление мероприятиями",
     "newEvent": "+ Новое событие",
+    "editEvent": "Редактировать событие",
     "newEventTitle": "Новое событие",
     "newEventTitleNamed": "{guildName} — Новое событие",
     "backToEvents": "← Назад к событиям",
@@ -252,8 +254,8 @@
     "pageOf": "Страница {page} из {total}",
     "attendanceHeading": "Посещаемость матчей",
     "attendanceEmpty": "В этой гильдии пока нет регистрации на матчи.",
-    "attendanceTotalSignups": "Общее количество регистраций",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No match signups} один {# match signup} другие {# match signups} }",
+    "attendanceTotalSignups": "Всего событий",
+    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} одно {# event} другие {# events} }",
     "attendanceRate": "Посещаемость",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} записано",
@@ -834,7 +836,8 @@
       "empty": "Нет запланированных мероприятий.",
       "heading": "**Предстоящие события**",
       "scrimLine": "• ** {name} ** (тренировочная сетка) — {when}",
-      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}"
+      "matchLine": "• ** {name} ** — {squad1Name} : {s1} · {squad2Name} : {s2}",
+      "simpleLine": "• ** {name} ** - {when}"
     },
     "signup": {
       "eventNotFound": "Событие не найдено.",
