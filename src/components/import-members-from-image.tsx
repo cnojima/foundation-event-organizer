@@ -70,15 +70,26 @@ function ImportFromImageModal({
 }) {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [file, setFile] = useState<File | null>(null);
-  // Derived: creating the URL inside useMemo keeps the resource synced
-  // with `file` without a setState-in-effect. The cleanup effect below
-  // revokes the previous URL when `file` changes (and on unmount).
-  const previewUrl = useMemo(
-    () => (file ? URL.createObjectURL(file) : null),
-    [file]
+  // Multi-file picker: admins can upload several screenshots in one go
+  // (e.g. paged guild rosters where the in-game UI shows ~10 members at
+  // a time). Extract loops per file; results are merged and de-duplicated
+  // client-side so the same in-game name spanning two screenshots only
+  // produces one row.
+  const [files, setFiles] = useState<File[]>([]);
+  // Derived: one object URL per file, kept in sync via useMemo. The
+  // cleanup effect below revokes the entire batch when `files` changes
+  // (and on unmount) so we don't leak blobs.
+  const previewUrls = useMemo(
+    () => files.map((f) => URL.createObjectURL(f)),
+    [files]
   );
   const [extracting, setExtracting] = useState(false);
+  // Per-image extract progress (0-indexed file count). Drives the "Extracting
+  // 2/3…" hint during multi-file extract loops.
+  const [extractProgress, setExtractProgress] = useState<{
+    done: number;
+    total: number;
+  } | null>(null);
   const [importing, setImporting] = useState(false);
   const [extractError, setExtractError] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
@@ -89,6 +100,10 @@ function ImportFromImageModal({
   // Server-emitted soft warning when Discord matching couldn't run (no
   // intent, bot not in server, etc). Surfaced once near the result list.
   const [discordWarning, setDiscordWarning] = useState<string | null>(null);
+  // Lightbox flag for the "Example screenshot" thumbnail. The example is
+  // a static asset served from /public/sample/guild1.png — handy for
+  // first-time admins who haven't taken their own roster screenshot yet.
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   // Esc to close (when not mid-request).
   useEffect(() => {
@@ -99,11 +114,40 @@ function ImportFromImageModal({
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose, extracting, importing]);
 
-  // Revoke object URL when preview changes/unmounts so we don't leak blobs.
+  // Revoke object URLs when previews change/unmount so we don't leak blobs.
+  // Each URL is owned by exactly one render pass; the cleanup fires on the
+  // next pass (or unmount) with the URLs from the closure that opened them.
   useEffect(() => {
-    if (!previewUrl) return;
-    return () => URL.revokeObjectURL(previewUrl);
-  }, [previewUrl]);
+    return () => {
+      for (const url of previewUrls) URL.revokeObjectURL(url);
+    };
+  }, [previewUrls]);
+
+  // Replace the file list (used by the <input type="file" multiple> picker
+  // — matches native semantics: each picker selection replaces the prior
+  // batch).
+  function pickFiles(f: File[]) {
+    setFiles(f);
+    setNames([]);
+    setExtractError(null);
+    setImportError(null);
+  }
+
+  // Append files (used by clipboard paste — admins paste screenshots one
+  // by one and expect them to accumulate).
+  function appendFiles(more: File[]) {
+    setFiles((prev) => [...prev, ...more]);
+    setNames([]);
+    setExtractError(null);
+    setImportError(null);
+  }
+
+  function removeFile(index: number) {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+    setNames([]);
+    setExtractError(null);
+    setImportError(null);
+  }
 
   // Clipboard paste: when the modal is open, ⌘V/Ctrl+V anywhere outside an
   // editable input grabs an image from the clipboard. Skip paste if the
@@ -122,78 +166,108 @@ function ImportFromImageModal({
       }
       const items = e.clipboardData?.items;
       if (!items) return;
+      // Collect every pasted image (multi-image clipboard payloads are rare
+      // but legal — most browsers paste just one).
+      const pasted: File[] = [];
       for (const item of Array.from(items)) {
         if (item.kind === "file" && item.type.startsWith("image/")) {
           const blob = item.getAsFile();
           if (blob) {
-            e.preventDefault();
             // Give pasted blobs a stable filename so the upload form-data
             // field looks reasonable in server logs. Browsers default to
             // "image.png" / blank.
             const ext = blob.type.split("/")[1] ?? "png";
-            const renamed = new File([blob], `clipboard.${ext}`, {
-              type: blob.type,
-            });
-            pickFile(renamed);
-            return;
+            pasted.push(
+              new File([blob], `clipboard-${Date.now()}-${pasted.length}.${ext}`, {
+                type: blob.type,
+              })
+            );
           }
         }
+      }
+      if (pasted.length > 0) {
+        e.preventDefault();
+        appendFiles(pasted);
       }
     }
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
   }, [extracting, importing]);
 
-  function pickFile(f: File | null) {
-    setFile(f);
-    setNames([]);
-    setExtractError(null);
-    setImportError(null);
-  }
-
   async function extract() {
-    if (!file) return;
+    if (files.length === 0) return;
     setExtractError(null);
     setExtracting(true);
-    const fd = new FormData();
-    fd.append("image", file);
-    fd.append("guildId", guildId);
-    const res = await fetch("/api/admin/members/import-from-image", {
-      method: "POST",
-      body: fd,
-    });
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      setExtractError(data?.error ?? "Failed to extract names.");
-      setExtracting(false);
-      return;
+    setExtractProgress({ done: 0, total: files.length });
+
+    // Sequential per-image API calls. The server endpoint takes one image
+    // at a time; multi-image batching client-side is simpler than growing
+    // the API contract and keeps each request well under the upload size
+    // cap. Names + Discord matches are merged + de-duped across the batch
+    // so the same in-game name spanning two screenshots produces one row.
+    const merged: ExtractedName[] = [];
+    const seenNames = new Set<string>(); // normalized lowercase
+    const claimedDiscordIds = new Set<string>();
+    let firstWarning: string | null = null;
+
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      const fd = new FormData();
+      fd.append("image", f);
+      fd.append("guildId", guildId);
+      const res = await fetch("/api/admin/members/import-from-image", {
+        method: "POST",
+        body: fd,
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setExtractError(
+          files.length > 1
+            ? `Image ${i + 1}: ${data?.error ?? "extraction failed"}`
+            : (data?.error ?? "Failed to extract names.")
+        );
+        setExtracting(false);
+        setExtractProgress(null);
+        return;
+      }
+      const data = (await res.json()) as {
+        names: {
+          value: string;
+          duplicate: boolean;
+          discordMatch: DiscordMatch | null;
+        }[];
+        discordWarning: string | null;
+      };
+      if (!firstWarning && data.discordWarning) firstWarning = data.discordWarning;
+      for (const n of data.names) {
+        const key = n.value.trim().toLowerCase();
+        if (seenNames.has(key)) continue;
+        seenNames.add(key);
+        // First-claim-wins for Discord matches across the batch — prevents
+        // two different in-game names (from different screenshots) from
+        // both pointing at the same Discord account.
+        let discordMatch = n.discordMatch;
+        if (discordMatch && claimedDiscordIds.has(discordMatch.userId)) {
+          discordMatch = null;
+        }
+        if (discordMatch) claimedDiscordIds.add(discordMatch.userId);
+        merged.push({
+          id: `${Date.now()}-${merged.length}`,
+          value: n.value,
+          selected: !n.duplicate,
+          duplicate: n.duplicate,
+          discordMatch,
+          sendDm: !!discordMatch,
+          status: "pending",
+        });
+      }
+      setExtractProgress({ done: i + 1, total: files.length });
     }
-    const data = (await res.json()) as {
-      names: {
-        value: string;
-        duplicate: boolean;
-        discordMatch: DiscordMatch | null;
-      }[];
-      discordWarning: string | null;
-    };
-    setDiscordWarning(data.discordWarning ?? null);
-    setNames(
-      data.names.map((n, i) => ({
-        id: `${Date.now()}-${i}`,
-        value: n.value,
-        // Duplicates default to unchecked — admin has to opt in if they
-        // really want a duplicate row (rare, but possible if the existing
-        // member is a stub the admin meant to replace).
-        selected: !n.duplicate,
-        duplicate: n.duplicate,
-        discordMatch: n.discordMatch,
-        // Auto-DM defaults to ON for matched rows. Admins can untick per
-        // row before clicking Import.
-        sendDm: !!n.discordMatch,
-        status: "pending",
-      }))
-    );
+
+    setDiscordWarning(firstWarning);
+    setNames(merged);
     setExtracting(false);
+    setExtractProgress(null);
   }
 
   function updateName(id: string, value: string) {
@@ -407,28 +481,89 @@ function ImportFromImageModal({
               ref={fileInputRef}
               type="file"
               accept="image/png,image/jpeg,image/webp"
-              onChange={(e) => pickFile(e.target.files?.[0] ?? null)}
+              multiple
+              onChange={(e) =>
+                pickFiles(e.target.files ? Array.from(e.target.files) : [])
+              }
               disabled={extracting || importing}
               className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-violet-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-violet-700 dark:file:bg-violet-950/40 dark:file:text-violet-300"
             />
+            {/* Example thumbnail. Shows admins what a "good" upload looks
+                like before they take their own screenshot. Capped width
+                so it doesn't overstretch the modal regardless of the
+                source image's aspect ratio. Click expands to a lightbox
+                with the full-resolution version + "Example" heading. */}
+            {files.length === 0 && (
+              <div className="mt-3 flex items-start gap-3">
+                <button
+                  type="button"
+                  onClick={() => setLightboxOpen(true)}
+                  className="block cursor-zoom-in rounded border border-gray-200 transition-colors hover:border-violet-400 dark:border-gray-800 dark:hover:border-violet-700"
+                  aria-label="Open full-size example screenshot"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/sample/guild1.png"
+                    alt="Example guild-roster screenshot"
+                    className="h-32 w-auto rounded"
+                  />
+                </button>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  <strong className="block text-gray-700 dark:text-gray-300">
+                    Example screenshot
+                  </strong>
+                  A guild-roster page from the game with each member&apos;s
+                  in-game name visible. Click to see the full size.
+                </p>
+              </div>
+            )}
           </div>
 
-          {previewUrl && (
-            <div className="mb-4 flex items-start gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={previewUrl}
-                alt="Screenshot preview"
-                className="max-h-48 rounded border border-gray-200 dark:border-gray-800"
-              />
-              <button
-                type="button"
-                onClick={extract}
-                disabled={extracting || importing}
-                className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
-              >
-                {extracting ? "Extracting…" : names.length > 0 ? "Re-extract" : "Extract names"}
-              </button>
+          {files.length > 0 && (
+            <div className="mb-4">
+              <div className="mb-2 flex flex-wrap items-start gap-2">
+                {files.map((f, i) => (
+                  <div
+                    key={`${f.name}-${i}`}
+                    className="relative shrink-0"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={previewUrls[i]}
+                      alt={`Preview ${i + 1}`}
+                      className="h-24 w-auto max-w-32 rounded border border-gray-200 object-contain dark:border-gray-800"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeFile(i)}
+                      disabled={extracting || importing}
+                      aria-label={`Remove image ${i + 1}`}
+                      className="absolute -right-1.5 -top-1.5 flex size-5 items-center justify-center rounded-full bg-gray-800 text-xs font-bold text-white shadow-sm hover:bg-red-600 disabled:opacity-50 dark:bg-gray-200 dark:text-gray-900 dark:hover:bg-red-400"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={extract}
+                  disabled={extracting || importing}
+                  className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
+                >
+                  {extracting
+                    ? extractProgress
+                      ? `Extracting ${extractProgress.done}/${extractProgress.total}…`
+                      : "Extracting…"
+                    : names.length > 0
+                      ? `Re-extract ${files.length > 1 ? `(${files.length} images)` : ""}`
+                      : `Extract names ${files.length > 1 ? `(${files.length} images)` : ""}`}
+                </button>
+                <span className="text-xs text-gray-500 dark:text-gray-400">
+                  {files.length} image{files.length === 1 ? "" : "s"} queued
+                </span>
+              </div>
             </div>
           )}
 
@@ -644,6 +779,70 @@ function ImportFromImageModal({
               </button>
             )}
           </div>
+        </div>
+      </div>
+      {/* Lightbox layered above the import modal. Closes on backdrop click
+          or Esc — Esc handling is owned by the parent's existing listener,
+          which we extend below to fire when the lightbox is open. */}
+      {lightboxOpen && (
+        <ExampleLightbox onClose={() => setLightboxOpen(false)} />
+      )}
+    </div>
+  );
+}
+
+function ExampleLightbox({ onClose }: { onClose: () => void }) {
+  // Esc to close. Self-contained so the lightbox doesn't have to coordinate
+  // with the parent modal's existing key handler.
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[60] grid place-items-center bg-black/70 p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="example-lightbox-title"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="flex max-h-[90vh] w-full max-w-md flex-col rounded-lg bg-white shadow-xl dark:bg-gray-900">
+        <div className="flex items-center justify-between gap-3 border-b border-gray-200 p-3 dark:border-gray-800">
+          <h2
+            id="example-lightbox-title"
+            className="text-base font-bold text-gray-900 dark:text-gray-100"
+          >
+            Example
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-gray-800 dark:hover:text-gray-200"
+          >
+            <svg viewBox="0 0 20 20" fill="none" className="size-5" aria-hidden>
+              <path
+                d="M5 5l10 10M15 5L5 15"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="overflow-y-auto p-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/sample/guild1.png"
+            alt="Example guild-roster screenshot (full size)"
+            className="mx-auto h-auto max-h-[75vh] w-auto rounded"
+          />
         </div>
       </div>
     </div>
