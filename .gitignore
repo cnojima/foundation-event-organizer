@@ -20,6 +20,9 @@
 # production
 /build
 
+# db
+data/app.db*
+
 # misc
 .DS_Store
 *.pem
@@ -42,4 +45,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-data/app.db
