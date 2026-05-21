@@ -22,7 +22,8 @@ import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
 import { ScrimResultForm } from "@/components/scrim-result-form";
 import { scrimSideFor, viewerOutcome } from "@/lib/scrims";
-import { SquadRoster, sortRoster, bucketSquad } from "@/components/squad-roster";
+import { SquadRoster } from "@/components/squad-roster";
+import { sortRoster, bucketSquad } from "@/lib/roster-utils";
 
 export default async function AdminEventPage({
   params,

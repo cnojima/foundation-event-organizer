@@ -16,13 +16,8 @@ import { CalendarDownloadLink } from "@/components/calendar-download-link";
 import { DateTime } from "@/components/date-time";
 import { EventKindHero } from "@/components/event-kind-icon";
 import { scrimSideFor, viewerOutcome } from "@/lib/scrims";
-import {
-  bucketSquad,
-  SignupListItem,
-  sortRoster,
-  SquadRoster,
-  type SquadSignupRow,
-} from "@/components/squad-roster";
+import { SignupListItem, SquadRoster } from "@/components/squad-roster";
+import { bucketSquad, sortRoster, type SquadSignupRow } from "@/lib/roster-utils";
 
 type SignupRow = SquadSignupRow;
 
