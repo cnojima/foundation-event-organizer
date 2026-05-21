@@ -1,13 +1,15 @@
-import type { events, signups, users } from "@/db/schema";
-import { WAITLIST_ROLE } from "@/lib/waitlist";
+"use client";
+
+import { useState } from "react";
+import type { events } from "@/db/schema";
+import { type SquadSignupRow } from "@/lib/roster-utils";
 import { displayName } from "@/lib/display";
 import { UserAvatar } from "@/components/user-avatar";
 import { InfoTip } from "@/components/info-tip";
 
-export type SquadSignupRow = {
-  signup: typeof signups.$inferSelect;
-  user: typeof users.$inferSelect | null;
-};
+export type { SquadSignupRow };
+
+const WAITLIST_ROLE = "waitlist";
 
 type EventLike = Pick<
   typeof events.$inferSelect,
@@ -39,6 +41,15 @@ export function SquadRoster({
   guildTag: string | null;
   defaultOpen?: boolean;
 }) {
+  const [checked, setChecked] = useState<Set<string>>(() => new Set());
+
+  const toggle = (id: string) =>
+    setChecked((prev) => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+
   const leaders = rows.filter((r) => r.signup.assignedRole === "leader");
   const backups = rows.filter((r) => r.signup.assignedRole === "backup");
   const players = rows.filter(
@@ -48,6 +59,7 @@ export function SquadRoster({
       r.signup.assignedRole !== WAITLIST_ROLE
   );
   const slotCap = event.maxPlayers + event.maxBackups;
+  const checkedCount = checked.size;
 
   const effectiveSubtitle =
     subtitle ?? (squadNumber ? `Squad ${squadNumber}` : undefined);
@@ -68,7 +80,14 @@ export function SquadRoster({
           </div>
         </div>
         <div className="text-right text-xs font-semibold text-gray-700 dark:text-gray-300">
-          {rows.length} / {slotCap}
+          {checkedCount > 0 ? (
+            <span>
+              <span className="text-emerald-600 dark:text-emerald-400">{checkedCount}</span>
+              <span className="text-gray-400 dark:text-gray-500"> / {rows.length}</span>
+            </span>
+          ) : (
+            <span>{rows.length} / {slotCap}</span>
+          )}
         </div>
       </summary>
       <div className="border-t border-gray-100 dark:border-gray-800">
@@ -83,18 +102,24 @@ export function SquadRoster({
               rows={leaders}
               currentUserId={currentUserId}
               guildTag={guildTag}
+              checked={checked}
+              onToggle={toggle}
             />
             <RosterSection
               title="Players"
               rows={players}
               currentUserId={currentUserId}
               guildTag={guildTag}
+              checked={checked}
+              onToggle={toggle}
             />
             <RosterSection
               title="Backups"
               rows={backups}
               currentUserId={currentUserId}
               guildTag={guildTag}
+              checked={checked}
+              onToggle={toggle}
             />
           </>
         )}
@@ -127,13 +152,20 @@ function RosterSection({
   rows,
   currentUserId,
   guildTag,
+  checked,
+  onToggle,
 }: {
   title: string;
   rows: SquadSignupRow[];
   currentUserId: string | null;
   guildTag: string | null;
+  checked: Set<string>;
+  onToggle: (id: string) => void;
 }) {
   if (rows.length === 0) return null;
+  const sorted = [...rows].sort((a, b) =>
+    displayName(a.user, guildTag).localeCompare(displayName(b.user, guildTag))
+  );
   return (
     <div className="border-b border-gray-100 last:border-b-0 dark:border-gray-800">
       <div className="flex items-center justify-between bg-gray-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-500 dark:bg-gray-800/50 dark:text-gray-400">
@@ -141,13 +173,15 @@ function RosterSection({
         <span className="text-gray-400 dark:text-gray-500">{rows.length}</span>
       </div>
       <ul>
-        {rows.map((row) => (
+        {sorted.map((row) => (
           <li key={row.signup.id}>
             <SignupListItem
               row={row}
               isCurrentUser={row.user?.id === currentUserId}
               showRoleBadge={false}
               guildTag={guildTag}
+              isChecked={checked.has(row.signup.id)}
+              onToggle={() => onToggle(row.signup.id)}
             />
           </li>
         ))}
@@ -162,33 +196,66 @@ export function SignupListItem({
   isCurrentUser,
   showRoleBadge = true,
   guildTag,
+  isChecked,
+  onToggle,
 }: {
   row: SquadSignupRow;
   index?: number;
   isCurrentUser: boolean;
   showRoleBadge?: boolean;
   guildTag: string | null;
+  isChecked?: boolean;
+  onToggle?: () => void;
 }) {
   const { signup, user } = row;
   return (
     <div
-      className={`flex items-center gap-2 px-3 py-1.5 ${
-        isCurrentUser ? "bg-violet-50/50 dark:bg-violet-950/20" : ""
+      role={onToggle ? "button" : undefined}
+      tabIndex={onToggle ? 0 : undefined}
+      onClick={onToggle}
+      onKeyDown={onToggle ? (e) => (e.key === "Enter" || e.key === " ") && onToggle() : undefined}
+      className={`flex items-center gap-2 px-3 py-1.5 transition-colors ${
+        onToggle ? "cursor-pointer select-none" : ""
+      } ${
+        isChecked
+          ? "bg-emerald-50/60 dark:bg-emerald-950/20"
+          : isCurrentUser
+          ? "bg-violet-50/50 dark:bg-violet-950/20"
+          : "hover:bg-gray-50 dark:hover:bg-gray-800/40"
       }`}
     >
+      {onToggle && (
+        <span className={`flex size-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
+          isChecked
+            ? "border-emerald-500 bg-emerald-500 dark:border-emerald-400 dark:bg-emerald-500"
+            : "border-gray-300 dark:border-gray-600"
+        }`}>
+          {isChecked && (
+            <svg viewBox="0 0 10 8" fill="none" className="size-2.5">
+              <path d="M1 4l2.5 2.5L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          )}
+        </span>
+      )}
       {index !== undefined && (
         <span className="w-5 text-right text-xs font-mono text-gray-400 dark:text-gray-500">
           {index}
         </span>
       )}
-      <UserAvatar
-        size="size-6"
-        name={displayName(user, guildTag)}
-        image={user?.image}
-      />
-      <span className="flex-1 truncate text-sm text-gray-900 dark:text-gray-100">
+      <span className={isChecked ? "opacity-50" : undefined}>
+        <UserAvatar
+          size="size-6"
+          name={displayName(user, guildTag)}
+          image={user?.image}
+        />
+      </span>
+      <span className={`flex-1 truncate text-sm transition-colors ${
+        isChecked
+          ? "text-gray-400 line-through dark:text-gray-500"
+          : "text-gray-900 dark:text-gray-100"
+      }`}>
         {displayName(user, guildTag)}
-        {isCurrentUser && (
+        {isCurrentUser && !isChecked && (
           <span className="ml-1 text-xs text-violet-600 dark:text-violet-300">(you)</span>
         )}
       </span>
@@ -271,30 +338,4 @@ function Pill({
   );
 }
 
-// Helpers exported so other pages can group signups consistently — e.g. when
-// computing which squad bucket a row belongs to before passing rows into
-// <SquadRoster>.
-export function bucketSquad(s: SquadSignupRow): 1 | 2 | "waitlist" | null {
-  if (s.signup.assignedRole === WAITLIST_ROLE) return "waitlist";
-  if (s.signup.assignedSquad === 1 || s.signup.assignedSquad === 2) {
-    return s.signup.assignedSquad as 1 | 2;
-  }
-  if (s.signup.squad1Preference === 1) return 1;
-  if (s.signup.squad2Preference === 1) return 2;
-  return null;
-}
-
-function roleSortKey(role: string | null): number {
-  if (role === "leader") return 0;
-  if (role === "backup") return 2;
-  return 1;
-}
-
-export function sortRoster(rows: SquadSignupRow[]): SquadSignupRow[] {
-  return [...rows].sort((a, b) => {
-    const ra = roleSortKey(a.signup.assignedRole);
-    const rb = roleSortKey(b.signup.assignedRole);
-    if (ra !== rb) return ra - rb;
-    return a.signup.createdAt.localeCompare(b.signup.createdAt);
-  });
-}
+export { bucketSquad, sortRoster } from "@/lib/roster-utils";
