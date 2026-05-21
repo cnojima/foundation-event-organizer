@@ -28,6 +28,28 @@ export async function registerNode(): Promise<void> {
     // operator can investigate via logs.
   }
 
+  // Backfill email_hash + email_encrypted for users created before the
+  // PII-protection migration. Idempotent — only touches rows that have a
+  // plaintext email but no derived columns. If EMAIL_PEPPER /
+  // EMAIL_ENCRYPTION_KEY aren't configured yet, this no-ops with a
+  // warning so the boot still succeeds; the operator then sets the
+  // secrets and the next boot completes the backfill.
+  try {
+    const { backfillEmailHashes } = await import("@/lib/email-backfill");
+    const r = backfillEmailHashes();
+    if (r.configMissing) {
+      console.warn(
+        "[boot] email backfill skipped — EMAIL_PEPPER and/or EMAIL_ENCRYPTION_KEY are not set. Configure them as Fly secrets, then restart."
+      );
+    } else if (r.filled > 0 || r.skipped > 0) {
+      console.log(
+        `[boot] email backfill: filled=${r.filled} skipped=${r.skipped} of ${r.scanned} candidates`
+      );
+    }
+  } catch (err) {
+    console.error("[boot] email backfill failed:", err);
+  }
+
   // Backfill canonical event templates for guilds that predate the
   // event_templates table. Idempotent — skips any guild that already has
   // at least one template row, so re-running on boot is a near-no-op.

@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Logo } from "@/components/logo";
 import { SignInProviderButtons } from "@/components/signin-provider-buttons";
+import { SignInCredentialsForm } from "@/components/signin-credentials-form";
 
 export const metadata = {
   title: "Sign in",
@@ -82,8 +83,14 @@ export default async function SignInPage({
             </div>
           )}
 
-          <div className="mx-auto mt-8 max-w-sm">
+          <div className="mx-auto mt-8 max-w-sm space-y-4">
             <SignInProviderButtons callbackUrl={callbackUrl} />
+            <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-gray-400 dark:text-gray-500">
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-800" />
+              <span>or</span>
+              <div className="h-px flex-1 bg-gray-200 dark:bg-gray-800" />
+            </div>
+            <SignInCredentialsForm callbackUrl={callbackUrl} />
           </div>
         </div>
       </section>

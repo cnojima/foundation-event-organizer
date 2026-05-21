@@ -99,6 +99,13 @@
       "when": 1778948618065,
       "tag": "0013_add_attendance_only",
       "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "6",
+      "when": 1779166061515,
+      "tag": "0014_auth_credentials_and_hashed_email",
+      "breakpoints": true
     }
   ]
 }

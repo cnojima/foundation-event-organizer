@@ -13,9 +13,32 @@ export const users = sqliteTable("users", {
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
   name: text("name"),
+  // Plaintext email — retained as a transitional fallback during the
+  // hashed-email migration. New code paths read/write `email_hash` +
+  // `email_encrypted` instead; this column will be dropped in a follow-up
+  // migration once OAuth and credentials flows are verified end-to-end.
   email: text("email").unique(),
+  // Deterministic HMAC of the lowercased email with EMAIL_PEPPER. Indexed
+  // unique — used by the Auth.js adapter for getUserByEmail and by the
+  // stub-claim flow for email-merge. Plaintext is never stored once this
+  // is fully load-bearing.
+  emailHash: text("email_hash").unique(),
+  // AES-256-GCM ciphertext of the email under EMAIL_ENCRYPTION_KEY.
+  // Recoverable form, decrypted only by the password-reset endpoint so
+  // the user can be emailed a reset link. Format documented in
+  // src/lib/email-crypto.ts.
+  emailEncrypted: text("email_encrypted"),
   emailVerified: integer("emailVerified", { mode: "timestamp_ms" }),
   image: text("image"),
+  // Canonical sign-in identifier for the username/password auth flow.
+  // Distinct from `inGameName` (the player's in-game display name, which
+  // can be any unicode). Format rules in src/lib/username.ts: 3-30 chars,
+  // lowercase letters/digits/hyphen/underscore, no leading/trailing
+  // separators, not in the reserved list.
+  username: text("username").unique(),
+  // bcrypt hash of the user's password. Null = no credentials set; user
+  // signs in via OAuth only. Format is whatever bcryptjs's hash() emits.
+  passwordHash: text("password_hash"),
   inGameName: text("in_game_name"),
   // BCP-47 language tag (e.g., "en", "pt-BR", "zh-CN"). Null = use the
   // browser's Accept-Language header to pick a supported locale.
