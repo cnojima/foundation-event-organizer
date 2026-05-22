@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { events, scrimProposals, signups, users, guilds } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
 import { auth } from "@/auth";
+import { EventDescription } from "@/components/event-description";
 import { requireGuildAdminPage } from "@/lib/rbac";
 import { notFound, redirect } from "next/navigation";
 import { AdminSignupRow } from "@/components/admin-signup-row";
@@ -346,7 +347,7 @@ export default async function AdminEventPage({
         </div>
       )}
       {event.description && (
-        <p className="mb-6 text-sm text-gray-700 dark:text-gray-300">{event.description}</p>
+        <EventDescription text={event.description} className="mb-6 text-sm text-gray-700 dark:text-gray-300" />
       )}
 
       {hasRoster && (

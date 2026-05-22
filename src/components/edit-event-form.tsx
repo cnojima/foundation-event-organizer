@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 import { DatetimeLocalHint } from "@/components/datetime-local-hint";
@@ -172,13 +173,7 @@ export function EditEventForm({
         <label htmlFor="ev-description" className="block text-sm font-medium mb-1">
           Description
         </label>
-        <textarea
-          id="ev-description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={4}
-          className="w-full rounded border px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
-        />
+        <RichTextEditor value={description} onChange={setDescription} />
       </div>
 
       {/* Squads + slots — match and scrim only. Scrim has a single squad

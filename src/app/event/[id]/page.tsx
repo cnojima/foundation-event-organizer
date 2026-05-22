@@ -2,6 +2,7 @@ import { db } from "@/db";
 import { events, guilds, scrimProposals, signups, users } from "@/db/schema";
 import { eq, and, asc, isNull } from "drizzle-orm";
 import { UserAvatar } from "@/components/user-avatar";
+import { EventDescription } from "@/components/event-description";
 import { displayName } from "@/lib/display";
 import { AddWalkInsButton } from "@/components/attendance-section";
 import { type EligibleMember } from "@/components/admin-signup-on-behalf-form";
@@ -238,7 +239,7 @@ export default async function EventPage({
           )}
         </div>
         {event.description && (
-          <p className="text-gray-600 mb-4 dark:text-gray-400">{event.description}</p>
+          <EventDescription text={event.description} className="text-gray-600 mb-4 dark:text-gray-400" />
         )}
 
         <div className="grid grid-cols-2 gap-4 text-sm">

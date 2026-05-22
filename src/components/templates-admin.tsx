@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 import { WEEKDAY_LABELS } from "@/lib/event-templates-shared";
@@ -309,12 +310,7 @@ function TemplateForm({
 
       <div>
         <label className="block text-sm font-medium mb-1">Description</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={3}
-          className="w-full border rounded px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
-        />
+        <RichTextEditor value={description} onChange={setDescription} />
       </div>
 
       <div>

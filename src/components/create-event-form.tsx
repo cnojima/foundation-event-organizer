@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { RichTextEditor } from "@/components/rich-text-editor";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
@@ -110,7 +111,7 @@ export function CreateEventForm({
     const baseBody: Record<string, unknown> = {
       kind,
       name: form.get("name"),
-      description: form.get("description"),
+      description: description.trim() === "" ? null : description,
     };
     if (guildIdOverride) baseBody.guildId = guildIdOverride;
     const body =
@@ -230,14 +231,8 @@ export function CreateEventForm({
 
       <div>
         <label className="block text-sm font-medium mb-1">Description</label>
-        <textarea
-          name="description"
-          rows={3}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full border rounded px-3 py-2"
-        />
-        <FieldHelp>Optional. Plain text shown on the event page.</FieldHelp>
+        <RichTextEditor key={templateVersion} value={description} onChange={setDescription} />
+        <FieldHelp>Optional. Supports bold, italic, bullet lists, and tables.</FieldHelp>
       </div>
 
       {kind === "match" && (
