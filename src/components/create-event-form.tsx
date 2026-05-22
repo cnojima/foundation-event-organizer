@@ -201,7 +201,7 @@ export function CreateEventForm({
         </div>
       </div>
 
-      <div className={kind === "simple" ? "grid grid-cols-2 gap-4" : ""}>
+      <div className={kind === "simple" ? "grid gap-4 sm:grid-cols-2" : ""}>
         <div>
           <label className="block text-sm font-medium mb-1">Event Name *</label>
           <input
@@ -242,7 +242,7 @@ export function CreateEventForm({
 
       {kind === "match" && (
         <>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium mb-1">Signup Opens</label>
               <DatetimeLocalField
@@ -268,7 +268,7 @@ export function CreateEventForm({
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium mb-1">Squad 1 Name</label>
               <input
@@ -312,7 +312,7 @@ export function CreateEventForm({
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid gap-4 sm:grid-cols-3">
             <div>
               <label className="block text-sm font-medium mb-1">Max Players</label>
               <input
