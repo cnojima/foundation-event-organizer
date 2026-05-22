@@ -284,7 +284,7 @@ export default async function Home({
                         )}
                       </div>
                     {event.description && !isScrim && (
-                      <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{event.description}</p>
+                      <div className="mt-1 text-sm text-gray-600 dark:text-gray-400 prose prose-sm dark:prose-invert max-w-none" dangerouslySetInnerHTML={{ __html: event.description }} />
                     )}
                     {isSimple && event.gameTime && (
                       <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
