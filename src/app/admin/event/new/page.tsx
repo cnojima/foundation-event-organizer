@@ -54,6 +54,7 @@ export default async function NewEventPage({
     maxPlayers: r.maxPlayers,
     maxBackups: r.maxBackups,
     leadershipSlots: r.leadershipSlots,
+    durationMinutes: r.durationMinutes,
     signupOpensWeekday: r.signupOpensWeekday,
     signupOpensTimeUtc: r.signupOpensTimeUtc,
     signupClosesWeekday: r.signupClosesWeekday,

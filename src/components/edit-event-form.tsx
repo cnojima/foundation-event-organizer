@@ -4,6 +4,7 @@ import { useState } from "react";
 import { RichTextEditor } from "@/components/rich-text-editor";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
+import { DURATION_OPTIONS } from "@/lib/event-templates-shared";
 import { DatetimeLocalHint } from "@/components/datetime-local-hint";
 import { EventKindHero, type EventKindIconKind } from "@/components/event-kind-icon";
 
@@ -49,15 +50,6 @@ export type EditEventFormInitial = {
   squad2StartsAt: string | null;
 };
 
-const DURATION_OPTIONS = [
-  { label: "Not set", value: "" },
-  { label: "30 min", value: "30" },
-  { label: "1 hour", value: "60" },
-  { label: "1.5 hours", value: "90" },
-  { label: "2 hours", value: "120" },
-  { label: "3 hours", value: "180" },
-  { label: "4 hours", value: "240" },
-];
 
 export function EditEventForm({
   initial,

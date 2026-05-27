@@ -4,7 +4,7 @@ import { useState } from "react";
 import { RichTextEditor } from "@/components/rich-text-editor";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
-import { WEEKDAY_LABELS } from "@/lib/event-templates-shared";
+import { DURATION_OPTIONS, WEEKDAY_LABELS } from "@/lib/event-templates-shared";
 
 export type AdminTemplate = {
   id: string;
@@ -17,6 +17,7 @@ export type AdminTemplate = {
   maxPlayers: number;
   maxBackups: number;
   leadershipSlots: number;
+  durationMinutes: number | null;
   signupOpensWeekday: number | null;
   signupOpensTimeUtc: string | null;
   signupClosesWeekday: number | null;
@@ -150,6 +151,13 @@ function TemplateRow({
           <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
             Event name: <span className="font-medium">{template.eventName}</span>
           </p>
+          {template.durationMinutes && (
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+              Duration:{" "}
+              {DURATION_OPTIONS.find((o) => o.value === String(template.durationMinutes))?.label ??
+                `${template.durationMinutes} min`}
+            </p>
+          )}
           {template.kind === "match" && (
             <>
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
@@ -233,6 +241,9 @@ function TemplateForm({
       : ""
   );
   const [closesTime, setClosesTime] = useState(existing?.signupClosesTimeUtc ?? "");
+  const [durationMinutes, setDurationMinutes] = useState(
+    String(existing?.durationMinutes ?? "")
+  );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -251,6 +262,7 @@ function TemplateForm({
       maxPlayers: Number(maxPlayers) || 20,
       maxBackups: Number(maxBackups) || 10,
       leadershipSlots: Number(leadershipSlots) || 3,
+      durationMinutes: durationMinutes ? Number(durationMinutes) : null,
       signupOpensWeekday: opensWeekday === "" ? null : Number(opensWeekday),
       signupOpensTimeUtc: opensTime || null,
       signupClosesWeekday: closesWeekday === "" ? null : Number(closesWeekday),
@@ -323,6 +335,22 @@ function TemplateForm({
           <option value="match">Match (2 squads)</option>
           <option value="simple">Simple (info-only)</option>
         </select>
+      </div>
+
+      <div className="grid gap-3 md:grid-cols-2">
+        <div>
+          <label className="block text-sm font-medium mb-1">Duration</label>
+          <select
+            value={durationMinutes}
+            onChange={(e) => setDurationMinutes(e.target.value)}
+            className="w-full border rounded px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+          >
+            {DURATION_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+          <FieldHelp>Pre-fills the duration when this template is applied.</FieldHelp>
+        </div>
       </div>
 
       {kind === "match" && (

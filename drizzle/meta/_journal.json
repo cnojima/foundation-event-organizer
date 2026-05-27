@@ -127,6 +127,13 @@
       "when": 1779910000000,
       "tag": "0017_add_end_notification_kinds",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "6",
+      "when": 1779910000001,
+      "tag": "0018_add_duration_minutes_to_event_templates",
+      "breakpoints": true
     }
   ]
 }

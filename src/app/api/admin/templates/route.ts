@@ -101,6 +101,7 @@ type ParsedTemplateBody =
         maxPlayers: number;
         maxBackups: number;
         leadershipSlots: number;
+        durationMinutes: number | null;
         signupOpensWeekday: number | null;
         signupOpensTimeUtc: string | null;
         signupClosesWeekday: number | null;
@@ -158,6 +159,12 @@ export function parseTemplateBody(body: unknown): ParsedTemplateBody {
     3
   );
 
+  const durationRaw = b.durationMinutes;
+  const durationMinutes =
+    durationRaw == null || durationRaw === "" || durationRaw === 0
+      ? null
+      : clampInt(durationRaw, 1, 1440, 0) || null;
+
   const window = parseSignupWindow(b);
   if (!window.ok) return window;
 
@@ -173,6 +180,7 @@ export function parseTemplateBody(body: unknown): ParsedTemplateBody {
       maxPlayers,
       maxBackups,
       leadershipSlots,
+      durationMinutes,
       ...window.value,
     },
   };

@@ -7,19 +7,10 @@ import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 import { DatetimeLocalField } from "@/components/datetime-local-field";
 import type { AdminTemplate } from "@/components/templates-admin";
-import { snapSignupTime } from "@/lib/event-templates-shared";
+import { snapSignupTime, DURATION_OPTIONS } from "@/lib/event-templates-shared";
 
 type EventKind = "match" | "simple";
 
-const DURATION_OPTIONS = [
-  { label: "Not set", value: "" },
-  { label: "30 min", value: "30" },
-  { label: "1 hour", value: "60" },
-  { label: "1.5 hours", value: "90" },
-  { label: "2 hours", value: "120" },
-  { label: "3 hours", value: "180" },
-  { label: "4 hours", value: "240" },
-];
 
 // The next upcoming Saturday at 14:00 UTC. If today is Saturday and 14:00
 // UTC has already passed, returns the following Saturday. Pure UTC math,
@@ -111,6 +102,7 @@ export function CreateEventForm({
     setSignupClosesUtc(
       snapWindow(t.signupClosesWeekday, t.signupClosesTimeUtc, defaultStartUtc)
     );
+    setDurationMinutes(String(t.durationMinutes ?? ""));
     setTemplateVersion((v) => v + 1);
   }
 

@@ -57,6 +57,16 @@ export function isValidTimeUtc(s: unknown): s is string {
 }
 
 // Numeric field limits shared by API validation + admin form constraints.
+export const DURATION_OPTIONS = [
+  { label: "Not set", value: "" },
+  { label: "30 min", value: "30" },
+  { label: "1 hour", value: "60" },
+  { label: "1.5 hours", value: "90" },
+  { label: "2 hours", value: "120" },
+  { label: "3 hours", value: "180" },
+  { label: "4 hours", value: "240" },
+] as const;
+
 export const TEMPLATE_LIMITS = {
   templateName: { max: 100 },
   eventName: { max: 200 },

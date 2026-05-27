@@ -256,6 +256,7 @@ export const eventTemplates = sqliteTable("event_templates", {
   maxPlayers: integer("max_players").notNull().default(20),
   maxBackups: integer("max_backups").notNull().default(10),
   leadershipSlots: integer("leadership_slots").notNull().default(3),
+  durationMinutes: integer("duration_minutes"),
   // 0=Sunday, 1=Monday, ..., 6=Saturday. UTC.
   signupOpensWeekday: integer("signup_opens_weekday"),
   // "HH:MM" 24h UTC, e.g. "00:00".
