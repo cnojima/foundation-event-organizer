@@ -277,6 +277,7 @@ export const events = sqliteTable("events", {
   // use squad1StartsAt / squad2StartsAt instead so the two squads can play at
   // different times. Reminders, ICS export, and listings branch on `kind`.
   gameTime: text("game_time"), // ISO datetime string
+  durationMinutes: integer("duration_minutes"), // optional; drives ICS DTEND for all event kinds
   squad1StartsAt: text("squad1_starts_at"), // match only; nullable until scheduled
   squad2StartsAt: text("squad2_starts_at"), // match only; nullable until scheduled
   signupOpens: text("signup_opens"), // ISO datetime string
@@ -444,7 +445,7 @@ export const eventNotifications = sqliteTable(
     // squadmate a clickable voice-channel link. Stored on the same table so
     // (eventId, squad, kind) gives us one idempotency row per squad-kind.
     kind: text("kind", {
-      enum: ["day", "hour", "twenty_min", "voice_dm"],
+      enum: ["day", "hour", "twenty_min", "voice_dm", "end_thirty_min", "end_five_min"],
     }).notNull(),
     sentAt: text("sent_at").notNull(),
   },

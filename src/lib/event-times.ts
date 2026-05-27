@@ -4,7 +4,7 @@ import type { events } from "@/db/schema";
 
 type EventLike = Pick<
   typeof events.$inferSelect,
-  "kind" | "gameTime" | "squad1Name" | "squad2Name" | "squad1StartsAt" | "squad2StartsAt"
+  "kind" | "gameTime" | "durationMinutes" | "squad1Name" | "squad2Name" | "squad1StartsAt" | "squad2StartsAt"
 >;
 
 // Returns the earliest known start timestamp across simple/match/scrim modes,
@@ -20,15 +20,12 @@ export function effectiveStartIso(event: EventLike): string | null {
   return candidates.reduce((a, b) => (a < b ? a : b));
 }
 
-// Padding added to the latest scheduled time to decide when an event is
-// "past". Schema has no end-time column; this is the heuristic the home
-// page uses to move events into the archive tab. Long enough that a 2-3h
-// game session followed by post-game roster review still counts as
-// "current."
-const EVENT_DURATION_PADDING_MS = 6 * 60 * 60 * 1000;
+// Fallback padding when no duration is set. Long enough that a 2-3h game
+// session + post-game roster review still counts as "current."
+const EVENT_DURATION_FALLBACK_MS = 6 * 60 * 60 * 1000;
 
-// Latest scheduled time + padding, or null if nothing is scheduled (those
-// events are treated as upcoming — still being planned).
+// Latest scheduled time + duration (or fallback), or null if nothing is
+// scheduled (those events are treated as upcoming — still being planned).
 export function effectiveEndIso(event: EventLike): string | null {
   let latest: string | null = null;
   if (event.kind === "simple" || event.kind === "scrim") {
@@ -42,9 +39,10 @@ export function effectiveEndIso(event: EventLike): string | null {
     }
   }
   if (!latest) return null;
-  return new Date(
-    new Date(latest).getTime() + EVENT_DURATION_PADDING_MS
-  ).toISOString();
+  const durationMs = event.durationMinutes
+    ? event.durationMinutes * 60_000
+    : EVENT_DURATION_FALLBACK_MS;
+  return new Date(new Date(latest).getTime() + durationMs).toISOString();
 }
 
 // Has this event's scheduled window (+ padding) already passed?

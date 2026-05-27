@@ -2,25 +2,40 @@ import { db } from "@/db";
 import { events, eventNotifications, guilds } from "@/db/schema";
 import { and, eq, gt, inArray, isNotNull, isNull, lte, or } from "drizzle-orm";
 
-export type NotificationKind = "day" | "hour" | "twenty_min" | "voice_dm";
+export type NotificationKind =
+  | "day"
+  | "hour"
+  | "twenty_min"
+  | "voice_dm"
+  | "end_thirty_min"
+  | "end_five_min";
 
 // "Chat" kinds post into the guild's text channel; the poller picks the
 // *smallest* fitting chat kind per cycle (so T-10 reports "twenty_min", not
-// "hour"). "voice_dm" is independent — see findPending(): a single squad at
-// T-10 can emit both a twenty_min channel post AND a voice_dm at the same
-// time, gated by separate idempotency rows.
-type ChatKind = Exclude<NotificationKind, "voice_dm">;
+// "hour"). "voice_dm" and end-time kinds are independent.
+type ChatKind = Exclude<NotificationKind, "voice_dm" | "end_thirty_min" | "end_five_min">;
 
+// Windows are exactly equal to their target times: with 1-min polling the
+// notification fires within 1 minute of the named threshold.
 const CHAT_WINDOW_MS: Record<ChatKind, number> = {
-  twenty_min: 25 * 60 * 1000,
-  hour: 75 * 60 * 1000,
-  day: 25 * 60 * 60 * 1000,
+  twenty_min: 20 * 60 * 1000,
+  hour: 60 * 60 * 1000,
+  day: 24 * 60 * 60 * 1000,
 };
-// Voice DMs aim for T-10; we accept anywhere in [0, 15] min so a missed poll
-// (bot restart) still fires the reminder before kickoff rather than dropping
-// it. Window is intentionally narrow — the T-20 channel post already gave
-// broad notice; this one is a last-minute personal nudge.
-const VOICE_DM_WINDOW_MS = 15 * 60 * 1000;
+const VOICE_DM_WINDOW_MS = 10 * 60 * 1000;
+
+type EndKind = "end_five_min" | "end_thirty_min";
+const END_CHAT_WINDOW_MS: Record<EndKind, number> = {
+  end_five_min: 5 * 60 * 1000,
+  end_thirty_min: 30 * 60 * 1000,
+};
+
+export function pickEndKind(msUntilEnd: number): EndKind | null {
+  if (msUntilEnd <= 0) return null;
+  if (msUntilEnd <= END_CHAT_WINDOW_MS.end_five_min) return "end_five_min";
+  if (msUntilEnd <= END_CHAT_WINDOW_MS.end_thirty_min) return "end_thirty_min";
+  return null;
+}
 
 export function pickKind(msUntilStart: number): ChatKind | null {
   if (msUntilStart <= 0) return null;
@@ -52,6 +67,7 @@ export type NotificationTarget = {
   squadNumber: 0 | 1 | 2;
   squadLabel: string | null;
   startsAt: string;
+  endsAt: string | null;
   guildId: string;
   channelId: string;
   kind: NotificationKind;
@@ -65,6 +81,7 @@ type CandidateRow = {
   channelId: string | null;
   kind: "match" | "simple" | "scrim";
   gameTime: string | null;
+  durationMinutes: number | null;
   squad1Name: string;
   squad2Name: string;
   squad1StartsAt: string | null;
@@ -76,6 +93,12 @@ type CandidateRow = {
 export async function findPending(now = new Date()): Promise<NotificationTarget[]> {
   const horizonIso = new Date(now.getTime() + CHAT_WINDOW_MS.day).toISOString();
   const nowIso = now.toISOString();
+  // Look back far enough to catch any in-progress event whose end time is
+  // still approaching. Max duration is 1440 min; add the largest end-reminder
+  // window (35 min) as a buffer.
+  const endLookbackIso = new Date(
+    now.getTime() - (1440 + 35) * 60_000
+  ).toISOString();
 
   const rows: CandidateRow[] = await db
     .select({
@@ -85,6 +108,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
       channelId: guilds.discordChannelId,
       kind: events.kind,
       gameTime: events.gameTime,
+      durationMinutes: events.durationMinutes,
       squad1Name: events.squad1Name,
       squad2Name: events.squad2Name,
       squad1StartsAt: events.squad1StartsAt,
@@ -99,8 +123,8 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
         isNull(events.deletedAt),
         isNull(guilds.deletedAt),
         isNotNull(guilds.discordChannelId),
-        // At least one start timestamp lands in the day window.
         or(
+          // Upcoming start: within the day window.
           and(
             isNotNull(events.gameTime),
             gt(events.gameTime, nowIso),
@@ -115,6 +139,25 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
             isNotNull(events.squad2StartsAt),
             gt(events.squad2StartsAt, nowIso),
             lte(events.squad2StartsAt, horizonIso)
+          ),
+          // In-progress: started recently and has a duration (end reminders).
+          and(
+            isNotNull(events.durationMinutes),
+            isNotNull(events.gameTime),
+            gt(events.gameTime, endLookbackIso),
+            lte(events.gameTime, nowIso)
+          ),
+          and(
+            isNotNull(events.durationMinutes),
+            isNotNull(events.squad1StartsAt),
+            gt(events.squad1StartsAt, endLookbackIso),
+            lte(events.squad1StartsAt, nowIso)
+          ),
+          and(
+            isNotNull(events.durationMinutes),
+            isNotNull(events.squad2StartsAt),
+            gt(events.squad2StartsAt, endLookbackIso),
+            lte(events.squad2StartsAt, nowIso)
           )
         )
       )
@@ -181,9 +224,14 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
         : // simple & scrim share one start time and one announcement.
           [{ squadNumber: 0, squadLabel: null, startsAt: row.gameTime, voiceChannelId: null }];
 
+    const endsAtMs = row.durationMinutes ? row.durationMinutes * 60_000 : null;
+
     for (const c of candidates) {
       if (!c.startsAt) continue;
       const ms = new Date(c.startsAt).getTime() - now.getTime();
+      const endsAt = endsAtMs
+        ? new Date(new Date(c.startsAt).getTime() + endsAtMs).toISOString()
+        : null;
 
       const chatKind = pickKind(ms);
       if (chatKind && !alreadySent(row.eventId, c.squadNumber, chatKind)) {
@@ -193,6 +241,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
           squadNumber: c.squadNumber,
           squadLabel: c.squadLabel,
           startsAt: c.startsAt,
+          endsAt,
           guildId: row.guildId,
           channelId: row.channelId,
           kind: chatKind,
@@ -216,11 +265,32 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
           squadNumber: c.squadNumber,
           squadLabel: c.squadLabel,
           startsAt: c.startsAt,
+          endsAt,
           guildId: row.guildId,
           channelId: row.channelId,
           kind: "voice_dm",
           voiceChannelId: c.voiceChannelId,
         });
+      }
+
+      // End-time reminders: only when the event has a duration set.
+      if (endsAt) {
+        const msUntilEnd = new Date(endsAt).getTime() - now.getTime();
+        const endKind = pickEndKind(msUntilEnd);
+        if (endKind && !alreadySent(row.eventId, c.squadNumber, endKind)) {
+          targets.push({
+            eventId: row.eventId,
+            eventName: row.eventName,
+            squadNumber: c.squadNumber,
+            squadLabel: c.squadLabel,
+            startsAt: c.startsAt,
+            endsAt,
+            guildId: row.guildId,
+            channelId: row.channelId,
+            kind: endKind,
+            voiceChannelId: null,
+          });
+        }
       }
     }
   }
@@ -263,12 +333,26 @@ export function recordSent(
 }
 
 export function buildMessage(t: NotificationTarget, now = new Date()): string {
-  const ms = new Date(t.startsAt).getTime() - now.getTime();
-  const when = formatTimeUntil(ms);
   const subject = t.squadLabel
     ? `${t.eventName} — ${t.squadLabel}`
     : t.eventName;
+  if (t.kind === "end_thirty_min" || t.kind === "end_five_min") {
+    const ms = t.endsAt ? new Date(t.endsAt).getTime() - now.getTime() : 0;
+    const when = formatTimeUntilEnd(ms);
+    return `@everyone **${subject}** ${when}.`;
+  }
+  const ms = new Date(t.startsAt).getTime() - now.getTime();
+  const when = formatTimeUntil(ms);
   return `@everyone **${subject}** ${when}.`;
+}
+
+function formatTimeUntilEnd(msUntilEnd: number): string {
+  const minutes = Math.round(msUntilEnd / (60 * 1000));
+  if (minutes <= 1) return "ending now";
+  if (minutes < 60) return `ends in ${minutes} minutes`;
+  const hours = Math.round(msUntilEnd / (60 * 60 * 1000));
+  if (hours === 1) return "ends in 1 hour";
+  return `ends in ${hours} hours`;
 }
 
 // Generic translator callback (decoupled from any specific i18n backend).

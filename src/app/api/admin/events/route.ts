@@ -38,6 +38,8 @@ export async function POST(req: Request) {
     description: body.description || null,
     // Simple events use gameTime; match events use squad1/squad2 startsAt.
     gameTime: kind === "simple" ? toIso(body.gameTime) : null,
+    durationMinutes:
+      body.durationMinutes != null ? Math.round(Number(body.durationMinutes)) || null : null,
     squad1StartsAt: kind === "match" ? toIso(body.squad1StartsAt) : null,
     squad2StartsAt: kind === "match" ? toIso(body.squad2StartsAt) : null,
     signupOpens: toIso(body.signupOpens),

@@ -11,6 +11,16 @@ import { snapSignupTime } from "@/lib/event-templates-shared";
 
 type EventKind = "match" | "simple";
 
+const DURATION_OPTIONS = [
+  { label: "Not set", value: "" },
+  { label: "30 min", value: "30" },
+  { label: "1 hour", value: "60" },
+  { label: "1.5 hours", value: "90" },
+  { label: "2 hours", value: "120" },
+  { label: "3 hours", value: "180" },
+  { label: "4 hours", value: "240" },
+];
+
 // The next upcoming Saturday at 14:00 UTC. If today is Saturday and 14:00
 // UTC has already passed, returns the following Saturday. Pure UTC math,
 // so the answer is the same regardless of the caller's timezone.
@@ -83,6 +93,7 @@ export function CreateEventForm({
   // components remount with the new defaultUtcIso. They manage their own
   // internal state, so a key-change is the simplest way to "reset" them.
   const [templateVersion, setTemplateVersion] = useState(0);
+  const [durationMinutes, setDurationMinutes] = useState("");
 
   function applyTemplate(t: AdminTemplate) {
     setSelectedTemplateId(t.id);
@@ -112,6 +123,7 @@ export function CreateEventForm({
       kind,
       name: form.get("name"),
       description: description.trim() === "" ? null : description,
+      durationMinutes: durationMinutes ? Number(durationMinutes) : null,
     };
     if (guildIdOverride) baseBody.guildId = guildIdOverride;
     const body =
@@ -227,6 +239,22 @@ export function CreateEventForm({
             </FieldHelp>
           </div>
         )}
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label className="block text-sm font-medium mb-1">Duration</label>
+          <select
+            value={durationMinutes}
+            onChange={(e) => setDurationMinutes(e.target.value)}
+            className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+          >
+            {DURATION_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+          <FieldHelp>How long the event runs. Sets the end time in calendar exports and determines when the event moves to the Past tab.</FieldHelp>
+        </div>
       </div>
 
       <div>

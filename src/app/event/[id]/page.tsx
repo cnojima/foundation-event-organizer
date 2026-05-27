@@ -185,6 +185,14 @@ export default async function EventPage({
           }))
       : [];
 
+  const endsAt = (startIso: string | null) =>
+    startIso && event.durationMinutes
+      ? new Date(new Date(startIso).getTime() + event.durationMinutes * 60_000).toISOString()
+      : null;
+  const gameEndsAt = endsAt(event.gameTime);
+  const squad1EndsAt = endsAt(event.squad1StartsAt);
+  const squad2EndsAt = endsAt(event.squad2StartsAt);
+
   return (
     <main className="max-w-5xl mx-auto p-6">
       {isDeleted && event.deletedAt && (
@@ -249,6 +257,12 @@ export default async function EventPage({
               <DateTime iso={event.gameTime} />
             </div>
           )}
+          {!isMatch && !isScrim && gameEndsAt && (
+            <div>
+              <span className="font-medium">End Time:</span>{" "}
+              <DateTime iso={gameEndsAt} />
+            </div>
+          )}
           {isScrim && (
             <>
               {event.gameTime && (
@@ -279,21 +293,33 @@ export default async function EventPage({
           {isMatch && (
             <>
               <div>
-                <span className="font-medium">{event.squad1Name}:</span>{" "}
+                <span className="font-medium">{event.squad1Name} starts:</span>{" "}
                 {event.squad1StartsAt ? (
                   <DateTime iso={event.squad1StartsAt} />
                 ) : (
                   <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
                 )}
               </div>
+              {squad1EndsAt && (
+                <div>
+                  <span className="font-medium">{event.squad1Name} ends:</span>{" "}
+                  <DateTime iso={squad1EndsAt} />
+                </div>
+              )}
               <div>
-                <span className="font-medium">{event.squad2Name}:</span>{" "}
+                <span className="font-medium">{event.squad2Name} starts:</span>{" "}
                 {event.squad2StartsAt ? (
                   <DateTime iso={event.squad2StartsAt} />
                 ) : (
                   <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
                 )}
               </div>
+              {squad2EndsAt && (
+                <div>
+                  <span className="font-medium">{event.squad2Name} ends:</span>{" "}
+                  <DateTime iso={squad2EndsAt} />
+                </div>
+              )}
             </>
           )}
           {isMatch && event.signupCloses && (

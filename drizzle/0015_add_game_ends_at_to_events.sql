@@ -1,0 +1,1 @@
+ALTER TABLE `events` ADD `game_ends_at` text;

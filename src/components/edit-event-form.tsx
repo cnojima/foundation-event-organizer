@@ -42,11 +42,22 @@ export type EditEventFormInitial = {
   maxBackups: number;
   leadershipSlots: number;
   gameTime: string | null;
+  durationMinutes: number | null;
   signupOpens: string | null;
   signupCloses: string | null;
   squad1StartsAt: string | null;
   squad2StartsAt: string | null;
 };
+
+const DURATION_OPTIONS = [
+  { label: "Not set", value: "" },
+  { label: "30 min", value: "30" },
+  { label: "1 hour", value: "60" },
+  { label: "1.5 hours", value: "90" },
+  { label: "2 hours", value: "120" },
+  { label: "3 hours", value: "180" },
+  { label: "4 hours", value: "240" },
+];
 
 export function EditEventForm({
   initial,
@@ -74,6 +85,9 @@ export function EditEventForm({
     String(initial.leadershipSlots)
   );
   const [gameTime, setGameTime] = useState(isoToUtcInput(initial.gameTime));
+  const [durationMinutes, setDurationMinutes] = useState(
+    String(initial.durationMinutes ?? "")
+  );
   const [signupOpens, setSignupOpens] = useState(isoToUtcInput(initial.signupOpens));
   const [signupCloses, setSignupCloses] = useState(
     isoToUtcInput(initial.signupCloses)
@@ -97,6 +111,7 @@ export function EditEventForm({
     const body: Record<string, string | number | null> = {
       name,
       description: description.trim() === "" ? null : description.trim(),
+      durationMinutes: durationMinutes ? Number(durationMinutes) : null,
     };
     if (isMatch || isScrim) {
       body.squad1Name = squad1Name;
@@ -174,6 +189,25 @@ export function EditEventForm({
           Description
         </label>
         <RichTextEditor value={description} onChange={setDescription} />
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="ev-duration" className="block text-sm font-medium mb-1">
+            Duration
+          </label>
+          <select
+            id="ev-duration"
+            value={durationMinutes}
+            onChange={(e) => setDurationMinutes(e.target.value)}
+            className="w-full rounded border px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+          >
+            {DURATION_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>{o.label}</option>
+            ))}
+          </select>
+          <FieldHelp>How long the event runs. Sets the end time in calendar exports and determines when the event moves to the Past tab.</FieldHelp>
+        </div>
       </div>
 
       {/* Squads + slots — match and scrim only. Scrim has a single squad

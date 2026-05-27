@@ -57,6 +57,7 @@ export default async function EditEventPage({
     maxBackups: event.maxBackups,
     leadershipSlots: event.leadershipSlots,
     gameTime: event.gameTime,
+    durationMinutes: event.durationMinutes,
     signupOpens: event.signupOpens,
     signupCloses: event.signupCloses,
     squad1StartsAt: event.squad1StartsAt,

@@ -182,6 +182,14 @@ export default async function AdminEventPage({
       image: s.user?.image ?? null,
     }));
 
+  const endsAt = (startIso: string | null) =>
+    startIso && event.durationMinutes
+      ? new Date(new Date(startIso).getTime() + event.durationMinutes * 60_000).toISOString()
+      : null;
+  const gameEndsAt = endsAt(event.gameTime);
+  const squad1EndsAt = endsAt(event.squad1StartsAt);
+  const squad2EndsAt = endsAt(event.squad2StartsAt);
+
   return (
     <main className="max-w-6xl mx-auto p-6">
       {actingGuild && (
@@ -233,6 +241,11 @@ export default async function AdminEventPage({
             Starts: <DateTime iso={event.gameTime} />
           </span>
         )}
+        {!isMatch && !isScrim && gameEndsAt && (
+          <span>
+            Ends: <DateTime iso={gameEndsAt} />
+          </span>
+        )}
         {isScrim && (
           <>
             <span>
@@ -267,6 +280,9 @@ export default async function AdminEventPage({
               ) : (
                 <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
               )}
+              {squad1EndsAt && (
+                <> – <DateTime iso={squad1EndsAt} /></>
+              )}
             </span>
             <span>
               {event.squad2Name}:{" "}
@@ -274,6 +290,9 @@ export default async function AdminEventPage({
                 <DateTime iso={event.squad2StartsAt} />
               ) : (
                 <span className="font-mono text-gray-400 dark:text-gray-500">TBD</span>
+              )}
+              {squad2EndsAt && (
+                <> – <DateTime iso={squad2EndsAt} /></>
               )}
             </span>
           </>

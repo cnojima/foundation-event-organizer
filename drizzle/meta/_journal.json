@@ -106,6 +106,27 @@
       "when": 1779166061515,
       "tag": "0014_auth_credentials_and_hashed_email",
       "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "6",
+      "when": 1779909316403,
+      "tag": "0015_add_game_ends_at_to_events",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "6",
+      "when": 1779909999999,
+      "tag": "0016_replace_game_ends_at_with_duration_minutes",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "6",
+      "when": 1779910000000,
+      "tag": "0017_add_end_notification_kinds",
+      "breakpoints": true
     }
   ]
 }

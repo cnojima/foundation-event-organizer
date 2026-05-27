@@ -36,9 +36,8 @@ import {
 } from "@/bot/i18n";
 import { isSupportedLocale, locales, localeLabels } from "@/i18n/config";
 
-// 5-minute poll cadence — small enough to never miss a notification window
-// (smallest window is 25 min wide), large enough that DB pressure is trivial.
-const POLL_INTERVAL_MS = 5 * 60 * 1000;
+// 1-minute poll cadence — matches the 1-minute notification windows.
+const POLL_INTERVAL_MS = 60 * 1000;
 
 // Operator-visible heartbeat channel. Each poll cycle posts a one-line
 // summary here so we can spot silent gateway drops (the bot looks alive

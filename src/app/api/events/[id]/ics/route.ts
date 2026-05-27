@@ -20,27 +20,34 @@ export async function GET(
   // VEVENT for gameTime. UIDs are squad-suffixed so calendars treat them as
   // independent entries (and updates per squad don't clobber each other).
   const ics: IcsEvent[] = [];
+  const durationMs = event.durationMinutes ? event.durationMinutes * 60_000 : null;
   if (event.kind === "match") {
     if (event.squad1StartsAt) {
+      const start = new Date(event.squad1StartsAt);
       ics.push({
         uid: `${event.id}-squad1@shadowfront.local`,
-        start: new Date(event.squad1StartsAt),
+        start,
+        end: durationMs ? new Date(start.getTime() + durationMs) : undefined,
         title: `${event.name} — ${event.squad1Name}`,
         description: event.description ?? undefined,
       });
     }
     if (event.squad2StartsAt) {
+      const start = new Date(event.squad2StartsAt);
       ics.push({
         uid: `${event.id}-squad2@shadowfront.local`,
-        start: new Date(event.squad2StartsAt),
+        start,
+        end: durationMs ? new Date(start.getTime() + durationMs) : undefined,
         title: `${event.name} — ${event.squad2Name}`,
         description: event.description ?? undefined,
       });
     }
   } else if (event.gameTime) {
+    const start = new Date(event.gameTime);
     ics.push({
       uid: `${event.id}@shadowfront.local`,
-      start: new Date(event.gameTime),
+      start,
+      end: durationMs ? new Date(start.getTime() + durationMs) : undefined,
       title: event.name,
       description: event.description ?? undefined,
     });

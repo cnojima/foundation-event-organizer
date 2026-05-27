@@ -136,6 +136,22 @@ export async function PATCH(
     updates[field] = n;
   }
 
+  if ("durationMinutes" in body) {
+    const raw = body.durationMinutes;
+    if (raw === null || raw === "" || raw === 0) {
+      updates.durationMinutes = null;
+    } else {
+      const n = typeof raw === "number" ? raw : Number(raw);
+      if (!Number.isInteger(n) || n < 1 || n > 1440) {
+        return NextResponse.json(
+          { error: "durationMinutes must be an integer in [1, 1440] or null." },
+          { status: 400 }
+        );
+      }
+      updates.durationMinutes = n;
+    }
+  }
+
   if (Object.keys(updates).length === 0) {
     return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
   }
