@@ -267,6 +267,35 @@ export const eventTemplates = sqliteTable("event_templates", {
   deletedAt: text("deleted_at"),
 });
 
+// Server-wide events created by super-admins. Publishing creates one mirrored
+// `events` row per guild on the target server (linked via events.globalEventId).
+export const globalEvents = sqliteTable("global_events", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  name: text("name").notNull(),
+  description: text("description"),
+  kind: text("kind", { enum: ["match", "simple"] }).notNull().default("match"),
+  serverNumber: integer("server_number").notNull(),
+  gameTime: text("game_time"),
+  durationMinutes: integer("duration_minutes"),
+  squad1StartsAt: text("squad1_starts_at"),
+  squad2StartsAt: text("squad2_starts_at"),
+  signupOpens: text("signup_opens"),
+  signupCloses: text("signup_closes"),
+  squad1Name: text("squad1_name").notNull().default("Squad 1"),
+  squad2Name: text("squad2_name").notNull().default("Squad 2"),
+  maxPlayers: integer("max_players").notNull().default(20),
+  maxBackups: integer("max_backups").notNull().default(10),
+  leadershipSlots: integer("leadership_slots").notNull().default(3),
+  createdByUserId: text("created_by_user_id").references(
+    (): AnySQLiteColumn => users.id,
+    { onDelete: "set null" }
+  ),
+  createdAt: text("created_at").notNull(),
+  deletedAt: text("deleted_at"),
+});
+
 export const events = sqliteTable("events", {
   id: text("id").primaryKey(),
   guildId: text("guild_id")
@@ -300,6 +329,13 @@ export const events = sqliteTable("events", {
   scrimmageId: text("scrimmage_id"),
   opposingGuildId: text("opposing_guild_id").references(
     (): AnySQLiteColumn => guilds.id,
+    { onDelete: "set null" }
+  ),
+  // Set when this event was created by publishing a global event. Null for
+  // regular guild events. onDelete: set null preserves the row for attendance
+  // history if the global event is deleted.
+  globalEventId: text("global_event_id").references(
+    (): AnySQLiteColumn => globalEvents.id,
     { onDelete: "set null" }
   ),
 });

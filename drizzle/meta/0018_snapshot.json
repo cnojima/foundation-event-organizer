@@ -1,8 +1,8 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "0016_snapshot",
-  "prevId": "6241040f-b182-4db9-88a1-75a2f7243b3f",
+  "id": "651775ff-09b8-5246-9cb6-f49bc1a3a1fb",
+  "prevId": "e5aa3a4e-2bea-5056-bf51-d501be9105f4",
   "tables": {
     "accounts": {
       "name": "accounts",
@@ -553,15 +553,7 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false,
-          "enumValues": [
-            "day",
-            "hour",
-            "twenty_min",
-            "voice_dm",
-            "end_thirty_min",
-            "end_five_min"
-          ]
+          "autoincrement": false
         },
         "sent_at": {
           "name": "sent_at",

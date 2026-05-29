@@ -277,6 +277,11 @@ export default async function Home({
                         >
                           {event.name}
                         </h2>
+                        {event.globalEventId && (
+                          <span className="rounded border border-amber-300 bg-amber-50 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-400">
+                            Global
+                          </span>
+                        )}
                         {isDeleted && (
                           <span className="rounded border border-gray-300 bg-gray-100 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
                             Deleted

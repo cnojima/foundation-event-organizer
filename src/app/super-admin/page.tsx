@@ -49,14 +49,23 @@ export default async function SuperAdminPage() {
         <Stat label="Super-admins" value={Number(superAdminCountRow?.count ?? 0)} />
       </div>
 
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">Guilds</h2>
+      <div className="mb-4 flex gap-3">
+        <Link
+          href="/super-admin/global-events"
+          className="rounded border border-violet-300 bg-violet-50 px-3 py-2 text-sm font-semibold text-violet-700 hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
+        >
+          Global Events →
+        </Link>
         <Link
           href="/super-admin/users"
-          className="text-sm font-semibold text-violet-700 hover:text-violet-900 dark:text-violet-300 dark:hover:text-violet-200"
+          className="rounded border border-gray-300 bg-white px-3 py-2 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
         >
           Manage super-admins →
         </Link>
+      </div>
+
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Guilds</h2>
       </div>
 
       <div className="space-y-2">

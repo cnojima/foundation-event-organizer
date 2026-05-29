@@ -8,17 +8,20 @@ export function DeleteEventButton({
   eventId,
   eventName,
   signupCount,
+  isGlobalCopy = false,
 }: {
   eventId: string;
   eventName: string;
   signupCount: number;
+  isGlobalCopy?: boolean;
 }) {
   const router = useRouter();
   const [deleting, setDeleting] = useState(false);
 
   async function handleDelete() {
-    const message =
-      signupCount > 0
+    const message = isGlobalCopy
+      ? `Opt out of "${eventName}"? This hides the event for your guild only — other guilds are not affected.`
+      : signupCount > 0
         ? `Delete "${eventName}" and remove ${signupCount} signup${signupCount === 1 ? "" : "s"}? This cannot be undone.`
         : `Delete "${eventName}"? This cannot be undone.`;
     if (!confirm(message)) return;
@@ -51,7 +54,7 @@ export function DeleteEventButton({
           strokeLinejoin="round"
         />
       </svg>
-      {deleting ? "Deleting…" : "Delete Event"}
+      {deleting ? (isGlobalCopy ? "Opting out…" : "Deleting…") : isGlobalCopy ? "Opt Out" : "Delete Event"}
     </button>
   );
 }

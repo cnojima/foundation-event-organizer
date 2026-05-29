@@ -61,7 +61,11 @@ export type AuditAction =
   // Event templates
   | "event_template.create"
   | "event_template.update"
-  | "event_template.delete";
+  | "event_template.delete"
+  // Global events (super-admin, guildId: null)
+  | "global_event.create"
+  | "global_event.update"
+  | "global_event.delete";
 
 export type AuditEntityType =
   | "event"
@@ -73,7 +77,8 @@ export type AuditEntityType =
   | "duel"
   | "user"
   | "bot"
-  | "event_template";
+  | "event_template"
+  | "global_event";
 
 export type AuditChange = Record<string, unknown>;
 

@@ -197,10 +197,28 @@ export default async function AdminEventPage({
           Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
         </div>
       )}
+      {event.globalEventId && (
+        <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
+          This is a server-wide event managed by a super-admin. Changes must be made globally.
+          {membership.isSuperAdmin && (
+            <Link
+              href={`/super-admin/global-events/${event.globalEventId}/edit`}
+              className="ml-2 font-semibold underline hover:no-underline"
+            >
+              Edit globally →
+            </Link>
+          )}
+        </div>
+      )}
       <div className="mb-2 flex items-start justify-between gap-4">
         <div className="flex items-center gap-3">
           <EventKindHero kind={event.kind} size="lg" />
           <h1 className="text-3xl font-bold">{event.name}</h1>
+          {event.globalEventId && !event.deletedAt && (
+            <span className="rounded border border-amber-300 bg-amber-50 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-amber-700 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-400">
+              Global
+            </span>
+          )}
           {event.deletedAt && (
             <span className="rounded border border-gray-300 bg-gray-100 px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-gray-600 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
               Deleted
@@ -208,7 +226,7 @@ export default async function AdminEventPage({
           )}
         </div>
         <div className="flex items-center gap-2">
-          {!event.deletedAt && !isScrim && (
+          {!event.deletedAt && !isScrim && !event.globalEventId && (
             <Link
               href={`/admin/event/${event.id}/edit${isImpersonating ? `?guildId=${event.guildId}` : ""}`}
               className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700"
@@ -224,6 +242,7 @@ export default async function AdminEventPage({
               eventId={event.id}
               eventName={event.name}
               signupCount={eventSignups.length}
+              isGlobalCopy={!!event.globalEventId}
             />
           )}
         </div>
