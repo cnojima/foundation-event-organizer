@@ -17,12 +17,13 @@ import {
 import { LandingPage } from "@/components/landing-page";
 import { PageHeader } from "@/components/page-header";
 import { EventKindHero } from "@/components/event-kind-icon";
+import { WeekCalendar, type CalendarEntry } from "@/components/week-calendar";
 import { loadSetupState } from "@/lib/setup-state";
 
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ guildId?: string; tab?: string }>;
+  searchParams: Promise<{ guildId?: string; tab?: string; view?: string }>;
 }) {
   const session = await auth();
   // Signed-out visitors get the public marketing landing instead of being
@@ -38,9 +39,11 @@ export default async function Home({
 
   // Super-admins can pin a target guild via ?guildId=. Regular users always
   // resolve back to their own guildId.
-  const { guildId: requestedGuildId, tab: tabParam } = await searchParams;
+  const { guildId: requestedGuildId, tab: tabParam, view: viewParam } = await searchParams;
   const tab: "upcoming" | "past" | "deleted" =
     tabParam === "past" ? "past" : tabParam === "deleted" ? "deleted" : "upcoming";
+  const view: "list" | "calendar" =
+    viewParam === "calendar" ? "calendar" : "list";
   const targetGuildId = await resolveAdminGuildId(membership, requestedGuildId);
   if (!targetGuildId) redirect("/guilds");
 
@@ -101,6 +104,46 @@ export default async function Home({
     (b.deletedAt ?? "").localeCompare(a.deletedAt ?? "")
   );
 
+  // Calendar: flatten upcoming events into per-squad blocks. Match events
+  // produce two blocks (one per squad). Events without any scheduled time
+  // land in the unscheduled list below the grid.
+  const calendarEntries: CalendarEntry[] = [];
+  const calendarUnscheduled: { eventId: string; name: string; kind: string }[] = [];
+  for (const e of upcomingEvents) {
+    const dur = (e.durationMinutes ?? 60) * 60_000;
+    if (e.kind === "match") {
+      let placed = false;
+      if (e.squad1StartsAt) {
+        calendarEntries.push({
+          eventId: e.id, name: e.name, kind: "match",
+          startIso: e.squad1StartsAt,
+          endIso: new Date(new Date(e.squad1StartsAt).getTime() + dur).toISOString(),
+          label: e.squad1Name,
+        });
+        placed = true;
+      }
+      if (e.squad2StartsAt) {
+        calendarEntries.push({
+          eventId: e.id, name: e.name, kind: "match",
+          startIso: e.squad2StartsAt,
+          endIso: new Date(new Date(e.squad2StartsAt).getTime() + dur).toISOString(),
+          label: e.squad2Name,
+        });
+        placed = true;
+      }
+      if (!placed) calendarUnscheduled.push({ eventId: e.id, name: e.name, kind: e.kind });
+    } else if (e.gameTime) {
+      calendarEntries.push({
+        eventId: e.id, name: e.name, kind: e.kind as "simple" | "scrim",
+        startIso: e.gameTime,
+        endIso: new Date(new Date(e.gameTime).getTime() + dur).toISOString(),
+        label: null,
+      });
+    } else {
+      calendarUnscheduled.push({ eventId: e.id, name: e.name, kind: e.kind });
+    }
+  }
+
   const guildEvents =
     tab === "deleted"
       ? deletedEvents
@@ -151,8 +194,16 @@ export default async function Home({
   const queryString = (extra: Record<string, string>) => {
     const parts: string[] = [];
     if (guildIdParam) parts.push(`guildId=${guildIdParam}`);
-    for (const [k, v] of Object.entries(extra)) parts.push(`${k}=${v}`);
+    if (view !== "list" && !("view" in extra)) parts.push(`view=${view}`);
+    for (const [k, v] of Object.entries(extra)) if (v) parts.push(`${k}=${v}`);
     return parts.length > 0 ? `?${parts.join("&")}` : "";
+  };
+  const viewHref = (v: "list" | "calendar") => {
+    const parts: string[] = [];
+    if (guildIdParam) parts.push(`guildId=${guildIdParam}`);
+    if (tab !== "upcoming") parts.push(`tab=${tab}`);
+    if (v !== "list") parts.push(`view=${v}`);
+    return parts.length > 0 ? `/?${parts.join("&")}` : "/";
   };
   const newEventHref = `/admin/event/new${queryString({})}`;
 
@@ -207,18 +258,54 @@ export default async function Home({
         }
       />
 
-      <EventsTabs
-        tab={tab}
-        upcomingCount={upcomingEvents.length}
-        pastCount={pastEvents.length}
-        showDeleted={isAdmin}
-        guildIdParam={guildIdParam}
-        upcomingLabel={t("upcoming")}
-        pastLabel={t("past")}
-        deletedLabel={tAdmin("deleted", { count: deletedEvents.length })}
-      />
+      <div className="mb-4 flex items-end justify-between gap-3">
+        <EventsTabs
+          tab={tab}
+          upcomingCount={upcomingEvents.length}
+          pastCount={pastEvents.length}
+          showDeleted={isAdmin}
+          guildIdParam={guildIdParam}
+          upcomingLabel={t("upcoming")}
+          pastLabel={t("past")}
+          deletedLabel={tAdmin("deleted", { count: deletedEvents.length })}
+        />
+        {tab === "upcoming" && (
+          <div className="mb-1 flex shrink-0 gap-1 text-xs font-semibold">
+            <Link
+              href={viewHref("list")}
+              className={`flex items-center gap-1 rounded border px-2 py-1 ${
+                view === "list"
+                  ? "border-violet-300 bg-violet-50 text-violet-700 dark:border-violet-800 dark:bg-violet-950/40 dark:text-violet-300"
+                  : "border-gray-200 text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+              }`}
+            >
+              <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5" aria-hidden>
+                <rect x="1" y="2" width="14" height="2.5" rx="1" />
+                <rect x="1" y="6.75" width="14" height="2.5" rx="1" />
+                <rect x="1" y="11.5" width="14" height="2.5" rx="1" />
+              </svg>
+              List
+            </Link>
+            <Link
+              href={viewHref("calendar")}
+              className={`flex items-center gap-1 rounded border px-2 py-1 ${
+                view === "calendar"
+                  ? "border-violet-300 bg-violet-50 text-violet-700 dark:border-violet-800 dark:bg-violet-950/40 dark:text-violet-300"
+                  : "border-gray-200 text-gray-500 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-800"
+              }`}
+            >
+              <svg viewBox="0 0 16 16" fill="currentColor" className="size-3.5" aria-hidden>
+                <path d="M4 1a1 1 0 0 1 2 0v1h4V1a1 1 0 1 1 2 0v1h1a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h1V1zm-1 5v7h10V6H3z" />
+              </svg>
+              Calendar
+            </Link>
+          </div>
+        )}
+      </div>
 
-      {guildEvents.length === 0 ? (
+      {tab === "upcoming" && view === "calendar" ? (
+        <WeekCalendar entries={calendarEntries} unscheduled={calendarUnscheduled} />
+      ) : guildEvents.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-400">
           {tab === "deleted"
             ? tAdmin("deletedKept")
@@ -385,7 +472,7 @@ function EventsTabs({
     return parts.length > 0 ? `/?${parts.join("&")}` : "/";
   };
   return (
-    <div className="mb-4 flex gap-1 border-b border-gray-200 text-sm font-semibold dark:border-gray-800">
+    <div className="flex gap-1 border-b border-gray-200 text-sm font-semibold dark:border-gray-800">
       <Tab href={tabHref("upcoming")} active={tab === "upcoming"}>
         {upcomingLabel} ({upcomingCount})
       </Tab>
