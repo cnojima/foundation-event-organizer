@@ -4,6 +4,9 @@ import {
   Client,
   GatewayIntentBits,
   MessageFlags,
+  type APIActionRowComponent,
+  type APIButtonComponentWithURL,
+  type APIEmbed,
   type AutocompleteInteraction,
   type ChatInputCommandInteraction,
   type Channel,
@@ -404,8 +407,16 @@ async function runOnce(): Promise<PollMetrics> {
         failed++;
         continue;
       }
+      const appBaseUrl = resolveAppBaseUrl();
+      const embed = buildReminderEmbed(p);
+      const components =
+        appBaseUrl && p.kind !== "end_thirty_min" && p.kind !== "end_five_min"
+          ? linkButtonRow("Sign up", `${appBaseUrl}/event/${p.eventId}`, "🔗")
+          : [];
       await (channel as TextChannel).send({
-        content: buildMessage(p),
+        content: "@everyone",
+        embeds: [embed],
+        components,
         allowedMentions: { parse: ["everyone"] },
       });
       sent++;
@@ -558,7 +569,13 @@ export async function sendTestMessage(
     };
   }
 
-  const content = `Test message from **Rally Up** — guild **${guildName}**. Your Discord integration is working. Event reminders will be sent here.`;
+  const testEmbed: APIEmbed = {
+    title: "✅ Integration working",
+    description: `This is a test message from **Rally Up** for guild **${guildName}**. Event reminders will be posted here.`,
+    color: EMBED_COLORS.success,
+    footer: { text: "Rally Up" },
+    timestamp: new Date().toISOString(),
+  };
 
   // Post the message.
   const postRes = await fetch(
@@ -570,7 +587,9 @@ export async function sendTestMessage(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        content,
+        content: "",
+        embeds: [testEmbed],
+        components: [],
         allowed_mentions: { parse: [] },
       }),
     }
@@ -771,7 +790,7 @@ export async function sendScrimNotification(
         input.appBaseUrl && eventId
           ? `${input.appBaseUrl}/event/${eventId}`
           : null;
-      const content = buildScrimMessage({
+      const post = buildScrimPost({
         action: input.action,
         proposingName: proposing.name,
         opposingName: opposing.name,
@@ -781,10 +800,10 @@ export async function sendScrimNotification(
         appBaseUrl: input.appBaseUrl,
         eventSignupUrl,
       });
-      const ok = await postScrimToChannel(
+      const ok = await postToChannel(
         token,
         g.discordChannelId,
-        content,
+        post,
         g.id
       );
       return { name: g.name, ok };
@@ -795,10 +814,16 @@ export async function sendScrimNotification(
   };
 }
 
-async function postScrimToChannel(
+type ChannelPost = {
+  content?: string;
+  embeds?: APIEmbed[];
+  components?: APIActionRowComponent<APIButtonComponentWithURL>[];
+};
+
+async function postToChannel(
   token: string,
   channelId: string,
-  content: string,
+  post: ChannelPost,
   appGuildId: string
 ): Promise<boolean> {
   try {
@@ -811,7 +836,9 @@ async function postScrimToChannel(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          content,
+          content: post.content ?? "",
+          embeds: post.embeds ?? [],
+          components: post.components ?? [],
           allowed_mentions: { parse: [] },
         }),
       }
@@ -819,14 +846,14 @@ async function postScrimToChannel(
     if (!res.ok) {
       const body = await res.text().catch(() => "");
       console.warn(
-        `[bot] scrim notification failed guild=${appGuildId} channel=${channelId} status=${res.status} body=${body.slice(0, 200)}`
+        `[bot] channel post failed guild=${appGuildId} channel=${channelId} status=${res.status} body=${body.slice(0, 200)}`
       );
       return false;
     }
     return true;
   } catch (err) {
     console.warn(
-      `[bot] scrim notification fetch threw guild=${appGuildId} channel=${channelId}:`,
+      `[bot] channel post fetch threw guild=${appGuildId} channel=${channelId}:`,
       err
     );
     return false;
@@ -1132,7 +1159,7 @@ async function resolveDiscordUserId(
   return accountRow?.providerAccountId ?? null;
 }
 
-function buildScrimMessage(args: {
+function buildScrimPost(args: {
   action: ScrimNotifyAction;
   proposingName: string;
   opposingName: string;
@@ -1141,49 +1168,74 @@ function buildScrimMessage(args: {
   winCondition: string;
   appBaseUrl?: string;
   eventSignupUrl?: string | null;
-}): string {
-  const when = discordTimestamp(args.proposedGameTime, "F");
-  const relative = discordTimestamp(args.proposedGameTime, "R");
-  const proposer = `**${args.proposingName}**`;
-  const opposer = `**${args.opposingName}**`;
-  // Scrim management lives at /admin/scrimmages — there's no per-scrim
-  // detail page, but that dashboard surfaces incoming proposals where the
-  // opposing-side admin can accept or decline.
+}): ChannelPost {
+  const unix = Math.floor(new Date(args.proposedGameTime).getTime() / 1000);
   const scrimUrl = args.appBaseUrl ? `${args.appBaseUrl}/admin/scrimmages` : null;
+
   if (args.action === "proposed") {
-    const cta = scrimUrl
-      ? `Guild admins can accept or decline at <${scrimUrl}>`
-      : `${opposer} admins can accept or decline on the website.`;
-    return [
-      `**Scrim proposed** — ${proposer} has challenged ${opposer} to a scrim.`,
-      `Time: ${when} (${relative})`,
-      `Location: ${args.location}`,
-      `Condition of Win: ${args.winCondition}`,
-      cta,
-    ].join("\n");
+    const embed: APIEmbed = {
+      title: "⚔️ Scrim Proposed",
+      description: `**${args.proposingName}** has challenged **${args.opposingName}** to a scrim.`,
+      color: EMBED_COLORS.warning,
+      fields: [
+        { name: "🕐 Time", value: `<t:${unix}:F> (<t:${unix}:R>)`, inline: false },
+        { name: "📍 Location", value: args.location, inline: true },
+        { name: "🏆 Condition of Win", value: args.winCondition, inline: true },
+      ],
+      footer: { text: "Rally Up · Guild admins can accept or decline on the website" },
+      timestamp: args.proposedGameTime,
+    };
+    return {
+      embeds: [embed],
+      components: scrimUrl ? linkButtonRow("Manage Scrimmages", scrimUrl, "🛡️") : [],
+    };
   }
+
   if (args.action === "accepted") {
-    const lines = [
-      `**Scrim accepted** — ${opposer} accepted ${proposer}'s scrim challenge.`,
-      `Time: ${when} (${relative})`,
-      `Location: ${args.location}`,
-      `Condition of Win: ${args.winCondition}`,
-    ];
-    if (args.eventSignupUrl) {
-      lines.push(`Sign up at <${args.eventSignupUrl}>`);
-    }
-    return lines.join("\n");
+    const embed: APIEmbed = {
+      title: "✅ Scrim Accepted",
+      description: `**${args.opposingName}** accepted **${args.proposingName}**'s scrim challenge.`,
+      color: EMBED_COLORS.success,
+      fields: [
+        { name: "🕐 Time", value: `<t:${unix}:F> (<t:${unix}:R>)`, inline: false },
+        { name: "📍 Location", value: args.location, inline: true },
+        { name: "🏆 Condition of Win", value: args.winCondition, inline: true },
+      ],
+      footer: { text: "Rally Up" },
+      timestamp: args.proposedGameTime,
+    };
+    return {
+      embeds: [embed],
+      components: args.eventSignupUrl
+        ? linkButtonRow("Sign up", args.eventSignupUrl, "🔗")
+        : [],
+    };
   }
+
   if (args.action === "cancelled") {
-    return [
-      `**Scrim cancelled** — The scrim between ${proposer} and ${opposer} (scheduled for ${when}) has been cancelled.`,
-    ].join("\n");
+    const embed: APIEmbed = {
+      title: "❌ Scrim Cancelled",
+      description: `The scrim between **${args.proposingName}** and **${args.opposingName}** has been cancelled.`,
+      color: EMBED_COLORS.neutral,
+      fields: [
+        { name: "Was scheduled for", value: `<t:${unix}:F>`, inline: false },
+      ],
+      footer: { text: "Rally Up" },
+    };
+    return { embeds: [embed] };
   }
+
   // declined
-  return [
-    `**Scrim declined** — ${opposer} declined ${proposer}'s scrim challenge.`,
-    `Was proposed for ${when}.`,
-  ].join("\n");
+  const embed: APIEmbed = {
+    title: "❌ Scrim Declined",
+    description: `**${args.opposingName}** declined **${args.proposingName}**'s scrim challenge.`,
+    color: EMBED_COLORS.neutral,
+    fields: [
+      { name: "Was proposed for", value: `<t:${unix}:F>`, inline: false },
+    ],
+    footer: { text: "Rally Up" },
+  };
+  return { embeds: [embed] };
 }
 
 // ---- Duel lifecycle notifications (1v1 player-vs-player) ----
@@ -1434,9 +1486,18 @@ export async function sendGuildJoinAnnouncement(input: {
 
   const tag = guild.tag ? `[${guild.tag}]` : guild.name;
   const joinUrl = `${input.appBaseUrl}/join/${inviteCode}`;
-  const content = `**${joinedUser.inGameName}** has joined **${tag}** — <${joinUrl}>`;
-
-  await postScrimToChannel(token, guild.discordChannelId, content, guild.id);
+  const joinEmbed: APIEmbed = {
+    title: `👋 ${joinedUser.inGameName} has joined ${tag}`,
+    color: EMBED_COLORS.success,
+    footer: { text: "Rally Up" },
+    timestamp: new Date().toISOString(),
+  };
+  await postToChannel(
+    token,
+    guild.discordChannelId,
+    { embeds: [joinEmbed], components: linkButtonRow("Join the guild", joinUrl) },
+    guild.id
+  );
 }
 
 // Returns a usable invite code for the guild. If no existing invite is
@@ -1551,56 +1612,138 @@ export async function sendEventNotification(
   });
   if (!guild?.discordChannelId) return;
 
-  const content = buildEventMessage(input);
-  await postScrimToChannel(token, guild.discordChannelId, content, guild.id);
+  const post = buildEventPost(input);
+  await postToChannel(token, guild.discordChannelId, post, guild.id);
 }
 
-function buildEventMessage(args: EventNotificationInput): string {
-  const headline =
+function buildEventPost(args: EventNotificationInput): ChannelPost {
+  const isCancelled = args.action === "cancelled";
+  const color = isCancelled ? EMBED_COLORS.neutral : EMBED_COLORS.simple;
+  const title =
     args.action === "created"
-      ? `**New event: ${args.eventName}**`
+      ? `📅 New event: ${args.eventName}`
       : args.action === "updated"
-        ? `**Event updated: ${args.eventName}**`
-        : `**Event cancelled: ${args.eventName}**`;
+        ? `✏️ Event updated: ${args.eventName}`
+        : `🗑️ Event cancelled: ${args.eventName}`;
 
-  const lines: string[] = [headline];
+  const fields: APIEmbed["fields"] = [];
 
-  if (args.action !== "cancelled") {
+  if (!isCancelled) {
     if (args.gameTime) {
-      const when = discordTimestamp(args.gameTime, "F");
-      const relative = discordTimestamp(args.gameTime, "R");
-      lines.push(`Starts: ${when} (${relative})`);
+      const unix = Math.floor(new Date(args.gameTime).getTime() / 1000);
+      fields.push({ name: "⏰ Starts", value: `<t:${unix}:F> (<t:${unix}:R>)`, inline: false });
     }
-    if (args.squad1StartsAt || args.squad2StartsAt) {
-      const parts: string[] = [];
-      if (args.squad1StartsAt) {
-        parts.push(
-          `${args.squad1Name ?? "Squad 1"}: ${discordTimestamp(args.squad1StartsAt, "F")}`
-        );
-      }
-      if (args.squad2StartsAt) {
-        parts.push(
-          `${args.squad2Name ?? "Squad 2"}: ${discordTimestamp(args.squad2StartsAt, "F")}`
-        );
-      }
-      lines.push(parts.join(" · "));
+    if (args.squad1StartsAt) {
+      const unix = Math.floor(new Date(args.squad1StartsAt).getTime() / 1000);
+      fields.push({ name: `📍 ${args.squad1Name ?? "Squad 1"}`, value: `<t:${unix}:F>`, inline: true });
     }
-    if (args.eventUrl) {
-      // Angle brackets suppress Discord's auto-embed preview, keeping the
-      // message compact.
-      lines.push(`Sign up: <${args.eventUrl}>`);
+    if (args.squad2StartsAt) {
+      const unix = Math.floor(new Date(args.squad2StartsAt).getTime() / 1000);
+      fields.push({ name: `📍 ${args.squad2Name ?? "Squad 2"}`, value: `<t:${unix}:F>`, inline: true });
     }
   }
 
-  return lines.join("\n");
+  const embed: APIEmbed = {
+    title,
+    color,
+    fields,
+    footer: { text: "Rally Up" },
+    ...(args.gameTime && !isCancelled ? { timestamp: args.gameTime } : {}),
+  };
+
+  return {
+    embeds: [embed],
+    components:
+      !isCancelled && args.eventUrl
+        ? linkButtonRow("Sign up", args.eventUrl, "🔗")
+        : [],
+  };
 }
 
 // Discord timestamp tokens: <t:UNIX:STYLE> renders in each viewer's local
 // timezone. F = "Saturday, May 11, 2024 2:00 PM"; R = "in 3 hours".
-function discordTimestamp(iso: string, style: "F" | "R"): string {
+function discordTimestamp(iso: string, style: "F" | "f" | "R"): string {
   const ms = new Date(iso).getTime();
   if (Number.isNaN(ms)) return iso;
   return `<t:${Math.floor(ms / 1000)}:${style}>`;
+}
+
+// ---- Discord embed helpers ----
+
+const EMBED_COLORS = {
+  match: 0x7c3aed,   // violet
+  scrim: 0xe11d48,   // rose
+  simple: 0x2563eb,  // blue
+  success: 0x059669, // emerald
+  warning: 0xd97706, // amber
+  neutral: 0x6b7280, // gray
+  danger: 0xdc2626,  // red
+} as const;
+
+const KIND_EMOJI: Record<"match" | "simple" | "scrim", string> = {
+  match: "⚔️",
+  scrim: "🏟️",
+  simple: "📅",
+};
+
+// Wraps a single link button in an action row — the only component type we
+// use. Returns an array so callers can spread into `components: []` directly.
+function linkButtonRow(
+  label: string,
+  url: string,
+  emoji?: string
+): APIActionRowComponent<APIButtonComponentWithURL>[] {
+  const btn: APIButtonComponentWithURL = {
+    type: 2,  // Button
+    style: 5, // Link
+    label,
+    url,
+    ...(emoji ? { emoji: { name: emoji } } : {}),
+  };
+  return [{ type: 1, components: [btn] }];
+}
+
+// Reads the canonical app origin from the Auth.js env var that Fly and
+// Vercel set automatically. Strips trailing slash. Falls back to null when
+// running locally without that var — callers omit buttons gracefully.
+function resolveAppBaseUrl(): string | null {
+  const raw = process.env.AUTH_URL ?? process.env.APP_URL ?? null;
+  return raw ? raw.replace(/\/$/, "") : null;
+}
+
+// Builds the embed for scheduled event reminders (channel posts). The
+// @everyone mention lives in `content` so it fires; the embed carries the
+// visual structure.
+function buildReminderEmbed(p: NotificationTarget): APIEmbed {
+  const color = EMBED_COLORS[p.eventKind];
+  const emoji = KIND_EMOJI[p.eventKind];
+  const title = p.squadLabel
+    ? `${emoji} ${p.eventName} — ${p.squadLabel}`
+    : `${emoji} ${p.eventName}`;
+  const unix = Math.floor(new Date(p.startsAt).getTime() / 1000);
+  const isEnd = p.kind === "end_thirty_min" || p.kind === "end_five_min";
+  const refTime = isEnd && p.endsAt ? p.endsAt : p.startsAt;
+  const refUnix = Math.floor(new Date(refTime).getTime() / 1000);
+
+  const description = isEnd
+    ? `Ends <t:${refUnix}:R>`
+    : `Starts <t:${unix}:R>`;
+
+  const embed: APIEmbed = {
+    title,
+    description,
+    color,
+    fields: [
+      {
+        name: isEnd ? "⏹️ Ends" : "⏰ Starts",
+        value: `<t:${refUnix}:F>`,
+        inline: true,
+      },
+    ],
+    footer: { text: "Rally Up" },
+    timestamp: p.startsAt,
+  };
+  return embed;
 }
 
 async function translateDiscordError(res: Response): Promise<string> {
@@ -1801,29 +1944,43 @@ async function handleUpcoming(
   }
 
   const tbd = t("common.tbd");
-  const lines = upcoming
-    .slice(0, 10)
-    .map((e) => {
-      if (e.kind === "scrim") {
-        const when = e.gameTime ? formatShort(e.gameTime) : tbd;
-        return t("upcoming.scrimLine", { name: e.name, when });
-      }
-      if (e.kind === "simple") {
-        const when = e.gameTime ? formatShort(e.gameTime) : tbd;
-        return t("upcoming.simpleLine", { name: e.name, when });
-      }
-      const s1 = e.squad1StartsAt ? formatShort(e.squad1StartsAt) : tbd;
-      const s2 = e.squad2StartsAt ? formatShort(e.squad2StartsAt) : tbd;
-      return t("upcoming.matchLine", {
-        name: e.name,
-        squad1Name: e.squad1Name,
-        s1,
-        squad2Name: e.squad2Name,
-        s2,
-      });
-    })
-    .join("\n");
-  await interaction.editReply(`${t("upcoming.heading")}\n${lines}`);
+  const fields: APIEmbed["fields"] = upcoming.slice(0, 10).map((e) => {
+    const emoji = KIND_EMOJI[e.kind as "match" | "scrim" | "simple"] ?? "📅";
+    if (e.kind === "scrim") {
+      const unix = e.gameTime ? Math.floor(new Date(e.gameTime).getTime() / 1000) : null;
+      return {
+        name: `${emoji} ${e.name}`,
+        value: unix ? `<t:${unix}:f>` : tbd,
+        inline: false,
+      };
+    }
+    if (e.kind === "simple") {
+      const unix = e.gameTime ? Math.floor(new Date(e.gameTime).getTime() / 1000) : null;
+      return {
+        name: `${emoji} ${e.name}`,
+        value: unix ? `<t:${unix}:f>` : tbd,
+        inline: false,
+      };
+    }
+    // match
+    const s1unix = e.squad1StartsAt ? Math.floor(new Date(e.squad1StartsAt).getTime() / 1000) : null;
+    const s2unix = e.squad2StartsAt ? Math.floor(new Date(e.squad2StartsAt).getTime() / 1000) : null;
+    const s1 = s1unix ? `<t:${s1unix}:f>` : tbd;
+    const s2 = s2unix ? `<t:${s2unix}:f>` : tbd;
+    return {
+      name: `${emoji} ${e.name}`,
+      value: `${e.squad1Name}: ${s1}\n${e.squad2Name}: ${s2}`,
+      inline: false,
+    };
+  });
+
+  const upcomingEmbed: APIEmbed = {
+    title: t("upcoming.heading"),
+    color: EMBED_COLORS.match,
+    fields,
+    footer: { text: "Rally Up" },
+  };
+  await interaction.editReply({ embeds: [upcomingEmbed] });
 }
 
 async function handleSignup(
@@ -1885,9 +2042,18 @@ async function handleSignup(
     return;
   }
 
-  await interaction.editReply(
-    result.waitlisted ? t("signup.waitlisted") : t("signup.success")
-  );
+  const signupEmbed: APIEmbed = result.waitlisted
+    ? {
+        title: `⏳ ${t("signup.waitlisted")}`,
+        color: EMBED_COLORS.warning,
+        footer: { text: "Rally Up" },
+      }
+    : {
+        title: `✅ ${t("signup.success")}`,
+        color: EMBED_COLORS.success,
+        footer: { text: "Rally Up" },
+      };
+  await interaction.editReply({ embeds: [signupEmbed] });
 }
 
 // Driven by the BOOL_SETTINGS registry — adding a new toggle there auto-

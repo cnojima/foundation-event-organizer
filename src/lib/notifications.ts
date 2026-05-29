@@ -61,9 +61,12 @@ export function formatTimeUntil(msUntilStart: number): string {
 // kind === "voice_dm", voiceChannelId is set (the per-squad VC the bot DMs
 // squadmates to join) and the bot dispatches per-user DMs instead of a
 // channel post. For all other kinds voiceChannelId is null.
+export type EventKind = "match" | "simple" | "scrim";
+
 export type NotificationTarget = {
   eventId: string;
   eventName: string;
+  eventKind: EventKind;
   squadNumber: 0 | 1 | 2;
   squadLabel: string | null;
   startsAt: string;
@@ -79,7 +82,7 @@ type CandidateRow = {
   eventName: string;
   guildId: string;
   channelId: string | null;
-  kind: "match" | "simple" | "scrim";
+  kind: EventKind;
   gameTime: string | null;
   durationMinutes: number | null;
   squad1Name: string;
@@ -238,6 +241,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
         targets.push({
           eventId: row.eventId,
           eventName: row.eventName,
+          eventKind: row.kind,
           squadNumber: c.squadNumber,
           squadLabel: c.squadLabel,
           startsAt: c.startsAt,
@@ -262,6 +266,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
         targets.push({
           eventId: row.eventId,
           eventName: row.eventName,
+          eventKind: row.kind,
           squadNumber: c.squadNumber,
           squadLabel: c.squadLabel,
           startsAt: c.startsAt,
@@ -281,6 +286,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
           targets.push({
             eventId: row.eventId,
             eventName: row.eventName,
+            eventKind: row.kind,
             squadNumber: c.squadNumber,
             squadLabel: c.squadLabel,
             startsAt: c.startsAt,
