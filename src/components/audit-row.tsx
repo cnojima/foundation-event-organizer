@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Row = {
   id: string;
@@ -31,6 +32,8 @@ export function AuditRow({
   DateTime: (props: { iso: string }) => React.ReactNode;
 }) {
   const router = useRouter();
+  const t = useTranslations("auditPage");
+  const tc = useTranslations("common");
   const [open, setOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [flaggedAt, setFlaggedAt] = useState<string | null>(row.flaggedAt);
@@ -97,7 +100,7 @@ export function AuditRow({
                 onClick={() => setOpen((v) => !v)}
                 className="text-xs text-violet-600 hover:underline dark:text-violet-300"
               >
-                {open ? "Hide diff" : "Diff"}
+                {open ? t("hideDiff") : t("diff")}
               </button>
             )}
           </div>
@@ -116,16 +119,15 @@ export function AuditRow({
                 : "border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
             }`}
           >
-            {isFlagged ? "★ Flagged" : "☆ Flag"}
+            {isFlagged ? t("flaggedButton") : t("flagButton")}
           </button>
         </td>
       </tr>
       {isFlagged && (flaggerDisplay || flagNote) && (
         <tr className="bg-amber-50/30 dark:bg-amber-950/10">
           <td colSpan={5} className="px-3 pb-2 text-xs text-amber-900 dark:text-amber-200">
-            Flagged
-            {flaggerDisplay ? ` by ${flaggerDisplay}` : ""}
-            {flagNote ? ` — “${flagNote}”` : ""}
+            {flaggerDisplay ? t("flaggedBy", { name: flaggerDisplay }) : t("flaggedAnon")}
+            {flagNote ? t("flagNote", { note: flagNote }) : ""}
           </td>
         </tr>
       )}
@@ -137,7 +139,7 @@ export function AuditRow({
                 type="text"
                 value={noteDraft}
                 onChange={(e) => setNoteDraft(e.target.value)}
-                placeholder="Optional note (e.g. 'review on Mon')"
+                placeholder={t("notePlaceholder")}
                 className="flex-1 min-w-48 rounded border px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
                 autoFocus
               />
@@ -147,7 +149,7 @@ export function AuditRow({
                 disabled={submitting}
                 className="rounded-md bg-amber-600 px-3 py-1 text-sm font-semibold text-white hover:bg-amber-700 disabled:opacity-50"
               >
-                {submitting ? "Saving…" : "Flag"}
+                {submitting ? tc("saving") : t("flagSubmit")}
               </button>
               <button
                 type="button"
@@ -158,7 +160,7 @@ export function AuditRow({
                 disabled={submitting}
                 className="text-sm text-gray-500 hover:underline dark:text-gray-400"
               >
-                Cancel
+                {tc("cancel")}
               </button>
             </div>
           </td>

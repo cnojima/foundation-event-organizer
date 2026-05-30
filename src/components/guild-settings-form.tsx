@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { FieldHelp } from "@/components/field-help";
 
 export function GuildSettingsForm({
@@ -20,6 +21,9 @@ export function GuildSettingsForm({
   defaultTag: string;
 }) {
   const router = useRouter();
+  const t = useTranslations("guildSettingsPage");
+  const tc = useTranslations("common");
+  const te = useTranslations("errors");
   const [submitting, setSubmitting] = useState(false);
   const [savedAt, setSavedAt] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -47,7 +51,7 @@ export function GuildSettingsForm({
       router.refresh();
     } else {
       const data = await res.json().catch(() => ({}));
-      setError(data?.error ?? "Failed");
+      setError(data?.error ?? te("failed"));
     }
     setSubmitting(false);
   }
@@ -55,39 +59,36 @@ export function GuildSettingsForm({
   return (
     <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
       <div>
-        <label className="block text-sm font-medium mb-1">Name</label>
+        <label className="block text-sm font-medium mb-1">{t("name")}</label>
         <input
           name="name"
           required
           defaultValue={defaultName}
           className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
-        <FieldHelp>Display name shown in the sidebar and discovery list.</FieldHelp>
+        <FieldHelp>{t("nameHelp")}</FieldHelp>
       </div>
       <div>
-        <label className="block text-sm font-medium mb-1">Description</label>
+        <label className="block text-sm font-medium mb-1">{t("description")}</label>
         <textarea
           name="description"
           rows={3}
           defaultValue={defaultDescription}
           className="w-full border rounded px-3 py-2 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
         />
-        <FieldHelp>Optional. Shown on the public guild page to help recruiting.</FieldHelp>
+        <FieldHelp>{t("descriptionHelp")}</FieldHelp>
       </div>
       <div>
         <label className="flex items-center gap-2 text-sm">
           <input type="checkbox" name="isPublic" defaultChecked={defaultIsPublic} />
-          Listed in public discovery
+          {t("isPublic")}
         </label>
-        <FieldHelp>
-          When on, signed-in users can find this guild on /guilds and join with
-          one click. When off, you can only invite members via invite link.
-        </FieldHelp>
+        <FieldHelp>{t("isPublicHelp")}</FieldHelp>
       </div>
 
       <div className="grid grid-cols-2 gap-4 border-t border-gray-100 pt-4 dark:border-gray-800">
         <div>
-          <label className="block text-sm font-medium mb-1">Server #</label>
+          <label className="block text-sm font-medium mb-1">{t("serverNumber")}</label>
           <input
             name="serverNumber"
             type="number"
@@ -98,12 +99,10 @@ export function GuildSettingsForm({
             placeholder="e.g. 1234"
             className="w-full border rounded px-3 py-2 font-mono dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
-          <FieldHelp>
-            Game-server number (1001-9999). Optional. Shown for ops reference.
-          </FieldHelp>
+          <FieldHelp>{t("serverNumberHelp")}</FieldHelp>
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1">Guild Tag</label>
+          <label className="block text-sm font-medium mb-1">{t("guildTag")}</label>
           <input
             name="tag"
             type="text"
@@ -113,10 +112,7 @@ export function GuildSettingsForm({
             placeholder="e.g. SHFT"
             className="w-full border rounded px-3 py-2 font-mono uppercase dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 dark:placeholder-gray-500"
           />
-          <FieldHelp>
-            2-4 characters. When set, prepended to every member&apos;s
-            displayed name as <code>[TAG] name</code>.
-          </FieldHelp>
+          <FieldHelp>{t("guildTagHelp")}</FieldHelp>
         </div>
       </div>
 
@@ -127,9 +123,9 @@ export function GuildSettingsForm({
           disabled={submitting}
           className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
         >
-          {submitting ? "Saving..." : "Save"}
+          {submitting ? tc("saving") : tc("save")}
         </button>
-        {savedAt && <span className="text-xs text-emerald-600 dark:text-emerald-300">Saved.</span>}
+        {savedAt && <span className="text-xs text-emerald-600 dark:text-emerald-300">{tc("saved")}</span>}
       </div>
     </form>
   );

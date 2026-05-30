@@ -173,10 +173,10 @@ Locally, put it in `.env.local`.
 
 3. **Enable the Server Members Intent.** Under **Bot → Privileged Gateway Intents**, toggle on **Server Members Intent**. This is required for the member import feature to search Discord guild members by username. Without it, `/api/admin/members/import` degrades gracefully — the Discord lookup step is skipped and unmatched names become invite-only stubs with no Discord ID.
 
-4. Build an install URL with **Send Messages + Mention Everyone + Slash Commands** permissions (`permissions=133120`) and both `bot` + `applications.commands` scopes (the latter is required for slash commands; the Mention Everyone bit is required so `@everyone` reminders actually ping):
+4. Build an install URL with **Send Messages + Embed Links + Mention Everyone + Slash Commands** permissions (`permissions=149504`) and both `bot` + `applications.commands` scopes (the latter is required for slash commands; the Mention Everyone bit is required so `@everyone` reminders actually ping; the Embed Links bit is required for rich embed messages to render — without it Discord silently strips embeds and shows only plain text):
 
 ```
-https://discord.com/oauth2/authorize?client_id=<APPLICATION_ID>&scope=bot+applications.commands&permissions=133120
+https://discord.com/oauth2/authorize?client_id=<APPLICATION_ID>&scope=bot+applications.commands&permissions=149504
 ```
 
 5. Each guild admin uses that URL to add the bot to their Discord server, then enables **Developer Mode** (User Settings → Advanced) and copies the channel ID for their target channel into Guild Settings → Discord channel ID.

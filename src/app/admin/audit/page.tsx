@@ -6,6 +6,7 @@ import { requireGuildAdminPage, resolveAdminGuildId } from "@/lib/rbac";
 import { DateTime } from "@/components/date-time";
 import { AuditRow } from "@/components/audit-row";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 export const metadata = {
   title: "Audit Log",
@@ -26,12 +27,17 @@ export default async function AuditPage({
     flagged?: string;
   }>;
 }) {
-  const session = await auth();
+  const [session, t, ta, te] = await Promise.all([
+    auth(),
+    getTranslations("auditPage"),
+    getTranslations("admin"),
+    getTranslations("errors"),
+  ]);
   const membership = requireGuildAdminPage(session);
   const params = await searchParams;
   const resolved = await resolveAdminGuildId(membership, params.guildId);
   if (!resolved) {
-    return <p className="text-red-600 dark:text-red-300">Guild not found.</p>;
+    return <p className="text-red-600 dark:text-red-300">{te("guildNotFound")}</p>;
   }
   const targetGuildId: string = resolved;
 
@@ -132,16 +138,15 @@ export default async function AuditPage({
     <div className="mx-auto max-w-5xl">
       {isImpersonating && actingGuild && (
         <div className="mb-4 rounded-md border border-amber-300 bg-amber-50 px-4 py-2 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
-          Acting as admin of <strong>{actingGuild.name}</strong> (super-admin override).
+          {ta("actingAsBanner", { guildName: actingGuild.name })}
         </div>
       )}
       <header className="mb-4">
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
-          {actingGuild ? `${actingGuild.name} — Audit Log` : "Audit Log"}
+          {actingGuild ? t("titleNamed", { guildName: actingGuild.name }) : t("title")}
         </h1>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-          Every state-changing action in this guild, newest first. Flag rows
-          you want to revisit — flagged rows are visible to all guild admins.
+          {t("desc")}
         </p>
       </header>
 
@@ -154,7 +159,7 @@ export default async function AuditPage({
         )}
         <div className="flex-1 min-w-48">
           <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
-            Search actor or target
+            {t("searchLabel")}
           </label>
           <input
             name="q"
@@ -165,14 +170,14 @@ export default async function AuditPage({
         </div>
         <div>
           <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
-            Action
+            {t("actionLabel")}
           </label>
           <select
             name="action"
             defaultValue={action}
             className="border rounded px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
           >
-            <option value="">All</option>
+            <option value="">{t("allActions")}</option>
             {distinctActions.map((a) => (
               <option key={a} value={a}>
                 {a}
@@ -187,13 +192,13 @@ export default async function AuditPage({
             value="1"
             defaultChecked={flaggedOnly}
           />
-          Flagged only
+          {t("flaggedOnly")}
         </label>
         <button
           type="submit"
           className="rounded-md bg-violet-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-violet-700"
         >
-          Filter
+          {t("filter")}
         </button>
         {(action || q || flaggedOnly) && (
           <Link
@@ -205,25 +210,25 @@ export default async function AuditPage({
             })}
             className="text-sm text-gray-500 hover:underline dark:text-gray-400"
           >
-            Clear
+            {t("clear")}
           </Link>
         )}
       </form>
 
       {rows.length === 0 ? (
         <p className="rounded-lg border border-dashed border-gray-300 bg-gray-50 p-6 text-center text-sm text-gray-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400">
-          No audit entries match.
+          {t("noEntries")}
         </p>
       ) : (
         <div className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
           <table className="w-full text-sm">
             <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400">
               <tr>
-                <th className="px-3 py-2 font-semibold">When</th>
-                <th className="px-3 py-2 font-semibold">Actor</th>
-                <th className="px-3 py-2 font-semibold">Action</th>
-                <th className="px-3 py-2 font-semibold">Target</th>
-                <th className="px-3 py-2 font-semibold text-right">Flag</th>
+                <th className="px-3 py-2 font-semibold">{t("colWhen")}</th>
+                <th className="px-3 py-2 font-semibold">{t("colActor")}</th>
+                <th className="px-3 py-2 font-semibold">{t("colAction")}</th>
+                <th className="px-3 py-2 font-semibold">{t("colTarget")}</th>
+                <th className="px-3 py-2 font-semibold text-right">{t("colFlag")}</th>
               </tr>
             </thead>
             <tbody>
@@ -256,7 +261,7 @@ export default async function AuditPage({
       {totalPages > 1 && (
         <div className="mt-4 flex items-center justify-between text-sm">
           <span className="text-gray-500 dark:text-gray-400">
-            Page {page} of {totalPages} · {total} entries
+            {t("pagination", { page, totalPages, total })}
           </span>
           <div className="flex gap-2">
             {page > 1 && (
@@ -264,7 +269,7 @@ export default async function AuditPage({
                 href={buildHref({ page: page - 1 })}
                 className="rounded-md border border-gray-300 bg-white px-3 py-1.5 font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
               >
-                ← Previous
+                {t("previous")}
               </Link>
             )}
             {page < totalPages && (
@@ -272,7 +277,7 @@ export default async function AuditPage({
                 href={buildHref({ page: page + 1 })}
                 className="rounded-md border border-gray-300 bg-white px-3 py-1.5 font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200 dark:hover:bg-gray-800"
               >
-                Next →
+                {t("next")}
               </Link>
             )}
           </div>
