@@ -68,6 +68,21 @@ function sameDay(a: Date, b: Date): boolean {
   );
 }
 
+// Splits an event that crosses a local-calendar midnight into two segments so
+// each day column gets a self-contained block with a positive height.
+function splitAtMidnight(entry: CalendarEntry): CalendarEntry[] {
+  const start = new Date(entry.startIso);
+  const end = new Date(entry.endIso);
+  if (sameDay(start, end) || end.getTime() <= start.getTime()) return [entry];
+  const midnight = new Date(start);
+  midnight.setDate(midnight.getDate() + 1);
+  midnight.setHours(0, 0, 0, 0);
+  return [
+    { ...entry, endIso: midnight.toISOString() },
+    { ...entry, startIso: midnight.toISOString() },
+  ];
+}
+
 function overlaps(a: CalendarEntry, b: CalendarEntry): boolean {
   return (
     new Date(a.startIso) < new Date(b.endIso) &&
@@ -176,16 +191,19 @@ export function WeekCalendar({
     return d;
   }, []);
 
-  // Group entries by which day column they fall in
+  // Group entries by which day column they fall in. Midnight-crossing events
+  // are split into two segments first so each column gets a clean block.
   const byDay = useMemo(() => {
     const map = new Map<number, CalendarEntry[]>();
     for (const entry of entries) {
-      const start = new Date(entry.startIso);
-      for (let i = 0; i < 7; i++) {
-        if (sameDay(start, days[i])) {
-          if (!map.has(i)) map.set(i, []);
-          map.get(i)!.push(entry);
-          break;
+      for (const segment of splitAtMidnight(entry)) {
+        const start = new Date(segment.startIso);
+        for (let i = 0; i < 7; i++) {
+          if (sameDay(start, days[i])) {
+            if (!map.has(i)) map.set(i, []);
+            map.get(i)!.push(segment);
+            break;
+          }
         }
       }
     }
@@ -364,7 +382,10 @@ export function WeekCalendar({
                     const start = new Date(entry.startIso);
                     const end = new Date(entry.endIso);
                     const startMin = start.getHours() * 60 + start.getMinutes();
-                    const endMin = end.getHours() * 60 + end.getMinutes();
+                    // Segments from splitAtMidnight may end exactly at midnight
+                    // (getHours=0, getMinutes=0) which means end-of-day (24*60).
+                    const rawEndMin = end.getHours() * 60 + end.getMinutes();
+                    const endMin = rawEndMin === 0 ? 24 * 60 : rawEndMin;
                     const top = startMin * PX_PER_MIN;
                     const height = Math.max((endMin - startMin) * PX_PER_MIN, 18);
                     const colW = 100 / entry.totalLanes;
