@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Toggle is_super_admin on a user. Sign in via OAuth at least once first
 // so the user row exists.
 //
