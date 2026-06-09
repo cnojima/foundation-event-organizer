@@ -104,15 +104,13 @@ export default async function Home({
     (b.deletedAt ?? "").localeCompare(a.deletedAt ?? "")
   );
 
-  // Calendar: flatten upcoming events into per-squad blocks. Match events
-  // produce two blocks (one per squad). Events without any scheduled time
-  // land in the unscheduled list below the grid.
+  // Calendar entries: built from ALL guild events so navigating to a past week
+  // still shows events that fell in that window. The WeekCalendar filters to
+  // the displayed week via sameDay(), so only visible entries are rendered.
   const calendarEntries: CalendarEntry[] = [];
-  const calendarUnscheduled: { eventId: string; name: string; kind: string }[] = [];
-  for (const e of upcomingEvents) {
+  for (const e of allGuildEvents) {
     const dur = (e.durationMinutes ?? 60) * 60_000;
     if (e.kind === "match") {
-      let placed = false;
       if (e.squad1StartsAt) {
         calendarEntries.push({
           eventId: e.id, name: e.name, kind: "match",
@@ -120,7 +118,6 @@ export default async function Home({
           endIso: new Date(new Date(e.squad1StartsAt).getTime() + dur).toISOString(),
           label: e.squad1Name,
         });
-        placed = true;
       }
       if (e.squad2StartsAt) {
         calendarEntries.push({
@@ -129,9 +126,7 @@ export default async function Home({
           endIso: new Date(new Date(e.squad2StartsAt).getTime() + dur).toISOString(),
           label: e.squad2Name,
         });
-        placed = true;
       }
-      if (!placed) calendarUnscheduled.push({ eventId: e.id, name: e.name, kind: e.kind });
     } else if (e.gameTime) {
       calendarEntries.push({
         eventId: e.id, name: e.name, kind: e.kind as "simple" | "scrim",
@@ -139,7 +134,14 @@ export default async function Home({
         endIso: new Date(new Date(e.gameTime).getTime() + dur).toISOString(),
         label: null,
       });
-    } else {
+    }
+  }
+
+  // Unscheduled: upcoming-only. Past events with no time have nowhere to land
+  // on the grid and aren't actionable, so they stay out of this list.
+  const calendarUnscheduled: { eventId: string; name: string; kind: string }[] = [];
+  for (const e of upcomingEvents) {
+    if (e.kind === "match" ? !e.squad1StartsAt && !e.squad2StartsAt : !e.gameTime) {
       calendarUnscheduled.push({ eventId: e.id, name: e.name, kind: e.kind });
     }
   }
