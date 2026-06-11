@@ -123,6 +123,7 @@ export async function POST(req: Request) {
       guildId: guild.id,
       eventId,
       eventName: globalEvent.name,
+      eventKind: globalEvent.kind,
       action: "created",
       eventUrl: `${baseUrl}/event/${eventId}`,
       gameTime: globalEvent.gameTime,

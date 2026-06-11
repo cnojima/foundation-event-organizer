@@ -408,14 +408,16 @@ async function runOnce(): Promise<PollMetrics> {
         continue;
       }
       const appBaseUrl = resolveAppBaseUrl();
-      const embed = buildReminderEmbed(p);
       const components =
         appBaseUrl && p.kind !== "end_thirty_min" && p.kind !== "end_five_min"
-          ? linkButtonRow("Sign up", `${appBaseUrl}/event/${p.eventId}`, "🔗")
+          ? linkButtonRow(
+              p.eventKind === "simple" ? "Event Info" : "Sign up",
+              `${appBaseUrl}/event/${p.eventId}`,
+              "🔗"
+            )
           : [];
       await (channel as TextChannel).send({
-        content: "@everyone",
-        embeds: [embed],
+        content: buildMessage(p),
         components,
         allowedMentions: { parse: ["everyone"] },
       });
@@ -1584,6 +1586,7 @@ type EventNotificationInput = {
   guildId: string;
   eventId: string;
   eventName: string;
+  eventKind?: EventKind;
   action: EventNotifyAction;
   // For non-cancellation messages we include a link so members can jump
   // straight to the event page. Cancellation links would 404 (event is
@@ -1618,44 +1621,39 @@ export async function sendEventNotification(
 
 function buildEventPost(args: EventNotificationInput): ChannelPost {
   const isCancelled = args.action === "cancelled";
-  const color = isCancelled ? EMBED_COLORS.neutral : EMBED_COLORS.simple;
-  const title =
+  const prefix =
     args.action === "created"
-      ? `📅 New event: ${args.eventName}`
+      ? "📅 New event"
       : args.action === "updated"
-        ? `✏️ Event updated: ${args.eventName}`
-        : `🗑️ Event cancelled: ${args.eventName}`;
+        ? "✏️ Event updated"
+        : "🗑️ Event cancelled";
 
-  const fields: APIEmbed["fields"] = [];
+  const lines: string[] = [`${prefix}: **${args.eventName}**`];
 
   if (!isCancelled) {
     if (args.gameTime) {
       const unix = Math.floor(new Date(args.gameTime).getTime() / 1000);
-      fields.push({ name: "⏰ Starts", value: `<t:${unix}:F> (<t:${unix}:R>)`, inline: false });
+      lines.push(`⏰ Starts <t:${unix}:R> — <t:${unix}:F>`);
     }
     if (args.squad1StartsAt) {
       const unix = Math.floor(new Date(args.squad1StartsAt).getTime() / 1000);
-      fields.push({ name: `📍 ${args.squad1Name ?? "Squad 1"}`, value: `<t:${unix}:F>`, inline: true });
+      lines.push(`📍 ${args.squad1Name ?? "Squad 1"}: <t:${unix}:F>`);
     }
     if (args.squad2StartsAt) {
       const unix = Math.floor(new Date(args.squad2StartsAt).getTime() / 1000);
-      fields.push({ name: `📍 ${args.squad2Name ?? "Squad 2"}`, value: `<t:${unix}:F>`, inline: true });
+      lines.push(`📍 ${args.squad2Name ?? "Squad 2"}: <t:${unix}:F>`);
     }
   }
 
-  const embed: APIEmbed = {
-    title,
-    color,
-    fields,
-    footer: { text: "Rally Up" },
-    ...(args.gameTime && !isCancelled ? { timestamp: args.gameTime } : {}),
-  };
-
   return {
-    embeds: [embed],
+    content: lines.join("\n"),
     components:
       !isCancelled && args.eventUrl
-        ? linkButtonRow("Sign up", args.eventUrl, "🔗")
+        ? linkButtonRow(
+            args.eventKind === "simple" ? "Event Info" : "Sign up",
+            args.eventUrl,
+            "🔗"
+          )
         : [],
   };
 }
@@ -1709,41 +1707,6 @@ function linkButtonRow(
 function resolveAppBaseUrl(): string | null {
   const raw = process.env.AUTH_URL ?? process.env.APP_URL ?? null;
   return raw ? raw.replace(/\/$/, "") : null;
-}
-
-// Builds the embed for scheduled event reminders (channel posts). The
-// @everyone mention lives in `content` so it fires; the embed carries the
-// visual structure.
-function buildReminderEmbed(p: NotificationTarget): APIEmbed {
-  const color = EMBED_COLORS[p.eventKind];
-  const emoji = KIND_EMOJI[p.eventKind];
-  const title = p.squadLabel
-    ? `${emoji} ${p.eventName} — ${p.squadLabel}`
-    : `${emoji} ${p.eventName}`;
-  const unix = Math.floor(new Date(p.startsAt).getTime() / 1000);
-  const isEnd = p.kind === "end_thirty_min" || p.kind === "end_five_min";
-  const refTime = isEnd && p.endsAt ? p.endsAt : p.startsAt;
-  const refUnix = Math.floor(new Date(refTime).getTime() / 1000);
-
-  const description = isEnd
-    ? `Ends <t:${refUnix}:R>`
-    : `Starts <t:${unix}:R>`;
-
-  const embed: APIEmbed = {
-    title,
-    description,
-    color,
-    fields: [
-      {
-        name: isEnd ? "⏹️ Ends" : "⏰ Starts",
-        value: `<t:${refUnix}:F>`,
-        inline: true,
-      },
-    ],
-    footer: { text: "Rally Up" },
-    timestamp: p.startsAt,
-  };
-  return embed;
 }
 
 async function translateDiscordError(res: Response): Promise<string> {

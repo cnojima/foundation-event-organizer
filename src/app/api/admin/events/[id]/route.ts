@@ -198,6 +198,7 @@ export async function PATCH(
       guildId: event.guildId,
       eventId: event.id,
       eventName: event.name,
+      eventKind: event.kind,
       action: "updated",
       eventUrl: `${appBaseUrlFromRequest(req)}/event/${event.id}`,
       gameTime: merged.gameTime,
@@ -247,6 +248,7 @@ export async function DELETE(
       guildId: event.guildId,
       eventId: event.id,
       eventName: event.name,
+      eventKind: event.kind,
       action: "cancelled",
     });
   }

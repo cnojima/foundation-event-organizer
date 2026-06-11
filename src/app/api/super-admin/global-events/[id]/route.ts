@@ -162,6 +162,7 @@ export async function PATCH(
         guildId: copy.guildId,
         eventId: copy.id,
         eventName: (updates.name as string | undefined) ?? globalEvent.name,
+        eventKind: globalEvent.kind,
         action: "updated",
         eventUrl: `${baseUrl}/event/${copy.id}`,
         gameTime: merged.gameTime ?? null,

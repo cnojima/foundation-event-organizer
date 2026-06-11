@@ -71,6 +71,7 @@ export async function POST(req: Request) {
     guildId: targetGuildId,
     eventId: event.id,
     eventName: event.name,
+    eventKind: event.kind,
     action: "created",
     eventUrl: `${appBaseUrlFromRequest(req)}/event/${event.id}`,
     gameTime: event.gameTime,

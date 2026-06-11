@@ -338,18 +338,17 @@ export function recordSent(
   }
 }
 
-export function buildMessage(t: NotificationTarget, now = new Date()): string {
+export function buildMessage(t: NotificationTarget): string {
   const subject = t.squadLabel
     ? `${t.eventName} — ${t.squadLabel}`
     : t.eventName;
-  if (t.kind === "end_thirty_min" || t.kind === "end_five_min") {
-    const ms = t.endsAt ? new Date(t.endsAt).getTime() - now.getTime() : 0;
-    const when = formatTimeUntilEnd(ms);
-    return `@everyone **${subject}** ${when}.`;
+  const isEnd = t.kind === "end_thirty_min" || t.kind === "end_five_min";
+  if (isEnd && t.endsAt) {
+    const unix = Math.floor(new Date(t.endsAt).getTime() / 1000);
+    return `@everyone **${subject}** ends <t:${unix}:R> — <t:${unix}:F>`;
   }
-  const ms = new Date(t.startsAt).getTime() - now.getTime();
-  const when = formatTimeUntil(ms);
-  return `@everyone **${subject}** ${when}.`;
+  const unix = Math.floor(new Date(t.startsAt).getTime() / 1000);
+  return `@everyone **${subject}** starts <t:${unix}:R> — <t:${unix}:F>`;
 }
 
 function formatTimeUntilEnd(msUntilEnd: number): string {
