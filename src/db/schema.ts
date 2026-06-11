@@ -482,7 +482,17 @@ export const eventNotifications = sqliteTable(
     // squadmate a clickable voice-channel link. Stored on the same table so
     // (eventId, squad, kind) gives us one idempotency row per squad-kind.
     kind: text("kind", {
-      enum: ["day", "hour", "twenty_min", "voice_dm", "end_thirty_min", "end_five_min"],
+      enum: [
+        "day",
+        "hour",
+        "twenty_min",
+        "voice_dm",
+        "end_thirty_min",
+        "end_five_min",
+        "signup_close_hour",
+        "signup_close_twenty_min",
+        "signup_close_five_min",
+      ],
     }).notNull(),
     sentAt: text("sent_at").notNull(),
   },

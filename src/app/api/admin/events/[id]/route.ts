@@ -4,7 +4,7 @@ import { canManageEvent } from "@/lib/rbac";
 import { db } from "@/db";
 import { events } from "@/db/schema";
 import { and, eq, isNull } from "drizzle-orm";
-import { clearNotifications } from "@/lib/notifications";
+import { clearNotifications, clearSignupCloseNotifications } from "@/lib/notifications";
 import { sendEventNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
 import { logAudit, resolveActorDisplay } from "@/lib/audit";
@@ -163,6 +163,9 @@ export async function PATCH(
   );
   if (startTimeChanged) {
     clearNotifications(id);
+  }
+  if ("signupCloses" in updates && updates.signupCloses !== event.signupCloses) {
+    clearSignupCloseNotifications(id);
   }
 
   await db.update(events).set(updates).where(eq(events.id, id));

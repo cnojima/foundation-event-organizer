@@ -8,12 +8,23 @@ export type NotificationKind =
   | "twenty_min"
   | "voice_dm"
   | "end_thirty_min"
-  | "end_five_min";
+  | "end_five_min"
+  | "signup_close_hour"
+  | "signup_close_twenty_min"
+  | "signup_close_five_min";
 
 // "Chat" kinds post into the guild's text channel; the poller picks the
 // *smallest* fitting chat kind per cycle (so T-10 reports "twenty_min", not
 // "hour"). "voice_dm" and end-time kinds are independent.
-type ChatKind = Exclude<NotificationKind, "voice_dm" | "end_thirty_min" | "end_five_min">;
+type ChatKind = Exclude<
+  NotificationKind,
+  | "voice_dm"
+  | "end_thirty_min"
+  | "end_five_min"
+  | "signup_close_hour"
+  | "signup_close_twenty_min"
+  | "signup_close_five_min"
+>;
 
 // Windows are exactly equal to their target times: with 1-min polling the
 // notification fires within 1 minute of the named threshold.
@@ -71,6 +82,7 @@ export type NotificationTarget = {
   squadLabel: string | null;
   startsAt: string;
   endsAt: string | null;
+  signupClosesAt: string | null;
   guildId: string;
   channelId: string;
   kind: NotificationKind;
@@ -93,8 +105,28 @@ type CandidateRow = {
   squad2VoiceChannelId: string | null;
 };
 
+// Windows for signup-close warnings. Three independent notifications fire as
+// the Thursday 18:00 UTC deadline approaches; each kind fires at most once per
+// event (idempotency via the event_notifications PK). Uses squad=0 since the
+// close time is per-event, not per-squad.
+const SIGNUP_CLOSE_KINDS: { kind: NotificationKind; windowMs: number }[] = [
+  { kind: "signup_close_hour", windowMs: 60 * 60_000 },
+  { kind: "signup_close_twenty_min", windowMs: 20 * 60_000 },
+  { kind: "signup_close_five_min", windowMs: 5 * 60_000 },
+];
+
+type SignupCloseCandidateRow = {
+  eventId: string;
+  eventName: string;
+  guildId: string;
+  channelId: string | null;
+  signupCloses: string | null;
+};
+
 export async function findPending(now = new Date()): Promise<NotificationTarget[]> {
   const horizonIso = new Date(now.getTime() + CHAT_WINDOW_MS.day).toISOString();
+  // Largest signup-close window is 1 hour.
+  const signupCloseHorizonIso = new Date(now.getTime() + 60 * 60_000).toISOString();
   const nowIso = now.toISOString();
   // Look back far enough to catch any in-progress event whose end time is
   // still approaching. Max duration is 1440 min; add the largest end-reminder
@@ -103,76 +135,102 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
     now.getTime() - (1440 + 35) * 60_000
   ).toISOString();
 
-  const rows: CandidateRow[] = await db
-    .select({
-      eventId: events.id,
-      eventName: events.name,
-      guildId: events.guildId,
-      channelId: guilds.discordChannelId,
-      kind: events.kind,
-      gameTime: events.gameTime,
-      durationMinutes: events.durationMinutes,
-      squad1Name: events.squad1Name,
-      squad2Name: events.squad2Name,
-      squad1StartsAt: events.squad1StartsAt,
-      squad2StartsAt: events.squad2StartsAt,
-      squad1VoiceChannelId: guilds.squad1VoiceChannelId,
-      squad2VoiceChannelId: guilds.squad2VoiceChannelId,
-    })
-    .from(events)
-    .innerJoin(guilds, eq(events.guildId, guilds.id))
-    .where(
-      and(
-        isNull(events.deletedAt),
-        isNull(guilds.deletedAt),
-        isNotNull(guilds.discordChannelId),
-        or(
-          // Upcoming start: within the day window.
-          and(
-            isNotNull(events.gameTime),
-            gt(events.gameTime, nowIso),
-            lte(events.gameTime, horizonIso)
-          ),
-          and(
-            isNotNull(events.squad1StartsAt),
-            gt(events.squad1StartsAt, nowIso),
-            lte(events.squad1StartsAt, horizonIso)
-          ),
-          and(
-            isNotNull(events.squad2StartsAt),
-            gt(events.squad2StartsAt, nowIso),
-            lte(events.squad2StartsAt, horizonIso)
-          ),
-          // In-progress: started recently and has a duration (end reminders).
-          and(
-            isNotNull(events.durationMinutes),
-            isNotNull(events.gameTime),
-            gt(events.gameTime, endLookbackIso),
-            lte(events.gameTime, nowIso)
-          ),
-          and(
-            isNotNull(events.durationMinutes),
-            isNotNull(events.squad1StartsAt),
-            gt(events.squad1StartsAt, endLookbackIso),
-            lte(events.squad1StartsAt, nowIso)
-          ),
-          and(
-            isNotNull(events.durationMinutes),
-            isNotNull(events.squad2StartsAt),
-            gt(events.squad2StartsAt, endLookbackIso),
-            lte(events.squad2StartsAt, nowIso)
+  const [rows, signupCloseRows] = await Promise.all([
+    db
+      .select({
+        eventId: events.id,
+        eventName: events.name,
+        guildId: events.guildId,
+        channelId: guilds.discordChannelId,
+        kind: events.kind,
+        gameTime: events.gameTime,
+        durationMinutes: events.durationMinutes,
+        squad1Name: events.squad1Name,
+        squad2Name: events.squad2Name,
+        squad1StartsAt: events.squad1StartsAt,
+        squad2StartsAt: events.squad2StartsAt,
+        squad1VoiceChannelId: guilds.squad1VoiceChannelId,
+        squad2VoiceChannelId: guilds.squad2VoiceChannelId,
+      })
+      .from(events)
+      .innerJoin(guilds, eq(events.guildId, guilds.id))
+      .where(
+        and(
+          isNull(events.deletedAt),
+          isNull(guilds.deletedAt),
+          isNotNull(guilds.discordChannelId),
+          or(
+            // Upcoming start: within the day window.
+            and(
+              isNotNull(events.gameTime),
+              gt(events.gameTime, nowIso),
+              lte(events.gameTime, horizonIso)
+            ),
+            and(
+              isNotNull(events.squad1StartsAt),
+              gt(events.squad1StartsAt, nowIso),
+              lte(events.squad1StartsAt, horizonIso)
+            ),
+            and(
+              isNotNull(events.squad2StartsAt),
+              gt(events.squad2StartsAt, nowIso),
+              lte(events.squad2StartsAt, horizonIso)
+            ),
+            // In-progress: started recently and has a duration (end reminders).
+            and(
+              isNotNull(events.durationMinutes),
+              isNotNull(events.gameTime),
+              gt(events.gameTime, endLookbackIso),
+              lte(events.gameTime, nowIso)
+            ),
+            and(
+              isNotNull(events.durationMinutes),
+              isNotNull(events.squad1StartsAt),
+              gt(events.squad1StartsAt, endLookbackIso),
+              lte(events.squad1StartsAt, nowIso)
+            ),
+            and(
+              isNotNull(events.durationMinutes),
+              isNotNull(events.squad2StartsAt),
+              gt(events.squad2StartsAt, endLookbackIso),
+              lte(events.squad2StartsAt, nowIso)
+            )
           )
         )
-      )
-    );
+      ) as Promise<CandidateRow[]>,
+    // Signup-close warnings: match events with a signupCloses within the next hour.
+    db
+      .select({
+        eventId: events.id,
+        eventName: events.name,
+        guildId: events.guildId,
+        channelId: guilds.discordChannelId,
+        signupCloses: events.signupCloses,
+      })
+      .from(events)
+      .innerJoin(guilds, eq(events.guildId, guilds.id))
+      .where(
+        and(
+          isNull(events.deletedAt),
+          isNull(guilds.deletedAt),
+          isNotNull(guilds.discordChannelId),
+          eq(events.kind, "match"),
+          isNotNull(events.signupCloses),
+          gt(events.signupCloses, nowIso),
+          lte(events.signupCloses, signupCloseHorizonIso)
+        )
+      ) as Promise<SignupCloseCandidateRow[]>,
+  ]);
 
-  if (rows.length === 0) return [];
+  if (rows.length === 0 && signupCloseRows.length === 0) return [];
 
-  const eventIds = rows.map((r) => r.eventId);
+  const allEventIds = [
+    ...new Set([...rows.map((r) => r.eventId), ...signupCloseRows.map((r) => r.eventId)]),
+  ];
   const sent = await db
     .select()
     .from(eventNotifications)
-    .where(inArray(eventNotifications.eventId, eventIds));
+    .where(inArray(eventNotifications.eventId, allEventIds));
 
   // sent: { (eventId): { (squad): Set<kind> } }
   const sentMap = new Map<string, Map<number, Set<NotificationKind>>>();
@@ -246,6 +304,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
           squadLabel: c.squadLabel,
           startsAt: c.startsAt,
           endsAt,
+          signupClosesAt: null,
           guildId: row.guildId,
           channelId: row.channelId,
           kind: chatKind,
@@ -271,6 +330,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
           squadLabel: c.squadLabel,
           startsAt: c.startsAt,
           endsAt,
+          signupClosesAt: null,
           guildId: row.guildId,
           channelId: row.channelId,
           kind: "voice_dm",
@@ -291,6 +351,7 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
             squadLabel: c.squadLabel,
             startsAt: c.startsAt,
             endsAt,
+            signupClosesAt: null,
             guildId: row.guildId,
             channelId: row.channelId,
             kind: endKind,
@@ -300,6 +361,32 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
       }
     }
   }
+
+  // Signup-close warnings: three independent kinds fire as Thursday 18:00 UTC approaches.
+  for (const row of signupCloseRows) {
+    if (!row.channelId || !row.signupCloses) continue;
+    const msUntilClose = new Date(row.signupCloses).getTime() - now.getTime();
+    if (msUntilClose <= 0) continue;
+    for (const { kind, windowMs } of SIGNUP_CLOSE_KINDS) {
+      if (msUntilClose <= windowMs && !alreadySent(row.eventId, 0, kind)) {
+        targets.push({
+          eventId: row.eventId,
+          eventName: row.eventName,
+          eventKind: "match",
+          squadNumber: 0,
+          squadLabel: null,
+          startsAt: row.signupCloses,
+          endsAt: null,
+          signupClosesAt: row.signupCloses,
+          guildId: row.guildId,
+          channelId: row.channelId,
+          kind,
+          voiceChannelId: null,
+        });
+      }
+    }
+  }
+
   return targets;
 }
 
@@ -310,6 +397,23 @@ export async function findPending(now = new Date()): Promise<NotificationTarget[
 export function clearNotifications(eventId: string): void {
   db.delete(eventNotifications)
     .where(eq(eventNotifications.eventId, eventId))
+    .run();
+}
+
+// Clears only the signup-close notification records so they re-fire after the
+// signupCloses timestamp is edited. Start/end reminders are unaffected.
+export function clearSignupCloseNotifications(eventId: string): void {
+  db.delete(eventNotifications)
+    .where(
+      and(
+        eq(eventNotifications.eventId, eventId),
+        inArray(eventNotifications.kind, [
+          "signup_close_hour",
+          "signup_close_twenty_min",
+          "signup_close_five_min",
+        ])
+      )
+    )
     .run();
 }
 
@@ -339,6 +443,15 @@ export function recordSent(
 }
 
 export function buildMessage(t: NotificationTarget): string {
+  if (
+    (t.kind === "signup_close_hour" ||
+      t.kind === "signup_close_twenty_min" ||
+      t.kind === "signup_close_five_min") &&
+    t.signupClosesAt
+  ) {
+    const unix = Math.floor(new Date(t.signupClosesAt).getTime() / 1000);
+    return `@everyone Signups for **${t.eventName}** close <t:${unix}:R> — <t:${unix}:F>`;
+  }
   const subject = t.squadLabel
     ? `${t.eventName} — ${t.squadLabel}`
     : t.eventName;
