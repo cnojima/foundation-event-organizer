@@ -335,6 +335,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const pathname = request.nextUrl.pathname;
       const PUBLIC_PATHS = new Set(["/", "/tos", "/privacy", "/signin", "/signup"]);
       if (PUBLIC_PATHS.has(pathname)) return true;
+      if (pathname.startsWith("/tools/")) return true;
       return !!auth;
     },
     async session({ session, user, token }) {
