@@ -177,6 +177,7 @@ const NAV_ITEMS: NavItem[] = [
 
   // ---- Platform: site-wide super-admin ----
   { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin", category: "platform" },
+  { labelKey: "damageCalculator", href: "/damage-calculator", icon: ICONS.crosshair, visibility: "superAdmin", category: "platform" },
 
   // ---- Account: per-user utilities (always visible to signed-in users) ----
   { labelKey: "myAccount", href: "/me", icon: ICONS.settings, visibility: "signedIn", category: "account" },

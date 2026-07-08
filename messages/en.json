@@ -37,6 +37,7 @@
     "settings": "Settings",
     "auditLog": "Audit Log",
     "superAdmin": "Super Admin",
+    "damageCalculator": "Damage Calculator",
     "browseGuilds": "Browse Guilds",
     "createGuild": "Create Guild",
     "adminHelp": "Admin Help",
