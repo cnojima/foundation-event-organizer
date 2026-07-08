@@ -3,9 +3,11 @@ import {
   sqliteTable,
   text,
   integer,
+  real,
   primaryKey,
   type AnySQLiteColumn,
 } from "drizzle-orm/sqlite-core";
+import { PHASES } from "@/lib/damage-calculator/phases";
 
 // Auth.js required tables
 export const users = sqliteTable("users", {
@@ -586,4 +588,54 @@ export const signups = sqliteTable("signups", {
   attendanceOnly: integer("attendance_only", { mode: "boolean" })
     .notNull()
     .default(false),
+});
+
+// ---- Damage calculator (personal tool, super-admin only, not guild-scoped) ----
+// Tracks raid damage screenshots for the "Calamity Befalls" event, replacing
+// a manual spreadsheet. A "fleet" is one player's flagship identity — it
+// persists across sessions (e.g. "Gram") since the same person always names
+// their ship the same thing, while the champions crewed onto it are read
+// fresh from each session's screenshots since rosters change per raid.
+export const damageFleets = sqliteTable("damage_fleets", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull().unique(),
+  // OCR only offers a best guess for this (the in-game icon is subtle/hard to
+  // read reliably); it's confirmed/edited once by the admin and then reused.
+  elementType: text("element_type", { enum: ["beam", "kinetic", "ion"] }),
+  createdAt: text("created_at").notNull(),
+});
+
+export const damageSessions = sqliteTable("damage_sessions", {
+  id: text("id").primaryKey(),
+  label: text("label").notNull(),
+  eventName: text("event_name").notNull().default("Calamity Befalls"),
+  // Manual input — the battle data carries no timestamps. Null until the
+  // admin fills it in; DPS can't be computed until then.
+  totalTimeSeconds: real("total_time_seconds"),
+  createdByUserId: text("created_by_user_id")
+    .notNull()
+    .references(() => users.id),
+  createdAt: text("created_at").notNull(),
+});
+
+// One row per entity (flagship or champion) per phase per session, extracted
+// via Claude vision OCR from a single screenshot. Re-uploading a screenshot
+// for the same (sessionId, phase, fleetId) replaces the prior rows for that
+// triple rather than accumulating duplicates.
+export const damageReadings = sqliteTable("damage_readings", {
+  id: text("id").primaryKey(),
+  sessionId: text("session_id")
+    .notNull()
+    .references(() => damageSessions.id, { onDelete: "cascade" }),
+  phase: text("phase", { enum: PHASES }).notNull(),
+  fleetId: text("fleet_id")
+    .notNull()
+    .references(() => damageFleets.id),
+  entityName: text("entity_name").notNull(),
+  entityRole: text("entity_role", { enum: ["flagship", "champion"] }).notNull(),
+  damageDealt: integer("damage_dealt").notNull(),
+  healingDone: integer("healing_done").notNull().default(0),
+  damageReceived: integer("damage_received").notNull().default(0),
+  sourceFileName: text("source_file_name"),
+  createdAt: text("created_at").notNull(),
 });

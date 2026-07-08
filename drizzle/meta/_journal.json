@@ -141,6 +141,13 @@
       "when": 1779920286974,
       "tag": "0019_add_global_events",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "6",
+      "when": 1783483135021,
+      "tag": "0020_add_damage_calculator",
+      "breakpoints": true
     }
   ]
 }
