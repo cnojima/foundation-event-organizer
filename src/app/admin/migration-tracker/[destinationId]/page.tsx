@@ -72,22 +72,30 @@ export default async function MigrationDestinationQueuePage({
         kicker={tShared("kicker")}
         title={t("title", { serverNumber: destination.serverNumber })}
         rightSlot={
-          isServerAdmin ? (
-            <div className="flex gap-2">
-              <Link
-                href={`/admin/migration-tracker/${destination.id}/officers`}
-                className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
-              >
-                {t("officersLink")}
-              </Link>
-              <Link
-                href={`/admin/migration-tracker/${destination.id}/settings`}
-                className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
-              >
-                {t("settingsLink")}
-              </Link>
-            </div>
-          ) : null
+          <div className="flex gap-2">
+            <Link
+              href={`/admin/migration-tracker/${destination.id}/import`}
+              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+            >
+              {t("importLink")}
+            </Link>
+            {isServerAdmin && (
+              <>
+                <Link
+                  href={`/admin/migration-tracker/${destination.id}/officers`}
+                  className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                >
+                  {t("officersLink")}
+                </Link>
+                <Link
+                  href={`/admin/migration-tracker/${destination.id}/settings`}
+                  className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+                >
+                  {t("settingsLink")}
+                </Link>
+              </>
+            )}
+          </div>
         }
       />
 

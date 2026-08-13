@@ -68,6 +68,7 @@ export type AuditAction =
   | "global_event.delete"
   // Migration tracker (server-scoped, not guild-scoped — guildId: null)
   | "migration.submit"
+  | "migration.import"
   | "migration.edit"
   | "migration.withdraw"
   | "migration.accept"
