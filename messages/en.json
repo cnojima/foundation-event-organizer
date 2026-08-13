@@ -1045,6 +1045,7 @@
   },
   "migrationTrackerQueue": {
     "title": "Server #{serverNumber} — Review queue",
+    "importLink": "Import",
     "officersLink": "Officers",
     "settingsLink": "Settings",
     "left": "{count} left",
@@ -1072,6 +1073,25 @@
     "statusDenied": "Denied",
     "statusWithdrawn": "Withdrawn",
     "statusRemoved": "Removed",
+    "errorGeneric": "Something went wrong."
+  },
+  "migrationTrackerImport": {
+    "title": "Server #{serverNumber} — Import applications",
+    "pasteLabel": "Paste CSV or TSV data",
+    "pastePlaceholder": "playerName\tsourceServer\tpower\tcontact\nExample Name\tServer 42\t95000000\t@example",
+    "pasteHint": "First row must be column headers. Copy-paste directly from a spreadsheet — commas and tabs are both supported. Recognized headers: Player/Name/IGN, Source Server/Origin, Power, Contact/Discord (optional).",
+    "windowNotOpen": "This migration window isn't open, so imported rows can't be admitted yet.",
+    "missingColumns": "Couldn't find required columns: {fields}. Add a header row with these columns and paste again.",
+    "summary": "{valid} row(s) ready to import, {invalid} with errors that will be skipped.",
+    "importButton": "Import {count} application(s)",
+    "importing": "Importing…",
+    "colPlayer": "Player",
+    "colSourceServer": "Source server",
+    "colPower": "Power",
+    "colContact": "Contact",
+    "colResult": "Result",
+    "resultPending": "Ready",
+    "resultImported": "Imported ({status})",
     "errorGeneric": "Something went wrong."
   },
   "migrationTrackerOfficers": {
