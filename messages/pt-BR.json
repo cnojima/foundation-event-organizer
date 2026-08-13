@@ -953,7 +953,10 @@
     "classificationHigh": "Servidor de alta potência",
     "classificationMid": "Servidor de potência média",
     "classificationLow": "Servidor de baixo consumo de energia",
-    "backToTracker": "← Voltar ao rastreador"
+    "backToTracker": "← Voltar ao rastreador",
+    "statusOpen": "Abrir",
+    "statusUpcoming": "Por vir",
+    "statusClosed": "Fechado"
   },
   "migrationTrackerBanner": {
     "nowOpen": "Já está aberto",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} Outros {# migration slots open across all power tiers} }",
     "subheadFull": "Todas as vagas estão preenchidas neste momento — entre na lista de espera.",
     "subheadDefault": "Veja quanto espaço ainda está disponível e solicite a migração.",
-    "cta": "Rastreador de visualizações →"
+    "cta": "Rastreador de visualizações →",
+    "multiTitle": "{count, plural, one {# server has} outros {# servers have} } abrir janelas de migração",
+    "subheadOpensOn": "Abre"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "Rastreador de Migração",
-    "titleServer": "Servidor nº {serverNumber}",
     "subtitle": "{classification} — Veja quanto espaço ainda resta em cada nível de poder antes de se candidatar.",
-    "subtitleUnconfigured": "O rastreador de migração deste servidor ainda não foi configurado.",
     "applyButton": "Solicite a migração",
     "checkBackSoon": "Volte em breve.",
     "colTier": "Nível de poder",
     "colCap": "Boné",
     "colReserved": "Reservado",
     "colRemaining": "Restante",
-    "colWaitlisted": "Lista de espera"
+    "colWaitlisted": "Lista de espera",
+    "subtitleInactive": "Servidor nº {serverNumber} Atualmente, não está rastreando migrações.",
+    "opensOn": "Inscrições abertas"
   },
   "migrationTrackerSubmit": {
     "title": "Solicite a migração",
-    "subtitleServer": "Servidor nº {serverNumber}",
-    "unconfigured": "O rastreador de migração deste servidor ainda não foi configurado.",
     "playerNameLabel": "Nome do jogador *",
     "sourceServerLabel": "Servidor de origem *",
     "sourceServerPlaceholder": "Exemplo nº 1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "Guarde este link — você não o verá novamente.",
     "saveLinkBody": "Use este link para editar sua inscrição ou cancelá-la posteriormente. Não há conta, portanto, este link é a única maneira de acessar novamente.",
     "copyLink": "Copiar link",
-    "copied": "Copiado!"
+    "copied": "Copiado!",
+    "inactive": "Este servidor não está rastreando migrações no momento.",
+    "notOpenYet": "Esta janela de migração ainda não está aberta — inscrições abertas",
+    "windowClosed": "O período de migração já foi encerrado. Não estamos mais aceitando inscrições."
   },
   "migrationTrackerEdit": {
     "title": "Sua candidatura",
@@ -1023,12 +1029,14 @@
     "withdrawing": "Retirando-se…",
     "errorSourceServerRequired": "É necessário um servidor de origem.",
     "errorPower": "A potência deve ser um número inteiro.",
-    "errorGeneric": "Algo deu errado. Por favor, tente novamente."
+    "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
+    "statusWindowClosed": "Esta janela de migração encerrou-se."
   },
   "migrationTrackerAdmin": {
     "kicker": "Administrador",
     "title": "Rastreador de Migração",
-    "empty": "Você não gerencia nenhum destino de migração. Administradores de guilda no servidor de destino e qualquer pessoa designada como Oficial de Imigração podem analisar solicitações aqui."
+    "empty": "Você não gerencia nenhum destino de migração. Administradores de guilda no servidor de destino e qualquer pessoa designada como Oficial de Imigração podem analisar solicitações aqui.",
+    "newWindow": "+ Nova janela"
   },
   "migrationTrackerQueue": {
     "title": "Servidor nº {serverNumber} — Fila de revisão",
@@ -1049,7 +1057,17 @@
     "deny": "Negar",
     "remove": "Remover",
     "confirm": "Confirmar",
-    "errorGeneric": "Algo deu errado."
+    "errorGeneric": "Algo deu errado.",
+    "colTier": "Nível",
+    "colStatus": "Status",
+    "emptyRoster": "Nenhuma candidatura foi submetida para este período.",
+    "closedNotice": "Esta janela de migração foi encerrada. Nada aqui pode ser feito — este é o registro final.",
+    "statusApplied": "Aplicado",
+    "statusWaitlisted": "Lista de espera",
+    "statusAccepted": "Aceito",
+    "statusDenied": "Negado",
+    "statusWithdrawn": "Retirado",
+    "statusRemoved": "Removido"
   },
   "migrationTrackerOfficers": {
     "title": "Servidor nº {serverNumber} — Oficiais",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "Digite pelo menos 2 caracteres para pesquisar.",
     "assign": "Atribuir",
     "alreadyOfficer": "Já é oficial",
-    "errorGeneric": "Algo deu errado."
+    "errorGeneric": "Algo deu errado.",
+    "closedNote": "Esta janela está fechada — a atribuição de oficiais está desativada."
   },
   "migrationTrackerSettings": {
     "title": "Servidor nº {serverNumber} - Configurações",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "Salvar limites",
     "errorAllocation": "Cada valor máximo deve ser um número não negativo.",
     "errorThreshold": "Cada limite deve ser um número, ou estar em branco caso não haja valor mínimo.",
-    "errorGeneric": "Algo deu errado."
+    "errorGeneric": "Algo deu errado.",
+    "datesHeading": "Datas de abertura/fechamento",
+    "datesDesc": "Ferramenta de correção para datas digitadas incorretamente — sempre editável, mesmo após o fechamento da janela. Estender a data de fechamento de uma janela fechada a reabre.",
+    "opensAtLabel": "Abre às",
+    "closesAtLabel": "Encerra às",
+    "saveDates": "Reserve as datas",
+    "errorDatesRequired": "Ambas as datas são necessárias.",
+    "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
+    "closedNote": "Esta janela está fechada — a edição está desativada."
+  },
+  "migrationTrackerIndex": {
+    "title": "Rastreador de Migração",
+    "subtitle": "Servidores atualmente rastreando migrações",
+    "empty": "Nenhum servidor está rastreando migrações neste momento."
+  },
+  "migrationTrackerCreate": {
+    "title": "Nova janela de migração",
+    "subtitle": "Abre o rastreamento para um servidor. Bloqueia se esse servidor já tiver uma janela aberta ou futura.",
+    "serverNumberLabel": "Número do servidor",
+    "classificationLabel": "Classificação",
+    "opensAtLabel": "Abre às",
+    "closesAtLabel": "Encerra às",
+    "submitButton": "Abrir janela",
+    "errorServerNumber": "O número do servidor deve estar entre 1001 e 9999.",
+    "errorClassificationRequired": "Escolha uma classificação.",
+    "errorDatesRequired": "Ambas as datas são necessárias.",
+    "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
+    "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
+    "backToOverview": "← Voltar ao Rastreador de Migração"
   }
 }

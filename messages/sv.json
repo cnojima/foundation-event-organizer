@@ -953,7 +953,10 @@
     "classificationHigh": "Högpresterande server",
     "classificationMid": "Server med medelhög effekt",
     "classificationLow": "Lågströmsserver",
-    "backToTracker": "← Tillbaka till spåraren"
+    "backToTracker": "← Tillbaka till spåraren",
+    "statusOpen": "Öppna",
+    "statusUpcoming": "Kommande",
+    "statusClosed": "Stängd"
   },
   "migrationTrackerBanner": {
     "nowOpen": "Nu öppet",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} andra {# migration slots open across all power tiers} }",
     "subheadFull": "Alla nivåer är fulla just nu — gå med i väntelistan",
     "subheadDefault": "Se hur mycket utrymme som finns kvar och ansök om migrering",
-    "cta": "Visa spårare →"
+    "cta": "Visa spårare →",
+    "multiTitle": "{count, plural, one {# server has} andra {# servers have} } öppna migreringsfönster",
+    "subheadOpensOn": "Öppnar"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "Migrationsspårare",
-    "titleServer": "Servernummer {serverNumber}",
     "subtitle": "{classification} — se hur mycket utrymme som finns kvar i varje effektnivå innan du ansöker.",
-    "subtitleUnconfigured": "Den här serverns migreringsspårare har inte konfigurerats ännu.",
     "applyButton": "Ansök om migrering",
     "checkBackSoon": "Återkom snart.",
     "colTier": "Kraftnivå",
     "colCap": "Lock",
     "colReserved": "Reserverad",
     "colRemaining": "Återstående",
-    "colWaitlisted": "Väntelistad"
+    "colWaitlisted": "Väntelistad",
+    "subtitleInactive": "Servernummer {serverNumber} spårar för närvarande inte migreringar.",
+    "opensOn": "Ansökningar öppna"
   },
   "migrationTrackerSubmit": {
     "title": "Ansök om migrering",
-    "subtitleServer": "Servernummer {serverNumber}",
-    "unconfigured": "Den här serverns migreringsspårare har inte konfigurerats ännu.",
     "playerNameLabel": "Spelarens namn *",
     "sourceServerLabel": "Källserver *",
     "sourceServerPlaceholder": "t.ex. #1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "Spara den här länken – du kommer inte att se den igen.",
     "saveLinkBody": "Använd den för att redigera din ansökan eller avbryta senare. Det finns inget konto, så den här länken är enda sättet att komma tillbaka.",
     "copyLink": "Kopiera länk",
-    "copied": "Kopierad!"
+    "copied": "Kopierad!",
+    "inactive": "Den här servern spårar för närvarande inte migreringar.",
+    "notOpenYet": "Det här migreringsfönstret är inte öppet än — applikationerna är öppna",
+    "windowClosed": "Den här migreringsrutan har stängts. Ansökningar accepteras inte längre."
   },
   "migrationTrackerEdit": {
     "title": "Din ansökan",
@@ -1023,12 +1029,14 @@
     "withdrawing": "Uttag…",
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
-    "errorGeneric": "Något gick fel. Försök igen."
+    "errorGeneric": "Något gick fel. Försök igen.",
+    "statusWindowClosed": "Det här migreringsfönstret har stängts."
   },
   "migrationTrackerAdmin": {
     "kicker": "Administration",
     "title": "Migrationsspårare",
-    "empty": "Du hanterar inga migrationsdestinationer. Gildeadministratörer på en destinations server, och alla som utsetts till immigrationshandläggare, kan granska ansökningar här."
+    "empty": "Du hanterar inga migrationsdestinationer. Gildeadministratörer på en destinations server, och alla som utsetts till immigrationshandläggare, kan granska ansökningar här.",
+    "newWindow": "+ Nytt fönster"
   },
   "migrationTrackerQueue": {
     "title": "Servernummer {serverNumber} — Granskningskö",
@@ -1049,7 +1057,17 @@
     "deny": "Förneka",
     "remove": "Ta bort",
     "confirm": "Bekräfta",
-    "errorGeneric": "Något gick fel."
+    "errorGeneric": "Något gick fel.",
+    "colTier": "Nivå",
+    "colStatus": "Status",
+    "emptyRoster": "Inga ansökningar lämnades in för detta fönster.",
+    "closedNotice": "Det här migreringsfönstret har stängts. Ingenting här är åtgärdbart – detta är den slutliga posten.",
+    "statusApplied": "Tillämpad",
+    "statusWaitlisted": "Väntelistad",
+    "statusAccepted": "Accepterad",
+    "statusDenied": "Nekad",
+    "statusWithdrawn": "Tillbakadragen",
+    "statusRemoved": "Borttagen"
   },
   "migrationTrackerOfficers": {
     "title": "Servernummer {serverNumber} — Officerare",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "Skriv minst 2 tecken för att söka.",
     "assign": "Tilldela",
     "alreadyOfficer": "Redan en officer",
-    "errorGeneric": "Något gick fel."
+    "errorGeneric": "Något gick fel.",
+    "closedNote": "Det här fönstret är stängt — tilldelning av tjänstemän är inaktiverad."
   },
   "migrationTrackerSettings": {
     "title": "Servernummer {serverNumber} — Inställningar",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "Spara tröskelvärden",
     "errorAllocation": "Varje versal måste vara ett icke-negativt tal.",
     "errorThreshold": "Varje tröskelvärde måste vara ett tal, eller tomt om det inte finns något minimumvärde.",
-    "errorGeneric": "Något gick fel."
+    "errorGeneric": "Något gick fel.",
+    "datesHeading": "Öppet-/stängningsdatum",
+    "datesDesc": "Korrigeringsverktyg för ett felstavat datum — alltid redigerbart, även efter att fönstret stängts. Om du förlänger ett stängt fönsters stängningsdatum öppnas det igen.",
+    "opensAtLabel": "Öppnar kl.",
+    "closesAtLabel": "Stänger kl.",
+    "saveDates": "Spara datum",
+    "errorDatesRequired": "Båda datumen är obligatoriska.",
+    "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
+    "closedNote": "Det här fönstret är stängt – redigering är inaktiverad."
+  },
+  "migrationTrackerIndex": {
+    "title": "Migrationsspårare",
+    "subtitle": "Servrar som för närvarande spårar migreringar",
+    "empty": "Inga servrar spårar migreringar just nu."
+  },
+  "migrationTrackerCreate": {
+    "title": "Nytt migreringsfönster",
+    "subtitle": "Öppnar spårning för en server. Blockeras om servern redan har ett öppet eller kommande fönster.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Klassificering",
+    "opensAtLabel": "Öppnar kl.",
+    "closesAtLabel": "Stänger kl.",
+    "submitButton": "Öppna fönstret",
+    "errorServerNumber": "Servernumret måste vara mellan 1001 och 9999.",
+    "errorClassificationRequired": "Välj en klassificering.",
+    "errorDatesRequired": "Båda datumen är obligatoriska.",
+    "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
+    "errorGeneric": "Något gick fel. Försök igen.",
+    "backToOverview": "← Tillbaka till Migrationsspåraren"
   }
 }

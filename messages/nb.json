@@ -953,7 +953,10 @@
     "classificationHigh": "Høyeffektsserver",
     "classificationMid": "Server med middels kraft",
     "classificationLow": "Server med lavt strømforbruk",
-    "backToTracker": "← Tilbake til sporingsenheten"
+    "backToTracker": "← Tilbake til sporingsenheten",
+    "statusOpen": "Åpne",
+    "statusUpcoming": "Kommende",
+    "statusClosed": "Lukket"
   },
   "migrationTrackerBanner": {
     "nowOpen": "Nå åpent",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} andre {# migration slots open across all power tiers} }",
     "subheadFull": "Alle nivåer er fulle nå – skriv deg på venteliste",
     "subheadDefault": "Se hvor mye plass som er igjen og søk om migrering",
-    "cta": "Vis sporing →"
+    "cta": "Vis sporing →",
+    "multiTitle": "{count, plural, one {# server has} andre {# servers have} } åpne migreringsvinduer",
+    "subheadOpensOn": "Åpner"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "Migrasjonssporing",
-    "titleServer": "Server # {serverNumber}",
     "subtitle": "{classification} — se hvor mye plass som er igjen i hvert effektnivå før du søker.",
-    "subtitleUnconfigured": "Denne serverens migreringssporing er ikke konfigurert ennå.",
     "applyButton": "Søk om å migrere",
     "checkBackSoon": "Sjekk tilbake snart.",
     "colTier": "Kraftnivå",
     "colCap": "Lokk",
     "colReserved": "Reservert",
     "colRemaining": "Gjenværende",
-    "colWaitlisted": "Venteliste"
+    "colWaitlisted": "Venteliste",
+    "subtitleInactive": "Server # {serverNumber} sporer ikke migrasjoner for øyeblikket.",
+    "opensOn": "Søknader åpne"
   },
   "migrationTrackerSubmit": {
     "title": "Søk om å migrere",
-    "subtitleServer": "Server # {serverNumber}",
-    "unconfigured": "Denne serverens migreringssporing er ikke konfigurert ennå.",
     "playerNameLabel": "Spillernavn *",
     "sourceServerLabel": "Kildeserver *",
     "sourceServerPlaceholder": "f.eks. #1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "Lagre denne lenken – du vil ikke se den igjen.",
     "saveLinkBody": "Bruk den til å redigere søknaden din eller trekke deg senere. Det finnes ingen konto, så denne lenken er den eneste veien tilbake.",
     "copyLink": "Kopier lenke",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "inactive": "Denne serveren sporer ikke migreringer for øyeblikket.",
+    "notOpenYet": "Dette migreringsvinduet er ikke åpent ennå – applikasjoner er åpne",
+    "windowClosed": "Dette migreringsvinduet er utløpt. Søknader godtas ikke lenger."
   },
   "migrationTrackerEdit": {
     "title": "Søknaden din",
@@ -1023,12 +1029,14 @@
     "withdrawing": "Uttak…",
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
-    "errorGeneric": "Noe gikk galt. Prøv igjen."
+    "errorGeneric": "Noe gikk galt. Prøv igjen.",
+    "statusWindowClosed": "Dette migreringsvinduet er lukket."
   },
   "migrationTrackerAdmin": {
     "kicker": "Admin",
     "title": "Migrasjonssporing",
-    "empty": "Du administrerer ingen migrasjonsdestinasjoner. Klanadministratorer på en destinasjons server, og alle som er utnevnt til immigrasjonsansvarlig, kan gjennomgå søknader her."
+    "empty": "Du administrerer ingen migrasjonsdestinasjoner. Klanadministratorer på en destinasjons server, og alle som er utnevnt til immigrasjonsansvarlig, kan gjennomgå søknader her.",
+    "newWindow": "+ Nytt vindu"
   },
   "migrationTrackerQueue": {
     "title": "Server # {serverNumber} — Gjennomgangskø",
@@ -1049,7 +1057,17 @@
     "deny": "Benekte",
     "remove": "Fjerne",
     "confirm": "Bekrefte",
-    "errorGeneric": "Noe gikk galt."
+    "errorGeneric": "Noe gikk galt.",
+    "colTier": "Nivå",
+    "colStatus": "Status",
+    "emptyRoster": "Ingen søknader ble sendt inn for dette vinduet.",
+    "closedNotice": "Dette migreringsvinduet er avsluttet. Ingenting her er handlingsrettet – dette er den endelige registreringen.",
+    "statusApplied": "Anvendt",
+    "statusWaitlisted": "Venteliste",
+    "statusAccepted": "Godkjent",
+    "statusDenied": "Avvist",
+    "statusWithdrawn": "Tilbaketrukket",
+    "statusRemoved": "Fjernet"
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Offiserer",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "Skriv inn minst 2 tegn for å søke.",
     "assign": "Tildele",
     "alreadyOfficer": "Allerede offiser",
-    "errorGeneric": "Noe gikk galt."
+    "errorGeneric": "Noe gikk galt.",
+    "closedNote": "Dette vinduet er lukket – tildeling av offiserer er deaktivert."
   },
   "migrationTrackerSettings": {
     "title": "Server # {serverNumber} — Innstillinger",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "Lagre terskler",
     "errorAllocation": "Hvert store bokstaver må være et ikke-negativt tall.",
     "errorThreshold": "Hver terskel må være et tall, eller være tom hvis det ikke er noe minimum.",
-    "errorGeneric": "Noe gikk galt."
+    "errorGeneric": "Noe gikk galt.",
+    "datesHeading": "Åpnings-/stengedatoer",
+    "datesDesc": "Korrigeringsverktøy for feilstavet dato – alltid redigerbart, selv etter at vinduet lukkes. Hvis du forlenger lukkedatoen for et lukket vindu, åpnes det på nytt.",
+    "opensAtLabel": "Åpner kl.",
+    "closesAtLabel": "Stenger kl.",
+    "saveDates": "Lagre datoer",
+    "errorDatesRequired": "Begge datoene er obligatoriske.",
+    "errorCloseAfterOpen": "Stengningsdatoen må være etter åpningsdatoen.",
+    "closedNote": "Dette vinduet er lukket – redigering er deaktivert."
+  },
+  "migrationTrackerIndex": {
+    "title": "Migrasjonssporing",
+    "subtitle": "Servere som for øyeblikket sporer migreringer",
+    "empty": "Ingen servere sporer migreringer akkurat nå."
+  },
+  "migrationTrackerCreate": {
+    "title": "Nytt migreringsvindu",
+    "subtitle": "Åpner sporing for en server. Blokkeres hvis serveren allerede har et åpent eller kommende vindu.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Klassifikasjon",
+    "opensAtLabel": "Åpner kl.",
+    "closesAtLabel": "Stenger kl.",
+    "submitButton": "Åpne vinduet",
+    "errorServerNumber": "Servernummeret må være mellom 1001 og 9999.",
+    "errorClassificationRequired": "Velg en klassifisering.",
+    "errorDatesRequired": "Begge datoene er obligatoriske.",
+    "errorCloseAfterOpen": "Stengningsdatoen må være etter åpningsdatoen.",
+    "errorGeneric": "Noe gikk galt. Prøv igjen.",
+    "backToOverview": "← Tilbake til migrasjonssporing"
   }
 }

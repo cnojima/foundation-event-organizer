@@ -953,7 +953,10 @@
     "classificationHigh": "Krachtige server",
     "classificationMid": "Server met gemiddeld vermogen",
     "classificationLow": "Energiezuinige server",
-    "backToTracker": "← Terug naar de tracker"
+    "backToTracker": "← Terug naar de tracker",
+    "statusOpen": "Open",
+    "statusUpcoming": "Aanstaande",
+    "statusClosed": "Gesloten"
   },
   "migrationTrackerBanner": {
     "nowOpen": "Nu geopend",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} overige {# migration slots open across all power tiers} }",
     "subheadFull": "Alle categorieën zijn momenteel vol — schrijf je in op de wachtlijst.",
     "subheadDefault": "Bekijk hoeveel ruimte er nog over is en dien een migratieverzoek in.",
-    "cta": "Bekijk de tracker →"
+    "cta": "Bekijk de tracker →",
+    "multiTitle": "{count, plural, one {# server has} andere {# servers have} } Migratievensters openen",
+    "subheadOpensOn": "Opent"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "Migratietracker",
-    "titleServer": "Servernummer {serverNumber}",
     "subtitle": "{classification} — Kijk eerst hoeveel ruimte er nog is in elke vermogenscategorie voordat je je aanmeldt.",
-    "subtitleUnconfigured": "De migratietracker voor deze server is nog niet geconfigureerd.",
     "applyButton": "Aanvraag voor migratie",
     "checkBackSoon": "Kom binnenkort nog eens terug.",
     "colTier": "Krachtniveau",
     "colCap": "Cap",
     "colReserved": "Gereserveerd",
     "colRemaining": "Overig",
-    "colWaitlisted": "Op de wachtlijst geplaatst"
+    "colWaitlisted": "Op de wachtlijst geplaatst",
+    "subtitleInactive": "Servernummer {serverNumber} Houdt momenteel geen migraties bij.",
+    "opensOn": "Aanmelden is mogelijk"
   },
   "migrationTrackerSubmit": {
     "title": "Aanvraag voor migratie",
-    "subtitleServer": "Servernummer {serverNumber}",
-    "unconfigured": "De migratietracker voor deze server is nog niet geconfigureerd.",
     "playerNameLabel": "Spelersnaam *",
     "sourceServerLabel": "Bronserver *",
     "sourceServerPlaceholder": "bijv. #1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "Bewaar deze link — je zult hem niet meer terugzien.",
     "saveLinkBody": "Gebruik deze link om je aanvraag te bewerken of later in te trekken. Er is geen account, dus deze link is de enige manier om weer in te loggen.",
     "copyLink": "Kopieer link",
-    "copied": "Gekopieerd!"
+    "copied": "Gekopieerd!",
+    "inactive": "Deze server houdt momenteel geen migraties bij.",
+    "notOpenYet": "Deze migratieperiode is nog niet geopend — aanvragen kunnen nog worden ingediend.",
+    "windowClosed": "De migratieperiode is gesloten. Aanvragen worden niet meer in behandeling genomen."
   },
   "migrationTrackerEdit": {
     "title": "Uw aanvraag",
@@ -1023,12 +1029,14 @@
     "withdrawing": "Terugtrekking…",
     "errorSourceServerRequired": "Een bronserver is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
-    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw."
+    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
+    "statusWindowClosed": "Deze migratieperiode is afgesloten."
   },
   "migrationTrackerAdmin": {
     "kicker": "Beheerder",
     "title": "Migratietracker",
-    "empty": "Je beheert geen migratiebestemmingen. Gildebeheerders op de server van een bestemming, en iedereen die is aangesteld als immigratiefunctionaris, kunnen hier aanvragen beoordelen."
+    "empty": "Je beheert geen migratiebestemmingen. Gildebeheerders op de server van een bestemming, en iedereen die is aangesteld als immigratiefunctionaris, kunnen hier aanvragen beoordelen.",
+    "newWindow": "+ Nieuw venster"
   },
   "migrationTrackerQueue": {
     "title": "Servernummer {serverNumber} — Wachtrij beoordelen",
@@ -1049,7 +1057,17 @@
     "deny": "Ontkennen",
     "remove": "Verwijderen",
     "confirm": "Bevestigen",
-    "errorGeneric": "Er is iets misgegaan."
+    "errorGeneric": "Er is iets misgegaan.",
+    "colTier": "Laag",
+    "colStatus": "Status",
+    "emptyRoster": "Er zijn voor deze periode geen aanvragen ingediend.",
+    "closedNotice": "Deze migratieperiode is afgesloten. Er zijn geen verdere acties meer mogelijk — dit is het definitieve document.",
+    "statusApplied": "Toegepast",
+    "statusWaitlisted": "Op de wachtlijst geplaatst",
+    "statusAccepted": "Geaccepteerd",
+    "statusDenied": "Geweigerd",
+    "statusWithdrawn": "Ingetrokken",
+    "statusRemoved": "VERWIJDERD"
   },
   "migrationTrackerOfficers": {
     "title": "Servernummer {serverNumber} — Agenten",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "Typ minimaal 2 tekens om te zoeken.",
     "assign": "Toewijzen",
     "alreadyOfficer": "Hij is al officier.",
-    "errorGeneric": "Er is iets misgegaan."
+    "errorGeneric": "Er is iets misgegaan.",
+    "closedNote": "Dit venster is gesloten — het toewijzen van agenten is uitgeschakeld."
   },
   "migrationTrackerSettings": {
     "title": "Servernummer {serverNumber} - Instellingen",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "Drempelwaarden opslaan",
     "errorAllocation": "Elke dop moet een niet-negatief getal zijn.",
     "errorThreshold": "Elke drempelwaarde moet een getal zijn, of leeg als er geen minimum is.",
-    "errorGeneric": "Er is iets misgegaan."
+    "errorGeneric": "Er is iets misgegaan.",
+    "datesHeading": "Openings-/sluitingsdata",
+    "datesDesc": "Correctietool voor een typefout in de datum — altijd bewerkbaar, zelfs nadat het venster is gesloten. Door de sluitingsdatum van een gesloten venster te verlengen, wordt het venster opnieuw geopend.",
+    "opensAtLabel": "Opent om",
+    "closesAtLabel": "Sluit om",
+    "saveDates": "Noteer de datums",
+    "errorDatesRequired": "Beide datums zijn vereist.",
+    "errorCloseAfterOpen": "De sluitingsdatum moet na de openingsdatum liggen.",
+    "closedNote": "Dit venster is gesloten — bewerken is uitgeschakeld."
+  },
+  "migrationTrackerIndex": {
+    "title": "Migratietracker",
+    "subtitle": "Servers die momenteel migraties bijhouden",
+    "empty": "Er zijn momenteel geen servers die migraties bijhouden."
+  },
+  "migrationTrackerCreate": {
+    "title": "Nieuw migratievenster",
+    "subtitle": "Opent de tracking voor een server. Geblokkeerd als die server al een open of aankomend venster heeft.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Classificatie",
+    "opensAtLabel": "Opent om",
+    "closesAtLabel": "Sluit om",
+    "submitButton": "Open venster",
+    "errorServerNumber": "Het servernummer moet tussen 1001 en 9999 liggen.",
+    "errorClassificationRequired": "Kies een classificatie.",
+    "errorDatesRequired": "Beide datums zijn vereist.",
+    "errorCloseAfterOpen": "De sluitingsdatum moet na de openingsdatum liggen.",
+    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
+    "backToOverview": "← Terug naar de migratietracker"
   }
 }

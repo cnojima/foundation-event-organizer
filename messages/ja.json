@@ -953,7 +953,10 @@
     "classificationHigh": "高性能サーバー",
     "classificationMid": "中規模サーバー",
     "classificationLow": "低消費電力サーバー",
-    "backToTracker": "← トラッカーに戻る"
+    "backToTracker": "← トラッカーに戻る",
+    "statusOpen": "開ける",
+    "statusUpcoming": "近日公開",
+    "statusClosed": "閉店"
   },
   "migrationTrackerBanner": {
     "nowOpen": "営業中",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers}その他の{# migration slots open across all power tiers} }",
     "subheadFull": "現在、全プランが満席です。ウェイティングリストにご登録ください。",
     "subheadDefault": "残りの空き容量を確認し、移行を申請してください。",
-    "cta": "トラッカーを表示 →"
+    "cta": "トラッカーを表示 →",
+    "multiTitle": "{count, plural, one {# server has}他の{# servers have} } 移行ウィンドウを開く",
+    "subheadOpensOn": "開く"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "移行トラッカー",
-    "titleServer": "サーバー番号： {serverNumber}",
     "subtitle": "{classification}応募する前に、各電力ティアにどれだけの空きがあるかを確認してください。",
-    "subtitleUnconfigured": "このサーバーの移行トラッカーはまだ設定されていません。",
     "applyButton": "移行を申請する",
     "checkBackSoon": "またすぐにご確認ください。",
     "colTier": "パワーティア",
     "colCap": "キャップ",
     "colReserved": "予約済み",
     "colRemaining": "残り",
-    "colWaitlisted": "ウェイティングリスト"
+    "colWaitlisted": "ウェイティングリスト",
+    "subtitleInactive": "サーバー番号： {serverNumber}現在、移行状況を追跡していません。",
+    "opensOn": "応募受付中"
   },
   "migrationTrackerSubmit": {
     "title": "移行を申請する",
-    "subtitleServer": "サーバー番号： {serverNumber}",
-    "unconfigured": "このサーバーの移行トラッカーはまだ設定されていません。",
     "playerNameLabel": "プレイヤー名 *",
     "sourceServerLabel": "ソースサーバー *",
     "sourceServerPlaceholder": "例 #1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "このリンクを保存してください。二度と表示されません。",
     "saveLinkBody": "応募内容の編集や、後で応募を取り消す場合にご利用ください。アカウントは作成されていないため、このリンクが唯一のアクセス手段となります。",
     "copyLink": "リンクをコピー",
-    "copied": "コピーしました！"
+    "copied": "コピーしました！",
+    "inactive": "このサーバーは現在、移行状況を追跡していません。",
+    "notOpenYet": "この移行期間はまだ始まっていません - アプリケーションは開いています",
+    "windowClosed": "この移行期間は終了しました。申請は受け付けておりません。"
   },
   "migrationTrackerEdit": {
     "title": "あなたのアプリケーション",
@@ -1023,12 +1029,14 @@
     "withdrawing": "撤退…",
     "errorSourceServerRequired": "ソースサーバーが必要です。",
     "errorPower": "べき乗は整数でなければならない。",
-    "errorGeneric": "エラーが発生しました。もう一度お試しください。"
+    "errorGeneric": "エラーが発生しました。もう一度お試しください。",
+    "statusWindowClosed": "この移行期間は終了しました。"
   },
   "migrationTrackerAdmin": {
     "kicker": "管理者",
     "title": "移行トラッカー",
-    "empty": "あなたは移住先の管理権限を持っていません。移住先のサーバーのギルド管理者、および移民担当官に任命された者は、ここで申請内容を審査できます。"
+    "empty": "あなたは移住先の管理権限を持っていません。移住先のサーバーのギルド管理者、および移民担当官に任命された者は、ここで申請内容を審査できます。",
+    "newWindow": "+ 新しいウィンドウ"
   },
   "migrationTrackerQueue": {
     "title": "サーバー番号： {serverNumber} — レビューキュー",
@@ -1049,7 +1057,17 @@
     "deny": "拒否",
     "remove": "取り除く",
     "confirm": "確認する",
-    "errorGeneric": "何かがおかしくなりました。"
+    "errorGeneric": "何かがおかしくなりました。",
+    "colTier": "ティア",
+    "colStatus": "状態",
+    "emptyRoster": "今回の応募期間には、応募書類は提出されませんでした。",
+    "closedNotice": "この移行期間は終了しました。ここに記載されている内容は何も変更できません。これが最終記録です。",
+    "statusApplied": "適用済み",
+    "statusWaitlisted": "ウェイティングリスト",
+    "statusAccepted": "承認済み",
+    "statusDenied": "拒否されました",
+    "statusWithdrawn": "撤回",
+    "statusRemoved": "削除済み"
   },
   "migrationTrackerOfficers": {
     "title": "サーバー番号： {serverNumber} — 警官",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "検索するには、少なくとも2文字を入力してください。",
     "assign": "割り当てる",
     "alreadyOfficer": "すでに役員",
-    "errorGeneric": "何かがおかしくなりました。"
+    "errorGeneric": "何かがおかしくなりました。",
+    "closedNote": "このウィンドウは閉じられています。担当官の割り当ては無効になっています。"
   },
   "migrationTrackerSettings": {
     "title": "サーバー番号： {serverNumber} - 設定",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "しきい値を保存する",
     "errorAllocation": "各キャップは負でない数でなければなりません。",
     "errorThreshold": "各しきい値は数値で指定するか、最小値を指定しない場合は空白にする必要があります。",
-    "errorGeneric": "何かがおかしくなりました。"
+    "errorGeneric": "何かがおかしくなりました。",
+    "datesHeading": "開始日／終了日",
+    "datesDesc": "入力ミスした日付を修正するためのツールです。ウィンドウが閉じた後でも、いつでも編集可能です。閉じたウィンドウの終了日を延長すると、ウィンドウが再び開きます。",
+    "opensAtLabel": "開店時間",
+    "closesAtLabel": "閉店時間",
+    "saveDates": "日程を保存",
+    "errorDatesRequired": "両方の日付が必要です。",
+    "errorCloseAfterOpen": "締め切り日は開始日以降でなければなりません。",
+    "closedNote": "このウィンドウは閉じられています。編集は無効になっています。"
+  },
+  "migrationTrackerIndex": {
+    "title": "移行トラッカー",
+    "subtitle": "現在移行を追跡しているサーバー",
+    "empty": "現在、移行状況を追跡しているサーバーはありません。"
+  },
+  "migrationTrackerCreate": {
+    "title": "新しい移行期間",
+    "subtitle": "サーバーのトラッキングを開始します。そのサーバーに既に開いている、または近日中に開始予定のウィンドウがある場合はブロックされます。",
+    "serverNumberLabel": "サーバー番号",
+    "classificationLabel": "分類",
+    "opensAtLabel": "開店時間",
+    "closesAtLabel": "閉店時間",
+    "submitButton": "窓を開ける",
+    "errorServerNumber": "サーバー番号は1001から9999の間である必要があります。",
+    "errorClassificationRequired": "分類を選択してください。",
+    "errorDatesRequired": "両方の日付が必要です。",
+    "errorCloseAfterOpen": "締め切り日は開始日以降でなければなりません。",
+    "errorGeneric": "エラーが発生しました。もう一度お試しください。",
+    "backToOverview": "← マイグレーショントラッカーに戻る"
   }
 }

@@ -953,7 +953,10 @@
     "classificationHigh": "高性能服务器",
     "classificationMid": "中型服务器",
     "classificationLow": "低功耗服务器",
-    "backToTracker": "← 返回追踪器"
+    "backToTracker": "← 返回追踪器",
+    "statusOpen": "打开",
+    "statusUpcoming": "即将推出",
+    "statusClosed": "关闭"
   },
   "migrationTrackerBanner": {
     "nowOpen": "现在营业",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers}其他{# migration slots open across all power tiers} }",
     "subheadFull": "目前所有档位均已满——加入候补名单",
     "subheadDefault": "查看剩余空间并申请迁移",
-    "cta": "视图追踪器 →"
+    "cta": "视图追踪器 →",
+    "multiTitle": "{count, plural, one {# server has}其他{# servers have}打开迁移窗口",
+    "subheadOpensOn": "打开"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "迁移跟踪器",
-    "titleServer": "服务器编号： {serverNumber}",
     "subtitle": "{classification} — 在申请之前，请查看每个功率等级还剩下多少空间。",
-    "subtitleUnconfigured": "此服务器的迁移跟踪器尚未配置。",
     "applyButton": "申请迁移",
     "checkBackSoon": "请稍后再来查看。",
     "colTier": "力量等级",
     "colCap": "帽",
     "colReserved": "预订的",
     "colRemaining": "其余的",
-    "colWaitlisted": "候补名单"
+    "colWaitlisted": "候补名单",
+    "subtitleInactive": "服务器编号： {serverNumber}目前未跟踪迁移情况。",
+    "opensOn": "应用程序开放"
   },
   "migrationTrackerSubmit": {
     "title": "申请迁移",
-    "subtitleServer": "服务器编号： {serverNumber}",
-    "unconfigured": "此服务器的迁移跟踪器尚未配置。",
     "playerNameLabel": "玩家姓名*",
     "sourceServerLabel": "源服务器*",
     "sourceServerPlaceholder": "例如 #1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "保存此链接——你以后不会再看到它了。",
     "saveLinkBody": "您可以使用此链接修改申请或稍后撤回申请。由于没有账户，所以此链接是唯一的登录方式。",
     "copyLink": "复制链接",
-    "copied": "已复制！"
+    "copied": "已复制！",
+    "inactive": "此服务器目前未跟踪迁移。",
+    "notOpenYet": "此次迁移窗口尚未开放——应用程序开放",
+    "windowClosed": "此次迁移窗口已关闭，不再接受申请。"
   },
   "migrationTrackerEdit": {
     "title": "您的申请",
@@ -1023,12 +1029,14 @@
     "withdrawing": "撤回……",
     "errorSourceServerRequired": "需要源服务器。",
     "errorPower": "幂必须是整数。",
-    "errorGeneric": "出错了，请重试。"
+    "errorGeneric": "出错了，请重试。",
+    "statusWindowClosed": "此迁移窗口已关闭。"
   },
   "migrationTrackerAdmin": {
     "kicker": "行政",
     "title": "迁移跟踪器",
-    "empty": "您无需管理任何移民目的地。目的地服务器上的公会管理员以及任何被任命为移民官的人员都可以在这里审核申请。"
+    "empty": "您无需管理任何移民目的地。目的地服务器上的公会管理员以及任何被任命为移民官的人员都可以在这里审核申请。",
+    "newWindow": "+ 新窗口"
   },
   "migrationTrackerQueue": {
     "title": "服务器编号： {serverNumber} — 审核队列",
@@ -1049,7 +1057,17 @@
     "deny": "否定",
     "remove": "消除",
     "confirm": "确认",
-    "errorGeneric": "出问题了。"
+    "errorGeneric": "出问题了。",
+    "colTier": "层级",
+    "colStatus": "地位",
+    "emptyRoster": "本窗口期未收到任何申请。",
+    "closedNotice": "此迁移窗口已关闭。此处任何操作均不可执行——这是最终记录。",
+    "statusApplied": "应用",
+    "statusWaitlisted": "候补名单",
+    "statusAccepted": "公认",
+    "statusDenied": "否认",
+    "statusWithdrawn": "已撤回",
+    "statusRemoved": "已移除"
   },
   "migrationTrackerOfficers": {
     "title": "服务器编号： {serverNumber} ——警官们",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "输入至少 2 个字符进行搜索。",
     "assign": "分配",
     "alreadyOfficer": "已是军官",
-    "errorGeneric": "出问题了。"
+    "errorGeneric": "出问题了。",
+    "closedNote": "此窗口已关闭——警员分配功能已禁用。"
   },
   "migrationTrackerSettings": {
     "title": "服务器编号： {serverNumber} - 设置",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "保存阈值",
     "errorAllocation": "每个上限值都必须是非负数。",
     "errorThreshold": "每个阈值必须为数字，留空则表示没有最低值。",
-    "errorGeneric": "出问题了。"
+    "errorGeneric": "出问题了。",
+    "datesHeading": "开放/关闭日期",
+    "datesDesc": "用于更正输入错误日期的工具——即使窗口关闭后也始终可编辑。延长已关闭窗口的关闭日期即可重新打开该窗口。",
+    "opensAtLabel": "营业时间",
+    "closesAtLabel": "关门时间",
+    "saveDates": "预留日期",
+    "errorDatesRequired": "两个日期都必须填写。",
+    "errorCloseAfterOpen": "截止日期必须晚于开放日期。",
+    "closedNote": "此窗口已关闭，编辑功能已禁用。"
+  },
+  "migrationTrackerIndex": {
+    "title": "迁移跟踪器",
+    "subtitle": "当前正在跟踪迁移的服务器",
+    "empty": "目前没有服务器在跟踪迁移。"
+  },
+  "migrationTrackerCreate": {
+    "title": "新迁移窗口",
+    "subtitle": "打开服务器跟踪。如果该服务器已有打开或即将打开的窗口，则会被阻止。",
+    "serverNumberLabel": "服务器编号",
+    "classificationLabel": "分类",
+    "opensAtLabel": "营业时间",
+    "closesAtLabel": "关门时间",
+    "submitButton": "打开窗口",
+    "errorServerNumber": "服务器编号必须介于 1001 和 9999 之间。",
+    "errorClassificationRequired": "选择分类。",
+    "errorDatesRequired": "两个日期都必须填写。",
+    "errorCloseAfterOpen": "截止日期必须晚于开放日期。",
+    "errorGeneric": "出错了，请重试。",
+    "backToOverview": "← 返回迁移跟踪器"
   }
 }

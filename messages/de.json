@@ -953,7 +953,10 @@
     "classificationHigh": "Hochleistungsserver",
     "classificationMid": "Server mittlerer Leistung",
     "classificationLow": "Server mit geringem Stromverbrauch",
-    "backToTracker": "← Zurück zum Tracker"
+    "backToTracker": "← Zurück zum Tracker",
+    "statusOpen": "Offen",
+    "statusUpcoming": "Demnächst",
+    "statusClosed": "Geschlossen"
   },
   "migrationTrackerBanner": {
     "nowOpen": "Jetzt geöffnet",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} andere {# migration slots open across all power tiers} }",
     "subheadFull": "Alle Pakete sind derzeit ausgebucht – tragen Sie sich in die Warteliste ein.",
     "subheadDefault": "Prüfen Sie, wie viel Speicherplatz noch verfügbar ist, und beantragen Sie die Migration.",
-    "cta": "Tracker anzeigen →"
+    "cta": "Tracker anzeigen →",
+    "multiTitle": "{count, plural, one {# server has} andere {# servers have} } Migrationsfenster öffnen",
+    "subheadOpensOn": "Öffnet"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "Migrations-Tracker",
-    "titleServer": "Server # {serverNumber}",
     "subtitle": "{classification} — Prüfen Sie, wie viel Platz in den einzelnen Leistungsstufen noch frei ist, bevor Sie sich bewerben.",
-    "subtitleUnconfigured": "Der Migrations-Tracker dieses Servers wurde noch nicht konfiguriert.",
     "applyButton": "Beantragen Sie die Migration",
     "checkBackSoon": "Schauen Sie bald wieder vorbei.",
     "colTier": "Leistungsstufe",
     "colCap": "Kappe",
     "colReserved": "Reserviert",
     "colRemaining": "Übrig",
-    "colWaitlisted": "Auf der Warteliste"
+    "colWaitlisted": "Auf der Warteliste",
+    "subtitleInactive": "Server # {serverNumber} Migrationen werden derzeit nicht erfasst.",
+    "opensOn": "Bewerbungen sind möglich"
   },
   "migrationTrackerSubmit": {
     "title": "Beantragen Sie die Migration",
-    "subtitleServer": "Server # {serverNumber}",
-    "unconfigured": "Der Migrations-Tracker dieses Servers wurde noch nicht konfiguriert.",
     "playerNameLabel": "Spielername *",
     "sourceServerLabel": "Quellserver *",
     "sourceServerPlaceholder": "z. B. #1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "Speichern Sie diesen Link – Sie werden ihn nicht wiedersehen.",
     "saveLinkBody": "Nutzen Sie diesen Link, um Ihre Bewerbung zu bearbeiten oder später zurückzuziehen. Da kein Konto vorhanden ist, ist dies der einzige Weg zurück.",
     "copyLink": "Link kopieren",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "inactive": "Dieser Server verfolgt derzeit keine Migrationen.",
+    "notOpenYet": "Dieses Migrationsfenster ist noch nicht geöffnet – Anwendungen sind geöffnet",
+    "windowClosed": "Das Migrationsfenster ist geschlossen. Bewerbungen werden nicht mehr angenommen."
   },
   "migrationTrackerEdit": {
     "title": "Ihre Bewerbung",
@@ -1023,12 +1029,14 @@
     "withdrawing": "Rückzug…",
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
     "errorPower": "Der Exponent muss eine ganze Zahl sein.",
-    "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+    "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "statusWindowClosed": "Dieses Migrationsfenster ist geschlossen."
   },
   "migrationTrackerAdmin": {
     "kicker": "Administrator",
     "title": "Migrations-Tracker",
-    "empty": "Sie verwalten keine Migrationsziele. Gildenadministratoren auf dem Zielserver und alle zum Einwanderungsbeamten ernannten Personen können hier Anträge prüfen."
+    "empty": "Sie verwalten keine Migrationsziele. Gildenadministratoren auf dem Zielserver und alle zum Einwanderungsbeamten ernannten Personen können hier Anträge prüfen.",
+    "newWindow": "+ Neues Fenster"
   },
   "migrationTrackerQueue": {
     "title": "Server # {serverNumber} — Warteschlange überprüfen",
@@ -1049,7 +1057,17 @@
     "deny": "Leugnen",
     "remove": "Entfernen",
     "confirm": "Bestätigen",
-    "errorGeneric": "Etwas ist schiefgelaufen."
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "colTier": "Stufe",
+    "colStatus": "Status",
+    "emptyRoster": "Für diesen Zeitraum wurden keine Anträge eingereicht.",
+    "closedNotice": "Das Migrationsfenster ist geschlossen. Hier sind keine Maßnahmen mehr möglich – dies ist der endgültige Datensatz.",
+    "statusApplied": "Angewandt",
+    "statusWaitlisted": "Auf der Warteliste",
+    "statusAccepted": "Akzeptiert",
+    "statusDenied": "Bestritten",
+    "statusWithdrawn": "Zurückgezogen",
+    "statusRemoved": "ENTFERNT"
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Beamte",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "Geben Sie mindestens 2 Zeichen ein, um zu suchen.",
     "assign": "Zuordnen",
     "alreadyOfficer": "bereits Offizier",
-    "errorGeneric": "Etwas ist schiefgelaufen."
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "closedNote": "Dieses Fenster ist geschlossen – die Offizierszuweisung ist deaktiviert."
   },
   "migrationTrackerSettings": {
     "title": "Server # {serverNumber} - Einstellungen",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "Schwellenwerte speichern",
     "errorAllocation": "Jede Kappe muss eine nicht-negative Zahl sein.",
     "errorThreshold": "Jeder Schwellenwert muss eine Zahl sein oder leer bleiben, wenn kein Mindestwert vorhanden ist.",
-    "errorGeneric": "Etwas ist schiefgelaufen."
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "datesHeading": "Öffnungs-/Schließdaten",
+    "datesDesc": "Korrekturwerkzeug für ein falsch eingegebenes Datum – jederzeit bearbeitbar, auch nach dem Schließen des Fensters. Durch Verlängern des Schließdatums eines geschlossenen Fensters wird dieses wieder geöffnet.",
+    "opensAtLabel": "Öffnet um",
+    "closesAtLabel": "Schließt um",
+    "saveDates": "Termine vormerken",
+    "errorDatesRequired": "Beide Termine sind erforderlich.",
+    "errorCloseAfterOpen": "Das Schließungsdatum muss nach dem Eröffnungsdatum liegen.",
+    "closedNote": "Dieses Fenster ist geschlossen – die Bearbeitung ist deaktiviert."
+  },
+  "migrationTrackerIndex": {
+    "title": "Migrations-Tracker",
+    "subtitle": "Server, die derzeit Migrationen verfolgen",
+    "empty": "Derzeit werden keine Migrationen auf Servern verfolgt."
+  },
+  "migrationTrackerCreate": {
+    "title": "Neues Migrationsfenster",
+    "subtitle": "Öffnet das Tracking für einen Server. Blockiert, falls dieser Server bereits ein offenes oder bevorstehendes Fenster hat.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Einstufung",
+    "opensAtLabel": "Öffnet um",
+    "closesAtLabel": "Schließt um",
+    "submitButton": "Fenster öffnen",
+    "errorServerNumber": "Die Servernummer muss zwischen 1001 und 9999 liegen.",
+    "errorClassificationRequired": "Wählen Sie eine Klassifizierung.",
+    "errorDatesRequired": "Beide Termine sind erforderlich.",
+    "errorCloseAfterOpen": "Das Schließungsdatum muss nach dem Eröffnungsdatum liegen.",
+    "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "backToOverview": "← Zurück zum Migrations-Tracker"
   }
 }

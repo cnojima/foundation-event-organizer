@@ -953,7 +953,10 @@
     "classificationHigh": "Потужний сервер",
     "classificationMid": "Сервер середньої потужності",
     "classificationLow": "Сервер з низьким енергоспоживанням",
-    "backToTracker": "← Назад до трекера"
+    "backToTracker": "← Назад до трекера",
+    "statusOpen": "ВІДЧИНЕНО",
+    "statusUpcoming": "Майбутні",
+    "statusClosed": "ЗАЧИНЕНО"
   },
   "migrationTrackerBanner": {
     "nowOpen": "Тепер відкрито",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} інші {# migration slots open across all power tiers} }",
     "subheadFull": "Усі рівні зараз заповнені — приєднуйтесь до списку очікування",
     "subheadDefault": "Перевірте, скільки місця залишилося, і подайте заявку на перенесення",
-    "cta": "Переглянути трекер →"
+    "cta": "Переглянути трекер →",
+    "multiTitle": "{count, plural, one {# server has} інші {# servers have} } відкрити вікна міграції",
+    "subheadOpensOn": "Відкривається"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "Відстеження міграції",
-    "titleServer": "Сервер № {serverNumber}",
     "subtitle": "{classification} — перевірте, скільки місця залишилося на кожному рівні потужності, перш ніж подавати заявку.",
-    "subtitleUnconfigured": "Трекер міграції цього сервера ще не налаштовано.",
     "applyButton": "Подати заявку на міграцію",
     "checkBackSoon": "Завітайте пізніше.",
     "colTier": "Рівень потужності",
     "colCap": "Кепка",
     "colReserved": "Зарезервовано",
     "colRemaining": "Залишок",
-    "colWaitlisted": "Список очікування"
+    "colWaitlisted": "Список очікування",
+    "subtitleInactive": "Сервер № {serverNumber} наразі не відстежує міграції.",
+    "opensOn": "Заявки відкриті"
   },
   "migrationTrackerSubmit": {
     "title": "Подати заявку на міграцію",
-    "subtitleServer": "Сервер № {serverNumber}",
-    "unconfigured": "Трекер міграції цього сервера ще не налаштовано.",
     "playerNameLabel": "Ім'я гравця *",
     "sourceServerLabel": "Вихідний сервер *",
     "sourceServerPlaceholder": "наприклад, №1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "Збережіть це посилання — ви його більше не побачите.",
     "saveLinkBody": "Використайте його для редагування заявки або її відкликання пізніше. Облікового запису немає, тому це посилання — єдиний шлях назад.",
     "copyLink": "Копіювати посилання",
-    "copied": "Скопійовано!"
+    "copied": "Скопійовано!",
+    "inactive": "Цей сервер наразі не відстежує міграції.",
+    "notOpenYet": "Це вікно міграції ще не відкрито — програми відкриті",
+    "windowClosed": "Це вікно міграції закрито. Заявки більше не приймаються."
   },
   "migrationTrackerEdit": {
     "title": "Ваша заявка",
@@ -1023,12 +1029,14 @@
     "withdrawing": "Виведення коштів…",
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
-    "errorGeneric": "Щось пішло не так. Спробуйте ще раз."
+    "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
+    "statusWindowClosed": "Це вікно міграції закрито."
   },
   "migrationTrackerAdmin": {
     "kicker": "Адміністратор",
     "title": "Відстеження міграції",
-    "empty": "Ви не керуєте жодними пунктами призначення міграції. Адміністратори гільдій на сервері пункту призначення та будь-хто, призначений імміграційним офіцером, можуть переглядати заявки тут."
+    "empty": "Ви не керуєте жодними пунктами призначення міграції. Адміністратори гільдій на сервері пункту призначення та будь-хто, призначений імміграційним офіцером, можуть переглядати заявки тут.",
+    "newWindow": "+ Нове вікно"
   },
   "migrationTrackerQueue": {
     "title": "Сервер № {serverNumber} — Черга на перегляд",
@@ -1049,7 +1057,17 @@
     "deny": "Заперечити",
     "remove": "Видалити",
     "confirm": "Підтвердити",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "colTier": "Рівень",
+    "colStatus": "Статус",
+    "emptyRoster": "На це вікно не було подано жодної заявки.",
+    "closedNotice": "Це вікно міграції закрито. Тут немає нічого, що можна було б використати — це остаточний запис.",
+    "statusApplied": "Застосовано",
+    "statusWaitlisted": "Список очікування",
+    "statusAccepted": "Прийнято",
+    "statusDenied": "Відмовлено",
+    "statusWithdrawn": "Відкликано",
+    "statusRemoved": "Видалено"
   },
   "migrationTrackerOfficers": {
     "title": "Сервер № {serverNumber} — Офіцери",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "Введіть щонайменше 2 символи для пошуку.",
     "assign": "Призначити",
     "alreadyOfficer": "Вже офіцер.",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "closedNote": "Це вікно закрито — призначення офіцера вимкнено."
   },
   "migrationTrackerSettings": {
     "title": "Сервер № {serverNumber} — Налаштування",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "Зберегти порогові значення",
     "errorAllocation": "Кожна ліміта має бути невід'ємним числом.",
     "errorThreshold": "Кожне порогове значення має бути числом або порожнім, якщо мінімального значення немає.",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "datesHeading": "Дати відкриття/закриття",
+    "datesDesc": "Інструмент виправлення дати з помилкою — його завжди можна редагувати, навіть після закриття вікна. Подовження дати закриття закритого вікна знову відкриває його.",
+    "opensAtLabel": "Відкривається о",
+    "closesAtLabel": "Закривається о",
+    "saveDates": "Зберегти дати",
+    "errorDatesRequired": "Обидві дати обов'язкові.",
+    "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
+    "closedNote": "Це вікно закрито — редагування вимкнено."
+  },
+  "migrationTrackerIndex": {
+    "title": "Відстеження міграції",
+    "subtitle": "Сервери, які зараз відстежують міграції",
+    "empty": "Наразі жоден сервер не відстежує міграції."
+  },
+  "migrationTrackerCreate": {
+    "title": "Нове вікно міграції",
+    "subtitle": "Відкриває відстеження для сервера. Блокується, якщо на цьому сервері вже є відкрите або майбутнє вікно.",
+    "serverNumberLabel": "Номер сервера",
+    "classificationLabel": "Класифікація",
+    "opensAtLabel": "Відкривається о",
+    "closesAtLabel": "Закривається о",
+    "submitButton": "Відкрите вікно",
+    "errorServerNumber": "Номер сервера має бути від 1001 до 9999.",
+    "errorClassificationRequired": "Виберіть класифікацію.",
+    "errorDatesRequired": "Обидві дати обов'язкові.",
+    "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
+    "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
+    "backToOverview": "← Назад до Відстеження міграції"
   }
 }

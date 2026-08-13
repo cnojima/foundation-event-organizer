@@ -953,7 +953,10 @@
     "classificationHigh": "Server berdaya tinggi",
     "classificationMid": "Server daya menengah",
     "classificationLow": "Server berdaya rendah",
-    "backToTracker": "← Kembali ke pelacak"
+    "backToTracker": "← Kembali ke pelacak",
+    "statusOpen": "Membuka",
+    "statusUpcoming": "Mendatang",
+    "statusClosed": "Tertutup"
   },
   "migrationTrackerBanner": {
     "nowOpen": "Sekarang sudah buka",
@@ -961,25 +964,25 @@
     "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} {# migration slots open across all power tiers} }",
     "subheadFull": "Semua tingkatan sudah penuh saat ini — bergabunglah dengan daftar tunggu.",
     "subheadDefault": "Lihat berapa banyak ruang yang tersisa dan ajukan permohonan migrasi.",
-    "cta": "Lihat pelacak →"
+    "cta": "Lihat pelacak →",
+    "multiTitle": "{count, plural, one {# server has} {# servers have} } buka jendela migrasi",
+    "subheadOpensOn": "Buka"
   },
   "migrationTrackerPage": {
     "titleUnconfigured": "Pelacak Migrasi",
-    "titleServer": "Server # {serverNumber}",
     "subtitle": "{classification} — lihat berapa banyak ruang yang tersisa di setiap tingkatan kekuatan sebelum Anda mendaftar.",
-    "subtitleUnconfigured": "Pelacak migrasi server ini belum dikonfigurasi.",
     "applyButton": "Ajukan permohonan migrasi",
     "checkBackSoon": "Silakan periksa kembali segera.",
     "colTier": "Tingkat kekuatan",
     "colCap": "Topi",
     "colReserved": "Disimpan",
     "colRemaining": "Tersisa",
-    "colWaitlisted": "Masuk daftar tunggu"
+    "colWaitlisted": "Masuk daftar tunggu",
+    "subtitleInactive": "Server # {serverNumber} Saat ini tidak melacak migrasi.",
+    "opensOn": "Pendaftaran dibuka"
   },
   "migrationTrackerSubmit": {
     "title": "Ajukan permohonan migrasi",
-    "subtitleServer": "Server # {serverNumber}",
-    "unconfigured": "Pelacak migrasi server ini belum dikonfigurasi.",
     "playerNameLabel": "Nama pemain *",
     "sourceServerLabel": "Server sumber *",
     "sourceServerPlaceholder": "contoh #1042",
@@ -999,7 +1002,10 @@
     "saveLinkHeading": "Simpan tautan ini — Anda tidak akan melihatnya lagi.",
     "saveLinkBody": "Gunakan tautan ini untuk mengedit aplikasi Anda atau menariknya kembali nanti. Tidak ada akun, jadi tautan ini adalah satu-satunya cara untuk masuk kembali.",
     "copyLink": "Salin tautan",
-    "copied": "Disalin!"
+    "copied": "Disalin!",
+    "inactive": "Server ini saat ini tidak melacak migrasi.",
+    "notOpenYet": "Jendela migrasi ini belum dibuka — pendaftaran dibuka",
+    "windowClosed": "Periode migrasi ini telah berakhir. Permohonan tidak lagi diterima."
   },
   "migrationTrackerEdit": {
     "title": "Aplikasi Anda",
@@ -1023,12 +1029,14 @@
     "withdrawing": "Menarik diri…",
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
-    "errorGeneric": "Terjadi kesalahan. Silakan coba lagi."
+    "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
+    "statusWindowClosed": "Jendela migrasi ini telah ditutup."
   },
   "migrationTrackerAdmin": {
     "kicker": "Admin",
     "title": "Pelacak Migrasi",
-    "empty": "Anda tidak mengelola tujuan migrasi apa pun. Admin guild di server tujuan, dan siapa pun yang ditunjuk sebagai Petugas Imigrasi, dapat meninjau aplikasi di sini."
+    "empty": "Anda tidak mengelola tujuan migrasi apa pun. Admin guild di server tujuan, dan siapa pun yang ditunjuk sebagai Petugas Imigrasi, dapat meninjau aplikasi di sini.",
+    "newWindow": "+ Jendela baru"
   },
   "migrationTrackerQueue": {
     "title": "Server # {serverNumber} — Antrian ulasan",
@@ -1049,7 +1057,17 @@
     "deny": "Membantah",
     "remove": "Menghapus",
     "confirm": "Mengonfirmasi",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "colTier": "Tingkat",
+    "colStatus": "Status",
+    "emptyRoster": "Tidak ada permohonan yang diajukan untuk periode ini.",
+    "closedNotice": "Jendela migrasi ini telah ditutup. Tidak ada tindakan yang dapat dilakukan di sini — ini adalah catatan terakhir.",
+    "statusApplied": "Terapan",
+    "statusWaitlisted": "Masuk daftar tunggu",
+    "statusAccepted": "Diterima",
+    "statusDenied": "Ditolak",
+    "statusWithdrawn": "Ditarik kembali",
+    "statusRemoved": "DIHAPUS"
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Petugas",
@@ -1063,7 +1081,8 @@
     "searchTooShort": "Ketik minimal 2 karakter untuk mencari.",
     "assign": "Menetapkan",
     "alreadyOfficer": "Sudah menjadi seorang perwira",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "closedNote": "Jendela ini ditutup — penugasan petugas dinonaktifkan."
   },
   "migrationTrackerSettings": {
     "title": "Server # {serverNumber} — Pengaturan",
@@ -1078,6 +1097,34 @@
     "saveThresholds": "Simpan ambang batas",
     "errorAllocation": "Setiap tutup botol harus berupa angka non-negatif.",
     "errorThreshold": "Setiap ambang batas harus berupa angka, atau kosong jika tidak ada nilai minimum.",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "datesHeading": "Tanggal buka/tutup",
+    "datesDesc": "Alat koreksi untuk kesalahan pengetikan tanggal — selalu dapat diedit, bahkan setelah jendela ditutup. Memperpanjang tanggal penutupan jendela yang tertutup akan membukanya kembali.",
+    "opensAtLabel": "Buka pada",
+    "closesAtLabel": "Tutup pada pukul",
+    "saveDates": "Simpan tanggalnya",
+    "errorDatesRequired": "Kedua tanggal tersebut wajib diisi.",
+    "errorCloseAfterOpen": "Tanggal penutupan harus setelah tanggal pembukaan.",
+    "closedNote": "Jendela ini ditutup — pengeditan dinonaktifkan."
+  },
+  "migrationTrackerIndex": {
+    "title": "Pelacak Migrasi",
+    "subtitle": "Server yang saat ini melacak migrasi",
+    "empty": "Saat ini tidak ada server yang melacak migrasi."
+  },
+  "migrationTrackerCreate": {
+    "title": "Jendela migrasi baru",
+    "subtitle": "Membuka pelacakan untuk sebuah server. Diblokir jika server tersebut sudah memiliki jendela yang terbuka atau akan datang.",
+    "serverNumberLabel": "Nomor server",
+    "classificationLabel": "Klasifikasi",
+    "opensAtLabel": "Buka pada",
+    "closesAtLabel": "Tutup pada pukul",
+    "submitButton": "Buka jendela",
+    "errorServerNumber": "Nomor server harus berada di antara 1001 dan 9999.",
+    "errorClassificationRequired": "Pilih klasifikasi.",
+    "errorDatesRequired": "Kedua tanggal tersebut wajib diisi.",
+    "errorCloseAfterOpen": "Tanggal penutupan harus setelah tanggal pembukaan.",
+    "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
+    "backToOverview": "← Kembali ke Pelacak Migrasi"
   }
 }
