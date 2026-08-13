@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type EditableApplication = {
   playerName: string;
@@ -12,13 +13,6 @@ type EditableApplication = {
   status: string;
 };
 
-const TIER_FLAVOR_LABEL: Record<string, string> = {
-  ultra_high: "Revivalist",
-  high: "Contributor",
-  mid: "Pioneer",
-  low: "Follower",
-};
-
 export function MigrationApplicationEditForm({
   token,
   application,
@@ -27,6 +21,17 @@ export function MigrationApplicationEditForm({
   application: EditableApplication;
 }) {
   const router = useRouter();
+  const t = useTranslations("migrationTrackerEdit");
+  const tShared = useTranslations("migrationTracker");
+  const tc = useTranslations("common");
+
+  const tierLabel: Record<string, string> = {
+    ultra_high: tShared("tierUltraHigh"),
+    high: tShared("tierHigh"),
+    mid: tShared("tierMid"),
+    low: tShared("tierLow"),
+  };
+
   const [sourceServer, setSourceServer] = useState(application.sourceServer);
   const [power, setPower] = useState(String(application.power));
   const [contact, setContact] = useState(application.contact ?? "");
@@ -45,11 +50,11 @@ export function MigrationApplicationEditForm({
 
     const powerNumber = Number(power);
     if (!sourceServer.trim()) {
-      setError("Source server is required.");
+      setError(t("errorSourceServerRequired"));
       return;
     }
     if (!Number.isFinite(powerNumber) || powerNumber < 0 || !Number.isInteger(powerNumber)) {
-      setError("Power must be a whole number.");
+      setError(t("errorPower"));
       return;
     }
 
@@ -66,7 +71,7 @@ export function MigrationApplicationEditForm({
     const data = await res.json().catch(() => ({}));
     setSubmitting(false);
     if (!res.ok) {
-      setError(data?.error ?? "Something went wrong. Please try again.");
+      setError(data?.error ?? t("errorGeneric"));
       return;
     }
     setTier(data.application.tier);
@@ -82,7 +87,7 @@ export function MigrationApplicationEditForm({
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data?.error ?? "Something went wrong. Please try again.");
+      setError(data?.error ?? t("errorGeneric"));
       setWithdrawing(false);
       return;
     }
@@ -95,14 +100,14 @@ export function MigrationApplicationEditForm({
       className="space-y-4 rounded-md border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900"
     >
       <p className="text-sm text-gray-600 dark:text-gray-400">
-        {application.playerName} — currently classified as{" "}
-        <strong>{TIER_FLAVOR_LABEL[tier] ?? tier}</strong>,{" "}
-        {status === "waitlisted" ? "waitlisted" : "awaiting officer review"}.
+        {status === "waitlisted"
+          ? t("introWaitlisted", { playerName: application.playerName, tier: tierLabel[tier] ?? tier })
+          : t("introAwaiting", { playerName: application.playerName, tier: tierLabel[tier] ?? tier })}
       </p>
 
       <div>
         <label htmlFor="mte-source-server" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          Source server
+          {t("sourceServerLabel")}
         </label>
         <input
           id="mte-source-server"
@@ -116,7 +121,7 @@ export function MigrationApplicationEditForm({
       </div>
       <div>
         <label htmlFor="mte-power" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          Power
+          {t("powerLabel")}
         </label>
         <input
           id="mte-power"
@@ -129,13 +134,11 @@ export function MigrationApplicationEditForm({
           onChange={(e) => setPower(e.target.value)}
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
         />
-        <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-          Changing this re-derives your tier and may move you on or off the waitlist.
-        </p>
+        <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">{t("powerHelp")}</p>
       </div>
       <div>
         <label htmlFor="mte-contact" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          Contact <span className="text-gray-400">(optional)</span>
+          {t("contactLabel")} <span className="text-gray-400">({tc("optional")})</span>
         </label>
         <input
           id="mte-contact"
@@ -157,7 +160,7 @@ export function MigrationApplicationEditForm({
       )}
       {saved && !error && (
         <p className="rounded border border-emerald-200 bg-emerald-50 p-2 text-sm text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
-          Saved.
+          {tc("saved")}
         </p>
       )}
 
@@ -167,7 +170,7 @@ export function MigrationApplicationEditForm({
           disabled={submitting}
           className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
         >
-          {submitting ? "Saving…" : "Save changes"}
+          {submitting ? tc("saving") : t("saveButton")}
         </button>
 
         {!confirmWithdraw ? (
@@ -176,25 +179,25 @@ export function MigrationApplicationEditForm({
             onClick={() => setConfirmWithdraw(true)}
             className="text-sm font-semibold text-red-600 hover:underline dark:text-red-400"
           >
-            Withdraw application
+            {t("withdrawButton")}
           </button>
         ) : (
           <div className="flex items-center gap-2 text-sm">
-            <span className="text-gray-600 dark:text-gray-400">Are you sure?</span>
+            <span className="text-gray-600 dark:text-gray-400">{t("withdrawConfirmPrompt")}</span>
             <button
               type="button"
               onClick={handleWithdraw}
               disabled={withdrawing}
               className="font-semibold text-red-600 hover:underline disabled:opacity-50 dark:text-red-400"
             >
-              {withdrawing ? "Withdrawing…" : "Yes, withdraw"}
+              {withdrawing ? t("withdrawing") : t("withdrawConfirmYes")}
             </button>
             <button
               type="button"
               onClick={() => setConfirmWithdraw(false)}
               className="text-gray-500 hover:underline dark:text-gray-400"
             >
-              Cancel
+              {tc("cancel")}
             </button>
           </div>
         )}

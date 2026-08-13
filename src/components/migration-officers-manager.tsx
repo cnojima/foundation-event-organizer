@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type Officer = { userId: string; displayName: string };
 type Candidate = {
@@ -18,6 +19,7 @@ export function MigrationOfficersManager({
   destinationId: string;
   initialOfficers: Officer[];
 }) {
+  const t = useTranslations("migrationTrackerOfficers");
   const [officers, setOfficers] = useState(initialOfficers);
   const [query, setQuery] = useState("");
   const [candidates, setCandidates] = useState<Candidate[]>([]);
@@ -28,7 +30,7 @@ export function MigrationOfficersManager({
   async function search() {
     setError(null);
     if (query.trim().length < 2) {
-      setError("Type at least 2 characters to search.");
+      setError(t("searchTooShort"));
       return;
     }
     setSearching(true);
@@ -50,7 +52,7 @@ export function MigrationOfficersManager({
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data?.error ?? "Something went wrong.");
+      setError(data?.error ?? t("errorGeneric"));
       setBusyUserId(null);
       return;
     }
@@ -68,7 +70,7 @@ export function MigrationOfficersManager({
     );
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setError(data?.error ?? "Something went wrong.");
+      setError(data?.error ?? t("errorGeneric"));
       setBusyUserId(null);
       return;
     }
@@ -80,10 +82,10 @@ export function MigrationOfficersManager({
     <div className="space-y-6">
       <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-          Current officers
+          {t("currentHeading")}
         </h2>
         {officers.length === 0 ? (
-          <p className="text-sm text-gray-500 dark:text-gray-400">No officers assigned yet.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t("empty")}</p>
         ) : (
           <ul className="space-y-2">
             {officers.map((o) => (
@@ -95,7 +97,7 @@ export function MigrationOfficersManager({
                   disabled={busyUserId === o.userId}
                   className="text-xs font-semibold text-red-600 hover:underline disabled:opacity-50 dark:text-red-400"
                 >
-                  Revoke
+                  {t("revoke")}
                 </button>
               </li>
             ))}
@@ -105,7 +107,7 @@ export function MigrationOfficersManager({
 
       <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-          Assign an officer
+          {t("assignHeading")}
         </h2>
         <div className="flex gap-2">
           <input
@@ -113,7 +115,7 @@ export function MigrationOfficersManager({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && search()}
-            placeholder="Name, username, or Discord ID"
+            placeholder={t("searchPlaceholder")}
             className="flex-1 rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
           />
           <button
@@ -122,7 +124,7 @@ export function MigrationOfficersManager({
             disabled={searching}
             className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
           >
-            {searching ? "Searching…" : "Search"}
+            {searching ? t("searching") : t("searchButton")}
           </button>
         </div>
 
@@ -152,7 +154,7 @@ export function MigrationOfficersManager({
                     disabled={alreadyOfficer || busyUserId === c.id}
                     className="text-xs font-semibold text-violet-700 hover:underline disabled:opacity-50 dark:text-violet-300"
                   >
-                    {alreadyOfficer ? "Already an officer" : "Assign"}
+                    {alreadyOfficer ? t("alreadyOfficer") : t("assign")}
                   </button>
                 </li>
               );

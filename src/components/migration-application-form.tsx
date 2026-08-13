@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type SubmittedApplication = {
   playerName: string;
@@ -8,14 +9,18 @@ type SubmittedApplication = {
   status: string;
 };
 
-const TIER_FLAVOR_LABEL: Record<string, string> = {
-  ultra_high: "Revivalist",
-  high: "Contributor",
-  mid: "Pioneer",
-  low: "Follower",
-};
-
 export function MigrationApplicationForm() {
+  const t = useTranslations("migrationTrackerSubmit");
+  const tShared = useTranslations("migrationTracker");
+  const tc = useTranslations("common");
+
+  const tierLabel: Record<string, string> = {
+    ultra_high: tShared("tierUltraHigh"),
+    high: tShared("tierHigh"),
+    mid: tShared("tierMid"),
+    low: tShared("tierLow"),
+  };
+
   const [playerName, setPlayerName] = useState("");
   const [sourceServer, setSourceServer] = useState("");
   const [power, setPower] = useState("");
@@ -34,11 +39,11 @@ export function MigrationApplicationForm() {
 
     const powerNumber = Number(power);
     if (!playerName.trim() || !sourceServer.trim()) {
-      setError("Player name and source server are required.");
+      setError(t("errorRequired"));
       return;
     }
     if (!Number.isFinite(powerNumber) || powerNumber < 0 || !Number.isInteger(powerNumber)) {
-      setError("Power must be a whole number.");
+      setError(t("errorPower"));
       return;
     }
 
@@ -55,7 +60,7 @@ export function MigrationApplicationForm() {
     });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      setError(data?.error ?? "Something went wrong. Please try again.");
+      setError(data?.error ?? t("errorGeneric"));
       setSubmitting(false);
       return;
     }
@@ -78,27 +83,23 @@ export function MigrationApplicationForm() {
   }
 
   if (result) {
+    const tierText = tierLabel[result.application.tier] ?? result.application.tier;
     return (
       <div className="space-y-4 rounded-md border border-emerald-200 bg-emerald-50 p-4 dark:border-emerald-900/60 dark:bg-emerald-950/40">
         <div>
           <p className="font-semibold text-emerald-900 dark:text-emerald-200">
-            Application submitted.
+            {t("successHeading")}
           </p>
           <p className="mt-1 text-sm text-emerald-800 dark:text-emerald-300">
-            {result.application.playerName} — classified as{" "}
-            <strong>{TIER_FLAVOR_LABEL[result.application.tier] ?? result.application.tier}</strong>
             {result.application.status === "waitlisted"
-              ? " and placed on the waitlist (that tier's cap is currently reserved)."
-              : ", awaiting officer review."}
+              ? t("successBodyWaitlisted", { playerName: result.application.playerName, tier: tierText })
+              : t("successBodyReview", { playerName: result.application.playerName, tier: tierText })}
           </p>
         </div>
 
         <div className="rounded border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200">
-          <p className="font-semibold">Save this link — you won&apos;t see it again.</p>
-          <p className="mt-1">
-            Use it to edit your application or withdraw later. There&apos;s no account, so this
-            link is the only way back in.
-          </p>
+          <p className="font-semibold">{t("saveLinkHeading")}</p>
+          <p className="mt-1">{t("saveLinkBody")}</p>
           <div className="mt-2 flex flex-wrap items-center gap-2">
             <code className="break-all rounded bg-white/70 px-2 py-1 text-xs text-gray-800 dark:bg-black/30 dark:text-gray-200">
               {editUrl}
@@ -108,7 +109,7 @@ export function MigrationApplicationForm() {
               onClick={copyEditLink}
               className="rounded-md border border-amber-400 bg-white px-3 py-1 text-xs font-semibold text-amber-800 hover:bg-amber-100 dark:border-amber-700 dark:bg-transparent dark:text-amber-200 dark:hover:bg-amber-900/40"
             >
-              {copied ? "Copied!" : "Copy link"}
+              {copied ? t("copied") : t("copyLink")}
             </button>
           </div>
         </div>
@@ -123,7 +124,7 @@ export function MigrationApplicationForm() {
     >
       <div>
         <label htmlFor="mt-player-name" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          Player name *
+          {t("playerNameLabel")}
         </label>
         <input
           id="mt-player-name"
@@ -137,14 +138,14 @@ export function MigrationApplicationForm() {
       </div>
       <div>
         <label htmlFor="mt-source-server" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          Source server *
+          {t("sourceServerLabel")}
         </label>
         <input
           id="mt-source-server"
           type="text"
           required
           maxLength={60}
-          placeholder="e.g. #1042"
+          placeholder={t("sourceServerPlaceholder")}
           value={sourceServer}
           onChange={(e) => setSourceServer(e.target.value)}
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
@@ -152,7 +153,7 @@ export function MigrationApplicationForm() {
       </div>
       <div>
         <label htmlFor="mt-power" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          Power *
+          {t("powerLabel")}
         </label>
         <input
           id="mt-power"
@@ -161,31 +162,27 @@ export function MigrationApplicationForm() {
           required
           min={0}
           step={1}
-          placeholder="e.g. 95000000"
+          placeholder={t("powerPlaceholder")}
           value={power}
           onChange={(e) => setPower(e.target.value)}
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
         />
-        <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-          Your tier is determined automatically from this number.
-        </p>
+        <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">{t("powerHelp")}</p>
       </div>
       <div>
         <label htmlFor="mt-contact" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          Contact <span className="text-gray-400">(optional)</span>
+          {t("contactLabel")} <span className="text-gray-400">({tc("optional")})</span>
         </label>
         <input
           id="mt-contact"
           type="text"
           maxLength={120}
-          placeholder="Discord handle"
+          placeholder={t("contactPlaceholder")}
           value={contact}
           onChange={(e) => setContact(e.target.value)}
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
         />
-        <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">
-          Helps officers reach you with questions.
-        </p>
+        <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">{t("contactHelp")}</p>
       </div>
 
       {error && (
@@ -202,7 +199,7 @@ export function MigrationApplicationForm() {
         disabled={submitting}
         className="w-full rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
       >
-        {submitting ? "Submitting…" : "Submit application"}
+        {submitting ? tc("submitting") : t("submitButton")}
       </button>
     </form>
   );

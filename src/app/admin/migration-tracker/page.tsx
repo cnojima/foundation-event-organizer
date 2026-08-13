@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireSignedInPage } from "@/lib/rbac";
 import { db } from "@/db";
@@ -8,15 +9,17 @@ import { PageHeader } from "@/components/page-header";
 
 export const metadata = { title: "Migration Tracker" };
 
-const CLASSIFICATION_LABEL: Record<string, string> = {
-  high: "High-power server",
-  mid: "Mid-power server",
-  low: "Low-power server",
-};
-
 export default async function AdminMigrationTrackerPage() {
   const session = await auth();
   const membership = requireSignedInPage(session);
+  const t = await getTranslations("migrationTrackerAdmin");
+  const tShared = await getTranslations("migrationTracker");
+
+  const CLASSIFICATION_LABEL: Record<string, string> = {
+    high: tShared("classificationHigh"),
+    mid: tShared("classificationMid"),
+    low: tShared("classificationLow"),
+  };
 
   let destinations: (typeof migrationDestinations.$inferSelect)[] = [];
 
@@ -46,14 +49,10 @@ export default async function AdminMigrationTrackerPage() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <PageHeader kicker="Admin" title="Migration Tracker" />
+      <PageHeader kicker={t("kicker")} title={t("title")} />
 
       {destinations.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-400">
-          You don&apos;t manage any migration destinations. Guild admins on a
-          destination&apos;s server, and anyone appointed as an Immigration
-          Officer, can review applications here.
-        </p>
+        <p className="text-gray-500 dark:text-gray-400">{t("empty")}</p>
       ) : (
         <div className="space-y-3">
           {destinations.map((d) => (
@@ -63,7 +62,7 @@ export default async function AdminMigrationTrackerPage() {
               className="block rounded-lg border border-gray-200 bg-white p-4 transition-colors hover:border-violet-400 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-violet-700"
             >
               <p className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-                Server #{d.serverNumber}
+                {tShared("serverLabel", { serverNumber: d.serverNumber })}
               </p>
               <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
                 {CLASSIFICATION_LABEL[d.classification]}

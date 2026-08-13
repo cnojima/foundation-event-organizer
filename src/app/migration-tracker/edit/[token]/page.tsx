@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { db } from "@/db";
 import { migrationApplications } from "@/db/schema";
 import { eq } from "drizzle-orm";
@@ -6,15 +7,6 @@ import { PageHeader } from "@/components/page-header";
 import { MigrationApplicationEditForm } from "@/components/migration-application-edit-form";
 
 export const metadata = { title: "Your Migration Application" };
-
-const STATUS_LABEL: Record<string, string> = {
-  applied: "Awaiting officer review.",
-  waitlisted: "Waitlisted — that tier's cap is currently reserved.",
-  accepted: "Accepted! An Immigration Officer approved this application.",
-  denied: "This application was denied.",
-  withdrawn: "You withdrew this application.",
-  removed_by_admin: "This application was removed by an admin.",
-};
 
 export default async function MigrationTrackerEditPage({
   params,
@@ -25,16 +17,24 @@ export default async function MigrationTrackerEditPage({
   const application = await db.query.migrationApplications.findFirst({
     where: eq(migrationApplications.editToken, token),
   });
+  const t = await getTranslations("migrationTrackerEdit");
+  const tShared = await getTranslations("migrationTracker");
+
+  const STATUS_LABEL: Record<string, string> = {
+    applied: t("statusApplied"),
+    waitlisted: t("statusWaitlisted"),
+    accepted: t("statusAccepted"),
+    denied: t("statusDenied"),
+    withdrawn: t("statusWithdrawn"),
+    removed_by_admin: t("statusRemoved"),
+  };
 
   return (
     <div className="mx-auto max-w-xl">
-      <PageHeader kicker="Migration Tracker" title="Your application" />
+      <PageHeader kicker={tShared("kicker")} title={t("title")} />
 
       {!application ? (
-        <p className="text-gray-500 dark:text-gray-400">
-          We couldn&apos;t find an application for this link. It may be wrong, or the
-          application may have been removed.
-        </p>
+        <p className="text-gray-500 dark:text-gray-400">{t("notFound")}</p>
       ) : application.status === "applied" || application.status === "waitlisted" ? (
         <MigrationApplicationEditForm
           token={token}
@@ -61,7 +61,7 @@ export default async function MigrationTrackerEditPage({
           href="/migration-tracker"
           className="font-semibold text-violet-700 hover:underline dark:text-violet-300"
         >
-          ← Back to the tracker
+          {tShared("backToTracker")}
         </Link>
       </p>
     </div>

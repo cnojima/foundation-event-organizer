@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireMigrationDestinationReviewPage } from "@/lib/rbac";
 import { db } from "@/db";
@@ -22,6 +23,9 @@ export default async function MigrationDestinationOfficersPage({
   );
   if (!isServerAdmin) redirect(`/admin/migration-tracker/${destinationId}`);
 
+  const t = await getTranslations("migrationTrackerOfficers");
+  const tShared = await getTranslations("migrationTracker");
+
   const officers = await db
     .select({
       userId: migrationOfficers.userId,
@@ -36,7 +40,7 @@ export default async function MigrationDestinationOfficersPage({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <PageHeader kicker="Admin" title={`Server #${destination.serverNumber} — Officers`} />
+      <PageHeader kicker={tShared("kicker")} title={t("title", { serverNumber: destination.serverNumber })} />
       <MigrationOfficersManager
         destinationId={destination.id}
         initialOfficers={officers.map((o) => ({

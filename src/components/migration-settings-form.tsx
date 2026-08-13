@@ -2,22 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 type Tier = "ultra_high" | "high" | "mid" | "low";
 type Classification = "high" | "mid" | "low";
-
-const TIER_FLAVOR_LABEL: Record<Tier, string> = {
-  ultra_high: "Revivalist",
-  high: "Contributor",
-  mid: "Pioneer",
-  low: "Follower",
-};
-
-const CLASSIFICATION_OPTIONS: { value: Classification; label: string }[] = [
-  { value: "high", label: "High-power server" },
-  { value: "mid", label: "Mid-power server" },
-  { value: "low", label: "Low-power server" },
-];
 
 export function MigrationSettingsForm({
   destinationId,
@@ -33,6 +21,21 @@ export function MigrationSettingsForm({
   canEditThresholds: boolean;
 }) {
   const router = useRouter();
+  const t = useTranslations("migrationTrackerSettings");
+  const tShared = useTranslations("migrationTracker");
+  const tc = useTranslations("common");
+
+  const tierLabel: Record<Tier, string> = {
+    ultra_high: tShared("tierUltraHigh"),
+    high: tShared("tierHigh"),
+    mid: tShared("tierMid"),
+    low: tShared("tierLow"),
+  };
+  const classificationOptions: { value: Classification; label: string }[] = [
+    { value: "high", label: tShared("classificationHigh") },
+    { value: "mid", label: tShared("classificationMid") },
+    { value: "low", label: tShared("classificationLow") },
+  ];
 
   const [selectedClassification, setSelectedClassification] = useState(classification);
   const [classSubmitting, setClassSubmitting] = useState(false);
@@ -46,7 +49,7 @@ export function MigrationSettingsForm({
   const [allocSaved, setAllocSaved] = useState(false);
 
   const [thresholdDrafts, setThresholdDrafts] = useState(
-    Object.fromEntries(thresholds.map((t) => [t.tier, t.minPower === null ? "" : String(t.minPower)]))
+    Object.fromEntries(thresholds.map((th) => [th.tier, th.minPower === null ? "" : String(th.minPower)]))
   );
   const [thresholdSubmitting, setThresholdSubmitting] = useState(false);
   const [thresholdError, setThresholdError] = useState<string | null>(null);
@@ -54,12 +57,7 @@ export function MigrationSettingsForm({
 
   async function saveClassification() {
     setClassError(null);
-    if (
-      selectedClassification !== classification &&
-      !confirm(
-        "Reclassifying resets all 4 tier caps to the new classification's standard defaults, discarding any manual overrides. Continue?"
-      )
-    ) {
+    if (selectedClassification !== classification && !confirm(t("reclassifyConfirm"))) {
       return;
     }
     setClassSubmitting(true);
@@ -71,7 +69,7 @@ export function MigrationSettingsForm({
     setClassSubmitting(false);
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setClassError(data?.error ?? "Something went wrong.");
+      setClassError(data?.error ?? t("errorGeneric"));
       return;
     }
     router.refresh();
@@ -85,7 +83,7 @@ export function MigrationSettingsForm({
       maxSlots: Number(value),
     }));
     if (updates.some((u) => !Number.isFinite(u.maxSlots) || u.maxSlots < 0)) {
-      setAllocError("Each cap must be a non-negative number.");
+      setAllocError(t("errorAllocation"));
       return;
     }
     setAllocSubmitting(true);
@@ -97,7 +95,7 @@ export function MigrationSettingsForm({
     setAllocSubmitting(false);
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setAllocError(data?.error ?? "Something went wrong.");
+      setAllocError(data?.error ?? t("errorGeneric"));
       return;
     }
     setAllocSaved(true);
@@ -112,7 +110,7 @@ export function MigrationSettingsForm({
       minPower: value.trim() === "" ? null : Number(value),
     }));
     if (updates.some((u) => u.minPower !== null && !Number.isFinite(u.minPower))) {
-      setThresholdError("Each threshold must be a number, or blank for no minimum.");
+      setThresholdError(t("errorThreshold"));
       return;
     }
     setThresholdSubmitting(true);
@@ -124,7 +122,7 @@ export function MigrationSettingsForm({
     setThresholdSubmitting(false);
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
-      setThresholdError(data?.error ?? "Something went wrong.");
+      setThresholdError(data?.error ?? t("errorGeneric"));
       return;
     }
     setThresholdSaved(true);
@@ -135,10 +133,10 @@ export function MigrationSettingsForm({
     <div className="space-y-6">
       <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-          Server classification
+          {t("classificationHeading")}
         </h2>
         <div className="flex flex-wrap gap-2">
-          {CLASSIFICATION_OPTIONS.map((opt) => (
+          {classificationOptions.map((opt) => (
             <button
               key={opt.value}
               type="button"
@@ -164,19 +162,19 @@ export function MigrationSettingsForm({
           disabled={classSubmitting || selectedClassification === classification}
           className="mt-3 rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
         >
-          {classSubmitting ? "Saving…" : "Save classification"}
+          {classSubmitting ? tc("saving") : t("saveClassification")}
         </button>
       </div>
 
       <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-          Tier caps (override)
+          {t("allocationsHeading")}
         </h2>
         <div className="space-y-2">
           {allocations.map((a) => (
             <div key={a.tier} className="flex items-center justify-between gap-3">
               <label htmlFor={`alloc-${a.tier}`} className="text-sm text-gray-700 dark:text-gray-300">
-                {TIER_FLAVOR_LABEL[a.tier]}
+                {tierLabel[a.tier]}
               </label>
               <input
                 id={`alloc-${a.tier}`}
@@ -199,7 +197,7 @@ export function MigrationSettingsForm({
         )}
         {allocSaved && !allocError && (
           <p className="mt-2 rounded border border-emerald-200 bg-emerald-50 p-2 text-sm text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
-            Saved.
+            {tc("saved")}
           </p>
         )}
         <button
@@ -208,34 +206,31 @@ export function MigrationSettingsForm({
           disabled={allocSubmitting}
           className="mt-3 rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
         >
-          {allocSubmitting ? "Saving…" : "Save caps"}
+          {allocSubmitting ? tc("saving") : t("saveCaps")}
         </button>
       </div>
 
       {canEditThresholds && (
         <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
           <h2 className="mb-1 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-            Power tier thresholds
+            {t("thresholdsHeading")}
           </h2>
-          <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
-            Global — applies across every destination, not just this one. Leave blank for the
-            bottom tier (no minimum).
-          </p>
+          <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">{t("thresholdsDesc")}</p>
           <div className="space-y-2">
-            {thresholds.map((t) => (
-              <div key={t.tier} className="flex items-center justify-between gap-3">
-                <label htmlFor={`threshold-${t.tier}`} className="text-sm text-gray-700 dark:text-gray-300">
-                  {TIER_FLAVOR_LABEL[t.tier]}
+            {thresholds.map((th) => (
+              <div key={th.tier} className="flex items-center justify-between gap-3">
+                <label htmlFor={`threshold-${th.tier}`} className="text-sm text-gray-700 dark:text-gray-300">
+                  {tierLabel[th.tier]}
                 </label>
                 <input
-                  id={`threshold-${t.tier}`}
+                  id={`threshold-${th.tier}`}
                   type="number"
                   min={0}
                   step={1}
-                  placeholder="No minimum"
-                  value={thresholdDrafts[t.tier]}
+                  placeholder={t("thresholdPlaceholder")}
+                  value={thresholdDrafts[th.tier]}
                   onChange={(e) =>
-                    setThresholdDrafts((prev) => ({ ...prev, [t.tier]: e.target.value }))
+                    setThresholdDrafts((prev) => ({ ...prev, [th.tier]: e.target.value }))
                   }
                   className="w-40 rounded border border-gray-300 px-2 py-1 text-sm dark:border-gray-700 dark:bg-gray-800"
                 />
@@ -249,7 +244,7 @@ export function MigrationSettingsForm({
           )}
           {thresholdSaved && !thresholdError && (
             <p className="mt-2 rounded border border-emerald-200 bg-emerald-50 p-2 text-sm text-emerald-700 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300">
-              Saved.
+              {tc("saved")}
             </p>
           )}
           <button
@@ -258,7 +253,7 @@ export function MigrationSettingsForm({
             disabled={thresholdSubmitting}
             className="mt-3 rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700 disabled:opacity-50"
           >
-            {thresholdSubmitting ? "Saving…" : "Save thresholds"}
+            {thresholdSubmitting ? tc("saving") : t("saveThresholds")}
           </button>
         </div>
       )}

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireMigrationDestinationReviewPage } from "@/lib/rbac";
 import { db } from "@/db";
@@ -23,6 +24,9 @@ export default async function MigrationDestinationSettingsPage({
   );
   if (!isServerAdmin) redirect(`/admin/migration-tracker/${destinationId}`);
 
+  const t = await getTranslations("migrationTrackerSettings");
+  const tShared = await getTranslations("migrationTracker");
+
   const allocationRows = await db
     .select()
     .from(migrationAllocations)
@@ -40,7 +44,7 @@ export default async function MigrationDestinationSettingsPage({
 
   return (
     <div className="mx-auto max-w-2xl">
-      <PageHeader kicker="Admin" title={`Server #${destination.serverNumber} — Settings`} />
+      <PageHeader kicker={tShared("kicker")} title={t("title", { serverNumber: destination.serverNumber })} />
       <MigrationSettingsForm
         destinationId={destination.id}
         classification={destination.classification}

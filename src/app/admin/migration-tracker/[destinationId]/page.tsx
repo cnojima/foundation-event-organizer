@@ -1,21 +1,15 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireMigrationDestinationReviewPage } from "@/lib/rbac";
 import { db } from "@/db";
 import { migrationApplications } from "@/db/schema";
 import { and, asc, eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
-import { getCapacitySummary, TIER_ORDER } from "@/lib/migration-tracker";
+import { getCapacitySummary, TIER_ORDER, type Tier } from "@/lib/migration-tracker";
 import { MigrationQueueRow } from "@/components/migration-queue-row";
 
 export const metadata = { title: "Migration Review Queue" };
-
-const TIER_FLAVOR_LABEL: Record<string, string> = {
-  ultra_high: "Revivalist",
-  high: "Contributor",
-  mid: "Pioneer",
-  low: "Follower",
-};
 
 export default async function MigrationDestinationQueuePage({
   params,
@@ -28,6 +22,14 @@ export default async function MigrationDestinationQueuePage({
     session,
     destinationId
   );
+  const t = await getTranslations("migrationTrackerQueue");
+  const tShared = await getTranslations("migrationTracker");
+  const tierLabel: Record<Tier, string> = {
+    ultra_high: tShared("tierUltraHigh"),
+    high: tShared("tierHigh"),
+    mid: tShared("tierMid"),
+    low: tShared("tierLow"),
+  };
 
   const summary = getCapacitySummary(destination.id);
 
@@ -46,8 +48,8 @@ export default async function MigrationDestinationQueuePage({
   return (
     <div className="mx-auto max-w-4xl">
       <PageHeader
-        kicker="Admin"
-        title={`Server #${destination.serverNumber} — Review queue`}
+        kicker={tShared("kicker")}
+        title={t("title", { serverNumber: destination.serverNumber })}
         rightSlot={
           isServerAdmin ? (
             <div className="flex gap-2">
@@ -55,13 +57,13 @@ export default async function MigrationDestinationQueuePage({
                 href={`/admin/migration-tracker/${destination.id}/officers`}
                 className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
               >
-                Officers
+                {t("officersLink")}
               </Link>
               <Link
                 href={`/admin/migration-tracker/${destination.id}/settings`}
                 className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
               >
-                Settings
+                {t("settingsLink")}
               </Link>
             </div>
           ) : null
@@ -72,14 +74,14 @@ export default async function MigrationDestinationQueuePage({
         {summary.map((row) => (
           <div key={row.tier} className="rounded-lg border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
             <p className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              {row.flavorName}
+              {tierLabel[row.tier as Tier] ?? row.flavorName}
             </p>
             <p className="mt-1 text-lg font-bold text-gray-900 dark:text-gray-100">
               {row.reserved}/{row.cap}
             </p>
             <p className="text-xs text-gray-500 dark:text-gray-400">
-              {row.remaining >= 0 ? `${row.remaining} left` : `${-row.remaining} over cap`} ·{" "}
-              {row.waitlisted} waitlisted
+              {row.remaining >= 0 ? t("left", { count: row.remaining }) : t("overCap", { count: -row.remaining })} ·{" "}
+              {t("waitlistedCount", { count: row.waitlisted })}
             </p>
           </div>
         ))}
@@ -93,18 +95,18 @@ export default async function MigrationDestinationQueuePage({
         return (
           <div key={tier} className="mb-6">
             <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              {TIER_FLAVOR_LABEL[tier] ?? tier}
+              {tierLabel[tier] ?? tier}
             </h2>
             {appliedForTier.length > 0 && (
               <div className="mb-3 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <table className="w-full text-sm">
                   <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400">
                     <tr>
-                      <th className="px-3 py-2 font-semibold">Player</th>
-                      <th className="px-3 py-2 font-semibold">Source server</th>
-                      <th className="px-3 py-2 font-semibold">Power</th>
-                      <th className="px-3 py-2 font-semibold">Applied</th>
-                      <th className="px-3 py-2 text-right font-semibold">Actions</th>
+                      <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
+                      <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
+                      <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
+                      <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
+                      <th className="px-3 py-2 text-right font-semibold">{t("colActions")}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -129,17 +131,17 @@ export default async function MigrationDestinationQueuePage({
             {waitlistedForTier.length > 0 && (
               <div>
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                  Waitlist
+                  {t("waitlistHeading")}
                 </p>
                 <div className="overflow-hidden rounded-lg border border-amber-200 bg-amber-50/40 dark:border-amber-900/60 dark:bg-amber-950/20">
                   <table className="w-full text-sm">
                     <thead className="bg-amber-50 text-left text-xs uppercase tracking-wider text-amber-800 dark:bg-amber-950/40 dark:text-amber-300">
                       <tr>
-                        <th className="px-3 py-2 font-semibold">Player</th>
-                        <th className="px-3 py-2 font-semibold">Source server</th>
-                        <th className="px-3 py-2 font-semibold">Power</th>
-                        <th className="px-3 py-2 font-semibold">Applied</th>
-                        <th className="px-3 py-2 text-right font-semibold">Actions</th>
+                        <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
+                        <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
+                        <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
+                        <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
+                        <th className="px-3 py-2 text-right font-semibold">{t("colActions")}</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -167,7 +169,7 @@ export default async function MigrationDestinationQueuePage({
       })}
 
       {applied.length === 0 && waitlisted.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400">No pending applications.</p>
+        <p className="text-gray-500 dark:text-gray-400">{t("empty")}</p>
       )}
     </div>
   );

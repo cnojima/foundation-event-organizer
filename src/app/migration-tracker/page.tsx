@@ -1,27 +1,30 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
-import { getDefaultDestination, getCapacitySummary } from "@/lib/migration-tracker";
+import { getDefaultDestination, getCapacitySummary, type Tier } from "@/lib/migration-tracker";
 
 export const metadata = { title: "Migration Tracker" };
 
-const CLASSIFICATION_LABEL: Record<string, string> = {
-  high: "High-power server",
-  mid: "Mid-power server",
-  low: "Low-power server",
-};
-
 export default async function MigrationTrackerPage() {
   const destination = getDefaultDestination();
+  const t = await getTranslations("migrationTrackerPage");
+  const tShared = await getTranslations("migrationTracker");
+
+  const classificationKey = destination
+    ? ({ high: "classificationHigh", mid: "classificationMid", low: "classificationLow" } as const)[
+        destination.classification
+      ]
+    : null;
 
   return (
     <div className="mx-auto max-w-3xl">
       <PageHeader
-        kicker="Migration Tracker"
-        title={destination ? `Server #${destination.serverNumber}` : "Migration Tracker"}
+        kicker={tShared("kicker")}
+        title={destination ? t("titleServer", { serverNumber: destination.serverNumber }) : t("titleUnconfigured")}
         subtitle={
-          destination
-            ? `${CLASSIFICATION_LABEL[destination.classification]} — see how much room is left in each power tier before you apply.`
-            : "This server's migration tracker hasn't been configured yet."
+          destination && classificationKey
+            ? t("subtitle", { classification: tShared(classificationKey) })
+            : t("subtitleUnconfigured")
         }
         rightSlot={
           destination ? (
@@ -29,14 +32,14 @@ export default async function MigrationTrackerPage() {
               href="/migration-tracker/submit"
               className="rounded-md bg-violet-600 px-4 py-2 text-sm font-semibold text-white hover:bg-violet-700"
             >
-              Apply to migrate
+              {t("applyButton")}
             </Link>
           ) : null
         }
       />
 
       {!destination ? (
-        <p className="text-gray-500 dark:text-gray-400">Check back soon.</p>
+        <p className="text-gray-500 dark:text-gray-400">{t("checkBackSoon")}</p>
       ) : (
         <MigrationCapacityTable destinationId={destination.id} />
       )}
@@ -44,26 +47,34 @@ export default async function MigrationTrackerPage() {
   );
 }
 
-function MigrationCapacityTable({ destinationId }: { destinationId: string }) {
+async function MigrationCapacityTable({ destinationId }: { destinationId: string }) {
   const summary = getCapacitySummary(destinationId);
+  const t = await getTranslations("migrationTrackerPage");
+  const tShared = await getTranslations("migrationTracker");
+  const tierLabel: Record<Tier, string> = {
+    ultra_high: tShared("tierUltraHigh"),
+    high: tShared("tierHigh"),
+    mid: tShared("tierMid"),
+    low: tShared("tierLow"),
+  };
 
   return (
     <div className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
       <table className="w-full text-sm">
         <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400">
           <tr>
-            <th className="px-3 py-2 font-semibold">Power tier</th>
-            <th className="px-3 py-2 text-right font-semibold">Cap</th>
-            <th className="px-3 py-2 text-right font-semibold">Reserved</th>
-            <th className="px-3 py-2 text-right font-semibold">Remaining</th>
-            <th className="px-3 py-2 text-right font-semibold">Waitlisted</th>
+            <th className="px-3 py-2 font-semibold">{t("colTier")}</th>
+            <th className="px-3 py-2 text-right font-semibold">{t("colCap")}</th>
+            <th className="px-3 py-2 text-right font-semibold">{t("colReserved")}</th>
+            <th className="px-3 py-2 text-right font-semibold">{t("colRemaining")}</th>
+            <th className="px-3 py-2 text-right font-semibold">{t("colWaitlisted")}</th>
           </tr>
         </thead>
         <tbody>
           {summary.map((row) => (
             <tr key={row.tier} className="border-t border-gray-100 dark:border-gray-800">
               <td className="px-3 py-3 font-medium text-gray-900 dark:text-gray-100">
-                {row.flavorName}
+                {tierLabel[row.tier as Tier] ?? row.flavorName}
               </td>
               <td className="px-3 py-3 text-right text-gray-600 dark:text-gray-400">{row.cap}</td>
               <td className="px-3 py-3 text-right text-gray-600 dark:text-gray-400">

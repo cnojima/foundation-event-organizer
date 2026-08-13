@@ -164,6 +164,7 @@ async function translateLocale({ locale, en, apiKey, force }) {
 
   let droppedForBrokenTags = 0;
   for (let i = 0; i < toTranslate.length; i += MAX_BATCH_SIZE) {
+    if (i > 0) await new Promise((r) => setTimeout(r, 1000));
     const batch = toTranslate.slice(i, i + MAX_BATCH_SIZE);
     const wrapped = batch.map((b) => protectPlaceholders(b.value));
     const translated = await callGoogleTranslate({
