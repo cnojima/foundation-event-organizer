@@ -61,11 +61,6 @@
     "signIn": "Logg inn",
     "signOut": "Logg ut"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Ting kan gå i stykker. Har du funnet en feil eller har du et forslag? Bruk<feedbackLink> Tilbakemelding</feedbackLink> lenke i bunnteksten, eller<githubLink> åpne en sak på GitHub</githubLink> .",
-    "dismiss": "Avvis alfavarsel"
-  },
   "footer": {
     "tagline": "SAML DER. SVAR SAMMEN.",
     "feedback": "TILBAKEMELDING",

@@ -61,11 +61,6 @@
     "signIn": "Giriş Yap",
     "signOut": "Oturumu Kapat"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Bazı şeyler bozulabilir. Bir hata mı buldunuz veya bir öneriniz mi var? Şunu kullanın:<feedbackLink> Geri bildirim</feedbackLink> altbilgideki bağlantı veya<githubLink> GitHub'da bir sorun bildirin.</githubLink> .",
-    "dismiss": "Alfa bildirimini kapat"
-  },
   "footer": {
     "tagline": "BİRLİKTE HAREKETE GEÇELİM. BİRLİKTE CEVAP VERELİM.",
     "feedback": "GERİ BİLDİRİM",

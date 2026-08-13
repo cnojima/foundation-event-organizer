@@ -61,11 +61,6 @@
     "signIn": "サインイン",
     "signOut": "サインアウト"
   },
-  "alphaBanner": {
-    "tag": "アルファ",
-    "message": "不具合が発生する場合があります。バグを発見した場合、またはご提案がある場合は、<feedbackLink>フィードバック</feedbackLink>フッターのリンク、または<githubLink>GitHubでイシューを開く</githubLink>。",
-    "dismiss": "アルファ通知を非表示にする"
-  },
   "footer": {
     "tagline": "団結しよう。共に答えを見つけよう。",
     "feedback": "フィードバック",

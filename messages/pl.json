@@ -61,11 +61,6 @@
     "signIn": "Zalogować się",
     "signOut": "Wyloguj się"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Rzeczy mogą się zepsuć. Znalazłeś błąd lub masz sugestię? Użyj<feedbackLink> Informacja zwrotna</feedbackLink> link w stopce lub<githubLink> otwórz problem na GitHubie</githubLink> .",
-    "dismiss": "Odrzuć powiadomienie alfa"
-  },
   "footer": {
     "tagline": "ZBIERZMY SIĘ. ODPOWIEDZMY RAZEM.",
     "feedback": "INFORMACJA ZWROTNA",

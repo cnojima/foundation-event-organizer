@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
+import { FEATURE_FLAGS } from "@/lib/feature-flags";
 
 export type PlayerCardData = {
   id: string;
@@ -52,7 +53,8 @@ export async function PlayerCard({
   challengeDisabledHint?: string;
 }) {
   const t = await getTranslations("players");
-  const effectiveCanChallenge = canChallenge ?? !sameGuild;
+  const effectiveCanChallenge =
+    FEATURE_FLAGS.socialFeaturesEnabled && (canChallenge ?? !sameGuild);
   const name = displayName({ inGameName: player.inGameName }, player.guildTag);
   const totalDuels = player.duelWins + player.duelLosses + player.duelDraws;
   const totalFeedback = player.feedbackUpCount + player.feedbackDownCount;

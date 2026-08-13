@@ -8,6 +8,7 @@ import {
   HelpLayout,
   type HelpSectionMeta,
 } from "@/components/help-layout";
+import { FEATURE_FLAGS } from "@/lib/feature-flags";
 
 export const metadata = {
   title: "Admin Help",
@@ -39,7 +40,9 @@ export default async function AdminHelpPage() {
     { id: "edit-event", title: t("sections.editEvent") },
     { id: "manage-players", title: t("sections.managePlayers") },
     { id: "waitlist", title: t("sections.waitlist") },
-    { id: "scrims", title: t("sections.scrims") },
+    ...(FEATURE_FLAGS.socialFeaturesEnabled
+      ? [{ id: "scrims", title: t("sections.scrims") }]
+      : []),
     { id: "invite-bot", title: t("sections.inviteBot") },
     { id: "discord-channel", title: t("sections.discordChannel") },
     { id: "slash-commands", title: t("sections.slashCommands") },
@@ -104,63 +107,65 @@ export default async function AdminHelpPage() {
         <p>{t("waitlist.promote")}</p>
       </CollapsibleSection>
 
-      <CollapsibleSection id="scrims" title={t("sections.scrims")}>
-        <p>{t("scrims.intro")}</p>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {t.rich("scrims.serverNote", {
-            settingsLink: link("/admin/settings"),
-          })}
-        </p>
-
-        <h3 className="mt-4 font-semibold">{t("scrims.proposeHeading")}</h3>
-        <ol className="list-decimal space-y-2 pl-5">
-          <li>
-            {t.rich("scrims.proposeStep1", {
-              scrimmagesLink: link("/admin/scrimmages"),
+      {FEATURE_FLAGS.socialFeaturesEnabled && (
+        <CollapsibleSection id="scrims" title={t("sections.scrims")}>
+          <p>{t("scrims.intro")}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {t.rich("scrims.serverNote", {
+              settingsLink: link("/admin/settings"),
             })}
-          </li>
-          <li>{t("scrims.proposeStep2")}</li>
-          <li>{t("scrims.proposeStep3")}</li>
-          <li>{t("scrims.proposeStep4")}</li>
-        </ol>
+          </p>
 
-        <h3 className="mt-4 font-semibold">{t("scrims.acceptDeclineHeading")}</h3>
-        <p>{t("scrims.acceptDeclineIntro")}</p>
-        <ul className="list-disc space-y-2 pl-5">
-          <li>{t("scrims.accept")}</li>
-          <li>{t("scrims.decline")}</li>
-          <li>{t("scrims.withdraw")}</li>
-        </ul>
+          <h3 className="mt-4 font-semibold">{t("scrims.proposeHeading")}</h3>
+          <ol className="list-decimal space-y-2 pl-5">
+            <li>
+              {t.rich("scrims.proposeStep1", {
+                scrimmagesLink: link("/admin/scrimmages"),
+              })}
+            </li>
+            <li>{t("scrims.proposeStep2")}</li>
+            <li>{t("scrims.proposeStep3")}</li>
+            <li>{t("scrims.proposeStep4")}</li>
+          </ol>
 
-        <h3 className="mt-4 font-semibold">{t("scrims.rosterHeading")}</h3>
-        <p>{t("scrims.rosterBody")}</p>
+          <h3 className="mt-4 font-semibold">{t("scrims.acceptDeclineHeading")}</h3>
+          <p>{t("scrims.acceptDeclineIntro")}</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>{t("scrims.accept")}</li>
+            <li>{t("scrims.decline")}</li>
+            <li>{t("scrims.withdraw")}</li>
+          </ul>
 
-        <h3 className="mt-4 font-semibold">{t("scrims.cancelHeading")}</h3>
-        <p>{t("scrims.cancelBody")}</p>
+          <h3 className="mt-4 font-semibold">{t("scrims.rosterHeading")}</h3>
+          <p>{t("scrims.rosterBody")}</p>
 
-        <h3 className="mt-4 font-semibold">{t("scrims.resultHeading")}</h3>
-        <p>{t("scrims.resultIntro")}</p>
-        <ul className="list-disc space-y-2 pl-5">
-          <li>{t("scrims.resultWonLost")}</li>
-          <li>{t("scrims.resultDrawNc")}</li>
-        </ul>
-        <p>{t("scrims.resultBody")}</p>
+          <h3 className="mt-4 font-semibold">{t("scrims.cancelHeading")}</h3>
+          <p>{t("scrims.cancelBody")}</p>
 
-        <h3 className="mt-4 font-semibold">
-          {t("scrims.discordNotificationsHeading")}
-        </h3>
-        <p>{t("scrims.discordNotificationsBody")}</p>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          {t("scrims.discordNotificationsFallback")}
-        </p>
+          <h3 className="mt-4 font-semibold">{t("scrims.resultHeading")}</h3>
+          <p>{t("scrims.resultIntro")}</p>
+          <ul className="list-disc space-y-2 pl-5">
+            <li>{t("scrims.resultWonLost")}</li>
+            <li>{t("scrims.resultDrawNc")}</li>
+          </ul>
+          <p>{t("scrims.resultBody")}</p>
 
-        <h3 className="mt-4 font-semibold">{t("scrims.playerVisibilityHeading")}</h3>
-        <p>
-          {t.rich("scrims.playerVisibilityBody", {
-            scrimsLink: link("/scrims"),
-          })}
-        </p>
-      </CollapsibleSection>
+          <h3 className="mt-4 font-semibold">
+            {t("scrims.discordNotificationsHeading")}
+          </h3>
+          <p>{t("scrims.discordNotificationsBody")}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
+            {t("scrims.discordNotificationsFallback")}
+          </p>
+
+          <h3 className="mt-4 font-semibold">{t("scrims.playerVisibilityHeading")}</h3>
+          <p>
+            {t.rich("scrims.playerVisibilityBody", {
+              scrimsLink: link("/scrims"),
+            })}
+          </p>
+        </CollapsibleSection>
+      )}
 
       <CollapsibleSection id="invite-bot" title={t("sections.inviteBot")}>
         <p>{t("inviteBot.intro")}</p>

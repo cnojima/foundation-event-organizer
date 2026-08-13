@@ -61,11 +61,6 @@
     "signIn": "Inloggen",
     "signOut": "Uitloggen"
   },
-  "alphaBanner": {
-    "tag": "Alpha",
-    "message": "Er kunnen dingen misgaan. Heb je een bug gevonden of een suggestie? Gebruik de<feedbackLink> Feedback</feedbackLink> link in de voettekst, of<githubLink> Een probleem melden op GitHub</githubLink> .",
-    "dismiss": "Alpha-melding negeren"
-  },
   "footer": {
     "tagline": "VERZAMEL JEZELF. ANTWOORD SAMEN.",
     "feedback": "FEEDBACK",

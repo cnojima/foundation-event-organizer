@@ -61,11 +61,6 @@
     "signIn": "Anmelden",
     "signOut": "Abmelden"
   },
-  "alphaBanner": {
-    "tag": "Alpha",
-    "message": "Es kann zu Problemen kommen. Haben Sie einen Fehler gefunden oder einen Verbesserungsvorschlag? Nutzen Sie die<feedbackLink> Rückmeldung</feedbackLink> Link in der Fußzeile, oder<githubLink> Eröffne ein Problem auf GitHub.</githubLink> Die",
-    "dismiss": "Alpha-Benachrichtigung verwerfen"
-  },
   "footer": {
     "tagline": "KLAPPT EUCH ZUSAMMEN. ANTWORTET GEMEINSAM.",
     "feedback": "RÜCKMELDUNG",

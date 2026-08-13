@@ -61,11 +61,6 @@
     "signIn": "Đăng nhập",
     "signOut": "Đăng xuất"
   },
-  "alphaBanner": {
-    "tag": "Alpha",
-    "message": "Có thể xảy ra lỗi. Bạn phát hiện lỗi hoặc có đề xuất? Hãy sử dụng...<feedbackLink> Nhận xét</feedbackLink> liên kết ở chân trang, hoặc<githubLink> Mở một vấn đề trên GitHub</githubLink> .",
-    "dismiss": "Bỏ qua thông báo alpha"
-  },
   "footer": {
     "tagline": "TẬP HỢP LẠI. CÙNG NHAU TRẢ LỜI.",
     "feedback": "NHẬN XÉT",

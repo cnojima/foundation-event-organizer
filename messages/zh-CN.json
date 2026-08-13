@@ -61,11 +61,6 @@
     "signIn": "登入",
     "signOut": "登出"
   },
-  "alphaBanner": {
-    "tag": "阿尔法",
-    "message": "系统可能会出现故障。发现错误或有任何建议？请使用<feedbackLink>反馈</feedbackLink>页脚中的链接，或<githubLink>在 GitHub 上提交一个 issue</githubLink> 。",
-    "dismiss": "驳回 alpha 通知"
-  },
   "footer": {
     "tagline": "团结起来，共同回答。",
     "feedback": "反馈",

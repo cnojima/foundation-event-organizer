@@ -61,11 +61,6 @@
     "signIn": "Masuk",
     "signOut": "Keluar"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Beberapa hal mungkin rusak. Menemukan bug atau punya saran? Gunakan<feedbackLink> Masukan</feedbackLink> tautan di bagian bawah halaman, atau<githubLink> buka masalah di GitHub</githubLink> .",
-    "dismiss": "Abaikan pemberitahuan alpha"
-  },
   "footer": {
     "tagline": "BERSATULAH. JAWABLAH BERSAMA.",
     "feedback": "MASUKAN",

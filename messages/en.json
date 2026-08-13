@@ -62,11 +62,6 @@
     "signIn": "Sign In",
     "signOut": "Sign Out"
   },
-  "alphaBanner": {
-    "tag": "Alpha",
-    "message": "Things may break. Found a bug or have a suggestion? Use the <feedbackLink>Feedback</feedbackLink> link in the footer, or <githubLink>open an issue on GitHub</githubLink>.",
-    "dismiss": "Dismiss alpha notice"
-  },
   "footer": {
     "tagline": "RALLY UP. ANSWER TOGETHER.",
     "feedback": "FEEDBACK",

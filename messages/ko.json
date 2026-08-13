@@ -61,11 +61,6 @@
     "signIn": "로그인",
     "signOut": "로그아웃"
   },
-  "alphaBanner": {
-    "tag": "알파",
-    "message": "오류가 발생할 수 있습니다. 버그를 발견했거나 제안 사항이 있으신가요? 신고 기능을 이용해 주세요.<feedbackLink> 피드백</feedbackLink> 바닥글에 있는 링크 또는<githubLink> GitHub에 이슈를 등록하세요</githubLink> .",
-    "dismiss": "알파 알림을 해제합니다"
-  },
   "footer": {
     "tagline": "힘을 모아 함께 해답을 찾자.",
     "feedback": "피드백",

@@ -61,11 +61,6 @@
     "signIn": "Logga in",
     "signOut": "Logga ut"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Saker kan gå sönder. Hittat ett fel eller har du ett förslag? Använd<feedbackLink> Feed-back</feedbackLink> länk i sidfoten, eller<githubLink> öppna ett ärende på GitHub</githubLink> .",
-    "dismiss": "Stäng alfameddelande"
-  },
   "footer": {
     "tagline": "SAMLAS. SVARA TILLSAMMANS.",
     "feedback": "FEED-BACK",
