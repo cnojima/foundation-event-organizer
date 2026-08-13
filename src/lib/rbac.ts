@@ -1,5 +1,12 @@
 import { db } from "@/db";
-import { events, guilds, users } from "@/db/schema";
+import {
+  events,
+  guilds,
+  users,
+  migrationDestinations,
+  migrationOfficers,
+  migrationApplications,
+} from "@/db/schema";
 import type { Session } from "next-auth";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
@@ -113,6 +120,171 @@ export function requireSuperAdminApi(session: Session | null): ApiResult<Members
   if (!r.ok) return r;
   if (!r.value.isSuperAdmin) return { ok: false, response: apiForbidden() };
   return r;
+}
+
+// ---- Migration tracker: server-scoped (not guild-scoped) admin access ----
+//
+// A destination is a game server, not an app guild — a server can host
+// several app guilds at once (see migrationDestinations in schema.ts), so
+// "admin of guild X" doesn't apply. Instead: any admin of ANY guild whose
+// own serverNumber matches the destination's serverNumber may manage it.
+// Super-admins always pass, same bypass convention as every other guard.
+
+export async function requireServerAdminApi(
+  session: Session | null,
+  serverNumber: number
+): Promise<ApiResult<Membership>> {
+  const r = requireSignedInApi(session);
+  if (!r.ok) return r;
+  const m = r.value;
+  if (m.isSuperAdmin) return { ok: true, value: m };
+  if (m.guildRole !== "admin" || !m.guildId) return { ok: false, response: apiForbidden() };
+  const guild = await db.query.guilds.findFirst({ where: eq(guilds.id, m.guildId) });
+  if (!guild || guild.serverNumber !== serverNumber) {
+    return { ok: false, response: apiForbidden() };
+  }
+  return { ok: true, value: m };
+}
+
+export async function requireServerAdminPage(
+  session: Session | null,
+  serverNumber: number
+): Promise<Membership> {
+  const m = requireSignedInPage(session);
+  if (m.isSuperAdmin) return m;
+  if (m.guildRole !== "admin" || !m.guildId) redirect("/");
+  const guild = await db.query.guilds.findFirst({ where: eq(guilds.id, m.guildId) });
+  if (!guild || guild.serverNumber !== serverNumber) redirect("/");
+  return m;
+}
+
+type MigrationDestinationRow = typeof migrationDestinations.$inferSelect;
+
+// Resource-aware: loads the destination, then applies the same "admin of a
+// guild on this server" check as requireServerAdminApi.
+export async function canManageMigrationDestination(
+  session: Session | null,
+  destinationId: string
+): Promise<ApiResult<{ membership: Membership; destination: MigrationDestinationRow }>> {
+  const destination = await db.query.migrationDestinations.findFirst({
+    where: eq(migrationDestinations.id, destinationId),
+  });
+  if (!destination) {
+    return {
+      ok: false,
+      response: NextResponse.json({ error: "Destination not found" }, { status: 404 }),
+    };
+  }
+  const guard = await requireServerAdminApi(session, destination.serverNumber);
+  if (!guard.ok) return guard;
+  return { ok: true, value: { membership: guard.value, destination } };
+}
+
+type MigrationApplicationRow = typeof migrationApplications.$inferSelect;
+
+// Resource-aware: loads the destination, then passes if the caller can
+// manage it (server-admin/super-admin) OR is an assigned officer for it.
+// `isServerAdmin` lets callers gate server-admin-only actions (like the
+// data-hygiene "remove", or Officers/Settings pages) without a second query.
+export async function canReviewMigrationDestination(
+  session: Session | null,
+  destinationId: string
+): Promise<
+  ApiResult<{
+    membership: Membership;
+    destination: MigrationDestinationRow;
+    isServerAdmin: boolean;
+  }>
+> {
+  const destination = await db.query.migrationDestinations.findFirst({
+    where: eq(migrationDestinations.id, destinationId),
+  });
+  if (!destination) {
+    return {
+      ok: false,
+      response: NextResponse.json({ error: "Destination not found" }, { status: 404 }),
+    };
+  }
+
+  const r = requireSignedInApi(session);
+  if (!r.ok) return r;
+  const m = r.value;
+
+  const adminGuard = await requireServerAdminApi(session, destination.serverNumber);
+  if (adminGuard.ok) {
+    return { ok: true, value: { membership: m, destination, isServerAdmin: true } };
+  }
+
+  const officer = await db.query.migrationOfficers.findFirst({
+    where: and(
+      eq(migrationOfficers.destinationId, destination.id),
+      eq(migrationOfficers.userId, m.userId)
+    ),
+  });
+  if (officer) {
+    return { ok: true, value: { membership: m, destination, isServerAdmin: false } };
+  }
+
+  return { ok: false, response: apiForbidden() };
+}
+
+// Page variant of canReviewMigrationDestination — redirects instead of
+// returning a NextResponse.
+export async function requireMigrationDestinationReviewPage(
+  session: Session | null,
+  destinationId: string
+): Promise<{ membership: Membership; destination: MigrationDestinationRow; isServerAdmin: boolean }> {
+  const m = requireSignedInPage(session);
+  const destination = await db.query.migrationDestinations.findFirst({
+    where: eq(migrationDestinations.id, destinationId),
+  });
+  if (!destination) redirect("/admin/migration-tracker");
+
+  if (m.isSuperAdmin) return { membership: m, destination, isServerAdmin: true };
+
+  if (m.guildRole === "admin" && m.guildId) {
+    const guild = await db.query.guilds.findFirst({ where: eq(guilds.id, m.guildId) });
+    if (guild && guild.serverNumber === destination.serverNumber) {
+      return { membership: m, destination, isServerAdmin: true };
+    }
+  }
+
+  const officer = await db.query.migrationOfficers.findFirst({
+    where: and(
+      eq(migrationOfficers.destinationId, destination.id),
+      eq(migrationOfficers.userId, m.userId)
+    ),
+  });
+  if (officer) return { membership: m, destination, isServerAdmin: false };
+
+  redirect("/");
+}
+
+// Resource-aware: loads the application -> its destination, then applies
+// canReviewMigrationDestination.
+export async function canReviewMigrationApplication(
+  session: Session | null,
+  applicationId: string
+): Promise<
+  ApiResult<{
+    membership: Membership;
+    destination: MigrationDestinationRow;
+    application: MigrationApplicationRow;
+    isServerAdmin: boolean;
+  }>
+> {
+  const application = await db.query.migrationApplications.findFirst({
+    where: eq(migrationApplications.id, applicationId),
+  });
+  if (!application) {
+    return {
+      ok: false,
+      response: NextResponse.json({ error: "Application not found" }, { status: 404 }),
+    };
+  }
+  const guard = await canReviewMigrationDestination(session, application.destinationId);
+  if (!guard.ok) return guard;
+  return { ok: true, value: { ...guard.value, application } };
 }
 
 // ---- Resource-aware checks ----

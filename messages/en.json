@@ -36,6 +36,7 @@
     "templates": "Event Templates",
     "settings": "Settings",
     "auditLog": "Audit Log",
+    "migrationTracker": "Migration Tracker",
     "superAdmin": "Super Admin",
     "damageCalculator": "Damage Calculator",
     "browseGuilds": "Browse Guilds",

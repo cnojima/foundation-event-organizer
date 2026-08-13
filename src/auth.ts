@@ -336,6 +336,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       const PUBLIC_PATHS = new Set(["/", "/tos", "/privacy", "/signin", "/signup"]);
       if (PUBLIC_PATHS.has(pathname)) return true;
       if (pathname.startsWith("/tools/")) return true;
+      // Migration tracker is crowd-sourced and public by design — viewing,
+      // applying, and the token-gated self-edit link all work without an
+      // account. Admin/officer review still lives behind /admin/... and
+      // /api/admin/..., which fall through to the `!!auth` check below.
+      if (pathname.startsWith("/migration-tracker")) return true;
+      if (pathname.startsWith("/api/migration-tracker")) return true;
       return !!auth;
     },
     async session({ session, user, token }) {

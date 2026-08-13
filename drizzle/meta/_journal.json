@@ -148,6 +148,13 @@
       "when": 1783483135021,
       "tag": "0020_add_damage_calculator",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "6",
+      "when": 1786641292429,
+      "tag": "0021_add_migration_tracker",
+      "breakpoints": true
     }
   ]
 }

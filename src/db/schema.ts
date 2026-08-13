@@ -639,3 +639,106 @@ export const damageReadings = sqliteTable("damage_readings", {
   sourceFileName: text("source_file_name"),
   createdAt: text("created_at").notNull(),
 });
+
+// ---- Migration tracker ----
+// Public, crowd-sourced tracker for players migrating between game servers.
+// A "destination" is a game server (matched by number, like globalEvents),
+// NOT an app guild — a server can host several app guilds at once, so access
+// is gated by "admin of any guild on this server", not by a single guildId.
+export const migrationDestinations = sqliteTable("migration_destinations", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  serverNumber: integer("server_number").notNull().unique(),
+  classification: text("classification", { enum: ["high", "mid", "low"] })
+    .notNull()
+    .default("mid"),
+  createdAt: text("created_at").notNull(),
+});
+
+// Global — a player's power tier is independent of any destination server.
+// Distinct from users.powerTier (roman numerals I-XIII, an unrelated duel
+// matchmaking self-rating).
+export const powerTierThresholds = sqliteTable("power_tier_thresholds", {
+  tier: text("tier", { enum: ["ultra_high", "high", "mid", "low"] }).primaryKey(),
+  flavorName: text("flavor_name").notNull(),
+  minPower: integer("min_power"), // null for the bottom tier
+});
+
+// Global standard table (classification x tier -> default cap). Seed data
+// only for MVP; not exposed in the admin UI since it's a cross-destination
+// balance table that rarely changes (edit via db:studio if it ever does).
+export const classificationDefaultAllocations = sqliteTable(
+  "classification_default_allocations",
+  {
+    classification: text("classification", { enum: ["high", "mid", "low"] }).notNull(),
+    tier: text("tier", { enum: ["ultra_high", "high", "mid", "low"] }).notNull(),
+    maxSlots: integer("max_slots").notNull(),
+  },
+  (table) => ({ pk: primaryKey({ columns: [table.classification, table.tier] }) })
+);
+
+// Per-destination caps, seeded from classification_default_allocations when
+// a destination is classified, independently overridable after that.
+export const migrationAllocations = sqliteTable(
+  "migration_allocations",
+  {
+    destinationId: text("destination_id")
+      .notNull()
+      .references(() => migrationDestinations.id, { onDelete: "cascade" }),
+    tier: text("tier", { enum: ["ultra_high", "high", "mid", "low"] }).notNull(),
+    maxSlots: integer("max_slots").notNull(),
+  },
+  (table) => ({ pk: primaryKey({ columns: [table.destinationId, table.tier] }) })
+);
+
+// Signed-in users assigned to review applications for one destination.
+// Distinct from guild-admin — an officer doesn't need to be an admin of any
+// guild at all, just someone a server admin (or super-admin) has appointed.
+export const migrationOfficers = sqliteTable(
+  "migration_officers",
+  {
+    destinationId: text("destination_id")
+      .notNull()
+      .references(() => migrationDestinations.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    assignedByUserId: text("assigned_by_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    createdAt: text("created_at").notNull(),
+  },
+  (table) => ({ pk: primaryKey({ columns: [table.destinationId, table.userId] }) })
+);
+
+// One row per migration application. Submitted anonymously (no account) via
+// the public form; `editToken` is a high-entropy bearer secret (separate
+// from `id`) that lets the submitter edit/withdraw without signing in —
+// same split as guildInvites.code vs guildInvites.id.
+export const migrationApplications = sqliteTable("migration_applications", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => crypto.randomUUID()),
+  destinationId: text("destination_id")
+    .notNull()
+    .references(() => migrationDestinations.id, { onDelete: "cascade" }),
+  playerName: text("player_name").notNull(),
+  sourceServer: text("source_server").notNull(),
+  power: integer("power").notNull(),
+  tier: text("tier", { enum: ["ultra_high", "high", "mid", "low"] }).notNull(),
+  contact: text("contact"),
+  status: text("status", {
+    enum: ["applied", "waitlisted", "accepted", "denied", "withdrawn", "removed_by_admin"],
+  })
+    .notNull()
+    .default("applied"),
+  reviewedByUserId: text("reviewed_by_user_id").references(() => users.id, {
+    onDelete: "set null",
+  }),
+  reviewedAt: text("reviewed_at"),
+  reviewNote: text("review_note"),
+  editToken: text("edit_token").notNull().unique(),
+  createdAt: text("created_at").notNull(),
+  updatedAt: text("updated_at").notNull(),
+});
