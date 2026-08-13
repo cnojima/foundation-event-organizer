@@ -519,8 +519,7 @@
     "deleteExplanation": "Om du permanent tar bort ditt konto tas din användarhistorik och alla dina registreringar bort, och länken till alla Google-/Discord-konton tas bort. Du kommer inte att kunna återställa detta – om du loggar in igen skapas ett nytt, tomt konto.",
     "deleteButton": "Ta bort mitt konto",
     "deleting": "Tar bort…",
-    "deleteConfirm": "Radera ditt konto? Detta tar bort dig från din gille, raderar alla dina registreringar och kopplar bort Google/Discord. Detta kan inte ångras.",
-    "language": "Språk"
+    "deleteConfirm": "Radera ditt konto? Detta tar bort dig från din gille, raderar alla dina registreringar och kopplar bort Google/Discord. Detta kan inte ångras."
   },
   "errors": {
     "forbidden": "Förbjuden",

@@ -519,8 +519,7 @@
     "deleteExplanation": "Als je je account permanent verwijdert, worden je gebruikersgegevens, al je aanmeldingen en alle gekoppelde Google/Discord-accounts verwijderd. Je kunt dit niet herstellen; opnieuw inloggen zou een nieuw, leeg account aanmaken.",
     "deleteButton": "Mijn account verwijderen",
     "deleting": "Verwijderen…",
-    "deleteConfirm": "Wil je je account verwijderen? Dan word je uit je gilde verwijderd, worden al je aanmeldingen gewist en wordt de koppeling met Google/Discord verbroken. Dit kan niet ongedaan worden gemaakt.",
-    "language": "Taal"
+    "deleteConfirm": "Wil je je account verwijderen? Dan word je uit je gilde verwijderd, worden al je aanmeldingen gewist en wordt de koppeling met Google/Discord verbroken. Dit kan niet ongedaan worden gemaakt."
   },
   "errors": {
     "forbidden": "Verboden",

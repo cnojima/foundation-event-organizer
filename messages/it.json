@@ -519,8 +519,7 @@
     "deleteExplanation": "Eliminando il tuo account, rimuoverai definitivamente i tuoi dati utente, tutte le tue registrazioni e scollegherai eventuali account Google/Discord. Non potrai recuperare l'account: accedendo nuovamente, verrà creato un nuovo account vuoto.",
     "deleteButton": "Elimina il mio account",
     "deleting": "Eliminazione in corso…",
-    "deleteConfirm": "Vuoi eliminare il tuo account? Questa operazione ti rimuove dalla gilda, cancella tutte le tue iscrizioni e scollega i tuoi account Google/Discord. È un'operazione irreversibile.",
-    "language": "Lingua"
+    "deleteConfirm": "Vuoi eliminare il tuo account? Questa operazione ti rimuove dalla gilda, cancella tutte le tue iscrizioni e scollega i tuoi account Google/Discord. È un'operazione irreversibile."
   },
   "errors": {
     "forbidden": "Vietato",

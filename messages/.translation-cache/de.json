@@ -467,7 +467,6 @@
     "myAccount.deleteButton": "Delete my account",
     "myAccount.deleting": "Deleting…",
     "myAccount.deleteConfirm": "Delete your account? This removes you from your guild, deletes all your signups, and unlinks Google/Discord. This can't be undone.",
-    "myAccount.language": "Language",
     "errors.forbidden": "Forbidden",
     "errors.unauthorized": "Unauthorized",
     "errors.guildNotFound": "Guild not found.",

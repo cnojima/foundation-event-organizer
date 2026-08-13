@@ -519,8 +519,7 @@
     "deleteExplanation": "La suppression de votre compte efface définitivement votre profil utilisateur, tous vos abonnements et dissocie vos comptes Google/Discord. Vous ne pourrez pas récupérer ces données : vous reconnecter créera un nouveau compte vide.",
     "deleteButton": "Supprimer mon compte",
     "deleting": "Suppression…",
-    "deleteConfirm": "Supprimer votre compte ? Cela vous retire de votre guilde, supprime tous vos comptes et dissocie votre compte Google/Discord. Cette action est irréversible.",
-    "language": "Langue"
+    "deleteConfirm": "Supprimer votre compte ? Cela vous retire de votre guilde, supprime tous vos comptes et dissocie votre compte Google/Discord. Cette action est irréversible."
   },
   "errors": {
     "forbidden": "Interdit",

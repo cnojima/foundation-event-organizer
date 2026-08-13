@@ -519,8 +519,7 @@
     "deleteExplanation": "Việc xóa tài khoản sẽ xóa vĩnh viễn hồ sơ người dùng, tất cả các lần đăng ký và hủy liên kết mọi tài khoản Google/Discord. Bạn sẽ không thể khôi phục lại tài khoản này — đăng nhập lại sẽ tạo một tài khoản mới hoàn toàn trống.",
     "deleteButton": "Xóa tài khoản của tôi",
     "deleting": "Đang xóa…",
-    "deleteConfirm": "Xóa tài khoản của bạn? Thao tác này sẽ xóa bạn khỏi bang hội, xóa tất cả các tài khoản đã đăng ký và hủy liên kết với Google/Discord. Không thể hoàn tác.",
-    "language": "Ngôn ngữ"
+    "deleteConfirm": "Xóa tài khoản của bạn? Thao tác này sẽ xóa bạn khỏi bang hội, xóa tất cả các tài khoản đã đăng ký và hủy liên kết với Google/Discord. Không thể hoàn tác."
   },
   "errors": {
     "forbidden": "Cấm",

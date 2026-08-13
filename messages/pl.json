@@ -519,8 +519,7 @@
     "deleteExplanation": "Usunięcie konta trwale usuwa Twój rekord użytkownika, wszystkie rejestracje i odłącza wszystkie konta Google/Discord. Nie będzie można tego odzyskać — ponowne zalogowanie spowoduje utworzenie nowego, pustego konta.",
     "deleteButton": "Usuń moje konto",
     "deleting": "Usuwanie…",
-    "deleteConfirm": "Usunąć konto? To spowoduje usunięcie Cię z gildii, usunięcie wszystkich Twoich rejestracji i odłączenie Google/Discord. Tego nie da się cofnąć.",
-    "language": "Język"
+    "deleteConfirm": "Usunąć konto? To spowoduje usunięcie Cię z gildii, usunięcie wszystkich Twoich rejestracji i odłączenie Google/Discord. Tego nie da się cofnąć."
   },
   "errors": {
     "forbidden": "Zabroniony",

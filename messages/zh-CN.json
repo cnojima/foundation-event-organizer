@@ -519,8 +519,7 @@
     "deleteExplanation": "永久删除您的帐户将移除您的用户记录、所有注册信息，并解除所有 Google/Discord 帐户的关联。您将无法恢复此帐户——再次登录将创建一个全新的空帐户。",
     "deleteButton": "删除我的帐户",
     "deleting": "正在删除…",
-    "deleteConfirm": "删除账号？这将使您从公会中移除，删除您的所有注册信息，并解除 Google/Discord 的关联。此操作无法撤销。",
-    "language": "语言"
+    "deleteConfirm": "删除账号？这将使您从公会中移除，删除您的所有注册信息，并解除 Google/Discord 的关联。此操作无法撤销。"
   },
   "errors": {
     "forbidden": "禁忌",

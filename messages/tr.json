@@ -519,8 +519,7 @@
     "deleteExplanation": "Hesabınızı silmek, kullanıcı kaydınızı, tüm kayıtlarınızı kalıcı olarak siler ve Google/Discord hesaplarınızla olan bağlantınızı keser. Bunu geri kurtaramazsınız; tekrar giriş yapmanız yeni, boş bir hesap oluşturacaktır.",
     "deleteButton": "Hesabımı sil",
     "deleting": "Siliniyor…",
-    "deleteConfirm": "Hesabınızı silmek mi istiyorsunuz? Bu işlem sizi loncanızdan çıkarır, tüm kayıtlarınızı siler ve Google/Discord bağlantınızı keser. Bu işlem geri alınamaz.",
-    "language": "Dil"
+    "deleteConfirm": "Hesabınızı silmek mi istiyorsunuz? Bu işlem sizi loncanızdan çıkarır, tüm kayıtlarınızı siler ve Google/Discord bağlantınızı keser. Bu işlem geri alınamaz."
   },
   "errors": {
     "forbidden": "Yasaklı",

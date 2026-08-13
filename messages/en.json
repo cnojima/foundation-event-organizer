@@ -520,8 +520,7 @@
     "deleteExplanation": "Deleting your account permanently removes your user record, all your signups, and unlinks any Google/Discord accounts. You won't be able to recover this — sign in again would create a new, empty account.",
     "deleteButton": "Delete my account",
     "deleting": "Deleting…",
-    "deleteConfirm": "Delete your account? This removes you from your guild, deletes all your signups, and unlinks Google/Discord. This can't be undone.",
-    "language": "Language"
+    "deleteConfirm": "Delete your account? This removes you from your guild, deletes all your signups, and unlinks Google/Discord. This can't be undone."
   },
   "errors": {
     "forbidden": "Forbidden",

@@ -11,6 +11,13 @@ import {
   type Locale,
 } from "@/i18n/config";
 
+// Kept as a standalone module-level function (rather than inline in the
+// event handler) so the DOM mutation isn't attributed to component render
+// scope by the react-compiler lint rule.
+function setLocaleCookie(next: Locale) {
+  document.cookie = `${LOCALE_COOKIE}=${next}; Path=/; Max-Age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+}
+
 function FlagIcon({ locale, className = "size-4" }: { locale: Locale; className?: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element -- tiny static SVG, not worth next/image's overhead
@@ -85,7 +92,7 @@ export function LocaleSwitcher({
       // Signed-out — just set the cookie client-side. next-intl reads
       // NEXT_LOCALE on the next request. 1 year so it survives browser
       // sessions. SameSite=Lax matches the API-set cookie.
-      document.cookie = `${LOCALE_COOKIE}=${next}; Path=/; Max-Age=${60 * 60 * 24 * 365}; SameSite=Lax`;
+      setLocaleCookie(next);
       startTransition(() => router.refresh());
     }
     setSubmitting(false);
