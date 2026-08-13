@@ -34,7 +34,10 @@ export async function PUT(
   }
 
   for (const u of updates) {
-    setAllocation(id, u.tier, u.maxSlots);
+    const result = setAllocation(id, u.tier, u.maxSlots);
+    if (!result.ok) {
+      return NextResponse.json({ error: result.reason }, { status: result.status });
+    }
   }
 
   void logAudit({

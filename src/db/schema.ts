@@ -645,14 +645,26 @@ export const damageReadings = sqliteTable("damage_readings", {
 // A "destination" is a game server (matched by number, like globalEvents),
 // NOT an app guild — a server can host several app guilds at once, so access
 // is gated by "admin of any guild on this server", not by a single guildId.
+//
+// A destination row is a bracketed migration WINDOW, not a permanent slot
+// for a server: opensAt/closesAt bound one isolated migration event, and a
+// server can have many rows over its lifetime (serverNumber is deliberately
+// NOT unique). Status (upcoming/open/closed) is derived from the two dates
+// at read time — see getWindowStatus() in src/lib/migration-tracker.ts —
+// rather than stored, so there's one source of truth. Applications,
+// allocations, and officers all FK to one destination row, so isolation
+// between windows (nothing carries over when a server reopens) falls out
+// for free from that scoping.
 export const migrationDestinations = sqliteTable("migration_destinations", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  serverNumber: integer("server_number").notNull().unique(),
+  serverNumber: integer("server_number").notNull(),
   classification: text("classification", { enum: ["high", "mid", "low"] })
     .notNull()
     .default("mid"),
+  opensAt: text("opens_at").notNull(),
+  closesAt: text("closes_at").notNull(),
   createdAt: text("created_at").notNull(),
 });
 

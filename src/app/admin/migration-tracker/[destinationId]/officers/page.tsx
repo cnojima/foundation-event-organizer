@@ -7,6 +7,7 @@ import { migrationOfficers, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
 import { MigrationOfficersManager } from "@/components/migration-officers-manager";
+import { getWindowStatus } from "@/lib/migration-tracker";
 
 export const metadata = { title: "Migration Tracker — Officers" };
 
@@ -43,6 +44,7 @@ export default async function MigrationDestinationOfficersPage({
       <PageHeader kicker={tShared("kicker")} title={t("title", { serverNumber: destination.serverNumber })} />
       <MigrationOfficersManager
         destinationId={destination.id}
+        windowClosed={getWindowStatus(destination) === "closed"}
         initialOfficers={officers.map((o) => ({
           userId: o.userId,
           displayName: o.inGameName ?? o.name ?? o.username ?? o.userId,

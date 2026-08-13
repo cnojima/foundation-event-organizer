@@ -9,7 +9,7 @@ type SubmittedApplication = {
   status: string;
 };
 
-export function MigrationApplicationForm() {
+export function MigrationApplicationForm({ serverNumber }: { serverNumber: number }) {
   const t = useTranslations("migrationTrackerSubmit");
   const tShared = useTranslations("migrationTracker");
   const tc = useTranslations("common");
@@ -52,6 +52,7 @@ export function MigrationApplicationForm() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        serverNumber,
         playerName: playerName.trim(),
         sourceServer: sourceServer.trim(),
         power: powerNumber,

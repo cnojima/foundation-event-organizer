@@ -7,7 +7,7 @@ import {
   migrationAllocations,
   migrationApplications,
 } from "@/db/schema";
-import { and, eq, inArray, ne, sql } from "drizzle-orm";
+import { and, eq, gte, inArray, ne, sql } from "drizzle-orm";
 
 export type Tier = "ultra_high" | "high" | "mid" | "low";
 export type Classification = "high" | "mid" | "low";
@@ -44,13 +44,51 @@ export function deriveTier(power: number, thresholds: ThresholdRow[]): Tier {
   return fallback?.tier ?? sorted[sorted.length - 1].tier;
 }
 
-export function getDefaultDestination(): MigrationDestinationRow | undefined {
+export type WindowStatus = "upcoming" | "open" | "closed";
+
+// Derived, never stored — one source of truth for a window's lifecycle.
+export function getWindowStatus(
+  destination: { opensAt: string; closesAt: string },
+  nowIso: string = new Date().toISOString()
+): WindowStatus {
+  if (nowIso < destination.opensAt) return "upcoming";
+  if (nowIso > destination.closesAt) return "closed";
+  return "open";
+}
+
+export function isWindowClosed(destination: { opensAt: string; closesAt: string }): boolean {
+  return getWindowStatus(destination) === "closed";
+}
+
+// Resolves the window that matters right now for a server: the open one if
+// any, else the nearest upcoming one, else undefined (nothing active). A
+// server can have many destination rows over its lifetime (past, current,
+// future) — this is how the public site finds "the current one" without
+// the URL needing a window id.
+export function resolveActiveDestination(serverNumber: number): MigrationDestinationRow | undefined {
+  const rows = db
+    .select()
+    .from(migrationDestinations)
+    .where(eq(migrationDestinations.serverNumber, serverNumber))
+    .all();
+  const open = rows.find((d) => getWindowStatus(d) === "open");
+  if (open) return open;
+  const upcoming = rows
+    .filter((d) => getWindowStatus(d) === "upcoming")
+    .sort((a, b) => a.opensAt.localeCompare(b.opensAt));
+  return upcoming[0];
+}
+
+// Every server with an open-or-upcoming window (closesAt >= now covers
+// both). Powers the public index and the landing/sign-in banner.
+export function getActiveDestinations(): MigrationDestinationRow[] {
+  const nowIso = new Date().toISOString();
   return db
     .select()
     .from(migrationDestinations)
-    .orderBy(migrationDestinations.createdAt)
-    .limit(1)
-    .get();
+    .where(gte(migrationDestinations.closesAt, nowIso))
+    .orderBy(migrationDestinations.serverNumber)
+    .all();
 }
 
 export type TierSummary = {
@@ -131,7 +169,7 @@ export type SubmitApplicationInput = {
 
 export type SubmitApplicationResult =
   | { ok: true; application: MigrationApplicationRow; editToken: string }
-  | { ok: false; reason: string; status: 400 | 404 };
+  | { ok: false; reason: string; status: 400 | 404 | 409 };
 
 export function submitApplication(input: SubmitApplicationInput): SubmitApplicationResult {
   return db.transaction((tx) => {
@@ -142,6 +180,13 @@ export function submitApplication(input: SubmitApplicationInput): SubmitApplicat
       .get();
     if (!destination) {
       return { ok: false as const, reason: "Destination not found", status: 404 as const };
+    }
+    if (getWindowStatus(destination) !== "open") {
+      return {
+        ok: false as const,
+        reason: "This migration window is not currently open",
+        status: 409 as const,
+      };
     }
 
     const thresholds = tx.select().from(powerTierThresholds).all();
@@ -224,6 +269,18 @@ export function editApplicationByToken(
         status: 409 as const,
       };
     }
+    const destination = tx
+      .select()
+      .from(migrationDestinations)
+      .where(eq(migrationDestinations.id, application.destinationId))
+      .get();
+    if (destination && isWindowClosed(destination)) {
+      return {
+        ok: false as const,
+        reason: "This migration window has closed",
+        status: 409 as const,
+      };
+    }
 
     const now = new Date().toISOString();
     let tier = application.tier as Tier;
@@ -294,6 +351,18 @@ export function withdrawApplicationByToken(token: string): WithdrawResult {
         status: 409 as const,
       };
     }
+    const destination = tx
+      .select()
+      .from(migrationDestinations)
+      .where(eq(migrationDestinations.id, application.destinationId))
+      .get();
+    if (destination && isWindowClosed(destination)) {
+      return {
+        ok: false as const,
+        reason: "This migration window has closed",
+        status: 409 as const,
+      };
+    }
     const now = new Date().toISOString();
     tx.update(migrationApplications)
       .set({ status: "withdrawn", updatedAt: now })
@@ -344,6 +413,18 @@ export function reviewApplication(
         status: 409 as const,
       };
     }
+    const destination = tx
+      .select()
+      .from(migrationDestinations)
+      .where(eq(migrationDestinations.id, application.destinationId))
+      .get();
+    if (destination && isWindowClosed(destination)) {
+      return {
+        ok: false as const,
+        reason: "This migration window has closed",
+        status: 409 as const,
+      };
+    }
     const now = new Date().toISOString();
     const updated: MigrationApplicationRow = {
       ...application,
@@ -387,6 +468,18 @@ export function removeApplication(
     if (application.status === "removed_by_admin") {
       return { ok: false as const, reason: "Already removed", status: 409 as const };
     }
+    const destination = tx
+      .select()
+      .from(migrationDestinations)
+      .where(eq(migrationDestinations.id, application.destinationId))
+      .get();
+    if (destination && isWindowClosed(destination)) {
+      return {
+        ok: false as const,
+        reason: "This migration window has closed",
+        status: 409 as const,
+      };
+    }
     const now = new Date().toISOString();
     const updated: MigrationApplicationRow = {
       ...application,
@@ -410,13 +503,61 @@ export function removeApplication(
   });
 }
 
+// Shared by reclassifyDestination and createDestination — upserts all 4
+// tier caps from the classification standard table. `tx` accepts either a
+// transaction handle or the bare `db`, same DbExec-style composition as
+// softDeleteGuildAndEvents in rbac.ts.
+type DbExec = {
+  select: typeof db.select;
+  update: typeof db.update;
+  insert: typeof db.insert;
+};
+function seedAllocationsFromClassification(
+  tx: DbExec,
+  destinationId: string,
+  classification: Classification
+): void {
+  const defaults = tx
+    .select()
+    .from(classificationDefaultAllocations)
+    .where(eq(classificationDefaultAllocations.classification, classification))
+    .all();
+  for (const d of defaults) {
+    const existing = tx
+      .select()
+      .from(migrationAllocations)
+      .where(
+        and(
+          eq(migrationAllocations.destinationId, destinationId),
+          eq(migrationAllocations.tier, d.tier)
+        )
+      )
+      .get();
+    if (existing) {
+      tx.update(migrationAllocations)
+        .set({ maxSlots: d.maxSlots })
+        .where(
+          and(
+            eq(migrationAllocations.destinationId, destinationId),
+            eq(migrationAllocations.tier, d.tier)
+          )
+        )
+        .run();
+    } else {
+      tx.insert(migrationAllocations)
+        .values({ destinationId, tier: d.tier, maxSlots: d.maxSlots })
+        .run();
+    }
+  }
+}
+
 // Reclassifying resets all 4 tier caps to the new classification's standard
 // defaults — the standard table is the default, and any prior manual
 // override is intentionally discarded (an admin can re-override afterward).
 export function reclassifyDestination(
   destinationId: string,
   classification: Classification
-): { ok: true } | { ok: false; reason: string; status: 404 } {
+): { ok: true } | { ok: false; reason: string; status: 404 | 409 } {
   return db.transaction((tx) => {
     const destination = tx
       .select()
@@ -426,50 +567,44 @@ export function reclassifyDestination(
     if (!destination) {
       return { ok: false as const, reason: "Destination not found", status: 404 as const };
     }
+    if (isWindowClosed(destination)) {
+      return {
+        ok: false as const,
+        reason: "This migration window has closed",
+        status: 409 as const,
+      };
+    }
 
     tx.update(migrationDestinations)
       .set({ classification })
       .where(eq(migrationDestinations.id, destinationId))
       .run();
-
-    const defaults = tx
-      .select()
-      .from(classificationDefaultAllocations)
-      .where(eq(classificationDefaultAllocations.classification, classification))
-      .all();
-    for (const d of defaults) {
-      const existing = tx
-        .select()
-        .from(migrationAllocations)
-        .where(
-          and(
-            eq(migrationAllocations.destinationId, destinationId),
-            eq(migrationAllocations.tier, d.tier)
-          )
-        )
-        .get();
-      if (existing) {
-        tx.update(migrationAllocations)
-          .set({ maxSlots: d.maxSlots })
-          .where(
-            and(
-              eq(migrationAllocations.destinationId, destinationId),
-              eq(migrationAllocations.tier, d.tier)
-            )
-          )
-          .run();
-      } else {
-        tx.insert(migrationAllocations)
-          .values({ destinationId, tier: d.tier, maxSlots: d.maxSlots })
-          .run();
-      }
-    }
+    seedAllocationsFromClassification(tx, destinationId, classification);
     return { ok: true as const };
   });
 }
 
-export function setAllocation(destinationId: string, tier: Tier, maxSlots: number): void {
-  db.transaction((tx) => {
+export function setAllocation(
+  destinationId: string,
+  tier: Tier,
+  maxSlots: number
+): { ok: true } | { ok: false; reason: string; status: 404 | 409 } {
+  return db.transaction((tx) => {
+    const destination = tx
+      .select()
+      .from(migrationDestinations)
+      .where(eq(migrationDestinations.id, destinationId))
+      .get();
+    if (!destination) {
+      return { ok: false as const, reason: "Destination not found", status: 404 as const };
+    }
+    if (isWindowClosed(destination)) {
+      return {
+        ok: false as const,
+        reason: "This migration window has closed",
+        status: 409 as const,
+      };
+    }
     const existing = tx
       .select()
       .from(migrationAllocations)
@@ -490,7 +625,81 @@ export function setAllocation(destinationId: string, tier: Tier, maxSlots: numbe
     } else {
       tx.insert(migrationAllocations).values({ destinationId, tier, maxSlots }).run();
     }
+    return { ok: true as const };
   });
+}
+
+export type CreateDestinationInput = {
+  serverNumber: number;
+  classification: Classification;
+  opensAt: string;
+  closesAt: string;
+};
+
+export type CreateDestinationResult =
+  | { ok: true; destination: MigrationDestinationRow }
+  | { ok: false; reason: string; status: 400 | 409 };
+
+// Blocked if the server already has an open-or-upcoming window, so
+// resolveActiveDestination() is never ambiguous about which one is current.
+export function createDestination(input: CreateDestinationInput): CreateDestinationResult {
+  if (input.closesAt <= input.opensAt) {
+    return { ok: false, reason: "Close date must be after open date", status: 400 };
+  }
+  return db.transaction((tx) => {
+    const existing = tx
+      .select()
+      .from(migrationDestinations)
+      .where(eq(migrationDestinations.serverNumber, input.serverNumber))
+      .all();
+    const nowIso = new Date().toISOString();
+    if (existing.some((d) => d.closesAt >= nowIso)) {
+      return {
+        ok: false as const,
+        reason: "This server already has an open or upcoming migration window",
+        status: 409 as const,
+      };
+    }
+
+    const destination: MigrationDestinationRow = {
+      id: crypto.randomUUID(),
+      serverNumber: input.serverNumber,
+      classification: input.classification,
+      opensAt: input.opensAt,
+      closesAt: input.closesAt,
+      createdAt: nowIso,
+    };
+    tx.insert(migrationDestinations).values(destination).run();
+    seedAllocationsFromClassification(tx, destination.id, input.classification);
+    return { ok: true as const, destination };
+  });
+}
+
+// Correction path for a mistyped date — always allowed, even on a closed
+// window. Since status is derived from these two dates, extending a closed
+// window's closesAt naturally reopens it (and un-archives its
+// applications, since "closed" is the only thing that hides them).
+export function updateWindowDates(
+  destinationId: string,
+  opensAt: string,
+  closesAt: string
+): { ok: true } | { ok: false; reason: string; status: 400 | 404 } {
+  if (closesAt <= opensAt) {
+    return { ok: false, reason: "Close date must be after open date", status: 400 };
+  }
+  const destination = db
+    .select()
+    .from(migrationDestinations)
+    .where(eq(migrationDestinations.id, destinationId))
+    .get();
+  if (!destination) {
+    return { ok: false, reason: "Destination not found", status: 404 };
+  }
+  db.update(migrationDestinations)
+    .set({ opensAt, closesAt })
+    .where(eq(migrationDestinations.id, destinationId))
+    .run();
+  return { ok: true };
 }
 
 // Re-derives `tier` on every application still awaiting a decision
@@ -526,8 +735,6 @@ export function updateThresholds(updates: { tier: Tier; minPower: number | null 
   });
 }
 
-const MVP_SERVER_NUMBER = 1130;
-
 const DEFAULT_THRESHOLDS: ThresholdRow[] = [
   { tier: "ultra_high", flavorName: "Revivalist", minPower: 110_000_000 },
   { tier: "high", flavorName: "Contributor", minPower: 90_000_000 },
@@ -555,8 +762,11 @@ const DEFAULT_CLASSIFICATION_ALLOCATIONS: {
 ];
 
 // Idempotent — safe to call on every boot (mirrors runMigrations() /
-// seedDefaultTemplatesForAllGuilds()). Seeds global thresholds, the global
-// classification standard table, and the single MVP destination (#1130).
+// seedDefaultTemplatesForAllGuilds()). Seeds only the two global reference
+// tables (power tier thresholds, classification default allocations) —
+// those are eternal config, not per-window. Does NOT create any
+// destination; servers are opened via the super-admin "new window" flow
+// (createDestination() above, POST /api/super-admin/migration-tracker/destinations).
 export function ensureMigrationTrackerDefaults(): void {
   const thresholdCount = db
     .select({ count: sql<number>`count(*)` })
@@ -575,39 +785,6 @@ export function ensureMigrationTrackerDefaults(): void {
   if (Number(allocDefaultsCount?.count ?? 0) === 0) {
     for (const a of DEFAULT_CLASSIFICATION_ALLOCATIONS) {
       db.insert(classificationDefaultAllocations).values(a).run();
-    }
-  }
-
-  let destination = db
-    .select()
-    .from(migrationDestinations)
-    .where(eq(migrationDestinations.serverNumber, MVP_SERVER_NUMBER))
-    .get();
-  if (!destination) {
-    destination = {
-      id: crypto.randomUUID(),
-      serverNumber: MVP_SERVER_NUMBER,
-      classification: "mid",
-      createdAt: new Date().toISOString(),
-    };
-    db.insert(migrationDestinations).values(destination).run();
-  }
-
-  const allocCount = db
-    .select({ count: sql<number>`count(*)` })
-    .from(migrationAllocations)
-    .where(eq(migrationAllocations.destinationId, destination.id))
-    .get();
-  if (Number(allocCount?.count ?? 0) === 0) {
-    const defaults = db
-      .select()
-      .from(classificationDefaultAllocations)
-      .where(eq(classificationDefaultAllocations.classification, destination.classification))
-      .all();
-    for (const d of defaults) {
-      db.insert(migrationAllocations)
-        .values({ destinationId: destination.id, tier: d.tier, maxSlots: d.maxSlots })
-        .run();
     }
   }
 }

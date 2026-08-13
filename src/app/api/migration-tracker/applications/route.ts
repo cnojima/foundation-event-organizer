@@ -1,20 +1,25 @@
 import { NextResponse } from "next/server";
-import { getDefaultDestination, submitApplication } from "@/lib/migration-tracker";
+import { resolveActiveDestination, submitApplication } from "@/lib/migration-tracker";
 import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
-// Public, no auth — anyone can apply to migrate. See docs/prd-migration-tracker.md.
+// Public, no auth — anyone can apply to migrate. See
+// docs/prd-migration-tracker.md and docs/prd-migration-tracker-multi-server.md.
 export async function POST(req: Request) {
   const body = await req.json().catch(() => null);
   if (!body || typeof body !== "object") {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
+  const serverNumber = Number(body.serverNumber);
   const playerName = typeof body.playerName === "string" ? body.playerName.trim() : "";
   const sourceServer = typeof body.sourceServer === "string" ? body.sourceServer.trim() : "";
   const power = Number(body.power);
   const contact =
     typeof body.contact === "string" && body.contact.trim() !== "" ? body.contact.trim() : null;
 
+  if (!Number.isInteger(serverNumber)) {
+    return NextResponse.json({ error: "serverNumber is required" }, { status: 400 });
+  }
   if (!playerName || playerName.length > 60) {
     return NextResponse.json({ error: "Player name is required" }, { status: 400 });
   }
@@ -28,11 +33,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Contact is too long" }, { status: 400 });
   }
 
-  const destination = getDefaultDestination();
+  const destination = resolveActiveDestination(serverNumber);
   if (!destination) {
     return NextResponse.json(
-      { error: "Migration tracker is not configured yet" },
-      { status: 400 }
+      { error: "No open migration window for this server" },
+      { status: 409 }
     );
   }
 

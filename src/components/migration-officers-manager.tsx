@@ -14,9 +14,11 @@ type Candidate = {
 
 export function MigrationOfficersManager({
   destinationId,
+  windowClosed,
   initialOfficers,
 }: {
   destinationId: string;
+  windowClosed: boolean;
   initialOfficers: Officer[];
 }) {
   const t = useTranslations("migrationTrackerOfficers");
@@ -94,7 +96,7 @@ export function MigrationOfficersManager({
                 <button
                   type="button"
                   onClick={() => revoke(o.userId)}
-                  disabled={busyUserId === o.userId}
+                  disabled={windowClosed || busyUserId === o.userId}
                   className="text-xs font-semibold text-red-600 hover:underline disabled:opacity-50 dark:text-red-400"
                 >
                   {t("revoke")}
@@ -109,6 +111,10 @@ export function MigrationOfficersManager({
         <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
           {t("assignHeading")}
         </h2>
+        {windowClosed ? (
+          <p className="text-sm text-gray-500 dark:text-gray-400">{t("closedNote")}</p>
+        ) : (
+          <>
         <div className="flex gap-2">
           <input
             type="text"
@@ -160,6 +166,8 @@ export function MigrationOfficersManager({
               );
             })}
           </ul>
+        )}
+          </>
         )}
       </div>
     </div>

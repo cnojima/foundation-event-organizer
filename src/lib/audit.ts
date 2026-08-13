@@ -78,6 +78,8 @@ export type AuditAction =
   | "migration.officer.revoke"
   | "migration.destination.reclassify"
   | "migration.destination.allocations.update"
+  | "migration.destination.create"
+  | "migration.destination.dates.update"
   | "migration.thresholds.update";
 
 export type AuditEntityType =

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { canManageMigrationDestination } from "@/lib/rbac";
+import { isWindowClosed } from "@/lib/migration-tracker";
 import { db } from "@/db";
 import { migrationOfficers, users } from "@/db/schema";
 import { and, eq } from "drizzle-orm";
@@ -14,7 +15,10 @@ export async function DELETE(
   const session = await auth();
   const guard = await canManageMigrationDestination(session, id);
   if (!guard.ok) return guard.response;
-  const { membership } = guard.value;
+  const { membership, destination } = guard.value;
+  if (isWindowClosed(destination)) {
+    return NextResponse.json({ error: "This migration window has closed" }, { status: 409 });
+  }
 
   const existing = await db.query.migrationOfficers.findFirst({
     where: and(eq(migrationOfficers.destinationId, id), eq(migrationOfficers.userId, userId)),

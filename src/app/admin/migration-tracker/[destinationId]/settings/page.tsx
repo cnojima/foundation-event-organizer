@@ -6,7 +6,7 @@ import { db } from "@/db";
 import { migrationAllocations, powerTierThresholds } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
-import { TIER_ORDER } from "@/lib/migration-tracker";
+import { TIER_ORDER, getWindowStatus } from "@/lib/migration-tracker";
 import { MigrationSettingsForm } from "@/components/migration-settings-form";
 
 export const metadata = { title: "Migration Tracker — Settings" };
@@ -48,6 +48,9 @@ export default async function MigrationDestinationSettingsPage({
       <MigrationSettingsForm
         destinationId={destination.id}
         classification={destination.classification}
+        opensAt={destination.opensAt}
+        closesAt={destination.closesAt}
+        windowClosed={getWindowStatus(destination) === "closed"}
         allocations={allocations}
         thresholds={thresholds}
         canEditThresholds={membership.isSuperAdmin}
