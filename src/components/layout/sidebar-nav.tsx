@@ -184,6 +184,7 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: "invites", href: "/admin/invites", icon: ICONS.invites, visibility: "guildAdmin", category: "manage" },
   { labelKey: "settings", href: "/admin/settings", icon: ICONS.settings, visibility: "guildAdmin", category: "manage" },
   { labelKey: "auditLog", href: "/admin/audit", icon: ICONS.scroll, visibility: "guildAdmin", category: "manage" },
+  { labelKey: "migrationTracker", href: "/admin/migration-tracker", icon: ICONS.scroll, visibility: "guildAdmin", category: "manage" },
   { labelKey: "adminHelp", href: "/admin/help", icon: ICONS.help, visibility: "guildAdmin", category: "manage" },
 
   // ---- Platform: site-wide super-admin ----

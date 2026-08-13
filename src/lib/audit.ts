@@ -65,7 +65,22 @@ export type AuditAction =
   // Global events (super-admin, guildId: null)
   | "global_event.create"
   | "global_event.update"
-  | "global_event.delete";
+  | "global_event.delete"
+  // Migration tracker (server-scoped, not guild-scoped — guildId: null)
+  | "migration.submit"
+  | "migration.edit"
+  | "migration.withdraw"
+  | "migration.accept"
+  | "migration.deny"
+  | "migration.waitlist"
+  | "migration.remove"
+  | "migration.officer.assign"
+  | "migration.officer.revoke"
+  | "migration.destination.reclassify"
+  | "migration.destination.allocations.update"
+  | "migration.destination.create"
+  | "migration.destination.dates.update"
+  | "migration.thresholds.update";
 
 export type AuditEntityType =
   | "event"
@@ -78,7 +93,10 @@ export type AuditEntityType =
   | "user"
   | "bot"
   | "event_template"
-  | "global_event";
+  | "global_event"
+  | "migration_application"
+  | "migration_destination"
+  | "migration_officer";
 
 export type AuditChange = Record<string, unknown>;
 

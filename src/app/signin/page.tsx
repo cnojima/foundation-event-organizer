@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
-import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Logo } from "@/components/logo";
 import { SignInProviderButtons } from "@/components/signin-provider-buttons";
 import { SignInCredentialsForm } from "@/components/signin-credentials-form";
+import { MigrationTrackerBanner } from "@/components/migration-tracker-banner";
 
 export const metadata = {
   title: "Sign in",
@@ -34,11 +34,13 @@ export default async function SignInPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-6 sm:py-8">
-      {/* Top bar matches the landing page: wordmark left, locale right. */}
-      <div className="mb-8 flex items-center justify-between gap-4">
+      {/* Wordmark. Locale switcher now lives in the shared TopBar so it's
+          uniform across every page instead of a page-local widget. */}
+      <div className="mb-8">
         <Logo variant="wordmark" />
-        <LocaleSwitcher signedIn={false} />
       </div>
+
+      <MigrationTrackerBanner />
 
       {/* Atmospheric hero — same radial-glow + hex-grid backdrop as the
           landing page, so the auth flow feels like the same surface. */}

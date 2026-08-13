@@ -67,6 +67,17 @@ export async function registerNode(): Promise<void> {
     console.error("[boot] event template seed failed:", err);
   }
 
+  // Seed migration-tracker reference data (power tier thresholds, the
+  // classification default-allocation table, and the MVP #1130 destination)
+  // if it isn't there yet. Idempotent — safe on every boot.
+  try {
+    const { ensureMigrationTrackerDefaults } = await import("@/lib/migration-tracker");
+    ensureMigrationTrackerDefaults();
+    console.log("[boot] migration tracker defaults ensured");
+  } catch (err) {
+    console.error("[boot] migration tracker seed failed:", err);
+  }
+
   const { startBot } = await import("@/bot/discord-bot");
   startBot();
 }

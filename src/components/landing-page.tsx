@@ -3,8 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { db } from "@/db";
 import { duelProposals, events, guilds, users } from "@/db/schema";
 import { and, eq, isNotNull, isNull, sql } from "drizzle-orm";
-import { LocaleSwitcher } from "@/components/locale-switcher";
 import { Logo } from "@/components/logo";
+import { MigrationTrackerBanner } from "@/components/migration-tracker-banner";
 import { FEEDBACK_REPO_URL, SUPPORT_DISCORD_URL } from "@/lib/feedback";
 
 // Public landing page for signed-out visitors. Mock screenshots are styled
@@ -51,11 +51,14 @@ export async function LandingPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-6 sm:py-8">
-      {/* ---- Top bar: wordmark left, locale switcher right ---- */}
-      <div className="mb-8 flex items-center justify-between gap-4">
+      {/* ---- Wordmark ---- Locale switcher now lives in the shared TopBar
+          (src/components/layout/top-bar.tsx) so it's uniform across every
+          page instead of a page-local widget. */}
+      <div className="mb-8">
         <Logo variant="wordmark" />
-        <LocaleSwitcher signedIn={false} />
       </div>
+
+      <MigrationTrackerBanner />
 
       {/* ---- Hero ----
           Atmospheric backdrop: a radial violet glow centered behind the

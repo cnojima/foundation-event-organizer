@@ -30,7 +30,7 @@ export async function TopBar({
       <div className="flex items-center gap-2">{leftSlot}</div>
       <div className="flex items-center gap-4">
       <ThemeToggle />
-      {user && <LocaleSwitcher variant="compact" />}
+      <LocaleSwitcher variant="compact" signedIn={!!user} />
       {user && <NotificationBell alerts={alerts} />}
 
       {user ? (
