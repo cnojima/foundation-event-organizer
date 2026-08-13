@@ -7,11 +7,11 @@ import { requireSignedInPage } from "@/lib/rbac";
 import { InGameNameForm } from "@/components/in-game-name-form";
 import { LeaveGuildButton } from "@/components/leave-guild-button";
 import { DeleteAccountButton } from "@/components/delete-account-button";
-import { LocaleSwitcher } from "@/components/locale-switcher";
 import { DuelSettingsForm } from "@/components/duel-settings-form";
 import { DiscordIdForm } from "@/components/discord-id-form";
 import { MatchNotificationsForm } from "@/components/match-notifications-form";
 import { PageHeader } from "@/components/page-header";
+import { FEATURE_FLAGS } from "@/lib/feature-flags";
 
 export const metadata = {
   title: "My Account",
@@ -74,22 +74,17 @@ export default async function MePage() {
         <InGameNameForm defaultValue={me.inGameName ?? ""} />
       </section>
 
-      <section>
-        <h2 className="mb-3 text-lg font-semibold">{t("language")}</h2>
-        <div className="rounded-lg border bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-          <LocaleSwitcher />
-        </div>
-      </section>
-
-      <section>
-        <h2 className="mb-3 text-lg font-semibold">{t("duels.heading")}</h2>
-        <DuelSettingsForm
-          defaultPowerTier={me.powerTier}
-          defaultDiscoverable={me.discoverableForDuels}
-          defaultDmEnabled={me.duelDmEnabled}
-          discordLinked={discordReachable}
-        />
-      </section>
+      {FEATURE_FLAGS.socialFeaturesEnabled && (
+        <section>
+          <h2 className="mb-3 text-lg font-semibold">{t("duels.heading")}</h2>
+          <DuelSettingsForm
+            defaultPowerTier={me.powerTier}
+            defaultDiscoverable={me.discoverableForDuels}
+            defaultDmEnabled={me.duelDmEnabled}
+            discordLinked={discordReachable}
+          />
+        </section>
+      )}
 
       <section>
         <h2 className="mb-3 text-lg font-semibold">Match notifications</h2>

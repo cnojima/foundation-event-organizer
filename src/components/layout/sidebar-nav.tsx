@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { FEATURE_FLAGS } from "@/lib/feature-flags";
 
 type Visibility =
   | "always"
@@ -20,6 +22,13 @@ type Category = "play" | "manage" | "platform" | "account";
 
 const CATEGORY_ORDER: Category[] = ["play", "manage", "platform", "account"];
 
+// Categories whose item lists collapse behind a toggleable header. "play" is
+// the primary, always-visible worklist and stays expanded. These start
+// collapsed and only open on click, or automatically if the active route
+// lives inside one (so navigating straight to e.g. /me doesn't strand the
+// highlighted item behind a closed header).
+const COLLAPSIBLE_CATEGORIES: Category[] = ["manage", "platform", "account"];
+
 type NavItem = {
   /** Translation key under `nav.*`. */
   labelKey: string;
@@ -27,6 +36,8 @@ type NavItem = {
   icon: React.ReactNode;
   visibility: Visibility;
   category: Category;
+  /** Gated on FEATURE_FLAGS.socialFeaturesEnabled (duels/scrimmages/leaderboard/findPlayers). */
+  socialFeature?: boolean;
 };
 
 const ICONS = {
@@ -153,10 +164,10 @@ const ICONS = {
 const NAV_ITEMS: NavItem[] = [
   // ---- Play: what you do as a member of a guild ----
   { labelKey: "events", href: "/", icon: ICONS.events, visibility: "signedInWithGuild", category: "play" },
-  { labelKey: "duels", href: "/duels", icon: ICONS.swords, visibility: "signedInWithGuild", category: "play" },
-  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin", category: "play" },
-  { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild", category: "play" },
-  { labelKey: "leaderboard", href: "/leaderboard", icon: ICONS.trophy, visibility: "signedInWithGuild", category: "play" },
+  { labelKey: "duels", href: "/duels", icon: ICONS.swords, visibility: "signedInWithGuild", category: "play", socialFeature: true },
+  { labelKey: "scrimmages", href: "/admin/scrimmages", icon: ICONS.swords, visibility: "guildAdmin", category: "play", socialFeature: true },
+  { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild", category: "play", socialFeature: true },
+  { labelKey: "leaderboard", href: "/leaderboard", icon: ICONS.trophy, visibility: "signedInWithGuild", category: "play", socialFeature: true },
   { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly", category: "play" },
   
   // ---- Manage: guild discovery (everyone) + guild-admin tools ----
@@ -166,7 +177,7 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: "setup", href: "/admin/setup", icon: ICONS.dashboard, visibility: "guildAdmin", category: "manage" },
   { labelKey: "templates", href: "/admin/templates", icon: ICONS.dashboard, visibility: "guildAdmin", category: "manage" },
   { labelKey: "browseGuilds", href: "/guilds", icon: ICONS.events, visibility: "signedIn", category: "manage" },
-  { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild", category: "manage" },
+  { labelKey: "scrimHistory", href: "/scrims", icon: ICONS.swords, visibility: "signedInWithGuild", category: "manage", socialFeature: true },
   { labelKey: "createGuild", href: "/guilds/new", icon: ICONS.dashboard, visibility: "guildless", category: "manage" },
   { labelKey: "players", href: "/admin/players", icon: ICONS.players, visibility: "guildAdmin", category: "manage" },
   { labelKey: "members", href: "/admin/members", icon: ICONS.members, visibility: "guildAdmin", category: "manage" },
@@ -241,12 +252,39 @@ function preservesImpersonation(href: string): boolean {
   );
 }
 
+function isItemActive(pathname: string, href: string): boolean {
+  return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function CategoryChevron({ open }: { open: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      className={`size-3 shrink-0 transition-transform ${open ? "" : "-rotate-90"}`}
+      aria-hidden
+    >
+      <path
+        d="M5 7.5l5 5 5-5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function SidebarNav(props: SidebarNavProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const impersonatingGuildId = searchParams.get("guildId");
   const t = useTranslations("nav");
-  const items = NAV_ITEMS.filter((item) => isVisible(item, props));
+  const items = NAV_ITEMS.filter(
+    (item) =>
+      isVisible(item, props) &&
+      (!item.socialFeature || FEATURE_FLAGS.socialFeaturesEnabled)
+  );
 
   // Bucket visible items by category, then walk CATEGORY_ORDER so the
   // sections render top-down in a stable order. Empty categories are
@@ -262,48 +300,74 @@ export function SidebarNav(props: SidebarNavProps) {
     grouped[item.category].push(item);
   }
 
+  const [openCategories, setOpenCategories] = useState<Partial<Record<Category, boolean>>>(
+    () => {
+      const initial: Partial<Record<Category, boolean>> = {};
+      for (const category of COLLAPSIBLE_CATEGORIES) {
+        initial[category] = grouped[category].some((item) =>
+          isItemActive(pathname, item.href)
+        );
+      }
+      return initial;
+    }
+  );
+
   return (
     <nav className="flex flex-col gap-4">
       {CATEGORY_ORDER.map((category) => {
         const categoryItems = grouped[category];
         if (categoryItems.length === 0) return null;
+        const collapsible = COLLAPSIBLE_CATEGORIES.includes(category);
+        const open = collapsible ? !!openCategories[category] : true;
         return (
           <div key={category} className="flex flex-col gap-1">
-            <p className="mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500">
-              {t(`category.${category}`)}
-            </p>
-            {categoryItems.map((item) => {
-              const active =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
-              const href =
-                impersonatingGuildId && preservesImpersonation(item.href)
-                  ? `${item.href}?guildId=${impersonatingGuildId}`
-                  : item.href;
-              return (
-                <Link
-                  key={item.href}
-                  href={href}
-                  className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
-                    active
-                      ? "bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-200"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100"
-                  }`}
-                >
-                  <span
-                    className={
+            {collapsible ? (
+              <button
+                type="button"
+                onClick={() =>
+                  setOpenCategories((prev) => ({ ...prev, [category]: !prev[category] }))
+                }
+                aria-expanded={open}
+                className="mb-1 flex items-center justify-between px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+              >
+                <span>{t(`category.${category}`)}</span>
+                <CategoryChevron open={open} />
+              </button>
+            ) : (
+              <p className="mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500">
+                {t(`category.${category}`)}
+              </p>
+            )}
+            {open &&
+              categoryItems.map((item) => {
+                const active = isItemActive(pathname, item.href);
+                const href =
+                  impersonatingGuildId && preservesImpersonation(item.href)
+                    ? `${item.href}?guildId=${impersonatingGuildId}`
+                    : item.href;
+                return (
+                  <Link
+                    key={item.href}
+                    href={href}
+                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
                       active
-                        ? "text-violet-600 dark:text-violet-300"
-                        : "text-gray-400 dark:text-gray-500"
-                    }
+                        ? "bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-200"
+                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100"
+                    }`}
                   >
-                    {item.icon}
-                  </span>
-                  <span className="uppercase">{t(item.labelKey)}</span>
-                </Link>
-              );
-            })}
+                    <span
+                      className={
+                        active
+                          ? "text-violet-600 dark:text-violet-300"
+                          : "text-gray-400 dark:text-gray-500"
+                      }
+                    >
+                      {item.icon}
+                    </span>
+                    <span className="uppercase">{t(item.labelKey)}</span>
+                  </Link>
+                );
+              })}
           </div>
         );
       })}

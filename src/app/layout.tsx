@@ -6,7 +6,6 @@ import "./globals.css";
 import { Sidebar } from "@/components/layout/sidebar";
 import { TopBar } from "@/components/layout/top-bar";
 import { Footer } from "@/components/layout/footer";
-import { AlphaBanner } from "@/components/layout/alpha-banner";
 import { MobileNav } from "@/components/layout/mobile-nav";
 import { auth } from "@/auth";
 import { db } from "@/db";
@@ -115,7 +114,6 @@ export default async function RootLayout({
                   gets a clean full-width canvas. */}
               {session?.user && <Sidebar {...sidebarProps} />}
               <div className="flex min-w-0 flex-1 flex-col">
-                <AlphaBanner />
                 <TopBar
                   leftSlot={session?.user ? <MobileNav {...sidebarProps} /> : null}
                   guildTag={guildTag}

@@ -61,11 +61,6 @@
     "signIn": "登入",
     "signOut": "登出"
   },
-  "alphaBanner": {
-    "tag": "阿尔法",
-    "message": "系统可能会出现故障。发现错误或有任何建议？请使用<feedbackLink>反馈</feedbackLink>页脚中的链接，或<githubLink>在 GitHub 上提交一个 issue</githubLink> 。",
-    "dismiss": "驳回 alpha 通知"
-  },
   "footer": {
     "tagline": "团结起来，共同回答。",
     "feedback": "反馈",
@@ -524,8 +519,7 @@
     "deleteExplanation": "永久删除您的帐户将移除您的用户记录、所有注册信息，并解除所有 Google/Discord 帐户的关联。您将无法恢复此帐户——再次登录将创建一个全新的空帐户。",
     "deleteButton": "删除我的帐户",
     "deleting": "正在删除…",
-    "deleteConfirm": "删除账号？这将使您从公会中移除，删除您的所有注册信息，并解除 Google/Discord 的关联。此操作无法撤销。",
-    "language": "语言"
+    "deleteConfirm": "删除账号？这将使您从公会中移除，删除您的所有注册信息，并解除 Google/Discord 的关联。此操作无法撤销。"
   },
   "errors": {
     "forbidden": "禁忌",

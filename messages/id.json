@@ -61,11 +61,6 @@
     "signIn": "Masuk",
     "signOut": "Keluar"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Beberapa hal mungkin rusak. Menemukan bug atau punya saran? Gunakan<feedbackLink> Masukan</feedbackLink> tautan di bagian bawah halaman, atau<githubLink> buka masalah di GitHub</githubLink> .",
-    "dismiss": "Abaikan pemberitahuan alpha"
-  },
   "footer": {
     "tagline": "BERSATULAH. JAWABLAH BERSAMA.",
     "feedback": "MASUKAN",
@@ -524,8 +519,7 @@
     "deleteExplanation": "Menghapus akun Anda secara permanen akan menghapus catatan pengguna Anda, semua pendaftaran Anda, dan memutuskan tautan akun Google/Discord apa pun. Anda tidak akan dapat memulihkannya — masuk kembali akan membuat akun baru yang kosong.",
     "deleteButton": "Hapus akun saya",
     "deleting": "Menghapus…",
-    "deleteConfirm": "Menghapus akun Anda? Ini akan menghapus Anda dari guild, menghapus semua pendaftaran Anda, dan memutuskan tautan Google/Discord. Tindakan ini tidak dapat dibatalkan.",
-    "language": "Bahasa"
+    "deleteConfirm": "Menghapus akun Anda? Ini akan menghapus Anda dari guild, menghapus semua pendaftaran Anda, dan memutuskan tautan Google/Discord. Tindakan ini tidak dapat dibatalkan."
   },
   "errors": {
     "forbidden": "Terlarang",

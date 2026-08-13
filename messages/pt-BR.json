@@ -61,11 +61,6 @@
     "signIn": "Entrar",
     "signOut": "Sair"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "As coisas podem dar errado. Encontrou um bug ou tem uma sugestão? Use o<feedbackLink> Opinião</feedbackLink> link no rodapé, ou<githubLink> Abra uma issue no GitHub</githubLink> .",
-    "dismiss": "Descartar notificação alfa"
-  },
   "footer": {
     "tagline": "UNAM-SE. RESPONDAMOS JUNTOS.",
     "feedback": "OPINIÃO",
@@ -524,8 +519,7 @@
     "deleteExplanation": "Excluir sua conta remove permanentemente seu registro de usuário, todos os seus cadastros e desvincula quaisquer contas do Google/Discord. Você não poderá recuperar isso — fazer login novamente criará uma nova conta vazia.",
     "deleteButton": "Excluir minha conta",
     "deleting": "Excluindo…",
-    "deleteConfirm": "Excluir sua conta? Isso remove você da sua guilda, exclui todos os seus cadastros e desvincula sua conta do Google/Discord. Essa ação é irreversível.",
-    "language": "Linguagem"
+    "deleteConfirm": "Excluir sua conta? Isso remove você da sua guilda, exclui todos os seus cadastros e desvincula sua conta do Google/Discord. Essa ação é irreversível."
   },
   "errors": {
     "forbidden": "Proibido",

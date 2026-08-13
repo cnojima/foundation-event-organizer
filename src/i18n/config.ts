@@ -50,6 +50,32 @@ export const localeLabels: Record<Locale, string> = {
   nb: "Norsk bokmål",
 };
 
+// ISO 3166-1 alpha-2 country code used to pick a flag icon for each locale
+// (public/flags/<code>.svg, sourced from the flag-icons project). Language
+// and country aren't the same axis — e.g. `uk` here is Ukrainian, not the
+// United Kingdom — so this is a deliberate per-locale choice, not a derived
+// one.
+export const localeFlagCountry: Record<Locale, string> = {
+  en: "us",
+  fr: "fr",
+  de: "de",
+  ru: "ru",
+  uk: "ua",
+  "zh-CN": "cn",
+  ko: "kr",
+  ja: "jp",
+  es: "es",
+  "pt-BR": "br",
+  it: "it",
+  id: "id",
+  nl: "nl",
+  tr: "tr",
+  pl: "pl",
+  vi: "vn",
+  sv: "se",
+  nb: "no",
+};
+
 export function isSupportedLocale(value: unknown): value is Locale {
   return typeof value === "string" && (locales as readonly string[]).includes(value);
 }

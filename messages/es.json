@@ -61,11 +61,6 @@
     "signIn": "Iniciar sesión",
     "signOut": "Desconectar"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Las cosas pueden fallar. ¿Encontraste un error o tienes alguna sugerencia? Usa el<feedbackLink> Comentario</feedbackLink> enlace en el pie de página, o<githubLink> Abrir un problema en GitHub</githubLink> .",
-    "dismiss": "Descartar aviso alfa"
-  },
   "footer": {
     "tagline": "¡UNÁMONOS! ¡RESPONDAMOS JUNTOS!",
     "feedback": "COMENTARIO",
@@ -524,8 +519,7 @@
     "deleteExplanation": "Eliminar tu cuenta de forma permanente borra tu registro de usuario, todos tus registros y desvincula cualquier cuenta de Google/Discord. No podrás recuperarla; al iniciar sesión de nuevo se creará una cuenta nueva y vacía.",
     "deleteButton": "Eliminar mi cuenta",
     "deleting": "Eliminando…",
-    "deleteConfirm": "¿Quieres eliminar tu cuenta? Esto te expulsará de tu gremio, borrará todos tus registros y desvinculará tu cuenta de Google/Discord. Esta acción es irreversible.",
-    "language": "Idioma"
+    "deleteConfirm": "¿Quieres eliminar tu cuenta? Esto te expulsará de tu gremio, borrará todos tus registros y desvinculará tu cuenta de Google/Discord. Esta acción es irreversible."
   },
   "errors": {
     "forbidden": "Prohibido",

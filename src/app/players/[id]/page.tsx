@@ -17,6 +17,7 @@ import { UserAvatar } from "@/components/user-avatar";
 import { displayName } from "@/lib/display";
 import { DateTime } from "@/components/date-time";
 import { duelSideFor, viewerOutcome } from "@/lib/duels";
+import { FEATURE_FLAGS } from "@/lib/feature-flags";
 import { WAITLIST_ROLE } from "@/lib/waitlist";
 
 const RECENT_EVENTS_LIMIT = 10;
@@ -203,7 +204,10 @@ export default async function PlayerProfilePage({
     profile.guildId !== null &&
     profile.guildId === membership.guildId;
   const canChallenge =
-    !isSelf && !sameGuild && profile.discoverableForDuels;
+    FEATURE_FLAGS.socialFeaturesEnabled &&
+    !isSelf &&
+    !sameGuild &&
+    profile.discoverableForDuels;
 
   // Match-attendance section visibility: same-guild members (and self /
   // super-admin) see signup + attendance aggregates. Cross-guild viewers

@@ -7,6 +7,7 @@ import { displayName } from "@/lib/display";
 import { NotificationBell } from "@/components/notification-bell";
 import { computeUserAlerts } from "@/lib/user-alerts";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LocaleSwitcher } from "@/components/locale-switcher";
 
 export async function TopBar({
   leftSlot,
@@ -29,6 +30,7 @@ export async function TopBar({
       <div className="flex items-center gap-2">{leftSlot}</div>
       <div className="flex items-center gap-4">
       <ThemeToggle />
+      {user && <LocaleSwitcher variant="compact" />}
       {user && <NotificationBell alerts={alerts} />}
 
       {user ? (

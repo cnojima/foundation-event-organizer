@@ -6,6 +6,7 @@ import {
   HelpLayout,
   type HelpSectionMeta,
 } from "@/components/help-layout";
+import { FEATURE_FLAGS } from "@/lib/feature-flags";
 
 export const metadata = {
   title: "Help",
@@ -26,8 +27,12 @@ export default async function HelpPage() {
     { id: "event-kinds", title: t("sections.eventKinds") },
     { id: "signup", title: t("sections.signup") },
     { id: "status", title: t("sections.status") },
-    { id: "scrims", title: t("sections.scrims") },
-    { id: "duels", title: t("sections.duels") },
+    ...(FEATURE_FLAGS.socialFeaturesEnabled
+      ? [
+          { id: "scrims", title: t("sections.scrims") },
+          { id: "duels", title: t("sections.duels") },
+        ]
+      : []),
     { id: "reminders", title: t("sections.reminders") },
     { id: "slash-commands", title: t("sections.slashCommands") },
     { id: "closed", title: t("sections.closed") },
@@ -89,66 +94,70 @@ export default async function HelpPage() {
         </ul>
       </CollapsibleSection>
 
-      <CollapsibleSection id="scrims" title={t("sections.scrims")}>
-        <p>{t("scrims.intro")}</p>
-        <ul className="list-disc space-y-2 pl-5">
-          <li>{t("scrims.oneSquad")}</li>
-          <li>{t("scrims.opponent")}</li>
-          <li>{t("scrims.result")}</li>
-          <li>
-            {t.rich("scrims.history", {
-              scrimsLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline dark:text-violet-300" href="/scrims">
-                  {c}
-                </Link>
-              ),
-            })}
-          </li>
-        </ul>
-        <p className="text-sm text-gray-600 dark:text-gray-400">{t("scrims.note")}</p>
-      </CollapsibleSection>
+      {FEATURE_FLAGS.socialFeaturesEnabled && (
+        <>
+          <CollapsibleSection id="scrims" title={t("sections.scrims")}>
+            <p>{t("scrims.intro")}</p>
+            <ul className="list-disc space-y-2 pl-5">
+              <li>{t("scrims.oneSquad")}</li>
+              <li>{t("scrims.opponent")}</li>
+              <li>{t("scrims.result")}</li>
+              <li>
+                {t.rich("scrims.history", {
+                  scrimsLink: (c: Chunks) => (
+                    <Link className="text-violet-700 underline dark:text-violet-300" href="/scrims">
+                      {c}
+                    </Link>
+                  ),
+                })}
+              </li>
+            </ul>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{t("scrims.note")}</p>
+          </CollapsibleSection>
 
-      <CollapsibleSection id="duels" title={t("sections.duels")}>
-        <p>{t("duels.intro")}</p>
-        <ul className="list-disc space-y-2 pl-5">
-          <li>
-            {t.rich("duels.find", {
-              playersLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline dark:text-violet-300" href="/players">
-                  {c}
-                </Link>
-              ),
-            })}
-          </li>
-          <li>{t("duels.powerTier")}</li>
-          <li>{t("duels.challenge")}</li>
-          <li>{t("duels.respond")}</li>
-          <li>{t("duels.negotiate")}</li>
-          <li>{t("duels.result")}</li>
-          <li>{t("duels.rating")}</li>
-          <li>
-            {t.rich("duels.leaderboard", {
-              leaderboardLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline dark:text-violet-300" href="/leaderboard">
-                  {c}
-                </Link>
-              ),
-            })}
-          </li>
-          <li>{t("duels.reputation")}</li>
-          <li>
-            {t.rich("duels.history", {
-              duelsLink: (c: Chunks) => (
-                <Link className="text-violet-700 underline dark:text-violet-300" href="/duels">
-                  {c}
-                </Link>
-              ),
-            })}
-          </li>
-          <li>{t("duels.discordDm")}</li>
-          <li>{t("duels.privacy")}</li>
-        </ul>
-      </CollapsibleSection>
+          <CollapsibleSection id="duels" title={t("sections.duels")}>
+            <p>{t("duels.intro")}</p>
+            <ul className="list-disc space-y-2 pl-5">
+              <li>
+                {t.rich("duels.find", {
+                  playersLink: (c: Chunks) => (
+                    <Link className="text-violet-700 underline dark:text-violet-300" href="/players">
+                      {c}
+                    </Link>
+                  ),
+                })}
+              </li>
+              <li>{t("duels.powerTier")}</li>
+              <li>{t("duels.challenge")}</li>
+              <li>{t("duels.respond")}</li>
+              <li>{t("duels.negotiate")}</li>
+              <li>{t("duels.result")}</li>
+              <li>{t("duels.rating")}</li>
+              <li>
+                {t.rich("duels.leaderboard", {
+                  leaderboardLink: (c: Chunks) => (
+                    <Link className="text-violet-700 underline dark:text-violet-300" href="/leaderboard">
+                      {c}
+                    </Link>
+                  ),
+                })}
+              </li>
+              <li>{t("duels.reputation")}</li>
+              <li>
+                {t.rich("duels.history", {
+                  duelsLink: (c: Chunks) => (
+                    <Link className="text-violet-700 underline dark:text-violet-300" href="/duels">
+                      {c}
+                    </Link>
+                  ),
+                })}
+              </li>
+              <li>{t("duels.discordDm")}</li>
+              <li>{t("duels.privacy")}</li>
+            </ul>
+          </CollapsibleSection>
+        </>
+      )}
 
       <CollapsibleSection id="reminders" title={t("sections.reminders")}>
         <ul className="list-disc space-y-2 pl-5">

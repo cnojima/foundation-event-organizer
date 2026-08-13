@@ -61,11 +61,6 @@
     "signIn": "Anmelden",
     "signOut": "Abmelden"
   },
-  "alphaBanner": {
-    "tag": "Alpha",
-    "message": "Es kann zu Problemen kommen. Haben Sie einen Fehler gefunden oder einen Verbesserungsvorschlag? Nutzen Sie die<feedbackLink> Rückmeldung</feedbackLink> Link in der Fußzeile, oder<githubLink> Eröffne ein Problem auf GitHub.</githubLink> Die",
-    "dismiss": "Alpha-Benachrichtigung verwerfen"
-  },
   "footer": {
     "tagline": "KLAPPT EUCH ZUSAMMEN. ANTWORTET GEMEINSAM.",
     "feedback": "RÜCKMELDUNG",
@@ -524,8 +519,7 @@
     "deleteExplanation": "Durch das Löschen deines Kontos werden deine Benutzerdaten, alle deine Anmeldungen und alle Verknüpfungen zu Google- und Discord-Konten endgültig entfernt. Diese Daten können nicht wiederhergestellt werden – eine erneute Anmeldung erstellt ein neues, leeres Konto.",
     "deleteButton": "Mein Konto löschen",
     "deleting": "Löschen…",
-    "deleteConfirm": "Dein Konto löschen? Dadurch wirst du aus deiner Gilde entfernt, alle deine Anmeldungen werden gelöscht und die Verknüpfung mit Google/Discord wird aufgehoben. Dies kann nicht rückgängig gemacht werden.",
-    "language": "Sprache"
+    "deleteConfirm": "Dein Konto löschen? Dadurch wirst du aus deiner Gilde entfernt, alle deine Anmeldungen werden gelöscht und die Verknüpfung mit Google/Discord wird aufgehoben. Dies kann nicht rückgängig gemacht werden."
   },
   "errors": {
     "forbidden": "Verboten",

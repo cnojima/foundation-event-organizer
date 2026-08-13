@@ -48,8 +48,8 @@ const DEFAULT_TEMPLATES = [
     leadershipSlots: 3,
     signupOpensWeekday: 1,
     signupOpensTimeUtc: "00:00",
-    signupClosesWeekday: 4,
-    signupClosesTimeUtc: "12:00",
+    signupClosesWeekday: 5,
+    signupClosesTimeUtc: "18:00",
   },
   {
     templateName: "Arms Race - Stage A",

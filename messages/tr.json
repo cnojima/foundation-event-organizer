@@ -61,11 +61,6 @@
     "signIn": "Giriş Yap",
     "signOut": "Oturumu Kapat"
   },
-  "alphaBanner": {
-    "tag": "Alfa",
-    "message": "Bazı şeyler bozulabilir. Bir hata mı buldunuz veya bir öneriniz mi var? Şunu kullanın:<feedbackLink> Geri bildirim</feedbackLink> altbilgideki bağlantı veya<githubLink> GitHub'da bir sorun bildirin.</githubLink> .",
-    "dismiss": "Alfa bildirimini kapat"
-  },
   "footer": {
     "tagline": "BİRLİKTE HAREKETE GEÇELİM. BİRLİKTE CEVAP VERELİM.",
     "feedback": "GERİ BİLDİRİM",
@@ -524,8 +519,7 @@
     "deleteExplanation": "Hesabınızı silmek, kullanıcı kaydınızı, tüm kayıtlarınızı kalıcı olarak siler ve Google/Discord hesaplarınızla olan bağlantınızı keser. Bunu geri kurtaramazsınız; tekrar giriş yapmanız yeni, boş bir hesap oluşturacaktır.",
     "deleteButton": "Hesabımı sil",
     "deleting": "Siliniyor…",
-    "deleteConfirm": "Hesabınızı silmek mi istiyorsunuz? Bu işlem sizi loncanızdan çıkarır, tüm kayıtlarınızı siler ve Google/Discord bağlantınızı keser. Bu işlem geri alınamaz.",
-    "language": "Dil"
+    "deleteConfirm": "Hesabınızı silmek mi istiyorsunuz? Bu işlem sizi loncanızdan çıkarır, tüm kayıtlarınızı siler ve Google/Discord bağlantınızı keser. Bu işlem geri alınamaz."
   },
   "errors": {
     "forbidden": "Yasaklı",

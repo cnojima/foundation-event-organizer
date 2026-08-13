@@ -61,11 +61,6 @@
     "signIn": "Se connecter",
     "signOut": "Se déconnecter"
   },
-  "alphaBanner": {
-    "tag": "Alpha",
-    "message": "Des problèmes peuvent survenir. Vous avez trouvé un bug ou une suggestion ? Utilisez le<feedbackLink> Retour</feedbackLink> lien dans le pied de page, ou<githubLink> ouvrir un ticket sur GitHub</githubLink> .",
-    "dismiss": "Avis de rejet alpha"
-  },
   "footer": {
     "tagline": "RASSEMBLONS-NOUS. RÉPONDONS ENSEMBLE.",
     "feedback": "RETOUR",
@@ -524,8 +519,7 @@
     "deleteExplanation": "La suppression de votre compte efface définitivement votre profil utilisateur, tous vos abonnements et dissocie vos comptes Google/Discord. Vous ne pourrez pas récupérer ces données : vous reconnecter créera un nouveau compte vide.",
     "deleteButton": "Supprimer mon compte",
     "deleting": "Suppression…",
-    "deleteConfirm": "Supprimer votre compte ? Cela vous retire de votre guilde, supprime tous vos comptes et dissocie votre compte Google/Discord. Cette action est irréversible.",
-    "language": "Langue"
+    "deleteConfirm": "Supprimer votre compte ? Cela vous retire de votre guilde, supprime tous vos comptes et dissocie votre compte Google/Discord. Cette action est irréversible."
   },
   "errors": {
     "forbidden": "Interdit",
