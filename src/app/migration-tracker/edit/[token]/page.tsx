@@ -54,6 +54,8 @@ export default async function MigrationTrackerEditPage({
             playerName: application.playerName,
             sourceServer: application.sourceServer,
             power: application.power,
+            desiredGuild: application.desiredGuild,
+            gameUid: application.gameUid,
             contact: application.contact,
             tier: application.tier,
             status: application.status,

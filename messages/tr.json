@@ -1007,6 +1007,7 @@
     "powerLabel": "Güç *",
     "powerPlaceholder": "örneğin 95.000.000",
     "powerHelp": "Bu numara üzerinden kademeniz otomatik olarak belirlenir.",
+    "gameUidLabel": "Oyun UID'si",
     "contactLabel": "Temas etmek",
     "contactPlaceholder": "Discord kullanıcı adı",
     "contactHelp": "Polis memurlarının size soru sormasına yardımcı olur.",
@@ -1020,7 +1021,10 @@
     "saveLinkHeading": "Bu bağlantıyı kaydedin, bir daha görmeyeceksiniz.",
     "saveLinkBody": "Başvurunuzu düzenlemek veya daha sonra geri çekmek için bunu kullanın. Hesap yok, bu nedenle geri dönmenin tek yolu bu bağlantı.",
     "copyLink": "Bağlantıyı kopyala",
-    "copied": "Kopyalandı!"
+    "copied": "Kopyalandı!",
+    "desiredGuildLabel": "Arzu Edilen Lonca",
+    "desiredGuildPlaceholder": "örneğin HUKUK",
+    "gameUidPlaceholder": "örneğin 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Başvurunuz",
@@ -1037,6 +1041,8 @@
     "sourceServerLabel": "Kaynak sunucu",
     "powerLabel": "Güç",
     "powerHelp": "Bunu değiştirmek, kademenizi yeniden belirler ve bekleme listesine alınmanıza veya listeden çıkarılmanıza neden olabilir.",
+    "desiredGuildLabel": "İstenen lonca",
+    "gameUidLabel": "Oyun UID'si",
     "contactLabel": "Temas etmek",
     "saveButton": "Değişiklikleri kaydet",
     "withdrawButton": "Başvuruyu geri çekme",
@@ -1065,9 +1071,13 @@
     "colSourceServer": "Kaynak sunucu",
     "colPower": "Güç",
     "colTier": "Aşama",
+    "colDesiredGuild": "İstenen lonca",
+    "colGameUid": "Oyun UID'si",
     "colStatus": "Durum",
     "colApplied": "Uygulandı",
     "colActions": "Eylemler",
+    "desiredGuildPlaceholder": "İstenen lonca",
+    "gameUidPlaceholder": "Oyun UID'si",
     "waitlistHeading": "Bekleme listesi",
     "empty": "Bekleyen başvuru bulunmamaktadır.",
     "emptyRoster": "Bu dönem için herhangi bir başvuru yapılmamıştır.",
@@ -1088,8 +1098,6 @@
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",
     "pasteLabel": "CSV veya TSV verilerini yapıştırın.",
-    "pastePlaceholder": "oyuncuAdı kaynakSunucu güç iletişim Örnek Ad Sunucusu 42 95000000 @örnek",
-    "pasteHint": "İlk satır sütun başlıkları olmalıdır. Doğrudan bir elektronik tablodan kopyala-yapıştır yapın — virgül ve sekme karakterleri desteklenir. Tanınan başlıklar: Oyuncu/Ad/IGN, Kaynak Sunucu/Origin, Güç, İletişim/Discord (isteğe bağlı).",
     "windowNotOpen": "Bu geçiş penceresi açık değil, bu nedenle içe aktarılan satırlar henüz kabul edilemiyor.",
     "missingColumns": "Gerekli sütunlar bulunamadı: {fields} Bu sütunları içeren bir başlık satırı ekleyin ve tekrar yapıştırın.",
     "summary": "{valid} İçe aktarılmaya hazır satır(lar), {invalid} Hata içeren kısımlar atlanacaktır.",
@@ -1098,11 +1106,15 @@
     "colPlayer": "Oyuncu",
     "colSourceServer": "Kaynak sunucu",
     "colPower": "Güç",
+    "colDesiredGuild": "İstenen lonca",
+    "colGameUid": "Oyun UID'si",
     "colContact": "Temas etmek",
     "colResult": "Sonuç",
     "resultPending": "Hazır",
     "resultImported": "İçe aktarıldı ( {status} )",
-    "errorGeneric": "Bir şeyler ters gitti."
+    "errorGeneric": "Bir şeyler ters gitti.",
+    "pastePlaceholder": "oyuncuAdı kaynakSunucu güç istenenLonca oyunUID iletişim Örnek Ad Sunucusu 42 95000000 Vakıf 123456789 @example",
+    "pasteHint": "İlk satır sütun başlıkları olmalıdır. Doğrudan bir elektronik tablodan kopyala-yapıştır yapın — virgül ve sekme karakterleri desteklenir. Tanınan başlıklar: Oyuncu/Ad/IGN, Kaynak Sunucu/Köken, Güç, İstenen Lonca (isteğe bağlı), Oyun UID'si (isteğe bağlı), İletişim/Discord (isteğe bağlı)."
   },
   "migrationTrackerOfficers": {
     "title": "Sunucu # {serverNumber} — Memurlar",

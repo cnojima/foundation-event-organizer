@@ -1006,6 +1006,7 @@
     "powerLabel": "Quyền lực *",
     "powerPlaceholder": "ví dụ 95.000.000",
     "powerHelp": "Cấp bậc của bạn được xác định tự động dựa trên con số này.",
+    "gameUidLabel": "Mã định danh trò chơi (Game UID)",
     "contactLabel": "Liên hệ",
     "contactPlaceholder": "Tên tài khoản Discord",
     "contactHelp": "Giúp các sĩ quan liên lạc với bạn khi có thắc mắc.",
@@ -1019,7 +1020,10 @@
     "saveLinkHeading": "Hãy lưu lại đường dẫn này — bạn sẽ không thấy nó nữa.",
     "saveLinkBody": "Hãy sử dụng liên kết này để chỉnh sửa đơn đăng ký hoặc rút đơn sau này. Bạn không có tài khoản, vì vậy liên kết này là cách duy nhất để đăng nhập lại.",
     "copyLink": "Sao chép liên kết",
-    "copied": "Đã sao chép!"
+    "copied": "Đã sao chép!",
+    "desiredGuildLabel": "Hội mong muốn",
+    "desiredGuildPlaceholder": "ví dụ LUẬT",
+    "gameUidPlaceholder": "ví dụ 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Đơn đăng ký của bạn",
@@ -1036,6 +1040,8 @@
     "sourceServerLabel": "Máy chủ nguồn",
     "powerLabel": "Quyền lực",
     "powerHelp": "Việc thay đổi này sẽ xác định lại cấp bậc của bạn và có thể đưa bạn vào hoặc ra khỏi danh sách chờ.",
+    "desiredGuildLabel": "Hội nhóm mong muốn",
+    "gameUidLabel": "Mã định danh trò chơi (Game UID)",
     "contactLabel": "Liên hệ",
     "saveButton": "Lưu thay đổi",
     "withdrawButton": "Rút đơn đăng ký",
@@ -1064,9 +1070,13 @@
     "colSourceServer": "Máy chủ nguồn",
     "colPower": "Quyền lực",
     "colTier": "Cấp độ",
+    "colDesiredGuild": "Hội nhóm mong muốn",
+    "colGameUid": "Mã định danh trò chơi (Game UID)",
     "colStatus": "Trạng thái",
     "colApplied": "Đã áp dụng",
     "colActions": "Hành động",
+    "desiredGuildPlaceholder": "Hội nhóm mong muốn",
+    "gameUidPlaceholder": "Mã định danh trò chơi (Game UID)",
     "waitlistHeading": "Danh sách chờ",
     "empty": "Hiện không có đơn đăng ký nào đang chờ xử lý.",
     "emptyRoster": "Không có đơn đăng ký nào được nộp cho đợt này.",
@@ -1087,8 +1097,6 @@
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",
     "pasteLabel": "Dán dữ liệu CSV hoặc TSV",
-    "pastePlaceholder": "playerName sourceServer power contact Example Name Server 42 95000000 @example",
-    "pasteHint": "Hàng đầu tiên phải là tiêu đề cột. Sao chép và dán trực tiếp từ bảng tính — cả dấu phẩy và dấu tab đều được hỗ trợ. Các tiêu đề được nhận dạng: Người chơi/Tên/Tên nhân vật trong game, Máy chủ nguồn/Nguồn gốc, Sức mạnh, Liên hệ/Discord (tùy chọn).",
     "windowNotOpen": "Cửa sổ chuyển đổi này chưa mở, vì vậy các hàng đã nhập chưa thể được chấp nhận.",
     "missingColumns": "Không tìm thấy các cột bắt buộc: {fields} Thêm hàng tiêu đề với các cột này và dán lại.",
     "summary": "{valid} Hàng (các hàng) sẵn sàng để nhập, {invalid} với những lỗi sẽ được bỏ qua.",
@@ -1097,11 +1105,15 @@
     "colPlayer": "Người chơi",
     "colSourceServer": "Máy chủ nguồn",
     "colPower": "Quyền lực",
+    "colDesiredGuild": "Hội nhóm mong muốn",
+    "colGameUid": "Mã định danh trò chơi (Game UID)",
     "colContact": "Liên hệ",
     "colResult": "Kết quả",
     "resultPending": "Sẵn sàng",
     "resultImported": "Đã nhập ( {status} )",
-    "errorGeneric": "Đã xảy ra lỗi."
+    "errorGeneric": "Đã xảy ra lỗi.",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Hàng đầu tiên phải là tiêu đề cột. Sao chép và dán trực tiếp từ bảng tính — cả dấu phẩy và dấu tab đều được hỗ trợ. Các tiêu đề được nhận dạng: Người chơi/Tên/Tên nhân vật trong game, Máy chủ nguồn/Nguồn gốc, Sức mạnh, Bang hội mong muốn (tùy chọn), UID trò chơi (tùy chọn), Liên hệ/Discord (tùy chọn)."
   },
   "migrationTrackerOfficers": {
     "title": "Máy chủ # {serverNumber} — Các sĩ quan",

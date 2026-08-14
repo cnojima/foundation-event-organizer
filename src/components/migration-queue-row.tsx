@@ -9,6 +9,8 @@ type QueueApplication = {
   playerName: string;
   sourceServer: string;
   power: number;
+  desiredGuild: string | null;
+  gameUid: string | null;
   contact: string | null;
   createdAt: string;
 };
@@ -28,6 +30,26 @@ export function MigrationQueueRow({
   const [submitting, setSubmitting] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmRemove, setConfirmRemove] = useState(false);
+  const [desiredGuild, setDesiredGuild] = useState(application.desiredGuild ?? "");
+  const [gameUid, setGameUid] = useState(application.gameUid ?? "");
+
+  async function saveField(field: "desiredGuild" | "gameUid", value: string) {
+    const trimmed = value.trim() || null;
+    const original = (field === "gameUid" ? application.gameUid : application.desiredGuild) ?? null;
+    if (trimmed === original) return;
+    setError(null);
+    const res = await fetch(`/api/admin/migration-tracker/applications/${application.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ [field]: trimmed }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setError(data?.error ?? t("errorGeneric"));
+      return;
+    }
+    router.refresh();
+  }
 
   async function act(action: "accept" | "deny" | "waitlist" | "remove") {
     setError(null);
@@ -55,6 +77,26 @@ export function MigrationQueueRow({
               ({application.contact})
             </span>
           )}
+          <div className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
+            <input
+              type="text"
+              maxLength={60}
+              placeholder={t("desiredGuildPlaceholder")}
+              value={desiredGuild}
+              onChange={(e) => setDesiredGuild(e.target.value)}
+              onBlur={(e) => saveField("desiredGuild", e.target.value)}
+              className="w-28 rounded border border-transparent bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:text-gray-400 dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800"
+            />
+            <input
+              type="text"
+              maxLength={60}
+              placeholder={t("gameUidPlaceholder")}
+              value={gameUid}
+              onChange={(e) => setGameUid(e.target.value)}
+              onBlur={(e) => saveField("gameUid", e.target.value)}
+              className="w-28 rounded border border-transparent bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:text-gray-400 dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800"
+            />
+          </div>
         </td>
         <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{application.sourceServer}</td>
         <td className="px-3 py-2 text-gray-600 dark:text-gray-400">

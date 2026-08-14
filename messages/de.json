@@ -1008,6 +1008,7 @@
     "powerLabel": "Leistung *",
     "powerPlaceholder": "z. B. 95.000.000",
     "powerHelp": "Ihr Tarif wird automatisch anhand dieser Zahl ermittelt.",
+    "gameUidLabel": "Spiel-UID",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Discord-Handle",
     "contactHelp": "Hilft den Beamten, Sie bei Fragen zu erreichen.",
@@ -1021,7 +1022,10 @@
     "saveLinkHeading": "Speichern Sie diesen Link – Sie werden ihn nicht wiedersehen.",
     "saveLinkBody": "Nutzen Sie diesen Link, um Ihre Bewerbung zu bearbeiten oder später zurückzuziehen. Da kein Konto vorhanden ist, ist dies der einzige Weg zurück.",
     "copyLink": "Link kopieren",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "desiredGuildLabel": "Gewünschte Gilde",
+    "desiredGuildPlaceholder": "z.B. GESETZ",
+    "gameUidPlaceholder": "z. B. 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Ihre Bewerbung",
@@ -1038,6 +1042,8 @@
     "sourceServerLabel": "Quellserver",
     "powerLabel": "Leistung",
     "powerHelp": "Eine Änderung dieser Einstellung führt zu einer Neuberechnung Ihres Tarifs und kann dazu führen, dass Sie auf die Warteliste gesetzt oder von ihr entfernt werden.",
+    "desiredGuildLabel": "Gewünschte Gilde",
+    "gameUidLabel": "Spiel-UID",
     "contactLabel": "Kontakt",
     "saveButton": "Änderungen speichern",
     "withdrawButton": "Antrag zurückziehen",
@@ -1066,9 +1072,13 @@
     "colSourceServer": "Quellserver",
     "colPower": "Leistung",
     "colTier": "Stufe",
+    "colDesiredGuild": "Gewünschte Gilde",
+    "colGameUid": "Spiel-UID",
     "colStatus": "Status",
     "colApplied": "Angewandt",
     "colActions": "Aktionen",
+    "desiredGuildPlaceholder": "Gewünschte Gilde",
+    "gameUidPlaceholder": "Spiel-UID",
     "waitlistHeading": "Warteliste",
     "empty": "Keine anhängigen Anträge.",
     "emptyRoster": "Für diesen Zeitraum wurden keine Anträge eingereicht.",
@@ -1089,8 +1099,6 @@
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importanträge",
     "pasteLabel": "CSV- oder TSV-Daten einfügen",
-    "pastePlaceholder": "Spielername Quellserver Stromkontakt Beispiel Name Server 42 95000000 @example",
-    "pasteHint": "Die erste Zeile muss die Spaltenüberschriften enthalten. Kopieren Sie die Spaltenüberschriften direkt aus einer Tabellenkalkulation – Kommas und Tabulatoren werden unterstützt. Erkannte Überschriften: Spieler/Name/IGN, Quellserver/Herkunft, Stärke, Kontakt/Discord (optional).",
     "windowNotOpen": "Das Migrationsfenster ist noch nicht geöffnet, daher können importierte Zeilen noch nicht zugelassen werden.",
     "missingColumns": "Die erforderlichen Spalten konnten nicht gefunden werden: {fields} Fügen Sie eine Kopfzeile mit diesen Spalten hinzu und fügen Sie die Datei erneut ein.",
     "summary": "{valid} Zeile(n) zum Import bereit, {invalid} mit Fehlern, die übersprungen werden.",
@@ -1099,11 +1107,15 @@
     "colPlayer": "Spieler",
     "colSourceServer": "Quellserver",
     "colPower": "Leistung",
+    "colDesiredGuild": "Gewünschte Gilde",
+    "colGameUid": "Spiel-UID",
     "colContact": "Kontakt",
     "colResult": "Ergebnis",
     "resultPending": "Bereit",
     "resultImported": "Importiert ( {status} )",
-    "errorGeneric": "Etwas ist schiefgelaufen."
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "pastePlaceholder": "Spielername Quellserver Stärke gewünschte Gilde Spiel-UID Kontakt Beispiel Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Die erste Zeile muss die Spaltenüberschriften enthalten. Kopieren Sie die Spaltenüberschriften direkt aus einer Tabellenkalkulation – Kommas und Tabulatoren werden unterstützt. Erkannte Spaltenüberschriften: Spielername/IGN, Quellserver/Herkunft, Stärke, Gewünschte Gilde (optional), Spiel-UID (optional), Kontakt/Discord (optional)."
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Beamte",

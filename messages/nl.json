@@ -1004,6 +1004,7 @@
     "powerLabel": "Stroom *",
     "powerPlaceholder": "bijv. 95.000.000",
     "powerHelp": "Uw categorie wordt automatisch bepaald aan de hand van dit nummer.",
+    "gameUidLabel": "Spel-UID",
     "contactLabel": "Contact",
     "contactPlaceholder": "Discord-gebruikersnaam",
     "contactHelp": "Helpt agenten om contact met u op te nemen als ze vragen hebben.",
@@ -1017,7 +1018,10 @@
     "saveLinkHeading": "Bewaar deze link — je zult hem niet meer terugzien.",
     "saveLinkBody": "Gebruik deze link om je aanvraag te bewerken of later in te trekken. Er is geen account, dus deze link is de enige manier om weer in te loggen.",
     "copyLink": "Kopieer link",
-    "copied": "Gekopieerd!"
+    "copied": "Gekopieerd!",
+    "desiredGuildLabel": "Gewenste Gilde",
+    "desiredGuildPlaceholder": "bijv. WET",
+    "gameUidPlaceholder": "bijv. 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Uw aanvraag",
@@ -1034,6 +1038,8 @@
     "sourceServerLabel": "Bronserver",
     "powerLabel": "Stroom",
     "powerHelp": "Als je dit wijzigt, wordt je status opnieuw berekend en kun je wel of niet op de wachtlijst komen te staan.",
+    "desiredGuildLabel": "Gewenste gilde",
+    "gameUidLabel": "Spel-UID",
     "contactLabel": "Contact",
     "saveButton": "Wijzigingen opslaan",
     "withdrawButton": "Aanvraag intrekken",
@@ -1062,9 +1068,13 @@
     "colSourceServer": "Bronserver",
     "colPower": "Stroom",
     "colTier": "Laag",
+    "colDesiredGuild": "Gewenste gilde",
+    "colGameUid": "Spel-UID",
     "colStatus": "Status",
     "colApplied": "Toegepast",
     "colActions": "Acties",
+    "desiredGuildPlaceholder": "Gewenste gilde",
+    "gameUidPlaceholder": "Spel-UID",
     "waitlistHeading": "Wachtlijst",
     "empty": "Geen lopende aanvragen.",
     "emptyRoster": "Er zijn voor deze periode geen aanvragen ingediend.",
@@ -1085,8 +1095,6 @@
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",
     "pasteLabel": "Plak CSV- of TSV-gegevens",
-    "pastePlaceholder": "spelernaam bronServer stroom contact Voorbeeld Naam Server 42 95000000 @voorbeeld",
-    "pasteHint": "De eerste rij moet bestaan uit kolomkoppen. Kopieer en plak rechtstreeks vanuit een spreadsheet — zowel komma's als tabs worden ondersteund. Herkende kopteksten: Speler/Naam/IGN, Bronserver/Origin, Kracht, Contact/Discord (optioneel).",
     "windowNotOpen": "Dit migratievenster is nog niet geopend, dus geïmporteerde rijen kunnen nog niet worden verwerkt.",
     "missingColumns": "De vereiste kolommen konden niet worden gevonden: {fields} Voeg een kopregel toe met deze kolommen en plak het opnieuw.",
     "summary": "{valid} rij(en) klaar om te importeren, {invalid} met fouten die overgeslagen zullen worden.",
@@ -1095,11 +1103,15 @@
     "colPlayer": "Speler",
     "colSourceServer": "Bronserver",
     "colPower": "Stroom",
+    "colDesiredGuild": "Gewenste gilde",
+    "colGameUid": "Spel-UID",
     "colContact": "Contact",
     "colResult": "Resultaat",
     "resultPending": "Klaar",
     "resultImported": "Geïmporteerd ( {status} )",
-    "errorGeneric": "Er is iets misgegaan."
+    "errorGeneric": "Er is iets misgegaan.",
+    "pastePlaceholder": "spelernaam bronServer vermogen gewenstGuild gameUID contact Voorbeeld Naam Server 42 95000000 Foundation 123456789 @voorbeeld",
+    "pasteHint": "De eerste rij moet bestaan uit kolomkoppen. Kopieer en plak rechtstreeks vanuit een spreadsheet — zowel komma's als tabs worden ondersteund. Herkende kopteksten: Speler/Naam/IGN, Bronserver/Origin, Kracht, Gewenste gilde (optioneel), Game-UID (optioneel), Contact/Discord (optioneel)."
   },
   "migrationTrackerOfficers": {
     "title": "Servernummer {serverNumber} — Agenten",

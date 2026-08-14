@@ -162,6 +162,13 @@
       "when": 1786650235971,
       "tag": "0022_migration_windows",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "6",
+      "when": 1786721046298,
+      "tag": "0023_add_game_uid_and_desired_guild_to_migration_applications",
+      "breakpoints": true
     }
   ]
 }

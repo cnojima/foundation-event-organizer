@@ -9,6 +9,8 @@ type EditableApplication = {
   playerName: string;
   sourceServer: string;
   power: number;
+  desiredGuild: string | null;
+  gameUid: string | null;
   contact: string | null;
   tier: string;
   status: string;
@@ -35,6 +37,8 @@ export function MigrationApplicationEditForm({
 
   const [sourceServer, setSourceServer] = useState(application.sourceServer);
   const [power, setPower] = useState(String(application.power));
+  const [desiredGuild, setDesiredGuild] = useState(application.desiredGuild ?? "");
+  const [gameUid, setGameUid] = useState(application.gameUid ?? "");
   const [contact, setContact] = useState(application.contact ?? "");
   const [tier, setTier] = useState(application.tier);
   const [status, setStatus] = useState(application.status);
@@ -66,6 +70,8 @@ export function MigrationApplicationEditForm({
       body: JSON.stringify({
         sourceServer: sourceServer.trim(),
         power: powerNumber,
+        desiredGuild: desiredGuild.trim() || null,
+        gameUid: gameUid.trim() || null,
         contact: contact.trim() || null,
       }),
     });
@@ -126,6 +132,32 @@ export function MigrationApplicationEditForm({
         </label>
         <PowerInput id="mte-power" required value={power} onChange={setPower} />
         <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">{t("powerHelp")}</p>
+      </div>
+      <div>
+        <label htmlFor="mte-desired-guild" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
+          {t("desiredGuildLabel")} <span className="text-gray-400">({tc("optional")})</span>
+        </label>
+        <input
+          id="mte-desired-guild"
+          type="text"
+          maxLength={60}
+          value={desiredGuild}
+          onChange={(e) => setDesiredGuild(e.target.value)}
+          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+        />
+      </div>
+      <div>
+        <label htmlFor="mte-game-uid" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
+          {t("gameUidLabel")} <span className="text-gray-400">({tc("optional")})</span>
+        </label>
+        <input
+          id="mte-game-uid"
+          type="text"
+          maxLength={60}
+          value={gameUid}
+          onChange={(e) => setGameUid(e.target.value)}
+          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+        />
       </div>
       <div>
         <label htmlFor="mte-contact" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">

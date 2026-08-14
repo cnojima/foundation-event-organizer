@@ -6,7 +6,13 @@
 // route (POST /api/migration-tracker/applications) so an imported row and a
 // self-submitted one are held to the same bar.
 
-export type ImportField = "playerName" | "sourceServer" | "power" | "contact";
+export type ImportField =
+  | "playerName"
+  | "sourceServer"
+  | "power"
+  | "desiredGuild"
+  | "gameUid"
+  | "contact";
 
 export const REQUIRED_IMPORT_FIELDS: ImportField[] = ["playerName", "sourceServer", "power"];
 
@@ -24,6 +30,8 @@ const HEADER_ALIASES: Record<ImportField, string[]> = {
     "currentserver",
   ],
   power: ["power", "powerlevel", "pwr", "might"],
+  desiredGuild: ["desiredguild", "guild", "targetguild", "requestedguild", "guildpreference"],
+  gameUid: ["gameuid", "uid", "gameid", "playerid", "playeruid"],
   contact: ["contact", "contactinfo", "discord", "discordid", "discordusername", "notes"],
 };
 
@@ -113,6 +121,8 @@ export type ImportRowInput = {
   playerName: string;
   sourceServer: string;
   power: number | null;
+  desiredGuild: string | null;
+  gameUid: string | null;
   contact: string | null;
 };
 
@@ -134,6 +144,12 @@ export function validateImportRow(
   ) {
     return { ok: false, error: "Power must be a whole number" };
   }
+  if (input.desiredGuild && input.desiredGuild.length > 60) {
+    return { ok: false, error: "Desired guild is too long (max 60 characters)" };
+  }
+  if (input.gameUid && input.gameUid.length > 60) {
+    return { ok: false, error: "Game UID is too long (max 60 characters)" };
+  }
   if (input.contact && input.contact.length > 120) {
     return { ok: false, error: "Contact is too long (max 120 characters)" };
   }
@@ -145,6 +161,8 @@ export type ImportRowPreview = {
   playerName: string;
   sourceServer: string;
   power: number | null;
+  desiredGuild: string | null;
+  gameUid: string | null;
   contact: string | null;
   error: string | null;
 };
@@ -187,12 +205,17 @@ export function parseImportText(text: string): ImportPreview {
       const playerName = (cells[mapping.playerName!] ?? "").trim();
       const sourceServer = (cells[mapping.sourceServer!] ?? "").trim();
       const power = parsePower(cells[mapping.power!] ?? "");
+      const desiredGuild =
+        mapping.desiredGuild !== undefined ? (cells[mapping.desiredGuild] ?? "").trim() : "";
+      const gameUid = mapping.gameUid !== undefined ? (cells[mapping.gameUid] ?? "").trim() : "";
       const contact = mapping.contact !== undefined ? (cells[mapping.contact] ?? "").trim() : "";
 
       const validation = validateImportRow({
         playerName,
         sourceServer,
         power,
+        desiredGuild: desiredGuild || null,
+        gameUid: gameUid || null,
         contact: contact || null,
       });
 
@@ -201,6 +224,8 @@ export function parseImportText(text: string): ImportPreview {
         playerName,
         sourceServer,
         power,
+        desiredGuild: desiredGuild || null,
+        gameUid: gameUid || null,
         contact: contact || null,
         error: validation.ok ? null : validation.error,
       };

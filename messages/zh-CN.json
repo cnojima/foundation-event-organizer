@@ -1007,6 +1007,7 @@
     "powerLabel": "力量 *",
     "powerPlaceholder": "例如 95,000,000",
     "powerHelp": "您的等级将根据此数字自动确定。",
+    "gameUidLabel": "游戏 UID",
     "contactLabel": "接触",
     "contactPlaceholder": "Discord 账号",
     "contactHelp": "方便警员联系您并向您提出问题。",
@@ -1020,7 +1021,10 @@
     "saveLinkHeading": "保存此链接——你以后不会再看到它了。",
     "saveLinkBody": "您可以使用此链接修改申请或稍后撤回申请。由于没有账户，所以此链接是唯一的登录方式。",
     "copyLink": "复制链接",
-    "copied": "已复制！"
+    "copied": "已复制！",
+    "desiredGuildLabel": "理想的公会",
+    "desiredGuildPlaceholder": "例如法律",
+    "gameUidPlaceholder": "例如 423456789"
   },
   "migrationTrackerEdit": {
     "title": "您的申请",
@@ -1037,6 +1041,8 @@
     "sourceServerLabel": "源服务器",
     "powerLabel": "力量",
     "powerHelp": "更改此设置会重新计算您的等级，并可能将您移入或移出候补名单。",
+    "desiredGuildLabel": "理想的公会",
+    "gameUidLabel": "游戏 UID",
     "contactLabel": "接触",
     "saveButton": "保存更改",
     "withdrawButton": "撤回申请",
@@ -1065,9 +1071,13 @@
     "colSourceServer": "源服务器",
     "colPower": "力量",
     "colTier": "层级",
+    "colDesiredGuild": "理想的公会",
+    "colGameUid": "游戏 UID",
     "colStatus": "地位",
     "colApplied": "应用",
     "colActions": "行动",
+    "desiredGuildPlaceholder": "理想的公会",
+    "gameUidPlaceholder": "游戏 UID",
     "waitlistHeading": "候补名单",
     "empty": "没有待处理的申请。",
     "emptyRoster": "本窗口期未收到任何申请。",
@@ -1088,8 +1098,6 @@
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",
     "pasteLabel": "粘贴 CSV 或 TSV 数据",
-    "pastePlaceholder": "玩家名称 源服务器 电源 联系方式 示例名称 服务器 42 95000000 @example",
-    "pasteHint": "第一行必须是列标题。直接从电子表格复制粘贴——逗号和制表符都支持。可识别的标题：玩家/名称/游戏ID、来源服务器/Origin、战力、联系方式/Discord（可选）。",
     "windowNotOpen": "此迁移窗口尚未开放，因此暂时无法导入行。",
     "missingColumns": "找不到所需的列： {fields}添加一个包含这些列的标题行，然后再次粘贴。",
     "summary": "{valid}准备导入的行， {invalid}包含将被忽略的错误。",
@@ -1098,11 +1106,15 @@
     "colPlayer": "玩家",
     "colSourceServer": "源服务器",
     "colPower": "力量",
+    "colDesiredGuild": "理想的公会",
+    "colGameUid": "游戏 UID",
     "colContact": "接触",
     "colResult": "结果",
     "resultPending": "准备好",
     "resultImported": "已导入（ {status} ）",
-    "errorGeneric": "出问题了。"
+    "errorGeneric": "出问题了。",
+    "pastePlaceholder": "玩家名称 源服务器 权限 期望公会 游戏Uid 联系方式 示例名称 服务器 42 95000000 基金会 123456789 @example",
+    "pasteHint": "第一行必须是列标题。直接从电子表格复制粘贴——支持逗号和制表符。可识别的标题：玩家/名称/游戏ID、来源服务器/Origin、战力、期望公会（可选）、游戏UID（可选）、联系方式/Discord（可选）。"
   },
   "migrationTrackerOfficers": {
     "title": "服务器编号： {serverNumber} ——警官们",

@@ -1008,6 +1008,7 @@
     "powerLabel": "Pouvoir *",
     "powerPlaceholder": "par exemple 95 000 000",
     "powerHelp": "Votre niveau est déterminé automatiquement à partir de ce numéro.",
+    "gameUidLabel": "UID du jeu",
     "contactLabel": "Contact",
     "contactPlaceholder": "Identifiant Discord",
     "contactHelp": "Permet aux agents de vous contacter en cas de questions.",
@@ -1021,7 +1022,10 @@
     "saveLinkHeading": "Enregistrez ce lien — vous ne le reverrez plus.",
     "saveLinkBody": "Utilisez ce lien pour modifier votre candidature ou la retirer ultérieurement. Vous n'avez pas de compte ; ce lien est donc le seul moyen de vous reconnecter.",
     "copyLink": "Copier le lien",
-    "copied": "Copié !"
+    "copied": "Copié !",
+    "desiredGuildLabel": "Guilde désirée",
+    "desiredGuildPlaceholder": "par exemple, la loi",
+    "gameUidPlaceholder": "ex. 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Votre candidature",
@@ -1038,6 +1042,8 @@
     "sourceServerLabel": "Serveur source",
     "powerLabel": "Pouvoir",
     "powerHelp": "Modifier ce paramètre recalcule votre niveau et peut vous faire entrer ou sortir de la liste d'attente.",
+    "desiredGuildLabel": "Guilde souhaitée",
+    "gameUidLabel": "UID du jeu",
     "contactLabel": "Contact",
     "saveButton": "Enregistrer les modifications",
     "withdrawButton": "Demande de retrait",
@@ -1066,9 +1072,13 @@
     "colSourceServer": "Serveur source",
     "colPower": "Pouvoir",
     "colTier": "Étage",
+    "colDesiredGuild": "Guilde souhaitée",
+    "colGameUid": "UID du jeu",
     "colStatus": "Statut",
     "colApplied": "Appliqué",
     "colActions": "Actes",
+    "desiredGuildPlaceholder": "Guilde souhaitée",
+    "gameUidPlaceholder": "UID du jeu",
     "waitlistHeading": "Liste d'attente",
     "empty": "Aucune demande en attente.",
     "emptyRoster": "Aucune candidature n'a été soumise pour cette période.",
@@ -1089,8 +1099,6 @@
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
     "pasteLabel": "Collez les données CSV ou TSV",
-    "pastePlaceholder": "Nom du joueur Serveur source alimentation contact Exemple Serveur de noms 42 95000000 @exemple",
-    "pasteHint": "La première ligne doit contenir les en-têtes de colonnes. Copiez-collez directement depuis une feuille de calcul ; les virgules et les tabulations sont acceptées. En-têtes reconnus : Joueur/Nom/IGN, Serveur source/Origine, Puissance, Contact/Discord (facultatif).",
     "windowNotOpen": "Cette fenêtre de migration n'est pas ouverte, les lignes importées ne peuvent donc pas encore être admises.",
     "missingColumns": "Colonnes requises introuvables : {fields} Ajoutez une ligne d'en-tête avec ces colonnes et collez à nouveau.",
     "summary": "{valid} ligne(s) prête(s) à importer, {invalid} avec des erreurs qui seront ignorées.",
@@ -1099,11 +1107,15 @@
     "colPlayer": "Joueur",
     "colSourceServer": "Serveur source",
     "colPower": "Pouvoir",
+    "colDesiredGuild": "Guilde souhaitée",
+    "colGameUid": "UID du jeu",
     "colContact": "Contact",
     "colResult": "Résultat",
     "resultPending": "Prêt",
     "resultImported": "Importé ( {status} )",
-    "errorGeneric": "Quelque chose a mal fonctionné."
+    "errorGeneric": "Quelque chose a mal fonctionné.",
+    "pastePlaceholder": "Nom du joueur Serveur source Puissance Guilde souhaitée UID du jeu Contact Exemple Nom Serveur 42 95000000 Fondation 123456789 @exemple",
+    "pasteHint": "La première ligne doit contenir les en-têtes de colonnes. Copiez-collez directement depuis une feuille de calcul ; les virgules et les tabulations sont acceptées. En-têtes reconnus : Joueur/Nom/IGN, Serveur source/Origine, Puissance, Guilde souhaitée (facultatif), UID du jeu (facultatif), Contact/Discord (facultatif)."
   },
   "migrationTrackerOfficers": {
     "title": "Serveur n° {serverNumber} — Officiers",

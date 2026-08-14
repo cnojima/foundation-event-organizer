@@ -1008,6 +1008,7 @@
     "powerLabel": "Effekt *",
     "powerPlaceholder": "t.ex. 95 000 000",
     "powerHelp": "Din nivå bestäms automatiskt utifrån detta nummer.",
+    "gameUidLabel": "Spel-UID",
     "contactLabel": "Kontakta",
     "contactPlaceholder": "Discord-handtag",
     "contactHelp": "Hjälper tjänstemän att nå dig med frågor.",
@@ -1021,7 +1022,10 @@
     "saveLinkHeading": "Spara den här länken – du kommer inte att se den igen.",
     "saveLinkBody": "Använd den för att redigera din ansökan eller avbryta senare. Det finns inget konto, så den här länken är enda sättet att komma tillbaka.",
     "copyLink": "Kopiera länk",
-    "copied": "Kopierad!"
+    "copied": "Kopierad!",
+    "desiredGuildLabel": "Önskad gille",
+    "desiredGuildPlaceholder": "t.ex. LAG",
+    "gameUidPlaceholder": "t.ex. 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Din ansökan",
@@ -1038,6 +1042,8 @@
     "sourceServerLabel": "Källserver",
     "powerLabel": "Driva",
     "powerHelp": "Om du ändrar detta omvärderas din nivå och du kan komma att flyttas till eller från väntelistan.",
+    "desiredGuildLabel": "Önskad gille",
+    "gameUidLabel": "Spel-UID",
     "contactLabel": "Kontakta",
     "saveButton": "Spara ändringar",
     "withdrawButton": "Återkalla ansökan",
@@ -1066,9 +1072,13 @@
     "colSourceServer": "Källserver",
     "colPower": "Driva",
     "colTier": "Nivå",
+    "colDesiredGuild": "Önskad gille",
+    "colGameUid": "Spel-UID",
     "colStatus": "Status",
     "colApplied": "Tillämpad",
     "colActions": "Åtgärder",
+    "desiredGuildPlaceholder": "Önskad gille",
+    "gameUidPlaceholder": "Spel-UID",
     "waitlistHeading": "Väntelista",
     "empty": "Inga väntande ansökningar.",
     "emptyRoster": "Inga ansökningar lämnades in för detta fönster.",
@@ -1089,8 +1099,6 @@
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",
     "pasteLabel": "Klistra in CSV- eller TSV-data",
-    "pastePlaceholder": "spelarnamn källaServer strömkontakt Exempel namnserver 42 95000000 @example",
-    "pasteHint": "Första raden måste vara kolumnrubriker. Kopiera och klistra in direkt från ett kalkylblad — kommatecken och tabbtecken stöds. Rubriker som känns igen: Spelare/Namn/IGN, Källserver/Ursprung, Ström, Kontakt/Discord (valfritt).",
     "windowNotOpen": "Det här migreringsfönstret är inte öppet, så importerade rader kan inte tas emot ännu.",
     "missingColumns": "Kunde inte hitta obligatoriska kolumner: {fields} Lägg till en rubrikrad med dessa kolumner och klistra in igen.",
     "summary": "{valid} rad(er) redo att importeras, {invalid} med fel som kommer att hoppas över.",
@@ -1099,11 +1107,15 @@
     "colPlayer": "Spelare",
     "colSourceServer": "Källserver",
     "colPower": "Driva",
+    "colDesiredGuild": "Önskad gille",
+    "colGameUid": "Spel-UID",
     "colContact": "Kontakta",
     "colResult": "Resultat",
     "resultPending": "Redo",
     "resultImported": "Importerad ( {status} )",
-    "errorGeneric": "Något gick fel."
+    "errorGeneric": "Något gick fel.",
+    "pastePlaceholder": "spelarnamn källaServerström önskadGillespelUid-kontakt ExempelnamnServer 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Första raden måste vara kolumnrubriker. Kopiera och klistra in direkt från ett kalkylblad — kommatecken och tabbtecken stöds. Rubriker som känns igen: Spelare/Namn/IGN, Källserver/Ursprung, Styrka, Önskad gille (valfritt), Spel-UID (valfritt), Kontakt/Discord (valfritt)."
   },
   "migrationTrackerOfficers": {
     "title": "Servernummer {serverNumber} — Officerare",

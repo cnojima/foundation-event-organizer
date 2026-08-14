@@ -14,7 +14,13 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  const updates: { sourceServer?: string; power?: number; contact?: string | null } = {};
+  const updates: {
+    sourceServer?: string;
+    power?: number;
+    desiredGuild?: string | null;
+    gameUid?: string | null;
+    contact?: string | null;
+  } = {};
 
   if ("sourceServer" in body) {
     const sourceServer = typeof body.sourceServer === "string" ? body.sourceServer.trim() : "";
@@ -29,6 +35,24 @@ export async function PATCH(
       return NextResponse.json({ error: "Power must be a whole number" }, { status: 400 });
     }
     updates.power = power;
+  }
+  if ("desiredGuild" in body) {
+    const desiredGuild =
+      typeof body.desiredGuild === "string" && body.desiredGuild.trim() !== ""
+        ? body.desiredGuild.trim()
+        : null;
+    if (desiredGuild && desiredGuild.length > 60) {
+      return NextResponse.json({ error: "Desired guild is too long" }, { status: 400 });
+    }
+    updates.desiredGuild = desiredGuild;
+  }
+  if ("gameUid" in body) {
+    const gameUid =
+      typeof body.gameUid === "string" && body.gameUid.trim() !== "" ? body.gameUid.trim() : null;
+    if (gameUid && gameUid.length > 60) {
+      return NextResponse.json({ error: "Game UID is too long" }, { status: 400 });
+    }
+    updates.gameUid = gameUid;
   }
   if ("contact" in body) {
     const contact =
@@ -63,6 +87,8 @@ export async function PATCH(
       power: result.application.power,
       tier: result.application.tier,
       status: result.application.status,
+      desiredGuild: result.application.desiredGuild,
+      gameUid: result.application.gameUid,
       contact: result.application.contact,
     },
   });
