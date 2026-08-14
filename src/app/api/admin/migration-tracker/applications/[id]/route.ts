@@ -4,9 +4,10 @@ import { canReviewMigrationApplication } from "@/lib/rbac";
 import { editApplicationByAdmin } from "@/lib/migration-tracker";
 import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
-// Officer/admin correction path for reference fields (game UID, desired
-// guild) that don't affect capacity or review status — distinct from
-// accept/deny/waitlist/remove, which are decisions.
+// Officer/admin correction path for fields that can be fixed after the fact
+// (typos in name/source server, a corrected power reading, game UID,
+// desired guild) — distinct from accept/deny/waitlist/remove, which are
+// decisions.
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -22,7 +23,34 @@ export async function PATCH(
     return NextResponse.json({ error: "Invalid body" }, { status: 400 });
   }
 
-  const updates: { gameUid?: string | null; desiredGuild?: string | null } = {};
+  const updates: {
+    playerName?: string;
+    sourceServer?: string;
+    power?: number;
+    gameUid?: string | null;
+    desiredGuild?: string | null;
+  } = {};
+  if ("playerName" in body) {
+    const playerName = typeof body.playerName === "string" ? body.playerName.trim() : "";
+    if (!playerName || playerName.length > 60) {
+      return NextResponse.json({ error: "Player name is required" }, { status: 400 });
+    }
+    updates.playerName = playerName;
+  }
+  if ("sourceServer" in body) {
+    const sourceServer = typeof body.sourceServer === "string" ? body.sourceServer.trim() : "";
+    if (!sourceServer || sourceServer.length > 60) {
+      return NextResponse.json({ error: "Source server is required" }, { status: 400 });
+    }
+    updates.sourceServer = sourceServer;
+  }
+  if ("power" in body) {
+    const power = Number(body.power);
+    if (!Number.isFinite(power) || power < 0 || !Number.isInteger(power)) {
+      return NextResponse.json({ error: "Power must be a whole number" }, { status: 400 });
+    }
+    updates.power = power;
+  }
   if ("gameUid" in body) {
     const gameUid =
       typeof body.gameUid === "string" && body.gameUid.trim() !== "" ? body.gameUid.trim() : null;
@@ -60,6 +88,11 @@ export async function PATCH(
   return NextResponse.json({
     application: {
       id: result.application.id,
+      playerName: result.application.playerName,
+      sourceServer: result.application.sourceServer,
+      power: result.application.power,
+      tier: result.application.tier,
+      status: result.application.status,
       gameUid: result.application.gameUid,
       desiredGuild: result.application.desiredGuild,
     },

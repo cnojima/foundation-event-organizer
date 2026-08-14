@@ -184,6 +184,35 @@ function countReserved(
   return Number(row?.count ?? 0);
 }
 
+// Re-derives tier from a new power value and, if the application is still
+// undecided (applied/waitlisted), re-runs the same room check as a fresh
+// submission — can flip applied <-> waitlisted, but never auto-promotes
+// someone else off the waitlist. For an already-decided application (e.g.
+// accepted/denied), the tier is still refreshed for accuracy but the
+// decision itself is left alone.
+function recomputeTierAndStatus(
+  tx: { select: typeof db.select },
+  destinationId: string,
+  applicationId: string,
+  power: number,
+  currentStatus: ApplicationStatus
+): { tier: Tier; status: ApplicationStatus } {
+  const thresholds = tx.select().from(powerTierThresholds).all();
+  const tier = deriveTier(power, thresholds);
+  if (currentStatus !== "applied" && currentStatus !== "waitlisted") {
+    return { tier, status: currentStatus };
+  }
+  const allocation = tx
+    .select()
+    .from(migrationAllocations)
+    .where(and(eq(migrationAllocations.destinationId, destinationId), eq(migrationAllocations.tier, tier)))
+    .get();
+  const cap = allocation?.maxSlots ?? 0;
+  const reserved = countReserved(destinationId, tier, applicationId, tx);
+  const status: ApplicationStatus = reserved < cap ? "applied" : "waitlisted";
+  return { tier, status };
+}
+
 export type SubmitApplicationInput = {
   destinationId: string;
   playerName: string;
@@ -319,21 +348,15 @@ export function editApplicationByToken(
     const power = updates.power ?? application.power;
 
     if (updates.power !== undefined) {
-      const thresholds = tx.select().from(powerTierThresholds).all();
-      tier = deriveTier(updates.power, thresholds);
-      const allocation = tx
-        .select()
-        .from(migrationAllocations)
-        .where(
-          and(
-            eq(migrationAllocations.destinationId, application.destinationId),
-            eq(migrationAllocations.tier, tier)
-          )
-        )
-        .get();
-      const cap = allocation?.maxSlots ?? 0;
-      const reserved = countReserved(application.destinationId, tier, application.id, tx);
-      status = reserved < cap ? "applied" : "waitlisted";
+      const recomputed = recomputeTierAndStatus(
+        tx,
+        application.destinationId,
+        application.id,
+        updates.power,
+        application.status as ApplicationStatus
+      );
+      tier = recomputed.tier;
+      status = recomputed.status as "applied" | "waitlisted";
     }
 
     const updated: MigrationApplicationRow = {
@@ -367,39 +390,77 @@ export function editApplicationByToken(
 }
 
 export type EditApplicationByAdminInput = {
+  playerName?: string;
+  sourceServer?: string;
+  power?: number;
   desiredGuild?: string | null;
   gameUid?: string | null;
 };
 
-// Admin/officer correction path for reference fields that don't affect
-// capacity or status — unlike editApplicationByToken, not gated on
-// applied/waitlisted status or window closure, since fixing a game UID or
-// desired guild after a decision is still useful.
+// Admin/officer correction path — not gated on applied/waitlisted status or
+// window closure, since fixing a typo or reference field after a decision
+// (or after the window closes) is still useful. A power edit still
+// re-derives tier the same way editApplicationByToken does, via the shared
+// recomputeTierAndStatus helper, but only flips applied <-> waitlisted if
+// the application is still undecided.
 export function editApplicationByAdmin(
   applicationId: string,
   updates: EditApplicationByAdminInput
 ): EditApplicationResult {
-  const application = db
-    .select()
-    .from(migrationApplications)
-    .where(eq(migrationApplications.id, applicationId))
-    .get();
-  if (!application) {
-    return { ok: false as const, reason: "Application not found", status: 404 as const };
-  }
-  const now = new Date().toISOString();
-  const updated: MigrationApplicationRow = {
-    ...application,
-    desiredGuild:
-      updates.desiredGuild === undefined ? application.desiredGuild : updates.desiredGuild,
-    gameUid: updates.gameUid === undefined ? application.gameUid : updates.gameUid,
-    updatedAt: now,
-  };
-  db.update(migrationApplications)
-    .set({ desiredGuild: updated.desiredGuild, gameUid: updated.gameUid, updatedAt: now })
-    .where(eq(migrationApplications.id, applicationId))
-    .run();
-  return { ok: true as const, application: updated };
+  return db.transaction((tx) => {
+    const application = tx
+      .select()
+      .from(migrationApplications)
+      .where(eq(migrationApplications.id, applicationId))
+      .get();
+    if (!application) {
+      return { ok: false as const, reason: "Application not found", status: 404 as const };
+    }
+
+    const now = new Date().toISOString();
+    let tier = application.tier as Tier;
+    let status = application.status as ApplicationStatus;
+    const power = updates.power ?? application.power;
+
+    if (updates.power !== undefined) {
+      const recomputed = recomputeTierAndStatus(
+        tx,
+        application.destinationId,
+        application.id,
+        updates.power,
+        application.status as ApplicationStatus
+      );
+      tier = recomputed.tier;
+      status = recomputed.status;
+    }
+
+    const updated: MigrationApplicationRow = {
+      ...application,
+      playerName: updates.playerName ?? application.playerName,
+      sourceServer: updates.sourceServer ?? application.sourceServer,
+      desiredGuild:
+        updates.desiredGuild === undefined ? application.desiredGuild : updates.desiredGuild,
+      gameUid: updates.gameUid === undefined ? application.gameUid : updates.gameUid,
+      power,
+      tier,
+      status,
+      updatedAt: now,
+    };
+    tx.update(migrationApplications)
+      .set({
+        playerName: updated.playerName,
+        sourceServer: updated.sourceServer,
+        desiredGuild: updated.desiredGuild,
+        gameUid: updated.gameUid,
+        power: updated.power,
+        tier: updated.tier,
+        status: updated.status,
+        updatedAt: updated.updatedAt,
+      })
+      .where(eq(migrationApplications.id, applicationId))
+      .run();
+    return { ok: true as const, application: updated };
+  });
 }
 
 export type WithdrawResult =

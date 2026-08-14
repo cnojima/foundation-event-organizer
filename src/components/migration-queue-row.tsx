@@ -3,8 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { PowerInput } from "@/components/power-input";
 
-type EditableField = "desiredGuild" | "gameUid";
+type EditableField = "playerName" | "sourceServer" | "power" | "desiredGuild" | "gameUid";
 
 type QueueApplication = {
   id: string;
@@ -32,9 +33,15 @@ export function MigrationQueueRow({
   const [submitting, setSubmitting] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [confirmRemove, setConfirmRemove] = useState(false);
+  const [playerName, setPlayerName] = useState(application.playerName);
+  const [sourceServer, setSourceServer] = useState(application.sourceServer);
+  const [power, setPower] = useState(String(application.power));
   const [desiredGuild, setDesiredGuild] = useState(application.desiredGuild ?? "");
   const [gameUid, setGameUid] = useState(application.gameUid ?? "");
   const [savedFlash, setSavedFlash] = useState<Record<EditableField, boolean>>({
+    playerName: false,
+    sourceServer: false,
+    power: false,
     desiredGuild: false,
     gameUid: false,
   });
@@ -55,21 +62,55 @@ export function MigrationQueueRow({
     }, 600);
   }
 
-  function inlineFieldClassName(saved: boolean): string {
-    return saved
-      ? "w-28 rounded border border-emerald-400 bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 transition-colors duration-700 dark:border-emerald-500 dark:text-gray-400"
-      : "w-28 rounded border border-transparent bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 transition-colors duration-700 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:text-gray-400 dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800";
+  type FieldVariant = "primary" | "cell" | "compact";
+
+  function fieldClassName(saved: boolean, variant: FieldVariant): string {
+    const width = variant === "compact" ? "w-28" : "w-full";
+    const text =
+      variant === "primary"
+        ? "text-sm font-medium text-gray-900 dark:text-gray-100"
+        : variant === "cell"
+          ? "text-sm text-gray-600 dark:text-gray-400"
+          : "text-xs font-normal text-gray-500 dark:text-gray-400";
+    if (saved) {
+      return `${width} rounded border border-emerald-400 bg-transparent px-1 py-0.5 ${text} transition-colors duration-700 dark:border-emerald-500`;
+    }
+    return `${width} rounded border border-transparent bg-transparent px-1 py-0.5 ${text} transition-colors duration-700 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800`;
   }
 
-  async function saveField(field: EditableField, value: string) {
-    const trimmed = value.trim() || null;
-    const original = (field === "gameUid" ? application.gameUid : application.desiredGuild) ?? null;
-    if (trimmed === original) return;
+  async function saveField(field: EditableField, rawValue: string) {
     setError(null);
+    let payloadValue: string | number | null;
+
+    if (field === "power") {
+      const trimmed = rawValue.trim();
+      const parsed = Number(trimmed);
+      if (trimmed === "" || !Number.isFinite(parsed) || parsed < 0 || !Number.isInteger(parsed)) {
+        setError(t("errorPower"));
+        return;
+      }
+      if (parsed === application.power) return;
+      payloadValue = parsed;
+    } else if (field === "playerName" || field === "sourceServer") {
+      const trimmed = rawValue.trim();
+      if (!trimmed) {
+        setError(field === "playerName" ? t("errorPlayerNameRequired") : t("errorSourceServerRequired"));
+        return;
+      }
+      const original = field === "playerName" ? application.playerName : application.sourceServer;
+      if (trimmed === original) return;
+      payloadValue = trimmed;
+    } else {
+      const trimmed = rawValue.trim() || null;
+      const original = (field === "gameUid" ? application.gameUid : application.desiredGuild) ?? null;
+      if (trimmed === original) return;
+      payloadValue = trimmed;
+    }
+
     const res = await fetch(`/api/admin/migration-tracker/applications/${application.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ [field]: trimmed }),
+      body: JSON.stringify({ [field]: payloadValue }),
     });
     if (!res.ok) {
       const data = await res.json().catch(() => ({}));
@@ -99,8 +140,15 @@ export function MigrationQueueRow({
   return (
     <>
       <tr className="border-t border-gray-100 dark:border-gray-800">
-        <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">
-          {application.playerName}
+        <td className="px-3 py-2">
+          <input
+            type="text"
+            maxLength={60}
+            value={playerName}
+            onChange={(e) => setPlayerName(e.target.value)}
+            onBlur={(e) => saveField("playerName", e.target.value)}
+            className={fieldClassName(savedFlash.playerName, "primary")}
+          />
           {application.contact && (
             <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
               ({application.contact})
@@ -114,7 +162,7 @@ export function MigrationQueueRow({
               value={desiredGuild}
               onChange={(e) => setDesiredGuild(e.target.value)}
               onBlur={(e) => saveField("desiredGuild", e.target.value)}
-              className={inlineFieldClassName(savedFlash.desiredGuild)}
+              className={fieldClassName(savedFlash.desiredGuild, "compact")}
             />
             <input
               type="text"
@@ -123,13 +171,28 @@ export function MigrationQueueRow({
               value={gameUid}
               onChange={(e) => setGameUid(e.target.value)}
               onBlur={(e) => saveField("gameUid", e.target.value)}
-              className={inlineFieldClassName(savedFlash.gameUid)}
+              className={fieldClassName(savedFlash.gameUid, "compact")}
             />
           </div>
         </td>
-        <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{application.sourceServer}</td>
-        <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-          {application.power.toLocaleString()}
+        <td className="px-3 py-2">
+          <input
+            type="text"
+            maxLength={60}
+            value={sourceServer}
+            onChange={(e) => setSourceServer(e.target.value)}
+            onBlur={(e) => saveField("sourceServer", e.target.value)}
+            className={fieldClassName(savedFlash.sourceServer, "cell")}
+          />
+        </td>
+        <td className="px-3 py-2">
+          <PowerInput
+            id={`mq-power-${application.id}`}
+            value={power}
+            onChange={setPower}
+            onBlur={(digits) => saveField("power", digits)}
+            className={fieldClassName(savedFlash.power, "cell")}
+          />
         </td>
         <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
           {new Date(application.createdAt).toLocaleDateString()}

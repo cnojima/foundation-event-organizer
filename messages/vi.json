@@ -1006,7 +1006,10 @@
     "powerLabel": "Quyền lực *",
     "powerPlaceholder": "ví dụ 95.000.000",
     "powerHelp": "Cấp bậc của bạn được xác định tự động dựa trên con số này.",
+    "desiredGuildLabel": "Hội mong muốn",
+    "desiredGuildPlaceholder": "ví dụ LUẬT",
     "gameUidLabel": "Mã định danh trò chơi (Game UID)",
+    "gameUidPlaceholder": "ví dụ 423456789",
     "contactLabel": "Liên hệ",
     "contactPlaceholder": "Tên tài khoản Discord",
     "contactHelp": "Giúp các sĩ quan liên lạc với bạn khi có thắc mắc.",
@@ -1020,10 +1023,7 @@
     "saveLinkHeading": "Hãy lưu lại đường dẫn này — bạn sẽ không thấy nó nữa.",
     "saveLinkBody": "Hãy sử dụng liên kết này để chỉnh sửa đơn đăng ký hoặc rút đơn sau này. Bạn không có tài khoản, vì vậy liên kết này là cách duy nhất để đăng nhập lại.",
     "copyLink": "Sao chép liên kết",
-    "copied": "Đã sao chép!",
-    "desiredGuildLabel": "Hội mong muốn",
-    "desiredGuildPlaceholder": "ví dụ LUẬT",
-    "gameUidPlaceholder": "ví dụ 423456789"
+    "copied": "Đã sao chép!"
   },
   "migrationTrackerEdit": {
     "title": "Đơn đăng ký của bạn",
@@ -1092,11 +1092,16 @@
     "statusDenied": "Từ chối",
     "statusWithdrawn": "Đã rút lại",
     "statusRemoved": "LOẠI BỎ",
-    "errorGeneric": "Đã xảy ra lỗi."
+    "errorGeneric": "Đã xảy ra lỗi.",
+    "errorPlayerNameRequired": "Tên người chơi là bắt buộc.",
+    "errorSourceServerRequired": "Cần có máy chủ nguồn.",
+    "errorPower": "Lũy thừa phải là số nguyên."
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",
     "pasteLabel": "Dán dữ liệu CSV hoặc TSV",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Hàng đầu tiên phải là tiêu đề cột. Sao chép và dán trực tiếp từ bảng tính — cả dấu phẩy và dấu tab đều được hỗ trợ. Các tiêu đề được nhận dạng: Người chơi/Tên/Tên nhân vật trong game, Máy chủ nguồn/Nguồn gốc, Sức mạnh, Bang hội mong muốn (tùy chọn), UID trò chơi (tùy chọn), Liên hệ/Discord (tùy chọn).",
     "windowNotOpen": "Cửa sổ chuyển đổi này chưa mở, vì vậy các hàng đã nhập chưa thể được chấp nhận.",
     "missingColumns": "Không tìm thấy các cột bắt buộc: {fields} Thêm hàng tiêu đề với các cột này và dán lại.",
     "summary": "{valid} Hàng (các hàng) sẵn sàng để nhập, {invalid} với những lỗi sẽ được bỏ qua.",
@@ -1111,9 +1116,7 @@
     "colResult": "Kết quả",
     "resultPending": "Sẵn sàng",
     "resultImported": "Đã nhập ( {status} )",
-    "errorGeneric": "Đã xảy ra lỗi.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Hàng đầu tiên phải là tiêu đề cột. Sao chép và dán trực tiếp từ bảng tính — cả dấu phẩy và dấu tab đều được hỗ trợ. Các tiêu đề được nhận dạng: Người chơi/Tên/Tên nhân vật trong game, Máy chủ nguồn/Nguồn gốc, Sức mạnh, Bang hội mong muốn (tùy chọn), UID trò chơi (tùy chọn), Liên hệ/Discord (tùy chọn)."
+    "errorGeneric": "Đã xảy ra lỗi."
   },
   "migrationTrackerOfficers": {
     "title": "Máy chủ # {serverNumber} — Các sĩ quan",

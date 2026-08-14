@@ -1007,7 +1007,10 @@
     "powerLabel": "力 *",
     "powerPlaceholder": "例：95,000,000",
     "powerHelp": "あなたのティアは、この数値に基づいて自動的に決定されます。",
+    "desiredGuildLabel": "希望するギルド",
+    "desiredGuildPlaceholder": "例：法律",
     "gameUidLabel": "ゲームUID",
+    "gameUidPlaceholder": "例：423456789",
     "contactLabel": "接触",
     "contactPlaceholder": "Discordアカウント",
     "contactHelp": "警察官があなたに質問するために連絡を取るのに役立ちます。",
@@ -1021,10 +1024,7 @@
     "saveLinkHeading": "このリンクを保存してください。二度と表示されません。",
     "saveLinkBody": "応募内容の編集や、後で応募を取り消す場合にご利用ください。アカウントは作成されていないため、このリンクが唯一のアクセス手段となります。",
     "copyLink": "リンクをコピー",
-    "copied": "コピーしました！",
-    "desiredGuildLabel": "希望するギルド",
-    "desiredGuildPlaceholder": "例：法律",
-    "gameUidPlaceholder": "例：423456789"
+    "copied": "コピーしました！"
   },
   "migrationTrackerEdit": {
     "title": "あなたのアプリケーション",
@@ -1093,11 +1093,16 @@
     "statusDenied": "拒否されました",
     "statusWithdrawn": "撤回",
     "statusRemoved": "削除済み",
-    "errorGeneric": "何かがおかしくなりました。"
+    "errorGeneric": "何かがおかしくなりました。",
+    "errorPlayerNameRequired": "プレイヤー名は必須です。",
+    "errorSourceServerRequired": "ソースサーバーが必要です。",
+    "errorPower": "べき乗は整数でなければならない。"
   },
   "migrationTrackerImport": {
     "title": "サーバー番号： {serverNumber} — アプリケーションをインポートする",
     "pasteLabel": "CSVまたはTSVデータを貼り付ける",
+    "pastePlaceholder": "プレイヤー名 ソースサーバー 電力 希望ギルド ゲームUID 連絡先 例 名前 サーバー 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "最初の行は列ヘッダーである必要があります。スプレッドシートから直接コピー＆ペーストしてください。カンマとタブの両方がサポートされています。認識されるヘッダー：プレイヤー/名前/IGN、ソースサーバー/オリジン、パワー、希望ギルド（オプション）、ゲームUID（オプション）、連絡先/Discord（オプション）。",
     "windowNotOpen": "この移行期間はまだ開始されていないため、インポートされた行はまだ受け入れられません。",
     "missingColumns": "必要な列が見つかりませんでした: {fields}これらの列を含むヘッダー行を追加し、再度貼り付けてください。",
     "summary": "{valid}インポート準備完了の行数： {invalid}エラーが発生した場合はスキップされます。",
@@ -1112,9 +1117,7 @@
     "colResult": "結果",
     "resultPending": "準備ができて",
     "resultImported": "インポート済み ( {status} ）",
-    "errorGeneric": "何かがおかしくなりました。",
-    "pastePlaceholder": "プレイヤー名 ソースサーバー 電力 希望ギルド ゲームUID 連絡先 例 名前 サーバー 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "最初の行は列ヘッダーである必要があります。スプレッドシートから直接コピー＆ペーストしてください。カンマとタブの両方がサポートされています。認識されるヘッダー：プレイヤー/名前/IGN、ソースサーバー/オリジン、パワー、希望ギルド（オプション）、ゲームUID（オプション）、連絡先/Discord（オプション）。"
+    "errorGeneric": "何かがおかしくなりました。"
   },
   "migrationTrackerOfficers": {
     "title": "サーバー番号： {serverNumber} — 警官",
