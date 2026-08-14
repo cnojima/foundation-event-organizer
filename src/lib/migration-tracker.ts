@@ -91,9 +91,33 @@ export function getActiveDestinations(): MigrationDestinationRow[] {
     .all();
 }
 
+export type ClassificationStandard = {
+  classification: Classification;
+  slotsByTier: Record<Tier, number>;
+};
+
+// The global classification x tier -> default cap table (seeded once, only
+// ever hand-edited via db:studio per the schema.ts comment). Read-only
+// helper for surfaces that explain the standard rather than a specific
+// destination's (possibly overridden) allocations — e.g. the public
+// tracker's "how slots are split" legend.
+export function getClassificationStandards(): ClassificationStandard[] {
+  const rows = db.select().from(classificationDefaultAllocations).all();
+  return (["high", "mid", "low"] as Classification[]).map((classification) => ({
+    classification,
+    slotsByTier: Object.fromEntries(
+      TIER_ORDER.map((tier) => [
+        tier,
+        rows.find((r) => r.classification === classification && r.tier === tier)?.maxSlots ?? 0,
+      ])
+    ) as Record<Tier, number>,
+  }));
+}
+
 export type TierSummary = {
   tier: Tier;
   flavorName: string;
+  minPower: number | null; // null for the bottom (catch-all) tier
   cap: number;
   reserved: number; // applied + accepted — counts against cap
   waitlisted: number;
@@ -129,6 +153,7 @@ export function getCapacitySummary(destinationId: string): TierSummary[] {
     return {
       tier,
       flavorName: threshold?.flavorName ?? tier,
+      minPower: threshold?.minPower ?? null,
       cap,
       reserved,
       waitlisted,
