@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+
+type EditableField = "desiredGuild" | "gameUid";
 
 type QueueApplication = {
   id: string;
@@ -32,8 +34,34 @@ export function MigrationQueueRow({
   const [confirmRemove, setConfirmRemove] = useState(false);
   const [desiredGuild, setDesiredGuild] = useState(application.desiredGuild ?? "");
   const [gameUid, setGameUid] = useState(application.gameUid ?? "");
+  const [savedFlash, setSavedFlash] = useState<Record<EditableField, boolean>>({
+    desiredGuild: false,
+    gameUid: false,
+  });
+  const flashTimers = useRef<Partial<Record<EditableField, ReturnType<typeof setTimeout>>>>({});
 
-  async function saveField(field: "desiredGuild" | "gameUid", value: string) {
+  useEffect(() => {
+    const timers = flashTimers.current;
+    return () => {
+      Object.values(timers).forEach((timer) => clearTimeout(timer));
+    };
+  }, []);
+
+  function flashSaved(field: EditableField) {
+    clearTimeout(flashTimers.current[field]);
+    setSavedFlash((prev) => ({ ...prev, [field]: true }));
+    flashTimers.current[field] = setTimeout(() => {
+      setSavedFlash((prev) => ({ ...prev, [field]: false }));
+    }, 600);
+  }
+
+  function inlineFieldClassName(saved: boolean): string {
+    return saved
+      ? "w-28 rounded border border-emerald-400 bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 transition-colors duration-700 dark:border-emerald-500 dark:text-gray-400"
+      : "w-28 rounded border border-transparent bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 transition-colors duration-700 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:text-gray-400 dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800";
+  }
+
+  async function saveField(field: EditableField, value: string) {
     const trimmed = value.trim() || null;
     const original = (field === "gameUid" ? application.gameUid : application.desiredGuild) ?? null;
     if (trimmed === original) return;
@@ -48,6 +76,7 @@ export function MigrationQueueRow({
       setError(data?.error ?? t("errorGeneric"));
       return;
     }
+    flashSaved(field);
     router.refresh();
   }
 
@@ -85,7 +114,7 @@ export function MigrationQueueRow({
               value={desiredGuild}
               onChange={(e) => setDesiredGuild(e.target.value)}
               onBlur={(e) => saveField("desiredGuild", e.target.value)}
-              className="w-28 rounded border border-transparent bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:text-gray-400 dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800"
+              className={inlineFieldClassName(savedFlash.desiredGuild)}
             />
             <input
               type="text"
@@ -94,7 +123,7 @@ export function MigrationQueueRow({
               value={gameUid}
               onChange={(e) => setGameUid(e.target.value)}
               onBlur={(e) => saveField("gameUid", e.target.value)}
-              className="w-28 rounded border border-transparent bg-transparent px-1 py-0.5 text-xs font-normal text-gray-500 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:text-gray-400 dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800"
+              className={inlineFieldClassName(savedFlash.gameUid)}
             />
           </div>
         </td>
