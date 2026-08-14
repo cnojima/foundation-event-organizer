@@ -739,6 +739,8 @@ export const migrationApplications = sqliteTable("migration_applications", {
   sourceServer: text("source_server").notNull(),
   power: integer("power").notNull(),
   tier: text("tier", { enum: ["ultra_high", "high", "mid", "low"] }).notNull(),
+  desiredGuild: text("desired_guild"),
+  gameUid: text("game_uid"),
   contact: text("contact"),
   status: text("status", {
     enum: ["applied", "waitlisted", "accepted", "denied", "withdrawn", "removed_by_admin"],

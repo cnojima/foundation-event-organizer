@@ -70,6 +70,7 @@ export type AuditAction =
   | "migration.submit"
   | "migration.import"
   | "migration.edit"
+  | "migration.admin_edit"
   | "migration.withdraw"
   | "migration.accept"
   | "migration.deny"

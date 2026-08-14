@@ -189,6 +189,8 @@ export type SubmitApplicationInput = {
   playerName: string;
   sourceServer: string;
   power: number;
+  desiredGuild: string | null;
+  gameUid: string | null;
   contact: string | null;
 };
 
@@ -246,6 +248,8 @@ export function submitApplication(input: SubmitApplicationInput): SubmitApplicat
       sourceServer: input.sourceServer,
       power: input.power,
       tier,
+      desiredGuild: input.desiredGuild,
+      gameUid: input.gameUid,
       contact: input.contact,
       status,
       reviewedByUserId: null,
@@ -263,6 +267,8 @@ export function submitApplication(input: SubmitApplicationInput): SubmitApplicat
 export type EditApplicationInput = {
   sourceServer?: string;
   power?: number;
+  desiredGuild?: string | null;
+  gameUid?: string | null;
   contact?: string | null;
 };
 
@@ -333,6 +339,9 @@ export function editApplicationByToken(
     const updated: MigrationApplicationRow = {
       ...application,
       sourceServer: updates.sourceServer ?? application.sourceServer,
+      desiredGuild:
+        updates.desiredGuild === undefined ? application.desiredGuild : updates.desiredGuild,
+      gameUid: updates.gameUid === undefined ? application.gameUid : updates.gameUid,
       contact: updates.contact === undefined ? application.contact : updates.contact,
       power,
       tier,
@@ -342,6 +351,8 @@ export function editApplicationByToken(
     tx.update(migrationApplications)
       .set({
         sourceServer: updated.sourceServer,
+        desiredGuild: updated.desiredGuild,
+        gameUid: updated.gameUid,
         contact: updated.contact,
         power: updated.power,
         tier: updated.tier,
@@ -353,6 +364,42 @@ export function editApplicationByToken(
 
     return { ok: true as const, application: updated };
   });
+}
+
+export type EditApplicationByAdminInput = {
+  desiredGuild?: string | null;
+  gameUid?: string | null;
+};
+
+// Admin/officer correction path for reference fields that don't affect
+// capacity or status — unlike editApplicationByToken, not gated on
+// applied/waitlisted status or window closure, since fixing a game UID or
+// desired guild after a decision is still useful.
+export function editApplicationByAdmin(
+  applicationId: string,
+  updates: EditApplicationByAdminInput
+): EditApplicationResult {
+  const application = db
+    .select()
+    .from(migrationApplications)
+    .where(eq(migrationApplications.id, applicationId))
+    .get();
+  if (!application) {
+    return { ok: false as const, reason: "Application not found", status: 404 as const };
+  }
+  const now = new Date().toISOString();
+  const updated: MigrationApplicationRow = {
+    ...application,
+    desiredGuild:
+      updates.desiredGuild === undefined ? application.desiredGuild : updates.desiredGuild,
+    gameUid: updates.gameUid === undefined ? application.gameUid : updates.gameUid,
+    updatedAt: now,
+  };
+  db.update(migrationApplications)
+    .set({ desiredGuild: updated.desiredGuild, gameUid: updated.gameUid, updatedAt: now })
+    .where(eq(migrationApplications.id, applicationId))
+    .run();
+  return { ok: true as const, application: updated };
 }
 
 export type WithdrawResult =

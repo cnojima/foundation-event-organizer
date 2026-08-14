@@ -129,8 +129,10 @@ export default async function MigrationDestinationQueuePage({
               <tr>
                 <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
                 <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colTier")}</th>
                 <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
+                <th className="px-3 py-2 font-semibold">{t("colTier")}</th>
+                <th className="px-3 py-2 font-semibold">{t("colDesiredGuild")}</th>
+                <th className="px-3 py-2 font-semibold">{t("colGameUid")}</th>
                 <th className="px-3 py-2 font-semibold">{t("colStatus")}</th>
                 <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
               </tr>
@@ -140,8 +142,10 @@ export default async function MigrationDestinationQueuePage({
                 <tr key={a.id} className="border-t border-gray-100 dark:border-gray-800">
                   <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">{a.playerName}</td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.sourceServer}</td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{tierLabel[a.tier as Tier] ?? a.tier}</td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
+                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{tierLabel[a.tier as Tier] ?? a.tier}</td>
+                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.desiredGuild ?? "—"}</td>
+                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.gameUid ?? "—"}</td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
                     {APPLICATION_STATUS_LABEL[a.status] ?? a.status}
                   </td>
@@ -185,6 +189,8 @@ export default async function MigrationDestinationQueuePage({
                           playerName: a.playerName,
                           sourceServer: a.sourceServer,
                           power: a.power,
+                          desiredGuild: a.desiredGuild,
+                          gameUid: a.gameUid,
                           contact: a.contact,
                           createdAt: a.createdAt,
                         }}
@@ -221,6 +227,8 @@ export default async function MigrationDestinationQueuePage({
                             sourceServer: a.sourceServer,
                             power: a.power,
                             contact: a.contact,
+                            gameUid: a.gameUid,
+                            desiredGuild: a.desiredGuild,
                             createdAt: a.createdAt,
                           }}
                           showRemove={isServerAdmin}

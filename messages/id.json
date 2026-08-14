@@ -1006,6 +1006,7 @@
     "powerLabel": "Kekuatan *",
     "powerPlaceholder": "misalnya 95.000.000",
     "powerHelp": "Tingkat keanggotaan Anda ditentukan secara otomatis dari angka ini.",
+    "gameUidLabel": "UID Game",
     "contactLabel": "Kontak",
     "contactPlaceholder": "Nama pengguna Discord",
     "contactHelp": "Membantu petugas menghubungi Anda jika ada pertanyaan.",
@@ -1019,7 +1020,10 @@
     "saveLinkHeading": "Simpan tautan ini — Anda tidak akan melihatnya lagi.",
     "saveLinkBody": "Gunakan tautan ini untuk mengedit aplikasi Anda atau menariknya kembali nanti. Tidak ada akun, jadi tautan ini adalah satu-satunya cara untuk masuk kembali.",
     "copyLink": "Salin tautan",
-    "copied": "Disalin!"
+    "copied": "Disalin!",
+    "desiredGuildLabel": "Persekutuan yang Diinginkan",
+    "desiredGuildPlaceholder": "misalnya HUKUM",
+    "gameUidPlaceholder": "misalnya 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Aplikasi Anda",
@@ -1036,6 +1040,8 @@
     "sourceServerLabel": "Server sumber",
     "powerLabel": "Kekuatan",
     "powerHelp": "Mengubah ini akan menghitung ulang tingkatan Anda dan dapat memindahkan Anda ke dalam atau keluar dari daftar tunggu.",
+    "desiredGuildLabel": "Serikat yang diinginkan",
+    "gameUidLabel": "UID Game",
     "contactLabel": "Kontak",
     "saveButton": "Simpan perubahan",
     "withdrawButton": "Permohonan penarikan",
@@ -1064,9 +1070,13 @@
     "colSourceServer": "Server sumber",
     "colPower": "Kekuatan",
     "colTier": "Tingkat",
+    "colDesiredGuild": "Serikat yang diinginkan",
+    "colGameUid": "UID Game",
     "colStatus": "Status",
     "colApplied": "Terapan",
     "colActions": "Tindakan",
+    "desiredGuildPlaceholder": "Serikat yang diinginkan",
+    "gameUidPlaceholder": "UID Game",
     "waitlistHeading": "Daftar Tunggu",
     "empty": "Tidak ada aplikasi yang sedang diproses.",
     "emptyRoster": "Tidak ada permohonan yang diajukan untuk periode ini.",
@@ -1087,8 +1097,6 @@
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",
     "pasteLabel": "Tempel data CSV atau TSV",
-    "pastePlaceholder": "playerName sourceServer power contact Example Name Server 42 95000000 @example",
-    "pasteHint": "Baris pertama harus berupa judul kolom. Salin-tempel langsung dari spreadsheet — koma dan tab sama-sama didukung. Judul yang dikenali: Pemain/Nama/IGN, Server Sumber/Asal, Kekuatan, Kontak/Discord (opsional).",
     "windowNotOpen": "Jendela migrasi ini belum dibuka, jadi baris yang diimpor belum dapat diterima.",
     "missingColumns": "Kolom yang dibutuhkan tidak ditemukan: {fields} Tambahkan baris header dengan kolom-kolom ini dan tempel lagi.",
     "summary": "{valid} baris siap diimpor, {invalid} dengan kesalahan yang akan dilewati.",
@@ -1097,11 +1105,15 @@
     "colPlayer": "Pemain",
     "colSourceServer": "Server sumber",
     "colPower": "Kekuatan",
+    "colDesiredGuild": "Serikat yang diinginkan",
+    "colGameUid": "UID Game",
     "colContact": "Kontak",
     "colResult": "Hasil",
     "resultPending": "Siap",
     "resultImported": "Diimpor ( {status} )",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Baris pertama harus berupa judul kolom. Salin-tempel langsung dari spreadsheet — koma dan tab sama-sama didukung. Judul yang dikenali: Pemain/Nama/IGN, Server Sumber/Asal, Kekuatan, Guild yang Diinginkan (opsional), UID Game (opsional), Kontak/Discord (opsional)."
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Petugas",

@@ -1008,6 +1008,7 @@
     "powerLabel": "Poder *",
     "powerPlaceholder": "Exemplo: 95.000.000",
     "powerHelp": "Seu nível é determinado automaticamente a partir desse número.",
+    "gameUidLabel": "ID do jogo",
     "contactLabel": "Contato",
     "contactPlaceholder": "Nome de usuário do Discord",
     "contactHelp": "Ajuda os agentes a entrarem em contato com você para tirar dúvidas.",
@@ -1021,7 +1022,10 @@
     "saveLinkHeading": "Guarde este link — você não o verá novamente.",
     "saveLinkBody": "Use este link para editar sua inscrição ou cancelá-la posteriormente. Não há conta, portanto, este link é a única maneira de acessar novamente.",
     "copyLink": "Copiar link",
-    "copied": "Copiado!"
+    "copied": "Copiado!",
+    "desiredGuildLabel": "Guilda desejada",
+    "desiredGuildPlaceholder": "por exemplo, LEI",
+    "gameUidPlaceholder": "Exemplo: 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Sua candidatura",
@@ -1038,6 +1042,8 @@
     "sourceServerLabel": "Servidor de origem",
     "powerLabel": "Poder",
     "powerHelp": "Alterar isso redefine seu nível e pode fazer com que você entre ou saia da lista de espera.",
+    "desiredGuildLabel": "Guilda desejada",
+    "gameUidLabel": "ID do jogo",
     "contactLabel": "Contato",
     "saveButton": "Salvar alterações",
     "withdrawButton": "Retirar candidatura",
@@ -1066,9 +1072,13 @@
     "colSourceServer": "Servidor de origem",
     "colPower": "Poder",
     "colTier": "Nível",
+    "colDesiredGuild": "Guilda desejada",
+    "colGameUid": "ID do jogo",
     "colStatus": "Status",
     "colApplied": "Aplicado",
     "colActions": "Ações",
+    "desiredGuildPlaceholder": "Guilda desejada",
+    "gameUidPlaceholder": "ID do jogo",
     "waitlistHeading": "Lista de espera",
     "empty": "Não há candidaturas pendentes.",
     "emptyRoster": "Nenhuma candidatura foi submetida para este período.",
@@ -1089,8 +1099,6 @@
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",
     "pasteLabel": "Cole os dados em formato CSV ou TSV.",
-    "pastePlaceholder": "playerName sourceServer power contact Exemplo de servidor de nomes 42 95000000 @example",
-    "pasteHint": "A primeira linha deve conter os cabeçalhos das colunas. Copie e cole diretamente de uma planilha — vírgulas e tabulações são suportadas. Cabeçalhos reconhecidos: Jogador/Nome/IGN, Servidor de origem/Origem, Poder, Contato/Discord (opcional).",
     "windowNotOpen": "Esta janela de migração não está aberta, portanto, as linhas importadas ainda não podem ser admitidas.",
     "missingColumns": "Não foi possível encontrar as colunas necessárias: {fields} Adicione uma linha de cabeçalho com essas colunas e cole novamente.",
     "summary": "{valid} linha(s) pronta(s) para importar, {invalid} com erros que serão ignorados.",
@@ -1099,11 +1107,15 @@
     "colPlayer": "Jogador",
     "colSourceServer": "Servidor de origem",
     "colPower": "Poder",
+    "colDesiredGuild": "Guilda desejada",
+    "colGameUid": "ID do jogo",
     "colContact": "Contato",
     "colResult": "Resultado",
     "resultPending": "Preparar",
     "resultImported": "Importado ( {status} )",
-    "errorGeneric": "Algo deu errado."
+    "errorGeneric": "Algo deu errado.",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Exemplo de nome do servidor: 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "A primeira linha deve conter os cabeçalhos das colunas. Copie e cole diretamente de uma planilha — vírgulas e tabulações são suportadas. Cabeçalhos reconhecidos: Jogador/Nome/IGN, Servidor de Origem, Poder, Guilda Desejada (opcional), UID do Jogo (opcional), Contato/Discord (opcional)."
   },
   "migrationTrackerOfficers": {
     "title": "Servidor nº {serverNumber} — Oficiais",

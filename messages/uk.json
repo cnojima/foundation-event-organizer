@@ -1008,6 +1008,7 @@
     "powerLabel": "Потужність *",
     "powerPlaceholder": "наприклад, 95 000 000",
     "powerHelp": "Ваш рівень визначається автоматично на основі цього числа.",
+    "gameUidLabel": "UID гри",
     "contactLabel": "Контакти",
     "contactPlaceholder": "Десктоп Discord",
     "contactHelp": "Допомагає офіцерам зв'язатися з вами з питаннями.",
@@ -1021,7 +1022,10 @@
     "saveLinkHeading": "Збережіть це посилання — ви його більше не побачите.",
     "saveLinkBody": "Використайте його для редагування заявки або її відкликання пізніше. Облікового запису немає, тому це посилання — єдиний шлях назад.",
     "copyLink": "Копіювати посилання",
-    "copied": "Скопійовано!"
+    "copied": "Скопійовано!",
+    "desiredGuildLabel": "Бажана гільдія",
+    "desiredGuildPlaceholder": "наприклад, ЗАКОН",
+    "gameUidPlaceholder": "наприклад, 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Ваша заявка",
@@ -1038,6 +1042,8 @@
     "sourceServerLabel": "Вихідний сервер",
     "powerLabel": "Потужність",
     "powerHelp": "Зміна цього параметра повторно визначає ваш рівень і може перемістити вас до списку очікування або з нього.",
+    "desiredGuildLabel": "Бажана гільдія",
+    "gameUidLabel": "UID гри",
     "contactLabel": "Контакти",
     "saveButton": "Зберегти зміни",
     "withdrawButton": "Відкликати заявку",
@@ -1066,9 +1072,13 @@
     "colSourceServer": "Вихідний сервер",
     "colPower": "Потужність",
     "colTier": "Рівень",
+    "colDesiredGuild": "Бажана гільдія",
+    "colGameUid": "UID гри",
     "colStatus": "Статус",
     "colApplied": "Застосовано",
     "colActions": "Дії",
+    "desiredGuildPlaceholder": "Бажана гільдія",
+    "gameUidPlaceholder": "UID гри",
     "waitlistHeading": "Список очікування",
     "empty": "Немає заявок, що очікують розгляду.",
     "emptyRoster": "На це вікно не було подано жодної заявки.",
@@ -1089,8 +1099,6 @@
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",
     "pasteLabel": "Вставити дані CSV або TSV",
-    "pastePlaceholder": "playerName sourceServer power contact Приклад сервера імен 42 95000000 @example",
-    "pasteHint": "Перший рядок має бути заголовками стовпців. Скопіюйте та вставте безпосередньо з електронної таблиці — підтримуються коми та табуляція. Розпізнавані заголовки: Гравець/Ім'я/IGN, Вихідний сервер/Походження, Сила, Контакт/Discord (необов'язково).",
     "windowNotOpen": "Це вікно міграції не відкрите, тому імпортовані рядки ще не можуть бути допущені.",
     "missingColumns": "Не вдалося знайти обов'язкові стовпці: {fields} Додайте рядок заголовка з цими стовпцями та вставте його знову.",
     "summary": "{valid} рядок(ки) готовий(і) до імпорту, {invalid} з помилками, які будуть пропущені.",
@@ -1099,11 +1107,15 @@
     "colPlayer": "Гравець",
     "colSourceServer": "Вихідний сервер",
     "colPower": "Потужність",
+    "colDesiredGuild": "Бажана гільдія",
+    "colGameUid": "UID гри",
     "colContact": "Контакти",
     "colResult": "Результат",
     "resultPending": "Готовий",
     "resultImported": "Імпортовано ( {status} )",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUID contact Приклад імені сервера 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Перший рядок має бути заголовками стовпців. Скопіюйте та вставте безпосередньо з електронної таблиці — підтримуються коми та табуляція. Розпізнавані заголовки: Гравець/Ім'я/IGN, Вихідний сервер/Походження, Влада, Бажана гільдія (необов'язково), UID гри (необов'язково), Контакт/Discord (необов'язково)."
   },
   "migrationTrackerOfficers": {
     "title": "Сервер № {serverNumber} — Офіцери",

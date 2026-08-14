@@ -14,6 +14,12 @@ export async function POST(req: Request) {
   const playerName = typeof body.playerName === "string" ? body.playerName.trim() : "";
   const sourceServer = typeof body.sourceServer === "string" ? body.sourceServer.trim() : "";
   const power = Number(body.power);
+  const desiredGuild =
+    typeof body.desiredGuild === "string" && body.desiredGuild.trim() !== ""
+      ? body.desiredGuild.trim()
+      : null;
+  const gameUid =
+    typeof body.gameUid === "string" && body.gameUid.trim() !== "" ? body.gameUid.trim() : null;
   const contact =
     typeof body.contact === "string" && body.contact.trim() !== "" ? body.contact.trim() : null;
 
@@ -28,6 +34,12 @@ export async function POST(req: Request) {
   }
   if (!Number.isFinite(power) || power < 0 || !Number.isInteger(power)) {
     return NextResponse.json({ error: "Power must be a whole number" }, { status: 400 });
+  }
+  if (desiredGuild && desiredGuild.length > 60) {
+    return NextResponse.json({ error: "Desired guild is too long" }, { status: 400 });
+  }
+  if (gameUid && gameUid.length > 60) {
+    return NextResponse.json({ error: "Game UID is too long" }, { status: 400 });
   }
   if (contact && contact.length > 120) {
     return NextResponse.json({ error: "Contact is too long" }, { status: 400 });
@@ -46,6 +58,8 @@ export async function POST(req: Request) {
     playerName,
     sourceServer,
     power,
+    desiredGuild,
+    gameUid,
     contact,
   });
   if (!result.ok) {

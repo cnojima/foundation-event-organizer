@@ -1008,6 +1008,7 @@
     "powerLabel": "Strøm *",
     "powerPlaceholder": "f.eks. 95 000 000",
     "powerHelp": "Nivået ditt bestemmes automatisk fra dette tallet.",
+    "gameUidLabel": "Spill-UID",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Discord-håndtak",
     "contactHelp": "Hjelper betjenter med å nå deg med spørsmål.",
@@ -1021,7 +1022,10 @@
     "saveLinkHeading": "Lagre denne lenken – du vil ikke se den igjen.",
     "saveLinkBody": "Bruk den til å redigere søknaden din eller trekke deg senere. Det finnes ingen konto, så denne lenken er den eneste veien tilbake.",
     "copyLink": "Kopier lenke",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "desiredGuildLabel": "Ønsket laug",
+    "desiredGuildPlaceholder": "f.eks. LOV",
+    "gameUidPlaceholder": "f.eks. 423456789"
   },
   "migrationTrackerEdit": {
     "title": "Søknaden din",
@@ -1038,6 +1042,8 @@
     "sourceServerLabel": "Kildeserver",
     "powerLabel": "Makt",
     "powerHelp": "Hvis du endrer dette, endres nivået ditt, og du kan bli flyttet på eller av ventelisten.",
+    "desiredGuildLabel": "Ønsket laug",
+    "gameUidLabel": "Spill-UID",
     "contactLabel": "Kontakt",
     "saveButton": "Lagre endringer",
     "withdrawButton": "Trekk tilbake søknaden",
@@ -1066,9 +1072,13 @@
     "colSourceServer": "Kildeserver",
     "colPower": "Makt",
     "colTier": "Nivå",
+    "colDesiredGuild": "Ønsket laug",
+    "colGameUid": "Spill-UID",
     "colStatus": "Status",
     "colApplied": "Anvendt",
     "colActions": "Handlinger",
+    "desiredGuildPlaceholder": "Ønsket laug",
+    "gameUidPlaceholder": "Spill-UID",
     "waitlistHeading": "Venteliste",
     "empty": "Ingen ventende søknader.",
     "emptyRoster": "Ingen søknader ble sendt inn for dette vinduet.",
@@ -1089,8 +1099,6 @@
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importer applikasjoner",
     "pasteLabel": "Lim inn CSV- eller TSV-data",
-    "pastePlaceholder": "spillerNavn kildeServer strømkontakt Eksempel Navneserver 42 95000000 @eksempel",
-    "pasteHint": "Første rad må være kolonneoverskrifter. Kopier og lim inn direkte fra et regneark – både komma og tabulatorer støttes. Gjenkjente overskrifter: Spiller/Navn/IGN, Kildeserver/Opprinnelse, Strøm, Kontakt/Discord (valgfritt).",
     "windowNotOpen": "Dette migreringsvinduet er ikke åpent, så importerte rader kan ikke tas imot ennå.",
     "missingColumns": "Finner ikke obligatoriske kolonner: {fields} Legg til en overskriftsrad med disse kolonnene og lim inn på nytt.",
     "summary": "{valid} rad(er) klar til import, {invalid} med feil som vil bli hoppet over.",
@@ -1099,11 +1107,15 @@
     "colPlayer": "Spiller",
     "colSourceServer": "Kildeserver",
     "colPower": "Makt",
+    "colDesiredGuild": "Ønsket laug",
+    "colGameUid": "Spill-UID",
     "colContact": "Kontakt",
     "colResult": "Resultat",
     "resultPending": "Ferdig",
     "resultImported": "Importert ( {status} )",
-    "errorGeneric": "Noe gikk galt."
+    "errorGeneric": "Noe gikk galt.",
+    "pastePlaceholder": "spillernavn kilde Server strøm ønsket Laug spillUid kontakt Eksempel navn Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Første rad må være kolonneoverskrifter. Kopier og lim inn direkte fra et regneark – både komma og tabulatorer støttes. Gjenkjente overskrifter: Spiller/Navn/IGN, Kildeserver/Opprinnelse, Strøm, Ønsket Guild (valgfritt), Spill-UID (valgfritt), Kontakt/Discord (valgfritt)."
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Offiserer",

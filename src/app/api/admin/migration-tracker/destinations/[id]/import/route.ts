@@ -53,6 +53,12 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       playerName: typeof row.playerName === "string" ? row.playerName.trim() : "",
       sourceServer: typeof row.sourceServer === "string" ? row.sourceServer.trim() : "",
       power: typeof row.power === "number" ? row.power : null,
+      desiredGuild:
+        typeof row.desiredGuild === "string" && row.desiredGuild.trim() !== ""
+          ? row.desiredGuild.trim()
+          : null,
+      gameUid:
+        typeof row.gameUid === "string" && row.gameUid.trim() !== "" ? row.gameUid.trim() : null,
       contact:
         typeof row.contact === "string" && row.contact.trim() !== "" ? row.contact.trim() : null,
     };
@@ -73,6 +79,8 @@ export async function POST(req: Request, { params }: { params: Promise<{ id: str
       playerName: row.playerName,
       sourceServer: row.sourceServer,
       power: row.power as number,
+      desiredGuild: row.desiredGuild,
+      gameUid: row.gameUid,
       contact: row.contact,
     });
 

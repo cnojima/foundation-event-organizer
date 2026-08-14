@@ -8,6 +8,8 @@ const FIELD_LABEL_KEYS: Record<ImportField, string> = {
   playerName: "colPlayer",
   sourceServer: "colSourceServer",
   power: "colPower",
+  desiredGuild: "colDesiredGuild",
+  gameUid: "colGameUid",
   contact: "colContact",
 };
 
@@ -46,6 +48,8 @@ export function MigrationImportForm({
           playerName: r.playerName,
           sourceServer: r.sourceServer,
           power: r.power,
+          desiredGuild: r.desiredGuild,
+          gameUid: r.gameUid,
           contact: r.contact,
         })),
       }),
@@ -135,6 +139,8 @@ export function MigrationImportForm({
                   <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
                   <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
                   <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
+                  <th className="px-3 py-2 font-semibold">{t("colDesiredGuild")}</th>
+                  <th className="px-3 py-2 font-semibold">{t("colGameUid")}</th>
                   <th className="px-3 py-2 font-semibold">{t("colContact")}</th>
                   <th className="px-3 py-2 font-semibold">{t("colResult")}</th>
                 </tr>
@@ -153,6 +159,8 @@ export function MigrationImportForm({
                       <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
                         {r.power !== null ? r.power.toLocaleString() : "—"}
                       </td>
+                      <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{r.desiredGuild ?? "—"}</td>
+                      <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{r.gameUid ?? "—"}</td>
                       <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{r.contact ?? "—"}</td>
                       <td className="px-3 py-2">
                         {outcome ? (

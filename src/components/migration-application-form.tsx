@@ -25,6 +25,8 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
   const [playerName, setPlayerName] = useState("");
   const [sourceServer, setSourceServer] = useState("");
   const [power, setPower] = useState("");
+  const [desiredGuild, setDesiredGuild] = useState("");
+  const [gameUid, setGameUid] = useState("");
   const [contact, setContact] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +59,8 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
         playerName: playerName.trim(),
         sourceServer: sourceServer.trim(),
         power: powerNumber,
+        desiredGuild: desiredGuild.trim() || undefined,
+        gameUid: gameUid.trim() || undefined,
         contact: contact.trim() || undefined,
       }),
     });
@@ -166,6 +170,34 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
           onChange={setPower}
         />
         <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">{t("powerHelp")}</p>
+      </div>
+      <div>
+        <label htmlFor="mt-desired-guild" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
+          {t("desiredGuildLabel")} <span className="text-gray-400">({tc("optional")})</span>
+        </label>
+        <input
+          id="mt-desired-guild"
+          type="text"
+          maxLength={60}
+          placeholder={t("desiredGuildPlaceholder")}
+          value={desiredGuild}
+          onChange={(e) => setDesiredGuild(e.target.value)}
+          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+        />
+      </div>
+      <div>
+        <label htmlFor="mt-game-uid" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
+          {t("gameUidLabel")} <span className="text-gray-400">({tc("optional")})</span>
+        </label>
+        <input
+          id="mt-game-uid"
+          type="text"
+          maxLength={60}
+          placeholder={t("gameUidPlaceholder")}
+          value={gameUid}
+          onChange={(e) => setGameUid(e.target.value)}
+          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+        />
       </div>
       <div>
         <label htmlFor="mt-contact" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
