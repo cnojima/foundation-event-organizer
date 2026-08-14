@@ -46,7 +46,7 @@
     "myAccount": "내 계정"
   },
   "alerts": {
-    "heading": "{count, plural, one {# notification} 기타 {# notifications} }",
+    "heading": "{count, plural, one { # 알림 } other { # 알림 } }",
     "discord_unlinked": {
       "title": "듀얼 DM을 활성화하려면 디스코드 링크를 연결하세요.",
       "body": "구글 계정으로 가입하셨군요. 디스코드 계정을 연결하시면 누군가 결투를 신청할 때 봇이 DM을 보낼 수 있습니다.",
@@ -91,7 +91,7 @@
     "closed": "닫은",
     "signUp": "모이자",
     "signedUp": "✓ 가입 완료",
-    "signupCount": "{count, plural, =0 {No signups} 하나 {# signup} 기타 {# signups} }",
+    "signupCount": "{count, plural, =0 { 가입 없음 } one { # 가입 } other { # 가입 } }",
     "youreSignedUp": "가입이 완료되었습니다!",
     "youreOnWaitlist": "당신은 대기자 명단에 있습니다.",
     "waitlistExplanation": "현재 모든 선수단 및 후보 선수 자리가 마감되었습니다. 자리가 생기면 알려드리겠습니다. 아래에서 선호 사항을 계속 업데이트하실 수 있습니다.",
@@ -238,8 +238,8 @@
     "record": "기록",
     "reputation": "평판",
     "lastActive": "마지막 결투",
-    "duelsTotal": "{count, plural, =0 {No duels} 하나 {# duel} 다른 {# duels} }",
-    "reputationSub": "{count, plural, one {# rating} 기타 {# ratings} }",
+    "duelsTotal": "{count, plural, =0 { 결투 없음 } one { # 결투 } other { # 결투 } }",
+    "reputationSub": "{count, plural, one { # 평점 } other { # 평점 } }",
     "reputationNotEnough": "평점 5점 이상 필요",
     "historyHeading": "결투 역사",
     "historyEmpty": "아직 완료된 결투가 없습니다.",
@@ -252,7 +252,7 @@
     "attendanceHeading": "경기 관람",
     "attendanceEmpty": "이 길드에는 아직 매치 신청이 없습니다.",
     "attendanceTotalSignups": "총 이벤트 수",
-    "attendanceTotalSignupsSub": "{count, plural, =0 {No events} 하나의 {# event} 기타 {# events} }",
+    "attendanceTotalSignupsSub": "{count, plural, =0 { 이벤트 없음 } one { # 이벤트 } other { # 이벤트 } }",
     "attendanceRate": "출석",
     "attendanceRateValue": "{pct} %",
     "attendanceRateSub": "{attended} / {recorded} 녹음됨",
@@ -295,7 +295,7 @@
     "ratingsHeading": "관리자 평가",
     "ratingsEmpty": "아직 평가가 기록되지 않았습니다.",
     "ratingsAverage": "평균 {avg} /5",
-    "ratingsCount": "{count, plural, one {# rating} 기타 {# ratings} }",
+    "ratingsCount": "{count, plural, one { # 평점 } other { # 평점 } }",
     "ratingsBucketLabel": "{stars} ★",
     "adminNotesHeading": "관리자 메모",
     "adminNotesEmpty": "관리자 메모가 기록되지 않았습니다.",
@@ -305,7 +305,7 @@
   },
   "leaderboard": {
     "title": "순위표",
-    "subtitle": "{count, plural, =0 {No ranked players on your server yet} {# ranked player on your server} 한 명 {# ranked player on your server} {# ranked players on your server} }.",
+    "subtitle": "{count, plural, =0 { 서버에 아직 랭크 플레이어가 없습니다 } one { # 서버에 랭크 플레이어가 있습니다 } other { # 서버에 랭크 플레이어가 있습니다 } } .",
     "serverLabel": "서버 번호 {serverNumber}",
     "howItWorks": "순위는 어떻게 매겨지는가 →",
     "yourRank": "당신의 순위: # {rank} · {rating} 평가",
@@ -320,7 +320,7 @@
   },
   "players": {
     "title": "플레이어 찾기",
-    "subtitle": "{count, plural, =0 {No discoverable players on your server yet} {# discoverable player on your server} 한 명 {# discoverable player on your server} {# discoverable players on your server} }.",
+    "subtitle": "{count, plural, =0 { 서버에 아직 검색 가능한 플레이어가 없습니다 } one { # 서버에 검색 가능한 플레이어 } other { # 서버에 검색 가능한 플레이어 } } .",
     "serverLabel": "서버 번호 {serverNumber}",
     "searchPlaceholder": "게임 내 이름으로 검색…",
     "allTiers": "모든 파워 티어",
@@ -352,7 +352,7 @@
     "noMembers": "아직 길드원이 없습니다.",
     "noSignups": "아직 가입자가 없습니다.",
     "deletedEvent": "삭제된 이벤트",
-    "signupCount": "{count, plural, =0 {0 signups} 하나 {# signup} 기타 {# signups} }",
+    "signupCount": "{count, plural, =0 { 0명 가입 } one { # 가입 } other { # 가입 } }",
     "leadershipNote": "경영진 참고 사항:",
     "assignedSquad": "배정: 분대 {n}",
     "noShow": "노쇼",
@@ -374,7 +374,7 @@
   "membersPage": {
     "title": "회원들",
     "titleNamed": "{guildName} — 회원들",
-    "summary": "{count, plural, one {# member} 다른 {# members} } · {admins, plural, one {# admin} 기타 {# admins} }",
+    "summary": "{count, plural, one { #명 } other { #명 } } · {admins, plural, one { #명 } other { #명 } }",
     "promote": "홍보하다",
     "demote": "강등",
     "kick": "차기",
@@ -460,7 +460,7 @@
     "subtitleNotInGuild": "기존 길드에 가입하거나, 직접 길드를 만들거나, 초대 링크를 사용하세요.",
     "createButton": "길드 생성",
     "noPublicGuilds": "아직 공개 길드가 없습니다. 첫 번째 길드를 만들어 보세요.",
-    "memberCount": "{count, plural, one {# member} 다른 {# members} }",
+    "memberCount": "{count, plural, one { #명 } other { #명 } }",
     "join": "가입하다",
     "joining": "합류…",
     "alreadyInGuild": "당신은 이미 다른 길드에 가입되어 있습니다. 먼저 기존 길드를 탈퇴하고 이 길드에 가입하세요.",
@@ -608,7 +608,7 @@
       "proposeStep4": "사내 규칙, 형식 관련 참고 사항 등을 메시지로 입력하려면 (선택 사항) '제안서 제출'을 클릭하세요.",
       "acceptDeclineHeading": "제안을 수락하거나 거절하세요.",
       "acceptDeclineIntro": "다른 길드에서 제출한 제안은 스크림 대시보드의 '접수 중인 제안' 섹션에 표시됩니다.",
-      "accept": "Accept는 단일 트랜잭션에서 두 개의 대칭 이벤트(길드당 하나씩)를 생성합니다. 각 측의 이벤트 이름은 \"Scrim vs\"입니다.<opponent> \"는 제안된 경기 시간을 시작 시간으로 삼고 일반 경기처럼 팀원 등록을 받습니다. 단, 팀은 하나뿐입니다.",
+      "accept": "Accept는 단일 트랜잭션에서 두 개의 대칭 이벤트(길드당 하나씩)를 생성합니다. 각 측 's event is named \"Scrim vs '<opponent> '\", gets the proposed game time as its start, and accepts member signups like a normal match — except there' 팀은 하나뿐입니다.",
       "decline": "거절(Decline)은 아무런 이벤트도 발생시키지 않고 제안을 거절(Defense)로 변경합니다.",
       "withdraw": "철회(발신 전용)는 상대방이 답변하기 전에 본인의 보류 중인 제안을 취소합니다.",
       "rosterHeading": "스크림 이벤트 참가 명단",
@@ -645,7 +645,7 @@
     "slashCommands": {
       "intro": "봇이 서버에 설치되고 테스트 통합을 통해 채널이 연결되면 회원들은 다음 기능을 사용할 수 있습니다.",
       "upcoming": "/upcoming — 길드의 예정된 이벤트 목록과 각 분대 시작 시간을 보여줍니다. 답글은 일시적입니다(사용자에게만 표시됨).",
-      "signup": "/이벤트 등록:<event> squad:<1|2> — 사용자가 이벤트에 등록됩니다. 이벤트 입력란에는 자동 완성 기능이 있습니다. 사용자는 Discord ID를 길드 계정과 연결할 수 있도록 Discord 계정으로 웹사이트에 최소 한 번 이상 로그인해야 합니다. 로그인한 적이 없는 경우 로그인하라는 메시지가 표시됩니다.",
+      "signup": "/이벤트 등록:'<event> 'squad:'<1|2>' — 사용자가 이벤트에 등록됩니다. 이벤트 입력란에는 자동 완성 기능이 있습니다. 사용자는 Discord ID와 길드 계정을 연결할 수 있도록 Discord 계정으로 웹사이트에 최소 한 번 이상 로그인해야 합니다. 로그인한 적이 없는 경우 로그인하라는 메시지가 표시됩니다.",
       "propagation": "새로운 글로벌 슬래시 명령어는 봇 배포 후 처음 적용될 때 최대 약 1시간이 소요될 수 있습니다. 이후에는 즉시 적용됩니다.",
       "failHeading": "/signup 자동 완성 기능에 \"옵션 불러오기 실패\"라는 메시지가 표시되는 경우",
       "failIntro": "일반적으로 Discord가 오래된 버전의 명령어 스키마를 캐시했거나 봇이 추가될 때 필요한 범위가 누락되었음을 의미합니다. 다음 순서대로 시도해 보세요.",
@@ -866,7 +866,6 @@
       "loadFailed": "설정을 불러올 수 없습니다.",
       "viewHeading": "**알림 설정**",
       "viewLine": "• {label} : ** {state} **",
-      "viewFooter": "`/settings`를 사용하세요.<name> 설정을 변경하려면 `enabled:true` 또는 `false`를 입력하세요.",
       "changed": "** {label} **는 현재 ** {state} 입니다. {state} **.",
       "labels": {
         "voiceInvites": "매치에 대한 음성 채널 초대"
@@ -964,8 +963,8 @@
   "migrationTrackerBanner": {
     "nowOpen": "지금 영업 중",
     "title": "마이그레이션 추적기 — 서버 번호 {serverNumber}",
-    "multiTitle": "{count, plural, one {# server has} 다른 {# servers have} } 마이그레이션 창 열기",
-    "subheadSlotsOpen": "{count, plural, one {# migration slot open across all power tiers} 기타 {# migration slots open across all power tiers} }",
+    "multiTitle": "{count, plural, one { # 서버는 } other { # 서버는 } } 마이그레이션 창을 열어 놓았습니다.",
+    "subheadSlotsOpen": "{count, plural, one { # 모든 전력 등급에 걸쳐 열려 있는 마이그레이션 슬롯 } other { # 모든 전력 등급에 걸쳐 열려 있는 마이그레이션 슬롯 } }",
     "subheadFull": "현재 모든 등급이 매진되었습니다. 대기자 명단에 등록하세요.",
     "subheadDefault": "남은 공간이 얼마나 되는지 확인하고 이전 신청을 하세요.",
     "subheadOpensOn": "오픈",
@@ -992,18 +991,19 @@
     "tierLegendAtLeast": "{power} + 전력",
     "tierLegendBelow": "아래 {power} 힘",
     "classificationLegendLabel": "서버 용량 표준",
-    "classificationLegendHigh": "고성능 서버: {ultraHigh, plural, one {# ultra-high-power Trader} 용 수신 슬롯 {ultraHigh, plural, one {# ultra-high-power Trader} 기타 {# ultra-high-power Traders} }, {high, plural, one {# high-power Trader} 기타 {# high-power Traders} }, {mid, plural, one {# mid-power Trader} 기타 {# mid-power Traders} }, 그리고 {low, plural, one {# low-power Trader} 기타 {# low-power Traders} }",
-    "classificationLegendMid": "중급 서버: {ultraHigh, plural, one {# ultra-high-power Trader} 용 수신 슬롯 {ultraHigh, plural, one {# ultra-high-power Trader} 기타 {# ultra-high-power Traders} }, {high, plural, one {# high-power Trader} 기타 {# high-power Traders} }, {mid, plural, one {# mid-power Trader} 기타 {# mid-power Traders} }, 그리고 {low, plural, one {# low-power Trader} 기타 {# low-power Traders} }",
-    "classificationLegendLow": "저전력 서버: {ultraHigh, plural, one {# ultra-high-power Trader} 용 수신 슬롯 {ultraHigh, plural, one {# ultra-high-power Trader} 기타 {# ultra-high-power Traders} }, {high, plural, one {# high-power Trader} 기타 {# high-power Traders} }, {mid, plural, one {# mid-power Trader} 기타 {# mid-power Traders} }, 그리고 {low, plural, one {# low-power Trader} 기타 {# low-power Traders} }"
+    "classificationLegendMid": "중급 서버: {ultraHigh, plural, one { # ultra-high-power Trader } other { # ultra-high-power Traders } } , {high, plural, one { # high-power Trader } other { # high-power Traders } } , {mid, plural, one { # mid-power Trader } other { # mid-power Traders } } , 및 {low, plural, one { # low-power Trader } other { # low-power Traders } } 에 대한 수신 슬롯"
   },
   "migrationTrackerSubmit": {
     "title": "이주 신청하기",
     "inactive": "이 서버는 현재 마이그레이션을 추적하지 않습니다.",
     "notOpenYet": "마이그레이션 기간은 아직 시작되지 않았습니다. 신청은 가능합니다.",
     "windowClosed": "이민 신청 기간이 종료되었습니다. 더 이상 신청을 받지 않습니다.",
+    "playerNameLabel": "게임 내 이름 *",
+    "playerNamePlaceholder": "예: 쿠리수",
     "sourceServerLabel": "소스 서버 *",
     "sourceServerPlaceholder": "예 #1042",
     "powerLabel": "힘 *",
+    "powerPlaceholder": "예: 95,000,000",
     "powerHelp": "귀하의 등급은 이 숫자를 기준으로 자동으로 결정됩니다.",
     "contactLabel": "연락하다",
     "contactPlaceholder": "디스코드 아이디",
@@ -1018,10 +1018,7 @@
     "saveLinkHeading": "이 링크를 저장해 두세요. 다시는 볼 수 없을 겁니다.",
     "saveLinkBody": "신청서를 수정하거나 나중에 철회하려면 이 링크를 사용하세요. 계정이 없으므로 이 링크가 유일한 복구 방법입니다.",
     "copyLink": "링크 복사",
-    "copied": "복사했어요!",
-    "playerNameLabel": "게임 내 이름 *",
-    "playerNamePlaceholder": "예: 쿠리수",
-    "powerPlaceholder": "예: 95,000,000"
+    "copied": "복사했어요!"
   },
   "migrationTrackerEdit": {
     "title": "귀하의 신청서",

@@ -12,13 +12,19 @@
 // against messages/.translation-cache/<locale>.json). Pass --force to
 // re-translate every key.
 //
-// ICU placeholders ({count}, {name}, etc.) and rich-text tags
+// ICU placeholders ({count}, {name}, etc.), plural/select argument syntax
+// ({count, plural, one {...} other {...}}), and rich-text tags
 // (<feedbackLink>...</feedbackLink>) are wrapped in <span translate="no">
-// before sending to Google so they survive translation, then unwrapped after.
+// before sending to Google so they survive translation, then unwrapped
+// after. Every translated result is also parsed with the same ICU
+// MessageFormat engine next-intl uses at runtime; anything that fails to
+// parse is dropped so the deep-merge in src/i18n/request.ts falls back to
+// the English string instead of shipping a message that throws at render.
 
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { IntlMessageFormat } from "intl-messageformat";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(__dirname, "..");
@@ -138,11 +144,14 @@ async function translateLocale({ locale, en, apiKey, force }) {
     const existingValue = flatExisting[key];
     // Re-translate if the source changed OR the existing translation has
     // structurally broken tags (Google occasionally drops closing tags when
-    // restructuring sentences for non-English grammar).
+    // restructuring sentences for non-English grammar) OR invalid ICU
+    // syntax (catches translations written before the protectPlaceholders
+    // nested-plural fix, or corruption from any other source).
     const stale =
       !existingValue ||
       prevSource !== value ||
-      !hasMatchingTags(value, existingValue);
+      !hasMatchingTags(value, existingValue) ||
+      !isValidIcuMessage(existingValue, locale);
     if (!force && !stale) {
       result[key] = existingValue;
     } else {
@@ -162,34 +171,75 @@ async function translateLocale({ locale, en, apiKey, force }) {
   console.log(`  translating ${toTranslate.length} keys…`);
   const targetLang = GOOGLE_CODE_OVERRIDES[locale] ?? locale;
 
+  // Google's NMT occasionally duplicates or drops a fragment when a string
+  // is short, code-like, and built almost entirely of protected spans (a
+  // terse backtick-wrapped command example with one placeholder is a worse
+  // case for it than an ordinary sentence) — verified non-deterministic
+  // across repeated calls with the exact same input. A couple of retries
+  // clears most of these; anything still broken after that falls back to
+  // English rather than looping forever on a string that may just never
+  // translate cleanly.
+  const MAX_ATTEMPTS = 3;
+  let pending = toTranslate;
   let droppedForBrokenTags = 0;
-  for (let i = 0; i < toTranslate.length; i += MAX_BATCH_SIZE) {
-    if (i > 0) await new Promise((r) => setTimeout(r, 1000));
-    const batch = toTranslate.slice(i, i + MAX_BATCH_SIZE);
-    const wrapped = batch.map((b) => protectPlaceholders(b.value));
-    const translated = await callGoogleTranslate({
-      apiKey,
-      texts: wrapped,
-      target: targetLang,
-    });
-    for (let j = 0; j < batch.length; j++) {
-      const out = unprotectPlaceholders(translated[j]);
-      // Validate the result has the same tag set as the source — Google
-      // sometimes drops closing tags when restructuring for the target
-      // language. Don't persist broken values: omit the key so the
-      // deep-merge fallback in src/i18n/request.ts uses the English
-      // source instead.
-      if (!hasMatchingTags(batch[j].value, out)) {
-        droppedForBrokenTags++;
-        console.warn(`  ! ${batch[j].key}: tag mismatch — falling back to English`);
-        continue;
+  let droppedForInvalidIcu = 0;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS && pending.length > 0; attempt++) {
+    const stillFailing = [];
+    for (let i = 0; i < pending.length; i += MAX_BATCH_SIZE) {
+      if (i > 0 || attempt > 1) await new Promise((r) => setTimeout(r, 1000));
+      const batch = pending.slice(i, i + MAX_BATCH_SIZE);
+      const wrapped = batch.map((b) => protectPlaceholders(b.value));
+      const translated = await callGoogleTranslate({
+        apiKey,
+        texts: wrapped,
+        target: targetLang,
+      });
+      for (let j = 0; j < batch.length; j++) {
+        const out = unprotectPlaceholders(translated[j]);
+        const isLastAttempt = attempt === MAX_ATTEMPTS;
+        // Validate the result has the same tag set as the source — Google
+        // sometimes drops or duplicates protected spans when restructuring
+        // for the target language. Don't persist broken values: omit the
+        // key so the deep-merge fallback in src/i18n/request.ts uses the
+        // English source instead.
+        if (!hasMatchingTags(batch[j].value, out)) {
+          if (isLastAttempt) {
+            droppedForBrokenTags++;
+            console.warn(`  ! ${batch[j].key}: tag mismatch — falling back to English`);
+          } else {
+            stillFailing.push(batch[j]);
+          }
+          continue;
+        }
+        // Belt-and-suspenders: actually parse the result as ICU MessageFormat
+        // the same way next-intl will at runtime. Catches any remaining edge
+        // case protectPlaceholders doesn't anticipate, rather than shipping a
+        // string that throws INVALID_MESSAGE when a page renders.
+        if (!isValidIcuMessage(out, targetLang)) {
+          if (isLastAttempt) {
+            droppedForInvalidIcu++;
+            console.warn(`  ! ${batch[j].key}: invalid ICU syntax — falling back to English`);
+          } else {
+            stillFailing.push(batch[j]);
+          }
+          continue;
+        }
+        result[batch[j].key] = out;
       }
-      result[batch[j].key] = out;
     }
+    if (stillFailing.length > 0 && attempt < MAX_ATTEMPTS) {
+      console.log(`  retrying ${stillFailing.length} key(s) (attempt ${attempt + 1})…`);
+    }
+    pending = stillFailing;
   }
   if (droppedForBrokenTags > 0) {
     console.warn(
       `  dropped ${droppedForBrokenTags} translation(s) with broken tags (fallback to English)`
+    );
+  }
+  if (droppedForInvalidIcu > 0) {
+    console.warn(
+      `  dropped ${droppedForInvalidIcu} translation(s) with invalid ICU syntax (fallback to English)`
     );
   }
 
@@ -243,16 +293,149 @@ async function callGoogleTranslate({ apiKey, texts, target }) {
 
 // ---- Placeholder protection ----
 
-// Wraps {placeholders} and <tags> in <span translate="no"> so Google leaves
-// them alone. ICU placeholders use curlies; rich-text tags (next-intl) use
-// angle brackets like <feedbackLink>...</feedbackLink>.
+// Wraps {placeholders}, <tags>, and ICU quoted-literals ('...') in
+// <span translate="no"> so Google leaves them alone. ICU placeholders use
+// curlies; rich-text tags (next-intl) use angle brackets like
+// <feedbackLink>...</feedbackLink>; ICU quoting ('<name>') escapes text
+// that would otherwise look like tag/argument syntax.
+//
+// Plural/select arguments need special handling: `{count, plural, one {# a}
+// other {# b}}` has *nested* curly braces, so a naive `\{[^}]+\}` match
+// swallows only up to the first inner `}` (i.e. "{count, plural, one {# a}"),
+// leaving " other {# b}" as bare exposed text. Google then translates the
+// literal ICU keyword "other" into the target language, which next-intl
+// can't parse (INVALID_MESSAGE / MISSING_OTHER_CLAUSE) — the whole message
+// throws at render time instead of just failing to translate cleanly.
+//
+// This is a single character-by-character pass that recognizes all three
+// protectable constructs and never re-scans text it has already wrapped —
+// deliberately *not* two passes (e.g. "protect tags globally, then protect
+// ICU syntax"), because a later pass matching bare `<tag>`/`'...'` patterns
+// would also match — and re-wrap — the `<span>`/`'` characters an earlier
+// pass just inserted, or wrap a tag a second time inside a quote span that
+// already contains it. Both produced real corruption in testing (stray
+// empty spans, and Google outright duplicating a sentence when it received
+// doubly-nested spans).
 function protectPlaceholders(text) {
-  return text
-    .replace(/(\{[^}]+\})/g, '<span translate="no">$1</span>')
-    .replace(
-      /(<\/?[a-zA-Z][a-zA-Z0-9]*>)/g,
-      '<span translate="no">$1</span>'
-    );
+  let out = "";
+  let i = 0;
+  while (i < text.length) {
+    const ch = text[i];
+    if (ch === "'") {
+      const end = findIcuQuoteEnd(text, i);
+      out += `<span translate="no">${text.slice(i, end)}</span>`;
+      i = end;
+      continue;
+    }
+    if (ch === "<") {
+      const tagMatch = /^<\/?[a-zA-Z][a-zA-Z0-9]*>/.exec(text.slice(i));
+      if (tagMatch) {
+        out += `<span translate="no">${tagMatch[0]}</span>`;
+        i += tagMatch[0].length;
+        continue;
+      }
+    }
+    if (ch === "{") {
+      const end = findMatchingBrace(text, i);
+      if (end === -1) {
+        // Unbalanced braces — protect the remainder verbatim rather than
+        // risk mangling it further.
+        out += `<span translate="no">${text.slice(i)}</span>`;
+        break;
+      }
+      const inner = text.slice(i + 1, end);
+      const icuMatch = inner.match(
+        /^(\s*[\w#]+\s*,\s*)(plural|select|selectordinal)(\s*,\s*)([\s\S]*)$/
+      );
+      if (icuMatch) {
+        const [, argPart, keyword, sepPart] = icuMatch;
+        const clausesPart = icuMatch[4];
+        out += `<span translate="no">{${argPart}${keyword}${sepPart}</span>`;
+        out += protectIcuClauses(clausesPart);
+        out += `<span translate="no">}</span>`;
+      } else {
+        out += `<span translate="no">{${inner}}</span>`;
+      }
+      i = end + 1;
+      continue;
+    }
+    out += ch;
+    i++;
+  }
+  return out;
+}
+
+// Walks a sequence of "label {sub-message}" clauses — the part of a
+// plural/select argument after its keyword — protecting each label and its
+// braces while recursing into the sub-message so its text stays
+// translatable (and any placeholders/nested plurals inside it stay
+// protected too).
+function protectIcuClauses(text) {
+  let out = "";
+  let i = 0;
+  while (i < text.length) {
+    if (/\s/.test(text[i])) {
+      out += text[i];
+      i++;
+      continue;
+    }
+    const labelMatch = /^[=\w]+/.exec(text.slice(i));
+    if (!labelMatch) {
+      out += `<span translate="no">${text.slice(i)}</span>`;
+      break;
+    }
+    const labelEnd = i + labelMatch[0].length;
+    let braceStart = labelEnd;
+    while (braceStart < text.length && /\s/.test(text[braceStart])) braceStart++;
+    if (text[braceStart] !== "{") {
+      out += `<span translate="no">${text.slice(i)}</span>`;
+      break;
+    }
+    const braceEnd = findMatchingBrace(text, braceStart);
+    if (braceEnd === -1) {
+      out += `<span translate="no">${text.slice(i)}</span>`;
+      break;
+    }
+    const submessage = text.slice(braceStart + 1, braceEnd);
+    out += `<span translate="no">${text.slice(i, braceStart)}{</span>`;
+    out += protectPlaceholders(submessage);
+    out += `<span translate="no">}</span>`;
+    i = braceEnd + 1;
+  }
+  return out;
+}
+
+// Finds the index of the `}` that closes the `{` at openIndex, accounting
+// for nested braces in between. Returns -1 if unbalanced.
+function findMatchingBrace(text, openIndex) {
+  let depth = 0;
+  for (let k = openIndex; k < text.length; k++) {
+    if (text[k] === "{") depth++;
+    else if (text[k] === "}") {
+      depth--;
+      if (depth === 0) return k;
+    }
+  }
+  return -1;
+}
+
+// Finds the index just past the `'` that closes the ICU quoted-literal span
+// starting at openIndex. Per ICU MessageFormat rules, `''` inside a quoted
+// span is an escaped literal apostrophe and does not end the span. Returns
+// text.length (protect to the end) if unterminated.
+function findIcuQuoteEnd(text, openIndex) {
+  let k = openIndex + 1;
+  while (k < text.length) {
+    if (text[k] === "'") {
+      if (text[k + 1] === "'") {
+        k += 2;
+        continue;
+      }
+      return k + 1;
+    }
+    k++;
+  }
+  return text.length;
 }
 
 function unprotectPlaceholders(text) {
@@ -290,6 +473,18 @@ function hasMatchingTags(source, translation) {
   for (const k of Object.keys(a)) if (a[k] !== (b[k] || 0)) return false;
   for (const k of Object.keys(b)) if (a[k] === undefined) return false;
   return true;
+}
+
+// Parses `text` with the same ICU MessageFormat engine next-intl uses at
+// runtime. Strings with no `{...}` at all always pass trivially; this only
+// meaningfully gates plural/select/argument syntax.
+function isValidIcuMessage(text, locale) {
+  try {
+    new IntlMessageFormat(text, locale);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function decodeHtmlEntities(s) {
