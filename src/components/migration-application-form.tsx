@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { PowerInput } from "@/components/power-input";
 
 type SubmittedApplication = {
   playerName: string;
@@ -132,6 +133,7 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
           type="text"
           required
           maxLength={60}
+          placeholder={t("playerNamePlaceholder")}
           value={playerName}
           onChange={(e) => setPlayerName(e.target.value)}
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
@@ -156,17 +158,12 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
         <label htmlFor="mt-power" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
           {t("powerLabel")}
         </label>
-        <input
+        <PowerInput
           id="mt-power"
-          type="number"
-          inputMode="numeric"
           required
-          min={0}
-          step={1}
           placeholder={t("powerPlaceholder")}
           value={power}
-          onChange={(e) => setPower(e.target.value)}
-          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+          onChange={setPower}
         />
         <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">{t("powerHelp")}</p>
       </div>

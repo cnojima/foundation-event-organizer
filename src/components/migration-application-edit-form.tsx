@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { PowerInput } from "@/components/power-input";
 
 type EditableApplication = {
   playerName: string;
@@ -123,17 +124,7 @@ export function MigrationApplicationEditForm({
         <label htmlFor="mte-power" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
           {t("powerLabel")}
         </label>
-        <input
-          id="mte-power"
-          type="number"
-          inputMode="numeric"
-          required
-          min={0}
-          step={1}
-          value={power}
-          onChange={(e) => setPower(e.target.value)}
-          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
-        />
+        <PowerInput id="mte-power" required value={power} onChange={setPower} />
         <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">{t("powerHelp")}</p>
       </div>
       <div>
