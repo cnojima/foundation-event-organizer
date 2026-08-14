@@ -190,20 +190,38 @@ const NAV_ITEMS: NavItem[] = [
   // ---- Platform: site-wide super-admin ----
   { labelKey: "superAdmin", href: "/super-admin", icon: ICONS.shield, visibility: "superAdmin", category: "platform" },
   { labelKey: "damageCalculator", href: "/damage-calculator", icon: ICONS.crosshair, visibility: "superAdmin", category: "platform" },
-
-  // ---- Account: per-user utilities (always visible to signed-in users) ----
-  { labelKey: "myAccount", href: "/me", icon: ICONS.settings, visibility: "signedIn", category: "account" },
-  { labelKey: "help", href: "/help", icon: ICONS.help, visibility: "always", category: "account" },
 ];
+
+// Rendered as siblings of the category sections, not nested inside any of
+// them — so they're never hidden behind a collapsed header (unlike the
+// "account" category, which starts collapsed unless the active route is
+// inside it).
+type TopLevelItem = {
+  labelKey: string;
+  href: string;
+  icon: React.ReactNode;
+  visibility: Visibility;
+};
+
+const TOP_LEVEL_ITEMS: TopLevelItem[] = [
+  { labelKey: "help", href: "/help", icon: ICONS.help, visibility: "always" },
+];
+
+// "onImage" is used by the desktop Sidebar, which renders on top of a dark
+// background image — links need to stay light-on-dark regardless of the
+// site's light/dark mode toggle. MobileNav keeps the default (theme-aware)
+// look since its drawer still uses a plain white/gray-950 background.
+type NavVisualVariant = "default" | "onImage";
 
 type SidebarNavProps = {
   signedIn: boolean;
   guildRole: "admin" | "member" | null;
   isSuperAdmin: boolean;
   hasGuild: boolean;
+  variant?: NavVisualVariant;
 };
 
-function isVisible(item: NavItem, p: SidebarNavProps): boolean {
+function isVisible(item: { visibility: Visibility }, p: SidebarNavProps): boolean {
   switch (item.visibility) {
     case "always":
       return true;
@@ -257,6 +275,47 @@ function isItemActive(pathname: string, href: string): boolean {
   return href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function NavLink({
+  href,
+  icon,
+  label,
+  active,
+  variant,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  active: boolean;
+  variant: NavVisualVariant;
+}) {
+  const linkClass =
+    variant === "onImage"
+      ? active
+        ? "bg-white/10 text-violet-200"
+        : "text-gray-200 hover:bg-white/10 hover:text-white"
+      : active
+        ? "bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-200"
+        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100";
+  const iconClass =
+    variant === "onImage"
+      ? active
+        ? "text-violet-300"
+        : "text-gray-400"
+      : active
+        ? "text-violet-600 dark:text-violet-300"
+        : "text-gray-400 dark:text-gray-500";
+
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${linkClass}`}
+    >
+      <span className={iconClass}>{icon}</span>
+      <span className="uppercase">{label}</span>
+    </Link>
+  );
+}
+
 function CategoryChevron({ open }: { open: boolean }) {
   return (
     <svg
@@ -277,6 +336,7 @@ function CategoryChevron({ open }: { open: boolean }) {
 }
 
 export function SidebarNav(props: SidebarNavProps) {
+  const variant = props.variant ?? "default";
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const impersonatingGuildId = searchParams.get("guildId");
@@ -313,6 +373,14 @@ export function SidebarNav(props: SidebarNavProps) {
     }
   );
 
+  function resolveHref(href: string): string {
+    return impersonatingGuildId && preservesImpersonation(href)
+      ? `${href}?guildId=${impersonatingGuildId}`
+      : href;
+  }
+
+  const topLevelItems = TOP_LEVEL_ITEMS.filter((item) => isVisible(item, props));
+
   return (
     <nav className="flex flex-col gap-4">
       {CATEGORY_ORDER.map((category) => {
@@ -329,49 +397,56 @@ export function SidebarNav(props: SidebarNavProps) {
                   setOpenCategories((prev) => ({ ...prev, [category]: !prev[category] }))
                 }
                 aria-expanded={open}
-                className="mb-1 flex items-center justify-between px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                className={`mb-1 flex items-center justify-between px-3 text-[10px] font-bold uppercase tracking-[0.15em] ${
+                  variant === "onImage"
+                    ? "text-gray-400 hover:text-gray-200"
+                    : "text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
+                }`}
               >
                 <span>{t(`category.${category}`)}</span>
                 <CategoryChevron open={open} />
               </button>
             ) : (
-              <p className="mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 dark:text-gray-500">
+              <p
+                className={`mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.15em] ${
+                  variant === "onImage" ? "text-gray-400" : "text-gray-400 dark:text-gray-500"
+                }`}
+              >
                 {t(`category.${category}`)}
               </p>
             )}
             {open &&
-              categoryItems.map((item) => {
-                const active = isItemActive(pathname, item.href);
-                const href =
-                  impersonatingGuildId && preservesImpersonation(item.href)
-                    ? `${item.href}?guildId=${impersonatingGuildId}`
-                    : item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    href={href}
-                    className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
-                      active
-                        ? "bg-violet-50 text-violet-700 dark:bg-violet-950/60 dark:text-violet-200"
-                        : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-gray-100"
-                    }`}
-                  >
-                    <span
-                      className={
-                        active
-                          ? "text-violet-600 dark:text-violet-300"
-                          : "text-gray-400 dark:text-gray-500"
-                      }
-                    >
-                      {item.icon}
-                    </span>
-                    <span className="uppercase">{t(item.labelKey)}</span>
-                  </Link>
-                );
-              })}
+              categoryItems.map((item) => (
+                <NavLink
+                  key={item.href}
+                  href={resolveHref(item.href)}
+                  icon={item.icon}
+                  label={t(item.labelKey)}
+                  active={isItemActive(pathname, item.href)}
+                  variant={variant}
+                />
+              ))}
           </div>
         );
       })}
+      {topLevelItems.length > 0 && (
+        <div
+          className={`flex flex-col gap-1 border-t pt-3 ${
+            variant === "onImage" ? "border-white/10" : "border-gray-100 dark:border-gray-800"
+          }`}
+        >
+          {topLevelItems.map((item) => (
+            <NavLink
+              key={item.href}
+              href={resolveHref(item.href)}
+              icon={item.icon}
+              label={t(item.labelKey)}
+              active={isItemActive(pathname, item.href)}
+              variant={variant}
+            />
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
