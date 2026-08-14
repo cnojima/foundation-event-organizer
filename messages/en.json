@@ -608,7 +608,7 @@
       "proposeStep4": "Optional message for house rules, format notes, etc. Click Send proposal.",
       "acceptDeclineHeading": "Accept or decline an incoming proposal",
       "acceptDeclineIntro": "Pending proposals from other guilds show up in the Incoming proposals section of the scrim dashboard.",
-      "accept": "Accept creates two mirrored events (one per guild) in a single transaction. Each side's event is named \"Scrim vs <opponent>\", gets the proposed game time as its start, and accepts member signups like a normal match — except there's only one squad.",
+      "accept": "Accept creates two mirrored events (one per guild) in a single transaction. Each side's event is named \"Scrim vs '<opponent>'\", gets the proposed game time as its start, and accepts member signups like a normal match — except there's only one squad.",
       "decline": "Decline flips the proposal to declined without creating any events.",
       "withdraw": "Withdraw (outgoing only) cancels your own pending proposal before the other side responds.",
       "rosterHeading": "Roster the scrim event",
@@ -645,7 +645,7 @@
     "slashCommands": {
       "intro": "Once the bot is in the server and you've linked the channel via Test integration, your members can use:",
       "upcoming": "/upcoming — lists the guild's upcoming events with both squad start times. Replies are ephemeral (only visible to the user).",
-      "signup": "/signup event:<event> squad:<1|2> — signs the user up for an event. The event field has autocomplete. The user has to have signed in to the website with Discord at least once so the bot can match their Discord ID to their guild account — it'll prompt them if they haven't.",
+      "signup": "/signup event:'<event>' squad:'<1|2>' — signs the user up for an event. The event field has autocomplete. The user has to have signed in to the website with Discord at least once so the bot can match their Discord ID to their guild account — it'll prompt them if they haven't.",
       "propagation": "New global slash commands take up to about 1 hour to propagate the first time after the bot deploys. After that, they're instant.",
       "failHeading": "If /signup autocomplete shows \"Loading options failed\"",
       "failIntro": "Usually means Discord cached an outdated version of the command schema, or the bot was added with a missing scope. Try in order:",
@@ -866,7 +866,7 @@
       "loadFailed": "Couldn't load your settings.",
       "viewHeading": "**Your notification preferences**",
       "viewLine": "• {label}: **{state}**",
-      "viewFooter": "Use `/settings <name> enabled:true` or `false` to change a setting.",
+      "viewFooter": "Use `/settings '<name>' enabled:true` or `false` to change a setting.",
       "changed": "**{label}** is now **{state}**.",
       "labels": {
         "voiceInvites": "Voice channel invites for matches"
