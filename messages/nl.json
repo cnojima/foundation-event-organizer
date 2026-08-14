@@ -1004,7 +1004,10 @@
     "powerLabel": "Stroom *",
     "powerPlaceholder": "bijv. 95.000.000",
     "powerHelp": "Uw categorie wordt automatisch bepaald aan de hand van dit nummer.",
+    "desiredGuildLabel": "Gewenste Gilde",
+    "desiredGuildPlaceholder": "bijv. WET",
     "gameUidLabel": "Spel-UID",
+    "gameUidPlaceholder": "bijv. 423456789",
     "contactLabel": "Contact",
     "contactPlaceholder": "Discord-gebruikersnaam",
     "contactHelp": "Helpt agenten om contact met u op te nemen als ze vragen hebben.",
@@ -1018,10 +1021,7 @@
     "saveLinkHeading": "Bewaar deze link — je zult hem niet meer terugzien.",
     "saveLinkBody": "Gebruik deze link om je aanvraag te bewerken of later in te trekken. Er is geen account, dus deze link is de enige manier om weer in te loggen.",
     "copyLink": "Kopieer link",
-    "copied": "Gekopieerd!",
-    "desiredGuildLabel": "Gewenste Gilde",
-    "desiredGuildPlaceholder": "bijv. WET",
-    "gameUidPlaceholder": "bijv. 423456789"
+    "copied": "Gekopieerd!"
   },
   "migrationTrackerEdit": {
     "title": "Uw aanvraag",
@@ -1090,11 +1090,16 @@
     "statusDenied": "Geweigerd",
     "statusWithdrawn": "Ingetrokken",
     "statusRemoved": "VERWIJDERD",
-    "errorGeneric": "Er is iets misgegaan."
+    "errorGeneric": "Er is iets misgegaan.",
+    "errorPlayerNameRequired": "Spelersnaam is verplicht.",
+    "errorSourceServerRequired": "Een bronserver is vereist.",
+    "errorPower": "De macht moet een geheel getal zijn."
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",
     "pasteLabel": "Plak CSV- of TSV-gegevens",
+    "pastePlaceholder": "spelernaam bronServer vermogen gewenstGuild gameUID contact Voorbeeld Naam Server 42 95000000 Foundation 123456789 @voorbeeld",
+    "pasteHint": "De eerste rij moet bestaan uit kolomkoppen. Kopieer en plak rechtstreeks vanuit een spreadsheet — zowel komma's als tabs worden ondersteund. Herkende kopteksten: Speler/Naam/IGN, Bronserver/Origin, Kracht, Gewenste gilde (optioneel), Game-UID (optioneel), Contact/Discord (optioneel).",
     "windowNotOpen": "Dit migratievenster is nog niet geopend, dus geïmporteerde rijen kunnen nog niet worden verwerkt.",
     "missingColumns": "De vereiste kolommen konden niet worden gevonden: {fields} Voeg een kopregel toe met deze kolommen en plak het opnieuw.",
     "summary": "{valid} rij(en) klaar om te importeren, {invalid} met fouten die overgeslagen zullen worden.",
@@ -1109,9 +1114,7 @@
     "colResult": "Resultaat",
     "resultPending": "Klaar",
     "resultImported": "Geïmporteerd ( {status} )",
-    "errorGeneric": "Er is iets misgegaan.",
-    "pastePlaceholder": "spelernaam bronServer vermogen gewenstGuild gameUID contact Voorbeeld Naam Server 42 95000000 Foundation 123456789 @voorbeeld",
-    "pasteHint": "De eerste rij moet bestaan uit kolomkoppen. Kopieer en plak rechtstreeks vanuit een spreadsheet — zowel komma's als tabs worden ondersteund. Herkende kopteksten: Speler/Naam/IGN, Bronserver/Origin, Kracht, Gewenste gilde (optioneel), Game-UID (optioneel), Contact/Discord (optioneel)."
+    "errorGeneric": "Er is iets misgegaan."
   },
   "migrationTrackerOfficers": {
     "title": "Servernummer {serverNumber} — Agenten",

@@ -1007,7 +1007,10 @@
     "powerLabel": "Власть *",
     "powerPlaceholder": "например, 95 000 000",
     "powerHelp": "Ваш уровень определяется автоматически на основе этого числа.",
+    "desiredGuildLabel": "Желаемая гильдия",
+    "desiredGuildPlaceholder": "например, ЗАКОН",
     "gameUidLabel": "Идентификатор игры",
+    "gameUidPlaceholder": "например 423456789",
     "contactLabel": "Контакт",
     "contactPlaceholder": "Ник в Discord",
     "contactHelp": "Помогает сотрудникам связаться с вами, если у вас возникнут вопросы.",
@@ -1021,10 +1024,7 @@
     "saveLinkHeading": "Сохраните эту ссылку — вы её больше не увидите.",
     "saveLinkBody": "Используйте эту ссылку для редактирования вашей заявки или для последующего вывода средств. Аккаунта нет, поэтому этот путь к повторному входу — единственный.",
     "copyLink": "Скопировать ссылку",
-    "copied": "Скопировано!",
-    "desiredGuildLabel": "Желаемая гильдия",
-    "desiredGuildPlaceholder": "например, ЗАКОН",
-    "gameUidPlaceholder": "например 423456789"
+    "copied": "Скопировано!"
   },
   "migrationTrackerEdit": {
     "title": "Ваше заявление",
@@ -1093,11 +1093,16 @@
     "statusDenied": "Отклонен",
     "statusWithdrawn": "Отозвано",
     "statusRemoved": "Удаленный",
-    "errorGeneric": "Что-то пошло не так."
+    "errorGeneric": "Что-то пошло не так.",
+    "errorPlayerNameRequired": "Необходимо указать имя игрока.",
+    "errorSourceServerRequired": "Требуется исходный сервер.",
+    "errorPower": "Мощность должна быть целым числом."
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",
     "pasteLabel": "Вставьте данные в формате CSV или TSV.",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Первая строка должна содержать заголовки столбцов. Копируйте и вставляйте текст непосредственно из электронной таблицы — поддерживаются как запятые, так и табуляция. Распознаваемые заголовки: Игрок/Имя/IGN, Исходный сервер/Источник, Power, Желаемая гильдия (необязательно), UID игры (необязательно), Контакты/Discord (необязательно).",
     "windowNotOpen": "Данное окно миграции еще не открыто, поэтому импортированные строки пока не могут быть приняты.",
     "missingColumns": "Не удалось найти необходимые столбцы: {fields} Добавьте строку заголовка с указанными столбцами и вставьте еще раз.",
     "summary": "{valid} строка(ы) готовы к импорту, {invalid} Ошибки будут пропущены.",
@@ -1112,9 +1117,7 @@
     "colResult": "Результат",
     "resultPending": "Готовый",
     "resultImported": "Импортировано ( {status} )",
-    "errorGeneric": "Что-то пошло не так.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Первая строка должна содержать заголовки столбцов. Копируйте и вставляйте текст непосредственно из электронной таблицы — поддерживаются как запятые, так и табуляция. Распознаваемые заголовки: Игрок/Имя/IGN, Исходный сервер/Источник, Power, Желаемая гильдия (необязательно), UID игры (необязательно), Контакты/Discord (необязательно)."
+    "errorGeneric": "Что-то пошло не так."
   },
   "migrationTrackerOfficers": {
     "title": "Сервер № {serverNumber} — Офицеры",

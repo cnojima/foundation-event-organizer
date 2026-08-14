@@ -1007,7 +1007,10 @@
     "powerLabel": "Energia *",
     "powerPlaceholder": "ad esempio 95.000.000",
     "powerHelp": "Il tuo livello viene determinato automaticamente in base a questo numero.",
+    "desiredGuildLabel": "Gilda desiderata",
+    "desiredGuildPlaceholder": "ad esempio LEGGE",
     "gameUidLabel": "ID utente del gioco",
+    "gameUidPlaceholder": "ad esempio 423456789",
     "contactLabel": "Contatto",
     "contactPlaceholder": "Nome utente Discord",
     "contactHelp": "Consente agli agenti di contattarti per eventuali domande.",
@@ -1021,10 +1024,7 @@
     "saveLinkHeading": "Salva questo link: non lo vedrai più.",
     "saveLinkBody": "Utilizzalo per modificare la tua domanda o per ritirarla in un secondo momento. Non esiste un account, quindi questo link è l'unico modo per accedere nuovamente.",
     "copyLink": "Copia il link",
-    "copied": "Copiato!",
-    "desiredGuildLabel": "Gilda desiderata",
-    "desiredGuildPlaceholder": "ad esempio LEGGE",
-    "gameUidPlaceholder": "ad esempio 423456789"
+    "copied": "Copiato!"
   },
   "migrationTrackerEdit": {
     "title": "La tua candidatura",
@@ -1093,11 +1093,16 @@
     "statusDenied": "Negato",
     "statusWithdrawn": "Ritirare",
     "statusRemoved": "RIMOSSO",
-    "errorGeneric": "Qualcosa è andato storto."
+    "errorGeneric": "Qualcosa è andato storto.",
+    "errorPlayerNameRequired": "Il nome del giocatore è obbligatorio.",
+    "errorSourceServerRequired": "È necessario un server sorgente.",
+    "errorPower": "La potenza deve essere un numero intero."
   },
   "migrationTrackerImport": {
     "title": "Server n. {serverNumber} — Applicazioni di importazione",
     "pasteLabel": "Incolla i dati CSV o TSV",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "La prima riga deve contenere le intestazioni di colonna. Copia e incolla direttamente da un foglio di calcolo: sono supportati sia le virgole che le tabulazioni. Intestazioni riconosciute: Giocatore/Nome/IGN, Server di origine/Origine, Potenza, Gilda desiderata (facoltativa), UID di gioco (facoltativa), Contatto/Discord (facoltativa).",
     "windowNotOpen": "Questa finestra di migrazione non è ancora aperta, quindi le righe importate non possono essere ancora accettate.",
     "missingColumns": "Impossibile trovare le colonne richieste: {fields} Aggiungi una riga di intestazione con queste colonne e incolla di nuovo.",
     "summary": "{valid} riga/e pronta/e per l'importazione, {invalid} con errori che verranno ignorati.",
@@ -1112,9 +1117,7 @@
     "colResult": "Risultato",
     "resultPending": "Pronto",
     "resultImported": "Importato ( {status} )",
-    "errorGeneric": "Qualcosa è andato storto.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "La prima riga deve contenere le intestazioni di colonna. Copia e incolla direttamente da un foglio di calcolo: sono supportati sia le virgole che le tabulazioni. Intestazioni riconosciute: Giocatore/Nome/IGN, Server di origine/Origine, Potenza, Gilda desiderata (facoltativa), UID di gioco (facoltativa), Contatto/Discord (facoltativa)."
+    "errorGeneric": "Qualcosa è andato storto."
   },
   "migrationTrackerOfficers": {
     "title": "Server n. {serverNumber} — Ufficiali",

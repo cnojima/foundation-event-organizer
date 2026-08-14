@@ -8,6 +8,7 @@ export function PowerInput({
   id,
   value,
   onChange,
+  onBlur,
   placeholder,
   required,
   className = "w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800",
@@ -15,6 +16,7 @@ export function PowerInput({
   id: string;
   value: string;
   onChange: (digits: string) => void;
+  onBlur?: (digits: string) => void;
   placeholder?: string;
   required?: boolean;
   className?: string;
@@ -30,6 +32,7 @@ export function PowerInput({
       placeholder={placeholder}
       value={display}
       onChange={(e) => onChange(e.target.value.replace(/[^\d]/g, ""))}
+      onBlur={onBlur ? () => onBlur(value) : undefined}
       className={className}
     />
   );

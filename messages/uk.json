@@ -1008,7 +1008,10 @@
     "powerLabel": "Потужність *",
     "powerPlaceholder": "наприклад, 95 000 000",
     "powerHelp": "Ваш рівень визначається автоматично на основі цього числа.",
+    "desiredGuildLabel": "Бажана гільдія",
+    "desiredGuildPlaceholder": "наприклад, ЗАКОН",
     "gameUidLabel": "UID гри",
+    "gameUidPlaceholder": "наприклад, 423456789",
     "contactLabel": "Контакти",
     "contactPlaceholder": "Десктоп Discord",
     "contactHelp": "Допомагає офіцерам зв'язатися з вами з питаннями.",
@@ -1022,10 +1025,7 @@
     "saveLinkHeading": "Збережіть це посилання — ви його більше не побачите.",
     "saveLinkBody": "Використайте його для редагування заявки або її відкликання пізніше. Облікового запису немає, тому це посилання — єдиний шлях назад.",
     "copyLink": "Копіювати посилання",
-    "copied": "Скопійовано!",
-    "desiredGuildLabel": "Бажана гільдія",
-    "desiredGuildPlaceholder": "наприклад, ЗАКОН",
-    "gameUidPlaceholder": "наприклад, 423456789"
+    "copied": "Скопійовано!"
   },
   "migrationTrackerEdit": {
     "title": "Ваша заявка",
@@ -1094,11 +1094,16 @@
     "statusDenied": "Відмовлено",
     "statusWithdrawn": "Відкликано",
     "statusRemoved": "Видалено",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "errorPlayerNameRequired": "Ім'я гравця обов'язкове.",
+    "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
+    "errorPower": "Степінь має бути цілим числом."
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",
     "pasteLabel": "Вставити дані CSV або TSV",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUID contact Приклад імені сервера 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Перший рядок має бути заголовками стовпців. Скопіюйте та вставте безпосередньо з електронної таблиці — підтримуються коми та табуляція. Розпізнавані заголовки: Гравець/Ім'я/IGN, Вихідний сервер/Походження, Влада, Бажана гільдія (необов'язково), UID гри (необов'язково), Контакт/Discord (необов'язково).",
     "windowNotOpen": "Це вікно міграції не відкрите, тому імпортовані рядки ще не можуть бути допущені.",
     "missingColumns": "Не вдалося знайти обов'язкові стовпці: {fields} Додайте рядок заголовка з цими стовпцями та вставте його знову.",
     "summary": "{valid} рядок(ки) готовий(і) до імпорту, {invalid} з помилками, які будуть пропущені.",
@@ -1113,9 +1118,7 @@
     "colResult": "Результат",
     "resultPending": "Готовий",
     "resultImported": "Імпортовано ( {status} )",
-    "errorGeneric": "Щось пішло не так.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUID contact Приклад імені сервера 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Перший рядок має бути заголовками стовпців. Скопіюйте та вставте безпосередньо з електронної таблиці — підтримуються коми та табуляція. Розпізнавані заголовки: Гравець/Ім'я/IGN, Вихідний сервер/Походження, Влада, Бажана гільдія (необов'язково), UID гри (необов'язково), Контакт/Discord (необов'язково)."
+    "errorGeneric": "Щось пішло не так."
   },
   "migrationTrackerOfficers": {
     "title": "Сервер № {serverNumber} — Офіцери",

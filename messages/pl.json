@@ -1007,7 +1007,10 @@
     "powerLabel": "Moc *",
     "powerPlaceholder": "np. 95 000 000",
     "powerHelp": "Twój poziom jest ustalany automatycznie na podstawie tej liczby.",
+    "desiredGuildLabel": "Pożądana gildia",
+    "desiredGuildPlaceholder": "np. PRAWO",
     "gameUidLabel": "Identyfikator użytkownika gry",
+    "gameUidPlaceholder": "np. 423456789",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Uchwyt Discorda",
     "contactHelp": "Pomaga funkcjonariuszom skontaktować się z Tobą w razie pytań.",
@@ -1021,10 +1024,7 @@
     "saveLinkHeading": "Zapisz ten link — nie zobaczysz go już więcej.",
     "saveLinkBody": "Użyj go, aby edytować swój wniosek lub wycofać go później. Nie masz konta, więc ten link to jedyny sposób na powrót.",
     "copyLink": "Kopiuj link",
-    "copied": "Skopiowano!",
-    "desiredGuildLabel": "Pożądana gildia",
-    "desiredGuildPlaceholder": "np. PRAWO",
-    "gameUidPlaceholder": "np. 423456789"
+    "copied": "Skopiowano!"
   },
   "migrationTrackerEdit": {
     "title": "Twoja aplikacja",
@@ -1093,11 +1093,16 @@
     "statusDenied": "Zaprzeczony",
     "statusWithdrawn": "Zamknięty w sobie",
     "statusRemoved": "REMOVED",
-    "errorGeneric": "Coś poszło nie tak."
+    "errorGeneric": "Coś poszło nie tak.",
+    "errorPlayerNameRequired": "Nazwa gracza jest wymagana.",
+    "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
+    "errorPower": "Moc musi być liczbą całkowitą."
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",
     "pasteLabel": "Wklej dane CSV lub TSV",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUID contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Pierwszy wiersz musi zawierać nagłówki kolumn. Kopiuj i wklej bezpośrednio z arkusza kalkulacyjnego — obsługiwane są przecinki i tabulatory. Rozpoznawane nagłówki: Gracz/Nazwa/IGN, Serwer źródłowy/Pochodzenie, Moc, Pożądana gildia (opcjonalnie), UID gry (opcjonalnie), Kontakt/Discord (opcjonalnie).",
     "windowNotOpen": "Okno migracji nie jest jeszcze otwarte, więc importowane wiersze nie mogą zostać jeszcze przyjęte.",
     "missingColumns": "Nie znaleziono wymaganych kolumn: {fields} Dodaj wiersz nagłówka z tymi kolumnami i wklej ponownie.",
     "summary": "{valid} wiersz(e) gotowe do zaimportowania, {invalid} z błędami, które zostaną pominięte.",
@@ -1112,9 +1117,7 @@
     "colResult": "Wynik",
     "resultPending": "Gotowy",
     "resultImported": "Zaimportowano ( {status} )",
-    "errorGeneric": "Coś poszło nie tak.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUID contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Pierwszy wiersz musi zawierać nagłówki kolumn. Kopiuj i wklej bezpośrednio z arkusza kalkulacyjnego — obsługiwane są przecinki i tabulatory. Rozpoznawane nagłówki: Gracz/Nazwa/IGN, Serwer źródłowy/Pochodzenie, Moc, Pożądana gildia (opcjonalnie), UID gry (opcjonalnie), Kontakt/Discord (opcjonalnie)."
+    "errorGeneric": "Coś poszło nie tak."
   },
   "migrationTrackerOfficers": {
     "title": "Serwer nr {serverNumber} — Oficerowie",

@@ -1006,7 +1006,10 @@
     "powerLabel": "Kekuatan *",
     "powerPlaceholder": "misalnya 95.000.000",
     "powerHelp": "Tingkat keanggotaan Anda ditentukan secara otomatis dari angka ini.",
+    "desiredGuildLabel": "Persekutuan yang Diinginkan",
+    "desiredGuildPlaceholder": "misalnya HUKUM",
     "gameUidLabel": "UID Game",
+    "gameUidPlaceholder": "misalnya 423456789",
     "contactLabel": "Kontak",
     "contactPlaceholder": "Nama pengguna Discord",
     "contactHelp": "Membantu petugas menghubungi Anda jika ada pertanyaan.",
@@ -1020,10 +1023,7 @@
     "saveLinkHeading": "Simpan tautan ini — Anda tidak akan melihatnya lagi.",
     "saveLinkBody": "Gunakan tautan ini untuk mengedit aplikasi Anda atau menariknya kembali nanti. Tidak ada akun, jadi tautan ini adalah satu-satunya cara untuk masuk kembali.",
     "copyLink": "Salin tautan",
-    "copied": "Disalin!",
-    "desiredGuildLabel": "Persekutuan yang Diinginkan",
-    "desiredGuildPlaceholder": "misalnya HUKUM",
-    "gameUidPlaceholder": "misalnya 423456789"
+    "copied": "Disalin!"
   },
   "migrationTrackerEdit": {
     "title": "Aplikasi Anda",
@@ -1092,11 +1092,16 @@
     "statusDenied": "Ditolak",
     "statusWithdrawn": "Ditarik kembali",
     "statusRemoved": "DIHAPUS",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "errorPlayerNameRequired": "Nama pemain wajib diisi.",
+    "errorSourceServerRequired": "Server sumber diperlukan.",
+    "errorPower": "Pangkat harus berupa bilangan bulat."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",
     "pasteLabel": "Tempel data CSV atau TSV",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Baris pertama harus berupa judul kolom. Salin-tempel langsung dari spreadsheet — koma dan tab sama-sama didukung. Judul yang dikenali: Pemain/Nama/IGN, Server Sumber/Asal, Kekuatan, Guild yang Diinginkan (opsional), UID Game (opsional), Kontak/Discord (opsional).",
     "windowNotOpen": "Jendela migrasi ini belum dibuka, jadi baris yang diimpor belum dapat diterima.",
     "missingColumns": "Kolom yang dibutuhkan tidak ditemukan: {fields} Tambahkan baris header dengan kolom-kolom ini dan tempel lagi.",
     "summary": "{valid} baris siap diimpor, {invalid} dengan kesalahan yang akan dilewati.",
@@ -1111,9 +1116,7 @@
     "colResult": "Hasil",
     "resultPending": "Siap",
     "resultImported": "Diimpor ( {status} )",
-    "errorGeneric": "Terjadi kesalahan.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Baris pertama harus berupa judul kolom. Salin-tempel langsung dari spreadsheet — koma dan tab sama-sama didukung. Judul yang dikenali: Pemain/Nama/IGN, Server Sumber/Asal, Kekuatan, Guild yang Diinginkan (opsional), UID Game (opsional), Kontak/Discord (opsional)."
+    "errorGeneric": "Terjadi kesalahan."
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Petugas",

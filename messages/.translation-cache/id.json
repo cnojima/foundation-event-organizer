@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "id",
-  "translatedAt": "2026-08-14T15:49:00.182Z",
+  "translatedAt": "2026-08-14T19:47:10.514Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -919,6 +919,9 @@
     "migrationTrackerQueue.statusDenied": "Denied",
     "migrationTrackerQueue.statusWithdrawn": "Withdrawn",
     "migrationTrackerQueue.statusRemoved": "Removed",
+    "migrationTrackerQueue.errorPlayerNameRequired": "Player name is required.",
+    "migrationTrackerQueue.errorSourceServerRequired": "Source server is required.",
+    "migrationTrackerQueue.errorPower": "Power must be a whole number.",
     "migrationTrackerQueue.errorGeneric": "Something went wrong.",
     "migrationTrackerImport.title": "Server #{serverNumber} — Import applications",
     "migrationTrackerImport.pasteLabel": "Paste CSV or TSV data",

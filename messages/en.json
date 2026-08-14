@@ -1094,6 +1094,9 @@
     "statusDenied": "Denied",
     "statusWithdrawn": "Withdrawn",
     "statusRemoved": "Removed",
+    "errorPlayerNameRequired": "Player name is required.",
+    "errorSourceServerRequired": "Source server is required.",
+    "errorPower": "Power must be a whole number.",
     "errorGeneric": "Something went wrong."
   },
   "migrationTrackerImport": {

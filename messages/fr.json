@@ -1008,7 +1008,10 @@
     "powerLabel": "Pouvoir *",
     "powerPlaceholder": "par exemple 95 000 000",
     "powerHelp": "Votre niveau est déterminé automatiquement à partir de ce numéro.",
+    "desiredGuildLabel": "Guilde désirée",
+    "desiredGuildPlaceholder": "par exemple, la loi",
     "gameUidLabel": "UID du jeu",
+    "gameUidPlaceholder": "ex. 423456789",
     "contactLabel": "Contact",
     "contactPlaceholder": "Identifiant Discord",
     "contactHelp": "Permet aux agents de vous contacter en cas de questions.",
@@ -1022,10 +1025,7 @@
     "saveLinkHeading": "Enregistrez ce lien — vous ne le reverrez plus.",
     "saveLinkBody": "Utilisez ce lien pour modifier votre candidature ou la retirer ultérieurement. Vous n'avez pas de compte ; ce lien est donc le seul moyen de vous reconnecter.",
     "copyLink": "Copier le lien",
-    "copied": "Copié !",
-    "desiredGuildLabel": "Guilde désirée",
-    "desiredGuildPlaceholder": "par exemple, la loi",
-    "gameUidPlaceholder": "ex. 423456789"
+    "copied": "Copié !"
   },
   "migrationTrackerEdit": {
     "title": "Votre candidature",
@@ -1094,11 +1094,16 @@
     "statusDenied": "Refusé",
     "statusWithdrawn": "Retiré",
     "statusRemoved": "Supprimé",
-    "errorGeneric": "Quelque chose a mal fonctionné."
+    "errorGeneric": "Quelque chose a mal fonctionné.",
+    "errorPlayerNameRequired": "Le nom du joueur est obligatoire.",
+    "errorSourceServerRequired": "Le serveur source est requis.",
+    "errorPower": "La puissance doit être un nombre entier."
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
     "pasteLabel": "Collez les données CSV ou TSV",
+    "pastePlaceholder": "Nom du joueur Serveur source Puissance Guilde souhaitée UID du jeu Contact Exemple Nom Serveur 42 95000000 Fondation 123456789 @exemple",
+    "pasteHint": "La première ligne doit contenir les en-têtes de colonnes. Copiez-collez directement depuis une feuille de calcul ; les virgules et les tabulations sont acceptées. En-têtes reconnus : Joueur/Nom/IGN, Serveur source/Origine, Puissance, Guilde souhaitée (facultatif), UID du jeu (facultatif), Contact/Discord (facultatif).",
     "windowNotOpen": "Cette fenêtre de migration n'est pas ouverte, les lignes importées ne peuvent donc pas encore être admises.",
     "missingColumns": "Colonnes requises introuvables : {fields} Ajoutez une ligne d'en-tête avec ces colonnes et collez à nouveau.",
     "summary": "{valid} ligne(s) prête(s) à importer, {invalid} avec des erreurs qui seront ignorées.",
@@ -1113,9 +1118,7 @@
     "colResult": "Résultat",
     "resultPending": "Prêt",
     "resultImported": "Importé ( {status} )",
-    "errorGeneric": "Quelque chose a mal fonctionné.",
-    "pastePlaceholder": "Nom du joueur Serveur source Puissance Guilde souhaitée UID du jeu Contact Exemple Nom Serveur 42 95000000 Fondation 123456789 @exemple",
-    "pasteHint": "La première ligne doit contenir les en-têtes de colonnes. Copiez-collez directement depuis une feuille de calcul ; les virgules et les tabulations sont acceptées. En-têtes reconnus : Joueur/Nom/IGN, Serveur source/Origine, Puissance, Guilde souhaitée (facultatif), UID du jeu (facultatif), Contact/Discord (facultatif)."
+    "errorGeneric": "Quelque chose a mal fonctionné."
   },
   "migrationTrackerOfficers": {
     "title": "Serveur n° {serverNumber} — Officiers",

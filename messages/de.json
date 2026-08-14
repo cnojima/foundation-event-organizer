@@ -1008,7 +1008,10 @@
     "powerLabel": "Leistung *",
     "powerPlaceholder": "z. B. 95.000.000",
     "powerHelp": "Ihr Tarif wird automatisch anhand dieser Zahl ermittelt.",
+    "desiredGuildLabel": "Gewünschte Gilde",
+    "desiredGuildPlaceholder": "z.B. GESETZ",
     "gameUidLabel": "Spiel-UID",
+    "gameUidPlaceholder": "z. B. 423456789",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Discord-Handle",
     "contactHelp": "Hilft den Beamten, Sie bei Fragen zu erreichen.",
@@ -1022,10 +1025,7 @@
     "saveLinkHeading": "Speichern Sie diesen Link – Sie werden ihn nicht wiedersehen.",
     "saveLinkBody": "Nutzen Sie diesen Link, um Ihre Bewerbung zu bearbeiten oder später zurückzuziehen. Da kein Konto vorhanden ist, ist dies der einzige Weg zurück.",
     "copyLink": "Link kopieren",
-    "copied": "Kopiert!",
-    "desiredGuildLabel": "Gewünschte Gilde",
-    "desiredGuildPlaceholder": "z.B. GESETZ",
-    "gameUidPlaceholder": "z. B. 423456789"
+    "copied": "Kopiert!"
   },
   "migrationTrackerEdit": {
     "title": "Ihre Bewerbung",
@@ -1094,11 +1094,16 @@
     "statusDenied": "Bestritten",
     "statusWithdrawn": "Zurückgezogen",
     "statusRemoved": "ENTFERNT",
-    "errorGeneric": "Etwas ist schiefgelaufen."
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "errorPlayerNameRequired": "Der Spielername ist erforderlich.",
+    "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
+    "errorPower": "Der Exponent muss eine ganze Zahl sein."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importanträge",
     "pasteLabel": "CSV- oder TSV-Daten einfügen",
+    "pastePlaceholder": "Spielername Quellserver Stärke gewünschte Gilde Spiel-UID Kontakt Beispiel Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "Die erste Zeile muss die Spaltenüberschriften enthalten. Kopieren Sie die Spaltenüberschriften direkt aus einer Tabellenkalkulation – Kommas und Tabulatoren werden unterstützt. Erkannte Spaltenüberschriften: Spielername/IGN, Quellserver/Herkunft, Stärke, Gewünschte Gilde (optional), Spiel-UID (optional), Kontakt/Discord (optional).",
     "windowNotOpen": "Das Migrationsfenster ist noch nicht geöffnet, daher können importierte Zeilen noch nicht zugelassen werden.",
     "missingColumns": "Die erforderlichen Spalten konnten nicht gefunden werden: {fields} Fügen Sie eine Kopfzeile mit diesen Spalten hinzu und fügen Sie die Datei erneut ein.",
     "summary": "{valid} Zeile(n) zum Import bereit, {invalid} mit Fehlern, die übersprungen werden.",
@@ -1113,9 +1118,7 @@
     "colResult": "Ergebnis",
     "resultPending": "Bereit",
     "resultImported": "Importiert ( {status} )",
-    "errorGeneric": "Etwas ist schiefgelaufen.",
-    "pastePlaceholder": "Spielername Quellserver Stärke gewünschte Gilde Spiel-UID Kontakt Beispiel Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Die erste Zeile muss die Spaltenüberschriften enthalten. Kopieren Sie die Spaltenüberschriften direkt aus einer Tabellenkalkulation – Kommas und Tabulatoren werden unterstützt. Erkannte Spaltenüberschriften: Spielername/IGN, Quellserver/Herkunft, Stärke, Gewünschte Gilde (optional), Spiel-UID (optional), Kontakt/Discord (optional)."
+    "errorGeneric": "Etwas ist schiefgelaufen."
   },
   "migrationTrackerOfficers": {
     "title": "Server # {serverNumber} — Beamte",

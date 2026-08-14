@@ -1008,7 +1008,10 @@
     "powerLabel": "Fuerza *",
     "powerPlaceholder": "Por ejemplo, 95.000.000",
     "powerHelp": "Tu nivel se determina automáticamente a partir de este número.",
+    "desiredGuildLabel": "Gremio deseado",
+    "desiredGuildPlaceholder": "p. ej. LEY",
     "gameUidLabel": "UID del juego",
+    "gameUidPlaceholder": "p. ej. 423456789",
     "contactLabel": "Contacto",
     "contactPlaceholder": "Nombre de usuario de Discord",
     "contactHelp": "Ayuda a los agentes a ponerse en contacto con usted si tienen preguntas.",
@@ -1022,10 +1025,7 @@
     "saveLinkHeading": "Guarda este enlace; no lo volverás a ver.",
     "saveLinkBody": "Úsalo para editar tu solicitud o retirarte más tarde. No hay cuenta, así que este enlace es la única forma de volver a acceder.",
     "copyLink": "Copiar enlace",
-    "copied": "¡Copiado!",
-    "desiredGuildLabel": "Gremio deseado",
-    "desiredGuildPlaceholder": "p. ej. LEY",
-    "gameUidPlaceholder": "p. ej. 423456789"
+    "copied": "¡Copiado!"
   },
   "migrationTrackerEdit": {
     "title": "Su solicitud",
@@ -1094,11 +1094,16 @@
     "statusDenied": "Denegado",
     "statusWithdrawn": "Retirado",
     "statusRemoved": "Remoto",
-    "errorGeneric": "Algo salió mal."
+    "errorGeneric": "Algo salió mal.",
+    "errorPlayerNameRequired": "Se requiere el nombre del jugador.",
+    "errorSourceServerRequired": "Se requiere un servidor de origen.",
+    "errorPower": "La potencia debe ser un número entero."
   },
   "migrationTrackerImport": {
     "title": "Servidor # {serverNumber} — Importar aplicaciones",
     "pasteLabel": "Pegar datos CSV o TSV",
+    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
+    "pasteHint": "La primera fila debe contener los encabezados de columna. Copie y pegue directamente desde una hoja de cálculo; se admiten comas y tabulaciones. Encabezados reconocidos: Jugador/Nombre/IGN, Servidor de origen/Origen, Poder, Gremio deseado (opcional), UID del juego (opcional), Contacto/Discord (opcional).",
     "windowNotOpen": "Esta ventana de migración no está abierta, por lo que aún no se pueden admitir las filas importadas.",
     "missingColumns": "No se pudieron encontrar las columnas requeridas: {fields} . Agregue una fila de encabezado con estas columnas y vuelva a pegar.",
     "summary": "{valid} fila(s) lista(s) para importar, {invalid} con errores que se omitirán.",
@@ -1113,9 +1118,7 @@
     "colResult": "Resultado",
     "resultPending": "Listo",
     "resultImported": "Importado ( {status} )",
-    "errorGeneric": "Algo salió mal.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "La primera fila debe contener los encabezados de columna. Copie y pegue directamente desde una hoja de cálculo; se admiten comas y tabulaciones. Encabezados reconocidos: Jugador/Nombre/IGN, Servidor de origen/Origen, Poder, Gremio deseado (opcional), UID del juego (opcional), Contacto/Discord (opcional)."
+    "errorGeneric": "Algo salió mal."
   },
   "migrationTrackerOfficers": {
     "title": "Servidor # {serverNumber} — Oficiales",
