@@ -1087,6 +1087,8 @@
     "waitlist": "Lista oczekujących",
     "deny": "Zaprzeczyć",
     "remove": "Usunąć",
+    "revert": "Odwracać",
+    "acceptedHeading": "Przyjęty",
     "confirm": "Potwierdzać",
     "statusApplied": "Stosowany",
     "statusWaitlisted": "Na liście oczekujących",
@@ -1097,15 +1099,13 @@
     "errorPlayerNameRequired": "Nazwa gracza jest wymagana.",
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
     "errorPower": "Moc musi być liczbą całkowitą.",
-    "errorGeneric": "Coś poszło nie tak.",
-    "revert": "Odwracać",
-    "acceptedHeading": "Przyjęty"
+    "errorGeneric": "Coś poszło nie tak."
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",
     "pasteLabel": "Wklej dane CSV lub TSV",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUID contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Pierwszy wiersz musi zawierać nagłówki kolumn. Kopiuj i wklej bezpośrednio z arkusza kalkulacyjnego — obsługiwane są przecinki i tabulatory. Rozpoznawane nagłówki: Gracz/Nazwa/IGN, Serwer źródłowy/Pochodzenie, Moc, Pożądana gildia (opcjonalnie), UID gry (opcjonalnie), Kontakt/Discord (opcjonalnie).",
+    "pasteHint": "Pierwszy wiersz musi zawierać nagłówki kolumn. Kopiuj i wklej bezpośrednio z arkusza kalkulacyjnego — obsługiwane są przecinki i tabulatory. Rozpoznawane nagłówki: playerName/Gracz/Nazwa/IGN, sourceServer/Serwer źródłowy/Origin, Power, Pożądana gildia (opcjonalnie), Game UID (opcjonalnie), Contact/Discord (opcjonalnie).",
+    "pasteHintTop": "playerName, sourceServer i power są polami WYMAGANYMI, pozostałe kolumny są opcjonalne.",
     "windowNotOpen": "Okno migracji nie jest jeszcze otwarte, więc importowane wiersze nie mogą zostać jeszcze przyjęte.",
     "missingColumns": "Nie znaleziono wymaganych kolumn: {fields} Dodaj wiersz nagłówka z tymi kolumnami i wklej ponownie.",
     "summary": "{valid} wiersz(e) gotowe do zaimportowania, {invalid} z błędami, które zostaną pominięte.",

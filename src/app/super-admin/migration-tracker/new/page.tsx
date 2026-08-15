@@ -3,7 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireSuperAdminPage } from "@/lib/rbac";
 import { PageHeader } from "@/components/page-header";
-import { MigrationCreateDestinationForm } from "@/components/migration-create-destination-form";
+import { MigrationCreateDestinationForm } from "@/components/migration-tracker/migration-create-destination-form";
 
 export const metadata = { title: "New Migration Window" };
 

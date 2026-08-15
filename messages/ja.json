@@ -1087,6 +1087,8 @@
     "waitlist": "待機リスト",
     "deny": "拒否",
     "remove": "取り除く",
+    "revert": "元に戻す",
+    "acceptedHeading": "承認済み",
     "confirm": "確認する",
     "statusApplied": "適用済み",
     "statusWaitlisted": "ウェイティングリスト",
@@ -1097,15 +1099,13 @@
     "errorPlayerNameRequired": "プレイヤー名は必須です。",
     "errorSourceServerRequired": "ソースサーバーが必要です。",
     "errorPower": "べき乗は整数でなければならない。",
-    "errorGeneric": "何かがおかしくなりました。",
-    "revert": "元に戻す",
-    "acceptedHeading": "承認済み"
+    "errorGeneric": "何かがおかしくなりました。"
   },
   "migrationTrackerImport": {
     "title": "サーバー番号： {serverNumber} — アプリケーションをインポートする",
     "pasteLabel": "CSVまたはTSVデータを貼り付ける",
-    "pastePlaceholder": "プレイヤー名 ソースサーバー 電力 希望ギルド ゲームUID 連絡先 例 名前 サーバー 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "最初の行は列ヘッダーである必要があります。スプレッドシートから直接コピー＆ペーストしてください。カンマとタブの両方がサポートされています。認識されるヘッダー：プレイヤー/名前/IGN、ソースサーバー/オリジン、パワー、希望ギルド（オプション）、ゲームUID（オプション）、連絡先/Discord（オプション）。",
+    "pasteHint": "最初の行は列ヘッダーである必要があります。スプレッドシートから直接コピー＆ペーストしてください。カンマとタブの両方がサポートされています。認識されるヘッダー: playerName/Player/Name/IGN、sourceServer/Source Server/Origin、Power、Desired Guild (オプション)、Game UID (オプション)、Contact/Discord (オプション)。",
+    "pasteHintTop": "playerName、sourceServer、powerは必須項目です。その他の列は任意です。",
     "windowNotOpen": "この移行期間はまだ開始されていないため、インポートされた行はまだ受け入れられません。",
     "missingColumns": "必要な列が見つかりませんでした: {fields}これらの列を含むヘッダー行を追加し、再度貼り付けてください。",
     "summary": "{valid}インポート準備完了の行数： {invalid}エラーが発生した場合はスキップされます。",

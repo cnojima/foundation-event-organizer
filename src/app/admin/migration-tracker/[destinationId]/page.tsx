@@ -8,8 +8,8 @@ import { asc, eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
 import { getCapacitySummary, getWindowStatus, TIER_ORDER, type Tier } from "@/lib/migration-tracker";
 import { findDuplicateMatches } from "@/lib/migration-dedupe";
-import { MigrationQueueRow } from "@/components/migration-queue-row";
-import { DuplicateBadge, duplicateRowId } from "@/components/migration-duplicate-badge";
+import { MigrationQueueRow } from "@/components/migration-tracker/migration-queue-row";
+import { DuplicateBadge, duplicateRowId } from "@/components/migration-tracker/migration-duplicate-badge";
 
 export const metadata = { title: "Migration Review Queue" };
 

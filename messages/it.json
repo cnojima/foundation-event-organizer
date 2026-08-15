@@ -1087,6 +1087,8 @@
     "waitlist": "Lista d'attesa",
     "deny": "Negare",
     "remove": "Rimuovere",
+    "revert": "Ripristina",
+    "acceptedHeading": "Accettato",
     "confirm": "Confermare",
     "statusApplied": "Applicato",
     "statusWaitlisted": "In lista d'attesa",
@@ -1097,15 +1099,13 @@
     "errorPlayerNameRequired": "Il nome del giocatore è obbligatorio.",
     "errorSourceServerRequired": "È necessario un server sorgente.",
     "errorPower": "La potenza deve essere un numero intero.",
-    "errorGeneric": "Qualcosa è andato storto.",
-    "revert": "Ripristina",
-    "acceptedHeading": "Accettato"
+    "errorGeneric": "Qualcosa è andato storto."
   },
   "migrationTrackerImport": {
     "title": "Server n. {serverNumber} — Applicazioni di importazione",
     "pasteLabel": "Incolla i dati CSV o TSV",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "La prima riga deve contenere le intestazioni di colonna. Copia e incolla direttamente da un foglio di calcolo: sono supportati sia le virgole che le tabulazioni. Intestazioni riconosciute: Giocatore/Nome/IGN, Server di origine/Origine, Potenza, Gilda desiderata (facoltativa), UID di gioco (facoltativa), Contatto/Discord (facoltativa).",
+    "pasteHint": "La prima riga deve contenere le intestazioni di colonna. Copia e incolla direttamente da un foglio di calcolo: sono supportate sia le virgole che le tabulazioni. Intestazioni riconosciute: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (opzionale), Game UID (opzionale), Contact/Discord (opzionale).",
+    "pasteHintTop": "playerName, sourceServer e power sono campi OBBLIGATORI; le altre colonne sono facoltative.",
     "windowNotOpen": "Questa finestra di migrazione non è ancora aperta, quindi le righe importate non possono essere ancora accettate.",
     "missingColumns": "Impossibile trovare le colonne richieste: {fields} Aggiungi una riga di intestazione con queste colonne e incolla di nuovo.",
     "summary": "{valid} riga/e pronta/e per l'importazione, {invalid} con errori che verranno ignorati.",

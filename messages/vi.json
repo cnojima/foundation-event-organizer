@@ -1086,6 +1086,8 @@
     "waitlist": "Danh sách chờ",
     "deny": "Từ chối",
     "remove": "Di dời",
+    "revert": "Hoàn tác",
+    "acceptedHeading": "Đã được chấp nhận",
     "confirm": "Xác nhận",
     "statusApplied": "Đã áp dụng",
     "statusWaitlisted": "Danh sách chờ",
@@ -1096,15 +1098,13 @@
     "errorPlayerNameRequired": "Tên người chơi là bắt buộc.",
     "errorSourceServerRequired": "Cần có máy chủ nguồn.",
     "errorPower": "Lũy thừa phải là số nguyên.",
-    "errorGeneric": "Đã xảy ra lỗi.",
-    "revert": "Hoàn tác",
-    "acceptedHeading": "Đã được chấp nhận"
+    "errorGeneric": "Đã xảy ra lỗi."
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",
     "pasteLabel": "Dán dữ liệu CSV hoặc TSV",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Hàng đầu tiên phải là tiêu đề cột. Sao chép và dán trực tiếp từ bảng tính — cả dấu phẩy và dấu tab đều được hỗ trợ. Các tiêu đề được nhận dạng: Người chơi/Tên/Tên nhân vật trong game, Máy chủ nguồn/Nguồn gốc, Sức mạnh, Bang hội mong muốn (tùy chọn), UID trò chơi (tùy chọn), Liên hệ/Discord (tùy chọn).",
+    "pasteHint": "Hàng đầu tiên phải là tiêu đề cột. Sao chép và dán trực tiếp từ bảng tính — cả dấu phẩy và dấu tab đều được hỗ trợ. Các tiêu đề được nhận dạng: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (tùy chọn), Game UID (tùy chọn), Contact/Discord (tùy chọn).",
+    "pasteHintTop": "playerName, sourceServer, power là các trường BẮT BUỘC; các cột khác là TÙY CHỌN.",
     "windowNotOpen": "Cửa sổ chuyển đổi này chưa mở, vì vậy các hàng đã nhập chưa thể được chấp nhận.",
     "missingColumns": "Không tìm thấy các cột bắt buộc: {fields} Thêm hàng tiêu đề với các cột này và dán lại.",
     "summary": "{valid} Hàng (các hàng) sẵn sàng để nhập, {invalid} với những lỗi sẽ được bỏ qua.",

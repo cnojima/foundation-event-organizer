@@ -1088,6 +1088,8 @@
     "waitlist": "Lista de espera",
     "deny": "Negar",
     "remove": "Remover",
+    "revert": "Reverter",
+    "acceptedHeading": "Aceito",
     "confirm": "Confirmar",
     "statusApplied": "Aplicado",
     "statusWaitlisted": "Lista de espera",
@@ -1098,15 +1100,13 @@
     "errorPlayerNameRequired": "É necessário nomear o jogador.",
     "errorSourceServerRequired": "É necessário um servidor de origem.",
     "errorPower": "A potência deve ser um número inteiro.",
-    "errorGeneric": "Algo deu errado.",
-    "revert": "Reverter",
-    "acceptedHeading": "Aceito"
+    "errorGeneric": "Algo deu errado."
   },
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",
     "pasteLabel": "Cole os dados em formato CSV ou TSV.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Exemplo de nome do servidor: 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "A primeira linha deve conter os cabeçalhos das colunas. Copie e cole diretamente de uma planilha — vírgulas e tabulações são suportadas. Cabeçalhos reconhecidos: Jogador/Nome/IGN, Servidor de Origem, Poder, Guilda Desejada (opcional), UID do Jogo (opcional), Contato/Discord (opcional).",
+    "pasteHint": "A primeira linha deve conter os cabeçalhos das colunas. Copie e cole diretamente de uma planilha — vírgulas e tabulações são suportadas. Cabeçalhos reconhecidos: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (opcional), Game UID (opcional), Contact/Discord (opcional).",
+    "pasteHintTop": "playerName, sourceServer e power são campos OBRIGATÓRIOS; as demais colunas são opcionais.",
     "windowNotOpen": "Esta janela de migração não está aberta, portanto, as linhas importadas ainda não podem ser admitidas.",
     "missingColumns": "Não foi possível encontrar as colunas necessárias: {fields} Adicione uma linha de cabeçalho com essas colunas e cole novamente.",
     "summary": "{valid} linha(s) pronta(s) para importar, {invalid} com erros que serão ignorados.",

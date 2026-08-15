@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { PowerInput } from "@/components/power-input";
-import { DuplicateBadge, duplicateRowId } from "@/components/migration-duplicate-badge";
+import { DuplicateBadge, duplicateRowId } from "@/components/migration-tracker/migration-duplicate-badge";
 import type { DuplicateMatch } from "@/lib/migration-dedupe";
 
 type EditableField = "playerName" | "sourceServer" | "power" | "desiredGuild" | "gameUid";

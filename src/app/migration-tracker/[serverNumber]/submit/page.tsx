@@ -2,7 +2,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { DateTime } from "@/components/date-time";
-import { MigrationApplicationForm } from "@/components/migration-application-form";
+import { MigrationApplicationForm } from "@/components/migration-tracker/migration-application-form";
 import { resolveActiveDestination, getWindowStatus } from "@/lib/migration-tracker";
 
 export const metadata = { title: "Apply to Migrate" };

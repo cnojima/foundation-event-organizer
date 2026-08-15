@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth";
 import { requireMigrationDestinationReviewPage } from "@/lib/rbac";
 import { PageHeader } from "@/components/page-header";
-import { MigrationImportForm } from "@/components/migration-import-form";
+import { MigrationImportForm } from "@/components/migration-tracker/migration-import-form";
 import { getWindowStatus } from "@/lib/migration-tracker";
 
 export const metadata = { title: "Migration Tracker — Import" };

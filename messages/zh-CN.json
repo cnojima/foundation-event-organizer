@@ -1087,6 +1087,8 @@
     "waitlist": "候补名单",
     "deny": "否定",
     "remove": "消除",
+    "revert": "恢复",
+    "acceptedHeading": "公认",
     "confirm": "确认",
     "statusApplied": "应用",
     "statusWaitlisted": "候补名单",
@@ -1097,15 +1099,13 @@
     "errorPlayerNameRequired": "玩家姓名为必填项。",
     "errorSourceServerRequired": "需要源服务器。",
     "errorPower": "幂必须是整数。",
-    "errorGeneric": "出问题了。",
-    "revert": "恢复",
-    "acceptedHeading": "公认"
+    "errorGeneric": "出问题了。"
   },
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",
     "pasteLabel": "粘贴 CSV 或 TSV 数据",
-    "pastePlaceholder": "玩家名称 源服务器 权限 期望公会 游戏Uid 联系方式 示例名称 服务器 42 95000000 基金会 123456789 @example",
-    "pasteHint": "第一行必须是列标题。直接从电子表格复制粘贴——支持逗号和制表符。可识别的标题：玩家/名称/游戏ID、来源服务器/Origin、战力、期望公会（可选）、游戏UID（可选）、联系方式/Discord（可选）。",
+    "pasteHint": "第一行必须是列标题。直接从电子表格复制粘贴——支持逗号和制表符。可识别的标题：playerName/Player/Name/IGN、sourceServer/Source Server/Origin、Power、Desired Guild（可选）、Game UID（可选）、Contact/Discord（可选）。",
+    "pasteHintTop": "playerName、sourceServer、power 为必填字段；其他列为可选字段。",
     "windowNotOpen": "此迁移窗口尚未开放，因此暂时无法导入行。",
     "missingColumns": "找不到所需的列： {fields}添加一个包含这些列的标题行，然后再次粘贴。",
     "summary": "{valid}准备导入的行， {invalid}包含将被忽略的错误。",

@@ -6,7 +6,7 @@ import { db } from "@/db";
 import { migrationOfficers, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
-import { MigrationOfficersManager } from "@/components/migration-officers-manager";
+import { MigrationOfficersManager } from "@/components/migration-tracker/migration-officers-manager";
 import { getWindowStatus } from "@/lib/migration-tracker";
 
 export const metadata = { title: "Migration Tracker — Officers" };

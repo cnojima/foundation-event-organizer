@@ -1088,6 +1088,8 @@
     "waitlist": "Список очікування",
     "deny": "Заперечити",
     "remove": "Видалити",
+    "revert": "Повернути",
+    "acceptedHeading": "Прийнято",
     "confirm": "Підтвердити",
     "statusApplied": "Застосовано",
     "statusWaitlisted": "Список очікування",
@@ -1098,15 +1100,13 @@
     "errorPlayerNameRequired": "Ім'я гравця обов'язкове.",
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
-    "errorGeneric": "Щось пішло не так.",
-    "revert": "Повернути",
-    "acceptedHeading": "Прийнято"
+    "errorGeneric": "Щось пішло не так."
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",
     "pasteLabel": "Вставити дані CSV або TSV",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUID contact Приклад імені сервера 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Перший рядок має бути заголовками стовпців. Скопіюйте та вставте безпосередньо з електронної таблиці — підтримуються коми та табуляція. Розпізнавані заголовки: Гравець/Ім'я/IGN, Вихідний сервер/Походження, Влада, Бажана гільдія (необов'язково), UID гри (необов'язково), Контакт/Discord (необов'язково).",
+    "pasteHint": "Перший рядок має бути заголовками стовпців. Скопіюйте та вставте безпосередньо з електронної таблиці — підтримуються коми та табуляція. Розпізнавані заголовки: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (необов'язково), Game UID (необов'язково), Contact/Discord (необов'язково).",
+    "pasteHintTop": "playerName, sourceServer, power – ОБОВ’ЯЗКОВІ поля; інші стовпці необов’язкові.",
     "windowNotOpen": "Це вікно міграції не відкрите, тому імпортовані рядки ще не можуть бути допущені.",
     "missingColumns": "Не вдалося знайти обов'язкові стовпці: {fields} Додайте рядок заголовка з цими стовпцями та вставте його знову.",
     "summary": "{valid} рядок(ки) готовий(і) до імпорту, {invalid} з помилками, які будуть пропущені.",

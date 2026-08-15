@@ -1088,6 +1088,8 @@
     "waitlist": "Liste d'attente",
     "deny": "Refuser",
     "remove": "Retirer",
+    "revert": "Revenir",
+    "acceptedHeading": "Accepté",
     "confirm": "Confirmer",
     "statusApplied": "Appliqué",
     "statusWaitlisted": "Liste d'attente",
@@ -1098,15 +1100,13 @@
     "errorPlayerNameRequired": "Le nom du joueur est obligatoire.",
     "errorSourceServerRequired": "Le serveur source est requis.",
     "errorPower": "La puissance doit être un nombre entier.",
-    "errorGeneric": "Quelque chose a mal fonctionné.",
-    "revert": "Revenir",
-    "acceptedHeading": "Accepté"
+    "errorGeneric": "Quelque chose a mal fonctionné."
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
     "pasteLabel": "Collez les données CSV ou TSV",
-    "pastePlaceholder": "Nom du joueur Serveur source Puissance Guilde souhaitée UID du jeu Contact Exemple Nom Serveur 42 95000000 Fondation 123456789 @exemple",
-    "pasteHint": "La première ligne doit contenir les en-têtes de colonnes. Copiez-collez directement depuis une feuille de calcul ; les virgules et les tabulations sont acceptées. En-têtes reconnus : Joueur/Nom/IGN, Serveur source/Origine, Puissance, Guilde souhaitée (facultatif), UID du jeu (facultatif), Contact/Discord (facultatif).",
+    "pasteHint": "La première ligne doit contenir les en-têtes de colonnes. Copiez-collez directement depuis une feuille de calcul ; les virgules et les tabulations sont acceptées. En-têtes reconnus : playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (facultatif), Game UID (facultatif), Contact/Discord (facultatif).",
+    "pasteHintTop": "Les champs playerName, sourceServer et power sont OBLIGATOIRES ; les autres colonnes sont facultatives.",
     "windowNotOpen": "Cette fenêtre de migration n'est pas ouverte, les lignes importées ne peuvent donc pas encore être admises.",
     "missingColumns": "Colonnes requises introuvables : {fields} Ajoutez une ligne d'en-tête avec ces colonnes et collez à nouveau.",
     "summary": "{valid} ligne(s) prête(s) à importer, {invalid} avec des erreurs qui seront ignorées.",

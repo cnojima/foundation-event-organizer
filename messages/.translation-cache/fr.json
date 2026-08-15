@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "fr",
-  "translatedAt": "2026-08-15T17:20:05.132Z",
+  "translatedAt": "2026-08-15T23:00:30.856Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -928,8 +928,9 @@
     "migrationTrackerQueue.errorGeneric": "Something went wrong.",
     "migrationTrackerImport.title": "Server #{serverNumber} — Import applications",
     "migrationTrackerImport.pasteLabel": "Paste CSV or TSV data",
-    "migrationTrackerImport.pastePlaceholder": "playerName\tsourceServer\tpower\tdesiredGuild\tgameUid\tcontact\nExample Name\tServer 42\t95000000\tFoundation\t123456789\t@example",
-    "migrationTrackerImport.pasteHint": "First row must be column headers. Copy-paste directly from a spreadsheet — commas and tabs are both supported. Recognized headers: Player/Name/IGN, Source Server/Origin, Power, Desired Guild (optional), Game UID (optional), Contact/Discord (optional).",
+    "migrationTrackerImport.pastePlaceholder": "playerName,sourceServer,power,desiredGuild,gameUid,contact",
+    "migrationTrackerImport.pasteHint": "First row must be column headers. Copy-paste directly from a spreadsheet — commas and tabs are both supported. Recognized headers: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (optional), Game UID (optional), Contact/Discord (optional).",
+    "migrationTrackerImport.pasteHintTop": "playerName, sourceServer, power are REQUIRED fields; the other columns are optional.",
     "migrationTrackerImport.windowNotOpen": "This migration window isn't open, so imported rows can't be admitted yet.",
     "migrationTrackerImport.missingColumns": "Couldn't find required columns: {fields}. Add a header row with these columns and paste again.",
     "migrationTrackerImport.summary": "{valid} row(s) ready to import, {invalid} with errors that will be skipped.",

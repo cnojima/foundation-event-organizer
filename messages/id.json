@@ -1086,6 +1086,8 @@
     "waitlist": "Daftar Tunggu",
     "deny": "Membantah",
     "remove": "Menghapus",
+    "revert": "Kembali",
+    "acceptedHeading": "Diterima",
     "confirm": "Mengonfirmasi",
     "statusApplied": "Terapan",
     "statusWaitlisted": "Masuk daftar tunggu",
@@ -1096,15 +1098,13 @@
     "errorPlayerNameRequired": "Nama pemain wajib diisi.",
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
-    "errorGeneric": "Terjadi kesalahan.",
-    "revert": "Kembali",
-    "acceptedHeading": "Diterima"
+    "errorGeneric": "Terjadi kesalahan."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",
     "pasteLabel": "Tempel data CSV atau TSV",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Baris pertama harus berupa judul kolom. Salin-tempel langsung dari spreadsheet — koma dan tab sama-sama didukung. Judul yang dikenali: Pemain/Nama/IGN, Server Sumber/Asal, Kekuatan, Guild yang Diinginkan (opsional), UID Game (opsional), Kontak/Discord (opsional).",
+    "pasteHint": "Baris pertama harus berupa judul kolom. Salin-tempel langsung dari spreadsheet — koma dan tab sama-sama didukung. Judul yang dikenali: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (opsional), Game UID (opsional), Contact/Discord (opsional).",
+    "pasteHintTop": "playerName, sourceServer, dan power adalah kolom WAJIB diisi; kolom lainnya bersifat opsional.",
     "windowNotOpen": "Jendela migrasi ini belum dibuka, jadi baris yang diimpor belum dapat diterima.",
     "missingColumns": "Kolom yang dibutuhkan tidak ditemukan: {fields} Tambahkan baris header dengan kolom-kolom ini dan tempel lagi.",
     "summary": "{valid} baris siap diimpor, {invalid} dengan kesalahan yang akan dilewati.",

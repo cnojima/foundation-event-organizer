@@ -1084,6 +1084,8 @@
     "waitlist": "Wachtlijst",
     "deny": "Ontkennen",
     "remove": "Verwijderen",
+    "revert": "Terugdraaien",
+    "acceptedHeading": "Geaccepteerd",
     "confirm": "Bevestigen",
     "statusApplied": "Toegepast",
     "statusWaitlisted": "Op de wachtlijst geplaatst",
@@ -1094,15 +1096,13 @@
     "errorPlayerNameRequired": "Spelersnaam is verplicht.",
     "errorSourceServerRequired": "Een bronserver is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
-    "errorGeneric": "Er is iets misgegaan.",
-    "revert": "Terugdraaien",
-    "acceptedHeading": "Geaccepteerd"
+    "errorGeneric": "Er is iets misgegaan."
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",
     "pasteLabel": "Plak CSV- of TSV-gegevens",
-    "pastePlaceholder": "spelernaam bronServer vermogen gewenstGuild gameUID contact Voorbeeld Naam Server 42 95000000 Foundation 123456789 @voorbeeld",
-    "pasteHint": "De eerste rij moet bestaan uit kolomkoppen. Kopieer en plak rechtstreeks vanuit een spreadsheet — zowel komma's als tabs worden ondersteund. Herkende kopteksten: Speler/Naam/IGN, Bronserver/Origin, Kracht, Gewenste gilde (optioneel), Game-UID (optioneel), Contact/Discord (optioneel).",
+    "pasteHint": "De eerste rij moet bestaan uit kolomkoppen. Kopieer en plak rechtstreeks vanuit een spreadsheet — zowel komma's als tabs worden ondersteund. Herkende kopteksten: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (optioneel), Game UID (optioneel), Contact/Discord (optioneel).",
+    "pasteHintTop": "De velden playerName, sourceServer en power zijn VERPLICHT; de andere kolommen zijn optioneel.",
     "windowNotOpen": "Dit migratievenster is nog niet geopend, dus geïmporteerde rijen kunnen nog niet worden verwerkt.",
     "missingColumns": "De vereiste kolommen konden niet worden gevonden: {fields} Voeg een kopregel toe met deze kolommen en plak het opnieuw.",
     "summary": "{valid} rij(en) klaar om te importeren, {invalid} met fouten die overgeslagen zullen worden.",

@@ -1087,6 +1087,8 @@
     "waitlist": "Bekleme listesi",
     "deny": "Reddetmek",
     "remove": "Kaldırmak",
+    "revert": "Geri al",
+    "acceptedHeading": "Kabul edildi",
     "confirm": "Onaylamak",
     "statusApplied": "Uygulandı",
     "statusWaitlisted": "Bekleme listesinde",
@@ -1097,15 +1099,13 @@
     "errorPlayerNameRequired": "Oyuncu adı zorunludur.",
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
-    "errorGeneric": "Bir şeyler ters gitti.",
-    "revert": "Geri al",
-    "acceptedHeading": "Kabul edildi"
+    "errorGeneric": "Bir şeyler ters gitti."
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",
     "pasteLabel": "CSV veya TSV verilerini yapıştırın.",
-    "pastePlaceholder": "oyuncuAdı kaynakSunucu güç istenenLonca oyunUID iletişim Örnek Ad Sunucusu 42 95000000 Vakıf 123456789 @example",
-    "pasteHint": "İlk satır sütun başlıkları olmalıdır. Doğrudan bir elektronik tablodan kopyala-yapıştır yapın — virgül ve sekme karakterleri desteklenir. Tanınan başlıklar: Oyuncu/Ad/IGN, Kaynak Sunucu/Köken, Güç, İstenen Lonca (isteğe bağlı), Oyun UID'si (isteğe bağlı), İletişim/Discord (isteğe bağlı).",
+    "pasteHint": "İlk satır sütun başlıkları olmalıdır. Doğrudan bir elektronik tablodan kopyala-yapıştır yapabilirsiniz; virgül ve sekme karakterleri desteklenir. Tanınan başlıklar: oyuncuAdı/Oyuncu/Adı/IGN, kaynakSunucu/Kaynak Sunucu/Origin, Güç, İstenen Lonca (isteğe bağlı), Oyun UID'si (isteğe bağlı), İletişim/Discord (isteğe bağlı).",
+    "pasteHintTop": "playerName, sourceServer ve power alanları ZORUNLU alanlardır; diğer sütunlar isteğe bağlıdır.",
     "windowNotOpen": "Bu geçiş penceresi açık değil, bu nedenle içe aktarılan satırlar henüz kabul edilemiyor.",
     "missingColumns": "Gerekli sütunlar bulunamadı: {fields} Bu sütunları içeren bir başlık satırı ekleyin ve tekrar yapıştırın.",
     "summary": "{valid} İçe aktarılmaya hazır satır(lar), {invalid} Hata içeren kısımlar atlanacaktır.",

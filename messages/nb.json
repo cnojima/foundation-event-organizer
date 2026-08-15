@@ -1088,6 +1088,8 @@
     "waitlist": "Venteliste",
     "deny": "Benekte",
     "remove": "Fjerne",
+    "revert": "Tilbakestill",
+    "acceptedHeading": "Godkjent",
     "confirm": "Bekrefte",
     "statusApplied": "Anvendt",
     "statusWaitlisted": "Venteliste",
@@ -1098,15 +1100,13 @@
     "errorPlayerNameRequired": "Spillernavn er obligatorisk.",
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
-    "errorGeneric": "Noe gikk galt.",
-    "revert": "Tilbakestill",
-    "acceptedHeading": "Godkjent"
+    "errorGeneric": "Noe gikk galt."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importer applikasjoner",
     "pasteLabel": "Lim inn CSV- eller TSV-data",
-    "pastePlaceholder": "spillernavn kilde Server strøm ønsket Laug spillUid kontakt Eksempel navn Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Første rad må være kolonneoverskrifter. Kopier og lim inn direkte fra et regneark – både komma og tabulatorer støttes. Gjenkjente overskrifter: Spiller/Navn/IGN, Kildeserver/Opprinnelse, Strøm, Ønsket Guild (valgfritt), Spill-UID (valgfritt), Kontakt/Discord (valgfritt).",
+    "pasteHint": "Første rad må være kolonneoverskrifter. Kopier og lim inn direkte fra et regneark – både komma og tabulatorer støttes. Gjenkjente overskrifter: spillernavn/spiller/navn/IGN, kildeserver/kildeserver/opprinnelse, strøm, ønsket laug (valgfritt), spill-UID (valgfritt), kontakt/discord (valgfritt).",
+    "pasteHintTop": "playerName, sourceServer og power er OBLIGATORISKE felt; de andre kolonnene er valgfrie.",
     "windowNotOpen": "Dette migreringsvinduet er ikke åpent, så importerte rader kan ikke tas imot ennå.",
     "missingColumns": "Finner ikke obligatoriske kolonner: {fields} Legg til en overskriftsrad med disse kolonnene og lim inn på nytt.",
     "summary": "{valid} rad(er) klar til import, {invalid} med feil som vil bli hoppet over.",

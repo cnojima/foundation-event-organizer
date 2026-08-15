@@ -1088,6 +1088,8 @@
     "waitlist": "Väntelista",
     "deny": "Förneka",
     "remove": "Ta bort",
+    "revert": "Återgå",
+    "acceptedHeading": "Accepterad",
     "confirm": "Bekräfta",
     "statusApplied": "Tillämpad",
     "statusWaitlisted": "Väntelistad",
@@ -1098,15 +1100,13 @@
     "errorPlayerNameRequired": "Spelarens namn krävs.",
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
-    "errorGeneric": "Något gick fel.",
-    "revert": "Återgå",
-    "acceptedHeading": "Accepterad"
+    "errorGeneric": "Något gick fel."
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",
     "pasteLabel": "Klistra in CSV- eller TSV-data",
-    "pastePlaceholder": "spelarnamn källaServerström önskadGillespelUid-kontakt ExempelnamnServer 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Första raden måste vara kolumnrubriker. Kopiera och klistra in direkt från ett kalkylblad — kommatecken och tabbtecken stöds. Rubriker som känns igen: Spelare/Namn/IGN, Källserver/Ursprung, Styrka, Önskad gille (valfritt), Spel-UID (valfritt), Kontakt/Discord (valfritt).",
+    "pasteHint": "Första raden måste vara kolumnrubriker. Kopiera och klistra in direkt från ett kalkylblad — kommatecken och tabbtecken stöds. Rubriker som känns igen: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (valfritt), Game UID (valfritt), Contact/Discord (valfritt).",
+    "pasteHintTop": "playerName, sourceServer och power är OBLIGATORISKA fält; de andra kolumnerna är valfria.",
     "windowNotOpen": "Det här migreringsfönstret är inte öppet, så importerade rader kan inte tas emot ännu.",
     "missingColumns": "Kunde inte hitta obligatoriska kolumner: {fields} Lägg till en rubrikrad med dessa kolumner och klistra in igen.",
     "summary": "{valid} rad(er) redo att importeras, {invalid} med fel som kommer att hoppas över.",

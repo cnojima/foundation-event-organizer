@@ -7,7 +7,7 @@ import { migrationAllocations, powerTierThresholds } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
 import { TIER_ORDER, getWindowStatus } from "@/lib/migration-tracker";
-import { MigrationSettingsForm } from "@/components/migration-settings-form";
+import { MigrationSettingsForm } from "@/components/migration-tracker/migration-settings-form";
 
 export const metadata = { title: "Migration Tracker — Settings" };
 

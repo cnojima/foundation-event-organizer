@@ -1088,6 +1088,8 @@
     "waitlist": "Lista de espera",
     "deny": "Denegar",
     "remove": "Eliminar",
+    "revert": "Revertir",
+    "acceptedHeading": "Aceptado",
     "confirm": "Confirmar",
     "statusApplied": "Aplicado",
     "statusWaitlisted": "Lista de espera",
@@ -1098,15 +1100,13 @@
     "errorPlayerNameRequired": "Se requiere el nombre del jugador.",
     "errorSourceServerRequired": "Se requiere un servidor de origen.",
     "errorPower": "La potencia debe ser un número entero.",
-    "errorGeneric": "Algo salió mal.",
-    "revert": "Revertir",
-    "acceptedHeading": "Aceptado"
+    "errorGeneric": "Algo salió mal."
   },
   "migrationTrackerImport": {
     "title": "Servidor # {serverNumber} — Importar aplicaciones",
     "pasteLabel": "Pegar datos CSV o TSV",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "La primera fila debe contener los encabezados de columna. Copie y pegue directamente desde una hoja de cálculo; se admiten comas y tabulaciones. Encabezados reconocidos: Jugador/Nombre/IGN, Servidor de origen/Origen, Poder, Gremio deseado (opcional), UID del juego (opcional), Contacto/Discord (opcional).",
+    "pasteHint": "La primera fila debe contener los encabezados de columna. Copie y pegue directamente desde una hoja de cálculo; se admiten comas y tabulaciones. Encabezados reconocidos: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (opcional), Game UID (opcional), Contact/Discord (opcional).",
+    "pasteHintTop": "Los campos playerName, sourceServer y power son OBLIGATORIOS; las demás columnas son opcionales.",
     "windowNotOpen": "Esta ventana de migración no está abierta, por lo que aún no se pueden admitir las filas importadas.",
     "missingColumns": "No se pudieron encontrar las columnas requeridas: {fields} . Agregue una fila de encabezado con estas columnas y vuelva a pegar.",
     "summary": "{valid} fila(s) lista(s) para importar, {invalid} con errores que se omitirán.",

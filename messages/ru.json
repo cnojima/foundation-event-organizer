@@ -1087,6 +1087,8 @@
     "waitlist": "Список ожидания",
     "deny": "Отрицать",
     "remove": "Удалять",
+    "revert": "Возвращаться",
+    "acceptedHeading": "Принял",
     "confirm": "Подтверждать",
     "statusApplied": "Применяемый",
     "statusWaitlisted": "В списке ожидания",
@@ -1097,15 +1099,13 @@
     "errorPlayerNameRequired": "Необходимо указать имя игрока.",
     "errorSourceServerRequired": "Требуется исходный сервер.",
     "errorPower": "Мощность должна быть целым числом.",
-    "errorGeneric": "Что-то пошло не так.",
-    "revert": "Возвращаться",
-    "acceptedHeading": "Принял"
+    "errorGeneric": "Что-то пошло не так."
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",
     "pasteLabel": "Вставьте данные в формате CSV или TSV.",
-    "pastePlaceholder": "playerName sourceServer power desiredGuild gameUid contact Example Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Первая строка должна содержать заголовки столбцов. Копируйте и вставляйте текст непосредственно из электронной таблицы — поддерживаются как запятые, так и табуляция. Распознаваемые заголовки: Игрок/Имя/IGN, Исходный сервер/Источник, Power, Желаемая гильдия (необязательно), UID игры (необязательно), Контакты/Discord (необязательно).",
+    "pasteHint": "Первая строка должна содержать заголовки столбцов. Копируйте и вставляйте текст непосредственно из электронной таблицы — поддерживаются как запятые, так и табуляция. Распознаваемые заголовки: playerName/Player/Name/IGN, sourceServer/Source Server/Origin, Power, Desired Guild (необязательно), Game UID (необязательно), Contact/Discord (необязательно).",
+    "pasteHintTop": "Поля playerName, sourceServer и power ОБЯЗАТЕЛЬНЫ для заполнения; остальные столбцы необязательны.",
     "windowNotOpen": "Данное окно миграции еще не открыто, поэтому импортированные строки пока не могут быть приняты.",
     "missingColumns": "Не удалось найти необходимые столбцы: {fields} Добавьте строку заголовка с указанными столбцами и вставьте еще раз.",
     "summary": "{valid} строка(ы) готовы к импорту, {invalid} Ошибки будут пропущены.",

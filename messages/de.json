@@ -1088,6 +1088,8 @@
     "waitlist": "Warteliste",
     "deny": "Leugnen",
     "remove": "Entfernen",
+    "revert": "Zurücksetzen",
+    "acceptedHeading": "Akzeptiert",
     "confirm": "Bestätigen",
     "statusApplied": "Angewandt",
     "statusWaitlisted": "Auf der Warteliste",
@@ -1098,15 +1100,13 @@
     "errorPlayerNameRequired": "Der Spielername ist erforderlich.",
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
     "errorPower": "Der Exponent muss eine ganze Zahl sein.",
-    "errorGeneric": "Etwas ist schiefgelaufen.",
-    "revert": "Zurücksetzen",
-    "acceptedHeading": "Akzeptiert"
+    "errorGeneric": "Etwas ist schiefgelaufen."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importanträge",
     "pasteLabel": "CSV- oder TSV-Daten einfügen",
-    "pastePlaceholder": "Spielername Quellserver Stärke gewünschte Gilde Spiel-UID Kontakt Beispiel Name Server 42 95000000 Foundation 123456789 @example",
-    "pasteHint": "Die erste Zeile muss die Spaltenüberschriften enthalten. Kopieren Sie die Spaltenüberschriften direkt aus einer Tabellenkalkulation – Kommas und Tabulatoren werden unterstützt. Erkannte Spaltenüberschriften: Spielername/IGN, Quellserver/Herkunft, Stärke, Gewünschte Gilde (optional), Spiel-UID (optional), Kontakt/Discord (optional).",
+    "pasteHint": "Die erste Zeile muss die Spaltenüberschriften enthalten. Kopieren Sie die Spalten direkt aus einer Tabellenkalkulation – Kommas und Tabulatoren werden unterstützt. Erkannte Spaltenüberschriften: Spielername/Spielername/IGN, Quellserver/Quellserver/Herkunft, Stärke, Gewünschte Gilde (optional), Spiel-UID (optional), Kontakt/Discord (optional).",
+    "pasteHintTop": "playerName, sourceServer, power sind Pflichtfelder; die anderen Spalten sind optional.",
     "windowNotOpen": "Das Migrationsfenster ist noch nicht geöffnet, daher können importierte Zeilen noch nicht zugelassen werden.",
     "missingColumns": "Die erforderlichen Spalten konnten nicht gefunden werden: {fields} Fügen Sie eine Kopfzeile mit diesen Spalten hinzu und fügen Sie die Datei erneut ein.",
     "summary": "{valid} Zeile(n) zum Import bereit, {invalid} mit Fehlern, die übersprungen werden.",

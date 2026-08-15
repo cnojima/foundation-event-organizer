@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { duelProposals, events, guilds, users } from "@/db/schema";
 import { and, eq, isNotNull, isNull, sql } from "drizzle-orm";
 import { Logo } from "@/components/logo";
-import { MigrationTrackerBanner } from "@/components/migration-tracker-banner";
+import { MigrationTrackerBanner } from "@/components/migration-tracker/migration-tracker-banner";
 import { FEEDBACK_REPO_URL, SUPPORT_DISCORD_URL } from "@/lib/feedback";
 
 // Public landing page for signed-out visitors. Mock screenshots are styled

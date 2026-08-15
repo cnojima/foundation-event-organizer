@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { migrationApplications, migrationDestinations } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
-import { MigrationApplicationEditForm } from "@/components/migration-application-edit-form";
+import { MigrationApplicationEditForm } from "@/components/migration-tracker/migration-application-edit-form";
 import { getWindowStatus } from "@/lib/migration-tracker";
 
 export const metadata = { title: "Your Migration Application" };
