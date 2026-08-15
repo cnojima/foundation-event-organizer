@@ -1092,10 +1092,11 @@
     "statusDenied": "Ditolak",
     "statusWithdrawn": "Ditarik kembali",
     "statusRemoved": "DIHAPUS",
-    "errorGeneric": "Terjadi kesalahan.",
     "errorPlayerNameRequired": "Nama pemain wajib diisi.",
     "errorSourceServerRequired": "Server sumber diperlukan.",
-    "errorPower": "Pangkat harus berupa bilangan bulat."
+    "errorPower": "Pangkat harus berupa bilangan bulat.",
+    "errorGeneric": "Terjadi kesalahan.",
+    "duplicateBadge": "Kemungkinan duplikat"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",

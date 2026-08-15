@@ -1094,10 +1094,11 @@
     "statusDenied": "Avvist",
     "statusWithdrawn": "Tilbaketrukket",
     "statusRemoved": "Fjernet",
-    "errorGeneric": "Noe gikk galt.",
     "errorPlayerNameRequired": "Spillernavn er obligatorisk.",
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
-    "errorPower": "Potens må være et helt tall."
+    "errorPower": "Potens må være et helt tall.",
+    "errorGeneric": "Noe gikk galt.",
+    "duplicateBadge": "Mulig duplikat"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importer applikasjoner",

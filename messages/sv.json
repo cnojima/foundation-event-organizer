@@ -1094,10 +1094,11 @@
     "statusDenied": "Nekad",
     "statusWithdrawn": "Tillbakadragen",
     "statusRemoved": "Borttagen",
-    "errorGeneric": "Något gick fel.",
     "errorPlayerNameRequired": "Spelarens namn krävs.",
     "errorSourceServerRequired": "Källserver krävs.",
-    "errorPower": "Potens måste vara ett heltal."
+    "errorPower": "Potens måste vara ett heltal.",
+    "errorGeneric": "Något gick fel.",
+    "duplicateBadge": "Möjlig dubblett"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",

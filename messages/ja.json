@@ -1093,10 +1093,11 @@
     "statusDenied": "拒否されました",
     "statusWithdrawn": "撤回",
     "statusRemoved": "削除済み",
-    "errorGeneric": "何かがおかしくなりました。",
     "errorPlayerNameRequired": "プレイヤー名は必須です。",
     "errorSourceServerRequired": "ソースサーバーが必要です。",
-    "errorPower": "べき乗は整数でなければならない。"
+    "errorPower": "べき乗は整数でなければならない。",
+    "errorGeneric": "何かがおかしくなりました。",
+    "duplicateBadge": "重複の可能性あり"
   },
   "migrationTrackerImport": {
     "title": "サーバー番号： {serverNumber} — アプリケーションをインポートする",

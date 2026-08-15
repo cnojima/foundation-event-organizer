@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "tr",
-  "translatedAt": "2026-08-14T19:47:15.930Z",
+  "translatedAt": "2026-08-15T15:57:10.428Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -904,6 +904,7 @@
     "migrationTrackerQueue.colActions": "Actions",
     "migrationTrackerQueue.desiredGuildPlaceholder": "Desired guild",
     "migrationTrackerQueue.gameUidPlaceholder": "Game UID",
+    "migrationTrackerQueue.duplicateBadge": "Possible duplicate",
     "migrationTrackerQueue.waitlistHeading": "Waitlist",
     "migrationTrackerQueue.empty": "No pending applications.",
     "migrationTrackerQueue.emptyRoster": "No applications were submitted for this window.",

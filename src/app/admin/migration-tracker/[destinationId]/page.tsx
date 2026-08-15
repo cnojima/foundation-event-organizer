@@ -4,10 +4,12 @@ import { auth } from "@/auth";
 import { requireMigrationDestinationReviewPage } from "@/lib/rbac";
 import { db } from "@/db";
 import { migrationApplications } from "@/db/schema";
-import { and, asc, eq } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
 import { getCapacitySummary, getWindowStatus, TIER_ORDER, type Tier } from "@/lib/migration-tracker";
+import { findDuplicateMatches } from "@/lib/migration-dedupe";
 import { MigrationQueueRow } from "@/components/migration-queue-row";
+import { DuplicateBadge, duplicateRowId } from "@/components/migration-duplicate-badge";
 
 export const metadata = { title: "Migration Review Queue" };
 
@@ -34,29 +36,31 @@ export default async function MigrationDestinationQueuePage({
   const summary = getCapacitySummary(destination.id);
   const windowClosed = getWindowStatus(destination) === "closed";
 
-  const applied = await db
+  // Single fetch of every application for this destination, regardless of
+  // status — applied/waitlisted/finalRoster are all derived from it below,
+  // and duplicate detection needs the full set (a duplicate may span
+  // statuses, e.g. one already-accepted application and one freshly applied).
+  const allApplications = await db
     .select()
     .from(migrationApplications)
-    .where(and(eq(migrationApplications.destinationId, destination.id), eq(migrationApplications.status, "applied")))
+    .where(eq(migrationApplications.destinationId, destination.id))
     .orderBy(asc(migrationApplications.createdAt));
 
-  const waitlisted = await db
-    .select()
-    .from(migrationApplications)
-    .where(and(eq(migrationApplications.destinationId, destination.id), eq(migrationApplications.status, "waitlisted")))
-    .orderBy(asc(migrationApplications.createdAt));
+  const applied = allApplications.filter((a) => a.status === "applied");
+  const waitlisted = allApplications.filter((a) => a.status === "waitlisted");
 
   // Closed windows are read-only, per docs/prd-migration-tracker-multi-server.md
   // §6-7: nothing is actionable once closed, so the queue's job shifts from
   // "review pending applications" to "show the final historical roster" —
   // every application regardless of status, no action buttons.
   const finalRoster = windowClosed
-    ? await db
-        .select()
-        .from(migrationApplications)
-        .where(eq(migrationApplications.destinationId, destination.id))
-        .orderBy(asc(migrationApplications.tier), asc(migrationApplications.createdAt))
+    ? [...allApplications].sort(
+        (a, b) => a.tier.localeCompare(b.tier) || a.createdAt.localeCompare(b.createdAt)
+      )
     : [];
+
+  const duplicateMatches = findDuplicateMatches(allApplications);
+
   const APPLICATION_STATUS_LABEL: Record<string, string> = {
     applied: t("statusApplied"),
     waitlisted: t("statusWaitlisted"),
@@ -139,8 +143,15 @@ export default async function MigrationDestinationQueuePage({
             </thead>
             <tbody>
               {finalRoster.map((a) => (
-                <tr key={a.id} className="border-t border-gray-100 dark:border-gray-800">
-                  <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">{a.playerName}</td>
+                <tr
+                  key={a.id}
+                  id={duplicateRowId(a.id)}
+                  className="scroll-mt-4 border-t border-gray-100 target:bg-amber-50 dark:border-gray-800 dark:target:bg-amber-950/30"
+                >
+                  <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">
+                    {a.playerName}
+                    <DuplicateBadge matches={duplicateMatches.get(a.id) ?? []} label={t("duplicateBadge")} />
+                  </td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.sourceServer}</td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{tierLabel[a.tier as Tier] ?? a.tier}</td>
@@ -195,6 +206,7 @@ export default async function MigrationDestinationQueuePage({
                           createdAt: a.createdAt,
                         }}
                         showRemove={isServerAdmin}
+                        duplicates={duplicateMatches.get(a.id) ?? []}
                       />
                     ))}
                   </tbody>
@@ -232,6 +244,7 @@ export default async function MigrationDestinationQueuePage({
                             createdAt: a.createdAt,
                           }}
                           showRemove={isServerAdmin}
+                          duplicates={duplicateMatches.get(a.id) ?? []}
                         />
                       ))}
                     </tbody>

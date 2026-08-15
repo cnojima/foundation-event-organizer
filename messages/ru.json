@@ -1093,10 +1093,11 @@
     "statusDenied": "Отклонен",
     "statusWithdrawn": "Отозвано",
     "statusRemoved": "Удаленный",
-    "errorGeneric": "Что-то пошло не так.",
     "errorPlayerNameRequired": "Необходимо указать имя игрока.",
     "errorSourceServerRequired": "Требуется исходный сервер.",
-    "errorPower": "Мощность должна быть целым числом."
+    "errorPower": "Мощность должна быть целым числом.",
+    "errorGeneric": "Что-то пошло не так.",
+    "duplicateBadge": "Возможно, дубликат"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",

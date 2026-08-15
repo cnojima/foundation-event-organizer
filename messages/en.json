@@ -1079,6 +1079,7 @@
     "colActions": "Actions",
     "desiredGuildPlaceholder": "Desired guild",
     "gameUidPlaceholder": "Game UID",
+    "duplicateBadge": "Possible duplicate",
     "waitlistHeading": "Waitlist",
     "empty": "No pending applications.",
     "emptyRoster": "No applications were submitted for this window.",

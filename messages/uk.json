@@ -1094,10 +1094,11 @@
     "statusDenied": "Відмовлено",
     "statusWithdrawn": "Відкликано",
     "statusRemoved": "Видалено",
-    "errorGeneric": "Щось пішло не так.",
     "errorPlayerNameRequired": "Ім'я гравця обов'язкове.",
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
-    "errorPower": "Степінь має бути цілим числом."
+    "errorPower": "Степінь має бути цілим числом.",
+    "errorGeneric": "Щось пішло не так.",
+    "duplicateBadge": "Можливий дублікат"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",

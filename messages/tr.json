@@ -1093,10 +1093,11 @@
     "statusDenied": "Reddedildi",
     "statusWithdrawn": "Geri çekildi",
     "statusRemoved": "Kaldırıldı",
-    "errorGeneric": "Bir şeyler ters gitti.",
     "errorPlayerNameRequired": "Oyuncu adı zorunludur.",
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
-    "errorPower": "Üs tam sayı olmalıdır."
+    "errorPower": "Üs tam sayı olmalıdır.",
+    "errorGeneric": "Bir şeyler ters gitti.",
+    "duplicateBadge": "Muhtemel mükerrer"
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",

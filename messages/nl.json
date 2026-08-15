@@ -1090,10 +1090,11 @@
     "statusDenied": "Geweigerd",
     "statusWithdrawn": "Ingetrokken",
     "statusRemoved": "VERWIJDERD",
-    "errorGeneric": "Er is iets misgegaan.",
     "errorPlayerNameRequired": "Spelersnaam is verplicht.",
     "errorSourceServerRequired": "Een bronserver is vereist.",
-    "errorPower": "De macht moet een geheel getal zijn."
+    "errorPower": "De macht moet een geheel getal zijn.",
+    "errorGeneric": "Er is iets misgegaan.",
+    "duplicateBadge": "Mogelijk een duplicaat"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",

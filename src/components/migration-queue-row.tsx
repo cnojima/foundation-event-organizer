@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { PowerInput } from "@/components/power-input";
+import { DuplicateBadge, duplicateRowId } from "@/components/migration-duplicate-badge";
+import type { DuplicateMatch } from "@/lib/migration-dedupe";
 
 type EditableField = "playerName" | "sourceServer" | "power" | "desiredGuild" | "gameUid";
 
@@ -23,9 +25,11 @@ type QueueApplication = {
 export function MigrationQueueRow({
   application,
   showRemove,
+  duplicates = [],
 }: {
   application: QueueApplication;
   showRemove: boolean;
+  duplicates?: DuplicateMatch[];
 }) {
   const router = useRouter();
   const t = useTranslations("migrationTrackerQueue");
@@ -139,7 +143,10 @@ export function MigrationQueueRow({
 
   return (
     <>
-      <tr className="border-t border-gray-100 dark:border-gray-800">
+      <tr
+        id={duplicateRowId(application.id)}
+        className="scroll-mt-4 border-t border-gray-100 target:bg-amber-50 dark:border-gray-800 dark:target:bg-amber-950/30"
+      >
         <td className="px-3 py-2">
           <input
             type="text"
@@ -149,6 +156,7 @@ export function MigrationQueueRow({
             onBlur={(e) => saveField("playerName", e.target.value)}
             className={fieldClassName(savedFlash.playerName, "primary")}
           />
+          <DuplicateBadge matches={duplicates} label={t("duplicateBadge")} />
           {application.contact && (
             <span className="ml-2 text-xs text-gray-500 dark:text-gray-400">
               ({application.contact})
