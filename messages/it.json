@@ -1093,10 +1093,11 @@
     "statusDenied": "Negato",
     "statusWithdrawn": "Ritirare",
     "statusRemoved": "RIMOSSO",
-    "errorGeneric": "Qualcosa è andato storto.",
     "errorPlayerNameRequired": "Il nome del giocatore è obbligatorio.",
     "errorSourceServerRequired": "È necessario un server sorgente.",
-    "errorPower": "La potenza deve essere un numero intero."
+    "errorPower": "La potenza deve essere un numero intero.",
+    "errorGeneric": "Qualcosa è andato storto.",
+    "duplicateBadge": "Possibile duplicato"
   },
   "migrationTrackerImport": {
     "title": "Server n. {serverNumber} — Applicazioni di importazione",

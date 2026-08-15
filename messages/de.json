@@ -1094,10 +1094,11 @@
     "statusDenied": "Bestritten",
     "statusWithdrawn": "Zurückgezogen",
     "statusRemoved": "ENTFERNT",
-    "errorGeneric": "Etwas ist schiefgelaufen.",
     "errorPlayerNameRequired": "Der Spielername ist erforderlich.",
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
-    "errorPower": "Der Exponent muss eine ganze Zahl sein."
+    "errorPower": "Der Exponent muss eine ganze Zahl sein.",
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "duplicateBadge": "Mögliches Duplikat"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importanträge",

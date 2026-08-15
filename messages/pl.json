@@ -1093,10 +1093,11 @@
     "statusDenied": "Zaprzeczony",
     "statusWithdrawn": "Zamknięty w sobie",
     "statusRemoved": "REMOVED",
-    "errorGeneric": "Coś poszło nie tak.",
     "errorPlayerNameRequired": "Nazwa gracza jest wymagana.",
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
-    "errorPower": "Moc musi być liczbą całkowitą."
+    "errorPower": "Moc musi być liczbą całkowitą.",
+    "errorGeneric": "Coś poszło nie tak.",
+    "duplicateBadge": "Możliwy duplikat"
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",

@@ -1092,10 +1092,11 @@
     "statusDenied": "Từ chối",
     "statusWithdrawn": "Đã rút lại",
     "statusRemoved": "LOẠI BỎ",
-    "errorGeneric": "Đã xảy ra lỗi.",
     "errorPlayerNameRequired": "Tên người chơi là bắt buộc.",
     "errorSourceServerRequired": "Cần có máy chủ nguồn.",
-    "errorPower": "Lũy thừa phải là số nguyên."
+    "errorPower": "Lũy thừa phải là số nguyên.",
+    "errorGeneric": "Đã xảy ra lỗi.",
+    "duplicateBadge": "Có thể là bản sao trùng lặp"
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",

@@ -1093,10 +1093,11 @@
     "statusDenied": "否认",
     "statusWithdrawn": "已撤回",
     "statusRemoved": "已移除",
-    "errorGeneric": "出问题了。",
     "errorPlayerNameRequired": "玩家姓名为必填项。",
     "errorSourceServerRequired": "需要源服务器。",
-    "errorPower": "幂必须是整数。"
+    "errorPower": "幂必须是整数。",
+    "errorGeneric": "出问题了。",
+    "duplicateBadge": "可能重复"
   },
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",

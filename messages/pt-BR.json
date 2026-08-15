@@ -1094,10 +1094,11 @@
     "statusDenied": "Negado",
     "statusWithdrawn": "Retirado",
     "statusRemoved": "Removido",
-    "errorGeneric": "Algo deu errado.",
     "errorPlayerNameRequired": "É necessário nomear o jogador.",
     "errorSourceServerRequired": "É necessário um servidor de origem.",
-    "errorPower": "A potência deve ser um número inteiro."
+    "errorPower": "A potência deve ser um número inteiro.",
+    "errorGeneric": "Algo deu errado.",
+    "duplicateBadge": "Possível duplicado"
   },
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",

@@ -1091,10 +1091,11 @@
     "statusDenied": "거부됨",
     "statusWithdrawn": "빼는",
     "statusRemoved": "제거됨",
-    "errorGeneric": "뭔가 잘못됐어요.",
     "errorPlayerNameRequired": "플레이어 이름은 필수 입력 사항입니다.",
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
-    "errorPower": "거듭제곱은 정수여야 합니다."
+    "errorPower": "거듭제곱은 정수여야 합니다.",
+    "errorGeneric": "뭔가 잘못됐어요.",
+    "duplicateBadge": "중복일 가능성이 있습니다."
   },
   "migrationTrackerImport": {
     "title": "서버 번호 {serverNumber} — 가져오기 애플리케이션",
