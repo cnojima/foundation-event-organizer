@@ -9,7 +9,7 @@ import { PageHeader } from "@/components/page-header";
 import { getCapacitySummary, getWindowStatus, TIER_ORDER, type Tier } from "@/lib/migration-tracker";
 import { findDuplicateMatches } from "@/lib/migration-dedupe";
 import { MigrationQueueRow } from "@/components/migration-queue-row";
-import { DuplicateBadge } from "@/components/migration-duplicate-badge";
+import { DuplicateBadge, duplicateRowId } from "@/components/migration-duplicate-badge";
 
 export const metadata = { title: "Migration Review Queue" };
 
@@ -143,7 +143,11 @@ export default async function MigrationDestinationQueuePage({
             </thead>
             <tbody>
               {finalRoster.map((a) => (
-                <tr key={a.id} className="border-t border-gray-100 dark:border-gray-800">
+                <tr
+                  key={a.id}
+                  id={duplicateRowId(a.id)}
+                  className="scroll-mt-4 border-t border-gray-100 target:bg-amber-50 dark:border-gray-800 dark:target:bg-amber-950/30"
+                >
                   <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">
                     {a.playerName}
                     <DuplicateBadge matches={duplicateMatches.get(a.id) ?? []} label={t("duplicateBadge")} />

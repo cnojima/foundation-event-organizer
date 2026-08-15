@@ -1,7 +1,8 @@
 // Pure, framework-agnostic duplicate detection for migration applications —
 // no DB access, so it's safe to call from a server component with an
 // already-fetched list. Two rules, applied independently (a pair can match
-// on both):
+// on both — in which case it's still a single match with both reasons
+// attached, not two separate entries):
 //
 // 1. Same normalized Game UID — treated as the same account, regardless of
 //    name/server (a UID is meant to be a unique per-account identifier).
@@ -13,6 +14,15 @@
 // "Normalized" strips everything but letters/digits and lowercases, so
 // "Cur-isu ", "cur isu", and "CurIsu" all collapse to the same key —
 // exact match after normalization, no fuzzy/edit-distance matching.
+//
+// Withdrawn and admin-removed applications are excluded from comparison
+// entirely (both as flaggable applications and as match targets) — once an
+// application is gone, it shouldn't keep triggering a "possible duplicate"
+// badge on whatever it used to match, and it shouldn't show one itself.
+// Denied/accepted stay in scope: those are still-live records of someone
+// having applied under that identity.
+
+const EXCLUDED_STATUSES = new Set(["withdrawn", "removed_by_admin"]);
 
 export type DuplicateReason = "gameUid" | "nameAndServer";
 
@@ -20,7 +30,7 @@ export type DuplicateMatch = {
   applicationId: string;
   playerName: string;
   status: string;
-  reason: DuplicateReason;
+  reasons: DuplicateReason[];
 };
 
 export type MinimalApplication = {
@@ -53,6 +63,10 @@ function groupBy<T>(items: T[], key: (item: T) => string): Map<string, T[]> {
   return groups;
 }
 
+// Merges into `result` by target applicationId — a pair that matches on
+// multiple rules (e.g. same UID *and* same name+server) ends up as one
+// match with both reasons attached, rather than two separate entries
+// pointing at the same target.
 function addAllPairs<T extends MinimalApplication>(
   result: Map<string, DuplicateMatch[]>,
   groups: Map<string, T[]>,
@@ -68,8 +82,11 @@ function addAllPairs<T extends MinimalApplication>(
           matches = [];
           result.set(a.id, matches);
         }
-        if (!matches.some((m) => m.applicationId === b.id && m.reason === reason)) {
-          matches.push({ applicationId: b.id, playerName: b.playerName, status: b.status, reason });
+        const existing = matches.find((m) => m.applicationId === b.id);
+        if (existing) {
+          if (!existing.reasons.includes(reason)) existing.reasons.push(reason);
+        } else {
+          matches.push({ applicationId: b.id, playerName: b.playerName, status: b.status, reasons: [reason] });
         }
       }
     }
@@ -83,15 +100,16 @@ export function findDuplicateMatches(
   applications: MinimalApplication[]
 ): Map<string, DuplicateMatch[]> {
   const result = new Map<string, DuplicateMatch[]>();
+  const live = applications.filter((a) => !EXCLUDED_STATUSES.has(a.status));
 
   const byUid = groupBy(
-    applications.filter((a) => a.gameUid && a.gameUid.trim() !== ""),
+    live.filter((a) => a.gameUid && a.gameUid.trim() !== ""),
     (a) => normalizeForDedupe(a.gameUid as string)
   );
   addAllPairs(result, byUid, "gameUid");
 
   const byNameAndServer = groupBy(
-    applications,
+    live,
     (a) => `${normalizeForDedupe(a.playerName)}::${normalizeForDedupe(a.sourceServer)}`
   );
   addAllPairs(result, byNameAndServer, "nameAndServer");
