@@ -1077,6 +1077,7 @@
     "colActions": "Tindakan",
     "desiredGuildPlaceholder": "Serikat yang diinginkan",
     "gameUidPlaceholder": "UID Game",
+    "duplicateBadge": "Kemungkinan duplikat",
     "waitlistHeading": "Daftar Tunggu",
     "empty": "Tidak ada aplikasi yang sedang diproses.",
     "emptyRoster": "Tidak ada permohonan yang diajukan untuk periode ini.",
@@ -1096,7 +1097,8 @@
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
     "errorGeneric": "Terjadi kesalahan.",
-    "duplicateBadge": "Kemungkinan duplikat"
+    "revert": "Kembali",
+    "acceptedHeading": "Diterima"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",

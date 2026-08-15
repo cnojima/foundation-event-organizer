@@ -1078,6 +1078,7 @@
     "colActions": "Azioni",
     "desiredGuildPlaceholder": "Gilda desiderata",
     "gameUidPlaceholder": "ID utente del gioco",
+    "duplicateBadge": "Possibile duplicato",
     "waitlistHeading": "Lista d'attesa",
     "empty": "Nessuna richiesta in sospeso.",
     "emptyRoster": "Per questo periodo non è stata presentata alcuna candidatura.",
@@ -1097,7 +1098,8 @@
     "errorSourceServerRequired": "È necessario un server sorgente.",
     "errorPower": "La potenza deve essere un numero intero.",
     "errorGeneric": "Qualcosa è andato storto.",
-    "duplicateBadge": "Possibile duplicato"
+    "revert": "Ripristina",
+    "acceptedHeading": "Accettato"
   },
   "migrationTrackerImport": {
     "title": "Server n. {serverNumber} — Applicazioni di importazione",

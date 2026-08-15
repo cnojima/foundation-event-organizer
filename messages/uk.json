@@ -1079,6 +1079,7 @@
     "colActions": "Дії",
     "desiredGuildPlaceholder": "Бажана гільдія",
     "gameUidPlaceholder": "UID гри",
+    "duplicateBadge": "Можливий дублікат",
     "waitlistHeading": "Список очікування",
     "empty": "Немає заявок, що очікують розгляду.",
     "emptyRoster": "На це вікно не було подано жодної заявки.",
@@ -1098,7 +1099,8 @@
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
     "errorGeneric": "Щось пішло не так.",
-    "duplicateBadge": "Можливий дублікат"
+    "revert": "Повернути",
+    "acceptedHeading": "Прийнято"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",

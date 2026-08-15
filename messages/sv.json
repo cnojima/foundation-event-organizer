@@ -1079,6 +1079,7 @@
     "colActions": "Åtgärder",
     "desiredGuildPlaceholder": "Önskad gille",
     "gameUidPlaceholder": "Spel-UID",
+    "duplicateBadge": "Möjlig dubblett",
     "waitlistHeading": "Väntelista",
     "empty": "Inga väntande ansökningar.",
     "emptyRoster": "Inga ansökningar lämnades in för detta fönster.",
@@ -1098,7 +1099,8 @@
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
     "errorGeneric": "Något gick fel.",
-    "duplicateBadge": "Möjlig dubblett"
+    "revert": "Återgå",
+    "acceptedHeading": "Accepterad"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",

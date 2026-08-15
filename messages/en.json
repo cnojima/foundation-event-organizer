@@ -1088,6 +1088,8 @@
     "waitlist": "Waitlist",
     "deny": "Deny",
     "remove": "Remove",
+    "revert": "Revert",
+    "acceptedHeading": "Accepted",
     "confirm": "Confirm",
     "statusApplied": "Applied",
     "statusWaitlisted": "Waitlisted",

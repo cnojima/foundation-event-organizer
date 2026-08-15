@@ -1079,6 +1079,7 @@
     "colActions": "Comportamiento",
     "desiredGuildPlaceholder": "Gremio deseado",
     "gameUidPlaceholder": "UID del juego",
+    "duplicateBadge": "Posible duplicado",
     "waitlistHeading": "Lista de espera",
     "empty": "No hay solicitudes pendientes.",
     "emptyRoster": "No se presentaron solicitudes para este período.",
@@ -1098,7 +1099,8 @@
     "errorSourceServerRequired": "Se requiere un servidor de origen.",
     "errorPower": "La potencia debe ser un número entero.",
     "errorGeneric": "Algo salió mal.",
-    "duplicateBadge": "Posible duplicado"
+    "revert": "Revertir",
+    "acceptedHeading": "Aceptado"
   },
   "migrationTrackerImport": {
     "title": "Servidor # {serverNumber} — Importar aplicaciones",

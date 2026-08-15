@@ -1075,6 +1075,7 @@
     "colActions": "Acties",
     "desiredGuildPlaceholder": "Gewenste gilde",
     "gameUidPlaceholder": "Spel-UID",
+    "duplicateBadge": "Mogelijk een duplicaat",
     "waitlistHeading": "Wachtlijst",
     "empty": "Geen lopende aanvragen.",
     "emptyRoster": "Er zijn voor deze periode geen aanvragen ingediend.",
@@ -1094,7 +1095,8 @@
     "errorSourceServerRequired": "Een bronserver is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
     "errorGeneric": "Er is iets misgegaan.",
-    "duplicateBadge": "Mogelijk een duplicaat"
+    "revert": "Terugdraaien",
+    "acceptedHeading": "Geaccepteerd"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",

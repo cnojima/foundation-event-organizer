@@ -1078,6 +1078,7 @@
     "colActions": "Eylemler",
     "desiredGuildPlaceholder": "İstenen lonca",
     "gameUidPlaceholder": "Oyun UID'si",
+    "duplicateBadge": "Muhtemel mükerrer",
     "waitlistHeading": "Bekleme listesi",
     "empty": "Bekleyen başvuru bulunmamaktadır.",
     "emptyRoster": "Bu dönem için herhangi bir başvuru yapılmamıştır.",
@@ -1097,7 +1098,8 @@
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
     "errorGeneric": "Bir şeyler ters gitti.",
-    "duplicateBadge": "Muhtemel mükerrer"
+    "revert": "Geri al",
+    "acceptedHeading": "Kabul edildi"
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",

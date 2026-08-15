@@ -1078,6 +1078,7 @@
     "colActions": "行動",
     "desiredGuildPlaceholder": "希望するギルド",
     "gameUidPlaceholder": "ゲームUID",
+    "duplicateBadge": "重複の可能性あり",
     "waitlistHeading": "待機リスト",
     "empty": "保留中の申請はありません。",
     "emptyRoster": "今回の応募期間には、応募書類は提出されませんでした。",
@@ -1097,7 +1098,8 @@
     "errorSourceServerRequired": "ソースサーバーが必要です。",
     "errorPower": "べき乗は整数でなければならない。",
     "errorGeneric": "何かがおかしくなりました。",
-    "duplicateBadge": "重複の可能性あり"
+    "revert": "元に戻す",
+    "acceptedHeading": "承認済み"
   },
   "migrationTrackerImport": {
     "title": "サーバー番号： {serverNumber} — アプリケーションをインポートする",

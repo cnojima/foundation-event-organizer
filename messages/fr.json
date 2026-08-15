@@ -1079,6 +1079,7 @@
     "colActions": "Actes",
     "desiredGuildPlaceholder": "Guilde souhaitée",
     "gameUidPlaceholder": "UID du jeu",
+    "duplicateBadge": "Duplicata possible",
     "waitlistHeading": "Liste d'attente",
     "empty": "Aucune demande en attente.",
     "emptyRoster": "Aucune candidature n'a été soumise pour cette période.",
@@ -1098,7 +1099,8 @@
     "errorSourceServerRequired": "Le serveur source est requis.",
     "errorPower": "La puissance doit être un nombre entier.",
     "errorGeneric": "Quelque chose a mal fonctionné.",
-    "duplicateBadge": "Duplicata possible"
+    "revert": "Revenir",
+    "acceptedHeading": "Accepté"
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
