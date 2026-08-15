@@ -1077,6 +1077,7 @@
     "colActions": "Hành động",
     "desiredGuildPlaceholder": "Hội nhóm mong muốn",
     "gameUidPlaceholder": "Mã định danh trò chơi (Game UID)",
+    "duplicateBadge": "Có thể là bản sao trùng lặp",
     "waitlistHeading": "Danh sách chờ",
     "empty": "Hiện không có đơn đăng ký nào đang chờ xử lý.",
     "emptyRoster": "Không có đơn đăng ký nào được nộp cho đợt này.",
@@ -1096,7 +1097,8 @@
     "errorSourceServerRequired": "Cần có máy chủ nguồn.",
     "errorPower": "Lũy thừa phải là số nguyên.",
     "errorGeneric": "Đã xảy ra lỗi.",
-    "duplicateBadge": "Có thể là bản sao trùng lặp"
+    "revert": "Hoàn tác",
+    "acceptedHeading": "Đã được chấp nhận"
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",

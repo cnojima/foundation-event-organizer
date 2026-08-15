@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { canReviewMigrationApplication } from "@/lib/rbac";
 import { reviewApplication } from "@/lib/migration-tracker";
-import { logAudit, resolveActorDisplay } from "@/lib/audit";
+import { logAudit, logMigrationPromotions, resolveActorDisplay } from "@/lib/audit";
 
 export async function POST(
   req: Request,
@@ -22,15 +22,17 @@ export async function POST(
     return NextResponse.json({ error: result.reason }, { status: result.status });
   }
 
+  const actorDisplay = await resolveActorDisplay(membership.userId);
   void logAudit({
     guildId: null,
     actorUserId: membership.userId,
-    actorDisplay: await resolveActorDisplay(membership.userId),
+    actorDisplay,
     action: "migration.waitlist",
     entityType: "migration_application",
     entityId: result.application.id,
     entityLabel: result.application.playerName,
   });
+  void logMigrationPromotions(result.promoted, membership.userId, actorDisplay);
 
-  return NextResponse.json({ application: result.application });
+  return NextResponse.json({ application: result.application, promoted: result.promoted });
 }

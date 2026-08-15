@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { withdrawApplicationByToken } from "@/lib/migration-tracker";
-import { logAudit, resolveActorDisplay } from "@/lib/audit";
+import { logAudit, logMigrationPromotions, resolveActorDisplay } from "@/lib/audit";
 
 // Public, no auth — possession of the token is the authorization.
 export async function POST(
@@ -22,6 +22,7 @@ export async function POST(
     entityId: result.application.id,
     entityLabel: result.application.playerName,
   });
+  void logMigrationPromotions(result.promoted, null, "(system)");
 
   return NextResponse.json({ success: true });
 }

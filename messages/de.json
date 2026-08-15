@@ -1079,6 +1079,7 @@
     "colActions": "Aktionen",
     "desiredGuildPlaceholder": "Gewünschte Gilde",
     "gameUidPlaceholder": "Spiel-UID",
+    "duplicateBadge": "Mögliches Duplikat",
     "waitlistHeading": "Warteliste",
     "empty": "Keine anhängigen Anträge.",
     "emptyRoster": "Für diesen Zeitraum wurden keine Anträge eingereicht.",
@@ -1098,7 +1099,8 @@
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
     "errorPower": "Der Exponent muss eine ganze Zahl sein.",
     "errorGeneric": "Etwas ist schiefgelaufen.",
-    "duplicateBadge": "Mögliches Duplikat"
+    "revert": "Zurücksetzen",
+    "acceptedHeading": "Akzeptiert"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importanträge",

@@ -1,6 +1,7 @@
 import { db } from "@/db";
 import { auditLog, users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import type { MigrationApplicationRow } from "@/lib/migration-tracker";
 
 // Stable, dot-namespaced action key. New keys can be added at will — the
 // UI maps unknown keys to a generic "action.unknown" label, so adding a
@@ -75,6 +76,8 @@ export type AuditAction =
   | "migration.accept"
   | "migration.deny"
   | "migration.waitlist"
+  | "migration.waitlist.promote"
+  | "migration.revert"
   | "migration.remove"
   | "migration.officer.assign"
   | "migration.officer.revoke"
@@ -158,5 +161,28 @@ export async function resolveActorDisplay(
     return u?.inGameName ?? u?.name ?? u?.email ?? userId;
   } catch {
     return userId;
+  }
+}
+
+// Shared by every migration-tracker route whose action can free a reserved
+// slot (deny/waitlist/remove/withdraw) — logs one entry per applicant that
+// promoteFromWaitlist auto-moved from waitlisted -> applied as a side
+// effect, so the audit trail explains the status change even though no one
+// clicked anything for that specific applicant.
+export async function logMigrationPromotions(
+  promoted: MigrationApplicationRow[],
+  actorUserId: string | null,
+  actorDisplay: string
+): Promise<void> {
+  for (const application of promoted) {
+    void logAudit({
+      guildId: null,
+      actorUserId,
+      actorDisplay,
+      action: "migration.waitlist.promote",
+      entityType: "migration_application",
+      entityId: application.id,
+      entityLabel: application.playerName,
+    });
   }
 }

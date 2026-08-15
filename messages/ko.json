@@ -1076,6 +1076,7 @@
     "colActions": "행위",
     "desiredGuildPlaceholder": "원하는 길드",
     "gameUidPlaceholder": "게임 UID",
+    "duplicateBadge": "중복일 가능성이 있습니다.",
     "waitlistHeading": "대기자 명단",
     "empty": "현재 접수된 신청서가 없습니다.",
     "emptyRoster": "이번 기간에는 지원서가 접수되지 않았습니다.",
@@ -1095,7 +1096,8 @@
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
     "errorGeneric": "뭔가 잘못됐어요.",
-    "duplicateBadge": "중복일 가능성이 있습니다."
+    "revert": "돌아가는 것",
+    "acceptedHeading": "수락됨"
   },
   "migrationTrackerImport": {
     "title": "서버 번호 {serverNumber} — 가져오기 애플리케이션",

@@ -1078,6 +1078,7 @@
     "colActions": "Действия",
     "desiredGuildPlaceholder": "Желаемая гильдия",
     "gameUidPlaceholder": "Идентификатор игры",
+    "duplicateBadge": "Возможно, дубликат",
     "waitlistHeading": "Список ожидания",
     "empty": "Заявки, находящиеся на рассмотрении, отсутствуют.",
     "emptyRoster": "Заявки на этот период не подавались.",
@@ -1097,7 +1098,8 @@
     "errorSourceServerRequired": "Требуется исходный сервер.",
     "errorPower": "Мощность должна быть целым числом.",
     "errorGeneric": "Что-то пошло не так.",
-    "duplicateBadge": "Возможно, дубликат"
+    "revert": "Возвращаться",
+    "acceptedHeading": "Принял"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",

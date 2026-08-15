@@ -7,7 +7,7 @@ import {
   migrationAllocations,
   migrationApplications,
 } from "@/db/schema";
-import { and, eq, gte, inArray, ne, sql } from "drizzle-orm";
+import { and, asc, eq, gte, inArray, ne, sql } from "drizzle-orm";
 
 export type Tier = "ultra_high" | "high" | "mid" | "low";
 export type Classification = "high" | "mid" | "low";
@@ -182,6 +182,62 @@ function countReserved(
     .where(and(...conditions))
     .get();
   return Number(row?.count ?? 0);
+}
+
+// Fills any now-open reserved slots in `tier` from the front of that tier's
+// waitlist (oldest createdAt first). Moves status waitlisted -> applied,
+// not accepted — acceptance stays a deliberate officer decision, this just
+// pulls the next applicant back into the reviewable pool. Called after any
+// transition that could free a reserved slot (deny, bump-to-waitlist,
+// remove, withdraw) on an application that was previously applied/accepted.
+// `excludeApplicationId` is the application that just triggered this call —
+// critical for the bump-to-waitlist case, where that application's own new
+// status is "waitlisted" too; without excluding it, an officer manually
+// waitlisting someone could immediately auto-promote that same person right
+// back to applied if they happen to have the oldest createdAt in the tier.
+// Returns the promoted rows so callers can audit-log each one.
+function promoteFromWaitlist(
+  tx: { select: typeof db.select; update: typeof db.update },
+  destinationId: string,
+  tier: Tier,
+  now: string,
+  excludeApplicationId?: string
+): MigrationApplicationRow[] {
+  const allocation = tx
+    .select()
+    .from(migrationAllocations)
+    .where(
+      and(eq(migrationAllocations.destinationId, destinationId), eq(migrationAllocations.tier, tier))
+    )
+    .get();
+  const cap = allocation?.maxSlots ?? 0;
+  let openSlots = cap - countReserved(destinationId, tier, undefined, tx);
+  if (openSlots <= 0) return [];
+
+  const waitlistConditions = [
+    eq(migrationApplications.destinationId, destinationId),
+    eq(migrationApplications.tier, tier),
+    eq(migrationApplications.status, "waitlisted"),
+  ];
+  if (excludeApplicationId) waitlistConditions.push(ne(migrationApplications.id, excludeApplicationId));
+  const waitlisted = tx
+    .select()
+    .from(migrationApplications)
+    .where(and(...waitlistConditions))
+    .orderBy(asc(migrationApplications.createdAt))
+    .all();
+
+  const promoted: MigrationApplicationRow[] = [];
+  for (const app of waitlisted) {
+    if (openSlots <= 0) break;
+    tx.update(migrationApplications)
+      .set({ status: "applied", updatedAt: now })
+      .where(eq(migrationApplications.id, app.id))
+      .run();
+    promoted.push({ ...app, status: "applied", updatedAt: now });
+    openSlots--;
+  }
+  return promoted;
 }
 
 // Re-derives tier from a new power value and, if the application is still
@@ -464,7 +520,7 @@ export function editApplicationByAdmin(
 }
 
 export type WithdrawResult =
-  | { ok: true; application: MigrationApplicationRow }
+  | { ok: true; application: MigrationApplicationRow; promoted: MigrationApplicationRow[] }
   | { ok: false; reason: string; status: 404 | 409 };
 
 export function withdrawApplicationByToken(token: string): WithdrawResult {
@@ -501,29 +557,46 @@ export function withdrawApplicationByToken(token: string): WithdrawResult {
       .set({ status: "withdrawn", updatedAt: now })
       .where(eq(migrationApplications.id, application.id))
       .run();
+    const promoted = RESERVED_STATUSES.includes(application.status as ApplicationStatus)
+      ? promoteFromWaitlist(tx, application.destinationId, application.tier as Tier, now, application.id)
+      : [];
     return {
       ok: true as const,
       application: { ...application, status: "withdrawn", updatedAt: now },
+      promoted,
     };
   });
 }
 
-export type ReviewAction = "accept" | "deny" | "waitlist";
+export type ReviewAction = "accept" | "deny" | "waitlist" | "revert";
 
 const REVIEW_TARGET_STATUS: Record<ReviewAction, ApplicationStatus> = {
   accept: "accepted",
   deny: "denied",
   waitlist: "waitlisted",
+  revert: "applied",
 };
 
 export type ReviewResult =
-  | { ok: true; application: MigrationApplicationRow }
+  | { ok: true; application: MigrationApplicationRow; promoted: MigrationApplicationRow[] }
   | { ok: false; reason: string; status: 404 | 409 };
 
-// Deliberately does not rebalance the rest of the tier's waitlist — freed or
-// consumed room just changes what getCapacitySummary reports next.
-// Promotion off the waitlist stays a manual officer action, and going over
-// cap from a decision is shown, not blocked.
+// Deny/waitlist can free a reserved slot (applied/accepted -> denied/
+// waitlisted) — when that happens, promoteFromWaitlist immediately pulls
+// the longest-waiting applicant(s) in that tier back into "applied".
+// Accept never frees a slot (applied/waitlisted -> accepted only holds or
+// consumes room), so it never triggers a promotion. Going over cap from a
+// decision is still shown, not blocked — promotion only fills existing
+// headroom, it doesn't create any.
+//
+// `revert` is the undo path for an accidental Accept click — it's the one
+// action allowed to move an application *out* of "accepted" (every other
+// action is blocked once decided, per DECIDED_STATUSES below, but accepted
+// is deliberately excluded from that set so this stays reachable). Reverts
+// straight back to "applied" (not the review queue's default landing spot,
+// but a neutral "undecided again" state) rather than accepted's original
+// status, since that's not tracked. accepted -> applied is reserved ->
+// reserved, so it never frees a slot or triggers promotion either.
 export function reviewApplication(
   applicationId: string,
   action: ReviewAction,
@@ -539,7 +612,15 @@ export function reviewApplication(
     if (!application) {
       return { ok: false as const, reason: "Application not found", status: 404 as const };
     }
-    if (DECIDED_STATUSES.includes(application.status as ApplicationStatus)) {
+    if (action === "revert") {
+      if (application.status !== "accepted") {
+        return {
+          ok: false as const,
+          reason: "Only accepted applications can be reverted",
+          status: 409 as const,
+        };
+      }
+    } else if (DECIDED_STATUSES.includes(application.status as ApplicationStatus)) {
       return {
         ok: false as const,
         reason: "This application has already been finalized",
@@ -577,7 +658,13 @@ export function reviewApplication(
       })
       .where(eq(migrationApplications.id, applicationId))
       .run();
-    return { ok: true as const, application: updated };
+    const freedSlot =
+      RESERVED_STATUSES.includes(application.status as ApplicationStatus) &&
+      !RESERVED_STATUSES.includes(updated.status as ApplicationStatus);
+    const promoted = freedSlot
+      ? promoteFromWaitlist(tx, application.destinationId, application.tier as Tier, now, application.id)
+      : [];
+    return { ok: true as const, application: updated, promoted };
   });
 }
 
@@ -632,7 +719,10 @@ export function removeApplication(
       })
       .where(eq(migrationApplications.id, applicationId))
       .run();
-    return { ok: true as const, application: updated };
+    const promoted = RESERVED_STATUSES.includes(application.status as ApplicationStatus)
+      ? promoteFromWaitlist(tx, application.destinationId, application.tier as Tier, now, application.id)
+      : [];
+    return { ok: true as const, application: updated, promoted };
   });
 }
 

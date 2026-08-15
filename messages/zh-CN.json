@@ -1078,6 +1078,7 @@
     "colActions": "行动",
     "desiredGuildPlaceholder": "理想的公会",
     "gameUidPlaceholder": "游戏 UID",
+    "duplicateBadge": "可能重复",
     "waitlistHeading": "候补名单",
     "empty": "没有待处理的申请。",
     "emptyRoster": "本窗口期未收到任何申请。",
@@ -1097,7 +1098,8 @@
     "errorSourceServerRequired": "需要源服务器。",
     "errorPower": "幂必须是整数。",
     "errorGeneric": "出问题了。",
-    "duplicateBadge": "可能重复"
+    "revert": "恢复",
+    "acceptedHeading": "公认"
   },
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",

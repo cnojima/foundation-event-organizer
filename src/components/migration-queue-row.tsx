@@ -21,13 +21,15 @@ type QueueApplication = {
 };
 
 // Single review-queue row. Client component because it owns the
-// accept/deny/waitlist/remove actions — modeled on audit-row.tsx.
+// accept/deny/waitlist/remove/revert actions — modeled on audit-row.tsx.
 export function MigrationQueueRow({
   application,
+  status,
   showRemove,
   duplicates = [],
 }: {
   application: QueueApplication;
+  status: "applied" | "waitlisted" | "accepted";
   showRemove: boolean;
   duplicates?: DuplicateMatch[];
 }) {
@@ -125,7 +127,7 @@ export function MigrationQueueRow({
     router.refresh();
   }
 
-  async function act(action: "accept" | "deny" | "waitlist" | "remove") {
+  async function act(action: "accept" | "deny" | "waitlist" | "remove" | "revert") {
     setError(null);
     setSubmitting(action);
     const res = await fetch(
@@ -207,14 +209,25 @@ export function MigrationQueueRow({
         </td>
         <td className="px-3 py-2">
           <div className="flex flex-wrap items-center justify-end gap-1.5">
-            <button
-              type="button"
-              onClick={() => act("accept")}
-              disabled={!!submitting}
-              className="rounded-md border border-emerald-300 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
-            >
-              {t("accept")}
-            </button>
+            {status === "accepted" ? (
+              <button
+                type="button"
+                onClick={() => act("revert")}
+                disabled={!!submitting}
+                className="rounded-md border border-violet-300 bg-violet-50 px-2 py-1 text-xs font-semibold text-violet-800 hover:bg-violet-100 disabled:opacity-50 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
+              >
+                {t("revert")}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => act("accept")}
+                disabled={!!submitting}
+                className="rounded-md border border-emerald-300 bg-emerald-50 px-2 py-1 text-xs font-semibold text-emerald-800 hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-900/60 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
+              >
+                {t("accept")}
+              </button>
+            )}
             <button
               type="button"
               onClick={() => act("waitlist")}

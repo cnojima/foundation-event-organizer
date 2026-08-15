@@ -1078,6 +1078,7 @@
     "colActions": "Akcje",
     "desiredGuildPlaceholder": "Pożądana gildia",
     "gameUidPlaceholder": "Identyfikator użytkownika gry",
+    "duplicateBadge": "Możliwy duplikat",
     "waitlistHeading": "Lista oczekujących",
     "empty": "Brak oczekujących wniosków.",
     "emptyRoster": "W tym okresie nie złożono żadnych wniosków.",
@@ -1097,7 +1098,8 @@
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
     "errorPower": "Moc musi być liczbą całkowitą.",
     "errorGeneric": "Coś poszło nie tak.",
-    "duplicateBadge": "Możliwy duplikat"
+    "revert": "Odwracać",
+    "acceptedHeading": "Przyjęty"
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",
