@@ -273,7 +273,7 @@ async function MigrationApplicantRoster({
                 </td>
                 <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
                 <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} />
+                  <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} hideValue />
                 </td>
                 <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
                   {statusLabel[a.status] ?? a.status}
@@ -392,7 +392,7 @@ function RosterRows({
             <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.sourceServer}</td>
             <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
             <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-              <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} />
+              <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} hideValue />
             </td>
             <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
               {new Date(a.createdAt).toLocaleDateString()}
