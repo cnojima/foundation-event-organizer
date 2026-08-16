@@ -134,6 +134,16 @@ export function MigrationSettingsForm({
   const [allocError, setAllocError] = useState<string | null>(null);
   const [allocSaved, setAllocSaved] = useState(false);
 
+  function selectClassification(value: Classification) {
+    setSelectedClassification(value);
+    if (value === classification) {
+      setAllocationDrafts(Object.fromEntries(allocations.map((a) => [a.tier, String(a.maxSlots)])));
+    } else {
+      const standard = standardByClassification[value];
+      setAllocationDrafts(Object.fromEntries(allocations.map((a) => [a.tier, String(standard[a.tier])])));
+    }
+  }
+
   const [thresholdDrafts, setThresholdDrafts] = useState(
     Object.fromEntries(thresholds.map((th) => [th.tier, th.minPower === null ? "" : String(th.minPower)]))
   );
@@ -328,7 +338,7 @@ export function MigrationSettingsForm({
             <button
               key={opt.value}
               type="button"
-              onClick={() => setSelectedClassification(opt.value)}
+              onClick={() => selectClassification(opt.value)}
               disabled={windowClosed}
               className={`rounded-md border px-3 py-1.5 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-50 ${
                 selectedClassification === opt.value
