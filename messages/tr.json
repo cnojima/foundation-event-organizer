@@ -1140,7 +1140,6 @@
   "migrationTrackerSettings": {
     "title": "Sunucu # {serverNumber} — Ayarlar",
     "datesHeading": "Açılış/kapanış tarihleri",
-    "datesDesc": "Yanlış yazılmış tarih için düzeltme aracı — pencere kapandıktan sonra bile her zaman düzenlenebilir. Kapalı bir pencerenin kapanış tarihini uzatmak, pencereyi yeniden açar.",
     "opensAtLabel": "Açılış saati",
     "closesAtLabel": "Kapanış saati",
     "saveDates": "Tarihleri kaydedin",
@@ -1148,6 +1147,10 @@
     "errorCloseAfterOpen": "Kapanış tarihi, açılış tarihinden sonra olmalıdır.",
     "closedNote": "Bu pencere kapalı — düzenleme devre dışı bırakıldı.",
     "tierInfoHeading": "Sunucu ve Oyuncu Seviyesi Bilgileri",
+    "tierInfoTiersHeading": "Tüccar Güç Seviyeleri:",
+    "tierInfoHighServersHeading": "Yüksek performanslı sunucular:",
+    "tierInfoMidServersHeading": "Orta güçteki sunucular:",
+    "tierInfoLowServersHeading": "Düşük güç tüketimli sunucular:",
     "tierInfoDiscordLink": "Resmi Discord Duyurusu",
     "classificationHeading": "Sunucu sınıflandırması",
     "saveClassification": "Sınıflandırmayı kaydet",
@@ -1161,10 +1164,7 @@
     "errorAllocation": "Her bir büyük harf negatif olmayan bir sayı olmalıdır.",
     "errorThreshold": "Her eşik değeri bir sayı olmalı veya minimum değer yoksa boş bırakılmalıdır.",
     "errorGeneric": "Bir şeyler ters gitti.",
-    "tierInfoTiersHeading": "Tüccar Güç Seviyeleri:",
-    "tierInfoHighServersHeading": "Yüksek performanslı sunucular:",
-    "tierInfoMidServersHeading": "Orta güçteki sunucular:",
-    "tierInfoLowServersHeading": "Düşük güç tüketimli sunucular:"
+    "datesDesc": "Sunucu geçiş uygulamaları bu süre zarfında açık kalacaktır."
   },
   "migrationTrackerCreate": {
     "title": "Yeni göç penceresi",

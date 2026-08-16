@@ -1139,7 +1139,6 @@
   "migrationTrackerSettings": {
     "title": "Máy chủ # {serverNumber} — Cài đặt",
     "datesHeading": "Ngày mở/đóng cửa",
-    "datesDesc": "Công cụ sửa lỗi nhập sai ngày tháng — luôn có thể chỉnh sửa, ngay cả sau khi cửa sổ đóng lại. Gia hạn ngày đóng của cửa sổ đã đóng sẽ mở lại cửa sổ đó.",
     "opensAtLabel": "Mở cửa lúc",
     "closesAtLabel": "Đóng cửa lúc",
     "saveDates": "Hãy lưu lại ngày tháng",
@@ -1147,6 +1146,10 @@
     "errorCloseAfterOpen": "Ngày đóng cửa phải sau ngày mở cửa.",
     "closedNote": "Cửa sổ này đã đóng — chức năng chỉnh sửa đã bị vô hiệu hóa.",
     "tierInfoHeading": "Thông tin về cấp độ máy chủ và người chơi",
+    "tierInfoTiersHeading": "Các cấp độ sức mạnh của nhà giao dịch:",
+    "tierInfoHighServersHeading": "Máy chủ hiệu năng cao:",
+    "tierInfoMidServersHeading": "Máy chủ tầm trung:",
+    "tierInfoLowServersHeading": "Máy chủ công suất thấp:",
     "tierInfoDiscordLink": "Thông báo chính thức trên Discord",
     "classificationHeading": "Phân loại máy chủ",
     "saveClassification": "Lưu phân loại",
@@ -1160,10 +1163,7 @@
     "errorAllocation": "Mỗi số mũ phải là một số không âm.",
     "errorThreshold": "Mỗi ngưỡng phải là một con số, hoặc để trống nếu không có ngưỡng tối thiểu.",
     "errorGeneric": "Đã xảy ra lỗi.",
-    "tierInfoTiersHeading": "Các cấp độ sức mạnh của nhà giao dịch:",
-    "tierInfoHighServersHeading": "Máy chủ hiệu năng cao:",
-    "tierInfoMidServersHeading": "Máy chủ tầm trung:",
-    "tierInfoLowServersHeading": "Máy chủ công suất thấp:"
+    "datesDesc": "Các ứng dụng di chuyển máy chủ sẽ vẫn mở trong khoảng thời gian này."
   },
   "migrationTrackerCreate": {
     "title": "Cửa sổ di cư mới",

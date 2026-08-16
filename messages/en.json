@@ -1141,7 +1141,7 @@
   "migrationTrackerSettings": {
     "title": "Server #{serverNumber} — Settings",
     "datesHeading": "Open / close dates",
-    "datesDesc": "Correction tool for a mistyped date — always editable, even after the window closes. Extending a closed window's close date reopens it.",
+    "datesDesc": "Server migation applications will remain open during this window.",
     "opensAtLabel": "Opens at",
     "closesAtLabel": "Closes at",
     "saveDates": "Save dates",

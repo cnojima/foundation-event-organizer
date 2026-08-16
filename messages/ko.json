@@ -1137,7 +1137,6 @@
   "migrationTrackerSettings": {
     "title": "서버 번호 {serverNumber} — 설정",
     "datesHeading": "개장/폐장 날짜",
-    "datesDesc": "날짜를 잘못 입력했을 때 수정할 수 있는 도구입니다. 창이 닫힌 후에도 언제든지 수정할 수 있습니다. 닫힌 창의 's close date reopens it.",
     "opensAtLabel": "오픈 시간",
     "closesAtLabel": "마감 시간",
     "saveDates": "날짜를 저장하세요",
@@ -1161,7 +1160,8 @@
     "saveThresholds": "임계값을 저장하세요",
     "errorAllocation": "각 상한값은 음수가 아니어야 합니다.",
     "errorThreshold": "각 기준값은 숫자여야 하며, 최소값이 없는 경우 공백이어야 합니다.",
-    "errorGeneric": "뭔가 잘못됐어요."
+    "errorGeneric": "뭔가 잘못됐어요.",
+    "datesDesc": "이 시간 동안 서버 마이그레이션 애플리케이션은 계속 열려 있습니다."
   },
   "migrationTrackerCreate": {
     "title": "새로운 마이그레이션 창",

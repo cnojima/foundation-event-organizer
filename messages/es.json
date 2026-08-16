@@ -1141,7 +1141,6 @@
   "migrationTrackerSettings": {
     "title": "Servidor n.º {serverNumber} — Configuración",
     "datesHeading": "Fechas de apertura/cierre",
-    "datesDesc": "Herramienta de corrección para fechas mal escritas: siempre editable, incluso después de que la ventana se cierre. Ampliar 's close date reopens it.",
     "opensAtLabel": "Abre a las",
     "closesAtLabel": "Cierra a las",
     "saveDates": "Reservar fechas",
@@ -1165,7 +1164,8 @@
     "saveThresholds": "Umbrales de guardado",
     "errorAllocation": "Cada tapa debe ser un número no negativo.",
     "errorThreshold": "Cada umbral debe ser un número, o estar en blanco si no hay un mínimo.",
-    "errorGeneric": "Algo salió mal."
+    "errorGeneric": "Algo salió mal.",
+    "datesDesc": "Las aplicaciones de migración de servidores permanecerán abiertas durante este período."
   },
   "migrationTrackerCreate": {
     "title": "Nueva ventana de migración",

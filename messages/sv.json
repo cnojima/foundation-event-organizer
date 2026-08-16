@@ -1141,7 +1141,6 @@
   "migrationTrackerSettings": {
     "title": "Servernummer {serverNumber} — Inställningar",
     "datesHeading": "Öppet-/stängningsdatum",
-    "datesDesc": "Korrigeringsverktyg för ett felstavat datum — alltid redigerbart, även efter att fönstret stängts. Om du förlänger ett stängt fönsters stängningsdatum öppnas det igen.",
     "opensAtLabel": "Öppnar kl.",
     "closesAtLabel": "Stänger kl.",
     "saveDates": "Spara datum",
@@ -1149,6 +1148,10 @@
     "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
     "closedNote": "Det här fönstret är stängt – redigering är inaktiverad.",
     "tierInfoHeading": "Server- och spelarnivåinformation",
+    "tierInfoTiersHeading": "Traderns maktnivåer:",
+    "tierInfoHighServersHeading": "Högpresterande servrar:",
+    "tierInfoMidServersHeading": "Medelstarka servrar:",
+    "tierInfoLowServersHeading": "Lågströmsservrar:",
     "tierInfoDiscordLink": "Officiellt Discord-meddelande",
     "classificationHeading": "Serverklassificering",
     "saveClassification": "Spara klassificering",
@@ -1162,10 +1165,7 @@
     "errorAllocation": "Varje versal måste vara ett icke-negativt tal.",
     "errorThreshold": "Varje tröskelvärde måste vara ett tal, eller tomt om det inte finns något minimumvärde.",
     "errorGeneric": "Något gick fel.",
-    "tierInfoTiersHeading": "Traderns maktnivåer:",
-    "tierInfoHighServersHeading": "Högpresterande servrar:",
-    "tierInfoMidServersHeading": "Medelstarka servrar:",
-    "tierInfoLowServersHeading": "Lågströmsservrar:"
+    "datesDesc": "Servermigreringsapplikationer kommer att förbli öppna under detta fönster."
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsfönster",

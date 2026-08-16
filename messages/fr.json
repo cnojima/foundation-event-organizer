@@ -1140,7 +1140,7 @@
   "migrationTrackerSettings": {
     "title": "Serveur n° {serverNumber} — Paramètres",
     "datesHeading": "Dates d'ouverture/de fermeture",
-    "datesDesc": "Outil de correction pour une date mal saisie — toujours modifiable, même après la fermeture de la fenêtre. Prolonger 's close date reopens it.",
+    "datesDesc": "Les applications de migration de serveur resteront ouvertes pendant cette période.",
     "opensAtLabel": "Ouverture à",
     "closesAtLabel": "Ferme à",
     "saveDates": "Réservez les dates",

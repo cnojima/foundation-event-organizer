@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "id",
-  "translatedAt": "2026-08-16T16:55:52.396Z",
+  "translatedAt": "2026-08-16T17:37:47.712Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -960,7 +960,7 @@
     "migrationTrackerOfficers.errorGeneric": "Something went wrong.",
     "migrationTrackerSettings.title": "Server #{serverNumber} — Settings",
     "migrationTrackerSettings.datesHeading": "Open / close dates",
-    "migrationTrackerSettings.datesDesc": "Correction tool for a mistyped date — always editable, even after the window closes. Extending a closed window's close date reopens it.",
+    "migrationTrackerSettings.datesDesc": "Server migation applications will remain open during this window.",
     "migrationTrackerSettings.opensAtLabel": "Opens at",
     "migrationTrackerSettings.closesAtLabel": "Closes at",
     "migrationTrackerSettings.saveDates": "Save dates",

@@ -1140,7 +1140,6 @@
   "migrationTrackerSettings": {
     "title": "Server n. {serverNumber} — Impostazioni",
     "datesHeading": "Date di apertura/chiusura",
-    "datesDesc": "Strumento di correzione per date digitate in modo errato: sempre modificabile, anche dopo la chiusura della finestra. Estendendo 's close date reopens it.",
     "opensAtLabel": "Apre alle",
     "closesAtLabel": "Chiude alle",
     "saveDates": "Salva le date",
@@ -1164,7 +1163,8 @@
     "saveThresholds": "Soglie di salvataggio",
     "errorAllocation": "Ogni lettera maiuscola deve essere un numero non negativo.",
     "errorThreshold": "Ogni soglia deve essere un numero, oppure vuota se non è indicato alcun valore minimo.",
-    "errorGeneric": "Qualcosa è andato storto."
+    "errorGeneric": "Qualcosa è andato storto.",
+    "datesDesc": "Le applicazioni di migrazione del server rimarranno aperte durante questo intervallo."
   },
   "migrationTrackerCreate": {
     "title": "Nuova finestra migratoria",

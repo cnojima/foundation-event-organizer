@@ -1140,7 +1140,6 @@
   "migrationTrackerSettings": {
     "title": "服务器编号： {serverNumber} - 设置",
     "datesHeading": "开放/关闭日期",
-    "datesDesc": "用于更正输入错误日期的工具——即使窗口关闭后也始终可编辑。延长已关闭窗口的关闭日期即可重新打开该窗口。",
     "opensAtLabel": "营业时间",
     "closesAtLabel": "关门时间",
     "saveDates": "预留日期",
@@ -1148,6 +1147,10 @@
     "errorCloseAfterOpen": "截止日期必须晚于开放日期。",
     "closedNote": "此窗口已关闭，编辑功能已禁用。",
     "tierInfoHeading": "服务器和玩家等级信息",
+    "tierInfoTiersHeading": "交易者实力等级：",
+    "tierInfoHighServersHeading": "高性能服务器：",
+    "tierInfoMidServersHeading": "中等功率服务器：",
+    "tierInfoLowServersHeading": "低功耗服务器：",
     "tierInfoDiscordLink": "官方Discord公告",
     "classificationHeading": "服务器分类",
     "saveClassification": "保存分类",
@@ -1161,10 +1164,7 @@
     "errorAllocation": "每个上限值都必须是非负数。",
     "errorThreshold": "每个阈值必须为数字，留空则表示没有最低值。",
     "errorGeneric": "出问题了。",
-    "tierInfoTiersHeading": "交易者实力等级：",
-    "tierInfoHighServersHeading": "高性能服务器：",
-    "tierInfoMidServersHeading": "中等功率服务器：",
-    "tierInfoLowServersHeading": "低功耗服务器："
+    "datesDesc": "服务器迁移应用程序将在此期间保持打开状态。"
   },
   "migrationTrackerCreate": {
     "title": "新迁移窗口",

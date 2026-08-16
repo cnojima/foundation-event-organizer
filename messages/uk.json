@@ -1141,7 +1141,7 @@
   "migrationTrackerSettings": {
     "title": "Сервер № {serverNumber} — Налаштування",
     "datesHeading": "Дати відкриття/закриття",
-    "datesDesc": "Інструмент виправлення дати з помилкою — його завжди можна редагувати, навіть після закриття вікна. Подовження дати закриття закритого вікна знову відкриває його.",
+    "datesDesc": "Програми для міграції серверів залишатимуться відкритими протягом цього вікна.",
     "opensAtLabel": "Відкривається о",
     "closesAtLabel": "Закривається о",
     "saveDates": "Зберегти дати",
@@ -1149,6 +1149,10 @@
     "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
     "closedNote": "Це вікно закрито — редагування вимкнено.",
     "tierInfoHeading": "Інформація про рівні сервера та гравця",
+    "tierInfoTiersHeading": "Рівні сили трейдера:",
+    "tierInfoHighServersHeading": "Потужні сервери:",
+    "tierInfoMidServersHeading": "Сервери середньої потужності:",
+    "tierInfoLowServersHeading": "Сервери з низьким енергоспоживанням:",
     "tierInfoDiscordLink": "Офіційне оголошення Discord",
     "classificationHeading": "Класифікація серверів",
     "saveClassification": "Зберегти класифікацію",
@@ -1161,11 +1165,7 @@
     "saveThresholds": "Зберегти порогові значення",
     "errorAllocation": "Кожна ліміта має бути невід'ємним числом.",
     "errorThreshold": "Кожне порогове значення має бути числом або порожнім, якщо мінімального значення немає.",
-    "errorGeneric": "Щось пішло не так.",
-    "tierInfoTiersHeading": "Рівні сили трейдера:",
-    "tierInfoHighServersHeading": "Потужні сервери:",
-    "tierInfoMidServersHeading": "Сервери середньої потужності:",
-    "tierInfoLowServersHeading": "Сервери з низьким енергоспоживанням:"
+    "errorGeneric": "Щось пішло не так."
   },
   "migrationTrackerCreate": {
     "title": "Нове вікно міграції",

@@ -1137,7 +1137,6 @@
   "migrationTrackerSettings": {
     "title": "Servernummer {serverNumber} - Instellingen",
     "datesHeading": "Openings-/sluitingsdata",
-    "datesDesc": "Correctietool voor een typefout in de datum — altijd bewerkbaar, zelfs nadat het venster is gesloten. Door de sluitingsdatum van een gesloten venster te verlengen, wordt het venster opnieuw geopend.",
     "opensAtLabel": "Opent om",
     "closesAtLabel": "Sluit om",
     "saveDates": "Noteer de datums",
@@ -1145,6 +1144,10 @@
     "errorCloseAfterOpen": "De sluitingsdatum moet na de openingsdatum liggen.",
     "closedNote": "Dit venster is gesloten — bewerken is uitgeschakeld.",
     "tierInfoHeading": "Server- en spelersniveau-informatie",
+    "tierInfoTiersHeading": "Machtniveaus voor handelaren:",
+    "tierInfoHighServersHeading": "Krachtige servers:",
+    "tierInfoMidServersHeading": "Servers met gemiddeld vermogen:",
+    "tierInfoLowServersHeading": "Servers met een laag stroomverbruik:",
     "tierInfoDiscordLink": "Officiële Discord-aankondiging",
     "classificationHeading": "Serverclassificatie",
     "saveClassification": "Classificatie opslaan",
@@ -1158,10 +1161,7 @@
     "errorAllocation": "Elke dop moet een niet-negatief getal zijn.",
     "errorThreshold": "Elke drempelwaarde moet een getal zijn, of leeg als er geen minimum is.",
     "errorGeneric": "Er is iets misgegaan.",
-    "tierInfoTiersHeading": "Machtniveaus voor handelaren:",
-    "tierInfoHighServersHeading": "Krachtige servers:",
-    "tierInfoMidServersHeading": "Servers met gemiddeld vermogen:",
-    "tierInfoLowServersHeading": "Servers met een laag stroomverbruik:"
+    "datesDesc": "Servermigratieapplicaties blijven gedurende deze periode open."
   },
   "migrationTrackerCreate": {
     "title": "Nieuw migratievenster",

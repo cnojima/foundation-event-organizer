@@ -1141,7 +1141,6 @@
   "migrationTrackerSettings": {
     "title": "Servidor nº {serverNumber} - Configurações",
     "datesHeading": "Datas de abertura/fechamento",
-    "datesDesc": "Ferramenta de correção para datas digitadas incorretamente — sempre editável, mesmo após o fechamento da janela. Estender a data de fechamento de uma janela fechada a reabre.",
     "opensAtLabel": "Abre às",
     "closesAtLabel": "Encerra às",
     "saveDates": "Reserve as datas",
@@ -1149,6 +1148,10 @@
     "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
     "closedNote": "Esta janela está fechada — a edição está desativada.",
     "tierInfoHeading": "Informações sobre servidores e níveis de jogadores",
+    "tierInfoTiersHeading": "Níveis de Poder do Trader:",
+    "tierInfoHighServersHeading": "Servidores de alta potência:",
+    "tierInfoMidServersHeading": "Servidores de potência média:",
+    "tierInfoLowServersHeading": "Servidores de baixo consumo de energia:",
     "tierInfoDiscordLink": "Anúncio oficial no Discord",
     "classificationHeading": "Classificação do servidor",
     "saveClassification": "Salvar classificação",
@@ -1162,10 +1165,7 @@
     "errorAllocation": "Cada valor máximo deve ser um número não negativo.",
     "errorThreshold": "Cada limite deve ser um número, ou estar em branco caso não haja valor mínimo.",
     "errorGeneric": "Algo deu errado.",
-    "tierInfoTiersHeading": "Níveis de Poder do Trader:",
-    "tierInfoHighServersHeading": "Servidores de alta potência:",
-    "tierInfoMidServersHeading": "Servidores de potência média:",
-    "tierInfoLowServersHeading": "Servidores de baixo consumo de energia:"
+    "datesDesc": "Os pedidos de migração de servidor permanecerão abertos durante esse período."
   },
   "migrationTrackerCreate": {
     "title": "Nova janela de migração",

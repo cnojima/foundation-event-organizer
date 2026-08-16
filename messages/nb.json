@@ -1141,7 +1141,6 @@
   "migrationTrackerSettings": {
     "title": "Server # {serverNumber} — Innstillinger",
     "datesHeading": "Åpnings-/stengedatoer",
-    "datesDesc": "Korrigeringsverktøy for feilstavet dato – alltid redigerbart, selv etter at vinduet lukkes. Hvis du forlenger 's close date reopens it.",
     "opensAtLabel": "Åpner kl.",
     "closesAtLabel": "Stenger kl.",
     "saveDates": "Lagre datoer",
@@ -1165,7 +1164,8 @@
     "saveThresholds": "Lagre terskler",
     "errorAllocation": "Hvert store bokstaver må være et ikke-negativt tall.",
     "errorThreshold": "Hver terskel må være et tall, eller være tom hvis det ikke er noe minimum.",
-    "errorGeneric": "Noe gikk galt."
+    "errorGeneric": "Noe gikk galt.",
+    "datesDesc": "Servermigreringsapplikasjoner vil forbli åpne i dette vinduet."
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsvindu",

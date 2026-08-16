@@ -1140,7 +1140,6 @@
   "migrationTrackerSettings": {
     "title": "サーバー番号{serverNumber} — 設定",
     "datesHeading": "開始日／終了日",
-    "datesDesc": "入力ミスした日付を修正するためのツールです。ウィンドウが閉じた後でも常に編集可能です。閉じたウィンドウ's close date reopens it.",
     "opensAtLabel": "開店時間",
     "closesAtLabel": "閉店時間",
     "saveDates": "日程を保存",
@@ -1164,7 +1163,8 @@
     "saveThresholds": "しきい値を保存する",
     "errorAllocation": "各キャップは負でない数でなければなりません。",
     "errorThreshold": "各しきい値は数値で指定するか、最小値を指定しない場合は空白にする必要があります。",
-    "errorGeneric": "何かがおかしくなりました。"
+    "errorGeneric": "何かがおかしくなりました。",
+    "datesDesc": "サーバー移行アプリケーションは、この期間中も開いたままになります。"
   },
   "migrationTrackerCreate": {
     "title": "新しい移行期間",

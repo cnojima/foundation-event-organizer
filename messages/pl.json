@@ -1140,7 +1140,6 @@
   "migrationTrackerSettings": {
     "title": "Serwer nr {serverNumber} — Ustawienia",
     "datesHeading": "Daty otwarcia/zamknięcia",
-    "datesDesc": "Narzędzie do korekty błędnie wpisanej daty — zawsze edytowalne, nawet po zamknięciu okna. Przesunięcie daty zamknięcia zamkniętego okna powoduje jego ponowne otwarcie.",
     "opensAtLabel": "Otwarcie o",
     "closesAtLabel": "Zamyka się o",
     "saveDates": "Zapisz daty",
@@ -1148,6 +1147,10 @@
     "errorCloseAfterOpen": "Data zamknięcia musi być późniejsza niż data otwarcia.",
     "closedNote": "To okno jest zamknięte — edycja jest wyłączona.",
     "tierInfoHeading": "Informacje o serwerze i poziomie gracza",
+    "tierInfoTiersHeading": "Poziomy mocy tradera:",
+    "tierInfoHighServersHeading": "Serwery o dużej mocy:",
+    "tierInfoMidServersHeading": "Serwery średniej mocy:",
+    "tierInfoLowServersHeading": "Serwery o niskim poborze mocy:",
     "tierInfoDiscordLink": "Oficjalne ogłoszenie Discord",
     "classificationHeading": "Klasyfikacja serwerów",
     "saveClassification": "Zapisz klasyfikację",
@@ -1161,10 +1164,7 @@
     "errorAllocation": "Każda nakrętka musi być liczbą nieujemną.",
     "errorThreshold": "Każdy próg musi być liczbą, lub pustym polem, jeśli nie ma wartości minimalnej.",
     "errorGeneric": "Coś poszło nie tak.",
-    "tierInfoTiersHeading": "Poziomy mocy tradera:",
-    "tierInfoHighServersHeading": "Serwery o dużej mocy:",
-    "tierInfoMidServersHeading": "Serwery średniej mocy:",
-    "tierInfoLowServersHeading": "Serwery o niskim poborze mocy:"
+    "datesDesc": "Aplikacje do migracji serwerów pozostaną otwarte w tym oknie."
   },
   "migrationTrackerCreate": {
     "title": "Nowe okno migracji",

@@ -1139,7 +1139,6 @@
   "migrationTrackerSettings": {
     "title": "Server # {serverNumber} — Pengaturan",
     "datesHeading": "Tanggal buka/tutup",
-    "datesDesc": "Alat koreksi untuk kesalahan pengetikan tanggal — selalu dapat diedit, bahkan setelah jendela ditutup. Memperpanjang 's close date reopens it.",
     "opensAtLabel": "Buka pada",
     "closesAtLabel": "Tutup pada pukul",
     "saveDates": "Simpan tanggalnya",
@@ -1163,7 +1162,8 @@
     "saveThresholds": "Simpan ambang batas",
     "errorAllocation": "Setiap tutup botol harus berupa angka non-negatif.",
     "errorThreshold": "Setiap ambang batas harus berupa angka, atau kosong jika tidak ada nilai minimum.",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "datesDesc": "Aplikasi migrasi server akan tetap terbuka selama periode ini."
   },
   "migrationTrackerCreate": {
     "title": "Jendela migrasi baru",
