@@ -4,7 +4,7 @@ import { auth } from "@/auth";
 import { Logo } from "@/components/logo";
 import { SignInProviderButtons } from "@/components/signin-provider-buttons";
 import { SignInCredentialsForm } from "@/components/signin-credentials-form";
-import { MigrationTrackerBanner } from "@/components/migration-tracker-banner";
+import { MigrationTrackerBanner } from "@/components/migration-tracker/migration-tracker-banner";
 
 export const metadata = {
   title: "Sign in",

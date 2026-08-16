@@ -6,8 +6,8 @@ import { db } from "@/db";
 import { migrationAllocations, powerTierThresholds } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
-import { TIER_ORDER, getWindowStatus } from "@/lib/migration-tracker";
-import { MigrationSettingsForm } from "@/components/migration-settings-form";
+import { TIER_ORDER, getWindowStatus, getClassificationStandards } from "@/lib/migration-tracker";
+import { MigrationSettingsForm } from "@/components/migration-tracker/migration-settings-form";
 
 export const metadata = { title: "Migration Tracker — Settings" };
 
@@ -42,6 +42,8 @@ export default async function MigrationDestinationSettingsPage({
     return { tier, flavorName: row?.flavorName ?? tier, minPower: row?.minPower ?? null };
   });
 
+  const classificationStandards = getClassificationStandards();
+
   return (
     <div className="mx-auto max-w-2xl">
       <PageHeader kicker={tShared("kicker")} title={t("title", { serverNumber: destination.serverNumber })} />
@@ -53,6 +55,7 @@ export default async function MigrationDestinationSettingsPage({
         windowClosed={getWindowStatus(destination) === "closed"}
         allocations={allocations}
         thresholds={thresholds}
+        classificationStandards={classificationStandards}
         canEditThresholds={membership.isSuperAdmin}
       />
     </div>

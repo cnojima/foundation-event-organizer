@@ -70,12 +70,15 @@ export function MigrationImportForm({
     setSubmitting(false);
   }
 
+  const pastePlaceholder = "playerName,sourceServer,power,desiredGuild,gameUid,contact\ncurisu,1130,95000000,LAW,423456789,DiscordHandle";
+
   return (
     <div className="space-y-4">
       <div>
         <label htmlFor="migration-import-text" className="mb-1 block text-sm font-semibold text-gray-700 dark:text-gray-300">
           {t("pasteLabel")}
         </label>
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">{t("pasteHintTop")}</p>
         <textarea
           id="migration-import-text"
           value={text}
@@ -84,7 +87,7 @@ export function MigrationImportForm({
             setOutcomes(null);
             setSubmitError(null);
           }}
-          placeholder={t("pastePlaceholder")}
+          placeholder={pastePlaceholder}
           rows={10}
           spellCheck={false}
           className="w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-xs dark:border-gray-700 dark:bg-gray-800"

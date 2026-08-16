@@ -47,10 +47,9 @@ export async function PATCH(
     updates.desiredGuild = desiredGuild;
   }
   if ("gameUid" in body) {
-    const gameUid =
-      typeof body.gameUid === "string" && body.gameUid.trim() !== "" ? body.gameUid.trim() : null;
-    if (gameUid && gameUid.length > 60) {
-      return NextResponse.json({ error: "Game UID is too long" }, { status: 400 });
+    const gameUid = typeof body.gameUid === "string" ? body.gameUid.trim() : "";
+    if (!gameUid || gameUid.length > 60) {
+      return NextResponse.json({ error: "Game UID is required" }, { status: 400 });
     }
     updates.gameUid = gameUid;
   }

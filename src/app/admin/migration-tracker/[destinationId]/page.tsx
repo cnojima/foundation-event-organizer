@@ -8,8 +8,9 @@ import { asc, eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
 import { getCapacitySummary, getWindowStatus, TIER_ORDER, type Tier } from "@/lib/migration-tracker";
 import { findDuplicateMatches } from "@/lib/migration-dedupe";
-import { MigrationQueueRow } from "@/components/migration-queue-row";
-import { DuplicateBadge, duplicateRowId } from "@/components/migration-duplicate-badge";
+import { MigrationQueueRow } from "@/components/migration-tracker/migration-queue-row";
+import { DuplicateBadge, duplicateRowId } from "@/components/migration-tracker/migration-duplicate-badge";
+import { GameUidCell } from "@/components/migration-tracker/migration-game-uid-cell";
 
 export const metadata = { title: "Migration Review Queue" };
 
@@ -157,7 +158,9 @@ export default async function MigrationDestinationQueuePage({
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{tierLabel[a.tier as Tier] ?? a.tier}</td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.desiredGuild ?? "—"}</td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.gameUid ?? "—"}</td>
+                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
+                    <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} />
+                  </td>
                   <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
                     {APPLICATION_STATUS_LABEL[a.status] ?? a.status}
                   </td>

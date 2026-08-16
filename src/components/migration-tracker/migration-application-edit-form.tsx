@@ -58,6 +58,10 @@ export function MigrationApplicationEditForm({
       setError(t("errorSourceServerRequired"));
       return;
     }
+    if (!gameUid.trim()) {
+      setError(t("errorGameUidRequired"));
+      return;
+    }
     if (!Number.isFinite(powerNumber) || powerNumber < 0 || !Number.isInteger(powerNumber)) {
       setError(t("errorPower"));
       return;
@@ -71,7 +75,7 @@ export function MigrationApplicationEditForm({
         sourceServer: sourceServer.trim(),
         power: powerNumber,
         desiredGuild: desiredGuild.trim() || null,
-        gameUid: gameUid.trim() || null,
+        gameUid: gameUid.trim(),
         contact: contact.trim() || null,
       }),
     });
@@ -148,11 +152,12 @@ export function MigrationApplicationEditForm({
       </div>
       <div>
         <label htmlFor="mte-game-uid" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          {t("gameUidLabel")} <span className="text-gray-400">({tc("optional")})</span>
+          {t("gameUidLabel")}
         </label>
         <input
           id="mte-game-uid"
           type="text"
+          required
           maxLength={60}
           value={gameUid}
           onChange={(e) => setGameUid(e.target.value)}
