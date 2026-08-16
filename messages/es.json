@@ -1010,13 +1010,14 @@
     "powerHelp": "Tu nivel se determina automáticamente a partir de este número.",
     "desiredGuildLabel": "Gremio deseado",
     "desiredGuildPlaceholder": "p. ej. LEY",
-    "gameUidLabel": "UID del juego",
+    "gameUidLabel": "UID del juego *",
     "gameUidPlaceholder": "p. ej. 423456789",
     "contactLabel": "Contacto",
     "contactPlaceholder": "Nombre de usuario de Discord",
     "contactHelp": "Ayuda a los agentes a ponerse en contacto con usted si tienen preguntas.",
     "submitButton": "Enviar solicitud",
     "errorRequired": "Se requiere el nombre del jugador y el servidor de origen.",
+    "errorGameUidRequired": "Se requiere el UID del juego.",
     "errorPower": "La potencia debe ser un número entero.",
     "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
     "successHeading": "Solicitud presentada.",
@@ -1025,7 +1026,9 @@
     "saveLinkHeading": "Guarda este enlace; 't see it again.",
     "saveLinkBody": "Úsalo para editar tu solicitud o retirarla más tarde. 's no account, so this link is the only way back in.",
     "copyLink": "Copiar enlace",
-    "copied": "¡Copiado!"
+    "copied": "¡Copiado!",
+    "gameUidHintToggle": "Cómo encontrar tu UID",
+    "gameUidHintBody": "El UID se encuentra en el perfil del jugador. Haz clic en tu avatar dentro del juego."
   },
   "migrationTrackerEdit": {
     "title": "Su solicitud",
@@ -1043,7 +1046,7 @@
     "powerLabel": "Fuerza",
     "powerHelp": "Cambiar esto modifica tu nivel y puede hacer que entres o salgas de la lista de espera.",
     "desiredGuildLabel": "Gremio deseado",
-    "gameUidLabel": "UID del juego",
+    "gameUidLabel": "UID del juego *",
     "contactLabel": "Contacto",
     "saveButton": "Guardar cambios",
     "withdrawButton": "Retirar la solicitud",
@@ -1051,6 +1054,7 @@
     "withdrawConfirmYes": "Sí, retirarse",
     "withdrawing": "Retirada…",
     "errorSourceServerRequired": "Se requiere un servidor de origen.",
+    "errorGameUidRequired": "Se requiere el UID del juego.",
     "errorPower": "La potencia debe ser un número entero.",
     "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo."
   },
@@ -1079,6 +1083,7 @@
     "colActions": "Comportamiento",
     "desiredGuildPlaceholder": "Gremio deseado",
     "gameUidPlaceholder": "UID del juego",
+    "missingGameUid": "Falta el UID",
     "duplicateBadge": "Posible duplicado",
     "waitlistHeading": "Lista de espera",
     "empty": "No hay solicitudes pendientes.",
@@ -1141,6 +1146,7 @@
   "migrationTrackerSettings": {
     "title": "Servidor n.º {serverNumber} — Configuración",
     "datesHeading": "Fechas de apertura/cierre",
+    "datesDesc": "Las aplicaciones de migración de servidores permanecerán abiertas durante este período.",
     "opensAtLabel": "Abre a las",
     "closesAtLabel": "Cierra a las",
     "saveDates": "Reservar fechas",
@@ -1164,8 +1170,7 @@
     "saveThresholds": "Umbrales de guardado",
     "errorAllocation": "Cada tapa debe ser un número no negativo.",
     "errorThreshold": "Cada umbral debe ser un número, o estar en blanco si no hay un mínimo.",
-    "errorGeneric": "Algo salió mal.",
-    "datesDesc": "Las aplicaciones de migración de servidores permanecerán abiertas durante este período."
+    "errorGeneric": "Algo salió mal."
   },
   "migrationTrackerCreate": {
     "title": "Nueva ventana de migración",

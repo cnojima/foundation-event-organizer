@@ -1009,13 +1009,14 @@
     "powerHelp": "Bu numara üzerinden kademeniz otomatik olarak belirlenir.",
     "desiredGuildLabel": "Arzu Edilen Lonca",
     "desiredGuildPlaceholder": "örneğin HUKUK",
-    "gameUidLabel": "Oyun UID'si",
+    "gameUidLabel": "Oyun UID'si *",
     "gameUidPlaceholder": "örneğin 423456789",
     "contactLabel": "Temas etmek",
     "contactPlaceholder": "Discord kullanıcı adı",
     "contactHelp": "Polis memurlarının size soru sormasına yardımcı olur.",
     "submitButton": "Başvuru formunu gönderin",
     "errorRequired": "Oyuncu adı ve kaynak sunucu bilgileri zorunludur.",
+    "errorGameUidRequired": "Oyun UID'si gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
     "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
     "successHeading": "Başvuru gönderildi.",
@@ -1024,7 +1025,9 @@
     "saveLinkHeading": "Bu bağlantıyı kaydedin, bir daha görmeyeceksiniz.",
     "saveLinkBody": "Başvurunuzu düzenlemek veya daha sonra geri çekmek için bunu kullanın. Hesap yok, bu nedenle geri dönmenin tek yolu bu bağlantı.",
     "copyLink": "Bağlantıyı kopyala",
-    "copied": "Kopyalandı!"
+    "copied": "Kopyalandı!",
+    "gameUidHintToggle": "UID'nizi nasıl bulabilirsiniz?",
+    "gameUidHintBody": "UID, Oyuncu Profilinde bulunur. Oyun içindeki avatarınıza tıklayın."
   },
   "migrationTrackerEdit": {
     "title": "Başvurunuz",
@@ -1042,7 +1045,7 @@
     "powerLabel": "Güç",
     "powerHelp": "Bunu değiştirmek, kademenizi yeniden belirler ve bekleme listesine alınmanıza veya listeden çıkarılmanıza neden olabilir.",
     "desiredGuildLabel": "İstenen lonca",
-    "gameUidLabel": "Oyun UID'si",
+    "gameUidLabel": "Oyun UID'si *",
     "contactLabel": "Temas etmek",
     "saveButton": "Değişiklikleri kaydet",
     "withdrawButton": "Başvuruyu geri çekme",
@@ -1050,6 +1053,7 @@
     "withdrawConfirmYes": "Evet, geri çekilin.",
     "withdrawing": "Geri çekiliyor…",
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
+    "errorGameUidRequired": "Oyun UID'si gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
     "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin."
   },
@@ -1078,6 +1082,7 @@
     "colActions": "Eylemler",
     "desiredGuildPlaceholder": "İstenen lonca",
     "gameUidPlaceholder": "Oyun UID'si",
+    "missingGameUid": "Eksik UID",
     "duplicateBadge": "Muhtemel mükerrer",
     "waitlistHeading": "Bekleme listesi",
     "empty": "Bekleyen başvuru bulunmamaktadır.",
@@ -1140,6 +1145,7 @@
   "migrationTrackerSettings": {
     "title": "Sunucu # {serverNumber} — Ayarlar",
     "datesHeading": "Açılış/kapanış tarihleri",
+    "datesDesc": "Sunucu geçiş uygulamaları bu süre zarfında açık kalacaktır.",
     "opensAtLabel": "Açılış saati",
     "closesAtLabel": "Kapanış saati",
     "saveDates": "Tarihleri kaydedin",
@@ -1163,8 +1169,7 @@
     "saveThresholds": "Eşik değerlerini kaydet",
     "errorAllocation": "Her bir büyük harf negatif olmayan bir sayı olmalıdır.",
     "errorThreshold": "Her eşik değeri bir sayı olmalı veya minimum değer yoksa boş bırakılmalıdır.",
-    "errorGeneric": "Bir şeyler ters gitti.",
-    "datesDesc": "Sunucu geçiş uygulamaları bu süre zarfında açık kalacaktır."
+    "errorGeneric": "Bir şeyler ters gitti."
   },
   "migrationTrackerCreate": {
     "title": "Yeni göç penceresi",

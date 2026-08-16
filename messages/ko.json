@@ -1006,13 +1006,14 @@
     "powerHelp": "귀하의 등급은 이 숫자를 기준으로 자동으로 결정됩니다.",
     "desiredGuildLabel": "원하는 길드",
     "desiredGuildPlaceholder": "예: 법",
-    "gameUidLabel": "게임 UID",
+    "gameUidLabel": "게임 UID *",
     "gameUidPlaceholder": "예: 423456789",
     "contactLabel": "연락하다",
     "contactPlaceholder": "디스코드 아이디",
     "contactHelp": "경찰관이 질문이 있을 때 연락할 수 있도록 도와줍니다.",
     "submitButton": "지원서 제출",
     "errorRequired": "플레이어 이름과 접속 서버는 필수 입력 사항입니다.",
+    "errorGameUidRequired": "게임 UID가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
     "errorGeneric": "오류가 발생했습니다. 다시 시도해 주세요.",
     "successHeading": "신청서가 제출되었습니다.",
@@ -1021,7 +1022,9 @@
     "saveLinkHeading": "이 링크를 저장해 두세요. 't see it again.",
     "saveLinkBody": "신청서를 수정하거나 나중에 철회하려면 이 링크를 사용하세요. 's no account, so this link is the only way back in.",
     "copyLink": "링크 복사",
-    "copied": "복사했어요!"
+    "copied": "복사했어요!",
+    "gameUidHintToggle": "UID를 찾는 방법",
+    "gameUidHintBody": "UID는 플레이어 프로필에서 찾을 수 있습니다. 게임 내에서 아바타를 클릭하세요."
   },
   "migrationTrackerEdit": {
     "title": "귀하의 신청서",
@@ -1039,7 +1042,7 @@
     "powerLabel": "힘",
     "powerHelp": "이 설정을 변경하면 등급이 다시 계산되어 대기자 명단에 오르거나 내려질 수 있습니다.",
     "desiredGuildLabel": "원하는 길드",
-    "gameUidLabel": "게임 UID",
+    "gameUidLabel": "게임 UID *",
     "contactLabel": "연락하다",
     "saveButton": "변경 사항 저장",
     "withdrawButton": "신청 철회",
@@ -1047,6 +1050,7 @@
     "withdrawConfirmYes": "네, 철회하세요",
     "withdrawing": "철회…",
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
+    "errorGameUidRequired": "게임 UID가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
     "errorGeneric": "오류가 발생했습니다. 다시 시도해 주세요."
   },
@@ -1075,6 +1079,7 @@
     "colActions": "행위",
     "desiredGuildPlaceholder": "원하는 길드",
     "gameUidPlaceholder": "게임 UID",
+    "missingGameUid": "UID가 누락되었습니다",
     "duplicateBadge": "중복일 가능성이 있습니다.",
     "waitlistHeading": "대기자 명단",
     "empty": "현재 접수된 신청서가 없습니다.",
@@ -1137,6 +1142,7 @@
   "migrationTrackerSettings": {
     "title": "서버 번호 {serverNumber} — 설정",
     "datesHeading": "개장/폐장 날짜",
+    "datesDesc": "이 시간 동안 서버 마이그레이션 애플리케이션은 계속 열려 있습니다.",
     "opensAtLabel": "오픈 시간",
     "closesAtLabel": "마감 시간",
     "saveDates": "날짜를 저장하세요",
@@ -1160,8 +1166,7 @@
     "saveThresholds": "임계값을 저장하세요",
     "errorAllocation": "각 상한값은 음수가 아니어야 합니다.",
     "errorThreshold": "각 기준값은 숫자여야 하며, 최소값이 없는 경우 공백이어야 합니다.",
-    "errorGeneric": "뭔가 잘못됐어요.",
-    "datesDesc": "이 시간 동안 서버 마이그레이션 애플리케이션은 계속 열려 있습니다."
+    "errorGeneric": "뭔가 잘못됐어요."
   },
   "migrationTrackerCreate": {
     "title": "새로운 마이그레이션 창",

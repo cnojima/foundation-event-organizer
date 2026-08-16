@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { DateTime } from "@/components/date-time";
 import { InfoTipIcon } from "@/components/info-tip";
+import { GameUidCell } from "@/components/migration-tracker/migration-game-uid-cell";
 import { db } from "@/db";
 import { migrationApplications } from "@/db/schema";
 import { and, asc, eq, inArray } from "drizzle-orm";
@@ -257,6 +258,7 @@ async function MigrationApplicantRoster({
               <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
               <th className="px-3 py-2 font-semibold">{t("colTier")}</th>
               <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
+              <th className="px-3 py-2 font-semibold">{t("colGameUid")}</th>
               <th className="px-3 py-2 font-semibold">{t("colStatus")}</th>
               <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
             </tr>
@@ -270,6 +272,9 @@ async function MigrationApplicantRoster({
                   {tierLabel[a.tier as Tier] ?? a.tier}
                 </td>
                 <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
+                <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
+                  <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} />
+                </td>
                 <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
                   {statusLabel[a.status] ?? a.status}
                 </td>
@@ -353,6 +358,7 @@ type RosterApplication = {
   playerName: string;
   sourceServer: string;
   power: number;
+  gameUid: string | null;
   createdAt: string;
 };
 
@@ -375,6 +381,7 @@ function RosterRows({
           <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
           <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
           <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
+          <th className="px-3 py-2 font-semibold">{t("colGameUid")}</th>
           <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
         </tr>
       </thead>
@@ -384,6 +391,9 @@ function RosterRows({
             <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">{a.playerName}</td>
             <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.sourceServer}</td>
             <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
+            <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
+              <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} />
+            </td>
             <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
               {new Date(a.createdAt).toLocaleDateString()}
             </td>

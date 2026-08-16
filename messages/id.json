@@ -1008,13 +1008,14 @@
     "powerHelp": "Tingkat keanggotaan Anda ditentukan secara otomatis dari angka ini.",
     "desiredGuildLabel": "Persekutuan yang Diinginkan",
     "desiredGuildPlaceholder": "misalnya HUKUM",
-    "gameUidLabel": "UID Game",
+    "gameUidLabel": "UID Game *",
     "gameUidPlaceholder": "misalnya 423456789",
     "contactLabel": "Kontak",
     "contactPlaceholder": "Nama pengguna Discord",
     "contactHelp": "Membantu petugas menghubungi Anda jika ada pertanyaan.",
     "submitButton": "Kirim aplikasi",
     "errorRequired": "Nama pemain dan server sumber wajib diisi.",
+    "errorGameUidRequired": "UID game diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
     "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
     "successHeading": "Permohonan telah diajukan.",
@@ -1023,7 +1024,9 @@
     "saveLinkHeading": "Simpan tautan ini — Anda 't see it again.",
     "saveLinkBody": "Gunakan tautan ini untuk mengedit aplikasi Anda atau menariknya kembali nanti. 's no account, so this link is the only way back in.",
     "copyLink": "Salin tautan",
-    "copied": "Disalin!"
+    "copied": "Disalin!",
+    "gameUidHintToggle": "Cara menemukan UID Anda",
+    "gameUidHintBody": "UID ditemukan di Profil Pemain. Klik avatar Anda di dalam game."
   },
   "migrationTrackerEdit": {
     "title": "Aplikasi Anda",
@@ -1041,7 +1044,7 @@
     "powerLabel": "Kekuatan",
     "powerHelp": "Mengubah ini akan menghitung ulang tingkatan Anda dan dapat memindahkan Anda ke dalam atau keluar dari daftar tunggu.",
     "desiredGuildLabel": "Serikat yang diinginkan",
-    "gameUidLabel": "UID Game",
+    "gameUidLabel": "UID Game *",
     "contactLabel": "Kontak",
     "saveButton": "Simpan perubahan",
     "withdrawButton": "Permohonan penarikan",
@@ -1049,6 +1052,7 @@
     "withdrawConfirmYes": "Ya, tarik kembali",
     "withdrawing": "Menarik diri…",
     "errorSourceServerRequired": "Server sumber diperlukan.",
+    "errorGameUidRequired": "UID game diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
     "errorGeneric": "Terjadi kesalahan. Silakan coba lagi."
   },
@@ -1077,6 +1081,7 @@
     "colActions": "Tindakan",
     "desiredGuildPlaceholder": "Serikat yang diinginkan",
     "gameUidPlaceholder": "UID Game",
+    "missingGameUid": "UID hilang",
     "duplicateBadge": "Kemungkinan duplikat",
     "waitlistHeading": "Daftar Tunggu",
     "empty": "Tidak ada aplikasi yang sedang diproses.",
@@ -1139,6 +1144,7 @@
   "migrationTrackerSettings": {
     "title": "Server # {serverNumber} — Pengaturan",
     "datesHeading": "Tanggal buka/tutup",
+    "datesDesc": "Aplikasi migrasi server akan tetap terbuka selama periode ini.",
     "opensAtLabel": "Buka pada",
     "closesAtLabel": "Tutup pada pukul",
     "saveDates": "Simpan tanggalnya",
@@ -1162,8 +1168,7 @@
     "saveThresholds": "Simpan ambang batas",
     "errorAllocation": "Setiap tutup botol harus berupa angka non-negatif.",
     "errorThreshold": "Setiap ambang batas harus berupa angka, atau kosong jika tidak ada nilai minimum.",
-    "errorGeneric": "Terjadi kesalahan.",
-    "datesDesc": "Aplikasi migrasi server akan tetap terbuka selama periode ini."
+    "errorGeneric": "Terjadi kesalahan."
   },
   "migrationTrackerCreate": {
     "title": "Jendela migrasi baru",

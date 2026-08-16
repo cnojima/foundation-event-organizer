@@ -70,7 +70,7 @@ export function MigrationQueueRow({
 
   type FieldVariant = "primary" | "cell" | "compact";
 
-  function fieldClassName(saved: boolean, variant: FieldVariant): string {
+  function fieldClassName(saved: boolean, variant: FieldVariant, warn = false): string {
     const width = variant === "compact" ? "w-28" : "w-full";
     const text =
       variant === "primary"
@@ -80,6 +80,9 @@ export function MigrationQueueRow({
           : "text-xs font-normal text-gray-500 dark:text-gray-400";
     if (saved) {
       return `${width} rounded border border-emerald-400 bg-transparent px-1 py-0.5 ${text} transition-colors duration-700 dark:border-emerald-500`;
+    }
+    if (warn) {
+      return `${width} rounded border border-amber-400 bg-amber-50 px-1 py-0.5 ${text} transition-colors duration-700 hover:border-amber-500 focus:border-amber-500 focus:bg-white focus:outline-none dark:border-amber-700 dark:bg-amber-950/30 dark:hover:border-amber-600 dark:focus:border-amber-500 dark:focus:bg-gray-800`;
     }
     return `${width} rounded border border-transparent bg-transparent px-1 py-0.5 ${text} transition-colors duration-700 hover:border-gray-200 focus:border-gray-300 focus:bg-white focus:outline-none dark:hover:border-gray-700 dark:focus:border-gray-600 dark:focus:bg-gray-800`;
   }
@@ -181,7 +184,7 @@ export function MigrationQueueRow({
               value={gameUid}
               onChange={(e) => setGameUid(e.target.value)}
               onBlur={(e) => saveField("gameUid", e.target.value)}
-              className={fieldClassName(savedFlash.gameUid, "compact")}
+              className={fieldClassName(savedFlash.gameUid, "compact", !gameUid.trim())}
             />
           </div>
         </td>

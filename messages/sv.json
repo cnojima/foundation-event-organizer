@@ -1010,13 +1010,14 @@
     "powerHelp": "Din nivå bestäms automatiskt utifrån detta nummer.",
     "desiredGuildLabel": "Önskad gille",
     "desiredGuildPlaceholder": "t.ex. LAG",
-    "gameUidLabel": "Spel-UID",
+    "gameUidLabel": "Spel-UID *",
     "gameUidPlaceholder": "t.ex. 423456789",
     "contactLabel": "Kontakta",
     "contactPlaceholder": "Discord-handtag",
     "contactHelp": "Hjälper tjänstemän att nå dig med frågor.",
     "submitButton": "Skicka in ansökan",
     "errorRequired": "Spelarnamn och källserver krävs.",
+    "errorGameUidRequired": "Spel-UID krävs.",
     "errorPower": "Potens måste vara ett heltal.",
     "errorGeneric": "Något gick fel. Försök igen.",
     "successHeading": "Ansökan inskickad.",
@@ -1025,7 +1026,9 @@
     "saveLinkHeading": "Spara den här länken – du kommer inte att se den igen.",
     "saveLinkBody": "Använd den för att redigera din ansökan eller avbryta senare. Det finns inget konto, så den här länken är enda sättet att komma tillbaka.",
     "copyLink": "Kopiera länk",
-    "copied": "Kopierad!"
+    "copied": "Kopierad!",
+    "gameUidHintToggle": "Hur du hittar ditt UID",
+    "gameUidHintBody": "UID finns i spelarprofilen. Klicka på din avatar i spelet."
   },
   "migrationTrackerEdit": {
     "title": "Din ansökan",
@@ -1043,7 +1046,7 @@
     "powerLabel": "Driva",
     "powerHelp": "Om du ändrar detta omvärderas din nivå och du kan komma att flyttas till eller från väntelistan.",
     "desiredGuildLabel": "Önskad gille",
-    "gameUidLabel": "Spel-UID",
+    "gameUidLabel": "Spel-UID *",
     "contactLabel": "Kontakta",
     "saveButton": "Spara ändringar",
     "withdrawButton": "Återkalla ansökan",
@@ -1051,6 +1054,7 @@
     "withdrawConfirmYes": "Ja, uttag",
     "withdrawing": "Uttag…",
     "errorSourceServerRequired": "Källserver krävs.",
+    "errorGameUidRequired": "Spel-UID krävs.",
     "errorPower": "Potens måste vara ett heltal.",
     "errorGeneric": "Något gick fel. Försök igen."
   },
@@ -1079,6 +1083,7 @@
     "colActions": "Åtgärder",
     "desiredGuildPlaceholder": "Önskad gille",
     "gameUidPlaceholder": "Spel-UID",
+    "missingGameUid": "UID saknas",
     "duplicateBadge": "Möjlig dubblett",
     "waitlistHeading": "Väntelista",
     "empty": "Inga väntande ansökningar.",
@@ -1141,6 +1146,7 @@
   "migrationTrackerSettings": {
     "title": "Servernummer {serverNumber} — Inställningar",
     "datesHeading": "Öppet-/stängningsdatum",
+    "datesDesc": "Servermigreringsapplikationer kommer att förbli öppna under detta fönster.",
     "opensAtLabel": "Öppnar kl.",
     "closesAtLabel": "Stänger kl.",
     "saveDates": "Spara datum",
@@ -1164,8 +1170,7 @@
     "saveThresholds": "Spara tröskelvärden",
     "errorAllocation": "Varje versal måste vara ett icke-negativt tal.",
     "errorThreshold": "Varje tröskelvärde måste vara ett tal, eller tomt om det inte finns något minimumvärde.",
-    "errorGeneric": "Något gick fel.",
-    "datesDesc": "Servermigreringsapplikationer kommer att förbli öppna under detta fönster."
+    "errorGeneric": "Något gick fel."
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsfönster",

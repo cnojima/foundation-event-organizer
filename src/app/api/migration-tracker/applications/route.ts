@@ -18,8 +18,7 @@ export async function POST(req: Request) {
     typeof body.desiredGuild === "string" && body.desiredGuild.trim() !== ""
       ? body.desiredGuild.trim()
       : null;
-  const gameUid =
-    typeof body.gameUid === "string" && body.gameUid.trim() !== "" ? body.gameUid.trim() : null;
+  const gameUid = typeof body.gameUid === "string" ? body.gameUid.trim() : "";
   const contact =
     typeof body.contact === "string" && body.contact.trim() !== "" ? body.contact.trim() : null;
 
@@ -38,8 +37,8 @@ export async function POST(req: Request) {
   if (desiredGuild && desiredGuild.length > 60) {
     return NextResponse.json({ error: "Desired guild is too long" }, { status: 400 });
   }
-  if (gameUid && gameUid.length > 60) {
-    return NextResponse.json({ error: "Game UID is too long" }, { status: 400 });
+  if (!gameUid || gameUid.length > 60) {
+    return NextResponse.json({ error: "Game UID is required" }, { status: 400 });
   }
   if (contact && contact.length > 120) {
     return NextResponse.json({ error: "Contact is too long" }, { status: 400 });

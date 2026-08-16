@@ -1009,13 +1009,14 @@
     "powerHelp": "Twój poziom jest ustalany automatycznie na podstawie tej liczby.",
     "desiredGuildLabel": "Pożądana gildia",
     "desiredGuildPlaceholder": "np. PRAWO",
-    "gameUidLabel": "Identyfikator użytkownika gry",
+    "gameUidLabel": "Identyfikator użytkownika gry *",
     "gameUidPlaceholder": "np. 423456789",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Uchwyt Discorda",
     "contactHelp": "Pomaga funkcjonariuszom skontaktować się z Tobą w razie pytań.",
     "submitButton": "Złóż wniosek",
     "errorRequired": "Wymagana jest nazwa gracza i serwer źródłowy.",
+    "errorGameUidRequired": "Wymagany jest identyfikator gry.",
     "errorPower": "Moc musi być liczbą całkowitą.",
     "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
     "successHeading": "Wniosek złożony.",
@@ -1024,7 +1025,9 @@
     "saveLinkHeading": "Zapisz ten link — nie zobaczysz go już więcej.",
     "saveLinkBody": "Użyj go, aby edytować swój wniosek lub wycofać go później. Nie masz konta, więc ten link to jedyny sposób na powrót.",
     "copyLink": "Kopiuj link",
-    "copied": "Skopiowano!"
+    "copied": "Skopiowano!",
+    "gameUidHintToggle": "Jak znaleźć swój UID",
+    "gameUidHintBody": "Znaleziono UID w profilu gracza. Kliknij swój awatar w grze."
   },
   "migrationTrackerEdit": {
     "title": "Twoja aplikacja",
@@ -1042,7 +1045,7 @@
     "powerLabel": "Moc",
     "powerHelp": "Zmiana tej opcji spowoduje zmianę Twojego poziomu, co może skutkować umieszczeniem Cię na liście oczekujących lub usunięciem z niej.",
     "desiredGuildLabel": "Pożądana gildia",
-    "gameUidLabel": "Identyfikator użytkownika gry",
+    "gameUidLabel": "Identyfikator użytkownika gry *",
     "contactLabel": "Kontakt",
     "saveButton": "Zapisz zmiany",
     "withdrawButton": "Wycofaj wniosek",
@@ -1050,6 +1053,7 @@
     "withdrawConfirmYes": "Tak, wycofaj",
     "withdrawing": "Wycofywanie…",
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
+    "errorGameUidRequired": "Wymagany jest identyfikator gry.",
     "errorPower": "Moc musi być liczbą całkowitą.",
     "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie."
   },
@@ -1078,6 +1082,7 @@
     "colActions": "Akcje",
     "desiredGuildPlaceholder": "Pożądana gildia",
     "gameUidPlaceholder": "Identyfikator użytkownika gry",
+    "missingGameUid": "Brak UID",
     "duplicateBadge": "Możliwy duplikat",
     "waitlistHeading": "Lista oczekujących",
     "empty": "Brak oczekujących wniosków.",
@@ -1140,6 +1145,7 @@
   "migrationTrackerSettings": {
     "title": "Serwer nr {serverNumber} — Ustawienia",
     "datesHeading": "Daty otwarcia/zamknięcia",
+    "datesDesc": "Aplikacje do migracji serwerów pozostaną otwarte w tym oknie.",
     "opensAtLabel": "Otwarcie o",
     "closesAtLabel": "Zamyka się o",
     "saveDates": "Zapisz daty",
@@ -1163,8 +1169,7 @@
     "saveThresholds": "Zapisz progi",
     "errorAllocation": "Każda nakrętka musi być liczbą nieujemną.",
     "errorThreshold": "Każdy próg musi być liczbą, lub pustym polem, jeśli nie ma wartości minimalnej.",
-    "errorGeneric": "Coś poszło nie tak.",
-    "datesDesc": "Aplikacje do migracji serwerów pozostaną otwarte w tym oknie."
+    "errorGeneric": "Coś poszło nie tak."
   },
   "migrationTrackerCreate": {
     "title": "Nowe okno migracji",

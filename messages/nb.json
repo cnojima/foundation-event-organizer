@@ -1010,13 +1010,14 @@
     "powerHelp": "Nivået ditt bestemmes automatisk fra dette tallet.",
     "desiredGuildLabel": "Ønsket laug",
     "desiredGuildPlaceholder": "f.eks. LOV",
-    "gameUidLabel": "Spill-UID",
+    "gameUidLabel": "Spill-UID *",
     "gameUidPlaceholder": "f.eks. 423456789",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Discord-håndtak",
     "contactHelp": "Hjelper betjenter med å nå deg med spørsmål.",
     "submitButton": "Send inn søknad",
     "errorRequired": "Spillernavn og kildeserver er påkrevd.",
+    "errorGameUidRequired": "Spill-UID er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
     "errorGeneric": "Noe gikk galt. Prøv igjen.",
     "successHeading": "Søknad sendt inn.",
@@ -1025,7 +1026,9 @@
     "saveLinkHeading": "Lagre denne lenken – du vil 't see it again.",
     "saveLinkBody": "Bruk den til å redigere søknaden din eller trekke deg senere. Det 's no account, so this link is the only way back in.",
     "copyLink": "Kopier lenke",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "gameUidHintToggle": "Slik finner du UID-en din",
+    "gameUidHintBody": "UID finnes i spillerprofilen. Klikk på avataren din i spillet."
   },
   "migrationTrackerEdit": {
     "title": "Søknaden din",
@@ -1043,7 +1046,7 @@
     "powerLabel": "Makt",
     "powerHelp": "Hvis du endrer dette, endres nivået ditt, og du kan bli flyttet på eller av ventelisten.",
     "desiredGuildLabel": "Ønsket laug",
-    "gameUidLabel": "Spill-UID",
+    "gameUidLabel": "Spill-UID *",
     "contactLabel": "Kontakt",
     "saveButton": "Lagre endringer",
     "withdrawButton": "Trekk tilbake søknaden",
@@ -1051,6 +1054,7 @@
     "withdrawConfirmYes": "Ja, trekk ut",
     "withdrawing": "Uttak…",
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
+    "errorGameUidRequired": "Spill-UID er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
     "errorGeneric": "Noe gikk galt. Prøv igjen."
   },
@@ -1079,6 +1083,7 @@
     "colActions": "Handlinger",
     "desiredGuildPlaceholder": "Ønsket laug",
     "gameUidPlaceholder": "Spill-UID",
+    "missingGameUid": "Manglende UID",
     "duplicateBadge": "Mulig duplikat",
     "waitlistHeading": "Venteliste",
     "empty": "Ingen ventende søknader.",
@@ -1141,6 +1146,7 @@
   "migrationTrackerSettings": {
     "title": "Server # {serverNumber} — Innstillinger",
     "datesHeading": "Åpnings-/stengedatoer",
+    "datesDesc": "Servermigreringsapplikasjoner vil forbli åpne i dette vinduet.",
     "opensAtLabel": "Åpner kl.",
     "closesAtLabel": "Stenger kl.",
     "saveDates": "Lagre datoer",
@@ -1164,8 +1170,7 @@
     "saveThresholds": "Lagre terskler",
     "errorAllocation": "Hvert store bokstaver må være et ikke-negativt tall.",
     "errorThreshold": "Hver terskel må være et tall, eller være tom hvis det ikke er noe minimum.",
-    "errorGeneric": "Noe gikk galt.",
-    "datesDesc": "Servermigreringsapplikasjoner vil forbli åpne i dette vinduet."
+    "errorGeneric": "Noe gikk galt."
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsvindu",

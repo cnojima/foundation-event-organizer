@@ -45,6 +45,10 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
       setError(t("errorRequired"));
       return;
     }
+    if (!gameUid.trim()) {
+      setError(t("errorGameUidRequired"));
+      return;
+    }
     if (!Number.isFinite(powerNumber) || powerNumber < 0 || !Number.isInteger(powerNumber)) {
       setError(t("errorPower"));
       return;
@@ -60,7 +64,7 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
         sourceServer: sourceServer.trim(),
         power: powerNumber,
         desiredGuild: desiredGuild.trim() || undefined,
-        gameUid: gameUid.trim() || undefined,
+        gameUid: gameUid.trim(),
         contact: contact.trim() || undefined,
       }),
     });
@@ -144,6 +148,35 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
         />
       </div>
       <div>
+        <label htmlFor="mt-game-uid" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
+          {t("gameUidLabel")}
+        </label>
+        <input
+          id="mt-game-uid"
+          type="text"
+          required
+          maxLength={60}
+          placeholder={t("gameUidPlaceholder")}
+          value={gameUid}
+          onChange={(e) => setGameUid(e.target.value)}
+          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
+        />
+        <details className="mt-1">
+          <summary className="cursor-pointer text-[10px] font-medium text-violet-600 hover:underline dark:text-violet-400">
+            {t("gameUidHintToggle")}
+          </summary>
+          <p className="mt-1.5 text-[10px] text-gray-500 dark:text-gray-400">{t("gameUidHintBody")}</p>
+          {/* eslint-disable-next-line @next/next/no-img-element -- static help screenshot inside a collapsed <details>, not worth next/image's overhead */}
+          <img
+            src="/migration-tracker/uid-hint.jpg"
+            alt={t("gameUidHintToggle")}
+            width={1218}
+            height={1844}
+            className="mt-2 max-w-[280px] rounded border border-gray-200 dark:border-gray-700"
+          />
+        </details>
+      </div>
+      <div>
         <label htmlFor="mt-source-server" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
           {t("sourceServerLabel")}
         </label>
@@ -185,20 +218,7 @@ export function MigrationApplicationForm({ serverNumber }: { serverNumber: numbe
           className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
         />
       </div>
-      <div>
-        <label htmlFor="mt-game-uid" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
-          {t("gameUidLabel")} <span className="text-gray-400">({tc("optional")})</span>
-        </label>
-        <input
-          id="mt-game-uid"
-          type="text"
-          maxLength={60}
-          placeholder={t("gameUidPlaceholder")}
-          value={gameUid}
-          onChange={(e) => setGameUid(e.target.value)}
-          className="w-full rounded border border-gray-300 px-3 py-2 text-sm dark:border-gray-700 dark:bg-gray-800"
-        />
-      </div>
+
       <div>
         <label htmlFor="mt-contact" className="mb-1 block text-xs font-medium text-gray-700 dark:text-gray-300">
           {t("contactLabel")} <span className="text-gray-400">({tc("optional")})</span>

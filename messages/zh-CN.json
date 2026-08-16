@@ -1009,13 +1009,14 @@
     "powerHelp": "您的等级将根据此数字自动确定。",
     "desiredGuildLabel": "理想的公会",
     "desiredGuildPlaceholder": "例如法律",
-    "gameUidLabel": "游戏 UID",
+    "gameUidLabel": "游戏 UID *",
     "gameUidPlaceholder": "例如 423456789",
     "contactLabel": "接触",
     "contactPlaceholder": "Discord 账号",
     "contactHelp": "方便警员联系您并向您提出问题。",
     "submitButton": "提交申请",
     "errorRequired": "玩家名称和服务器来源信息为必填项。",
+    "errorGameUidRequired": "需要游戏UID。",
     "errorPower": "幂必须是整数。",
     "errorGeneric": "出错了，请重试。",
     "successHeading": "申请已提交。",
@@ -1024,7 +1025,9 @@
     "saveLinkHeading": "保存此链接——你以后不会再看到它了。",
     "saveLinkBody": "您可以使用此链接修改申请或稍后撤回申请。由于没有账户，所以此链接是唯一的登录方式。",
     "copyLink": "复制链接",
-    "copied": "已复制！"
+    "copied": "已复制！",
+    "gameUidHintToggle": "如何查找您的 UID",
+    "gameUidHintBody": "玩家个人资料中已找到UID。请在游戏中点击您的头像。"
   },
   "migrationTrackerEdit": {
     "title": "您的申请",
@@ -1042,7 +1045,7 @@
     "powerLabel": "力量",
     "powerHelp": "更改此设置会重新计算您的等级，并可能将您移入或移出候补名单。",
     "desiredGuildLabel": "理想的公会",
-    "gameUidLabel": "游戏 UID",
+    "gameUidLabel": "游戏 UID *",
     "contactLabel": "接触",
     "saveButton": "保存更改",
     "withdrawButton": "撤回申请",
@@ -1050,6 +1053,7 @@
     "withdrawConfirmYes": "是的，撤回",
     "withdrawing": "撤回……",
     "errorSourceServerRequired": "需要源服务器。",
+    "errorGameUidRequired": "需要游戏UID。",
     "errorPower": "幂必须是整数。",
     "errorGeneric": "出错了，请重试。"
   },
@@ -1078,6 +1082,7 @@
     "colActions": "行动",
     "desiredGuildPlaceholder": "理想的公会",
     "gameUidPlaceholder": "游戏 UID",
+    "missingGameUid": "缺少 UID",
     "duplicateBadge": "可能重复",
     "waitlistHeading": "候补名单",
     "empty": "没有待处理的申请。",
@@ -1140,6 +1145,7 @@
   "migrationTrackerSettings": {
     "title": "服务器编号： {serverNumber} - 设置",
     "datesHeading": "开放/关闭日期",
+    "datesDesc": "服务器迁移应用程序将在此期间保持打开状态。",
     "opensAtLabel": "营业时间",
     "closesAtLabel": "关门时间",
     "saveDates": "预留日期",
@@ -1163,8 +1169,7 @@
     "saveThresholds": "保存阈值",
     "errorAllocation": "每个上限值都必须是非负数。",
     "errorThreshold": "每个阈值必须为数字，留空则表示没有最低值。",
-    "errorGeneric": "出问题了。",
-    "datesDesc": "服务器迁移应用程序将在此期间保持打开状态。"
+    "errorGeneric": "出问题了。"
   },
   "migrationTrackerCreate": {
     "title": "新迁移窗口",

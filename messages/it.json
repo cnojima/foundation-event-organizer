@@ -1009,13 +1009,14 @@
     "powerHelp": "Il tuo livello viene determinato automaticamente in base a questo numero.",
     "desiredGuildLabel": "Gilda desiderata",
     "desiredGuildPlaceholder": "ad esempio LEGGE",
-    "gameUidLabel": "ID utente del gioco",
+    "gameUidLabel": "ID utente del gioco *",
     "gameUidPlaceholder": "ad esempio 423456789",
     "contactLabel": "Contatto",
     "contactPlaceholder": "Nome utente Discord",
     "contactHelp": "Consente agli agenti di contattarti per eventuali domande.",
     "submitButton": "Invia la domanda",
     "errorRequired": "Sono richiesti il nome del giocatore e il server di origine.",
+    "errorGameUidRequired": "È richiesto l'UID del gioco.",
     "errorPower": "La potenza deve essere un numero intero.",
     "errorGeneric": "Si è verificato un errore. Riprova.",
     "successHeading": "Domanda presentata.",
@@ -1024,7 +1025,9 @@
     "saveLinkHeading": "Salva questo link: 't see it again.",
     "saveLinkBody": "Utilizzalo per modificare la tua domanda o per ritirarla in un secondo momento. 's no account, so this link is the only way back in.",
     "copyLink": "Copia il link",
-    "copied": "Copiato!"
+    "copied": "Copiato!",
+    "gameUidHintToggle": "Come trovare il tuo UID",
+    "gameUidHintBody": "L'UID si trova nel profilo del giocatore. Clicca sul tuo avatar nel gioco."
   },
   "migrationTrackerEdit": {
     "title": "La tua candidatura",
@@ -1042,7 +1045,7 @@
     "powerLabel": "Energia",
     "powerHelp": "Modificando questo parametro, verrà ricalcolata la tua fascia di priorità e potresti essere inserito o rimosso dalla lista d'attesa.",
     "desiredGuildLabel": "Gilda desiderata",
-    "gameUidLabel": "ID utente del gioco",
+    "gameUidLabel": "ID utente del gioco *",
     "contactLabel": "Contatto",
     "saveButton": "Salva le modifiche",
     "withdrawButton": "Ritirare la domanda",
@@ -1050,6 +1053,7 @@
     "withdrawConfirmYes": "Sì, ritirarsi",
     "withdrawing": "Ritiro…",
     "errorSourceServerRequired": "È necessario un server sorgente.",
+    "errorGameUidRequired": "È richiesto l'UID del gioco.",
     "errorPower": "La potenza deve essere un numero intero.",
     "errorGeneric": "Si è verificato un errore. Riprova."
   },
@@ -1078,6 +1082,7 @@
     "colActions": "Azioni",
     "desiredGuildPlaceholder": "Gilda desiderata",
     "gameUidPlaceholder": "ID utente del gioco",
+    "missingGameUid": "UID mancante",
     "duplicateBadge": "Possibile duplicato",
     "waitlistHeading": "Lista d'attesa",
     "empty": "Nessuna richiesta in sospeso.",
@@ -1140,6 +1145,7 @@
   "migrationTrackerSettings": {
     "title": "Server n. {serverNumber} — Impostazioni",
     "datesHeading": "Date di apertura/chiusura",
+    "datesDesc": "Le applicazioni di migrazione del server rimarranno aperte durante questo intervallo.",
     "opensAtLabel": "Apre alle",
     "closesAtLabel": "Chiude alle",
     "saveDates": "Salva le date",
@@ -1163,8 +1169,7 @@
     "saveThresholds": "Soglie di salvataggio",
     "errorAllocation": "Ogni lettera maiuscola deve essere un numero non negativo.",
     "errorThreshold": "Ogni soglia deve essere un numero, oppure vuota se non è indicato alcun valore minimo.",
-    "errorGeneric": "Qualcosa è andato storto.",
-    "datesDesc": "Le applicazioni di migrazione del server rimarranno aperte durante questo intervallo."
+    "errorGeneric": "Qualcosa è andato storto."
   },
   "migrationTrackerCreate": {
     "title": "Nuova finestra migratoria",

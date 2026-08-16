@@ -1006,13 +1006,14 @@
     "powerHelp": "Uw categorie wordt automatisch bepaald aan de hand van dit nummer.",
     "desiredGuildLabel": "Gewenste Gilde",
     "desiredGuildPlaceholder": "bijv. WET",
-    "gameUidLabel": "Spel-UID",
+    "gameUidLabel": "Spel-UID *",
     "gameUidPlaceholder": "bijv. 423456789",
     "contactLabel": "Contact",
     "contactPlaceholder": "Discord-gebruikersnaam",
     "contactHelp": "Helpt agenten om contact met u op te nemen als ze vragen hebben.",
     "submitButton": "Dien uw aanvraag in",
     "errorRequired": "De spelersnaam en de bronserver zijn vereist.",
+    "errorGameUidRequired": "Een game-UID is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
     "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
     "successHeading": "Aanvraag ingediend.",
@@ -1021,7 +1022,9 @@
     "saveLinkHeading": "Bewaar deze link — je zult hem niet meer terugzien.",
     "saveLinkBody": "Gebruik deze link om je aanvraag te bewerken of later in te trekken. Er is geen account, dus deze link is de enige manier om weer in te loggen.",
     "copyLink": "Kopieer link",
-    "copied": "Gekopieerd!"
+    "copied": "Gekopieerd!",
+    "gameUidHintToggle": "Hoe vind je je UID?",
+    "gameUidHintBody": "Je UID vind je in je spelersprofiel. Klik in het spel op je avatar."
   },
   "migrationTrackerEdit": {
     "title": "Uw aanvraag",
@@ -1039,7 +1042,7 @@
     "powerLabel": "Stroom",
     "powerHelp": "Als je dit wijzigt, wordt je status opnieuw berekend en kun je wel of niet op de wachtlijst komen te staan.",
     "desiredGuildLabel": "Gewenste gilde",
-    "gameUidLabel": "Spel-UID",
+    "gameUidLabel": "Spel-UID *",
     "contactLabel": "Contact",
     "saveButton": "Wijzigingen opslaan",
     "withdrawButton": "Aanvraag intrekken",
@@ -1047,6 +1050,7 @@
     "withdrawConfirmYes": "Ja, intrekken",
     "withdrawing": "Terugtrekking…",
     "errorSourceServerRequired": "Een bronserver is vereist.",
+    "errorGameUidRequired": "Een game-UID is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
     "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw."
   },
@@ -1075,6 +1079,7 @@
     "colActions": "Acties",
     "desiredGuildPlaceholder": "Gewenste gilde",
     "gameUidPlaceholder": "Spel-UID",
+    "missingGameUid": "Ontbrekende UID",
     "duplicateBadge": "Mogelijk een duplicaat",
     "waitlistHeading": "Wachtlijst",
     "empty": "Geen lopende aanvragen.",
@@ -1137,6 +1142,7 @@
   "migrationTrackerSettings": {
     "title": "Servernummer {serverNumber} - Instellingen",
     "datesHeading": "Openings-/sluitingsdata",
+    "datesDesc": "Servermigratieapplicaties blijven gedurende deze periode open.",
     "opensAtLabel": "Opent om",
     "closesAtLabel": "Sluit om",
     "saveDates": "Noteer de datums",
@@ -1160,8 +1166,7 @@
     "saveThresholds": "Drempelwaarden opslaan",
     "errorAllocation": "Elke dop moet een niet-negatief getal zijn.",
     "errorThreshold": "Elke drempelwaarde moet een getal zijn, of leeg als er geen minimum is.",
-    "errorGeneric": "Er is iets misgegaan.",
-    "datesDesc": "Servermigratieapplicaties blijven gedurende deze periode open."
+    "errorGeneric": "Er is iets misgegaan."
   },
   "migrationTrackerCreate": {
     "title": "Nieuw migratievenster",
