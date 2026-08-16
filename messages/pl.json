@@ -1147,6 +1147,8 @@
     "errorDatesRequired": "Obie daty są wymagane.",
     "errorCloseAfterOpen": "Data zamknięcia musi być późniejsza niż data otwarcia.",
     "closedNote": "To okno jest zamknięte — edycja jest wyłączona.",
+    "tierInfoHeading": "Informacje o serwerze i poziomie gracza",
+    "tierInfoDiscordLink": "Oficjalne ogłoszenie Discord",
     "classificationHeading": "Klasyfikacja serwerów",
     "saveClassification": "Zapisz klasyfikację",
     "reclassifyConfirm": "Ponowna klasyfikacja resetuje wszystkie 4 limity poziomów do domyślnych wartości nowej klasyfikacji, odrzucając wszelkie ręczne zmiany. Kontynuować?",
@@ -1158,7 +1160,11 @@
     "saveThresholds": "Zapisz progi",
     "errorAllocation": "Każda nakrętka musi być liczbą nieujemną.",
     "errorThreshold": "Każdy próg musi być liczbą, lub pustym polem, jeśli nie ma wartości minimalnej.",
-    "errorGeneric": "Coś poszło nie tak."
+    "errorGeneric": "Coś poszło nie tak.",
+    "tierInfoTiersHeading": "Poziomy mocy tradera:",
+    "tierInfoHighServersHeading": "Serwery o dużej mocy:",
+    "tierInfoMidServersHeading": "Serwery średniej mocy:",
+    "tierInfoLowServersHeading": "Serwery o niskim poborze mocy:"
   },
   "migrationTrackerCreate": {
     "title": "Nowe okno migracji",

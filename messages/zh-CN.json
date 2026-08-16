@@ -1147,6 +1147,8 @@
     "errorDatesRequired": "两个日期都必须填写。",
     "errorCloseAfterOpen": "截止日期必须晚于开放日期。",
     "closedNote": "此窗口已关闭，编辑功能已禁用。",
+    "tierInfoHeading": "服务器和玩家等级信息",
+    "tierInfoDiscordLink": "官方Discord公告",
     "classificationHeading": "服务器分类",
     "saveClassification": "保存分类",
     "reclassifyConfirm": "重新分类会将所有 4 个等级的上限重置为新分类的标准默认值，并丢弃任何手动更改。是否继续？",
@@ -1158,7 +1160,11 @@
     "saveThresholds": "保存阈值",
     "errorAllocation": "每个上限值都必须是非负数。",
     "errorThreshold": "每个阈值必须为数字，留空则表示没有最低值。",
-    "errorGeneric": "出问题了。"
+    "errorGeneric": "出问题了。",
+    "tierInfoTiersHeading": "交易者实力等级：",
+    "tierInfoHighServersHeading": "高性能服务器：",
+    "tierInfoMidServersHeading": "中等功率服务器：",
+    "tierInfoLowServersHeading": "低功耗服务器："
   },
   "migrationTrackerCreate": {
     "title": "新迁移窗口",

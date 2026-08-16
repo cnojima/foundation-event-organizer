@@ -1148,6 +1148,8 @@
     "errorDatesRequired": "Båda datumen är obligatoriska.",
     "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
     "closedNote": "Det här fönstret är stängt – redigering är inaktiverad.",
+    "tierInfoHeading": "Server- och spelarnivåinformation",
+    "tierInfoDiscordLink": "Officiellt Discord-meddelande",
     "classificationHeading": "Serverklassificering",
     "saveClassification": "Spara klassificering",
     "reclassifyConfirm": "Omklassificering återställer alla fyra nivåtak till den nya klassificeringens standardinställningar och tar bort alla manuella åsidosättningar. Vill du fortsätta?",
@@ -1159,7 +1161,11 @@
     "saveThresholds": "Spara tröskelvärden",
     "errorAllocation": "Varje versal måste vara ett icke-negativt tal.",
     "errorThreshold": "Varje tröskelvärde måste vara ett tal, eller tomt om det inte finns något minimumvärde.",
-    "errorGeneric": "Något gick fel."
+    "errorGeneric": "Något gick fel.",
+    "tierInfoTiersHeading": "Traderns maktnivåer:",
+    "tierInfoHighServersHeading": "Högpresterande servrar:",
+    "tierInfoMidServersHeading": "Medelstarka servrar:",
+    "tierInfoLowServersHeading": "Lågströmsservrar:"
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsfönster",

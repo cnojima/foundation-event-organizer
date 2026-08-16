@@ -1147,6 +1147,8 @@
     "errorDatesRequired": "Her iki tarih de gereklidir.",
     "errorCloseAfterOpen": "Kapanış tarihi, açılış tarihinden sonra olmalıdır.",
     "closedNote": "Bu pencere kapalı — düzenleme devre dışı bırakıldı.",
+    "tierInfoHeading": "Sunucu ve Oyuncu Seviyesi Bilgileri",
+    "tierInfoDiscordLink": "Resmi Discord Duyurusu",
     "classificationHeading": "Sunucu sınıflandırması",
     "saveClassification": "Sınıflandırmayı kaydet",
     "reclassifyConfirm": "Yeniden sınıflandırma, tüm 4 kademe sınırını yeni sınıflandırmanın standart varsayılan değerlerine sıfırlar ve manuel olarak yapılan tüm geçersiz kılmaları ortadan kaldırır. Devam edilsin mi?",
@@ -1158,7 +1160,11 @@
     "saveThresholds": "Eşik değerlerini kaydet",
     "errorAllocation": "Her bir büyük harf negatif olmayan bir sayı olmalıdır.",
     "errorThreshold": "Her eşik değeri bir sayı olmalı veya minimum değer yoksa boş bırakılmalıdır.",
-    "errorGeneric": "Bir şeyler ters gitti."
+    "errorGeneric": "Bir şeyler ters gitti.",
+    "tierInfoTiersHeading": "Tüccar Güç Seviyeleri:",
+    "tierInfoHighServersHeading": "Yüksek performanslı sunucular:",
+    "tierInfoMidServersHeading": "Orta güçteki sunucular:",
+    "tierInfoLowServersHeading": "Düşük güç tüketimli sunucular:"
   },
   "migrationTrackerCreate": {
     "title": "Yeni göç penceresi",

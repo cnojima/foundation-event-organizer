@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "tr",
-  "translatedAt": "2026-08-15T23:12:44.345Z",
+  "translatedAt": "2026-08-16T16:55:57.867Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -967,6 +967,12 @@
     "migrationTrackerSettings.errorDatesRequired": "Both dates are required.",
     "migrationTrackerSettings.errorCloseAfterOpen": "Close date must be after open date.",
     "migrationTrackerSettings.closedNote": "This window is closed — editing is disabled.",
+    "migrationTrackerSettings.tierInfoHeading": "Server & Player Tier Info",
+    "migrationTrackerSettings.tierInfoTiersHeading": "Trader Power Tiers:",
+    "migrationTrackerSettings.tierInfoHighServersHeading": "High-power servers:",
+    "migrationTrackerSettings.tierInfoMidServersHeading": "Mid-power servers:",
+    "migrationTrackerSettings.tierInfoLowServersHeading": "Low-power servers:",
+    "migrationTrackerSettings.tierInfoDiscordLink": "Official Discord Announcement",
     "migrationTrackerSettings.classificationHeading": "Server classification",
     "migrationTrackerSettings.saveClassification": "Save classification",
     "migrationTrackerSettings.reclassifyConfirm": "Reclassifying resets all 4 tier caps to the new classification's standard defaults, discarding any manual overrides. Continue?",

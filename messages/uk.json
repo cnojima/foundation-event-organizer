@@ -1148,6 +1148,8 @@
     "errorDatesRequired": "Обидві дати обов'язкові.",
     "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
     "closedNote": "Це вікно закрито — редагування вимкнено.",
+    "tierInfoHeading": "Інформація про рівні сервера та гравця",
+    "tierInfoDiscordLink": "Офіційне оголошення Discord",
     "classificationHeading": "Класифікація серверів",
     "saveClassification": "Зберегти класифікацію",
     "reclassifyConfirm": "Перекласифікація скидає всі 4 обмеження рівнів до стандартних значень за замовчуванням нової класифікації, відкидаючи будь-які ручні зміни. Продовжити?",
@@ -1159,7 +1161,11 @@
     "saveThresholds": "Зберегти порогові значення",
     "errorAllocation": "Кожна ліміта має бути невід'ємним числом.",
     "errorThreshold": "Кожне порогове значення має бути числом або порожнім, якщо мінімального значення немає.",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "tierInfoTiersHeading": "Рівні сили трейдера:",
+    "tierInfoHighServersHeading": "Потужні сервери:",
+    "tierInfoMidServersHeading": "Сервери середньої потужності:",
+    "tierInfoLowServersHeading": "Сервери з низьким енергоспоживанням:"
   },
   "migrationTrackerCreate": {
     "title": "Нове вікно міграції",

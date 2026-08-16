@@ -1148,6 +1148,8 @@
     "errorDatesRequired": "Ambas as datas são necessárias.",
     "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
     "closedNote": "Esta janela está fechada — a edição está desativada.",
+    "tierInfoHeading": "Informações sobre servidores e níveis de jogadores",
+    "tierInfoDiscordLink": "Anúncio oficial no Discord",
     "classificationHeading": "Classificação do servidor",
     "saveClassification": "Salvar classificação",
     "reclassifyConfirm": "A reclassificação redefine todos os limites de 4 níveis para os valores padrão da nova classificação, descartando quaisquer alterações manuais. Continuar?",
@@ -1159,7 +1161,11 @@
     "saveThresholds": "Salvar limites",
     "errorAllocation": "Cada valor máximo deve ser um número não negativo.",
     "errorThreshold": "Cada limite deve ser um número, ou estar em branco caso não haja valor mínimo.",
-    "errorGeneric": "Algo deu errado."
+    "errorGeneric": "Algo deu errado.",
+    "tierInfoTiersHeading": "Níveis de Poder do Trader:",
+    "tierInfoHighServersHeading": "Servidores de alta potência:",
+    "tierInfoMidServersHeading": "Servidores de potência média:",
+    "tierInfoLowServersHeading": "Servidores de baixo consumo de energia:"
   },
   "migrationTrackerCreate": {
     "title": "Nova janela de migração",

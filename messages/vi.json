@@ -1146,6 +1146,8 @@
     "errorDatesRequired": "Cần phải có cả hai ngày.",
     "errorCloseAfterOpen": "Ngày đóng cửa phải sau ngày mở cửa.",
     "closedNote": "Cửa sổ này đã đóng — chức năng chỉnh sửa đã bị vô hiệu hóa.",
+    "tierInfoHeading": "Thông tin về cấp độ máy chủ và người chơi",
+    "tierInfoDiscordLink": "Thông báo chính thức trên Discord",
     "classificationHeading": "Phân loại máy chủ",
     "saveClassification": "Lưu phân loại",
     "reclassifyConfirm": "Việc phân loại lại sẽ đặt lại tất cả 4 giới hạn cấp bậc về các giá trị mặc định tiêu chuẩn của phân loại mới, loại bỏ mọi thiết lập ghi đè thủ công. Tiếp tục?",
@@ -1157,7 +1159,11 @@
     "saveThresholds": "Lưu ngưỡng",
     "errorAllocation": "Mỗi số mũ phải là một số không âm.",
     "errorThreshold": "Mỗi ngưỡng phải là một con số, hoặc để trống nếu không có ngưỡng tối thiểu.",
-    "errorGeneric": "Đã xảy ra lỗi."
+    "errorGeneric": "Đã xảy ra lỗi.",
+    "tierInfoTiersHeading": "Các cấp độ sức mạnh của nhà giao dịch:",
+    "tierInfoHighServersHeading": "Máy chủ hiệu năng cao:",
+    "tierInfoMidServersHeading": "Máy chủ tầm trung:",
+    "tierInfoLowServersHeading": "Máy chủ công suất thấp:"
   },
   "migrationTrackerCreate": {
     "title": "Cửa sổ di cư mới",

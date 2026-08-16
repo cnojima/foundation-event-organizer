@@ -8,6 +8,32 @@ import { DatetimeLocalField } from "@/components/datetime-local-field";
 type Tier = "ultra_high" | "high" | "mid" | "low";
 type Classification = "high" | "mid" | "low";
 
+const OFFICIAL_TIER_ANNOUNCEMENT_URL =
+  "https://discord.com/channels/1275441685031157902/1275454764968312917/1532302222115733575";
+
+function formatPowerM(power: number): string {
+  return `${Math.round(power / 1_000_000)}M`;
+}
+
+function TierInfoChevron() {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      fill="none"
+      aria-hidden
+      className="size-4 shrink-0 text-gray-400 transition-transform group-open:rotate-90 dark:text-gray-500"
+    >
+      <path
+        d="M7 5l5 5-5 5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 export function MigrationSettingsForm({
   destinationId,
   classification,
@@ -16,6 +42,7 @@ export function MigrationSettingsForm({
   windowClosed,
   allocations,
   thresholds,
+  classificationStandards,
   canEditThresholds,
 }: {
   destinationId: string;
@@ -25,12 +52,29 @@ export function MigrationSettingsForm({
   windowClosed: boolean;
   allocations: { tier: Tier; maxSlots: number }[];
   thresholds: { tier: Tier; flavorName: string; minPower: number | null }[];
+  classificationStandards: { classification: Classification; slotsByTier: Record<Tier, number> }[];
   canEditThresholds: boolean;
 }) {
   const router = useRouter();
   const t = useTranslations("migrationTrackerSettings");
   const tShared = useTranslations("migrationTracker");
   const tc = useTranslations("common");
+
+  const tierInfoLines = thresholds.map((th, i) => {
+    if (i === 0) return `${th.flavorName}: Above ${formatPowerM(th.minPower ?? 0)}`;
+    const prevMinPower = thresholds[i - 1].minPower ?? 0;
+    if (th.minPower === null) return `${th.flavorName}: Below ${formatPowerM(prevMinPower)}`;
+    return `${th.flavorName}: ${formatPowerM(th.minPower)}–${formatPowerM(prevMinPower)}`;
+  });
+
+  const standardByClassification = Object.fromEntries(
+    classificationStandards.map((s) => [s.classification, s.slotsByTier])
+  ) as Record<Classification, Record<Tier, number>>;
+  const classificationSlotLines = (slotsByTier: Record<Tier, number>) =>
+    thresholds.map((th) => `${slotsByTier[th.tier]} ${th.flavorName}s`);
+  const highSlotLines = classificationSlotLines(standardByClassification.high);
+  const midSlotLines = classificationSlotLines(standardByClassification.mid);
+  const lowSlotLines = classificationSlotLines(standardByClassification.low);
 
   const [datesSubmitting, setDatesSubmitting] = useState(false);
   const [datesError, setDatesError] = useState<string | null>(null);
@@ -210,6 +254,67 @@ export function MigrationSettingsForm({
           </button>
         </form>
       </div>
+
+      <details className="group rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+        <summary className="flex cursor-pointer list-none items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-gray-500 [&::-webkit-details-marker]:hidden dark:text-gray-400">
+          <TierInfoChevron />
+          {t("tierInfoHeading")}
+        </summary>
+        <div className="mt-3">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div>
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                {t("tierInfoTiersHeading")}
+              </p>
+              <ul className="mt-1 list-inside list-disc space-y-0.5 text-sm text-gray-700 dark:text-gray-300">
+                {tierInfoLines.map((line) => (
+                  <li key={line}>{line}</li>
+                ))}
+              </ul>
+            </div>
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t("tierInfoHighServersHeading")}
+                </p>
+                <ul className="mt-1 list-inside list-disc space-y-0.5 text-sm text-gray-700 dark:text-gray-300">
+                  {highSlotLines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t("tierInfoMidServersHeading")}
+                </p>
+                <ul className="mt-1 list-inside list-disc space-y-0.5 text-sm text-gray-700 dark:text-gray-300">
+                  {midSlotLines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                  {t("tierInfoLowServersHeading")}
+                </p>
+                <ul className="mt-1 list-inside list-disc space-y-0.5 text-sm text-gray-700 dark:text-gray-300">
+                  {lowSlotLines.map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <a
+            href={OFFICIAL_TIER_ANNOUNCEMENT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-block text-sm font-medium text-violet-600 hover:underline dark:text-violet-400"
+          >
+            {t("tierInfoDiscordLink")}
+          </a>
+        </div>
+      </details>
 
       <div className="rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
