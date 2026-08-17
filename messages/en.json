@@ -1161,7 +1161,7 @@
     "tierInfoDiscordLink": "Official Discord Announcement",
     "classificationHeading": "Server classification",
     "saveClassification": "Save classification",
-    "reclassifyConfirm": "Reclassifying resets all 4 tier caps to the new classification's standard defaults, discarding any manual overrides. Continue?",
+    "reclassifyConfirm": "Reclassifying resets all 4 tier caps to the new classification's standard defaults, discarding any manual overrides. If a tier's new cap is smaller, the newest applied applicants in that tier are immediately waitlisted to fit; if it's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Tier caps (override)",
     "saveCaps": "Save caps",
     "thresholdsHeading": "Power tier thresholds",

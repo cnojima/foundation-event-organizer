@@ -1011,6 +1011,8 @@
     "desiredGuildPlaceholder": "örneğin HUKUK",
     "gameUidLabel": "Oyun UID'si *",
     "gameUidPlaceholder": "örneğin 423456789",
+    "gameUidHintToggle": "UID'nizi nasıl bulabilirsiniz?",
+    "gameUidHintBody": "UID, Oyuncu Profilinde bulunur. Oyun içindeki avatarınıza tıklayın.",
     "contactLabel": "Temas etmek",
     "contactPlaceholder": "Discord kullanıcı adı",
     "contactHelp": "Polis memurlarının size soru sormasına yardımcı olur.",
@@ -1025,9 +1027,7 @@
     "saveLinkHeading": "Bu bağlantıyı kaydedin, bir daha görmeyeceksiniz.",
     "saveLinkBody": "Başvurunuzu düzenlemek veya daha sonra geri çekmek için bunu kullanın. Hesap yok, bu nedenle geri dönmenin tek yolu bu bağlantı.",
     "copyLink": "Bağlantıyı kopyala",
-    "copied": "Kopyalandı!",
-    "gameUidHintToggle": "UID'nizi nasıl bulabilirsiniz?",
-    "gameUidHintBody": "UID, Oyuncu Profilinde bulunur. Oyun içindeki avatarınıza tıklayın."
+    "copied": "Kopyalandı!"
   },
   "migrationTrackerEdit": {
     "title": "Başvurunuz",
@@ -1160,7 +1160,6 @@
     "tierInfoDiscordLink": "Resmi Discord Duyurusu",
     "classificationHeading": "Sunucu sınıflandırması",
     "saveClassification": "Sınıflandırmayı kaydet",
-    "reclassifyConfirm": "Yeniden sınıflandırma, tüm 4 kademe sınırını yeni sınıflandırmanın standart varsayılan değerlerine sıfırlar ve manuel olarak yapılan tüm geçersiz kılmaları ortadan kaldırır. Devam edilsin mi?",
     "allocationsHeading": "Kademe sınırları (geçersiz kılma)",
     "saveCaps": "Kapakları saklayın",
     "thresholdsHeading": "Güç kademesi eşikleri",
@@ -1169,7 +1168,8 @@
     "saveThresholds": "Eşik değerlerini kaydet",
     "errorAllocation": "Her bir büyük harf negatif olmayan bir sayı olmalıdır.",
     "errorThreshold": "Her eşik değeri bir sayı olmalı veya minimum değer yoksa boş bırakılmalıdır.",
-    "errorGeneric": "Bir şeyler ters gitti."
+    "errorGeneric": "Bir şeyler ters gitti.",
+    "reclassifyConfirm": "Yeniden sınıflandırma, tüm 4 kademe sınırını yeni 's standard defaults, discarding any manual overrides. If a tier' yeni sınırı daha küçükse, o kademede en yeni başvuranlar hemen bekleme listesine alınır; 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Yeni göç penceresi",

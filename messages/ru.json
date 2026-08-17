@@ -1011,6 +1011,8 @@
     "desiredGuildPlaceholder": "например, ЗАКОН",
     "gameUidLabel": "Идентификатор игры *",
     "gameUidPlaceholder": "например 423456789",
+    "gameUidHintToggle": "Как найти свой UID",
+    "gameUidHintBody": "UID находится в профиле игрока. Щелкните по своему аватару в игре.",
     "contactLabel": "Контакт",
     "contactPlaceholder": "Ник в Discord",
     "contactHelp": "Помогает сотрудникам связаться с вами, если у вас возникнут вопросы.",
@@ -1025,9 +1027,7 @@
     "saveLinkHeading": "Сохраните эту ссылку — вы её больше не увидите.",
     "saveLinkBody": "Используйте эту ссылку для редактирования вашей заявки или для последующего вывода средств. Аккаунта нет, поэтому этот путь к повторному входу — единственный.",
     "copyLink": "Скопировать ссылку",
-    "copied": "Скопировано!",
-    "gameUidHintToggle": "Как найти свой UID",
-    "gameUidHintBody": "UID находится в профиле игрока. Щелкните по своему аватару в игре."
+    "copied": "Скопировано!"
   },
   "migrationTrackerEdit": {
     "title": "Ваше заявление",
@@ -1160,7 +1160,6 @@
     "tierInfoDiscordLink": "Официальное объявление в Discord",
     "classificationHeading": "Классификация серверов",
     "saveClassification": "Сохранить классификацию",
-    "reclassifyConfirm": "Переклассификация сбрасывает все 4 предельных уровня до стандартных значений по умолчанию для новой классификации, отменяя любые изменения, внесенные вручную. Продолжить?",
     "allocationsHeading": "Ограничения по уровням (переопределение)",
     "saveCaps": "Сохранить заглавные буквы",
     "thresholdsHeading": "Пороговые значения уровней мощности",
@@ -1169,7 +1168,8 @@
     "saveThresholds": "Сохранение пороговых значений",
     "errorAllocation": "Каждое значение заглавной буквы должно быть неотрицательным числом.",
     "errorThreshold": "Каждый пороговый уровень должен быть числом, или же должно быть пустое поле, если минимальный уровень отсутствует.",
-    "errorGeneric": "Что-то пошло не так."
+    "errorGeneric": "Что-то пошло не так.",
+    "reclassifyConfirm": "Переклассификация сбрасывает все 4 ограничения по уровням до 's standard defaults, discarding any manual overrides. If a tier' меньше, то кандидаты, подавшие заявки в этом уровне впервые, немедленно включаются в список ожидания; если 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Новое окно миграции",

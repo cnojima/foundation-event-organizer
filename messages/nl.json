@@ -1008,6 +1008,8 @@
     "desiredGuildPlaceholder": "bijv. WET",
     "gameUidLabel": "Spel-UID *",
     "gameUidPlaceholder": "bijv. 423456789",
+    "gameUidHintToggle": "Hoe vind je je UID?",
+    "gameUidHintBody": "Je UID vind je in je spelersprofiel. Klik in het spel op je avatar.",
     "contactLabel": "Contact",
     "contactPlaceholder": "Discord-gebruikersnaam",
     "contactHelp": "Helpt agenten om contact met u op te nemen als ze vragen hebben.",
@@ -1022,9 +1024,7 @@
     "saveLinkHeading": "Bewaar deze link — je zult hem niet meer terugzien.",
     "saveLinkBody": "Gebruik deze link om je aanvraag te bewerken of later in te trekken. Er is geen account, dus deze link is de enige manier om weer in te loggen.",
     "copyLink": "Kopieer link",
-    "copied": "Gekopieerd!",
-    "gameUidHintToggle": "Hoe vind je je UID?",
-    "gameUidHintBody": "Je UID vind je in je spelersprofiel. Klik in het spel op je avatar."
+    "copied": "Gekopieerd!"
   },
   "migrationTrackerEdit": {
     "title": "Uw aanvraag",
@@ -1157,7 +1157,6 @@
     "tierInfoDiscordLink": "Officiële Discord-aankondiging",
     "classificationHeading": "Serverclassificatie",
     "saveClassification": "Classificatie opslaan",
-    "reclassifyConfirm": "Door de herclassificatie worden alle 4 limieten van de niveaus teruggezet naar de standaardwaarden van de nieuwe classificatie, waarbij eventuele handmatige aanpassingen worden verwijderd. Doorgaan?",
     "allocationsHeading": "Tierlimieten (override)",
     "saveCaps": "Caps opslaan",
     "thresholdsHeading": "Drempelwaarden voor vermogensniveaus",
@@ -1166,7 +1165,8 @@
     "saveThresholds": "Drempelwaarden opslaan",
     "errorAllocation": "Elke dop moet een niet-negatief getal zijn.",
     "errorThreshold": "Elke drempelwaarde moet een getal zijn, of leeg als er geen minimum is.",
-    "errorGeneric": "Er is iets misgegaan."
+    "errorGeneric": "Er is iets misgegaan.",
+    "reclassifyConfirm": "Bij herclassificatie worden alle 4 limieten voor de categorieën teruggezet naar de 's standard defaults, discarding any manual overrides. If a tier' lager is, worden de nieuwste aanvragers in die categorie direct op de wachtlijst geplaatst; als 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Nieuw migratievenster",

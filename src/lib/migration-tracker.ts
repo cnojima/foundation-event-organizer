@@ -240,6 +240,67 @@ function promoteFromWaitlist(
   return promoted;
 }
 
+// Mirror of promoteFromWaitlist for the opposite direction: when a tier's
+// cap shrinks (e.g. reclassifying to a smaller classification), waitlists
+// the newest "applied" applications in `tier` — oldest kept, newest bumped
+// — until the reserved count fits the new cap. Never touches "accepted"
+// applications; acceptance is a deliberate officer decision (see
+// promoteFromWaitlist above) and is never auto-reversed by a config change.
+// If accepted alone already exceeds the new cap, there's nothing left to
+// demote — the overage just surfaces via getCapacitySummary for an officer
+// to handle manually, same as any other over-cap state.
+// Returns the demoted rows so callers can audit-log each one.
+function demoteOverCapToWaitlist(
+  tx: { select: typeof db.select; update: typeof db.update },
+  destinationId: string,
+  tier: Tier,
+  now: string
+): MigrationApplicationRow[] {
+  const allocation = tx
+    .select()
+    .from(migrationAllocations)
+    .where(
+      and(eq(migrationAllocations.destinationId, destinationId), eq(migrationAllocations.tier, tier))
+    )
+    .get();
+  const cap = allocation?.maxSlots ?? 0;
+
+  const acceptedCount = tx
+    .select({ count: sql<number>`count(*)` })
+    .from(migrationApplications)
+    .where(
+      and(
+        eq(migrationApplications.destinationId, destinationId),
+        eq(migrationApplications.tier, tier),
+        eq(migrationApplications.status, "accepted")
+      )
+    )
+    .get();
+  const room = Math.max(0, cap - Number(acceptedCount?.count ?? 0));
+
+  const applied = tx
+    .select()
+    .from(migrationApplications)
+    .where(
+      and(
+        eq(migrationApplications.destinationId, destinationId),
+        eq(migrationApplications.tier, tier),
+        eq(migrationApplications.status, "applied")
+      )
+    )
+    .orderBy(asc(migrationApplications.createdAt))
+    .all();
+
+  const overflow = applied.slice(room);
+  for (const app of overflow) {
+    tx.update(migrationApplications)
+      .set({ status: "waitlisted", updatedAt: now })
+      .where(eq(migrationApplications.id, app.id))
+      .run();
+  }
+  return overflow.map((app) => ({ ...app, status: "waitlisted" as const, updatedAt: now }));
+}
+
 // Re-derives tier from a new power value and, if the application is still
 // undecided (applied/waitlisted), re-runs the same room check as a fresh
 // submission — can flip applied <-> waitlisted, but never auto-promotes
@@ -777,10 +838,23 @@ function seedAllocationsFromClassification(
 // Reclassifying resets all 4 tier caps to the new classification's standard
 // defaults — the standard table is the default, and any prior manual
 // override is intentionally discarded (an admin can re-override afterward).
+// Also re-syncs applied/waitlisted status per tier against the new caps in
+// both directions: a shrunk cap demotes the newest over-cap "applied"
+// applicants to "waitlisted" (see demoteOverCapToWaitlist), while a grown
+// cap promotes the longest-waiting "waitlisted" applicants back to
+// "applied" (see promoteFromWaitlist) to fill the newly opened room. Only
+// one direction can ever apply per tier — each function is a no-op unless
+// its own condition (over cap / under cap) actually holds — so it's safe to
+// run both unconditionally instead of branching on which way the
+// reclassify moved.
 export function reclassifyDestination(
   destinationId: string,
   classification: Classification
-): { ok: true } | { ok: false; reason: string; status: 404 | 409 } {
+): {
+  ok: true;
+  demoted: MigrationApplicationRow[];
+  promoted: MigrationApplicationRow[];
+} | { ok: false; reason: string; status: 404 | 409 } {
   return db.transaction((tx) => {
     const destination = tx
       .select()
@@ -803,7 +877,15 @@ export function reclassifyDestination(
       .where(eq(migrationDestinations.id, destinationId))
       .run();
     seedAllocationsFromClassification(tx, destinationId, classification);
-    return { ok: true as const };
+
+    const now = new Date().toISOString();
+    const demoted: MigrationApplicationRow[] = [];
+    const promoted: MigrationApplicationRow[] = [];
+    for (const tier of TIER_ORDER) {
+      demoted.push(...demoteOverCapToWaitlist(tx, destinationId, tier, now));
+      promoted.push(...promoteFromWaitlist(tx, destinationId, tier, now));
+    }
+    return { ok: true as const, demoted, promoted };
   });
 }
 

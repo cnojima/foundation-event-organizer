@@ -1012,6 +1012,8 @@
     "desiredGuildPlaceholder": "t.ex. LAG",
     "gameUidLabel": "Spel-UID *",
     "gameUidPlaceholder": "t.ex. 423456789",
+    "gameUidHintToggle": "Hur du hittar ditt UID",
+    "gameUidHintBody": "UID finns i spelarprofilen. Klicka på din avatar i spelet.",
     "contactLabel": "Kontakta",
     "contactPlaceholder": "Discord-handtag",
     "contactHelp": "Hjälper tjänstemän att nå dig med frågor.",
@@ -1026,9 +1028,7 @@
     "saveLinkHeading": "Spara den här länken – du kommer inte att se den igen.",
     "saveLinkBody": "Använd den för att redigera din ansökan eller avbryta senare. Det finns inget konto, så den här länken är enda sättet att komma tillbaka.",
     "copyLink": "Kopiera länk",
-    "copied": "Kopierad!",
-    "gameUidHintToggle": "Hur du hittar ditt UID",
-    "gameUidHintBody": "UID finns i spelarprofilen. Klicka på din avatar i spelet."
+    "copied": "Kopierad!"
   },
   "migrationTrackerEdit": {
     "title": "Din ansökan",
@@ -1161,7 +1161,6 @@
     "tierInfoDiscordLink": "Officiellt Discord-meddelande",
     "classificationHeading": "Serverklassificering",
     "saveClassification": "Spara klassificering",
-    "reclassifyConfirm": "Omklassificering återställer alla fyra nivåtak till den nya klassificeringens standardinställningar och tar bort alla manuella åsidosättningar. Vill du fortsätta?",
     "allocationsHeading": "Nivåtak (åsidosätt)",
     "saveCaps": "Spara versaler",
     "thresholdsHeading": "Tröskelvärden för effektnivåer",
@@ -1170,7 +1169,8 @@
     "saveThresholds": "Spara tröskelvärden",
     "errorAllocation": "Varje versal måste vara ett icke-negativt tal.",
     "errorThreshold": "Varje tröskelvärde måste vara ett tal, eller tomt om det inte finns något minimumvärde.",
-    "errorGeneric": "Något gick fel."
+    "errorGeneric": "Något gick fel.",
+    "reclassifyConfirm": "Omklassificering återställer alla fyra nivåtak till den nya 's standard defaults, discarding any manual overrides. If a tier' nya tak är mindre, placeras de senast sökande i den nivån omedelbart på väntelistan för att få plats. Om det 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsfönster",

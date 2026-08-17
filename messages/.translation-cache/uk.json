@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "uk",
-  "translatedAt": "2026-08-16T17:50:51.031Z",
+  "translatedAt": "2026-08-17T18:00:38.818Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -980,7 +980,7 @@
     "migrationTrackerSettings.tierInfoDiscordLink": "Official Discord Announcement",
     "migrationTrackerSettings.classificationHeading": "Server classification",
     "migrationTrackerSettings.saveClassification": "Save classification",
-    "migrationTrackerSettings.reclassifyConfirm": "Reclassifying resets all 4 tier caps to the new classification's standard defaults, discarding any manual overrides. Continue?",
+    "migrationTrackerSettings.reclassifyConfirm": "Reclassifying resets all 4 tier caps to the new classification's standard defaults, discarding any manual overrides. If a tier's new cap is smaller, the newest applied applicants in that tier are immediately waitlisted to fit; if it's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "migrationTrackerSettings.allocationsHeading": "Tier caps (override)",
     "migrationTrackerSettings.saveCaps": "Save caps",
     "migrationTrackerSettings.thresholdsHeading": "Power tier thresholds",

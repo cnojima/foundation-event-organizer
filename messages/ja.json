@@ -1011,6 +1011,8 @@
     "desiredGuildPlaceholder": "例：法律",
     "gameUidLabel": "ゲームUID *",
     "gameUidPlaceholder": "例：423456789",
+    "gameUidHintToggle": "自分のUIDを見つける方法",
+    "gameUidHintBody": "プレイヤープロフィールにUIDが記載されています。ゲーム内でアバターをクリックしてください。",
     "contactLabel": "接触",
     "contactPlaceholder": "Discordアカウント",
     "contactHelp": "警察官があなたに質問するために連絡を取るのに役立ちます。",
@@ -1025,9 +1027,7 @@
     "saveLinkHeading": "このリンクを保存してください。 't see it again.",
     "saveLinkBody": "応募内容の編集や、後で応募を取り消す場合にご利用ください。 's no account, so this link is the only way back in.",
     "copyLink": "リンクをコピー",
-    "copied": "コピーしました！",
-    "gameUidHintToggle": "自分のUIDを見つける方法",
-    "gameUidHintBody": "プレイヤープロフィールにUIDが記載されています。ゲーム内でアバターをクリックしてください。"
+    "copied": "コピーしました！"
   },
   "migrationTrackerEdit": {
     "title": "あなたのアプリケーション",
@@ -1160,7 +1160,6 @@
     "tierInfoDiscordLink": "公式Discordアナウンス",
     "classificationHeading": "サーバー分類",
     "saveClassification": "分類を保存",
-    "reclassifyConfirm": "再分類を行うと、4つのティアの上限すべてが新しい分類's standard defaults, discarding any manual overrides. Continue?",
     "allocationsHeading": "ティア上限（上書き）",
     "saveCaps": "キャップを保存",
     "thresholdsHeading": "電力階層のしきい値",
@@ -1169,7 +1168,8 @@
     "saveThresholds": "しきい値を保存する",
     "errorAllocation": "各キャップは負でない数でなければなりません。",
     "errorThreshold": "各しきい値は数値で指定するか、最小値を指定しない場合は空白にする必要があります。",
-    "errorGeneric": "何かがおかしくなりました。"
+    "errorGeneric": "何かがおかしくなりました。",
+    "reclassifyConfirm": "再分類を行うと、4つの階層すべての上限が新しい分類's standard defaults, discarding any manual overrides. If a tier' 、その階層で最近申請した応募者はすぐに待機リストに追加され、 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "新しい移行期間",
