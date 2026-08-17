@@ -1011,6 +1011,8 @@
     "desiredGuildPlaceholder": "par exemple, la loi",
     "gameUidLabel": "UID du jeu *",
     "gameUidPlaceholder": "ex. 423456789",
+    "gameUidHintToggle": "Comment trouver votre UID",
+    "gameUidHintBody": "Identifiant unique trouvé dans le profil du joueur. Cliquez sur votre avatar en jeu.",
     "contactLabel": "Contact",
     "contactPlaceholder": "Identifiant Discord",
     "contactHelp": "Permet aux agents de vous contacter en cas de questions.",
@@ -1025,9 +1027,7 @@
     "saveLinkHeading": "Enregistrez ce lien — vous 't see it again.",
     "saveLinkBody": "Utilisez ce lien pour modifier votre candidature ou la retirer ultérieurement. 's no account, so this link is the only way back in.",
     "copyLink": "Copier le lien",
-    "copied": "Copié !",
-    "gameUidHintToggle": "Comment trouver votre UID",
-    "gameUidHintBody": "Identifiant unique trouvé dans le profil du joueur. Cliquez sur votre avatar en jeu."
+    "copied": "Copié !"
   },
   "migrationTrackerEdit": {
     "title": "Votre candidature",
@@ -1160,7 +1160,6 @@
     "tierInfoDiscordLink": "Annonce officielle sur Discord",
     "classificationHeading": "Classification des serveurs",
     "saveClassification": "Sauvegarder la classification",
-    "reclassifyConfirm": "La reclassification réinitialise les quatre limites de niveau aux 's standard defaults, discarding any manual overrides. Continue?",
     "allocationsHeading": "Limites de niveau (remplacer)",
     "saveCaps": "Économisez les capsules",
     "thresholdsHeading": "seuils des niveaux de puissance",
@@ -1169,7 +1168,8 @@
     "saveThresholds": "Seuil de sauvegarde",
     "errorAllocation": "Chaque valeur maximale doit être un nombre non négatif.",
     "errorThreshold": "Chaque seuil doit être un nombre, ou vide pour indiquer l'absence de seuil minimum.",
-    "errorGeneric": "Quelque chose a mal fonctionné."
+    "errorGeneric": "Quelque chose a mal fonctionné.",
+    "reclassifyConfirm": "La reclassification réinitialise les limites des 4 niveaux aux 's standard defaults, discarding any manual overrides. If a tier' est inférieure, les candidats les plus récents de ce niveau sont immédiatement placés sur liste d'attente ; si elle 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Nouvelle fenêtre de migration",

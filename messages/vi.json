@@ -1010,6 +1010,8 @@
     "desiredGuildPlaceholder": "ví dụ LUẬT",
     "gameUidLabel": "Mã định danh trò chơi *",
     "gameUidPlaceholder": "ví dụ 423456789",
+    "gameUidHintToggle": "Cách tìm UID của bạn",
+    "gameUidHintBody": "Đã tìm thấy UID trong Hồ sơ người chơi. Nhấp vào ảnh đại diện của bạn trong game.",
     "contactLabel": "Liên hệ",
     "contactPlaceholder": "Tên tài khoản Discord",
     "contactHelp": "Giúp các sĩ quan liên lạc với bạn khi có thắc mắc.",
@@ -1024,9 +1026,7 @@
     "saveLinkHeading": "Hãy lưu lại đường dẫn này — bạn sẽ không thấy nó nữa.",
     "saveLinkBody": "Hãy sử dụng liên kết này để chỉnh sửa đơn đăng ký hoặc rút đơn sau này. Bạn không có tài khoản, vì vậy liên kết này là cách duy nhất để đăng nhập lại.",
     "copyLink": "Sao chép liên kết",
-    "copied": "Đã sao chép!",
-    "gameUidHintToggle": "Cách tìm UID của bạn",
-    "gameUidHintBody": "Đã tìm thấy UID trong Hồ sơ người chơi. Nhấp vào ảnh đại diện của bạn trong game."
+    "copied": "Đã sao chép!"
   },
   "migrationTrackerEdit": {
     "title": "Đơn đăng ký của bạn",
@@ -1159,7 +1159,6 @@
     "tierInfoDiscordLink": "Thông báo chính thức trên Discord",
     "classificationHeading": "Phân loại máy chủ",
     "saveClassification": "Lưu phân loại",
-    "reclassifyConfirm": "Việc phân loại lại sẽ đặt lại tất cả 4 giới hạn cấp bậc về các giá trị mặc định tiêu chuẩn của phân loại mới, loại bỏ mọi thiết lập ghi đè thủ công. Tiếp tục?",
     "allocationsHeading": "Giới hạn cấp bậc (ghi đè)",
     "saveCaps": "Tiết kiệm tiền",
     "thresholdsHeading": "Ngưỡng cấp độ sức mạnh",
@@ -1168,7 +1167,8 @@
     "saveThresholds": "Lưu ngưỡng",
     "errorAllocation": "Mỗi số mũ phải là một số không âm.",
     "errorThreshold": "Mỗi ngưỡng phải là một con số, hoặc để trống nếu không có ngưỡng tối thiểu.",
-    "errorGeneric": "Đã xảy ra lỗi."
+    "errorGeneric": "Đã xảy ra lỗi.",
+    "reclassifyConfirm": "Việc phân loại lại sẽ đặt lại tất cả 4 giới hạn cấp bậc về 's standard defaults, discarding any manual overrides. If a tier' nhỏ hơn, những người nộp đơn mới nhất trong cấp bậc đó sẽ được đưa vào danh sách chờ ngay lập tức; nếu 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Cửa sổ di cư mới",

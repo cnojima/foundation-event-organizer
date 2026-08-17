@@ -1012,6 +1012,8 @@
     "desiredGuildPlaceholder": "f.eks. LOV",
     "gameUidLabel": "Spill-UID *",
     "gameUidPlaceholder": "f.eks. 423456789",
+    "gameUidHintToggle": "Slik finner du UID-en din",
+    "gameUidHintBody": "UID finnes i spillerprofilen. Klikk på avataren din i spillet.",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Discord-håndtak",
     "contactHelp": "Hjelper betjenter med å nå deg med spørsmål.",
@@ -1026,9 +1028,7 @@
     "saveLinkHeading": "Lagre denne lenken – du vil 't see it again.",
     "saveLinkBody": "Bruk den til å redigere søknaden din eller trekke deg senere. Det 's no account, so this link is the only way back in.",
     "copyLink": "Kopier lenke",
-    "copied": "Kopiert!",
-    "gameUidHintToggle": "Slik finner du UID-en din",
-    "gameUidHintBody": "UID finnes i spillerprofilen. Klikk på avataren din i spillet."
+    "copied": "Kopiert!"
   },
   "migrationTrackerEdit": {
     "title": "Søknaden din",
@@ -1161,7 +1161,6 @@
     "tierInfoDiscordLink": "Offisiell Discord-kunngjøring",
     "classificationHeading": "Serverklassifisering",
     "saveClassification": "Lagre klassifisering",
-    "reclassifyConfirm": "Omklassifisering tilbakestiller alle fire nivågrenser til 's standard defaults, discarding any manual overrides. Continue?",
     "allocationsHeading": "Nivågrenser (overstyr)",
     "saveCaps": "Lagre store bokstaver",
     "thresholdsHeading": "Terskler for maktnivå",
@@ -1170,7 +1169,8 @@
     "saveThresholds": "Lagre terskler",
     "errorAllocation": "Hvert store bokstaver må være et ikke-negativt tall.",
     "errorThreshold": "Hver terskel må være et tall, eller være tom hvis det ikke er noe minimum.",
-    "errorGeneric": "Noe gikk galt."
+    "errorGeneric": "Noe gikk galt.",
+    "reclassifyConfirm": "Omklassifisering tilbakestiller alle fire nivågrenser til 's standard defaults, discarding any manual overrides. If a tier' nye grense er mindre, blir de nyeste søkerne i det nivået umiddelbart satt på venteliste for å få plass. Hvis 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsvindu",

@@ -1012,6 +1012,8 @@
     "desiredGuildPlaceholder": "наприклад, ЗАКОН",
     "gameUidLabel": "UID гри *",
     "gameUidPlaceholder": "наприклад, 423456789",
+    "gameUidHintToggle": "Як знайти свій UID",
+    "gameUidHintBody": "UID знайдено в профілі гравця. Натисніть на свій аватар у грі.",
     "contactLabel": "Контакти",
     "contactPlaceholder": "Десктоп Discord",
     "contactHelp": "Допомагає офіцерам зв'язатися з вами з питаннями.",
@@ -1026,9 +1028,7 @@
     "saveLinkHeading": "Збережіть це посилання — ви його більше не побачите.",
     "saveLinkBody": "Використайте його для редагування заявки або її відкликання пізніше. Облікового запису немає, тому це посилання — єдиний шлях назад.",
     "copyLink": "Копіювати посилання",
-    "copied": "Скопійовано!",
-    "gameUidHintToggle": "Як знайти свій UID",
-    "gameUidHintBody": "UID знайдено в профілі гравця. Натисніть на свій аватар у грі."
+    "copied": "Скопійовано!"
   },
   "migrationTrackerEdit": {
     "title": "Ваша заявка",
@@ -1161,7 +1161,6 @@
     "tierInfoDiscordLink": "Офіційне оголошення Discord",
     "classificationHeading": "Класифікація серверів",
     "saveClassification": "Зберегти класифікацію",
-    "reclassifyConfirm": "Перекласифікація скидає всі 4 обмеження рівнів до стандартних значень за замовчуванням нової класифікації, відкидаючи будь-які ручні зміни. Продовжити?",
     "allocationsHeading": "Обмеження рівнів (замінити)",
     "saveCaps": "Зберегти обмеження",
     "thresholdsHeading": "Порогові значення рівня потужності",
@@ -1170,7 +1169,8 @@
     "saveThresholds": "Зберегти порогові значення",
     "errorAllocation": "Кожна ліміта має бути невід'ємним числом.",
     "errorThreshold": "Кожне порогове значення має бути числом або порожнім, якщо мінімального значення немає.",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "reclassifyConfirm": "Перекласифікація скидає всі 4 обмеження рівнів до 's standard defaults, discarding any manual overrides. If a tier' менше, нові заявки на цьому рівні негайно потрапляють до списку очікування; якщо 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Нове вікно міграції",

@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { canManageMigrationDestination } from "@/lib/rbac";
 import { reclassifyDestination } from "@/lib/migration-tracker";
-import { logAudit, resolveActorDisplay } from "@/lib/audit";
+import { logAudit, logMigrationDemotions, logMigrationPromotions, resolveActorDisplay } from "@/lib/audit";
 
 const VALID_CLASSIFICATIONS = ["high", "mid", "low"] as const;
 
@@ -35,16 +35,30 @@ export async function PATCH(
     return NextResponse.json({ error: result.reason }, { status: result.status });
   }
 
+  const actorDisplay = await resolveActorDisplay(membership.userId);
   void logAudit({
     guildId: null,
     actorUserId: membership.userId,
-    actorDisplay: await resolveActorDisplay(membership.userId),
+    actorDisplay,
     action: "migration.destination.reclassify",
     entityType: "migration_destination",
     entityId: id,
     entityLabel: `Server #${destination.serverNumber}`,
-    changes: { before: { classification: destination.classification }, after: { classification: body.classification } },
+    changes: {
+      before: { classification: destination.classification },
+      after: {
+        classification: body.classification,
+        demotedCount: result.demoted.length,
+        promotedCount: result.promoted.length,
+      },
+    },
   });
+  void logMigrationDemotions(result.demoted, membership.userId, actorDisplay);
+  void logMigrationPromotions(result.promoted, membership.userId, actorDisplay);
 
-  return NextResponse.json({ success: true });
+  return NextResponse.json({
+    success: true,
+    demoted: result.demoted.length,
+    promoted: result.promoted.length,
+  });
 }

@@ -1011,6 +1011,8 @@
     "desiredGuildPlaceholder": "np. PRAWO",
     "gameUidLabel": "Identyfikator użytkownika gry *",
     "gameUidPlaceholder": "np. 423456789",
+    "gameUidHintToggle": "Jak znaleźć swój UID",
+    "gameUidHintBody": "Znaleziono UID w profilu gracza. Kliknij swój awatar w grze.",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Uchwyt Discorda",
     "contactHelp": "Pomaga funkcjonariuszom skontaktować się z Tobą w razie pytań.",
@@ -1025,9 +1027,7 @@
     "saveLinkHeading": "Zapisz ten link — nie zobaczysz go już więcej.",
     "saveLinkBody": "Użyj go, aby edytować swój wniosek lub wycofać go później. Nie masz konta, więc ten link to jedyny sposób na powrót.",
     "copyLink": "Kopiuj link",
-    "copied": "Skopiowano!",
-    "gameUidHintToggle": "Jak znaleźć swój UID",
-    "gameUidHintBody": "Znaleziono UID w profilu gracza. Kliknij swój awatar w grze."
+    "copied": "Skopiowano!"
   },
   "migrationTrackerEdit": {
     "title": "Twoja aplikacja",
@@ -1160,7 +1160,6 @@
     "tierInfoDiscordLink": "Oficjalne ogłoszenie Discord",
     "classificationHeading": "Klasyfikacja serwerów",
     "saveClassification": "Zapisz klasyfikację",
-    "reclassifyConfirm": "Ponowna klasyfikacja resetuje wszystkie 4 limity poziomów do domyślnych wartości nowej klasyfikacji, odrzucając wszelkie ręczne zmiany. Kontynuować?",
     "allocationsHeading": "Limity poziomów (nadpisanie)",
     "saveCaps": "Zapisz czapki",
     "thresholdsHeading": "Progi poziomów mocy",
@@ -1169,7 +1168,8 @@
     "saveThresholds": "Zapisz progi",
     "errorAllocation": "Każda nakrętka musi być liczbą nieujemną.",
     "errorThreshold": "Każdy próg musi być liczbą, lub pustym polem, jeśli nie ma wartości minimalnej.",
-    "errorGeneric": "Coś poszło nie tak."
+    "errorGeneric": "Coś poszło nie tak.",
+    "reclassifyConfirm": "Reklasyfikacja resetuje wszystkie 4 limity poziomów do 's standard defaults, discarding any manual overrides. If a tier' jest niższy, kandydaci, którzy złożyli ostatnio wniosek, są natychmiast umieszczani na liście oczekujących; jeśli 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Nowe okno migracji",

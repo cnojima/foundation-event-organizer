@@ -77,6 +77,7 @@ export type AuditAction =
   | "migration.deny"
   | "migration.waitlist"
   | "migration.waitlist.promote"
+  | "migration.waitlist.demote"
   | "migration.revert"
   | "migration.remove"
   | "migration.officer.assign"
@@ -180,6 +181,28 @@ export async function logMigrationPromotions(
       actorUserId,
       actorDisplay,
       action: "migration.waitlist.promote",
+      entityType: "migration_application",
+      entityId: application.id,
+      entityLabel: application.playerName,
+    });
+  }
+}
+
+// Mirror of logMigrationPromotions for reclassifyDestination — logs one
+// entry per applicant that demoteOverCapToWaitlist auto-moved from
+// applied -> waitlisted because the new classification's caps no longer
+// had room for them.
+export async function logMigrationDemotions(
+  demoted: MigrationApplicationRow[],
+  actorUserId: string | null,
+  actorDisplay: string
+): Promise<void> {
+  for (const application of demoted) {
+    void logAudit({
+      guildId: null,
+      actorUserId,
+      actorDisplay,
+      action: "migration.waitlist.demote",
       entityType: "migration_application",
       entityId: application.id,
       entityLabel: application.playerName,

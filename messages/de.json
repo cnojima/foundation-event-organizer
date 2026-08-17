@@ -1010,6 +1010,8 @@
     "desiredGuildPlaceholder": "z.B. GESETZ",
     "gameUidLabel": "Spiel-UID *",
     "gameUidPlaceholder": "z. B. 423456789",
+    "gameUidHintToggle": "So finden Sie Ihre UID",
+    "gameUidHintBody": "Die UID befindet sich im Spielerprofil. Klicken Sie im Spiel auf Ihren Avatar.",
     "contactLabel": "Kontakt",
     "contactPlaceholder": "Discord-Handle",
     "contactHelp": "Hilft den Beamten, Sie bei Fragen zu erreichen.",
@@ -1024,9 +1026,7 @@
     "saveLinkHeading": "Speichern Sie diesen Link – Sie werden 't see it again.",
     "saveLinkBody": "Nutzen Sie 's no account, so this link is the only way back in.",
     "copyLink": "Link kopieren",
-    "copied": "Kopiert!",
-    "gameUidHintToggle": "So finden Sie Ihre UID",
-    "gameUidHintBody": "Die UID befindet sich im Spielerprofil. Klicken Sie im Spiel auf Ihren Avatar."
+    "copied": "Kopiert!"
   },
   "migrationTrackerEdit": {
     "title": "Ihre Bewerbung",
@@ -1159,7 +1159,6 @@
     "tierInfoDiscordLink": "Offizielle Discord-Ankündigung",
     "classificationHeading": "Serverklassifizierung",
     "saveClassification": "Klassifizierung speichern",
-    "reclassifyConfirm": "Durch die Neuklassifizierung werden alle vier Stufenobergrenzen auf die 's standard defaults, discarding any manual overrides. Continue?",
     "allocationsHeading": "Stufenobergrenzen (Überschreibung)",
     "saveCaps": "Spare die Kronkorken",
     "thresholdsHeading": "Leistungsstufenschwellenwerte",
@@ -1168,7 +1167,8 @@
     "saveThresholds": "Schwellenwerte speichern",
     "errorAllocation": "Jede Kappe muss eine nicht-negative Zahl sein.",
     "errorThreshold": "Jeder Schwellenwert muss eine Zahl sein oder leer bleiben, wenn kein Mindestwert vorhanden ist.",
-    "errorGeneric": "Etwas ist schiefgelaufen."
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "reclassifyConfirm": "Durch die Neuklassifizierung werden alle vier Stufenobergrenzen auf die 's standard defaults, discarding any manual overrides. If a tier' niedriger, werden die zuletzt Bewerber dieser Stufe sofort auf die Warteliste gesetzt, um den frei gewordenen Platz zu besetzen 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Neues Migrationsfenster",

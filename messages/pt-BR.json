@@ -1012,6 +1012,8 @@
     "desiredGuildPlaceholder": "por exemplo, LEI",
     "gameUidLabel": "ID do jogo *",
     "gameUidPlaceholder": "Exemplo: 423456789",
+    "gameUidHintToggle": "Como encontrar seu UID",
+    "gameUidHintBody": "UID encontrado no Perfil do Jogador. Clique no seu avatar no jogo.",
     "contactLabel": "Contato",
     "contactPlaceholder": "Nome de usuário do Discord",
     "contactHelp": "Ajuda os agentes a entrarem em contato com você para tirar dúvidas.",
@@ -1026,9 +1028,7 @@
     "saveLinkHeading": "Guarde este link — você não o verá novamente.",
     "saveLinkBody": "Use este link para editar sua inscrição ou cancelá-la posteriormente. Não há conta, portanto, este link é a única maneira de acessar novamente.",
     "copyLink": "Copiar link",
-    "copied": "Copiado!",
-    "gameUidHintToggle": "Como encontrar seu UID",
-    "gameUidHintBody": "UID encontrado no Perfil do Jogador. Clique no seu avatar no jogo."
+    "copied": "Copiado!"
   },
   "migrationTrackerEdit": {
     "title": "Sua candidatura",
@@ -1161,7 +1161,6 @@
     "tierInfoDiscordLink": "Anúncio oficial no Discord",
     "classificationHeading": "Classificação do servidor",
     "saveClassification": "Salvar classificação",
-    "reclassifyConfirm": "A reclassificação redefine todos os limites de 4 níveis para os valores padrão da nova classificação, descartando quaisquer alterações manuais. Continuar?",
     "allocationsHeading": "Limites de nível (substituir)",
     "saveCaps": "Economize tampas",
     "thresholdsHeading": "Limiares de níveis de potência",
@@ -1170,7 +1169,8 @@
     "saveThresholds": "Salvar limites",
     "errorAllocation": "Cada valor máximo deve ser um número não negativo.",
     "errorThreshold": "Cada limite deve ser um número, ou estar em branco caso não haja valor mínimo.",
-    "errorGeneric": "Algo deu errado."
+    "errorGeneric": "Algo deu errado.",
+    "reclassifyConfirm": "A reclassificação redefine os limites de vagas dos 4 níveis para os 's standard defaults, discarding any manual overrides. If a tier' for menor, os candidatos que se inscreveram mais recentemente nesse nível serão imediatamente colocados em lista de espera; se 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Nova janela de migração",

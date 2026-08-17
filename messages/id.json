@@ -1010,6 +1010,8 @@
     "desiredGuildPlaceholder": "misalnya HUKUM",
     "gameUidLabel": "UID Game *",
     "gameUidPlaceholder": "misalnya 423456789",
+    "gameUidHintToggle": "Cara menemukan UID Anda",
+    "gameUidHintBody": "UID ditemukan di Profil Pemain. Klik avatar Anda di dalam game.",
     "contactLabel": "Kontak",
     "contactPlaceholder": "Nama pengguna Discord",
     "contactHelp": "Membantu petugas menghubungi Anda jika ada pertanyaan.",
@@ -1024,9 +1026,7 @@
     "saveLinkHeading": "Simpan tautan ini — Anda 't see it again.",
     "saveLinkBody": "Gunakan tautan ini untuk mengedit aplikasi Anda atau menariknya kembali nanti. 's no account, so this link is the only way back in.",
     "copyLink": "Salin tautan",
-    "copied": "Disalin!",
-    "gameUidHintToggle": "Cara menemukan UID Anda",
-    "gameUidHintBody": "UID ditemukan di Profil Pemain. Klik avatar Anda di dalam game."
+    "copied": "Disalin!"
   },
   "migrationTrackerEdit": {
     "title": "Aplikasi Anda",
@@ -1159,7 +1159,6 @@
     "tierInfoDiscordLink": "Pengumuman Resmi Discord",
     "classificationHeading": "Klasifikasi server",
     "saveClassification": "Simpan klasifikasi",
-    "reclassifyConfirm": "Pengklasifikasian ulang akan mengatur ulang semua batasan 4 tingkat ke 's standard defaults, discarding any manual overrides. Continue?",
     "allocationsHeading": "Batasan tingkatan (timpa)",
     "saveCaps": "Simpan tutupnya",
     "thresholdsHeading": "Ambang batas tingkat daya",
@@ -1168,7 +1167,8 @@
     "saveThresholds": "Simpan ambang batas",
     "errorAllocation": "Setiap tutup botol harus berupa angka non-negatif.",
     "errorThreshold": "Setiap ambang batas harus berupa angka, atau kosong jika tidak ada nilai minimum.",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "reclassifyConfirm": "Pengklasifikasian ulang mengatur ulang semua 4 batas tingkatan ke 's standard defaults, discarding any manual overrides. If a tier' lebih kecil, pelamar terbaru yang mendaftar di tingkatan tersebut segera dimasukkan ke daftar tunggu untuk mengisi kuota; jika 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
   },
   "migrationTrackerCreate": {
     "title": "Jendela migrasi baru",
