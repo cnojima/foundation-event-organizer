@@ -1041,9 +1041,9 @@ export function updateThresholds(updates: { tier: Tier; minPower: number | null 
 }
 
 const DEFAULT_THRESHOLDS: ThresholdRow[] = [
-  { tier: "ultra_high", flavorName: "Revivalist", minPower: 110_000_000 },
+  { tier: "ultra_high", flavorName: "Revivalist", minPower: 125_000_000 },
   { tier: "high", flavorName: "Contributor", minPower: 90_000_000 },
-  { tier: "mid", flavorName: "Pioneer", minPower: 43_000_000 },
+  { tier: "mid", flavorName: "Pioneer", minPower: 73_000_000 },
   { tier: "low", flavorName: "Follower", minPower: null },
 ];
 
@@ -1052,17 +1052,17 @@ const DEFAULT_CLASSIFICATION_ALLOCATIONS: {
   tier: Tier;
   maxSlots: number;
 }[] = [
-  { classification: "high", tier: "ultra_high", maxSlots: 1 },
+  { classification: "high", tier: "ultra_high", maxSlots: 0 },
   { classification: "high", tier: "high", maxSlots: 3 },
-  { classification: "high", tier: "mid", maxSlots: 30 },
-  { classification: "high", tier: "low", maxSlots: 40 },
+  { classification: "high", tier: "mid", maxSlots: 50 },
+  { classification: "high", tier: "low", maxSlots: 50 },
   { classification: "mid", tier: "ultra_high", maxSlots: 2 },
   { classification: "mid", tier: "high", maxSlots: 5 },
-  { classification: "mid", tier: "mid", maxSlots: 40 },
+  { classification: "mid", tier: "mid", maxSlots: 60 },
   { classification: "mid", tier: "low", maxSlots: 60 },
   { classification: "low", tier: "ultra_high", maxSlots: 3 },
   { classification: "low", tier: "high", maxSlots: 8 },
-  { classification: "low", tier: "mid", maxSlots: 60 },
+  { classification: "low", tier: "mid", maxSlots: 80 },
   { classification: "low", tier: "low", maxSlots: 80 },
 ];
 
