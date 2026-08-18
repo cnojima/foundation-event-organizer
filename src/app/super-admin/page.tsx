@@ -98,7 +98,7 @@ export default async function SuperAdminPage() {
             </div>
             <div className="flex items-center gap-2 text-xs">
               <Link
-                href={`/admin?guildId=${g.id}`}
+                href={`/?guildId=${g.id}`}
                 className="rounded border border-violet-300 bg-violet-50 px-2 py-1 font-semibold text-violet-700 hover:bg-violet-100 dark:border-violet-900/60 dark:bg-violet-950/40 dark:text-violet-300 dark:hover:bg-violet-900/50"
               >
                 Manage as admin
