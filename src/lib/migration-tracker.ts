@@ -631,11 +631,10 @@ export function withdrawApplicationByToken(token: string): WithdrawResult {
 
 export type ReviewAction = "accept" | "deny" | "waitlist" | "revert";
 
-const REVIEW_TARGET_STATUS: Record<ReviewAction, ApplicationStatus> = {
+const REVIEW_TARGET_STATUS: Record<Exclude<ReviewAction, "revert">, ApplicationStatus> = {
   accept: "accepted",
   deny: "denied",
   waitlist: "waitlisted",
-  revert: "applied",
 };
 
 export type ReviewResult =
@@ -654,14 +653,12 @@ export type ReviewResult =
 // action allowed to move an application out of "accepted" or "denied" (every
 // other action is blocked once decided, per DECIDED_STATUSES below, but
 // revert itself checks status directly instead of going through that set so
-// both of these stay reachable). Reverts straight back to "applied" (not the
-// review queue's default landing spot, but a neutral "undecided again"
-// state) rather than the prior status, since that's not tracked.
-// accepted -> applied is reserved -> reserved, so it never frees a slot.
-// denied -> applied is unreserved -> reserved, so it never frees a slot
-// either — it can only push a tier over cap, which (like any other
-// decision) is shown, not blocked. withdrawn/removed_by_admin remain
-// unreachable via revert; those are genuinely terminal.
+// both of these stay reachable). Lands on "applied" or "waitlisted" — same
+// room check as a fresh submission (see recomputeTierAndStatus) — rather
+// than unconditionally "applied": the application's original status isn't
+// tracked, and other applications may have been accepted into this tier in
+// the meantime, so "applied" isn't always accurate. withdrawn/removed_by_admin
+// remain unreachable via revert; those are genuinely terminal.
 export function reviewApplication(
   applicationId: string,
   action: ReviewAction,
@@ -705,9 +702,27 @@ export function reviewApplication(
       };
     }
     const now = new Date().toISOString();
+    let targetStatus: ApplicationStatus;
+    if (action === "revert") {
+      const allocation = tx
+        .select()
+        .from(migrationAllocations)
+        .where(
+          and(
+            eq(migrationAllocations.destinationId, application.destinationId),
+            eq(migrationAllocations.tier, application.tier as Tier)
+          )
+        )
+        .get();
+      const cap = allocation?.maxSlots ?? 0;
+      const reserved = countReserved(application.destinationId, application.tier as Tier, application.id, tx);
+      targetStatus = reserved < cap ? "applied" : "waitlisted";
+    } else {
+      targetStatus = REVIEW_TARGET_STATUS[action];
+    }
     const updated: MigrationApplicationRow = {
       ...application,
-      status: REVIEW_TARGET_STATUS[action],
+      status: targetStatus,
       reviewedByUserId: reviewerUserId,
       reviewedAt: now,
       reviewNote: note ?? null,
