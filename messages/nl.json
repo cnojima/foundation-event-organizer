@@ -1101,7 +1101,8 @@
     "errorPlayerNameRequired": "Spelersnaam is verplicht.",
     "errorSourceServerRequired": "Een bronserver is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
-    "errorGeneric": "Er is iets misgegaan."
+    "errorGeneric": "Er is iets misgegaan.",
+    "deniedHeading": "Geweigerd"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",
@@ -1157,6 +1158,7 @@
     "tierInfoDiscordLink": "Officiële Discord-aankondiging",
     "classificationHeading": "Serverclassificatie",
     "saveClassification": "Classificatie opslaan",
+    "reclassifyConfirm": "Bij herclassificatie worden alle 4 limieten voor de categorieën teruggezet naar de 's standard defaults, discarding any manual overrides. If a tier' lager is, worden de nieuwste aanvragers in die categorie direct op de wachtlijst geplaatst; als 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Tierlimieten (override)",
     "saveCaps": "Caps opslaan",
     "thresholdsHeading": "Drempelwaarden voor vermogensniveaus",
@@ -1165,8 +1167,7 @@
     "saveThresholds": "Drempelwaarden opslaan",
     "errorAllocation": "Elke dop moet een niet-negatief getal zijn.",
     "errorThreshold": "Elke drempelwaarde moet een getal zijn, of leeg als er geen minimum is.",
-    "errorGeneric": "Er is iets misgegaan.",
-    "reclassifyConfirm": "Bij herclassificatie worden alle 4 limieten voor de categorieën teruggezet naar de 's standard defaults, discarding any manual overrides. If a tier' lager is, worden de nieuwste aanvragers in die categorie direct op de wachtlijst geplaatst; als 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Er is iets misgegaan."
   },
   "migrationTrackerCreate": {
     "title": "Nieuw migratievenster",

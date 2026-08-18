@@ -1104,7 +1104,8 @@
     "errorPlayerNameRequired": "Nazwa gracza jest wymagana.",
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
     "errorPower": "Moc musi być liczbą całkowitą.",
-    "errorGeneric": "Coś poszło nie tak."
+    "errorGeneric": "Coś poszło nie tak.",
+    "deniedHeading": "Zaprzeczony"
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",
@@ -1160,6 +1161,7 @@
     "tierInfoDiscordLink": "Oficjalne ogłoszenie Discord",
     "classificationHeading": "Klasyfikacja serwerów",
     "saveClassification": "Zapisz klasyfikację",
+    "reclassifyConfirm": "Reklasyfikacja resetuje wszystkie 4 limity poziomów do 's standard defaults, discarding any manual overrides. If a tier' jest niższy, kandydaci, którzy złożyli ostatnio wniosek, są natychmiast umieszczani na liście oczekujących; jeśli 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Limity poziomów (nadpisanie)",
     "saveCaps": "Zapisz czapki",
     "thresholdsHeading": "Progi poziomów mocy",
@@ -1168,8 +1170,7 @@
     "saveThresholds": "Zapisz progi",
     "errorAllocation": "Każda nakrętka musi być liczbą nieujemną.",
     "errorThreshold": "Każdy próg musi być liczbą, lub pustym polem, jeśli nie ma wartości minimalnej.",
-    "errorGeneric": "Coś poszło nie tak.",
-    "reclassifyConfirm": "Reklasyfikacja resetuje wszystkie 4 limity poziomów do 's standard defaults, discarding any manual overrides. If a tier' jest niższy, kandydaci, którzy złożyli ostatnio wniosek, są natychmiast umieszczani na liście oczekujących; jeśli 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Coś poszło nie tak."
   },
   "migrationTrackerCreate": {
     "title": "Nowe okno migracji",

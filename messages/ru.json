@@ -1104,7 +1104,8 @@
     "errorPlayerNameRequired": "Необходимо указать имя игрока.",
     "errorSourceServerRequired": "Требуется исходный сервер.",
     "errorPower": "Мощность должна быть целым числом.",
-    "errorGeneric": "Что-то пошло не так."
+    "errorGeneric": "Что-то пошло не так.",
+    "deniedHeading": "Отклонен"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",
@@ -1160,6 +1161,7 @@
     "tierInfoDiscordLink": "Официальное объявление в Discord",
     "classificationHeading": "Классификация серверов",
     "saveClassification": "Сохранить классификацию",
+    "reclassifyConfirm": "Переклассификация сбрасывает все 4 ограничения по уровням до 's standard defaults, discarding any manual overrides. If a tier' меньше, то кандидаты, подавшие заявки в этом уровне впервые, немедленно включаются в список ожидания; если 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Ограничения по уровням (переопределение)",
     "saveCaps": "Сохранить заглавные буквы",
     "thresholdsHeading": "Пороговые значения уровней мощности",
@@ -1168,8 +1170,7 @@
     "saveThresholds": "Сохранение пороговых значений",
     "errorAllocation": "Каждое значение заглавной буквы должно быть неотрицательным числом.",
     "errorThreshold": "Каждый пороговый уровень должен быть числом, или же должно быть пустое поле, если минимальный уровень отсутствует.",
-    "errorGeneric": "Что-то пошло не так.",
-    "reclassifyConfirm": "Переклассификация сбрасывает все 4 ограничения по уровням до 's standard defaults, discarding any manual overrides. If a tier' меньше, то кандидаты, подавшие заявки в этом уровне впервые, немедленно включаются в список ожидания; если 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Что-то пошло не так."
   },
   "migrationTrackerCreate": {
     "title": "Новое окно миграции",

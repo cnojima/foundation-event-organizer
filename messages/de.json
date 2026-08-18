@@ -1103,7 +1103,8 @@
     "errorPlayerNameRequired": "Der Spielername ist erforderlich.",
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
     "errorPower": "Der Exponent muss eine ganze Zahl sein.",
-    "errorGeneric": "Etwas ist schiefgelaufen."
+    "errorGeneric": "Etwas ist schiefgelaufen.",
+    "deniedHeading": "Bestritten"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Anwendungen importieren",
@@ -1159,6 +1160,7 @@
     "tierInfoDiscordLink": "Offizielle Discord-Ankündigung",
     "classificationHeading": "Serverklassifizierung",
     "saveClassification": "Klassifizierung speichern",
+    "reclassifyConfirm": "Durch die Neuklassifizierung werden alle vier Stufenobergrenzen auf die 's standard defaults, discarding any manual overrides. If a tier' niedriger, werden die zuletzt Bewerber dieser Stufe sofort auf die Warteliste gesetzt, um den frei gewordenen Platz zu besetzen 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Stufenobergrenzen (Überschreibung)",
     "saveCaps": "Spare die Kronkorken",
     "thresholdsHeading": "Leistungsstufenschwellenwerte",
@@ -1167,8 +1169,7 @@
     "saveThresholds": "Schwellenwerte speichern",
     "errorAllocation": "Jede Kappe muss eine nicht-negative Zahl sein.",
     "errorThreshold": "Jeder Schwellenwert muss eine Zahl sein oder leer bleiben, wenn kein Mindestwert vorhanden ist.",
-    "errorGeneric": "Etwas ist schiefgelaufen.",
-    "reclassifyConfirm": "Durch die Neuklassifizierung werden alle vier Stufenobergrenzen auf die 's standard defaults, discarding any manual overrides. If a tier' niedriger, werden die zuletzt Bewerber dieser Stufe sofort auf die Warteliste gesetzt, um den frei gewordenen Platz zu besetzen 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Etwas ist schiefgelaufen."
   },
   "migrationTrackerCreate": {
     "title": "Neues Migrationsfenster",

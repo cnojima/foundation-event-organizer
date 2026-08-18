@@ -650,14 +650,18 @@ export type ReviewResult =
 // decision is still shown, not blocked — promotion only fills existing
 // headroom, it doesn't create any.
 //
-// `revert` is the undo path for an accidental Accept click — it's the one
-// action allowed to move an application *out* of "accepted" (every other
-// action is blocked once decided, per DECIDED_STATUSES below, but accepted
-// is deliberately excluded from that set so this stays reachable). Reverts
-// straight back to "applied" (not the review queue's default landing spot,
-// but a neutral "undecided again" state) rather than accepted's original
-// status, since that's not tracked. accepted -> applied is reserved ->
-// reserved, so it never frees a slot or triggers promotion either.
+// `revert` is the undo path for an accidental Accept or Deny click — the one
+// action allowed to move an application out of "accepted" or "denied" (every
+// other action is blocked once decided, per DECIDED_STATUSES below, but
+// revert itself checks status directly instead of going through that set so
+// both of these stay reachable). Reverts straight back to "applied" (not the
+// review queue's default landing spot, but a neutral "undecided again"
+// state) rather than the prior status, since that's not tracked.
+// accepted -> applied is reserved -> reserved, so it never frees a slot.
+// denied -> applied is unreserved -> reserved, so it never frees a slot
+// either — it can only push a tier over cap, which (like any other
+// decision) is shown, not blocked. withdrawn/removed_by_admin remain
+// unreachable via revert; those are genuinely terminal.
 export function reviewApplication(
   applicationId: string,
   action: ReviewAction,
@@ -674,10 +678,10 @@ export function reviewApplication(
       return { ok: false as const, reason: "Application not found", status: 404 as const };
     }
     if (action === "revert") {
-      if (application.status !== "accepted") {
+      if (application.status !== "accepted" && application.status !== "denied") {
         return {
           ok: false as const,
-          reason: "Only accepted applications can be reverted",
+          reason: "Only accepted or denied applications can be reverted",
           status: 409 as const,
         };
       }

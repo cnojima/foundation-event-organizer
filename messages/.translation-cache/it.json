@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "it",
-  "translatedAt": "2026-08-17T18:00:51.115Z",
+  "translatedAt": "2026-08-18T18:35:08.060Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -920,6 +920,7 @@
     "migrationTrackerQueue.remove": "Remove",
     "migrationTrackerQueue.revert": "Revert",
     "migrationTrackerQueue.acceptedHeading": "Accepted",
+    "migrationTrackerQueue.deniedHeading": "Denied",
     "migrationTrackerQueue.confirm": "Confirm",
     "migrationTrackerQueue.statusApplied": "Applied",
     "migrationTrackerQueue.statusWaitlisted": "Waitlisted",

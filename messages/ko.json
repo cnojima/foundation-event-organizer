@@ -1101,7 +1101,8 @@
     "errorPlayerNameRequired": "플레이어 이름은 필수 입력 사항입니다.",
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
-    "errorGeneric": "뭔가 잘못됐어요."
+    "errorGeneric": "뭔가 잘못됐어요.",
+    "deniedHeading": "거부됨"
   },
   "migrationTrackerImport": {
     "title": "서버 번호 {serverNumber} — 애플리케이션 가져오기",
@@ -1157,6 +1158,7 @@
     "tierInfoDiscordLink": "공식 디스코드 공지",
     "classificationHeading": "서버 분류",
     "saveClassification": "분류 저장",
+    "reclassifyConfirm": "재분류를 's standard defaults, discarding any manual overrides. If a tier' 상한선이 더 작으면 해당 등급에 가장 최근에 지원한 신청자가 즉시 대기자 명단에 오르게 되고 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "티어 제한(재정의)",
     "saveCaps": "캡을 저장하세요",
     "thresholdsHeading": "전력 등급 임계값",
@@ -1165,8 +1167,7 @@
     "saveThresholds": "임계값을 저장하세요",
     "errorAllocation": "각 상한값은 음수가 아니어야 합니다.",
     "errorThreshold": "각 기준값은 숫자여야 하며, 최소값이 없는 경우 공백이어야 합니다.",
-    "errorGeneric": "뭔가 잘못됐어요.",
-    "reclassifyConfirm": "재분류를 's standard defaults, discarding any manual overrides. If a tier' 상한선이 더 작으면 해당 등급에 가장 최근에 지원한 신청자가 즉시 대기자 명단에 오르게 되고 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "뭔가 잘못됐어요."
   },
   "migrationTrackerCreate": {
     "title": "새로운 마이그레이션 창",

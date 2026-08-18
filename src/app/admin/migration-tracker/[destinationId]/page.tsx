@@ -50,6 +50,7 @@ export default async function MigrationDestinationQueuePage({
   const applied = allApplications.filter((a) => a.status === "applied");
   const waitlisted = allApplications.filter((a) => a.status === "waitlisted");
   const accepted = allApplications.filter((a) => a.status === "accepted");
+  const denied = allApplications.filter((a) => a.status === "denied");
 
   // Closed windows are read-only, per docs/prd-migration-tracker-multi-server.md
   // §6-7: nothing is actionable once closed, so the queue's job shifts from
@@ -177,7 +178,13 @@ export default async function MigrationDestinationQueuePage({
         const appliedForTier = applied.filter((a) => a.tier === tier);
         const waitlistedForTier = waitlisted.filter((a) => a.tier === tier);
         const acceptedForTier = accepted.filter((a) => a.tier === tier);
-        if (appliedForTier.length === 0 && waitlistedForTier.length === 0 && acceptedForTier.length === 0) {
+        const deniedForTier = denied.filter((a) => a.tier === tier);
+        if (
+          appliedForTier.length === 0 &&
+          waitlistedForTier.length === 0 &&
+          acceptedForTier.length === 0 &&
+          deniedForTier.length === 0
+        ) {
           return null;
         }
 
@@ -301,12 +308,52 @@ export default async function MigrationDestinationQueuePage({
                 </div>
               </div>
             )}
+            {deniedForTier.length > 0 && (
+              <div>
+                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-red-700 dark:text-red-400">
+                  {t("deniedHeading")}
+                </p>
+                <div className="overflow-hidden rounded-lg border border-red-200 bg-red-50/40 dark:border-red-900/60 dark:bg-red-950/20">
+                  <table className="w-full text-sm">
+                    <thead className="bg-red-50 text-left text-xs uppercase tracking-wider text-red-800 dark:bg-red-950/40 dark:text-red-300">
+                      <tr>
+                        <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
+                        <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
+                        <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
+                        <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
+                        <th className="px-3 py-2 text-right font-semibold">{t("colActions")}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {deniedForTier.map((a) => (
+                        <MigrationQueueRow
+                          key={a.id}
+                          application={{
+                            id: a.id,
+                            playerName: a.playerName,
+                            sourceServer: a.sourceServer,
+                            power: a.power,
+                            contact: a.contact,
+                            gameUid: a.gameUid,
+                            desiredGuild: a.desiredGuild,
+                            createdAt: a.createdAt,
+                          }}
+                          status="denied"
+                          showRemove={isServerAdmin}
+                          duplicates={duplicateMatches.get(a.id) ?? []}
+                        />
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            )}
           </div>
         );
       })
       )}
 
-      {!windowClosed && applied.length === 0 && waitlisted.length === 0 && accepted.length === 0 && (
+      {!windowClosed && applied.length === 0 && waitlisted.length === 0 && accepted.length === 0 && denied.length === 0 && (
         <p className="text-gray-500 dark:text-gray-400">{t("empty")}</p>
       )}
       {windowClosed && finalRoster.length === 0 && (

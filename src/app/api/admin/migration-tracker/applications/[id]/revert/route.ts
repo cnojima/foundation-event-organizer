@@ -4,9 +4,9 @@ import { canReviewMigrationApplication } from "@/lib/rbac";
 import { reviewApplication } from "@/lib/migration-tracker";
 import { logAudit, resolveActorDisplay } from "@/lib/audit";
 
-// Undo path for an accidental Accept click — moves an accepted application
-// back to "applied". Same reviewer permission as accept/deny/waitlist, not
-// server-admin-only like remove.
+// Undo path for an accidental Accept or Deny click — moves an accepted or
+// denied application back to "applied". Same reviewer permission as
+// accept/deny/waitlist, not server-admin-only like remove.
 export async function POST(
   req: Request,
   { params }: { params: Promise<{ id: string }> }

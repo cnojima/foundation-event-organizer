@@ -1104,7 +1104,8 @@
     "errorPlayerNameRequired": "Oyuncu adı zorunludur.",
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
-    "errorGeneric": "Bir şeyler ters gitti."
+    "errorGeneric": "Bir şeyler ters gitti.",
+    "deniedHeading": "Reddedildi"
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",
@@ -1160,6 +1161,7 @@
     "tierInfoDiscordLink": "Resmi Discord Duyurusu",
     "classificationHeading": "Sunucu sınıflandırması",
     "saveClassification": "Sınıflandırmayı kaydet",
+    "reclassifyConfirm": "Yeniden sınıflandırma, tüm 4 kademe sınırını yeni 's standard defaults, discarding any manual overrides. If a tier' yeni sınırı daha küçükse, o kademede en yeni başvuranlar hemen bekleme listesine alınır; 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Kademe sınırları (geçersiz kılma)",
     "saveCaps": "Kapakları saklayın",
     "thresholdsHeading": "Güç kademesi eşikleri",
@@ -1168,8 +1170,7 @@
     "saveThresholds": "Eşik değerlerini kaydet",
     "errorAllocation": "Her bir büyük harf negatif olmayan bir sayı olmalıdır.",
     "errorThreshold": "Her eşik değeri bir sayı olmalı veya minimum değer yoksa boş bırakılmalıdır.",
-    "errorGeneric": "Bir şeyler ters gitti.",
-    "reclassifyConfirm": "Yeniden sınıflandırma, tüm 4 kademe sınırını yeni 's standard defaults, discarding any manual overrides. If a tier' yeni sınırı daha küçükse, o kademede en yeni başvuranlar hemen bekleme listesine alınır; 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Bir şeyler ters gitti."
   },
   "migrationTrackerCreate": {
     "title": "Yeni göç penceresi",

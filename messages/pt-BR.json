@@ -1105,7 +1105,8 @@
     "errorPlayerNameRequired": "É necessário nomear o jogador.",
     "errorSourceServerRequired": "É necessário um servidor de origem.",
     "errorPower": "A potência deve ser um número inteiro.",
-    "errorGeneric": "Algo deu errado."
+    "errorGeneric": "Algo deu errado.",
+    "deniedHeading": "Negado"
   },
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",
@@ -1161,6 +1162,7 @@
     "tierInfoDiscordLink": "Anúncio oficial no Discord",
     "classificationHeading": "Classificação do servidor",
     "saveClassification": "Salvar classificação",
+    "reclassifyConfirm": "A reclassificação redefine os limites de vagas dos 4 níveis para os 's standard defaults, discarding any manual overrides. If a tier' for menor, os candidatos que se inscreveram mais recentemente nesse nível serão imediatamente colocados em lista de espera; se 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Limites de nível (substituir)",
     "saveCaps": "Economize tampas",
     "thresholdsHeading": "Limiares de níveis de potência",
@@ -1169,8 +1171,7 @@
     "saveThresholds": "Salvar limites",
     "errorAllocation": "Cada valor máximo deve ser um número não negativo.",
     "errorThreshold": "Cada limite deve ser um número, ou estar em branco caso não haja valor mínimo.",
-    "errorGeneric": "Algo deu errado.",
-    "reclassifyConfirm": "A reclassificação redefine os limites de vagas dos 4 níveis para os 's standard defaults, discarding any manual overrides. If a tier' for menor, os candidatos que se inscreveram mais recentemente nesse nível serão imediatamente colocados em lista de espera; se 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Algo deu errado."
   },
   "migrationTrackerCreate": {
     "title": "Nova janela de migração",

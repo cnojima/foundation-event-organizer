@@ -1104,7 +1104,8 @@
     "errorPlayerNameRequired": "玩家姓名为必填项。",
     "errorSourceServerRequired": "需要源服务器。",
     "errorPower": "幂必须是整数。",
-    "errorGeneric": "出问题了。"
+    "errorGeneric": "出问题了。",
+    "deniedHeading": "否认"
   },
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",
@@ -1160,6 +1161,7 @@
     "tierInfoDiscordLink": "官方Discord公告",
     "classificationHeading": "服务器分类",
     "saveClassification": "保存分类",
+    "reclassifyConfirm": "重新分类会将所有 4 个层级的上限重置为新分类's standard defaults, discarding any manual overrides. If a tier'新上限较小，则该层级中最新提交申请的申请人将立即进入候补名单以填补空缺；如果's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "等级上限（覆盖）",
     "saveCaps": "节省瓶盖",
     "thresholdsHeading": "能力等级阈值",
@@ -1168,8 +1170,7 @@
     "saveThresholds": "保存阈值",
     "errorAllocation": "每个上限值都必须是非负数。",
     "errorThreshold": "每个阈值必须为数字，留空则表示没有最低值。",
-    "errorGeneric": "出问题了。",
-    "reclassifyConfirm": "重新分类会将所有 4 个层级的上限重置为新分类's standard defaults, discarding any manual overrides. If a tier'新上限较小，则该层级中最新提交申请的申请人将立即进入候补名单以填补空缺；如果's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "出问题了。"
   },
   "migrationTrackerCreate": {
     "title": "新迁移窗口",

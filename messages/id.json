@@ -1103,7 +1103,8 @@
     "errorPlayerNameRequired": "Nama pemain wajib diisi.",
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
-    "errorGeneric": "Terjadi kesalahan."
+    "errorGeneric": "Terjadi kesalahan.",
+    "deniedHeading": "Ditolak"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",
@@ -1159,6 +1160,7 @@
     "tierInfoDiscordLink": "Pengumuman Resmi Discord",
     "classificationHeading": "Klasifikasi server",
     "saveClassification": "Simpan klasifikasi",
+    "reclassifyConfirm": "Pengklasifikasian ulang mengatur ulang semua 4 batas tingkatan ke 's standard defaults, discarding any manual overrides. If a tier' lebih kecil, pelamar terbaru yang mendaftar di tingkatan tersebut segera dimasukkan ke daftar tunggu untuk mengisi kuota; jika 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Batasan tingkatan (timpa)",
     "saveCaps": "Simpan tutupnya",
     "thresholdsHeading": "Ambang batas tingkat daya",
@@ -1167,8 +1169,7 @@
     "saveThresholds": "Simpan ambang batas",
     "errorAllocation": "Setiap tutup botol harus berupa angka non-negatif.",
     "errorThreshold": "Setiap ambang batas harus berupa angka, atau kosong jika tidak ada nilai minimum.",
-    "errorGeneric": "Terjadi kesalahan.",
-    "reclassifyConfirm": "Pengklasifikasian ulang mengatur ulang semua 4 batas tingkatan ke 's standard defaults, discarding any manual overrides. If a tier' lebih kecil, pelamar terbaru yang mendaftar di tingkatan tersebut segera dimasukkan ke daftar tunggu untuk mengisi kuota; jika 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Terjadi kesalahan."
   },
   "migrationTrackerCreate": {
     "title": "Jendela migrasi baru",

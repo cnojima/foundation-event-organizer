@@ -1104,7 +1104,8 @@
     "errorPlayerNameRequired": "Le nom du joueur est obligatoire.",
     "errorSourceServerRequired": "Le serveur source est requis.",
     "errorPower": "La puissance doit être un nombre entier.",
-    "errorGeneric": "Quelque chose a mal fonctionné."
+    "errorGeneric": "Quelque chose a mal fonctionné.",
+    "deniedHeading": "Refusé"
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
@@ -1160,6 +1161,7 @@
     "tierInfoDiscordLink": "Annonce officielle sur Discord",
     "classificationHeading": "Classification des serveurs",
     "saveClassification": "Sauvegarder la classification",
+    "reclassifyConfirm": "La reclassification réinitialise les limites des 4 niveaux aux 's standard defaults, discarding any manual overrides. If a tier' est inférieure, les candidats les plus récents de ce niveau sont immédiatement placés sur liste d'attente ; si elle 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Limites de niveau (remplacer)",
     "saveCaps": "Économisez les capsules",
     "thresholdsHeading": "seuils des niveaux de puissance",
@@ -1168,8 +1170,7 @@
     "saveThresholds": "Seuil de sauvegarde",
     "errorAllocation": "Chaque valeur maximale doit être un nombre non négatif.",
     "errorThreshold": "Chaque seuil doit être un nombre, ou vide pour indiquer l'absence de seuil minimum.",
-    "errorGeneric": "Quelque chose a mal fonctionné.",
-    "reclassifyConfirm": "La reclassification réinitialise les limites des 4 niveaux aux 's standard defaults, discarding any manual overrides. If a tier' est inférieure, les candidats les plus récents de ce niveau sont immédiatement placés sur liste d'attente ; si elle 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Quelque chose a mal fonctionné."
   },
   "migrationTrackerCreate": {
     "title": "Nouvelle fenêtre de migration",

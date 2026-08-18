@@ -1104,7 +1104,8 @@
     "errorPlayerNameRequired": "Il nome del giocatore è obbligatorio.",
     "errorSourceServerRequired": "È necessario un server sorgente.",
     "errorPower": "La potenza deve essere un numero intero.",
-    "errorGeneric": "Qualcosa è andato storto."
+    "errorGeneric": "Qualcosa è andato storto.",
+    "deniedHeading": "Negato"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importa applicazioni",
@@ -1160,6 +1161,7 @@
     "tierInfoDiscordLink": "Annuncio ufficiale su Discord",
     "classificationHeading": "Ciclo di server",
     "saveClassification": "Salvare la classificazione",
+    "reclassifyConfirm": "La riclassificazione ripristina tutti e 4 i limiti di livello ai 's standard defaults, discarding any manual overrides. If a tier' è inferiore, i candidati che hanno presentato domanda più di recente in quel livello vengono immediatamente inseriti in lista d'attesa per poter essere ammessi; se 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Limiti di livello (override)",
     "saveCaps": "Risparmia i tappi",
     "thresholdsHeading": "Soglie di potenza",
@@ -1168,8 +1170,7 @@
     "saveThresholds": "Soglie di salvataggio",
     "errorAllocation": "Ogni lettera maiuscola deve essere un numero non negativo.",
     "errorThreshold": "Ogni soglia deve essere un numero, oppure vuota se non è indicato alcun valore minimo.",
-    "errorGeneric": "Qualcosa è andato storto.",
-    "reclassifyConfirm": "La riclassificazione ripristina tutti e 4 i limiti di livello ai 's standard defaults, discarding any manual overrides. If a tier' è inferiore, i candidati che hanno presentato domanda più di recente in quel livello vengono immediatamente inseriti in lista d'attesa per poter essere ammessi; se 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Qualcosa è andato storto."
   },
   "migrationTrackerCreate": {
     "title": "Nuova finestra migratoria",

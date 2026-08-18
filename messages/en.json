@@ -1095,6 +1095,7 @@
     "remove": "Remove",
     "revert": "Revert",
     "acceptedHeading": "Accepted",
+    "deniedHeading": "Denied",
     "confirm": "Confirm",
     "statusApplied": "Applied",
     "statusWaitlisted": "Waitlisted",

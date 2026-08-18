@@ -1105,7 +1105,8 @@
     "errorPlayerNameRequired": "Ім'я гравця обов'язкове.",
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
-    "errorGeneric": "Щось пішло не так."
+    "errorGeneric": "Щось пішло не так.",
+    "deniedHeading": "Відмовлено"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",
@@ -1161,6 +1162,7 @@
     "tierInfoDiscordLink": "Офіційне оголошення Discord",
     "classificationHeading": "Класифікація серверів",
     "saveClassification": "Зберегти класифікацію",
+    "reclassifyConfirm": "Перекласифікація скидає всі 4 обмеження рівнів до 's standard defaults, discarding any manual overrides. If a tier' менше, нові заявки на цьому рівні негайно потрапляють до списку очікування; якщо 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Обмеження рівнів (замінити)",
     "saveCaps": "Зберегти обмеження",
     "thresholdsHeading": "Порогові значення рівня потужності",
@@ -1169,8 +1171,7 @@
     "saveThresholds": "Зберегти порогові значення",
     "errorAllocation": "Кожна ліміта має бути невід'ємним числом.",
     "errorThreshold": "Кожне порогове значення має бути числом або порожнім, якщо мінімального значення немає.",
-    "errorGeneric": "Щось пішло не так.",
-    "reclassifyConfirm": "Перекласифікація скидає всі 4 обмеження рівнів до 's standard defaults, discarding any manual overrides. If a tier' менше, нові заявки на цьому рівні негайно потрапляють до списку очікування; якщо 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Щось пішло не так."
   },
   "migrationTrackerCreate": {
     "title": "Нове вікно міграції",

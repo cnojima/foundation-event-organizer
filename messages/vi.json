@@ -1103,7 +1103,8 @@
     "errorPlayerNameRequired": "Tên người chơi là bắt buộc.",
     "errorSourceServerRequired": "Cần có máy chủ nguồn.",
     "errorPower": "Lũy thừa phải là số nguyên.",
-    "errorGeneric": "Đã xảy ra lỗi."
+    "errorGeneric": "Đã xảy ra lỗi.",
+    "deniedHeading": "Từ chối"
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",
@@ -1159,6 +1160,7 @@
     "tierInfoDiscordLink": "Thông báo chính thức trên Discord",
     "classificationHeading": "Phân loại máy chủ",
     "saveClassification": "Lưu phân loại",
+    "reclassifyConfirm": "Việc phân loại lại sẽ đặt lại tất cả 4 giới hạn cấp bậc về 's standard defaults, discarding any manual overrides. If a tier' nhỏ hơn, những người nộp đơn mới nhất trong cấp bậc đó sẽ được đưa vào danh sách chờ ngay lập tức; nếu 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Giới hạn cấp bậc (ghi đè)",
     "saveCaps": "Tiết kiệm tiền",
     "thresholdsHeading": "Ngưỡng cấp độ sức mạnh",
@@ -1167,8 +1169,7 @@
     "saveThresholds": "Lưu ngưỡng",
     "errorAllocation": "Mỗi số mũ phải là một số không âm.",
     "errorThreshold": "Mỗi ngưỡng phải là một con số, hoặc để trống nếu không có ngưỡng tối thiểu.",
-    "errorGeneric": "Đã xảy ra lỗi.",
-    "reclassifyConfirm": "Việc phân loại lại sẽ đặt lại tất cả 4 giới hạn cấp bậc về 's standard defaults, discarding any manual overrides. If a tier' nhỏ hơn, những người nộp đơn mới nhất trong cấp bậc đó sẽ được đưa vào danh sách chờ ngay lập tức; nếu 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Đã xảy ra lỗi."
   },
   "migrationTrackerCreate": {
     "title": "Cửa sổ di cư mới",

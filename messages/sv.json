@@ -1105,7 +1105,8 @@
     "errorPlayerNameRequired": "Spelarens namn krävs.",
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
-    "errorGeneric": "Något gick fel."
+    "errorGeneric": "Något gick fel.",
+    "deniedHeading": "Nekad"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",
@@ -1161,6 +1162,7 @@
     "tierInfoDiscordLink": "Officiellt Discord-meddelande",
     "classificationHeading": "Serverklassificering",
     "saveClassification": "Spara klassificering",
+    "reclassifyConfirm": "Omklassificering återställer alla fyra nivåtak till den nya 's standard defaults, discarding any manual overrides. If a tier' nya tak är mindre, placeras de senast sökande i den nivån omedelbart på väntelistan för att få plats. Om det 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Nivåtak (åsidosätt)",
     "saveCaps": "Spara versaler",
     "thresholdsHeading": "Tröskelvärden för effektnivåer",
@@ -1169,8 +1171,7 @@
     "saveThresholds": "Spara tröskelvärden",
     "errorAllocation": "Varje versal måste vara ett icke-negativt tal.",
     "errorThreshold": "Varje tröskelvärde måste vara ett tal, eller tomt om det inte finns något minimumvärde.",
-    "errorGeneric": "Något gick fel.",
-    "reclassifyConfirm": "Omklassificering återställer alla fyra nivåtak till den nya 's standard defaults, discarding any manual overrides. If a tier' nya tak är mindre, placeras de senast sökande i den nivån omedelbart på väntelistan för att få plats. Om det 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Något gick fel."
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsfönster",

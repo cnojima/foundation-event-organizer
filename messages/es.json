@@ -1105,7 +1105,8 @@
     "errorPlayerNameRequired": "Se requiere el nombre del jugador.",
     "errorSourceServerRequired": "Se requiere un servidor de origen.",
     "errorPower": "La potencia debe ser un número entero.",
-    "errorGeneric": "Algo salió mal."
+    "errorGeneric": "Algo salió mal.",
+    "deniedHeading": "Denegado"
   },
   "migrationTrackerImport": {
     "title": "Servidor n.º {serverNumber} — Importar aplicaciones",
@@ -1161,6 +1162,7 @@
     "tierInfoDiscordLink": "Anuncio oficial en Discord",
     "classificationHeading": "Clasificación del servidor",
     "saveClassification": "Guardar clasificación",
+    "reclassifyConfirm": "La reclasificación restablece los límites de los cuatro niveles a los 's standard defaults, discarding any manual overrides. If a tier' es menor, los solicitantes más recientes de ese nivel se colocan inmediatamente en lista de espera para ocupar el nuevo espacio; si 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Límites de nivel (anulación)",
     "saveCaps": "Ahorrar chapas",
     "thresholdsHeading": "Umbrales de nivel de poder",
@@ -1169,8 +1171,7 @@
     "saveThresholds": "Umbrales de guardado",
     "errorAllocation": "Cada tapa debe ser un número no negativo.",
     "errorThreshold": "Cada umbral debe ser un número, o estar en blanco si no hay un mínimo.",
-    "errorGeneric": "Algo salió mal.",
-    "reclassifyConfirm": "La reclasificación restablece los límites de los cuatro niveles a los 's standard defaults, discarding any manual overrides. If a tier' es menor, los solicitantes más recientes de ese nivel se colocan inmediatamente en lista de espera para ocupar el nuevo espacio; si 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Algo salió mal."
   },
   "migrationTrackerCreate": {
     "title": "Nueva ventana de migración",

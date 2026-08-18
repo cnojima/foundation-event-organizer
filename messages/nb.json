@@ -1105,7 +1105,8 @@
     "errorPlayerNameRequired": "Spillernavn er obligatorisk.",
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
-    "errorGeneric": "Noe gikk galt."
+    "errorGeneric": "Noe gikk galt.",
+    "deniedHeading": "Avvist"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} – Importer applikasjoner",
@@ -1161,6 +1162,7 @@
     "tierInfoDiscordLink": "Offisiell Discord-kunngjøring",
     "classificationHeading": "Serverklassifisering",
     "saveClassification": "Lagre klassifisering",
+    "reclassifyConfirm": "Omklassifisering tilbakestiller alle fire nivågrenser til 's standard defaults, discarding any manual overrides. If a tier' nye grense er mindre, blir de nyeste søkerne i det nivået umiddelbart satt på venteliste for å få plass. Hvis 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?",
     "allocationsHeading": "Nivågrenser (overstyr)",
     "saveCaps": "Lagre store bokstaver",
     "thresholdsHeading": "Terskler for maktnivå",
@@ -1169,8 +1171,7 @@
     "saveThresholds": "Lagre terskler",
     "errorAllocation": "Hvert store bokstaver må være et ikke-negativt tall.",
     "errorThreshold": "Hver terskel må være et tall, eller være tom hvis det ikke er noe minimum.",
-    "errorGeneric": "Noe gikk galt.",
-    "reclassifyConfirm": "Omklassifisering tilbakestiller alle fire nivågrenser til 's standard defaults, discarding any manual overrides. If a tier' nye grense er mindre, blir de nyeste søkerne i det nivået umiddelbart satt på venteliste for å få plass. Hvis 's larger, the longest-waiting waitlisted applicants are immediately promoted to fill the new room (accepted applicants are never affected either way). Continue?"
+    "errorGeneric": "Noe gikk galt."
   },
   "migrationTrackerCreate": {
     "title": "Nytt migreringsvindu",
