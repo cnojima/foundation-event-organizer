@@ -1091,6 +1091,7 @@
     "closedNotice": "この移行期間は終了しました。ここに記載されている内容は何も変更できません。これが最終記録です。",
     "accept": "受け入れる",
     "waitlist": "待機リスト",
+    "promote": "推進する",
     "deny": "拒否",
     "remove": "取り除く",
     "revert": "元に戻す",
@@ -1107,7 +1108,10 @@
     "errorSourceServerRequired": "ソースサーバーが必要です。",
     "errorPower": "べき乗は整数でなければならない。",
     "errorGeneric": "何かがおかしくなりました。",
-    "promote": "推進する"
+    "searchPlaceholderAdmin": "名前、サーバー、ギルド、またはUIDで検索…",
+    "searchPlaceholderPublic": "名前またはサーバーで検索…",
+    "noSearchResults": "検索条件に一致するアプリケーションは見つかりませんでした。",
+    "matchCount": "{count} / {total}"
   },
   "migrationTrackerImport": {
     "title": "サーバー番号{serverNumber} — アプリケーションのインポート",

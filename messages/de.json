@@ -1090,6 +1090,7 @@
     "closedNotice": "Das Migrationsfenster ist geschlossen. Hier sind keine Maßnahmen mehr möglich – dies ist der endgültige Datensatz.",
     "accept": "Akzeptieren",
     "waitlist": "Warteliste",
+    "promote": "Fördern",
     "deny": "Leugnen",
     "remove": "Entfernen",
     "revert": "Zurücksetzen",
@@ -1106,7 +1107,10 @@
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
     "errorPower": "Der Exponent muss eine ganze Zahl sein.",
     "errorGeneric": "Etwas ist schiefgelaufen.",
-    "promote": "Fördern"
+    "searchPlaceholderAdmin": "Suche nach Name, Server, Gilde oder UID…",
+    "searchPlaceholderPublic": "Suche nach Name oder Server…",
+    "noSearchResults": "Es wurden keine passenden Anwendungen für Ihre Suche gefunden.",
+    "matchCount": "{count} von {total}"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Anwendungen importieren",

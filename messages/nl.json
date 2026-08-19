@@ -1088,6 +1088,7 @@
     "closedNotice": "Deze migratieperiode is afgesloten. Er zijn geen verdere acties meer mogelijk — dit is het definitieve document.",
     "accept": "Accepteren",
     "waitlist": "Wachtlijst",
+    "promote": "Bevorderen",
     "deny": "Ontkennen",
     "remove": "Verwijderen",
     "revert": "Terugdraaien",
@@ -1104,7 +1105,10 @@
     "errorSourceServerRequired": "Een bronserver is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
     "errorGeneric": "Er is iets misgegaan.",
-    "promote": "Bevorderen"
+    "searchPlaceholderAdmin": "Zoeken op naam, server, gilde of UID…",
+    "searchPlaceholderPublic": "Zoeken op naam of server…",
+    "noSearchResults": "Er zijn geen applicaties gevonden die overeenkomen met uw zoekopdracht.",
+    "matchCount": "{count} van {total}"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",

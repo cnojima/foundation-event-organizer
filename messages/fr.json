@@ -1091,6 +1091,7 @@
     "closedNotice": "Cette période de migration est terminée. Aucune action n'est possible ici ; il s'agit du dernier enregistrement.",
     "accept": "Accepter",
     "waitlist": "Liste d'attente",
+    "promote": "Promouvoir",
     "deny": "Refuser",
     "remove": "Retirer",
     "revert": "Revenir",
@@ -1107,7 +1108,10 @@
     "errorSourceServerRequired": "Le serveur source est requis.",
     "errorPower": "La puissance doit être un nombre entier.",
     "errorGeneric": "Quelque chose a mal fonctionné.",
-    "promote": "Promouvoir"
+    "searchPlaceholderAdmin": "Recherche par nom, serveur, guilde ou UID…",
+    "searchPlaceholderPublic": "Recherche par nom ou serveur…",
+    "noSearchResults": "Aucune application ne correspond à votre recherche.",
+    "matchCount": "{count} de {total}"
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",

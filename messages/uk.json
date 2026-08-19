@@ -1092,6 +1092,7 @@
     "closedNotice": "Це вікно міграції закрито. Тут немає нічого, що можна було б використати — це остаточний запис.",
     "accept": "Прийняти",
     "waitlist": "Список очікування",
+    "promote": "Просувати",
     "deny": "Заперечити",
     "remove": "Видалити",
     "revert": "Повернути",
@@ -1108,7 +1109,10 @@
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
     "errorGeneric": "Щось пішло не так.",
-    "promote": "Просувати"
+    "searchPlaceholderAdmin": "Пошук за назвою, сервером, гільдією або UID…",
+    "searchPlaceholderPublic": "Пошук за назвою або сервером…",
+    "noSearchResults": "Немає програм, що відповідають вашому пошуку.",
+    "matchCount": "{count} з {total}"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",

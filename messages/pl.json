@@ -1091,6 +1091,7 @@
     "closedNotice": "To okno migracji zostało zamknięte. Nic tutaj nie jest możliwe do podjęcia — to jest ostateczny rekord.",
     "accept": "Przyjąć",
     "waitlist": "Lista oczekujących",
+    "promote": "Promować",
     "deny": "Zaprzeczyć",
     "remove": "Usunąć",
     "revert": "Odwracać",
@@ -1107,7 +1108,10 @@
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
     "errorPower": "Moc musi być liczbą całkowitą.",
     "errorGeneric": "Coś poszło nie tak.",
-    "promote": "Promować"
+    "searchPlaceholderAdmin": "Szukaj według nazwy, serwera, gildii lub UID…",
+    "searchPlaceholderPublic": "Szukaj według nazwy lub serwera…",
+    "noSearchResults": "Brak aplikacji odpowiadających Twojemu wyszukiwaniu.",
+    "matchCount": "{count} z {total}"
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",

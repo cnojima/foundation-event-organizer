@@ -1090,6 +1090,7 @@
     "closedNotice": "Jendela migrasi ini telah ditutup. Tidak ada tindakan yang dapat dilakukan di sini — ini adalah catatan terakhir.",
     "accept": "Menerima",
     "waitlist": "Daftar Tunggu",
+    "promote": "Mendorong",
     "deny": "Membantah",
     "remove": "Menghapus",
     "revert": "Kembali",
@@ -1106,7 +1107,10 @@
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
     "errorGeneric": "Terjadi kesalahan.",
-    "promote": "Mendorong"
+    "searchPlaceholderAdmin": "Cari berdasarkan nama, server, guild, atau UID…",
+    "searchPlaceholderPublic": "Cari berdasarkan nama atau server…",
+    "noSearchResults": "Tidak ada aplikasi yang sesuai dengan pencarian Anda.",
+    "matchCount": "{count} dari {total}"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",

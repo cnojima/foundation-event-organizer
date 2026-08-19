@@ -1092,6 +1092,7 @@
     "closedNotice": "Det här migreringsfönstret har stängts. Ingenting här är åtgärdbart – detta är den slutliga posten.",
     "accept": "Acceptera",
     "waitlist": "Väntelista",
+    "promote": "Främja",
     "deny": "Förneka",
     "remove": "Ta bort",
     "revert": "Återgå",
@@ -1108,7 +1109,10 @@
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
     "errorGeneric": "Något gick fel.",
-    "promote": "Främja"
+    "searchPlaceholderAdmin": "Sök efter namn, server, gille eller UID…",
+    "searchPlaceholderPublic": "Sök efter namn eller server…",
+    "noSearchResults": "Inga applikationer matchar din sökning.",
+    "matchCount": "{count} av {total}"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",

@@ -1091,6 +1091,7 @@
     "closedNotice": "此迁移窗口已关闭。此处任何操作均不可执行——这是最终记录。",
     "accept": "接受",
     "waitlist": "候补名单",
+    "promote": "推动",
     "deny": "否定",
     "remove": "消除",
     "revert": "恢复",
@@ -1107,7 +1108,10 @@
     "errorSourceServerRequired": "需要源服务器。",
     "errorPower": "幂必须是整数。",
     "errorGeneric": "出问题了。",
-    "promote": "推动"
+    "searchPlaceholderAdmin": "按名称、服务器、公会或UID搜索……",
+    "searchPlaceholderPublic": "按名称或服务器搜索…",
+    "noSearchResults": "没有符合您搜索条件的应用程序。",
+    "matchCount": "{total}的{count}"
   },
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",

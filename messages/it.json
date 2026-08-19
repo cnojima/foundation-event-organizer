@@ -1091,6 +1091,7 @@
     "closedNotice": "Questa finestra di migrazione si è chiusa. Qui non è possibile intraprendere alcuna azione: questo è il record definitivo.",
     "accept": "Accettare",
     "waitlist": "Lista d'attesa",
+    "promote": "Promuovere",
     "deny": "Negare",
     "remove": "Rimuovere",
     "revert": "Ripristina",
@@ -1107,7 +1108,10 @@
     "errorSourceServerRequired": "È necessario un server sorgente.",
     "errorPower": "La potenza deve essere un numero intero.",
     "errorGeneric": "Qualcosa è andato storto.",
-    "promote": "Promuovere"
+    "searchPlaceholderAdmin": "Cerca per nome, server, gilda o UID…",
+    "searchPlaceholderPublic": "Cerca per nome o server…",
+    "noSearchResults": "Nessuna applicazione corrisponde alla tua ricerca.",
+    "matchCount": "{count} di {total}"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importa applicazioni",

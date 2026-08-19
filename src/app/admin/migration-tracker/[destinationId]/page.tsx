@@ -6,11 +6,9 @@ import { db } from "@/db";
 import { migrationApplications } from "@/db/schema";
 import { asc, eq } from "drizzle-orm";
 import { PageHeader } from "@/components/page-header";
-import { getCapacitySummary, getWindowStatus, TIER_ORDER, type Tier } from "@/lib/migration-tracker";
+import { getCapacitySummary, getWindowStatus, type Tier } from "@/lib/migration-tracker";
 import { findDuplicateMatches } from "@/lib/migration-dedupe";
-import { MigrationQueueRow } from "@/components/migration-tracker/migration-queue-row";
-import { DuplicateBadge, duplicateRowId } from "@/components/migration-tracker/migration-duplicate-badge";
-import { GameUidCell } from "@/components/migration-tracker/migration-game-uid-cell";
+import { MigrationAdminQueue, type AdminQueueRow } from "@/components/migration-tracker/migration-admin-queue";
 
 export const metadata = { title: "Migration Review Queue" };
 
@@ -47,31 +45,28 @@ export default async function MigrationDestinationQueuePage({
     .where(eq(migrationApplications.destinationId, destination.id))
     .orderBy(asc(migrationApplications.createdAt));
 
-  const applied = allApplications.filter((a) => a.status === "applied");
-  const waitlisted = allApplications.filter((a) => a.status === "waitlisted");
-  const accepted = allApplications.filter((a) => a.status === "accepted");
-  const denied = allApplications.filter((a) => a.status === "denied");
-
-  // Closed windows are read-only, per docs/prd-migration-tracker-multi-server.md
-  // §6-7: nothing is actionable once closed, so the queue's job shifts from
-  // "review pending applications" to "show the final historical roster" —
-  // every application regardless of status, no action buttons.
-  const finalRoster = windowClosed
-    ? [...allApplications].sort(
-        (a, b) => a.tier.localeCompare(b.tier) || a.createdAt.localeCompare(b.createdAt)
-      )
-    : [];
-
   const duplicateMatches = findDuplicateMatches(allApplications);
 
-  const APPLICATION_STATUS_LABEL: Record<string, string> = {
-    applied: t("statusApplied"),
-    waitlisted: t("statusWaitlisted"),
-    accepted: t("statusAccepted"),
-    denied: t("statusDenied"),
-    withdrawn: t("statusWithdrawn"),
-    removed_by_admin: t("statusRemoved"),
-  };
+  // Rows for the client-side queue/roster view (search + collapsible tier
+  // sections both need to filter/toggle without a round trip). Closed
+  // windows are read-only, per docs/prd-migration-tracker-multi-server.md
+  // §6-7: nothing is actionable once closed, so the queue's job shifts from
+  // "review pending applications" to "show the final historical roster" —
+  // every application regardless of status, no action buttons. The
+  // component itself decides which statuses are relevant per mode.
+  const rows: AdminQueueRow[] = allApplications.map((a) => ({
+    id: a.id,
+    playerName: a.playerName,
+    sourceServer: a.sourceServer,
+    power: a.power,
+    tier: a.tier as Tier,
+    desiredGuild: a.desiredGuild,
+    gameUid: a.gameUid,
+    contact: a.contact,
+    createdAt: a.createdAt,
+    status: a.status,
+    duplicates: duplicateMatches.get(a.id) ?? [],
+  }));
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -135,236 +130,12 @@ export default async function MigrationDestinationQueuePage({
         </div>
       )}
 
-      {windowClosed ? (
-        <div className="overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-          <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400">
-              <tr>
-                <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colTier")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colDesiredGuild")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colGameUid")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colStatus")}</th>
-                <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {finalRoster.map((a) => (
-                <tr
-                  key={a.id}
-                  id={duplicateRowId(a.id)}
-                  className="scroll-mt-4 border-t border-gray-100 target:bg-amber-50 dark:border-gray-800 dark:target:bg-amber-950/30"
-                >
-                  <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">
-                    {a.playerName}
-                    <DuplicateBadge matches={duplicateMatches.get(a.id) ?? []} label={t("duplicateBadge")} />
-                  </td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.sourceServer}</td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{tierLabel[a.tier as Tier] ?? a.tier}</td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.desiredGuild ?? "—"}</td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-                    <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} />
-                  </td>
-                  <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-                    {APPLICATION_STATUS_LABEL[a.status] ?? a.status}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
-                    {new Date(a.createdAt).toLocaleDateString()}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        TIER_ORDER.map((tier) => {
-        const appliedForTier = applied.filter((a) => a.tier === tier);
-        const waitlistedForTier = waitlisted.filter((a) => a.tier === tier);
-        const acceptedForTier = accepted.filter((a) => a.tier === tier);
-        const deniedForTier = denied.filter((a) => a.tier === tier);
-        if (
-          appliedForTier.length === 0 &&
-          waitlistedForTier.length === 0 &&
-          acceptedForTier.length === 0 &&
-          deniedForTier.length === 0
-        ) {
-          return null;
-        }
-
-        return (
-          <div key={tier} className="mb-6">
-            <h2 className="mb-2 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              {tierLabel[tier] ?? tier}
-            </h2>
-            {appliedForTier.length > 0 && (
-              <div className="mb-3 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <table className="w-full text-sm">
-                  <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400">
-                    <tr>
-                      <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
-                      <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-                      <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
-                      <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
-                      <th className="px-3 py-2 text-right font-semibold">{t("colActions")}</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {appliedForTier.map((a) => (
-                      <MigrationQueueRow
-                        key={a.id}
-                        application={{
-                          id: a.id,
-                          playerName: a.playerName,
-                          sourceServer: a.sourceServer,
-                          power: a.power,
-                          desiredGuild: a.desiredGuild,
-                          gameUid: a.gameUid,
-                          contact: a.contact,
-                          createdAt: a.createdAt,
-                        }}
-                        status="applied"
-                        showRemove={isServerAdmin}
-                        duplicates={duplicateMatches.get(a.id) ?? []}
-                      />
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
-            {waitlistedForTier.length > 0 && (
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                  {t("waitlistHeading")}
-                </p>
-                <div className="overflow-hidden rounded-lg border border-amber-200 bg-amber-50/40 dark:border-amber-900/60 dark:bg-amber-950/20">
-                  <table className="w-full text-sm">
-                    <thead className="bg-amber-50 text-left text-xs uppercase tracking-wider text-amber-800 dark:bg-amber-950/40 dark:text-amber-300">
-                      <tr>
-                        <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
-                        <th className="px-3 py-2 text-right font-semibold">{t("colActions")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {waitlistedForTier.map((a) => (
-                        <MigrationQueueRow
-                          key={a.id}
-                          application={{
-                            id: a.id,
-                            playerName: a.playerName,
-                            sourceServer: a.sourceServer,
-                            power: a.power,
-                            contact: a.contact,
-                            gameUid: a.gameUid,
-                            desiredGuild: a.desiredGuild,
-                            createdAt: a.createdAt,
-                          }}
-                          status="waitlisted"
-                          showRemove={isServerAdmin}
-                          duplicates={duplicateMatches.get(a.id) ?? []}
-                        />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-            {acceptedForTier.length > 0 && (
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-violet-700 dark:text-violet-400">
-                  {t("acceptedHeading")}
-                </p>
-                <div className="overflow-hidden rounded-lg border border-violet-200 bg-violet-50/40 dark:border-violet-900/60 dark:bg-violet-950/20">
-                  <table className="w-full text-sm">
-                    <thead className="bg-violet-50 text-left text-xs uppercase tracking-wider text-violet-800 dark:bg-violet-950/40 dark:text-violet-300">
-                      <tr>
-                        <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
-                        <th className="px-3 py-2 text-right font-semibold">{t("colActions")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {acceptedForTier.map((a) => (
-                        <MigrationQueueRow
-                          key={a.id}
-                          application={{
-                            id: a.id,
-                            playerName: a.playerName,
-                            sourceServer: a.sourceServer,
-                            power: a.power,
-                            contact: a.contact,
-                            gameUid: a.gameUid,
-                            desiredGuild: a.desiredGuild,
-                            createdAt: a.createdAt,
-                          }}
-                          status="accepted"
-                          showRemove={isServerAdmin}
-                          duplicates={duplicateMatches.get(a.id) ?? []}
-                        />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-            {deniedForTier.length > 0 && (
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-red-700 dark:text-red-400">
-                  {t("deniedHeading")}
-                </p>
-                <div className="overflow-hidden rounded-lg border border-red-200 bg-red-50/40 dark:border-red-900/60 dark:bg-red-950/20">
-                  <table className="w-full text-sm">
-                    <thead className="bg-red-50 text-left text-xs uppercase tracking-wider text-red-800 dark:bg-red-950/40 dark:text-red-300">
-                      <tr>
-                        <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
-                        <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
-                        <th className="px-3 py-2 text-right font-semibold">{t("colActions")}</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {deniedForTier.map((a) => (
-                        <MigrationQueueRow
-                          key={a.id}
-                          application={{
-                            id: a.id,
-                            playerName: a.playerName,
-                            sourceServer: a.sourceServer,
-                            power: a.power,
-                            contact: a.contact,
-                            gameUid: a.gameUid,
-                            desiredGuild: a.desiredGuild,
-                            createdAt: a.createdAt,
-                          }}
-                          status="denied"
-                          showRemove={isServerAdmin}
-                          duplicates={duplicateMatches.get(a.id) ?? []}
-                        />
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })
-      )}
-
-      {!windowClosed && applied.length === 0 && waitlisted.length === 0 && accepted.length === 0 && denied.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400">{t("empty")}</p>
-      )}
-      {windowClosed && finalRoster.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400">{t("emptyRoster")}</p>
-      )}
+      <MigrationAdminQueue
+        rows={rows}
+        windowClosed={windowClosed}
+        tierLabel={tierLabel}
+        isServerAdmin={isServerAdmin}
+      />
     </div>
   );
 }

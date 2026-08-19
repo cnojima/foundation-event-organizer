@@ -1092,6 +1092,7 @@
     "closedNotice": "Este periodo de migración ha finalizado. No hay nada que pueda modificarse aquí; este es el registro final.",
     "accept": "Aceptar",
     "waitlist": "Lista de espera",
+    "promote": "Promover",
     "deny": "Denegar",
     "remove": "Eliminar",
     "revert": "Revertir",
@@ -1108,7 +1109,10 @@
     "errorSourceServerRequired": "Se requiere un servidor de origen.",
     "errorPower": "La potencia debe ser un número entero.",
     "errorGeneric": "Algo salió mal.",
-    "promote": "Promover"
+    "searchPlaceholderAdmin": "Buscar por nombre, servidor, clan o UID…",
+    "searchPlaceholderPublic": "Buscar por nombre o servidor…",
+    "noSearchResults": "No se encontraron aplicaciones que coincidan con su búsqueda.",
+    "matchCount": "{count} de {total}"
   },
   "migrationTrackerImport": {
     "title": "Servidor n.º {serverNumber} — Importar aplicaciones",

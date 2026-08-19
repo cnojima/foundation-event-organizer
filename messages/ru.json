@@ -1091,6 +1091,7 @@
     "closedNotice": "Окно для миграции закрыто. Никаких действий предпринимать не нужно — это окончательная запись.",
     "accept": "Принимать",
     "waitlist": "Список ожидания",
+    "promote": "Продвигать",
     "deny": "Отрицать",
     "remove": "Удалять",
     "revert": "Возвращаться",
@@ -1107,7 +1108,10 @@
     "errorSourceServerRequired": "Требуется исходный сервер.",
     "errorPower": "Мощность должна быть целым числом.",
     "errorGeneric": "Что-то пошло не так.",
-    "promote": "Продвигать"
+    "searchPlaceholderAdmin": "Поиск по имени, серверу, гильдии или UID…",
+    "searchPlaceholderPublic": "Поиск по имени или серверу…",
+    "noSearchResults": "По вашему запросу не найдено ни одного приложения.",
+    "matchCount": "{count} из {total}"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",

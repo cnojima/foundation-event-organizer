@@ -1092,6 +1092,7 @@
     "closedNotice": "Esta janela de migração foi encerrada. Nada aqui pode ser feito — este é o registro final.",
     "accept": "Aceitar",
     "waitlist": "Lista de espera",
+    "promote": "Promover",
     "deny": "Negar",
     "remove": "Remover",
     "revert": "Reverter",
@@ -1108,7 +1109,10 @@
     "errorSourceServerRequired": "É necessário um servidor de origem.",
     "errorPower": "A potência deve ser um número inteiro.",
     "errorGeneric": "Algo deu errado.",
-    "promote": "Promover"
+    "searchPlaceholderAdmin": "Pesquise por nome, servidor, guilda ou UID…",
+    "searchPlaceholderPublic": "Pesquisar por nome ou servidor…",
+    "noSearchResults": "Nenhum aplicativo corresponde à sua pesquisa.",
+    "matchCount": "{count} de {total}"
   },
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",

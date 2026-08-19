@@ -1092,6 +1092,7 @@
     "closedNotice": "Dette migreringsvinduet er avsluttet. Ingenting her er handlingsrettet – dette er den endelige registreringen.",
     "accept": "Akseptere",
     "waitlist": "Venteliste",
+    "promote": "Reklamere",
     "deny": "Benekte",
     "remove": "Fjerne",
     "revert": "Tilbakestill",
@@ -1108,7 +1109,10 @@
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
     "errorGeneric": "Noe gikk galt.",
-    "promote": "Reklamere"
+    "searchPlaceholderAdmin": "Søk etter navn, server, laug eller UID…",
+    "searchPlaceholderPublic": "Søk etter navn eller server…",
+    "noSearchResults": "Ingen applikasjoner samsvarer med søket ditt.",
+    "matchCount": "{count} av {total}"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} – Importer applikasjoner",

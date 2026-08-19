@@ -3,10 +3,10 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/page-header";
 import { DateTime } from "@/components/date-time";
 import { InfoTipIcon } from "@/components/info-tip";
-import { GameUidCell } from "@/components/migration-tracker/migration-game-uid-cell";
+import { MigrationPublicRoster, type PublicRosterRow } from "@/components/migration-tracker/migration-public-roster";
 import { db } from "@/db";
 import { migrationApplications } from "@/db/schema";
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { asc, eq } from "drizzle-orm";
 import {
   resolveActiveDestination,
   getCapacitySummary,
@@ -206,11 +206,11 @@ async function MigrationCapacityTable({ destinationId }: { destinationId: string
   );
 }
 
-// Read-only roster for the public page — same rows the admin queue shows,
-// minus contact info and the accept/waitlist/deny/remove actions. While a
-// window is open/upcoming that's applied+waitlisted grouped by tier; once
-// closed it flips to the full final roster (every status), matching the
-// admin queue's own open-vs-closed split.
+// Read-only roster for the public page — same applications the admin queue
+// shows, minus contact info, desired guild, real UID values, and every
+// review action. Search/collapsible-tier rendering lives in the client
+// component; this just fetches everything once and reshapes it, mirroring
+// the admin queue page's split (server fetches, client filters/toggles).
 async function MigrationApplicantRoster({
   destinationId,
   windowClosed,
@@ -218,7 +218,6 @@ async function MigrationApplicantRoster({
   destinationId: string;
   windowClosed: boolean;
 }) {
-  const t = await getTranslations("migrationTrackerQueue");
   const tShared = await getTranslations("migrationTracker");
   const tPage = await getTranslations("migrationTrackerPage");
   const tierLabel: Record<Tier, string> = {
@@ -228,178 +227,40 @@ async function MigrationApplicantRoster({
     low: tShared("tierLow"),
   };
   const summaryByTier = new Map(getCapacitySummary(destinationId).map((s) => [s.tier, s] as const));
+  const tierInfo = Object.fromEntries(
+    TIER_ORDER.map((tier, i) => {
+      const minPower = summaryByTier.get(tier)?.minPower ?? null;
+      const previousMinPower = summaryByTier.get(TIER_ORDER[i - 1])?.minPower ?? 0;
+      return [
+        tier,
+        {
+          label: tierLabel[tier] ?? tier,
+          tipLabel: tPage("tierLegendLabel", { tier: tierLabel[tier] ?? tier }),
+          tipContent:
+            minPower !== null
+              ? tPage("tierLegendAtLeast", { power: minPower.toLocaleString() })
+              : tPage("tierLegendBelow", { power: previousMinPower.toLocaleString() }),
+        },
+      ] as const;
+    })
+  ) as Record<Tier, { label: string; tipLabel: string; tipContent: string }>;
 
-  if (windowClosed) {
-    const finalRoster = await db
-      .select()
-      .from(migrationApplications)
-      .where(eq(migrationApplications.destinationId, destinationId))
-      .orderBy(asc(migrationApplications.tier), asc(migrationApplications.createdAt));
-
-    if (finalRoster.length === 0) {
-      return <p className="mt-6 text-gray-500 dark:text-gray-400">{t("emptyRoster")}</p>;
-    }
-
-    const statusLabel: Record<string, string> = {
-      applied: t("statusApplied"),
-      waitlisted: t("statusWaitlisted"),
-      accepted: t("statusAccepted"),
-      denied: t("statusDenied"),
-      withdrawn: t("statusWithdrawn"),
-      removed_by_admin: t("statusRemoved"),
-    };
-
-    return (
-      <div className="mt-6 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-        <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400">
-            <tr>
-              <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
-              <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-              <th className="px-3 py-2 font-semibold">{t("colTier")}</th>
-              <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
-              <th className="px-3 py-2 font-semibold">{t("colGameUid")}</th>
-              <th className="px-3 py-2 font-semibold">{t("colStatus")}</th>
-              <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {finalRoster.map((a) => (
-              <tr key={a.id} className="border-t border-gray-100 dark:border-gray-800">
-                <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">{a.playerName}</td>
-                <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.sourceServer}</td>
-                <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {tierLabel[a.tier as Tier] ?? a.tier}
-                </td>
-                <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
-                <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} hideValue />
-                </td>
-                <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-                  {statusLabel[a.status] ?? a.status}
-                </td>
-                <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
-                  {new Date(a.createdAt).toLocaleDateString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-
-  const rows = await db
+  const allApplications = await db
     .select()
     .from(migrationApplications)
-    .where(
-      and(
-        eq(migrationApplications.destinationId, destinationId),
-        inArray(migrationApplications.status, ["applied", "waitlisted"])
-      )
-    )
+    .where(eq(migrationApplications.destinationId, destinationId))
     .orderBy(asc(migrationApplications.createdAt));
 
-  const applied = rows.filter((a) => a.status === "applied");
-  const waitlisted = rows.filter((a) => a.status === "waitlisted");
+  const rows: PublicRosterRow[] = allApplications.map((a) => ({
+    id: a.id,
+    playerName: a.playerName,
+    sourceServer: a.sourceServer,
+    power: a.power,
+    tier: a.tier as Tier,
+    hasGameUid: !!a.gameUid,
+    createdAt: a.createdAt,
+    status: a.status,
+  }));
 
-  if (applied.length === 0 && waitlisted.length === 0) {
-    return <p className="mt-6 text-gray-500 dark:text-gray-400">{t("empty")}</p>;
-  }
-
-  return (
-    <div className="mt-6">
-      {TIER_ORDER.map((tier, tierIndex) => {
-        const appliedForTier = applied.filter((a) => a.tier === tier);
-        const waitlistedForTier = waitlisted.filter((a) => a.tier === tier);
-        if (appliedForTier.length === 0 && waitlistedForTier.length === 0) return null;
-
-        const minPower = summaryByTier.get(tier)?.minPower ?? null;
-        const previousMinPower = summaryByTier.get(TIER_ORDER[tierIndex - 1])?.minPower ?? 0;
-
-        return (
-          <div key={tier} className="mb-6">
-            <h2 className="mb-2 flex items-center gap-1.5 text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-              {tierLabel[tier] ?? tier}
-              <InfoTipIcon
-                label={tPage("tierLegendLabel", { tier: tierLabel[tier] ?? tier })}
-                placement="bottom"
-                content={
-                  minPower !== null
-                    ? tPage("tierLegendAtLeast", { power: minPower.toLocaleString() })
-                    : tPage("tierLegendBelow", { power: previousMinPower.toLocaleString() })
-                }
-              />
-            </h2>
-            {appliedForTier.length > 0 && (
-              <div className="mb-3 overflow-hidden rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <RosterRows t={t} rows={appliedForTier} />
-              </div>
-            )}
-            {waitlistedForTier.length > 0 && (
-              <div>
-                <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
-                  {t("waitlistHeading")}
-                </p>
-                <div className="overflow-hidden rounded-lg border border-amber-200 bg-amber-50/40 dark:border-amber-900/60 dark:bg-amber-950/20">
-                  <RosterRows t={t} rows={waitlistedForTier} amber />
-                </div>
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-type RosterApplication = {
-  id: string;
-  playerName: string;
-  sourceServer: string;
-  power: number;
-  gameUid: string | null;
-  createdAt: string;
-};
-
-function RosterRows({
-  t,
-  rows,
-  amber,
-}: {
-  t: Awaited<ReturnType<typeof getTranslations<"migrationTrackerQueue">>>;
-  rows: RosterApplication[];
-  amber?: boolean;
-}) {
-  const headClass = amber
-    ? "bg-amber-50 text-left text-xs uppercase tracking-wider text-amber-800 dark:bg-amber-950/40 dark:text-amber-300"
-    : "bg-gray-50 text-left text-xs uppercase tracking-wider text-gray-500 dark:bg-gray-900 dark:text-gray-400";
-  return (
-    <table className="w-full text-sm">
-      <thead className={headClass}>
-        <tr>
-          <th className="px-3 py-2 font-semibold">{t("colPlayer")}</th>
-          <th className="px-3 py-2 font-semibold">{t("colSourceServer")}</th>
-          <th className="px-3 py-2 font-semibold">{t("colPower")}</th>
-          <th className="px-3 py-2 font-semibold">{t("colGameUid")}</th>
-          <th className="px-3 py-2 font-semibold">{t("colApplied")}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((a) => (
-          <tr key={a.id} className="border-t border-gray-100 dark:border-gray-800">
-            <td className="px-3 py-2 font-medium text-gray-900 dark:text-gray-100">{a.playerName}</td>
-            <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.sourceServer}</td>
-            <td className="px-3 py-2 text-gray-600 dark:text-gray-400">{a.power.toLocaleString()}</td>
-            <td className="px-3 py-2 text-gray-600 dark:text-gray-400">
-              <GameUidCell gameUid={a.gameUid} missingLabel={t("missingGameUid")} hideValue />
-            </td>
-            <td className="whitespace-nowrap px-3 py-2 text-xs text-gray-500 dark:text-gray-400">
-              {new Date(a.createdAt).toLocaleDateString()}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
+  return <MigrationPublicRoster rows={rows} windowClosed={windowClosed} tierInfo={tierInfo} />;
 }

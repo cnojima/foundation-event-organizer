@@ -1088,6 +1088,7 @@
     "closedNotice": "이 마이그레이션 기간이 종료되었습니다. 더 이상 조치를 취할 수 없습니다. 이것이 최종 기록입니다.",
     "accept": "수용하다",
     "waitlist": "대기자 명단",
+    "promote": "홍보하다",
     "deny": "부인하다",
     "remove": "제거하다",
     "revert": "돌아가는 것",
@@ -1104,7 +1105,9 @@
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
     "errorGeneric": "뭔가 잘못됐어요.",
-    "promote": "홍보하다"
+    "searchPlaceholderAdmin": "이름, 서버, 길드 또는 UID로 검색하세요…",
+    "searchPlaceholderPublic": "이름 또는 서버로 검색하세요…",
+    "noSearchResults": "검색 조건에 맞는 지원서가 없습니다."
   },
   "migrationTrackerImport": {
     "title": "서버 번호 {serverNumber} — 애플리케이션 가져오기",

@@ -9,8 +9,10 @@ import {
 } from "@/db/schema";
 import { and, asc, eq, gte, inArray, ne, sql } from "drizzle-orm";
 
-export type Tier = "ultra_high" | "high" | "mid" | "low";
-export type Classification = "high" | "mid" | "low";
+import { TIER_ORDER, type Tier, type Classification } from "@/lib/migration-tracker-types";
+export { TIER_ORDER };
+export type { Tier, Classification };
+
 export type ApplicationStatus =
   | "applied"
   | "waitlisted"
@@ -18,9 +20,6 @@ export type ApplicationStatus =
   | "denied"
   | "withdrawn"
   | "removed_by_admin";
-
-// Highest to lowest — the display order used throughout the tracker UI.
-export const TIER_ORDER: Tier[] = ["ultra_high", "high", "mid", "low"];
 
 type ThresholdRow = { tier: Tier; flavorName: string; minPower: number | null };
 export type MigrationApplicationRow = typeof migrationApplications.$inferSelect;

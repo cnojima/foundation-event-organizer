@@ -1091,6 +1091,7 @@
     "closedNotice": "Bu geçiş penceresi kapandı. Burada yapılabilecek hiçbir işlem yok; bu son kayıttır.",
     "accept": "Kabul etmek",
     "waitlist": "Bekleme listesi",
+    "promote": "Terfi",
     "deny": "Reddetmek",
     "remove": "Kaldırmak",
     "revert": "Geri al",
@@ -1107,7 +1108,10 @@
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
     "errorGeneric": "Bir şeyler ters gitti.",
-    "promote": "Terfi"
+    "searchPlaceholderAdmin": "İsim, sunucu, lonca veya UID'ye göre arama yapın…",
+    "searchPlaceholderPublic": "İsim veya sunucuya göre arama yapın…",
+    "noSearchResults": "Arama kriterlerinize uyan hiçbir başvuru bulunamadı.",
+    "matchCount": "{count} / {total}"
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",
