@@ -86,6 +86,12 @@ export default async function MigrationDestinationQueuePage({
             >
               {t("importLink")}
             </Link>
+            <Link
+              href={`/admin/migration-tracker/${destination.id}/audit`}
+              className="rounded-md border border-gray-300 px-3 py-1.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
+            >
+              {t("auditLink")}
+            </Link>
             {isServerAdmin && (
               <>
                 <Link

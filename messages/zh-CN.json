@@ -1094,6 +1094,7 @@
     "remove": "消除",
     "revert": "恢复",
     "acceptedHeading": "公认",
+    "deniedHeading": "否认",
     "confirm": "确认",
     "statusApplied": "应用",
     "statusWaitlisted": "候补名单",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "需要源服务器。",
     "errorPower": "幂必须是整数。",
     "errorGeneric": "出问题了。",
-    "deniedHeading": "否认"
+    "auditLink": "审计日志"
   },
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",
@@ -1186,5 +1187,23 @@
     "errorCloseAfterOpen": "截止日期必须晚于开放日期。",
     "errorGeneric": "出错了，请重试。",
     "backToOverview": "← 返回迁移跟踪器"
+  },
+  "migrationTrackerAudit": {
+    "title": "服务器 # {serverNumber} — 审计日志",
+    "desc": "在此迁移窗口期内，所有状态变更操作（按最新情况排序）——申请决定、官员变更和设置编辑。",
+    "searchLabel": "搜索行动者或目标",
+    "actionLabel": "行动",
+    "allActions": "全部",
+    "filter": "筛选",
+    "clear": "清除",
+    "noEntries": "没有匹配的审计条目。",
+    "colWhen": "什么时候",
+    "colActor": "演员",
+    "colAction": "行动",
+    "colTarget": "目标",
+    "pagination": "第{page} ，共{totalPages}页 · 共{total}篇文章",
+    "previous": "← 上一页",
+    "next": "下一页 →",
+    "diff": "细节"
   }
 }

@@ -1095,6 +1095,7 @@
     "remove": "Remover",
     "revert": "Reverter",
     "acceptedHeading": "Aceito",
+    "deniedHeading": "Negado",
     "confirm": "Confirmar",
     "statusApplied": "Aplicado",
     "statusWaitlisted": "Lista de espera",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "É necessário um servidor de origem.",
     "errorPower": "A potência deve ser um número inteiro.",
     "errorGeneric": "Algo deu errado.",
-    "deniedHeading": "Negado"
+    "auditLink": "Registro de auditoria"
   },
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",
@@ -1187,5 +1188,23 @@
     "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
     "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
     "backToOverview": "← Voltar ao Rastreador de Migração"
+  },
+  "migrationTrackerAudit": {
+    "title": "Servidor nº {serverNumber} — Log de auditoria",
+    "desc": "Todas as ações que alteram o estado do sistema durante esta janela de migração, da mais recente para a mais antiga — decisões sobre aplicativos, alterações de responsáveis e edições de configurações.",
+    "searchLabel": "Pesquisar ator ou alvo",
+    "actionLabel": "Ação",
+    "allActions": "Todos",
+    "filter": "Filtro",
+    "clear": "Claro",
+    "noEntries": "Nenhuma das entradas de auditoria corresponde.",
+    "colWhen": "Quando",
+    "colActor": "Ator",
+    "colAction": "Ação",
+    "colTarget": "Alvo",
+    "pagination": "Página {page} de {totalPages} · {total} entradas",
+    "previous": "← Anterior",
+    "next": "Próximo →",
+    "diff": "Detalhes"
   }
 }

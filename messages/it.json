@@ -1094,6 +1094,7 @@
     "remove": "Rimuovere",
     "revert": "Ripristina",
     "acceptedHeading": "Accettato",
+    "deniedHeading": "Negato",
     "confirm": "Confermare",
     "statusApplied": "Applicato",
     "statusWaitlisted": "In lista d'attesa",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "È necessario un server sorgente.",
     "errorPower": "La potenza deve essere un numero intero.",
     "errorGeneric": "Qualcosa è andato storto.",
-    "deniedHeading": "Negato"
+    "auditLink": "registro di controllo"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importa applicazioni",
@@ -1186,5 +1187,23 @@
     "errorCloseAfterOpen": "La data di chiusura deve essere successiva alla data di apertura.",
     "errorGeneric": "Si è verificato un errore. Riprova.",
     "backToOverview": "← Torna al Migration Tracker"
+  },
+  "migrationTrackerAudit": {
+    "title": "Server n. {serverNumber} — Registro di controllo",
+    "desc": "Tutte le azioni che modificano lo stato per questa finestra di migrazione, dalla più recente alla meno recente: decisioni sulle applicazioni, cambi di responsabile e modifiche alle impostazioni.",
+    "searchLabel": "Cerca attore o bersaglio",
+    "actionLabel": "Azione",
+    "allActions": "Tutto",
+    "filter": "Filtro",
+    "clear": "Chiaro",
+    "noEntries": "Nessuna voce di audit corrisponde.",
+    "colWhen": "Quando",
+    "colActor": "Attore",
+    "colAction": "Azione",
+    "colTarget": "Bersaglio",
+    "pagination": "Pagina {page} di {totalPages} · {total} voci",
+    "previous": "← Precedente",
+    "next": "Avanti →",
+    "diff": "Dettagli"
   }
 }

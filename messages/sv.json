@@ -1095,6 +1095,7 @@
     "remove": "Ta bort",
     "revert": "Återgå",
     "acceptedHeading": "Accepterad",
+    "deniedHeading": "Nekad",
     "confirm": "Bekräfta",
     "statusApplied": "Tillämpad",
     "statusWaitlisted": "Väntelistad",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
     "errorGeneric": "Något gick fel.",
-    "deniedHeading": "Nekad"
+    "auditLink": "Granskningslogg"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",
@@ -1187,5 +1188,23 @@
     "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
     "errorGeneric": "Något gick fel. Försök igen.",
     "backToOverview": "← Tillbaka till Migrationsspåraren"
+  },
+  "migrationTrackerAudit": {
+    "title": "Server # {serverNumber} — Granskningslogg",
+    "desc": "Varje tillståndsändringsåtgärd för detta migreringsfönster, nyaste först – applikationsbeslut, ändringar av handläggare och inställningsredigeringar.",
+    "searchLabel": "Sök aktör eller mål",
+    "actionLabel": "Handling",
+    "allActions": "Alla",
+    "filter": "Filtrera",
+    "clear": "Rensa",
+    "noEntries": "Inga matchande revisionsposter.",
+    "colWhen": "När",
+    "colActor": "Skådespelare",
+    "colAction": "Handling",
+    "colTarget": "Mål",
+    "pagination": "Sida {page} av {totalPages} · {total} inlägg",
+    "previous": "← Föregående",
+    "next": "Nästa →",
+    "diff": "Detaljer"
   }
 }

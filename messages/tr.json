@@ -1094,6 +1094,7 @@
     "remove": "Kaldırmak",
     "revert": "Geri al",
     "acceptedHeading": "Kabul edildi",
+    "deniedHeading": "Reddedildi",
     "confirm": "Onaylamak",
     "statusApplied": "Uygulandı",
     "statusWaitlisted": "Bekleme listesinde",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
     "errorGeneric": "Bir şeyler ters gitti.",
-    "deniedHeading": "Reddedildi"
+    "auditLink": "Denetim günlüğü"
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",
@@ -1186,5 +1187,23 @@
     "errorCloseAfterOpen": "Kapanış tarihi, açılış tarihinden sonra olmalıdır.",
     "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
     "backToOverview": "← Göç Takip Aracına Geri Dön"
+  },
+  "migrationTrackerAudit": {
+    "title": "Sunucu # {serverNumber} — Denetim günlüğü",
+    "desc": "Bu geçiş penceresi için durum değiştiren tüm işlemler, en yeniden başlayarak; uygulama kararları, yetkili değişiklikleri ve ayar düzenlemeleri.",
+    "searchLabel": "Oyuncu veya hedef ara",
+    "actionLabel": "Aksiyon",
+    "allActions": "Tüm",
+    "filter": "Filtrele",
+    "clear": "Temizlemek",
+    "noEntries": "Hiçbir denetim kaydı eşleşmiyor.",
+    "colWhen": "Ne zaman",
+    "colActor": "Aktör",
+    "colAction": "Aksiyon",
+    "colTarget": "Hedef",
+    "pagination": "Sayfa {page} / {totalPages} · {total} giriş",
+    "previous": "← Önceki",
+    "next": "Sonraki →",
+    "diff": "Detaylar"
   }
 }
