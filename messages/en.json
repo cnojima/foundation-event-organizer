@@ -1067,6 +1067,7 @@
   "migrationTrackerQueue": {
     "title": "Server #{serverNumber} — Review queue",
     "importLink": "Import",
+    "auditLink": "Audit log",
     "officersLink": "Officers",
     "settingsLink": "Settings",
     "left": "{count} left",
@@ -1172,6 +1173,24 @@
     "errorAllocation": "Each cap must be a non-negative number.",
     "errorThreshold": "Each threshold must be a number, or blank for no minimum.",
     "errorGeneric": "Something went wrong."
+  },
+  "migrationTrackerAudit": {
+    "title": "Server #{serverNumber} — Audit log",
+    "desc": "Every state-changing action for this migration window, newest first — application decisions, officer changes, and settings edits.",
+    "searchLabel": "Search actor or target",
+    "actionLabel": "Action",
+    "allActions": "All",
+    "filter": "Filter",
+    "clear": "Clear",
+    "noEntries": "No audit entries match.",
+    "colWhen": "When",
+    "colActor": "Actor",
+    "colAction": "Action",
+    "colTarget": "Target",
+    "pagination": "Page {page} of {totalPages} · {total} entries",
+    "previous": "← Previous",
+    "next": "Next →",
+    "diff": "Details"
   },
   "migrationTrackerCreate": {
     "title": "New migration window",

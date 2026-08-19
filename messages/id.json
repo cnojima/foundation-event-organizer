@@ -1093,6 +1093,7 @@
     "remove": "Menghapus",
     "revert": "Kembali",
     "acceptedHeading": "Diterima",
+    "deniedHeading": "Ditolak",
     "confirm": "Mengonfirmasi",
     "statusApplied": "Terapan",
     "statusWaitlisted": "Masuk daftar tunggu",
@@ -1104,7 +1105,7 @@
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
     "errorGeneric": "Terjadi kesalahan.",
-    "deniedHeading": "Ditolak"
+    "auditLink": "Catatan audit"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",
@@ -1185,5 +1186,23 @@
     "errorCloseAfterOpen": "Tanggal penutupan harus setelah tanggal pembukaan.",
     "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
     "backToOverview": "← Kembali ke Pelacak Migrasi"
+  },
+  "migrationTrackerAudit": {
+    "title": "Server # {serverNumber} — Log audit",
+    "desc": "Semua tindakan yang mengubah status selama periode migrasi ini, dari yang terbaru terlebih dahulu — keputusan aplikasi, perubahan petugas, dan pengeditan pengaturan.",
+    "searchLabel": "Cari aktor atau target",
+    "actionLabel": "Tindakan",
+    "allActions": "Semua",
+    "filter": "Menyaring",
+    "clear": "Jernih",
+    "noEntries": "Tidak ada entri audit yang cocok.",
+    "colWhen": "Kapan",
+    "colActor": "Aktor",
+    "colAction": "Tindakan",
+    "colTarget": "Target",
+    "pagination": "Halaman {page} dari {totalPages} · {total} entri",
+    "previous": "← Sebelumnya",
+    "next": "Selanjutnya →",
+    "diff": "Detail"
   }
 }

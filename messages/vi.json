@@ -1093,6 +1093,7 @@
     "remove": "Di dời",
     "revert": "Hoàn tác",
     "acceptedHeading": "Đã được chấp nhận",
+    "deniedHeading": "Từ chối",
     "confirm": "Xác nhận",
     "statusApplied": "Đã áp dụng",
     "statusWaitlisted": "Danh sách chờ",
@@ -1104,7 +1105,7 @@
     "errorSourceServerRequired": "Cần có máy chủ nguồn.",
     "errorPower": "Lũy thừa phải là số nguyên.",
     "errorGeneric": "Đã xảy ra lỗi.",
-    "deniedHeading": "Từ chối"
+    "auditLink": "nhật ký kiểm toán"
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",
@@ -1185,5 +1186,23 @@
     "errorCloseAfterOpen": "Ngày đóng cửa phải sau ngày mở cửa.",
     "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
     "backToOverview": "← Quay lại Trình theo dõi di cư"
+  },
+  "migrationTrackerAudit": {
+    "title": "Máy chủ # {serverNumber} — Nhật ký kiểm toán",
+    "desc": "Mọi hành động thay đổi trạng thái trong khoảng thời gian chuyển đổi này, được liệt kê mới nhất trước tiên — quyết định ứng dụng, thay đổi cán bộ và chỉnh sửa cài đặt.",
+    "searchLabel": "Tìm kiếm diễn viên hoặc mục tiêu",
+    "actionLabel": "Hoạt động",
+    "allActions": "Tất cả",
+    "filter": "Lọc",
+    "clear": "Thông thoáng",
+    "noEntries": "Không có mục kiểm toán nào khớp.",
+    "colWhen": "Khi",
+    "colActor": "Diễn viên",
+    "colAction": "Hoạt động",
+    "colTarget": "Mục tiêu",
+    "pagination": "Trang {page} trong tổng số {totalPages} · {total} mục",
+    "previous": "← Trước đó",
+    "next": "Tiếp theo →",
+    "diff": "Chi tiết"
   }
 }

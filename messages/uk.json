@@ -1095,6 +1095,7 @@
     "remove": "Видалити",
     "revert": "Повернути",
     "acceptedHeading": "Прийнято",
+    "deniedHeading": "Відмовлено",
     "confirm": "Підтвердити",
     "statusApplied": "Застосовано",
     "statusWaitlisted": "Список очікування",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
     "errorGeneric": "Щось пішло не так.",
-    "deniedHeading": "Відмовлено"
+    "auditLink": "Журнал аудиту"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",
@@ -1187,5 +1188,23 @@
     "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
     "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
     "backToOverview": "← Назад до Відстеження міграції"
+  },
+  "migrationTrackerAudit": {
+    "title": "Сервер № {serverNumber} — Журнал аудиту",
+    "desc": "Кожна дія, що змінює стан для цього вікна міграції, починаючи від найновіших — рішення щодо заявок, зміни співробітників та редагування налаштувань.",
+    "searchLabel": "Пошук актора або цільової аудиторії",
+    "actionLabel": "Дія",
+    "allActions": "Усі",
+    "filter": "Фільтр",
+    "clear": "Очистити",
+    "noEntries": "Немає збігів записів аудиту.",
+    "colWhen": "Коли",
+    "colActor": "Актор",
+    "colAction": "Дія",
+    "colTarget": "Ціль",
+    "pagination": "Сторінка {page} з {totalPages} · {total} записів",
+    "previous": "← Попередній",
+    "next": "Далі →",
+    "diff": "Деталі"
   }
 }

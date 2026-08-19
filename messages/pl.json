@@ -1094,6 +1094,7 @@
     "remove": "Usunąć",
     "revert": "Odwracać",
     "acceptedHeading": "Przyjęty",
+    "deniedHeading": "Zaprzeczony",
     "confirm": "Potwierdzać",
     "statusApplied": "Stosowany",
     "statusWaitlisted": "Na liście oczekujących",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
     "errorPower": "Moc musi być liczbą całkowitą.",
     "errorGeneric": "Coś poszło nie tak.",
-    "deniedHeading": "Zaprzeczony"
+    "auditLink": "Dziennik audytu"
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",
@@ -1186,5 +1187,23 @@
     "errorCloseAfterOpen": "Data zamknięcia musi być późniejsza niż data otwarcia.",
     "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
     "backToOverview": "← Powrót do narzędzia do śledzenia migracji"
+  },
+  "migrationTrackerAudit": {
+    "title": "Serwer nr {serverNumber} — dziennik audytu",
+    "desc": "Każda akcja zmieniająca stan w tym oknie migracji, najnowsze na początku — decyzje dotyczące aplikacji, zmiany urzędników i edycje ustawień.",
+    "searchLabel": "Wyszukaj aktora lub cel",
+    "actionLabel": "Działanie",
+    "allActions": "Wszystko",
+    "filter": "Filtr",
+    "clear": "Jasne",
+    "noEntries": "Brak pasujących wpisów audytu.",
+    "colWhen": "Gdy",
+    "colActor": "Aktor",
+    "colAction": "Działanie",
+    "colTarget": "Cel",
+    "pagination": "Strona {page} z {totalPages} · {total} wpisów",
+    "previous": "← Poprzedni",
+    "next": "Dalej →",
+    "diff": "Bliższe dane"
   }
 }

@@ -1091,6 +1091,7 @@
     "remove": "제거하다",
     "revert": "돌아가는 것",
     "acceptedHeading": "수락됨",
+    "deniedHeading": "거부됨",
     "confirm": "확인하다",
     "statusApplied": "적용된",
     "statusWaitlisted": "대기자 명단에 올랐습니다",
@@ -1102,7 +1103,7 @@
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
     "errorGeneric": "뭔가 잘못됐어요.",
-    "deniedHeading": "거부됨"
+    "auditLink": "감사 로그"
   },
   "migrationTrackerImport": {
     "title": "서버 번호 {serverNumber} — 애플리케이션 가져오기",
@@ -1183,5 +1184,23 @@
     "errorCloseAfterOpen": "마감일은 개시일 이후여야 합니다.",
     "errorGeneric": "오류가 발생했습니다. 다시 시도해 주세요.",
     "backToOverview": "← 마이그레이션 추적기로 돌아가기"
+  },
+  "migrationTrackerAudit": {
+    "title": "서버 번호 {serverNumber} — 감사 로그",
+    "desc": "이번 마이그레이션 기간 동안 발생한 모든 상태 변경 작업(최신순) - 신청 승인, 담당자 변경 및 설정 수정.",
+    "searchLabel": "행위자 또는 대상을 검색하세요",
+    "actionLabel": "행동",
+    "allActions": "모두",
+    "filter": "필터",
+    "clear": "분명한",
+    "noEntries": "일치하는 감사 항목이 없습니다.",
+    "colWhen": "언제",
+    "colActor": "배우",
+    "colAction": "행동",
+    "colTarget": "목표",
+    "pagination": "페이지 {page} / {totalPages} · 총 항목 수 {total} 개",
+    "previous": "← 이전",
+    "next": "다음 →",
+    "diff": "세부"
   }
 }

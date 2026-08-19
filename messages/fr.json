@@ -1094,6 +1094,7 @@
     "remove": "Retirer",
     "revert": "Revenir",
     "acceptedHeading": "Accepté",
+    "deniedHeading": "Refusé",
     "confirm": "Confirmer",
     "statusApplied": "Appliqué",
     "statusWaitlisted": "Liste d'attente",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "Le serveur source est requis.",
     "errorPower": "La puissance doit être un nombre entier.",
     "errorGeneric": "Quelque chose a mal fonctionné.",
-    "deniedHeading": "Refusé"
+    "auditLink": "Journal d'audit"
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
@@ -1186,5 +1187,23 @@
     "errorCloseAfterOpen": "La date de clôture doit être postérieure à la date d'ouverture.",
     "errorGeneric": "Une erreur s'est produite. Veuillez réessayer.",
     "backToOverview": "← Retour au Suivi des migrations"
+  },
+  "migrationTrackerAudit": {
+    "title": "Serveur n° {serverNumber} — Journal d'audit",
+    "desc": "Toutes les actions modifiant l'état pour cette fenêtre de migration, de la plus récente à la plus ancienne : décisions relatives aux candidatures, changements de responsables et modifications des paramètres.",
+    "searchLabel": "Acteur ou cible de recherche",
+    "actionLabel": "Action",
+    "allActions": "Tous",
+    "filter": "Filtre",
+    "clear": "Clair",
+    "noEntries": "Aucune entrée d'audit ne correspond.",
+    "colWhen": "Quand",
+    "colActor": "Acteur",
+    "colAction": "Action",
+    "colTarget": "Cible",
+    "pagination": "Page {page} sur {totalPages} · {total} entrées",
+    "previous": "← Précédent",
+    "next": "Suivant →",
+    "diff": "Détails"
   }
 }

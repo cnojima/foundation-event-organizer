@@ -1094,6 +1094,7 @@
     "remove": "取り除く",
     "revert": "元に戻す",
     "acceptedHeading": "承認済み",
+    "deniedHeading": "拒否されました",
     "confirm": "確認する",
     "statusApplied": "適用済み",
     "statusWaitlisted": "ウェイティングリスト",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "ソースサーバーが必要です。",
     "errorPower": "べき乗は整数でなければならない。",
     "errorGeneric": "何かがおかしくなりました。",
-    "deniedHeading": "拒否されました"
+    "auditLink": "監査ログ"
   },
   "migrationTrackerImport": {
     "title": "サーバー番号{serverNumber} — アプリケーションのインポート",
@@ -1186,5 +1187,23 @@
     "errorCloseAfterOpen": "締め切り日は開始日以降でなければなりません。",
     "errorGeneric": "エラーが発生しました。もう一度お試しください。",
     "backToOverview": "← マイグレーショントラッカーに戻る"
+  },
+  "migrationTrackerAudit": {
+    "title": "サーバー番号{serverNumber} — 監査ログ",
+    "desc": "この移行期間中に行われたすべての状態変更アクション（申請決定、担当者変更、設定編集など）を、新しい順に掲載します。",
+    "searchLabel": "犯人または対象者を検索",
+    "actionLabel": "アクション",
+    "allActions": "全て",
+    "filter": "フィルター",
+    "clear": "クリア",
+    "noEntries": "一致する監査記録はありません。",
+    "colWhen": "いつ",
+    "colActor": "俳優",
+    "colAction": "アクション",
+    "colTarget": "ターゲット",
+    "pagination": "{totalPages}ページ中{page}ページ · {total}件のエントリー",
+    "previous": "← 前へ",
+    "next": "次へ →",
+    "diff": "詳細"
   }
 }

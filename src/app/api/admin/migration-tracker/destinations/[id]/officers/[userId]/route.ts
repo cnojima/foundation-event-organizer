@@ -40,6 +40,7 @@ export async function DELETE(
     entityType: "migration_officer",
     entityId: userId,
     entityLabel: targetUser?.inGameName ?? targetUser?.name ?? targetUser?.username ?? userId,
+    changes: { destinationId: id },
   });
 
   return NextResponse.json({ success: true });

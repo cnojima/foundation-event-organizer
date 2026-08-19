@@ -1095,6 +1095,7 @@
     "remove": "Fjerne",
     "revert": "Tilbakestill",
     "acceptedHeading": "Godkjent",
+    "deniedHeading": "Avvist",
     "confirm": "Bekrefte",
     "statusApplied": "Anvendt",
     "statusWaitlisted": "Venteliste",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
     "errorGeneric": "Noe gikk galt.",
-    "deniedHeading": "Avvist"
+    "auditLink": "Revisjonslogg"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} – Importer applikasjoner",
@@ -1187,5 +1188,23 @@
     "errorCloseAfterOpen": "Stengningsdatoen må være etter åpningsdatoen.",
     "errorGeneric": "Noe gikk galt. Prøv igjen.",
     "backToOverview": "← Tilbake til migrasjonssporing"
+  },
+  "migrationTrackerAudit": {
+    "title": "Server # {serverNumber} – Revisjonslogg",
+    "desc": "Alle handlinger som endrer tilstand for dette migreringsvinduet, nyeste først – søknadsvedtak, endringer av offiserer og redigeringer av innstillinger.",
+    "searchLabel": "Søk etter aktør eller mål",
+    "actionLabel": "Handling",
+    "allActions": "Alle",
+    "filter": "Filter",
+    "clear": "Klar",
+    "noEntries": "Ingen samsvarende revisjonsoppføringer.",
+    "colWhen": "Når",
+    "colActor": "Skuespiller",
+    "colAction": "Handling",
+    "colTarget": "Mål",
+    "pagination": "Side {page} av {totalPages} · {total} oppføringer",
+    "previous": "← Forrige",
+    "next": "Neste →",
+    "diff": "Detaljer"
   }
 }

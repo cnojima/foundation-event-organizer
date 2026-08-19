@@ -1093,6 +1093,7 @@
     "remove": "Entfernen",
     "revert": "Zurücksetzen",
     "acceptedHeading": "Akzeptiert",
+    "deniedHeading": "Bestritten",
     "confirm": "Bestätigen",
     "statusApplied": "Angewandt",
     "statusWaitlisted": "Auf der Warteliste",
@@ -1104,7 +1105,7 @@
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
     "errorPower": "Der Exponent muss eine ganze Zahl sein.",
     "errorGeneric": "Etwas ist schiefgelaufen.",
-    "deniedHeading": "Bestritten"
+    "auditLink": "Audit-Protokoll"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Anwendungen importieren",
@@ -1185,5 +1186,23 @@
     "errorCloseAfterOpen": "Das Schließungsdatum muss nach dem Eröffnungsdatum liegen.",
     "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
     "backToOverview": "← Zurück zum Migrations-Tracker"
+  },
+  "migrationTrackerAudit": {
+    "title": "Server # {serverNumber} — Audit-Protokoll",
+    "desc": "Alle Statusänderungen während dieses Migrationszeitraums, die neuesten zuerst – Anwendungsentscheidungen, Offizierswechsel und Einstellungsänderungen.",
+    "searchLabel": "Akteur oder Ziel suchen",
+    "actionLabel": "Aktion",
+    "allActions": "Alle",
+    "filter": "Filter",
+    "clear": "Klar",
+    "noEntries": "Es gibt keine übereinstimmenden Prüfeinträge.",
+    "colWhen": "Wann",
+    "colActor": "Schauspieler",
+    "colAction": "Aktion",
+    "colTarget": "Ziel",
+    "pagination": "Seite {page} von {totalPages} · {total} Einträge",
+    "previous": "← Zurück",
+    "next": "Weiter →",
+    "diff": "Details"
   }
 }

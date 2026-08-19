@@ -1095,6 +1095,7 @@
     "remove": "Eliminar",
     "revert": "Revertir",
     "acceptedHeading": "Aceptado",
+    "deniedHeading": "Denegado",
     "confirm": "Confirmar",
     "statusApplied": "Aplicado",
     "statusWaitlisted": "Lista de espera",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Se requiere un servidor de origen.",
     "errorPower": "La potencia debe ser un número entero.",
     "errorGeneric": "Algo salió mal.",
-    "deniedHeading": "Denegado"
+    "auditLink": "Registro de auditoría"
   },
   "migrationTrackerImport": {
     "title": "Servidor n.º {serverNumber} — Importar aplicaciones",
@@ -1187,5 +1188,23 @@
     "errorCloseAfterOpen": "La fecha de cierre debe ser posterior a la fecha de apertura.",
     "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
     "backToOverview": "← Volver al Rastreador de migraciones"
+  },
+  "migrationTrackerAudit": {
+    "title": "Servidor n.° {serverNumber} — Registro de auditoría",
+    "desc": "Todas las acciones que modifican el estado durante este período de migración, las más recientes primero: decisiones sobre la aplicación, cambios de oficiales y ediciones de configuración.",
+    "searchLabel": "Actor o objetivo de búsqueda",
+    "actionLabel": "Acción",
+    "allActions": "Todo",
+    "filter": "Filtrar",
+    "clear": "Claro",
+    "noEntries": "No se encontraron coincidencias en los asientos de auditoría.",
+    "colWhen": "Cuando",
+    "colActor": "Actor",
+    "colAction": "Acción",
+    "colTarget": "Objetivo",
+    "pagination": "Página {page} de {totalPages} · {total} entradas",
+    "previous": "← Anterior",
+    "next": "Siguiente →",
+    "diff": "Detalles"
   }
 }

@@ -76,6 +76,7 @@ export async function POST(
     entityType: "migration_officer",
     entityId: body.userId,
     entityLabel: targetUser.inGameName ?? targetUser.name ?? targetUser.username ?? body.userId,
+    changes: { destinationId: id },
   });
 
   return NextResponse.json({ success: true }, { status: 201 });

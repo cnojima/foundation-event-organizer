@@ -1094,6 +1094,7 @@
     "remove": "Удалять",
     "revert": "Возвращаться",
     "acceptedHeading": "Принял",
+    "deniedHeading": "Отклонен",
     "confirm": "Подтверждать",
     "statusApplied": "Применяемый",
     "statusWaitlisted": "В списке ожидания",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "Требуется исходный сервер.",
     "errorPower": "Мощность должна быть целым числом.",
     "errorGeneric": "Что-то пошло не так.",
-    "deniedHeading": "Отклонен"
+    "auditLink": "Журнал аудита"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",
@@ -1186,5 +1187,23 @@
     "errorCloseAfterOpen": "Дата закрытия должна быть после даты открытия.",
     "errorGeneric": "Произошла ошибка. Пожалуйста, попробуйте еще раз.",
     "backToOverview": "← Назад к трекеру миграции"
+  },
+  "migrationTrackerAudit": {
+    "title": "Сервер № {serverNumber} — Журнал аудита",
+    "desc": "Все действия, изменяющие состояние в течение этого периода миграции, от самых новых к самым новым — решения по заявкам, изменения в составе сотрудников и редактирование настроек.",
+    "searchLabel": "Поиск актора или цели",
+    "actionLabel": "Действие",
+    "allActions": "Все",
+    "filter": "Фильтр",
+    "clear": "Прозрачный",
+    "noEntries": "Ни одна из записей аудита не совпадает.",
+    "colWhen": "Когда",
+    "colActor": "Актер",
+    "colAction": "Действие",
+    "colTarget": "Цель",
+    "pagination": "Страница {page} из {totalPages} · {total} записей",
+    "previous": "← Предыдущая",
+    "next": "Далее →",
+    "diff": "Подробности"
   }
 }
