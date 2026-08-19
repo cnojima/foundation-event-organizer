@@ -130,7 +130,7 @@ export function MigrationQueueRow({
     router.refresh();
   }
 
-  async function act(action: "accept" | "deny" | "waitlist" | "remove" | "revert") {
+  async function act(action: "accept" | "deny" | "waitlist" | "remove" | "revert" | "promote") {
     setError(null);
     setSubmitting(action);
     const res = await fetch(
@@ -231,15 +231,26 @@ export function MigrationQueueRow({
                 {t("accept")}
               </button>
             )}
-            {status !== "denied" && (
+            {status === "waitlisted" ? (
               <button
                 type="button"
-                onClick={() => act("waitlist")}
+                onClick={() => act("promote")}
                 disabled={!!submitting}
                 className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-900 hover:bg-amber-100 disabled:opacity-50 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200 dark:hover:bg-amber-900/50"
               >
-                {t("waitlist")}
+                {t("promote")}
               </button>
+            ) : (
+              status !== "denied" && (
+                <button
+                  type="button"
+                  onClick={() => act("waitlist")}
+                  disabled={!!submitting}
+                  className="rounded-md border border-amber-300 bg-amber-50 px-2 py-1 text-xs font-semibold text-amber-900 hover:bg-amber-100 disabled:opacity-50 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-200 dark:hover:bg-amber-900/50"
+                >
+                  {t("waitlist")}
+                </button>
+              )
             )}
             {status !== "denied" && (
               <button

@@ -1067,6 +1067,7 @@
   "migrationTrackerQueue": {
     "title": "Server # {serverNumber} – Gjennomgangskø",
     "importLink": "Import",
+    "auditLink": "Revisjonslogg",
     "officersLink": "Offiserer",
     "settingsLink": "Innstillinger",
     "left": "{count} igjen",
@@ -1107,7 +1108,7 @@
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
     "errorGeneric": "Noe gikk galt.",
-    "auditLink": "Revisjonslogg"
+    "promote": "Reklamere"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} – Importer applikasjoner",
@@ -1174,21 +1175,6 @@
     "errorThreshold": "Hver terskel må være et tall, eller være tom hvis det ikke er noe minimum.",
     "errorGeneric": "Noe gikk galt."
   },
-  "migrationTrackerCreate": {
-    "title": "Nytt migreringsvindu",
-    "subtitle": "Åpner sporing for en server. Blokkeres hvis serveren allerede har et åpent eller kommende vindu.",
-    "serverNumberLabel": "Servernummer",
-    "classificationLabel": "Klassifikasjon",
-    "opensAtLabel": "Åpner kl.",
-    "closesAtLabel": "Stenger kl.",
-    "submitButton": "Åpne vinduet",
-    "errorServerNumber": "Servernummeret må være mellom 1001 og 9999.",
-    "errorClassificationRequired": "Velg en klassifisering.",
-    "errorDatesRequired": "Begge datoene er obligatoriske.",
-    "errorCloseAfterOpen": "Stengningsdatoen må være etter åpningsdatoen.",
-    "errorGeneric": "Noe gikk galt. Prøv igjen.",
-    "backToOverview": "← Tilbake til migrasjonssporing"
-  },
   "migrationTrackerAudit": {
     "title": "Server # {serverNumber} – Revisjonslogg",
     "desc": "Alle handlinger som endrer tilstand for dette migreringsvinduet, nyeste først – søknadsvedtak, endringer av offiserer og redigeringer av innstillinger.",
@@ -1206,5 +1192,20 @@
     "previous": "← Forrige",
     "next": "Neste →",
     "diff": "Detaljer"
+  },
+  "migrationTrackerCreate": {
+    "title": "Nytt migreringsvindu",
+    "subtitle": "Åpner sporing for en server. Blokkeres hvis serveren allerede har et åpent eller kommende vindu.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Klassifikasjon",
+    "opensAtLabel": "Åpner kl.",
+    "closesAtLabel": "Stenger kl.",
+    "submitButton": "Åpne vinduet",
+    "errorServerNumber": "Servernummeret må være mellom 1001 og 9999.",
+    "errorClassificationRequired": "Velg en klassifisering.",
+    "errorDatesRequired": "Begge datoene er obligatoriske.",
+    "errorCloseAfterOpen": "Stengningsdatoen må være etter åpningsdatoen.",
+    "errorGeneric": "Noe gikk galt. Prøv igjen.",
+    "backToOverview": "← Tilbake til migrasjonssporing"
   }
 }

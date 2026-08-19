@@ -1,7 +1,7 @@
 {
   "sourceLocale": "en",
   "targetLocale": "nl",
-  "translatedAt": "2026-08-19T17:35:22.984Z",
+  "translatedAt": "2026-08-19T18:48:12.564Z",
   "sourceSnapshot": {
     "common.save": "Save",
     "common.saving": "Saving…",
@@ -917,6 +917,7 @@
     "migrationTrackerQueue.closedNotice": "This migration window has closed. Nothing here is actionable — this is the final record.",
     "migrationTrackerQueue.accept": "Accept",
     "migrationTrackerQueue.waitlist": "Waitlist",
+    "migrationTrackerQueue.promote": "Promote",
     "migrationTrackerQueue.deny": "Deny",
     "migrationTrackerQueue.remove": "Remove",
     "migrationTrackerQueue.revert": "Revert",

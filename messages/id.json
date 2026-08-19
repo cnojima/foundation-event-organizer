@@ -1065,6 +1065,7 @@
   "migrationTrackerQueue": {
     "title": "Server # {serverNumber} — Antrian tinjauan",
     "importLink": "Impor",
+    "auditLink": "Catatan audit",
     "officersLink": "Petugas",
     "settingsLink": "Pengaturan",
     "left": "{count} tersisa",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
     "errorGeneric": "Terjadi kesalahan.",
-    "auditLink": "Catatan audit"
+    "promote": "Mendorong"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",
@@ -1172,21 +1173,6 @@
     "errorThreshold": "Setiap ambang batas harus berupa angka, atau kosong jika tidak ada nilai minimum.",
     "errorGeneric": "Terjadi kesalahan."
   },
-  "migrationTrackerCreate": {
-    "title": "Jendela migrasi baru",
-    "subtitle": "Membuka pelacakan untuk sebuah server. Diblokir jika server tersebut sudah memiliki jendela yang terbuka atau akan datang.",
-    "serverNumberLabel": "Nomor server",
-    "classificationLabel": "Klasifikasi",
-    "opensAtLabel": "Buka pada",
-    "closesAtLabel": "Tutup pada pukul",
-    "submitButton": "Buka jendela",
-    "errorServerNumber": "Nomor server harus berada di antara 1001 dan 9999.",
-    "errorClassificationRequired": "Pilih klasifikasi.",
-    "errorDatesRequired": "Kedua tanggal tersebut wajib diisi.",
-    "errorCloseAfterOpen": "Tanggal penutupan harus setelah tanggal pembukaan.",
-    "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
-    "backToOverview": "← Kembali ke Pelacak Migrasi"
-  },
   "migrationTrackerAudit": {
     "title": "Server # {serverNumber} — Log audit",
     "desc": "Semua tindakan yang mengubah status selama periode migrasi ini, dari yang terbaru terlebih dahulu — keputusan aplikasi, perubahan petugas, dan pengeditan pengaturan.",
@@ -1204,5 +1190,20 @@
     "previous": "← Sebelumnya",
     "next": "Selanjutnya →",
     "diff": "Detail"
+  },
+  "migrationTrackerCreate": {
+    "title": "Jendela migrasi baru",
+    "subtitle": "Membuka pelacakan untuk sebuah server. Diblokir jika server tersebut sudah memiliki jendela yang terbuka atau akan datang.",
+    "serverNumberLabel": "Nomor server",
+    "classificationLabel": "Klasifikasi",
+    "opensAtLabel": "Buka pada",
+    "closesAtLabel": "Tutup pada pukul",
+    "submitButton": "Buka jendela",
+    "errorServerNumber": "Nomor server harus berada di antara 1001 dan 9999.",
+    "errorClassificationRequired": "Pilih klasifikasi.",
+    "errorDatesRequired": "Kedua tanggal tersebut wajib diisi.",
+    "errorCloseAfterOpen": "Tanggal penutupan harus setelah tanggal pembukaan.",
+    "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
+    "backToOverview": "← Kembali ke Pelacak Migrasi"
   }
 }

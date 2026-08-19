@@ -1067,6 +1067,7 @@
   "migrationTrackerQueue": {
     "title": "Servernummer {serverNumber} — Granskningskö",
     "importLink": "Importera",
+    "auditLink": "Granskningslogg",
     "officersLink": "Officerare",
     "settingsLink": "Inställningar",
     "left": "{count} vänster",
@@ -1107,7 +1108,7 @@
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
     "errorGeneric": "Något gick fel.",
-    "auditLink": "Granskningslogg"
+    "promote": "Främja"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",
@@ -1174,21 +1175,6 @@
     "errorThreshold": "Varje tröskelvärde måste vara ett tal, eller tomt om det inte finns något minimumvärde.",
     "errorGeneric": "Något gick fel."
   },
-  "migrationTrackerCreate": {
-    "title": "Nytt migreringsfönster",
-    "subtitle": "Öppnar spårning för en server. Blockeras om servern redan har ett öppet eller kommande fönster.",
-    "serverNumberLabel": "Servernummer",
-    "classificationLabel": "Klassificering",
-    "opensAtLabel": "Öppnar kl.",
-    "closesAtLabel": "Stänger kl.",
-    "submitButton": "Öppna fönstret",
-    "errorServerNumber": "Servernumret måste vara mellan 1001 och 9999.",
-    "errorClassificationRequired": "Välj en klassificering.",
-    "errorDatesRequired": "Båda datumen är obligatoriska.",
-    "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
-    "errorGeneric": "Något gick fel. Försök igen.",
-    "backToOverview": "← Tillbaka till Migrationsspåraren"
-  },
   "migrationTrackerAudit": {
     "title": "Server # {serverNumber} — Granskningslogg",
     "desc": "Varje tillståndsändringsåtgärd för detta migreringsfönster, nyaste först – applikationsbeslut, ändringar av handläggare och inställningsredigeringar.",
@@ -1206,5 +1192,20 @@
     "previous": "← Föregående",
     "next": "Nästa →",
     "diff": "Detaljer"
+  },
+  "migrationTrackerCreate": {
+    "title": "Nytt migreringsfönster",
+    "subtitle": "Öppnar spårning för en server. Blockeras om servern redan har ett öppet eller kommande fönster.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Klassificering",
+    "opensAtLabel": "Öppnar kl.",
+    "closesAtLabel": "Stänger kl.",
+    "submitButton": "Öppna fönstret",
+    "errorServerNumber": "Servernumret måste vara mellan 1001 och 9999.",
+    "errorClassificationRequired": "Välj en klassificering.",
+    "errorDatesRequired": "Båda datumen är obligatoriska.",
+    "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
+    "errorGeneric": "Något gick fel. Försök igen.",
+    "backToOverview": "← Tillbaka till Migrationsspåraren"
   }
 }

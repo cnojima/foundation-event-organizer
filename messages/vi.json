@@ -1065,6 +1065,7 @@
   "migrationTrackerQueue": {
     "title": "Máy chủ # {serverNumber} — Hàng đợi xem xét",
     "importLink": "Nhập khẩu",
+    "auditLink": "nhật ký kiểm toán",
     "officersLink": "Các sĩ quan",
     "settingsLink": "Cài đặt",
     "left": "{count} bên trái",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "Cần có máy chủ nguồn.",
     "errorPower": "Lũy thừa phải là số nguyên.",
     "errorGeneric": "Đã xảy ra lỗi.",
-    "auditLink": "nhật ký kiểm toán"
+    "promote": "Khuyến khích"
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",
@@ -1172,21 +1173,6 @@
     "errorThreshold": "Mỗi ngưỡng phải là một con số, hoặc để trống nếu không có ngưỡng tối thiểu.",
     "errorGeneric": "Đã xảy ra lỗi."
   },
-  "migrationTrackerCreate": {
-    "title": "Cửa sổ di cư mới",
-    "subtitle": "Bắt đầu theo dõi máy chủ. Bị chặn nếu máy chủ đó đã có cửa sổ đang mở hoặc sắp mở.",
-    "serverNumberLabel": "Số máy chủ",
-    "classificationLabel": "Phân loại",
-    "opensAtLabel": "Mở cửa lúc",
-    "closesAtLabel": "Đóng cửa lúc",
-    "submitButton": "Cửa sổ mở",
-    "errorServerNumber": "Số máy chủ phải nằm trong khoảng từ 1001 đến 9999.",
-    "errorClassificationRequired": "Hãy chọn một phân loại.",
-    "errorDatesRequired": "Cần phải có cả hai ngày.",
-    "errorCloseAfterOpen": "Ngày đóng cửa phải sau ngày mở cửa.",
-    "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
-    "backToOverview": "← Quay lại Trình theo dõi di cư"
-  },
   "migrationTrackerAudit": {
     "title": "Máy chủ # {serverNumber} — Nhật ký kiểm toán",
     "desc": "Mọi hành động thay đổi trạng thái trong khoảng thời gian chuyển đổi này, được liệt kê mới nhất trước tiên — quyết định ứng dụng, thay đổi cán bộ và chỉnh sửa cài đặt.",
@@ -1204,5 +1190,20 @@
     "previous": "← Trước đó",
     "next": "Tiếp theo →",
     "diff": "Chi tiết"
+  },
+  "migrationTrackerCreate": {
+    "title": "Cửa sổ di cư mới",
+    "subtitle": "Bắt đầu theo dõi máy chủ. Bị chặn nếu máy chủ đó đã có cửa sổ đang mở hoặc sắp mở.",
+    "serverNumberLabel": "Số máy chủ",
+    "classificationLabel": "Phân loại",
+    "opensAtLabel": "Mở cửa lúc",
+    "closesAtLabel": "Đóng cửa lúc",
+    "submitButton": "Cửa sổ mở",
+    "errorServerNumber": "Số máy chủ phải nằm trong khoảng từ 1001 đến 9999.",
+    "errorClassificationRequired": "Hãy chọn một phân loại.",
+    "errorDatesRequired": "Cần phải có cả hai ngày.",
+    "errorCloseAfterOpen": "Ngày đóng cửa phải sau ngày mở cửa.",
+    "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "backToOverview": "← Quay lại Trình theo dõi di cư"
   }
 }

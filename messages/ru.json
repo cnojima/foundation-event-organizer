@@ -1066,6 +1066,7 @@
   "migrationTrackerQueue": {
     "title": "Сервер № {serverNumber} — Очередь просмотра",
     "importLink": "Импорт",
+    "auditLink": "Журнал аудита",
     "officersLink": "Офицеры",
     "settingsLink": "Настройки",
     "left": "{count} левый",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Требуется исходный сервер.",
     "errorPower": "Мощность должна быть целым числом.",
     "errorGeneric": "Что-то пошло не так.",
-    "auditLink": "Журнал аудита"
+    "promote": "Продвигать"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",
@@ -1173,21 +1174,6 @@
     "errorThreshold": "Каждый пороговый уровень должен быть числом, или же должно быть пустое поле, если минимальный уровень отсутствует.",
     "errorGeneric": "Что-то пошло не так."
   },
-  "migrationTrackerCreate": {
-    "title": "Новое окно миграции",
-    "subtitle": "Открывает отслеживание для сервера. Блокируется, если у этого сервера уже есть открытое или предстоящее окно.",
-    "serverNumberLabel": "номер сервера",
-    "classificationLabel": "Классификация",
-    "opensAtLabel": "Открывается в",
-    "closesAtLabel": "Закрывается в",
-    "submitButton": "Открыть окно",
-    "errorServerNumber": "Номер сервера должен быть в диапазоне от 1001 до 9999.",
-    "errorClassificationRequired": "Выберите классификацию.",
-    "errorDatesRequired": "Необходимы обе даты.",
-    "errorCloseAfterOpen": "Дата закрытия должна быть после даты открытия.",
-    "errorGeneric": "Произошла ошибка. Пожалуйста, попробуйте еще раз.",
-    "backToOverview": "← Назад к трекеру миграции"
-  },
   "migrationTrackerAudit": {
     "title": "Сервер № {serverNumber} — Журнал аудита",
     "desc": "Все действия, изменяющие состояние в течение этого периода миграции, от самых новых к самым новым — решения по заявкам, изменения в составе сотрудников и редактирование настроек.",
@@ -1205,5 +1191,20 @@
     "previous": "← Предыдущая",
     "next": "Далее →",
     "diff": "Подробности"
+  },
+  "migrationTrackerCreate": {
+    "title": "Новое окно миграции",
+    "subtitle": "Открывает отслеживание для сервера. Блокируется, если у этого сервера уже есть открытое или предстоящее окно.",
+    "serverNumberLabel": "номер сервера",
+    "classificationLabel": "Классификация",
+    "opensAtLabel": "Открывается в",
+    "closesAtLabel": "Закрывается в",
+    "submitButton": "Открыть окно",
+    "errorServerNumber": "Номер сервера должен быть в диапазоне от 1001 до 9999.",
+    "errorClassificationRequired": "Выберите классификацию.",
+    "errorDatesRequired": "Необходимы обе даты.",
+    "errorCloseAfterOpen": "Дата закрытия должна быть после даты открытия.",
+    "errorGeneric": "Произошла ошибка. Пожалуйста, попробуйте еще раз.",
+    "backToOverview": "← Назад к трекеру миграции"
   }
 }

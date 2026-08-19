@@ -1066,6 +1066,7 @@
   "migrationTrackerQueue": {
     "title": "Server # {serverNumber} — Coda di revisione",
     "importLink": "Importare",
+    "auditLink": "registro di controllo",
     "officersLink": "Ufficiali",
     "settingsLink": "Impostazioni",
     "left": "{count} rimanenti",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "È necessario un server sorgente.",
     "errorPower": "La potenza deve essere un numero intero.",
     "errorGeneric": "Qualcosa è andato storto.",
-    "auditLink": "registro di controllo"
+    "promote": "Promuovere"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importa applicazioni",
@@ -1173,21 +1174,6 @@
     "errorThreshold": "Ogni soglia deve essere un numero, oppure vuota se non è indicato alcun valore minimo.",
     "errorGeneric": "Qualcosa è andato storto."
   },
-  "migrationTrackerCreate": {
-    "title": "Nuova finestra migratoria",
-    "subtitle": "Apre il tracciamento per quel server. Bloccato se quel server ha già una finestra aperta o in programma.",
-    "serverNumberLabel": "Numero del server",
-    "classificationLabel": "Classificazione",
-    "opensAtLabel": "Apre alle",
-    "closesAtLabel": "Chiude alle",
-    "submitButton": "Apri la finestra",
-    "errorServerNumber": "Il numero del server deve essere compreso tra 1001 e 9999.",
-    "errorClassificationRequired": "Scegli una classificazione.",
-    "errorDatesRequired": "Sono necessarie entrambe le date.",
-    "errorCloseAfterOpen": "La data di chiusura deve essere successiva alla data di apertura.",
-    "errorGeneric": "Si è verificato un errore. Riprova.",
-    "backToOverview": "← Torna al Migration Tracker"
-  },
   "migrationTrackerAudit": {
     "title": "Server n. {serverNumber} — Registro di controllo",
     "desc": "Tutte le azioni che modificano lo stato per questa finestra di migrazione, dalla più recente alla meno recente: decisioni sulle applicazioni, cambi di responsabile e modifiche alle impostazioni.",
@@ -1205,5 +1191,20 @@
     "previous": "← Precedente",
     "next": "Avanti →",
     "diff": "Dettagli"
+  },
+  "migrationTrackerCreate": {
+    "title": "Nuova finestra migratoria",
+    "subtitle": "Apre il tracciamento per quel server. Bloccato se quel server ha già una finestra aperta o in programma.",
+    "serverNumberLabel": "Numero del server",
+    "classificationLabel": "Classificazione",
+    "opensAtLabel": "Apre alle",
+    "closesAtLabel": "Chiude alle",
+    "submitButton": "Apri la finestra",
+    "errorServerNumber": "Il numero del server deve essere compreso tra 1001 e 9999.",
+    "errorClassificationRequired": "Scegli una classificazione.",
+    "errorDatesRequired": "Sono necessarie entrambe le date.",
+    "errorCloseAfterOpen": "La data di chiusura deve essere successiva alla data di apertura.",
+    "errorGeneric": "Si è verificato un errore. Riprova.",
+    "backToOverview": "← Torna al Migration Tracker"
   }
 }

@@ -1092,6 +1092,7 @@
     "closedNotice": "This migration window has closed. Nothing here is actionable — this is the final record.",
     "accept": "Accept",
     "waitlist": "Waitlist",
+    "promote": "Promote",
     "deny": "Deny",
     "remove": "Remove",
     "revert": "Revert",

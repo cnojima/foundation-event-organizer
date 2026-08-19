@@ -76,6 +76,7 @@ export type AuditAction =
   | "migration.accept"
   | "migration.deny"
   | "migration.waitlist"
+  | "migration.promote"
   | "migration.waitlist.promote"
   | "migration.waitlist.demote"
   | "migration.revert"

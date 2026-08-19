@@ -1065,6 +1065,7 @@
   "migrationTrackerQueue": {
     "title": "Server # {serverNumber} — Überprüfungswarteschlange",
     "importLink": "Import",
+    "auditLink": "Audit-Protokoll",
     "officersLink": "Offiziere",
     "settingsLink": "Einstellungen",
     "left": "{count} übrig",
@@ -1105,7 +1106,7 @@
     "errorSourceServerRequired": "Ein Quellserver ist erforderlich.",
     "errorPower": "Der Exponent muss eine ganze Zahl sein.",
     "errorGeneric": "Etwas ist schiefgelaufen.",
-    "auditLink": "Audit-Protokoll"
+    "promote": "Fördern"
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Anwendungen importieren",
@@ -1172,21 +1173,6 @@
     "errorThreshold": "Jeder Schwellenwert muss eine Zahl sein oder leer bleiben, wenn kein Mindestwert vorhanden ist.",
     "errorGeneric": "Etwas ist schiefgelaufen."
   },
-  "migrationTrackerCreate": {
-    "title": "Neues Migrationsfenster",
-    "subtitle": "Öffnet das Tracking für einen Server. Blockiert, falls dieser Server bereits ein offenes oder bevorstehendes Fenster hat.",
-    "serverNumberLabel": "Servernummer",
-    "classificationLabel": "Einstufung",
-    "opensAtLabel": "Öffnet um",
-    "closesAtLabel": "Schließt um",
-    "submitButton": "Fenster öffnen",
-    "errorServerNumber": "Die Servernummer muss zwischen 1001 und 9999 liegen.",
-    "errorClassificationRequired": "Wählen Sie eine Klassifizierung.",
-    "errorDatesRequired": "Beide Termine sind erforderlich.",
-    "errorCloseAfterOpen": "Das Schließungsdatum muss nach dem Eröffnungsdatum liegen.",
-    "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
-    "backToOverview": "← Zurück zum Migrations-Tracker"
-  },
   "migrationTrackerAudit": {
     "title": "Server # {serverNumber} — Audit-Protokoll",
     "desc": "Alle Statusänderungen während dieses Migrationszeitraums, die neuesten zuerst – Anwendungsentscheidungen, Offizierswechsel und Einstellungsänderungen.",
@@ -1204,5 +1190,20 @@
     "previous": "← Zurück",
     "next": "Weiter →",
     "diff": "Details"
+  },
+  "migrationTrackerCreate": {
+    "title": "Neues Migrationsfenster",
+    "subtitle": "Öffnet das Tracking für einen Server. Blockiert, falls dieser Server bereits ein offenes oder bevorstehendes Fenster hat.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Einstufung",
+    "opensAtLabel": "Öffnet um",
+    "closesAtLabel": "Schließt um",
+    "submitButton": "Fenster öffnen",
+    "errorServerNumber": "Die Servernummer muss zwischen 1001 und 9999 liegen.",
+    "errorClassificationRequired": "Wählen Sie eine Klassifizierung.",
+    "errorDatesRequired": "Beide Termine sind erforderlich.",
+    "errorCloseAfterOpen": "Das Schließungsdatum muss nach dem Eröffnungsdatum liegen.",
+    "errorGeneric": "Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "backToOverview": "← Zurück zum Migrations-Tracker"
   }
 }

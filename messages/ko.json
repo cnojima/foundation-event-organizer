@@ -1063,6 +1063,7 @@
   "migrationTrackerQueue": {
     "title": "서버 번호 {serverNumber} — 대기열 검토",
     "importLink": "수입",
+    "auditLink": "감사 로그",
     "officersLink": "장교들",
     "settingsLink": "설정",
     "left": "{count} 개 남았습니다",
@@ -1103,7 +1104,7 @@
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
     "errorGeneric": "뭔가 잘못됐어요.",
-    "auditLink": "감사 로그"
+    "promote": "홍보하다"
   },
   "migrationTrackerImport": {
     "title": "서버 번호 {serverNumber} — 애플리케이션 가져오기",
@@ -1170,21 +1171,6 @@
     "errorThreshold": "각 기준값은 숫자여야 하며, 최소값이 없는 경우 공백이어야 합니다.",
     "errorGeneric": "뭔가 잘못됐어요."
   },
-  "migrationTrackerCreate": {
-    "title": "새로운 마이그레이션 창",
-    "subtitle": "서버에 대한 추적을 시작합니다. 해당 서버에 이미 추적 창이 열려 있거나 예정되어 있는 경우 차단됩니다.",
-    "serverNumberLabel": "서버 번호",
-    "classificationLabel": "분류",
-    "opensAtLabel": "오픈 시간",
-    "closesAtLabel": "마감 시간",
-    "submitButton": "창 열기",
-    "errorServerNumber": "서버 번호는 1001에서 9999 사이여야 합니다.",
-    "errorClassificationRequired": "분류를 선택하세요.",
-    "errorDatesRequired": "두 날짜 모두 필수입니다.",
-    "errorCloseAfterOpen": "마감일은 개시일 이후여야 합니다.",
-    "errorGeneric": "오류가 발생했습니다. 다시 시도해 주세요.",
-    "backToOverview": "← 마이그레이션 추적기로 돌아가기"
-  },
   "migrationTrackerAudit": {
     "title": "서버 번호 {serverNumber} — 감사 로그",
     "desc": "이번 마이그레이션 기간 동안 발생한 모든 상태 변경 작업(최신순) - 신청 승인, 담당자 변경 및 설정 수정.",
@@ -1202,5 +1188,20 @@
     "previous": "← 이전",
     "next": "다음 →",
     "diff": "세부"
+  },
+  "migrationTrackerCreate": {
+    "title": "새로운 마이그레이션 창",
+    "subtitle": "서버에 대한 추적을 시작합니다. 해당 서버에 이미 추적 창이 열려 있거나 예정되어 있는 경우 차단됩니다.",
+    "serverNumberLabel": "서버 번호",
+    "classificationLabel": "분류",
+    "opensAtLabel": "오픈 시간",
+    "closesAtLabel": "마감 시간",
+    "submitButton": "창 열기",
+    "errorServerNumber": "서버 번호는 1001에서 9999 사이여야 합니다.",
+    "errorClassificationRequired": "분류를 선택하세요.",
+    "errorDatesRequired": "두 날짜 모두 필수입니다.",
+    "errorCloseAfterOpen": "마감일은 개시일 이후여야 합니다.",
+    "errorGeneric": "오류가 발생했습니다. 다시 시도해 주세요.",
+    "backToOverview": "← 마이그레이션 추적기로 돌아가기"
   }
 }

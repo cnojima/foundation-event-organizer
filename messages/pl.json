@@ -1066,6 +1066,7 @@
   "migrationTrackerQueue": {
     "title": "Serwer nr {serverNumber} — Kolejka do przeglądu",
     "importLink": "Import",
+    "auditLink": "Dziennik audytu",
     "officersLink": "Oficerowie",
     "settingsLink": "Ustawienia",
     "left": "{count} lewy",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
     "errorPower": "Moc musi być liczbą całkowitą.",
     "errorGeneric": "Coś poszło nie tak.",
-    "auditLink": "Dziennik audytu"
+    "promote": "Promować"
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",
@@ -1173,21 +1174,6 @@
     "errorThreshold": "Każdy próg musi być liczbą, lub pustym polem, jeśli nie ma wartości minimalnej.",
     "errorGeneric": "Coś poszło nie tak."
   },
-  "migrationTrackerCreate": {
-    "title": "Nowe okno migracji",
-    "subtitle": "Otwiera śledzenie dla serwera. Blokowane, jeśli na tym serwerze jest już otwarte lub nadchodzące okno.",
-    "serverNumberLabel": "Numer serwera",
-    "classificationLabel": "Klasyfikacja",
-    "opensAtLabel": "Otwarcie o",
-    "closesAtLabel": "Zamyka się o",
-    "submitButton": "Otwórz okno",
-    "errorServerNumber": "Numer serwera musi zawierać się w przedziale od 1001 do 9999.",
-    "errorClassificationRequired": "Wybierz klasyfikację.",
-    "errorDatesRequired": "Obie daty są wymagane.",
-    "errorCloseAfterOpen": "Data zamknięcia musi być późniejsza niż data otwarcia.",
-    "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
-    "backToOverview": "← Powrót do narzędzia do śledzenia migracji"
-  },
   "migrationTrackerAudit": {
     "title": "Serwer nr {serverNumber} — dziennik audytu",
     "desc": "Każda akcja zmieniająca stan w tym oknie migracji, najnowsze na początku — decyzje dotyczące aplikacji, zmiany urzędników i edycje ustawień.",
@@ -1205,5 +1191,20 @@
     "previous": "← Poprzedni",
     "next": "Dalej →",
     "diff": "Bliższe dane"
+  },
+  "migrationTrackerCreate": {
+    "title": "Nowe okno migracji",
+    "subtitle": "Otwiera śledzenie dla serwera. Blokowane, jeśli na tym serwerze jest już otwarte lub nadchodzące okno.",
+    "serverNumberLabel": "Numer serwera",
+    "classificationLabel": "Klasyfikacja",
+    "opensAtLabel": "Otwarcie o",
+    "closesAtLabel": "Zamyka się o",
+    "submitButton": "Otwórz okno",
+    "errorServerNumber": "Numer serwera musi zawierać się w przedziale od 1001 do 9999.",
+    "errorClassificationRequired": "Wybierz klasyfikację.",
+    "errorDatesRequired": "Obie daty są wymagane.",
+    "errorCloseAfterOpen": "Data zamknięcia musi być późniejsza niż data otwarcia.",
+    "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
+    "backToOverview": "← Powrót do narzędzia do śledzenia migracji"
   }
 }

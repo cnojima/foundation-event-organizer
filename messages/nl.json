@@ -1063,6 +1063,7 @@
   "migrationTrackerQueue": {
     "title": "Servernummer {serverNumber} — Wachtrij beoordelen",
     "importLink": "Importeren",
+    "auditLink": "Auditlogboek",
     "officersLink": "Agenten",
     "settingsLink": "Instellingen",
     "left": "{count} links",
@@ -1103,7 +1104,7 @@
     "errorSourceServerRequired": "Een bronserver is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
     "errorGeneric": "Er is iets misgegaan.",
-    "auditLink": "Auditlogboek"
+    "promote": "Bevorderen"
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",
@@ -1170,21 +1171,6 @@
     "errorThreshold": "Elke drempelwaarde moet een getal zijn, of leeg als er geen minimum is.",
     "errorGeneric": "Er is iets misgegaan."
   },
-  "migrationTrackerCreate": {
-    "title": "Nieuw migratievenster",
-    "subtitle": "Opent de tracking voor een server. Geblokkeerd als die server al een open of aankomend venster heeft.",
-    "serverNumberLabel": "Servernummer",
-    "classificationLabel": "Classificatie",
-    "opensAtLabel": "Opent om",
-    "closesAtLabel": "Sluit om",
-    "submitButton": "Open venster",
-    "errorServerNumber": "Het servernummer moet tussen 1001 en 9999 liggen.",
-    "errorClassificationRequired": "Kies een classificatie.",
-    "errorDatesRequired": "Beide datums zijn vereist.",
-    "errorCloseAfterOpen": "De sluitingsdatum moet na de openingsdatum liggen.",
-    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
-    "backToOverview": "← Terug naar de migratietracker"
-  },
   "migrationTrackerAudit": {
     "title": "Server # {serverNumber} — Auditlogboek",
     "desc": "Alle wijzigingen in de status voor deze migratieperiode, van meest recent naar meest recent: beslissingen over aanvragen, wijzigingen van functionarissen en aanpassingen van instellingen.",
@@ -1202,5 +1188,20 @@
     "previous": "← Vorige",
     "next": "Volgende →",
     "diff": "Details"
+  },
+  "migrationTrackerCreate": {
+    "title": "Nieuw migratievenster",
+    "subtitle": "Opent de tracking voor een server. Geblokkeerd als die server al een open of aankomend venster heeft.",
+    "serverNumberLabel": "Servernummer",
+    "classificationLabel": "Classificatie",
+    "opensAtLabel": "Opent om",
+    "closesAtLabel": "Sluit om",
+    "submitButton": "Open venster",
+    "errorServerNumber": "Het servernummer moet tussen 1001 en 9999 liggen.",
+    "errorClassificationRequired": "Kies een classificatie.",
+    "errorDatesRequired": "Beide datums zijn vereist.",
+    "errorCloseAfterOpen": "De sluitingsdatum moet na de openingsdatum liggen.",
+    "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
+    "backToOverview": "← Terug naar de migratietracker"
   }
 }

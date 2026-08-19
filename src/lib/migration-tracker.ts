@@ -629,12 +629,13 @@ export function withdrawApplicationByToken(token: string): WithdrawResult {
   });
 }
 
-export type ReviewAction = "accept" | "deny" | "waitlist" | "revert";
+export type ReviewAction = "accept" | "deny" | "waitlist" | "revert" | "promote";
 
 const REVIEW_TARGET_STATUS: Record<Exclude<ReviewAction, "revert">, ApplicationStatus> = {
   accept: "accepted",
   deny: "denied",
   waitlist: "waitlisted",
+  promote: "applied",
 };
 
 export type ReviewResult =
@@ -644,10 +645,16 @@ export type ReviewResult =
 // Deny/waitlist can free a reserved slot (applied/accepted -> denied/
 // waitlisted) — when that happens, promoteFromWaitlist immediately pulls
 // the longest-waiting applicant(s) in that tier back into "applied".
-// Accept never frees a slot (applied/waitlisted -> accepted only holds or
-// consumes room), so it never triggers a promotion. Going over cap from a
-// decision is still shown, not blocked — promotion only fills existing
-// headroom, it doesn't create any.
+// Accept and promote never free a slot (applied/waitlisted -> accepted, or
+// waitlisted -> applied, only hold or consume room), so neither triggers a
+// promotion. Going over cap from a decision is still shown, not blocked —
+// promotion only fills existing headroom, it doesn't create any.
+//
+// `promote` is a deliberate officer override — pulling a specific waitlisted
+// applicant into "applied" out of order — distinct from promoteFromWaitlist,
+// which is the automatic, oldest-first backfill that runs as a side effect
+// of some other application freeing a slot. Logged separately in the audit
+// trail for the same reason (migration.promote vs migration.waitlist.promote).
 //
 // `revert` is the undo path for an accidental Accept or Deny click — the one
 // action allowed to move an application out of "accepted" or "denied" (every

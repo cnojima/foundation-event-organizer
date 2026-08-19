@@ -1067,6 +1067,7 @@
   "migrationTrackerQueue": {
     "title": "Servidor nº {serverNumber} — Fila de revisão",
     "importLink": "Importar",
+    "auditLink": "Registro de auditoria",
     "officersLink": "Oficiais",
     "settingsLink": "Configurações",
     "left": "{count} esquerda",
@@ -1107,7 +1108,7 @@
     "errorSourceServerRequired": "É necessário um servidor de origem.",
     "errorPower": "A potência deve ser um número inteiro.",
     "errorGeneric": "Algo deu errado.",
-    "auditLink": "Registro de auditoria"
+    "promote": "Promover"
   },
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",
@@ -1174,21 +1175,6 @@
     "errorThreshold": "Cada limite deve ser um número, ou estar em branco caso não haja valor mínimo.",
     "errorGeneric": "Algo deu errado."
   },
-  "migrationTrackerCreate": {
-    "title": "Nova janela de migração",
-    "subtitle": "Abre o rastreamento para um servidor. Bloqueia se esse servidor já tiver uma janela aberta ou futura.",
-    "serverNumberLabel": "Número do servidor",
-    "classificationLabel": "Classificação",
-    "opensAtLabel": "Abre às",
-    "closesAtLabel": "Encerra às",
-    "submitButton": "Abrir janela",
-    "errorServerNumber": "O número do servidor deve estar entre 1001 e 9999.",
-    "errorClassificationRequired": "Escolha uma classificação.",
-    "errorDatesRequired": "Ambas as datas são necessárias.",
-    "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
-    "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
-    "backToOverview": "← Voltar ao Rastreador de Migração"
-  },
   "migrationTrackerAudit": {
     "title": "Servidor nº {serverNumber} — Log de auditoria",
     "desc": "Todas as ações que alteram o estado do sistema durante esta janela de migração, da mais recente para a mais antiga — decisões sobre aplicativos, alterações de responsáveis e edições de configurações.",
@@ -1206,5 +1192,20 @@
     "previous": "← Anterior",
     "next": "Próximo →",
     "diff": "Detalhes"
+  },
+  "migrationTrackerCreate": {
+    "title": "Nova janela de migração",
+    "subtitle": "Abre o rastreamento para um servidor. Bloqueia se esse servidor já tiver uma janela aberta ou futura.",
+    "serverNumberLabel": "Número do servidor",
+    "classificationLabel": "Classificação",
+    "opensAtLabel": "Abre às",
+    "closesAtLabel": "Encerra às",
+    "submitButton": "Abrir janela",
+    "errorServerNumber": "O número do servidor deve estar entre 1001 e 9999.",
+    "errorClassificationRequired": "Escolha uma classificação.",
+    "errorDatesRequired": "Ambas as datas são necessárias.",
+    "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
+    "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
+    "backToOverview": "← Voltar ao Rastreador de Migração"
   }
 }

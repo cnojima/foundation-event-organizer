@@ -1067,6 +1067,7 @@
   "migrationTrackerQueue": {
     "title": "Сервер № {serverNumber} — Черга на перегляд",
     "importLink": "Імпорт",
+    "auditLink": "Журнал аудиту",
     "officersLink": "Офіцери",
     "settingsLink": "Налаштування",
     "left": "{count} ліворуч",
@@ -1107,7 +1108,7 @@
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
     "errorGeneric": "Щось пішло не так.",
-    "auditLink": "Журнал аудиту"
+    "promote": "Просувати"
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",
@@ -1174,21 +1175,6 @@
     "errorThreshold": "Кожне порогове значення має бути числом або порожнім, якщо мінімального значення немає.",
     "errorGeneric": "Щось пішло не так."
   },
-  "migrationTrackerCreate": {
-    "title": "Нове вікно міграції",
-    "subtitle": "Відкриває відстеження для сервера. Блокується, якщо на цьому сервері вже є відкрите або майбутнє вікно.",
-    "serverNumberLabel": "Номер сервера",
-    "classificationLabel": "Класифікація",
-    "opensAtLabel": "Відкривається о",
-    "closesAtLabel": "Закривається о",
-    "submitButton": "Відкрите вікно",
-    "errorServerNumber": "Номер сервера має бути від 1001 до 9999.",
-    "errorClassificationRequired": "Виберіть класифікацію.",
-    "errorDatesRequired": "Обидві дати обов'язкові.",
-    "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
-    "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
-    "backToOverview": "← Назад до Відстеження міграції"
-  },
   "migrationTrackerAudit": {
     "title": "Сервер № {serverNumber} — Журнал аудиту",
     "desc": "Кожна дія, що змінює стан для цього вікна міграції, починаючи від найновіших — рішення щодо заявок, зміни співробітників та редагування налаштувань.",
@@ -1206,5 +1192,20 @@
     "previous": "← Попередній",
     "next": "Далі →",
     "diff": "Деталі"
+  },
+  "migrationTrackerCreate": {
+    "title": "Нове вікно міграції",
+    "subtitle": "Відкриває відстеження для сервера. Блокується, якщо на цьому сервері вже є відкрите або майбутнє вікно.",
+    "serverNumberLabel": "Номер сервера",
+    "classificationLabel": "Класифікація",
+    "opensAtLabel": "Відкривається о",
+    "closesAtLabel": "Закривається о",
+    "submitButton": "Відкрите вікно",
+    "errorServerNumber": "Номер сервера має бути від 1001 до 9999.",
+    "errorClassificationRequired": "Виберіть класифікацію.",
+    "errorDatesRequired": "Обидві дати обов'язкові.",
+    "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
+    "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
+    "backToOverview": "← Назад до Відстеження міграції"
   }
 }

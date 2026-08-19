@@ -1066,6 +1066,7 @@
   "migrationTrackerQueue": {
     "title": "Serveur n° {serverNumber} — File d'attente de révision",
     "importLink": "Importer",
+    "auditLink": "Journal d'audit",
     "officersLink": "Officiers",
     "settingsLink": "Paramètres",
     "left": "{count} restant",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Le serveur source est requis.",
     "errorPower": "La puissance doit être un nombre entier.",
     "errorGeneric": "Quelque chose a mal fonctionné.",
-    "auditLink": "Journal d'audit"
+    "promote": "Promouvoir"
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
@@ -1173,21 +1174,6 @@
     "errorThreshold": "Chaque seuil doit être un nombre, ou vide pour indiquer l'absence de seuil minimum.",
     "errorGeneric": "Quelque chose a mal fonctionné."
   },
-  "migrationTrackerCreate": {
-    "title": "Nouvelle fenêtre de migration",
-    "subtitle": "Ouvre le suivi pour un serveur. Bloqué si ce serveur a déjà une fenêtre de suivi ouverte ou à venir.",
-    "serverNumberLabel": "Numéro de serveur",
-    "classificationLabel": "Classification",
-    "opensAtLabel": "Ouverture à",
-    "closesAtLabel": "Ferme à",
-    "submitButton": "Ouvrir la fenêtre",
-    "errorServerNumber": "Le numéro du serveur doit être compris entre 1001 et 9999.",
-    "errorClassificationRequired": "Choisissez une classification.",
-    "errorDatesRequired": "Les deux dates sont requises.",
-    "errorCloseAfterOpen": "La date de clôture doit être postérieure à la date d'ouverture.",
-    "errorGeneric": "Une erreur s'est produite. Veuillez réessayer.",
-    "backToOverview": "← Retour au Suivi des migrations"
-  },
   "migrationTrackerAudit": {
     "title": "Serveur n° {serverNumber} — Journal d'audit",
     "desc": "Toutes les actions modifiant l'état pour cette fenêtre de migration, de la plus récente à la plus ancienne : décisions relatives aux candidatures, changements de responsables et modifications des paramètres.",
@@ -1205,5 +1191,20 @@
     "previous": "← Précédent",
     "next": "Suivant →",
     "diff": "Détails"
+  },
+  "migrationTrackerCreate": {
+    "title": "Nouvelle fenêtre de migration",
+    "subtitle": "Ouvre le suivi pour un serveur. Bloqué si ce serveur a déjà une fenêtre de suivi ouverte ou à venir.",
+    "serverNumberLabel": "Numéro de serveur",
+    "classificationLabel": "Classification",
+    "opensAtLabel": "Ouverture à",
+    "closesAtLabel": "Ferme à",
+    "submitButton": "Ouvrir la fenêtre",
+    "errorServerNumber": "Le numéro du serveur doit être compris entre 1001 et 9999.",
+    "errorClassificationRequired": "Choisissez une classification.",
+    "errorDatesRequired": "Les deux dates sont requises.",
+    "errorCloseAfterOpen": "La date de clôture doit être postérieure à la date d'ouverture.",
+    "errorGeneric": "Une erreur s'est produite. Veuillez réessayer.",
+    "backToOverview": "← Retour au Suivi des migrations"
   }
 }

@@ -1066,6 +1066,7 @@
   "migrationTrackerQueue": {
     "title": "Sunucu # {serverNumber} — İnceleme sırası",
     "importLink": "İçe aktarmak",
+    "auditLink": "Denetim günlüğü",
     "officersLink": "Subaylar",
     "settingsLink": "Ayarlar",
     "left": "{count} sol",
@@ -1106,7 +1107,7 @@
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
     "errorGeneric": "Bir şeyler ters gitti.",
-    "auditLink": "Denetim günlüğü"
+    "promote": "Terfi"
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",
@@ -1173,21 +1174,6 @@
     "errorThreshold": "Her eşik değeri bir sayı olmalı veya minimum değer yoksa boş bırakılmalıdır.",
     "errorGeneric": "Bir şeyler ters gitti."
   },
-  "migrationTrackerCreate": {
-    "title": "Yeni göç penceresi",
-    "subtitle": "Bir sunucu için izleme penceresini açar. Eğer sunucunun zaten açık veya yaklaşan bir penceresi varsa engellenir.",
-    "serverNumberLabel": "Sunucu numarası",
-    "classificationLabel": "Sınıflandırma",
-    "opensAtLabel": "Açılış saati",
-    "closesAtLabel": "Kapanış saati",
-    "submitButton": "Pencereyi aç",
-    "errorServerNumber": "Sunucu numarası 1001 ile 9999 arasında olmalıdır.",
-    "errorClassificationRequired": "Bir sınıflandırma seçin.",
-    "errorDatesRequired": "Her iki tarih de gereklidir.",
-    "errorCloseAfterOpen": "Kapanış tarihi, açılış tarihinden sonra olmalıdır.",
-    "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
-    "backToOverview": "← Göç Takip Aracına Geri Dön"
-  },
   "migrationTrackerAudit": {
     "title": "Sunucu # {serverNumber} — Denetim günlüğü",
     "desc": "Bu geçiş penceresi için durum değiştiren tüm işlemler, en yeniden başlayarak; uygulama kararları, yetkili değişiklikleri ve ayar düzenlemeleri.",
@@ -1205,5 +1191,20 @@
     "previous": "← Önceki",
     "next": "Sonraki →",
     "diff": "Detaylar"
+  },
+  "migrationTrackerCreate": {
+    "title": "Yeni göç penceresi",
+    "subtitle": "Bir sunucu için izleme penceresini açar. Eğer sunucunun zaten açık veya yaklaşan bir penceresi varsa engellenir.",
+    "serverNumberLabel": "Sunucu numarası",
+    "classificationLabel": "Sınıflandırma",
+    "opensAtLabel": "Açılış saati",
+    "closesAtLabel": "Kapanış saati",
+    "submitButton": "Pencereyi aç",
+    "errorServerNumber": "Sunucu numarası 1001 ile 9999 arasında olmalıdır.",
+    "errorClassificationRequired": "Bir sınıflandırma seçin.",
+    "errorDatesRequired": "Her iki tarih de gereklidir.",
+    "errorCloseAfterOpen": "Kapanış tarihi, açılış tarihinden sonra olmalıdır.",
+    "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
+    "backToOverview": "← Göç Takip Aracına Geri Dön"
   }
 }
