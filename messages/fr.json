@@ -43,7 +43,8 @@
     "createGuild": "Créer une guilde",
     "adminHelp": "Aide administrative",
     "help": "Aide",
-    "myAccount": "Mon compte"
+    "myAccount": "Mon compte",
+    "directory": "Annuaire"
   },
   "alerts": {
     "heading": "{count, plural, one { # notification } other { # notifications } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Classement des serveurs",
       "members": "Liste des membres de la guilde",
       "duels": "Vos duels",
-      "me": "Compte"
+      "me": "Compte",
+      "directory": "Chaque joueur, chaque guilde"
     }
   },
   "signin": {
@@ -1089,6 +1091,10 @@
     "empty": "Aucune demande en attente.",
     "emptyRoster": "Aucune candidature n'a été soumise pour cette période.",
     "closedNotice": "Cette période de migration est terminée. Aucune action n'est possible ici ; il s'agit du dernier enregistrement.",
+    "searchPlaceholderAdmin": "Recherche par nom, serveur, guilde ou UID…",
+    "searchPlaceholderPublic": "Recherche par nom ou serveur…",
+    "noSearchResults": "Aucune application ne correspond à votre recherche.",
+    "matchCount": "{count} de {total}",
     "accept": "Accepter",
     "waitlist": "Liste d'attente",
     "promote": "Promouvoir",
@@ -1107,11 +1113,7 @@
     "errorPlayerNameRequired": "Le nom du joueur est obligatoire.",
     "errorSourceServerRequired": "Le serveur source est requis.",
     "errorPower": "La puissance doit être un nombre entier.",
-    "errorGeneric": "Quelque chose a mal fonctionné.",
-    "searchPlaceholderAdmin": "Recherche par nom, serveur, guilde ou UID…",
-    "searchPlaceholderPublic": "Recherche par nom ou serveur…",
-    "noSearchResults": "Aucune application ne correspond à votre recherche.",
-    "matchCount": "{count} de {total}"
+    "errorGeneric": "Quelque chose a mal fonctionné."
   },
   "migrationTrackerImport": {
     "title": "Serveur n° {serverNumber} — Importer des applications",
@@ -1210,5 +1212,21 @@
     "errorCloseAfterOpen": "La date de clôture doit être postérieure à la date d'ouverture.",
     "errorGeneric": "Une erreur s'est produite. Veuillez réessayer.",
     "backToOverview": "← Retour au Suivi des migrations"
+  },
+  "directory": {
+    "title": "Répertoire des joueurs",
+    "subtitle": "{count, plural, =0 { Aucun joueur trouvé } one { # joueur } other { # joueurs } } .",
+    "searchPlaceholder": "Recherche par nom en jeu…",
+    "allServers": "Tous les serveurs",
+    "allGuilds": "Toutes les guildes",
+    "serverLabel": "Serveur n° {serverNumber}",
+    "noGuild": "Pas de guilde",
+    "unclaimedBadge": "Non réclamé",
+    "reset": "Réinitialiser",
+    "noMatches": "Aucun joueur ne correspond à ces filtres.",
+    "emptyState": "Aucun joueur pour le moment.",
+    "prev": "← Précédent",
+    "next": "Suivant →",
+    "pageOf": "Page {page} sur {total}"
   }
 }

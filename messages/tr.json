@@ -43,7 +43,8 @@
     "createGuild": "Lonca Oluştur",
     "adminHelp": "Yönetici Yardımı",
     "help": "Yardım",
-    "myAccount": "Hesabım"
+    "myAccount": "Hesabım",
+    "directory": "Dizin"
   },
   "alerts": {
     "heading": "{count, plural, one { # bildirim } other { # bildirimler } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Sunucu sıralamaları",
       "members": "Lonca kadrosu",
       "duels": "Sizin düellolarınız",
-      "me": "Hesap"
+      "me": "Hesap",
+      "directory": "Her oyuncu, her lonca"
     }
   },
   "signin": {
@@ -1089,6 +1091,10 @@
     "empty": "Bekleyen başvuru bulunmamaktadır.",
     "emptyRoster": "Bu dönem için herhangi bir başvuru yapılmamıştır.",
     "closedNotice": "Bu geçiş penceresi kapandı. Burada yapılabilecek hiçbir işlem yok; bu son kayıttır.",
+    "searchPlaceholderAdmin": "İsim, sunucu, lonca veya UID'ye göre arama yapın…",
+    "searchPlaceholderPublic": "İsim veya sunucuya göre arama yapın…",
+    "noSearchResults": "Arama kriterlerinize uyan hiçbir başvuru bulunamadı.",
+    "matchCount": "{count} / {total}",
     "accept": "Kabul etmek",
     "waitlist": "Bekleme listesi",
     "promote": "Terfi",
@@ -1107,11 +1113,7 @@
     "errorPlayerNameRequired": "Oyuncu adı zorunludur.",
     "errorSourceServerRequired": "Kaynak sunucu gereklidir.",
     "errorPower": "Üs tam sayı olmalıdır.",
-    "errorGeneric": "Bir şeyler ters gitti.",
-    "searchPlaceholderAdmin": "İsim, sunucu, lonca veya UID'ye göre arama yapın…",
-    "searchPlaceholderPublic": "İsim veya sunucuya göre arama yapın…",
-    "noSearchResults": "Arama kriterlerinize uyan hiçbir başvuru bulunamadı.",
-    "matchCount": "{count} / {total}"
+    "errorGeneric": "Bir şeyler ters gitti."
   },
   "migrationTrackerImport": {
     "title": "Sunucu # {serverNumber} — Uygulamaları içe aktarın",
@@ -1210,5 +1212,21 @@
     "errorCloseAfterOpen": "Kapanış tarihi, açılış tarihinden sonra olmalıdır.",
     "errorGeneric": "Bir sorun oluştu. Lütfen tekrar deneyin.",
     "backToOverview": "← Göç Takip Aracına Geri Dön"
+  },
+  "directory": {
+    "title": "Oyuncu Dizini",
+    "subtitle": "{count, plural, =0 { Oyuncu bulunamadı } one { # oyuncu } other { # oyuncu } } .",
+    "searchPlaceholder": "Oyun içi isme göre ara…",
+    "allServers": "Tüm sunucular",
+    "allGuilds": "Tüm loncalar",
+    "serverLabel": "Sunucu # {serverNumber}",
+    "noGuild": "Lonca yok",
+    "unclaimedBadge": "Sahipsiz",
+    "reset": "Sıfırla",
+    "noMatches": "Bu filtrelerle eşleşen oyuncu yok.",
+    "emptyState": "Henüz oyuncu yok.",
+    "prev": "← Önceki",
+    "next": "Sonraki →",
+    "pageOf": "Sayfa {page} / {total}"
   }
 }

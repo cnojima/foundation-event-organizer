@@ -43,7 +43,8 @@
     "createGuild": "길드 생성",
     "adminHelp": "관리자 도움말",
     "help": "돕다",
-    "myAccount": "내 계정"
+    "myAccount": "내 계정",
+    "directory": "예배 규칙서"
   },
   "alerts": {
     "heading": "{count, plural, one { # 알림 } other { # 알림 } }",
@@ -827,7 +828,8 @@
       "leaderboard": "서버 순위",
       "members": "길드 명단",
       "duels": "당신의 결투",
-      "me": "계정"
+      "me": "계정",
+      "directory": "모든 플레이어, 모든 길드"
     }
   },
   "signin": {
@@ -1086,6 +1088,9 @@
     "empty": "현재 접수된 신청서가 없습니다.",
     "emptyRoster": "이번 기간에는 지원서가 접수되지 않았습니다.",
     "closedNotice": "이 마이그레이션 기간이 종료되었습니다. 더 이상 조치를 취할 수 없습니다. 이것이 최종 기록입니다.",
+    "searchPlaceholderAdmin": "이름, 서버, 길드 또는 UID로 검색하세요…",
+    "searchPlaceholderPublic": "이름 또는 서버로 검색하세요…",
+    "noSearchResults": "검색 조건에 맞는 지원서가 없습니다.",
     "accept": "수용하다",
     "waitlist": "대기자 명단",
     "promote": "홍보하다",
@@ -1104,10 +1109,7 @@
     "errorPlayerNameRequired": "플레이어 이름은 필수 입력 사항입니다.",
     "errorSourceServerRequired": "소스 서버가 필요합니다.",
     "errorPower": "거듭제곱은 정수여야 합니다.",
-    "errorGeneric": "뭔가 잘못됐어요.",
-    "searchPlaceholderAdmin": "이름, 서버, 길드 또는 UID로 검색하세요…",
-    "searchPlaceholderPublic": "이름 또는 서버로 검색하세요…",
-    "noSearchResults": "검색 조건에 맞는 지원서가 없습니다."
+    "errorGeneric": "뭔가 잘못됐어요."
   },
   "migrationTrackerImport": {
     "title": "서버 번호 {serverNumber} — 애플리케이션 가져오기",
@@ -1206,5 +1208,21 @@
     "errorCloseAfterOpen": "마감일은 개시일 이후여야 합니다.",
     "errorGeneric": "오류가 발생했습니다. 다시 시도해 주세요.",
     "backToOverview": "← 마이그레이션 추적기로 돌아가기"
+  },
+  "directory": {
+    "title": "플레이어 디렉토리",
+    "subtitle": "{count, plural, =0 { 플레이어를 찾을 수 없습니다 } one { # 플레이어 } other { # 플레이어 } } .",
+    "searchPlaceholder": "게임 내 이름으로 검색…",
+    "allServers": "모든 서버",
+    "allGuilds": "모든 길드",
+    "serverLabel": "서버 번호 {serverNumber}",
+    "noGuild": "길드 없음",
+    "unclaimedBadge": "주인이 없는",
+    "reset": "다시 놓기",
+    "noMatches": "해당 필터 조건에 맞는 선수가 없습니다.",
+    "emptyState": "아직 플레이어가 없습니다.",
+    "prev": "← 이전",
+    "next": "다음 →",
+    "pageOf": "페이지 {page} / {total} 페이지"
   }
 }

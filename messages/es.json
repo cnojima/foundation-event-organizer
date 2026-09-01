@@ -43,7 +43,8 @@
     "createGuild": "Crear gremio",
     "adminHelp": "Ayuda administrativa",
     "help": "Ayuda",
-    "myAccount": "Mi cuenta"
+    "myAccount": "Mi cuenta",
+    "directory": "Directorio"
   },
   "alerts": {
     "heading": "{count, plural, one { # notificación } other { # notificaciones } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Clasificación de servidores",
       "members": "Lista de miembros del gremio",
       "duels": "Tus duelos",
-      "me": "Cuenta"
+      "me": "Cuenta",
+      "directory": "Cada jugador, cada gremio"
     }
   },
   "signin": {
@@ -1090,6 +1092,10 @@
     "empty": "No hay solicitudes pendientes.",
     "emptyRoster": "No se presentaron solicitudes para este período.",
     "closedNotice": "Este periodo de migración ha finalizado. No hay nada que pueda modificarse aquí; este es el registro final.",
+    "searchPlaceholderAdmin": "Buscar por nombre, servidor, clan o UID…",
+    "searchPlaceholderPublic": "Buscar por nombre o servidor…",
+    "noSearchResults": "No se encontraron aplicaciones que coincidan con su búsqueda.",
+    "matchCount": "{count} de {total}",
     "accept": "Aceptar",
     "waitlist": "Lista de espera",
     "promote": "Promover",
@@ -1108,11 +1114,7 @@
     "errorPlayerNameRequired": "Se requiere el nombre del jugador.",
     "errorSourceServerRequired": "Se requiere un servidor de origen.",
     "errorPower": "La potencia debe ser un número entero.",
-    "errorGeneric": "Algo salió mal.",
-    "searchPlaceholderAdmin": "Buscar por nombre, servidor, clan o UID…",
-    "searchPlaceholderPublic": "Buscar por nombre o servidor…",
-    "noSearchResults": "No se encontraron aplicaciones que coincidan con su búsqueda.",
-    "matchCount": "{count} de {total}"
+    "errorGeneric": "Algo salió mal."
   },
   "migrationTrackerImport": {
     "title": "Servidor n.º {serverNumber} — Importar aplicaciones",
@@ -1211,5 +1213,21 @@
     "errorCloseAfterOpen": "La fecha de cierre debe ser posterior a la fecha de apertura.",
     "errorGeneric": "Algo salió mal. Por favor, inténtalo de nuevo.",
     "backToOverview": "← Volver al Rastreador de migraciones"
+  },
+  "directory": {
+    "title": "Directorio de jugadores",
+    "subtitle": "{count, plural, =0 { No se encontraron jugadores } one { # jugador } other { # jugadores } } .",
+    "searchPlaceholder": "Buscar por nombre en el juego…",
+    "allServers": "Todos los servidores",
+    "allGuilds": "Todos los gremios",
+    "serverLabel": "Servidor # {serverNumber}",
+    "noGuild": "Ningún gremio",
+    "unclaimedBadge": "No reclamado",
+    "reset": "Reiniciar",
+    "noMatches": "Ningún jugador coincide con esos filtros.",
+    "emptyState": "Aún no hay jugadores.",
+    "prev": "← Anterior",
+    "next": "Siguiente →",
+    "pageOf": "Página {page} de {total}"
   }
 }

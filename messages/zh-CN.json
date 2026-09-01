@@ -43,7 +43,8 @@
     "createGuild": "创建公会",
     "adminHelp": "管理员帮助",
     "help": "帮助",
-    "myAccount": "我的账户"
+    "myAccount": "我的账户",
+    "directory": "目录"
   },
   "alerts": {
     "heading": "{count, plural, one { # 通知} other { # 通知} }",
@@ -828,7 +829,8 @@
       "leaderboard": "服务器排名",
       "members": "公会成员名单",
       "duels": "你的决斗",
-      "me": "帐户"
+      "me": "帐户",
+      "directory": "每个玩家，每个公会"
     }
   },
   "signin": {
@@ -1089,6 +1091,10 @@
     "empty": "没有待处理的申请。",
     "emptyRoster": "本窗口期未收到任何申请。",
     "closedNotice": "此迁移窗口已关闭。此处任何操作均不可执行——这是最终记录。",
+    "searchPlaceholderAdmin": "按名称、服务器、公会或UID搜索……",
+    "searchPlaceholderPublic": "按名称或服务器搜索…",
+    "noSearchResults": "没有符合您搜索条件的应用程序。",
+    "matchCount": "{total}的{count}",
     "accept": "接受",
     "waitlist": "候补名单",
     "promote": "推动",
@@ -1107,11 +1113,7 @@
     "errorPlayerNameRequired": "玩家姓名为必填项。",
     "errorSourceServerRequired": "需要源服务器。",
     "errorPower": "幂必须是整数。",
-    "errorGeneric": "出问题了。",
-    "searchPlaceholderAdmin": "按名称、服务器、公会或UID搜索……",
-    "searchPlaceholderPublic": "按名称或服务器搜索…",
-    "noSearchResults": "没有符合您搜索条件的应用程序。",
-    "matchCount": "{total}的{count}"
+    "errorGeneric": "出问题了。"
   },
   "migrationTrackerImport": {
     "title": "服务器编号： {serverNumber} — 导入应用程序",
@@ -1210,5 +1212,21 @@
     "errorCloseAfterOpen": "截止日期必须晚于开放日期。",
     "errorGeneric": "出错了，请重试。",
     "backToOverview": "← 返回迁移跟踪器"
+  },
+  "directory": {
+    "title": "玩家目录",
+    "subtitle": "{count, plural, =0 {未找到玩家} one { # 玩家} other { # 玩家} } 。",
+    "searchPlaceholder": "按游戏内名称搜索…",
+    "allServers": "所有服务器",
+    "allGuilds": "所有公会",
+    "serverLabel": "服务器编号： {serverNumber}",
+    "noGuild": "没有公会",
+    "unclaimedBadge": "无人认领",
+    "reset": "重置",
+    "noMatches": "没有玩家符合这些筛选条件。",
+    "emptyState": "目前还没有玩家。",
+    "prev": "← 上一页",
+    "next": "下一页 →",
+    "pageOf": "第{page}页，共{total}页"
   }
 }

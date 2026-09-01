@@ -43,7 +43,8 @@
     "createGuild": "Crea gilda",
     "adminHelp": "Assistenza amministrativa",
     "help": "Aiuto",
-    "myAccount": "Il mio conto"
+    "myAccount": "Il mio conto",
+    "directory": "Elenco"
   },
   "alerts": {
     "heading": "{count, plural, one { # notifica } other { # notifiche } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Classifica dei server",
       "members": "Elenco della gilda",
       "duels": "I tuoi duelli",
-      "me": "Account"
+      "me": "Account",
+      "directory": "Ogni giocatore, ogni gilda"
     }
   },
   "signin": {
@@ -1089,6 +1091,10 @@
     "empty": "Nessuna richiesta in sospeso.",
     "emptyRoster": "Per questo periodo non è stata presentata alcuna candidatura.",
     "closedNotice": "Questa finestra di migrazione si è chiusa. Qui non è possibile intraprendere alcuna azione: questo è il record definitivo.",
+    "searchPlaceholderAdmin": "Cerca per nome, server, gilda o UID…",
+    "searchPlaceholderPublic": "Cerca per nome o server…",
+    "noSearchResults": "Nessuna applicazione corrisponde alla tua ricerca.",
+    "matchCount": "{count} di {total}",
     "accept": "Accettare",
     "waitlist": "Lista d'attesa",
     "promote": "Promuovere",
@@ -1107,11 +1113,7 @@
     "errorPlayerNameRequired": "Il nome del giocatore è obbligatorio.",
     "errorSourceServerRequired": "È necessario un server sorgente.",
     "errorPower": "La potenza deve essere un numero intero.",
-    "errorGeneric": "Qualcosa è andato storto.",
-    "searchPlaceholderAdmin": "Cerca per nome, server, gilda o UID…",
-    "searchPlaceholderPublic": "Cerca per nome o server…",
-    "noSearchResults": "Nessuna applicazione corrisponde alla tua ricerca.",
-    "matchCount": "{count} di {total}"
+    "errorGeneric": "Qualcosa è andato storto."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Importa applicazioni",
@@ -1210,5 +1212,21 @@
     "errorCloseAfterOpen": "La data di chiusura deve essere successiva alla data di apertura.",
     "errorGeneric": "Si è verificato un errore. Riprova.",
     "backToOverview": "← Torna al Migration Tracker"
+  },
+  "directory": {
+    "title": "Elenco dei giocatori",
+    "subtitle": "{count, plural, =0 { Nessun giocatore trovato } one { # giocatore } other { # giocatori } } .",
+    "searchPlaceholder": "Cerca per nome nel gioco…",
+    "allServers": "Tutti i server",
+    "allGuilds": "Tutte le gilde",
+    "serverLabel": "Server n. {serverNumber}",
+    "noGuild": "Nessuna gilda",
+    "unclaimedBadge": "Non reclamati",
+    "reset": "Reset",
+    "noMatches": "Nessun giocatore corrisponde a quei filtri.",
+    "emptyState": "Ancora nessun giocatore.",
+    "prev": "← Precedente",
+    "next": "Avanti →",
+    "pageOf": "Pagina {page} di {total}"
   }
 }

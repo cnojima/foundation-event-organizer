@@ -43,7 +43,8 @@
     "createGuild": "Maak een gilde aan",
     "adminHelp": "Admin Help",
     "help": "Hulp",
-    "myAccount": "Mijn account"
+    "myAccount": "Mijn account",
+    "directory": "Directory"
   },
   "alerts": {
     "heading": "{count, plural, one { # melding } other { # meldingen } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Serverranglijsten",
       "members": "Gildeledenlijst",
       "duels": "Jouw duels",
-      "me": "Rekening"
+      "me": "Rekening",
+      "directory": "Elke speler, elke gilde"
     }
   },
   "signin": {
@@ -1086,6 +1088,10 @@
     "empty": "Geen lopende aanvragen.",
     "emptyRoster": "Er zijn voor deze periode geen aanvragen ingediend.",
     "closedNotice": "Deze migratieperiode is afgesloten. Er zijn geen verdere acties meer mogelijk — dit is het definitieve document.",
+    "searchPlaceholderAdmin": "Zoeken op naam, server, gilde of UID…",
+    "searchPlaceholderPublic": "Zoeken op naam of server…",
+    "noSearchResults": "Er zijn geen applicaties gevonden die overeenkomen met uw zoekopdracht.",
+    "matchCount": "{count} van {total}",
     "accept": "Accepteren",
     "waitlist": "Wachtlijst",
     "promote": "Bevorderen",
@@ -1104,11 +1110,7 @@
     "errorPlayerNameRequired": "Spelersnaam is verplicht.",
     "errorSourceServerRequired": "Een bronserver is vereist.",
     "errorPower": "De macht moet een geheel getal zijn.",
-    "errorGeneric": "Er is iets misgegaan.",
-    "searchPlaceholderAdmin": "Zoeken op naam, server, gilde of UID…",
-    "searchPlaceholderPublic": "Zoeken op naam of server…",
-    "noSearchResults": "Er zijn geen applicaties gevonden die overeenkomen met uw zoekopdracht.",
-    "matchCount": "{count} van {total}"
+    "errorGeneric": "Er is iets misgegaan."
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importtoepassingen",
@@ -1207,5 +1209,21 @@
     "errorCloseAfterOpen": "De sluitingsdatum moet na de openingsdatum liggen.",
     "errorGeneric": "Er is iets misgegaan. Probeer het opnieuw.",
     "backToOverview": "← Terug naar de migratietracker"
+  },
+  "directory": {
+    "title": "Spelersgids",
+    "subtitle": "{count, plural, =0 { Geen spelers gevonden } one { # speler } other { # spelers } } .",
+    "searchPlaceholder": "Zoeken op in-game naam…",
+    "allServers": "Alle servers",
+    "allGuilds": "Alle gilden",
+    "serverLabel": "Servernummer {serverNumber}",
+    "noGuild": "Geen gilde",
+    "unclaimedBadge": "Niet opgeëist",
+    "reset": "Reset",
+    "noMatches": "Geen enkele speler voldoet aan die filters.",
+    "emptyState": "Nog geen spelers.",
+    "prev": "← Vorige",
+    "next": "Volgende →",
+    "pageOf": "Pagina {page} van {total}"
   }
 }

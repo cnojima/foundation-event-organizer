@@ -43,7 +43,8 @@
     "createGuild": "Utwórz gildię",
     "adminHelp": "Pomoc administratora",
     "help": "Pomoc",
-    "myAccount": "Moje konto"
+    "myAccount": "Moje konto",
+    "directory": "Informator"
   },
   "alerts": {
     "heading": "{count, plural, one { # powiadomienie } other { # powiadomienia } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Rankingi serwerów",
       "members": "Skład gildii",
       "duels": "Twoje pojedynki",
-      "me": "Konto"
+      "me": "Konto",
+      "directory": "Każdy gracz, każda gildia"
     }
   },
   "signin": {
@@ -1089,6 +1091,10 @@
     "empty": "Brak oczekujących wniosków.",
     "emptyRoster": "W tym okresie nie złożono żadnych wniosków.",
     "closedNotice": "To okno migracji zostało zamknięte. Nic tutaj nie jest możliwe do podjęcia — to jest ostateczny rekord.",
+    "searchPlaceholderAdmin": "Szukaj według nazwy, serwera, gildii lub UID…",
+    "searchPlaceholderPublic": "Szukaj według nazwy lub serwera…",
+    "noSearchResults": "Brak aplikacji odpowiadających Twojemu wyszukiwaniu.",
+    "matchCount": "{count} z {total}",
     "accept": "Przyjąć",
     "waitlist": "Lista oczekujących",
     "promote": "Promować",
@@ -1107,11 +1113,7 @@
     "errorPlayerNameRequired": "Nazwa gracza jest wymagana.",
     "errorSourceServerRequired": "Wymagany jest serwer źródłowy.",
     "errorPower": "Moc musi być liczbą całkowitą.",
-    "errorGeneric": "Coś poszło nie tak.",
-    "searchPlaceholderAdmin": "Szukaj według nazwy, serwera, gildii lub UID…",
-    "searchPlaceholderPublic": "Szukaj według nazwy lub serwera…",
-    "noSearchResults": "Brak aplikacji odpowiadających Twojemu wyszukiwaniu.",
-    "matchCount": "{count} z {total}"
+    "errorGeneric": "Coś poszło nie tak."
   },
   "migrationTrackerImport": {
     "title": "Serwer nr {serverNumber} — Importuj aplikacje",
@@ -1210,5 +1212,21 @@
     "errorCloseAfterOpen": "Data zamknięcia musi być późniejsza niż data otwarcia.",
     "errorGeneric": "Coś poszło nie tak. Spróbuj ponownie.",
     "backToOverview": "← Powrót do narzędzia do śledzenia migracji"
+  },
+  "directory": {
+    "title": "Katalog graczy",
+    "subtitle": "{count, plural, =0 { Nie znaleziono graczy } one { liczba graczy } other { liczba graczy } } .",
+    "searchPlaceholder": "Wyszukaj po nazwie w grze…",
+    "allServers": "Wszystkie serwery",
+    "allGuilds": "Wszystkie gildie",
+    "serverLabel": "Serwer nr {serverNumber}",
+    "noGuild": "Brak gildii",
+    "unclaimedBadge": "Nieodebrane",
+    "reset": "Nastawić",
+    "noMatches": "Żaden gracz nie spełnia tych filtrów.",
+    "emptyState": "Nie ma jeszcze graczy.",
+    "prev": "← Poprzedni",
+    "next": "Dalej →",
+    "pageOf": "Strona {page} z {total}"
   }
 }
