@@ -43,7 +43,8 @@
     "createGuild": "Criar Guilda",
     "adminHelp": "Ajuda do administrador",
     "help": "Ajuda",
-    "myAccount": "Minha conta"
+    "myAccount": "Minha conta",
+    "directory": "Diretório"
   },
   "alerts": {
     "heading": "{count, plural, one { # notificação } other { # notificações } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Classificação dos servidores",
       "members": "Lista de membros da guilda",
       "duels": "Seus duelos",
-      "me": "Conta"
+      "me": "Conta",
+      "directory": "Cada jogador, cada guilda"
     }
   },
   "signin": {
@@ -1090,6 +1092,10 @@
     "empty": "Não há candidaturas pendentes.",
     "emptyRoster": "Nenhuma candidatura foi submetida para este período.",
     "closedNotice": "Esta janela de migração foi encerrada. Nada aqui pode ser feito — este é o registro final.",
+    "searchPlaceholderAdmin": "Pesquise por nome, servidor, guilda ou UID…",
+    "searchPlaceholderPublic": "Pesquisar por nome ou servidor…",
+    "noSearchResults": "Nenhum aplicativo corresponde à sua pesquisa.",
+    "matchCount": "{count} de {total}",
     "accept": "Aceitar",
     "waitlist": "Lista de espera",
     "promote": "Promover",
@@ -1108,11 +1114,7 @@
     "errorPlayerNameRequired": "É necessário nomear o jogador.",
     "errorSourceServerRequired": "É necessário um servidor de origem.",
     "errorPower": "A potência deve ser um número inteiro.",
-    "errorGeneric": "Algo deu errado.",
-    "searchPlaceholderAdmin": "Pesquise por nome, servidor, guilda ou UID…",
-    "searchPlaceholderPublic": "Pesquisar por nome ou servidor…",
-    "noSearchResults": "Nenhum aplicativo corresponde à sua pesquisa.",
-    "matchCount": "{count} de {total}"
+    "errorGeneric": "Algo deu errado."
   },
   "migrationTrackerImport": {
     "title": "Servidor nº {serverNumber} — Importar aplicativos",
@@ -1211,5 +1213,21 @@
     "errorCloseAfterOpen": "A data de encerramento deve ser posterior à data de abertura.",
     "errorGeneric": "Algo deu errado. Por favor, tente novamente.",
     "backToOverview": "← Voltar ao Rastreador de Migração"
+  },
+  "directory": {
+    "title": "Diretório de Jogadores",
+    "subtitle": "{count, plural, =0 { Nenhum jogador encontrado } one { # jogador } other { # jogadores } } .",
+    "searchPlaceholder": "Pesquisar pelo nome no jogo…",
+    "allServers": "Todos os servidores",
+    "allGuilds": "Todas as guildas",
+    "serverLabel": "Servidor nº {serverNumber}",
+    "noGuild": "Sem guilda",
+    "unclaimedBadge": "Não reclamado",
+    "reset": "Reiniciar",
+    "noMatches": "Nenhum jogador corresponde a esses filtros.",
+    "emptyState": "Ainda não há jogadores.",
+    "prev": "← Anterior",
+    "next": "Próximo →",
+    "pageOf": "Página {page} de {total}"
   }
 }

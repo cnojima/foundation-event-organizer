@@ -43,7 +43,8 @@
     "createGuild": "ギルドを作成する",
     "adminHelp": "管理者ヘルプ",
     "help": "ヘルプ",
-    "myAccount": "私のアカウント"
+    "myAccount": "私のアカウント",
+    "directory": "ディレクトリ"
   },
   "alerts": {
     "heading": "{count, plural, one { # 通知} other { # 通知} }",
@@ -828,7 +829,8 @@
       "leaderboard": "サーバーランキング",
       "members": "ギルド名簿",
       "duels": "あなたの決闘",
-      "me": "アカウント"
+      "me": "アカウント",
+      "directory": "すべてのプレイヤー、すべてのギルド"
     }
   },
   "signin": {
@@ -1089,6 +1091,10 @@
     "empty": "保留中の申請はありません。",
     "emptyRoster": "今回の募集期間には応募がありませんでした。",
     "closedNotice": "この移行期間は終了しました。ここに記載されている内容は何も変更できません。これが最終記録です。",
+    "searchPlaceholderAdmin": "名前、サーバー、ギルド、またはUIDで検索…",
+    "searchPlaceholderPublic": "名前またはサーバーで検索…",
+    "noSearchResults": "検索条件に一致するアプリケーションは見つかりませんでした。",
+    "matchCount": "{count} / {total}",
     "accept": "受け入れる",
     "waitlist": "待機リスト",
     "promote": "推進する",
@@ -1107,11 +1113,7 @@
     "errorPlayerNameRequired": "プレイヤー名は必須です。",
     "errorSourceServerRequired": "ソースサーバーが必要です。",
     "errorPower": "べき乗は整数でなければならない。",
-    "errorGeneric": "何かがおかしくなりました。",
-    "searchPlaceholderAdmin": "名前、サーバー、ギルド、またはUIDで検索…",
-    "searchPlaceholderPublic": "名前またはサーバーで検索…",
-    "noSearchResults": "検索条件に一致するアプリケーションは見つかりませんでした。",
-    "matchCount": "{count} / {total}"
+    "errorGeneric": "何かがおかしくなりました。"
   },
   "migrationTrackerImport": {
     "title": "サーバー番号{serverNumber} — アプリケーションのインポート",
@@ -1210,5 +1212,21 @@
     "errorCloseAfterOpen": "締め切り日は開始日以降でなければなりません。",
     "errorGeneric": "エラーが発生しました。もう一度お試しください。",
     "backToOverview": "← マイグレーショントラッカーに戻る"
+  },
+  "directory": {
+    "title": "プレイヤーディレクトリ",
+    "subtitle": "{count, plural, =0 {プレイヤーが見つかりませんでした} one { # プレイヤー} other { # プレイヤー} } 。",
+    "searchPlaceholder": "ゲーム内名で検索…",
+    "allServers": "すべてのサーバー",
+    "allGuilds": "すべてのギルド",
+    "serverLabel": "サーバー番号： {serverNumber}",
+    "noGuild": "ギルドなし",
+    "unclaimedBadge": "未請求",
+    "reset": "リセット",
+    "noMatches": "これらの条件に一致するプレイヤーはいません。",
+    "emptyState": "まだプレイヤーはいません。",
+    "prev": "← 前へ",
+    "next": "次へ →",
+    "pageOf": "ページ{page} / {total}"
   }
 }

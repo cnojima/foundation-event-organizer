@@ -43,7 +43,8 @@
     "createGuild": "Створити гільдію",
     "adminHelp": "Допомога адміністратора",
     "help": "Допомога",
-    "myAccount": "Мій обліковий запис"
+    "myAccount": "Мій обліковий запис",
+    "directory": "Довідник"
   },
   "alerts": {
     "heading": "{count, plural, one { # сповіщення } other { # сповіщення } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Рейтинги серверів",
       "members": "Список учасників гільдії",
       "duels": "Ваші дуелі",
-      "me": "Обліковий запис"
+      "me": "Обліковий запис",
+      "directory": "Кожен гравець, кожна гільдія"
     }
   },
   "signin": {
@@ -1090,6 +1092,10 @@
     "empty": "Немає заявок, що очікують розгляду.",
     "emptyRoster": "На це вікно не було подано жодної заявки.",
     "closedNotice": "Це вікно міграції закрито. Тут немає нічого, що можна було б використати — це остаточний запис.",
+    "searchPlaceholderAdmin": "Пошук за назвою, сервером, гільдією або UID…",
+    "searchPlaceholderPublic": "Пошук за назвою або сервером…",
+    "noSearchResults": "Немає програм, що відповідають вашому пошуку.",
+    "matchCount": "{count} з {total}",
     "accept": "Прийняти",
     "waitlist": "Список очікування",
     "promote": "Просувати",
@@ -1108,11 +1114,7 @@
     "errorPlayerNameRequired": "Ім'я гравця обов'язкове.",
     "errorSourceServerRequired": "Вихідний сервер обов'язковий.",
     "errorPower": "Степінь має бути цілим числом.",
-    "errorGeneric": "Щось пішло не так.",
-    "searchPlaceholderAdmin": "Пошук за назвою, сервером, гільдією або UID…",
-    "searchPlaceholderPublic": "Пошук за назвою або сервером…",
-    "noSearchResults": "Немає програм, що відповідають вашому пошуку.",
-    "matchCount": "{count} з {total}"
+    "errorGeneric": "Щось пішло не так."
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Імпорт програм",
@@ -1211,5 +1213,21 @@
     "errorCloseAfterOpen": "Дата закриття має бути після дати відкриття.",
     "errorGeneric": "Щось пішло не так. Спробуйте ще раз.",
     "backToOverview": "← Назад до Відстеження міграції"
+  },
+  "directory": {
+    "title": "Каталог гравців",
+    "subtitle": "{count, plural, =0 { Гравців не знайдено } one { # гравців } other { # гравців } } .",
+    "searchPlaceholder": "Пошук за назвою в грі…",
+    "allServers": "Усі сервери",
+    "allGuilds": "Усі гільдії",
+    "serverLabel": "Сервер № {serverNumber}",
+    "noGuild": "Без гільдії",
+    "unclaimedBadge": "Незаявлені",
+    "reset": "Скинути",
+    "noMatches": "Жоден гравець не відповідає цим фільтрам.",
+    "emptyState": "Ще немає гравців.",
+    "prev": "← Попередній",
+    "next": "Далі →",
+    "pageOf": "Сторінка {page} з {total}"
   }
 }

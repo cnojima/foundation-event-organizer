@@ -43,7 +43,8 @@
     "createGuild": "Opprett laug",
     "adminHelp": "Administratorhjelp",
     "help": "Hjelp",
-    "myAccount": "Min konto"
+    "myAccount": "Min konto",
+    "directory": "Katalog"
   },
   "alerts": {
     "heading": "{count, plural, one { # varsel } other { # varsler } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Serverrangeringer",
       "members": "Gildeliste",
       "duels": "Duellene dine",
-      "me": "Konto"
+      "me": "Konto",
+      "directory": "Hver spiller, hver laug"
     }
   },
   "signin": {
@@ -1090,6 +1092,10 @@
     "empty": "Ingen ventende søknader.",
     "emptyRoster": "Ingen søknader ble sendt inn for dette vinduet.",
     "closedNotice": "Dette migreringsvinduet er avsluttet. Ingenting her er handlingsrettet – dette er den endelige registreringen.",
+    "searchPlaceholderAdmin": "Søk etter navn, server, laug eller UID…",
+    "searchPlaceholderPublic": "Søk etter navn eller server…",
+    "noSearchResults": "Ingen applikasjoner samsvarer med søket ditt.",
+    "matchCount": "{count} av {total}",
     "accept": "Akseptere",
     "waitlist": "Venteliste",
     "promote": "Reklamere",
@@ -1108,11 +1114,7 @@
     "errorPlayerNameRequired": "Spillernavn er obligatorisk.",
     "errorSourceServerRequired": "Kildeserver er påkrevd.",
     "errorPower": "Potens må være et helt tall.",
-    "errorGeneric": "Noe gikk galt.",
-    "searchPlaceholderAdmin": "Søk etter navn, server, laug eller UID…",
-    "searchPlaceholderPublic": "Søk etter navn eller server…",
-    "noSearchResults": "Ingen applikasjoner samsvarer med søket ditt.",
-    "matchCount": "{count} av {total}"
+    "errorGeneric": "Noe gikk galt."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} – Importer applikasjoner",
@@ -1211,5 +1213,21 @@
     "errorCloseAfterOpen": "Stengningsdatoen må være etter åpningsdatoen.",
     "errorGeneric": "Noe gikk galt. Prøv igjen.",
     "backToOverview": "← Tilbake til migrasjonssporing"
+  },
+  "directory": {
+    "title": "Spillerkatalog",
+    "subtitle": "{count, plural, =0 { Ingen spillere funnet } one { # spiller } other { # spillere } } .",
+    "searchPlaceholder": "Søk etter navn i spillet…",
+    "allServers": "Alle servere",
+    "allGuilds": "Alle laug",
+    "serverLabel": "Server # {serverNumber}",
+    "noGuild": "Ingen laug",
+    "unclaimedBadge": "Uavhentet",
+    "reset": "Tilbakestill",
+    "noMatches": "Ingen spillere samsvarer med disse filtrene.",
+    "emptyState": "Ingen spillere ennå.",
+    "prev": "← Forrige",
+    "next": "Neste →",
+    "pageOf": "Side {page} av {total}"
   }
 }

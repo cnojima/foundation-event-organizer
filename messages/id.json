@@ -43,7 +43,8 @@
     "createGuild": "Buat Persekutuan",
     "adminHelp": "Bantuan Admin",
     "help": "Membantu",
-    "myAccount": "Akun Saya"
+    "myAccount": "Akun Saya",
+    "directory": "Direktori"
   },
   "alerts": {
     "discord_unlinked": {
@@ -827,7 +828,8 @@
       "leaderboard": "Peringkat server",
       "members": "Daftar anggota guild",
       "duels": "Duel Anda",
-      "me": "Akun"
+      "me": "Akun",
+      "directory": "Setiap pemain, setiap guild"
     }
   },
   "signin": {
@@ -1088,6 +1090,10 @@
     "empty": "Tidak ada aplikasi yang sedang diproses.",
     "emptyRoster": "Tidak ada permohonan yang diajukan untuk periode ini.",
     "closedNotice": "Jendela migrasi ini telah ditutup. Tidak ada tindakan yang dapat dilakukan di sini — ini adalah catatan terakhir.",
+    "searchPlaceholderAdmin": "Cari berdasarkan nama, server, guild, atau UID…",
+    "searchPlaceholderPublic": "Cari berdasarkan nama atau server…",
+    "noSearchResults": "Tidak ada aplikasi yang sesuai dengan pencarian Anda.",
+    "matchCount": "{count} dari {total}",
     "accept": "Menerima",
     "waitlist": "Daftar Tunggu",
     "promote": "Mendorong",
@@ -1106,11 +1112,7 @@
     "errorPlayerNameRequired": "Nama pemain wajib diisi.",
     "errorSourceServerRequired": "Server sumber diperlukan.",
     "errorPower": "Pangkat harus berupa bilangan bulat.",
-    "errorGeneric": "Terjadi kesalahan.",
-    "searchPlaceholderAdmin": "Cari berdasarkan nama, server, guild, atau UID…",
-    "searchPlaceholderPublic": "Cari berdasarkan nama atau server…",
-    "noSearchResults": "Tidak ada aplikasi yang sesuai dengan pencarian Anda.",
-    "matchCount": "{count} dari {total}"
+    "errorGeneric": "Terjadi kesalahan."
   },
   "migrationTrackerImport": {
     "title": "Server # {serverNumber} — Impor aplikasi",
@@ -1209,5 +1211,20 @@
     "errorCloseAfterOpen": "Tanggal penutupan harus setelah tanggal pembukaan.",
     "errorGeneric": "Terjadi kesalahan. Silakan coba lagi.",
     "backToOverview": "← Kembali ke Pelacak Migrasi"
+  },
+  "directory": {
+    "title": "Direktori Pemain",
+    "searchPlaceholder": "Cari berdasarkan nama dalam game…",
+    "allServers": "Semua server",
+    "allGuilds": "Semua serikat",
+    "serverLabel": "Server # {serverNumber}",
+    "noGuild": "Tidak ada serikat",
+    "unclaimedBadge": "Tidak diklaim",
+    "reset": "Mengatur ulang",
+    "noMatches": "Tidak ada pemain yang sesuai dengan filter tersebut.",
+    "emptyState": "Belum ada pemain.",
+    "prev": "← Sebelumnya",
+    "next": "Selanjutnya →",
+    "pageOf": "Halaman {page} dari {total}"
   }
 }

@@ -43,7 +43,8 @@
     "createGuild": "Skapa gille",
     "adminHelp": "Administratörshjälp",
     "help": "Hjälp",
-    "myAccount": "Mitt konto"
+    "myAccount": "Mitt konto",
+    "directory": "Katalog"
   },
   "alerts": {
     "heading": "{count, plural, one { # avisering } other { # aviseringar } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Serverrankningar",
       "members": "Gildets lista",
       "duels": "Dina dueller",
-      "me": "Konto"
+      "me": "Konto",
+      "directory": "Varje spelare, varje gille"
     }
   },
   "signin": {
@@ -1090,6 +1092,10 @@
     "empty": "Inga väntande ansökningar.",
     "emptyRoster": "Inga ansökningar lämnades in för detta fönster.",
     "closedNotice": "Det här migreringsfönstret har stängts. Ingenting här är åtgärdbart – detta är den slutliga posten.",
+    "searchPlaceholderAdmin": "Sök efter namn, server, gille eller UID…",
+    "searchPlaceholderPublic": "Sök efter namn eller server…",
+    "noSearchResults": "Inga applikationer matchar din sökning.",
+    "matchCount": "{count} av {total}",
     "accept": "Acceptera",
     "waitlist": "Väntelista",
     "promote": "Främja",
@@ -1108,11 +1114,7 @@
     "errorPlayerNameRequired": "Spelarens namn krävs.",
     "errorSourceServerRequired": "Källserver krävs.",
     "errorPower": "Potens måste vara ett heltal.",
-    "errorGeneric": "Något gick fel.",
-    "searchPlaceholderAdmin": "Sök efter namn, server, gille eller UID…",
-    "searchPlaceholderPublic": "Sök efter namn eller server…",
-    "noSearchResults": "Inga applikationer matchar din sökning.",
-    "matchCount": "{count} av {total}"
+    "errorGeneric": "Något gick fel."
   },
   "migrationTrackerImport": {
     "title": "Servernummer {serverNumber} — Importera applikationer",
@@ -1211,5 +1213,21 @@
     "errorCloseAfterOpen": "Stängningsdatumet måste infalla efter öppningsdatumet.",
     "errorGeneric": "Något gick fel. Försök igen.",
     "backToOverview": "← Tillbaka till Migrationsspåraren"
+  },
+  "directory": {
+    "title": "Spelarkatalog",
+    "subtitle": "{count, plural, =0 { Inga spelare hittades } one { # player } other { # players } } .",
+    "searchPlaceholder": "Sök efter namn i spelet…",
+    "allServers": "Alla servrar",
+    "allGuilds": "Alla gillen",
+    "serverLabel": "Servernummer {serverNumber}",
+    "noGuild": "Ingen gille",
+    "unclaimedBadge": "Ej hämtad",
+    "reset": "Återställa",
+    "noMatches": "Inga spelare matchar dessa filter.",
+    "emptyState": "Inga spelare än.",
+    "prev": "← Föregående",
+    "next": "Nästa →",
+    "pageOf": "Sida {page} av {total}"
   }
 }

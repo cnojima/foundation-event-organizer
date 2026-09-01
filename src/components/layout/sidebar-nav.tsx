@@ -169,7 +169,8 @@ const NAV_ITEMS: NavItem[] = [
   { labelKey: "findPlayers", href: "/players", icon: ICONS.crosshair, visibility: "signedInWithGuild", category: "play", socialFeature: true },
   { labelKey: "leaderboard", href: "/leaderboard", icon: ICONS.trophy, visibility: "signedInWithGuild", category: "play", socialFeature: true },
   { labelKey: "members", href: "/members", icon: ICONS.members, visibility: "memberOnly", category: "play" },
-  
+  { labelKey: "directory", href: "/directory", icon: ICONS.players, visibility: "signedInWithGuild", category: "play" },
+
   // ---- Manage: guild discovery (everyone) + guild-admin tools ----
   // Event management lives on the merged "/" listing now — admins get
   // role-based CTAs there (+ New event, kind badges, Deleted tab) instead of

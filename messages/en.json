@@ -30,6 +30,7 @@
     "duels": "Duels",
     "leaderboard": "Leaderboard",
     "players": "Players",
+    "directory": "Directory",
     "members": "Members",
     "invites": "Invites",
     "setup": "Setup",
@@ -339,6 +340,22 @@
     "emptyState": "No discoverable players on your server yet.",
     "needsServerNumber": "Set a Server # for your guild in <settingsLink>Guild Settings</settingsLink> to discover players on the same server.",
     "noGuildsOnServer": "No other guilds on this server have been registered yet.",
+    "prev": "← Previous",
+    "next": "Next →",
+    "pageOf": "Page {page} of {total}"
+  },
+  "directory": {
+    "title": "Player Directory",
+    "subtitle": "{count, plural, =0 {No players found} one {# player} other {# players}}.",
+    "searchPlaceholder": "Search by in-game name…",
+    "allServers": "All servers",
+    "allGuilds": "All guilds",
+    "serverLabel": "Server #{serverNumber}",
+    "noGuild": "No guild",
+    "unclaimedBadge": "Unclaimed",
+    "reset": "Reset",
+    "noMatches": "No players match those filters.",
+    "emptyState": "No players yet.",
     "prev": "← Previous",
     "next": "Next →",
     "pageOf": "Page {page} of {total}"
@@ -828,7 +845,8 @@
       "leaderboard": "Server rankings",
       "members": "Guild roster",
       "duels": "Your duels",
-      "me": "Account"
+      "me": "Account",
+      "directory": "Every player, every guild"
     }
   },
   "signin": {

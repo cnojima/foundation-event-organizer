@@ -43,7 +43,8 @@
     "createGuild": "Создать гильдию",
     "adminHelp": "Помощь администратора",
     "help": "Помощь",
-    "myAccount": "Мой счет"
+    "myAccount": "Мой счет",
+    "directory": "Каталог"
   },
   "alerts": {
     "heading": "{count, plural, one { # notification } other { # notifications } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Рейтинги серверов",
       "members": "Список членов гильдии",
       "duels": "Ваши дуэли",
-      "me": "Счет"
+      "me": "Счет",
+      "directory": "Каждый игрок, каждая гильдия"
     }
   },
   "signin": {
@@ -1089,6 +1091,10 @@
     "empty": "Заявки, находящиеся на рассмотрении, отсутствуют.",
     "emptyRoster": "Заявки на этот период не подавались.",
     "closedNotice": "Окно для миграции закрыто. Никаких действий предпринимать не нужно — это окончательная запись.",
+    "searchPlaceholderAdmin": "Поиск по имени, серверу, гильдии или UID…",
+    "searchPlaceholderPublic": "Поиск по имени или серверу…",
+    "noSearchResults": "По вашему запросу не найдено ни одного приложения.",
+    "matchCount": "{count} из {total}",
     "accept": "Принимать",
     "waitlist": "Список ожидания",
     "promote": "Продвигать",
@@ -1107,11 +1113,7 @@
     "errorPlayerNameRequired": "Необходимо указать имя игрока.",
     "errorSourceServerRequired": "Требуется исходный сервер.",
     "errorPower": "Мощность должна быть целым числом.",
-    "errorGeneric": "Что-то пошло не так.",
-    "searchPlaceholderAdmin": "Поиск по имени, серверу, гильдии или UID…",
-    "searchPlaceholderPublic": "Поиск по имени или серверу…",
-    "noSearchResults": "По вашему запросу не найдено ни одного приложения.",
-    "matchCount": "{count} из {total}"
+    "errorGeneric": "Что-то пошло не так."
   },
   "migrationTrackerImport": {
     "title": "Сервер № {serverNumber} — Импорт приложений",
@@ -1210,5 +1212,21 @@
     "errorCloseAfterOpen": "Дата закрытия должна быть после даты открытия.",
     "errorGeneric": "Произошла ошибка. Пожалуйста, попробуйте еще раз.",
     "backToOverview": "← Назад к трекеру миграции"
+  },
+  "directory": {
+    "title": "Справочник игроков",
+    "subtitle": "{count, plural, =0 { Игроки не найдены } one { # игрок } other { # игроки } } .",
+    "searchPlaceholder": "Поиск по внутриигровому имени…",
+    "allServers": "Все серверы",
+    "allGuilds": "Все гильдии",
+    "serverLabel": "Сервер № {serverNumber}",
+    "noGuild": "Нет гильдии",
+    "unclaimedBadge": "Невостребованный",
+    "reset": "Перезагрузить",
+    "noMatches": "Ни один игрок не соответствует этим фильтрам.",
+    "emptyState": "Игроков пока нет.",
+    "prev": "← Предыдущая",
+    "next": "Далее →",
+    "pageOf": "Страница {page} из {total}"
   }
 }

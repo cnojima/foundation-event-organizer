@@ -43,7 +43,8 @@
     "createGuild": "Tạo Bang hội",
     "adminHelp": "Trợ giúp quản trị viên",
     "help": "Giúp đỡ",
-    "myAccount": "Tài khoản của tôi"
+    "myAccount": "Tài khoản của tôi",
+    "directory": "Thư mục"
   },
   "alerts": {
     "heading": "{count, plural, one { # thông báo } other { # thông báo } }",
@@ -828,7 +829,8 @@
       "leaderboard": "Xếp hạng máy chủ",
       "members": "Danh sách bang hội",
       "duels": "Các trận đấu của bạn",
-      "me": "Tài khoản"
+      "me": "Tài khoản",
+      "directory": "Mỗi người chơi, mỗi bang hội"
     }
   },
   "signin": {
@@ -1088,6 +1090,10 @@
     "empty": "Hiện không có đơn đăng ký nào đang chờ xử lý.",
     "emptyRoster": "Không có đơn đăng ký nào được nộp cho đợt này.",
     "closedNotice": "Thời gian chuyển đổi này đã kết thúc. Không có gì cần thực hiện thêm nữa — đây là bản ghi cuối cùng.",
+    "searchPlaceholderAdmin": "Tìm kiếm theo tên, máy chủ, bang hội hoặc UID…",
+    "searchPlaceholderPublic": "Tìm kiếm theo tên hoặc máy chủ…",
+    "noSearchResults": "Không có ứng dụng nào phù hợp với tìm kiếm của bạn.",
+    "matchCount": "{count} trong {total}",
     "accept": "Chấp nhận",
     "waitlist": "Danh sách chờ",
     "promote": "Khuyến khích",
@@ -1106,11 +1112,7 @@
     "errorPlayerNameRequired": "Tên người chơi là bắt buộc.",
     "errorSourceServerRequired": "Cần có máy chủ nguồn.",
     "errorPower": "Lũy thừa phải là số nguyên.",
-    "errorGeneric": "Đã xảy ra lỗi.",
-    "searchPlaceholderAdmin": "Tìm kiếm theo tên, máy chủ, bang hội hoặc UID…",
-    "searchPlaceholderPublic": "Tìm kiếm theo tên hoặc máy chủ…",
-    "noSearchResults": "Không có ứng dụng nào phù hợp với tìm kiếm của bạn.",
-    "matchCount": "{count} trong {total}"
+    "errorGeneric": "Đã xảy ra lỗi."
   },
   "migrationTrackerImport": {
     "title": "Máy chủ # {serverNumber} — Nhập ứng dụng",
@@ -1209,5 +1211,21 @@
     "errorCloseAfterOpen": "Ngày đóng cửa phải sau ngày mở cửa.",
     "errorGeneric": "Đã xảy ra lỗi. Vui lòng thử lại.",
     "backToOverview": "← Quay lại Trình theo dõi di cư"
+  },
+  "directory": {
+    "title": "Danh mục người chơi",
+    "subtitle": "{count, plural, =0 { Không tìm thấy người chơi nào } one { # người chơi } other { # người chơi } } .",
+    "searchPlaceholder": "Tìm kiếm theo tên trong game…",
+    "allServers": "Tất cả các máy chủ",
+    "allGuilds": "Tất cả các bang hội",
+    "serverLabel": "Máy chủ # {serverNumber}",
+    "noGuild": "Không có hội",
+    "unclaimedBadge": "Chưa được nhận",
+    "reset": "Cài lại",
+    "noMatches": "Không có cầu thủ nào đáp ứng các bộ lọc đó.",
+    "emptyState": "Chưa có người chơi nào.",
+    "prev": "← Trước đó",
+    "next": "Tiếp theo →",
+    "pageOf": "Trang {page} trong tổng {total}"
   }
 }
