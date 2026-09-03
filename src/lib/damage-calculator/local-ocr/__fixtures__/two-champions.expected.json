@@ -1,0 +1,10 @@
+{
+  "confident": true,
+  "stageDigit": 2,
+  "flagship": { "name": "Demerzel", "damageDealt": 1127040, "healingDone": 0, "damageReceived": 840 },
+  "champions": [
+    { "name": "Lucius Pullo", "damageDealt": 992012, "healingDone": 0, "damageReceived": 0 },
+    { "name": "Lani Verita", "damageDealt": 1114221, "healingDone": 0, "damageReceived": 0 }
+  ],
+  "enemy": { "name": "Calamity Befalls", "damageDealt": 840, "healingDone": 0, "damageReceived": 3233273 }
+}

@@ -37,6 +37,12 @@ RUN npm prune --omit=dev
 # Final stage for app image
 FROM base
 
+# Tesseract OCR binary for the damage-calculator's local screenshot-parsing
+# pipeline (src/lib/damage-calculator/local-ocr). Runtime dependency, not a
+# build tool, so it belongs in this stage rather than the build stage above.
+RUN apt-get update && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-eng \
+    && rm -rf /var/lib/apt/lists/*
+
 # Copy built application
 COPY --from=build /app /app
 

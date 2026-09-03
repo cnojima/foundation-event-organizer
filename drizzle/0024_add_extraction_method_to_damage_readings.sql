@@ -1,0 +1,1 @@
+ALTER TABLE `damage_readings` ADD `extraction_method` text;

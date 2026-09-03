@@ -4,16 +4,18 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PHASES, matchPhase, type Phase } from "@/lib/damage-calculator/phases";
 
-type QueuedFile = { phase: Phase; file: File; relativePath: string };
+type QueuedFile = { phase: Phase | null; file: File; relativePath: string };
 
 type ProcessingRow = {
-  phase: Phase;
+  phase: Phase | null;
   fileName: string;
   status: "pending" | "uploading" | "done" | "error";
   fleetName?: string;
   warning?: string | null;
   error?: string;
 };
+
+type UploadMode = "folder" | "flat";
 
 const IMAGE_EXTENSIONS = [".png", ".jpg", ".jpeg", ".webp"];
 
@@ -26,6 +28,7 @@ function isImageFile(file: File): boolean {
 export function NewSessionForm() {
   const router = useRouter();
   const folderInputRef = useRef<HTMLInputElement | null>(null);
+  const flatInputRef = useRef<HTMLInputElement | null>(null);
 
   // webkitdirectory/directory aren't in React's typed input attributes —
   // set them imperatively on the underlying DOM node instead.
@@ -36,6 +39,7 @@ export function NewSessionForm() {
     el.setAttribute("directory", "");
   }, []);
 
+  const [mode, setMode] = useState<UploadMode>("folder");
   const [label, setLabel] = useState("");
   const [eventName, setEventName] = useState("Calamity Befalls");
   const [queued, setQueued] = useState<QueuedFile[]>([]);
@@ -47,7 +51,10 @@ export function NewSessionForm() {
 
   const queuedByPhase = useMemo(() => {
     const map = new Map<Phase, number>();
-    for (const q of queued) map.set(q.phase, (map.get(q.phase) ?? 0) + 1);
+    for (const q of queued) {
+      if (!q.phase) continue;
+      map.set(q.phase, (map.get(q.phase) ?? 0) + 1);
+    }
     return map;
   }, [queued]);
 
@@ -97,6 +104,35 @@ export function NewSessionForm() {
     }
   }
 
+  function handleFlatSelect(fileList: FileList | null) {
+    setSubmitError(null);
+    setRows([]);
+    setSessionId(null);
+    if (!fileList || fileList.length === 0) {
+      setQueued([]);
+      setUnrecognized([]);
+      return;
+    }
+
+    const files = Array.from(fileList);
+    const nextUnrecognized: string[] = [];
+    const nextQueued: QueuedFile[] = [];
+    for (const file of files) {
+      if (!isImageFile(file)) {
+        nextUnrecognized.push(file.name);
+        continue;
+      }
+      nextQueued.push({ phase: null, file, relativePath: file.name });
+    }
+    // Filenames are sequential capture order (e.g. IMG_3459, IMG_3460, …) —
+    // sort so upload order matches chronological order, since sub-stage
+    // detection on the server relies on that ordering.
+    nextQueued.sort((a, b) => a.file.name.localeCompare(b.file.name));
+
+    setQueued(nextQueued);
+    setUnrecognized(nextUnrecognized);
+  }
+
   async function startUpload() {
     if (queued.length === 0 || !label.trim()) return;
     setSubmitError(null);
@@ -120,11 +156,18 @@ export function NewSessionForm() {
       setSessionId(createdSessionId);
     }
 
-    // Sort by PHASES order so the progress list reads top-to-bottom the same
-    // way the final pivot table will.
-    const ordered = [...queued].sort(
-      (a, b) => PHASES.indexOf(a.phase) - PHASES.indexOf(b.phase)
-    );
+    // Folder mode: sort by PHASES order so the progress list reads
+    // top-to-bottom the same way the final pivot table will. Flat mode:
+    // already sorted into chronological (filename) order by handleFlatSelect
+    // — that order must be preserved and uploaded sequentially, since the
+    // server infers each screenshot's sub-stage from what's already been
+    // recorded for this session.
+    const ordered =
+      mode === "folder"
+        ? [...queued].sort(
+            (a, b) => PHASES.indexOf(a.phase as Phase) - PHASES.indexOf(b.phase as Phase)
+          )
+        : queued;
     const initialRows: ProcessingRow[] = ordered.map((q) => ({
       phase: q.phase,
       fileName: q.file.name,
@@ -140,7 +183,7 @@ export function NewSessionForm() {
       );
       const fd = new FormData();
       fd.append("image", q.file);
-      fd.append("phase", q.phase);
+      if (q.phase) fd.append("phase", q.phase);
       const res = await fetch(
         `/api/damage-calculator/sessions/${createdSessionId}/readings`,
         { method: "POST", body: fd }
@@ -148,6 +191,7 @@ export function NewSessionForm() {
       if (res.ok) {
         const data = (await res.json()) as {
           fleet: { name: string };
+          phase: Phase;
           crossCheckWarning: string | null;
         };
         setRows((prev) =>
@@ -155,6 +199,7 @@ export function NewSessionForm() {
             idx === i
               ? {
                   ...r,
+                  phase: data.phase,
                   status: "done",
                   fleetName: data.fleet.name,
                   warning: data.crossCheckWarning,
@@ -216,24 +261,80 @@ export function NewSessionForm() {
           </label>
         </div>
 
-        <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
-          Screenshot folder
-        </label>
-        <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
-          Pick the session folder (e.g. <code>2026-07-07_1</code>) — each phase
-          subfolder (IV, III.iii, III.ii, …) should contain the fleets&apos;
-          screenshots.
-        </p>
-        <input
-          ref={folderInputRef}
-          type="file"
-          multiple
-          onChange={(e) => handleFolderSelect(e.target.files)}
-          disabled={uploading}
-          className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-violet-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-violet-700 disabled:opacity-70 dark:file:bg-violet-950/40 dark:file:text-violet-300"
-        />
+        <div className="mb-3 flex gap-4 text-sm">
+          <label className="flex items-center gap-1.5">
+            <input
+              type="radio"
+              name="upload-mode"
+              checked={mode === "folder"}
+              disabled={uploading}
+              onChange={() => {
+                setMode("folder");
+                setQueued([]);
+                setUnrecognized([]);
+              }}
+            />
+            Folder (phase subfolders)
+          </label>
+          <label className="flex items-center gap-1.5">
+            <input
+              type="radio"
+              name="upload-mode"
+              checked={mode === "flat"}
+              disabled={uploading}
+              onChange={() => {
+                setMode("flat");
+                setQueued([]);
+                setUnrecognized([]);
+              }}
+            />
+            Flat screenshots (auto-detect stage)
+          </label>
+        </div>
 
-        {queued.length > 0 && (
+        {mode === "folder" ? (
+          <>
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Screenshot folder
+            </label>
+            <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
+              Pick the session folder (e.g. <code>2026-07-07_1</code>) — each phase
+              subfolder (IV, III.iii, III.ii, …) should contain the fleets&apos;
+              screenshots.
+            </p>
+            <input
+              ref={folderInputRef}
+              type="file"
+              multiple
+              onChange={(e) => handleFolderSelect(e.target.files)}
+              disabled={uploading}
+              className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-violet-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-violet-700 disabled:opacity-70 dark:file:bg-violet-950/40 dark:file:text-violet-300"
+            />
+          </>
+        ) : (
+          <>
+            <label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Screenshots
+            </label>
+            <p className="mb-2 text-xs text-gray-500 dark:text-gray-400">
+              Select any flat batch of screenshots — the major stage (I-IV) is
+              read from the numeric badge on the enemy portrait. The sub-stage
+              (.i/.ii/.iii) is inferred from upload order, so screenshots must
+              be selected in the order they were taken.
+            </p>
+            <input
+              ref={flatInputRef}
+              type="file"
+              multiple
+              accept="image/*"
+              onChange={(e) => handleFlatSelect(e.target.files)}
+              disabled={uploading}
+              className="block w-full text-sm file:mr-3 file:rounded-md file:border-0 file:bg-violet-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-violet-700 disabled:opacity-70 dark:file:bg-violet-950/40 dark:file:text-violet-300"
+            />
+          </>
+        )}
+
+        {queued.length > 0 && mode === "folder" && (
           <div className="mt-3 text-xs text-gray-600 dark:text-gray-400">
             <p className="font-medium text-gray-700 dark:text-gray-300">
               {queued.length} screenshot{queued.length === 1 ? "" : "s"} recognized:
@@ -247,10 +348,18 @@ export function NewSessionForm() {
             </ul>
           </div>
         )}
+        {queued.length > 0 && mode === "flat" && (
+          <p className="mt-3 text-xs text-gray-600 dark:text-gray-400">
+            {queued.length} screenshot{queued.length === 1 ? "" : "s"} queued, sorted by
+            filename — stage will be detected during upload.
+          </p>
+        )}
         {unrecognized.length > 0 && (
           <p className="mt-2 rounded border border-amber-200 bg-amber-50 p-2 text-xs text-amber-800 dark:border-amber-900/60 dark:bg-amber-950/40 dark:text-amber-300">
-            Skipped {unrecognized.length} file{unrecognized.length === 1 ? "" : "s"} not
-            in a recognized phase folder ({PHASES.join(", ")}).
+            Skipped {unrecognized.length} file{unrecognized.length === 1 ? "" : "s"}
+            {mode === "folder"
+              ? ` not in a recognized phase folder (${PHASES.join(", ")}).`
+              : " that aren't images."}
           </p>
         )}
 
@@ -302,7 +411,7 @@ export function NewSessionForm() {
                       : "border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-800/50"
                 }`}
               >
-                <span className="font-mono">{r.phase}</span>
+                <span className="font-mono">{r.phase ?? "auto"}</span>
                 <span className="flex-1 truncate text-gray-600 dark:text-gray-400">
                   {r.fileName}
                 </span>

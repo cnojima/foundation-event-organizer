@@ -16,6 +16,11 @@ export type ExtractedReading = {
   };
   champions: ExtractedEntity[];
   enemy: ExtractedEntity;
+  // The small numeric badge on the corner of the enemy portrait (upper
+  // right) — this is the raid's major stage number (1-4), confirmed present
+  // on every "Calamity Befalls" card. Used to auto-detect phase for flat,
+  // non-folder-organized screenshot uploads.
+  stageDigit: 1 | 2 | 3 | 4;
 };
 
 const ENTITY_SCHEMA = {
@@ -52,8 +57,9 @@ const READING_SCHEMA = {
       items: ENTITY_SCHEMA,
     },
     enemy: ENTITY_SCHEMA,
+    stageDigit: { type: "integer", enum: [1, 2, 3, 4] },
   },
-  required: ["flagship", "champions", "enemy"],
+  required: ["flagship", "champions", "enemy", "stageDigit"],
 } as const;
 
 const SYSTEM_PROMPT = `You extract battle statistics from a single mobile-game "damage stats card" screenshot for the raid event Calamity Befalls.
@@ -65,6 +71,8 @@ The card has two columns:
 Critical: large numbers visually wrap onto a second line directly below the main value (e.g. a number rendered as "70,330,36" with "7" on the line just below it is actually 70,330,367 — concatenate the wrapped digits into ONE number). Never report a truncated number, and never invent digits you can't see. If a stat shows 0 or is blank, report 0.
 
 For the flagship only, also give your best guess at its elemental type (beam / kinetic / ion) from the small style icon badge near its avatar or level. If you can't confidently tell, use "unknown" — do not guess randomly.
+
+The enemy portrait (top right, next to "Calamity Befalls") carries a small numeric badge in its bottom-right corner, showing a single digit 1-4 — this is the raid's major stage number. Report it as stageDigit.
 
 Preserve exact name spelling, including accented characters. Return only the champions actually visible (there may be fewer than 3).`;
 

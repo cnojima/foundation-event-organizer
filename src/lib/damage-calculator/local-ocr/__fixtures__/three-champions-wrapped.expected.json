@@ -1,0 +1,12 @@
+{
+  "confident": false,
+  "stageDigit": 4,
+  "note": "Hand-verified ground truth below (cross-check sums confirmed consistent by hand). Killer Bee's damageDealt wraps to a 2nd digit line AND sits close enough to its heal column that Tesseract's word segmentation merges the two into one low-confidence word — exactly the case the confidence gate exists to catch. extractBattleReadingLocal is expected to return confident:false for this fixture; the route falls back to Claude for it. Ground truth kept here so a future local-OCR improvement can be checked against it.",
+  "flagship": { "name": "Opportunity", "damageDealt": 179347112, "healingDone": 0, "damageReceived": 2016 },
+  "champions": [
+    { "name": "Eva von Trier", "damageDealt": 54871882, "healingDone": 0, "damageReceived": 0 },
+    { "name": "Jodie Béart", "damageDealt": 106779708, "healingDone": 0, "damageReceived": 0 },
+    { "name": "Killer Bee", "damageDealt": 55180140, "healingDone": 2016, "damageReceived": 0 }
+  ],
+  "enemy": { "name": "Calamity Befalls", "damageDealt": 2016, "healingDone": 0, "damageReceived": 396178842 }
+}

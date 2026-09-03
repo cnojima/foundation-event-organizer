@@ -7,11 +7,17 @@ import { damageFleets, damageReadings, damageSessions } from "@/db/schema";
 import { and, eq, sql } from "drizzle-orm";
 import { generateId } from "@/lib/ids";
 import { PHASES, type Phase } from "@/lib/damage-calculator/phases";
+import { resolveFlatPhase } from "@/lib/damage-calculator/resolve-phase";
 import {
   ALLOWED_MEDIA_TYPES,
   extractBattleReading,
   type AllowedMediaType,
 } from "@/lib/damage-calculator/ocr";
+import {
+  extractBattleReadingLocal,
+  type LocalReading,
+} from "@/lib/damage-calculator/local-ocr/extract";
+import { TesseractUnavailableError } from "@/lib/damage-calculator/local-ocr/tesseract";
 
 // Same cap as the member-import OCR route — a phone screenshot is a few MB;
 // anything bigger is almost certainly the wrong file.
@@ -50,14 +56,17 @@ export async function POST(
     );
   }
 
+  // Phase is optional: folder-based uploads already know it client-side and
+  // pass it explicitly, while flat uploads (no phase subfolders) omit it and
+  // rely on OCR-detected stageDigit + resolveFlatPhase below instead.
   const rawPhase = formData.get("phase");
-  if (typeof rawPhase !== "string" || !PHASES.includes(rawPhase as Phase)) {
+  if (rawPhase !== null && (typeof rawPhase !== "string" || !PHASES.includes(rawPhase as Phase))) {
     return NextResponse.json(
-      { error: `Missing or invalid phase. Must be one of: ${PHASES.join(", ")}` },
+      { error: `Invalid phase. Must be one of: ${PHASES.join(", ")}` },
       { status: 400 }
     );
   }
-  const phase = rawPhase as Phase;
+  const explicitPhase = rawPhase as Phase | null;
 
   const file = formData.get("image");
   if (!(file instanceof File)) {
@@ -86,10 +95,44 @@ export async function POST(
   const base64 = buffer.toString("base64");
 
   try {
-    const extracted = await extractBattleReading({
-      base64,
-      mediaType: mediaType as AllowedMediaType,
-    });
+    // Local OCR (Tesseract, deterministic pixel-region parsing) handles the
+    // common case for free. Claude vision is only called when: local
+    // extraction fails its own confidence gate (bad read, cross-check
+    // mismatch, unrecognized layout), the `tesseract` binary isn't
+    // available on this machine, or this is the first-ever screenshot of a
+    // new fleet (elemental-type icon guessing is genuinely icon-semantics
+    // work local OCR can't do). Worst case — local OCR unavailable or wrong
+    // every time — this behaves exactly like the fully-Claude pipeline it
+    // replaces.
+    let local: { confident: boolean; reading: LocalReading | null } = { confident: false, reading: null };
+    try {
+      local = await extractBattleReadingLocal(buffer);
+    } catch (err) {
+      if (!(err instanceof TesseractUnavailableError)) throw err;
+      console.warn("[damage-calculator readings] tesseract unavailable, using Claude fallback:", err);
+    }
+
+    let needsClaudeFallback = !local.confident || !local.reading;
+    if (local.confident && local.reading) {
+      const localFleetName = local.reading.flagship.name.trim();
+      const existingFleet = await db.query.damageFleets.findFirst({
+        where: sql`lower(${damageFleets.name}) = lower(${localFleetName})`,
+      });
+      // A brand-new fleet needs Claude for the one-time elemental-type
+      // guess (see the `if (!fleet)` branch below) — icon semantics aren't
+      // something local OCR attempts.
+      if (!existingFleet) needsClaudeFallback = true;
+    }
+
+    const extractionMethod: "local" | "claude_fallback" = needsClaudeFallback ? "claude_fallback" : "local";
+    const extracted = needsClaudeFallback
+      ? await extractBattleReading({ base64, mediaType: mediaType as AllowedMediaType })
+      : local.reading!;
+    // LocalReading's flagship has no elementTypeGuess (local OCR can't guess
+    // icon semantics) — only the Claude path (`ExtractedReading`) does.
+    const elementTypeGuess =
+      (extracted.flagship as { elementTypeGuess?: "beam" | "kinetic" | "ion" | "unknown" }).elementTypeGuess ??
+      "unknown";
 
     // Fleets persist across sessions (same player, same flagship name every
     // raid) — match case-insensitively, create on first sighting.
@@ -98,10 +141,7 @@ export async function POST(
       where: sql`lower(${damageFleets.name}) = lower(${fleetName})`,
     });
     if (!fleet) {
-      const elementType =
-        extracted.flagship.elementTypeGuess === "unknown"
-          ? null
-          : extracted.flagship.elementTypeGuess;
+      const elementType = elementTypeGuess === "unknown" ? null : elementTypeGuess;
       const newFleet = {
         id: generateId(),
         name: fleetName,
@@ -111,6 +151,14 @@ export async function POST(
       await db.insert(damageFleets).values(newFleet);
       fleet = newFleet;
     }
+
+    const phase =
+      explicitPhase ??
+      (await resolveFlatPhase({
+        sessionId,
+        digit: extracted.stageDigit,
+        fleetId: fleet.id,
+      }));
 
     // Re-uploading a screenshot for the same phase+fleet replaces the prior
     // reading rows rather than accumulating duplicates.
@@ -137,6 +185,7 @@ export async function POST(
         healingDone: extracted.flagship.healingDone,
         damageReceived: extracted.flagship.damageReceived,
         sourceFileName: file.name || null,
+        extractionMethod,
         createdAt,
       },
       ...extracted.champions.map((c) => ({
@@ -150,6 +199,7 @@ export async function POST(
         healingDone: c.healingDone,
         damageReceived: c.damageReceived,
         sourceFileName: file.name || null,
+        extractionMethod,
         createdAt,
       })),
     ];
@@ -165,6 +215,7 @@ export async function POST(
 
     return NextResponse.json({
       fleet,
+      phase,
       readings: rowsToInsert,
       crossCheckWarning,
     });

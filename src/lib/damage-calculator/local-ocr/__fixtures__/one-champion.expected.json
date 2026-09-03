@@ -1,0 +1,9 @@
+{
+  "confident": true,
+  "stageDigit": 1,
+  "flagship": { "name": "Gram", "damageDealt": 642096, "healingDone": 355, "damageReceived": 355 },
+  "champions": [
+    { "name": "Lily", "damageDealt": 4821879, "healingDone": 0, "damageReceived": 0 }
+  ],
+  "enemy": { "name": "Calamity Befalls", "damageDealt": 355, "healingDone": 0, "damageReceived": 5463975 }
+}

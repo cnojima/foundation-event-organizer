@@ -637,6 +637,11 @@ export const damageReadings = sqliteTable("damage_readings", {
   healingDone: integer("healing_done").notNull().default(0),
   damageReceived: integer("damage_received").notNull().default(0),
   sourceFileName: text("source_file_name"),
+  // Telemetry only — which extraction path produced this row. Lets us
+  // monitor how often the local Tesseract pipeline's confidence gate falls
+  // back to Claude in production. Null for rows written before this column
+  // existed.
+  extractionMethod: text("extraction_method", { enum: ["local", "claude_fallback"] }),
   createdAt: text("created_at").notNull(),
 });
 
