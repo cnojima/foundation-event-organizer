@@ -56,6 +56,66 @@ export function isValidTimeUtc(s: unknown): s is string {
   return typeof s === "string" && /^([01]\d|2[0-3]):[0-5]\d$/.test(s);
 }
 
+// Adds a whole number of weeks to an ISO timestamp. Used to step a
+// recurring template's anchor forward — since the anchor already sits at
+// the target weekday+time, adding N*7 days preserves both.
+export function addWeeksToIso(iso: string, weeks: number): string | null {
+  const t = new Date(iso).getTime();
+  if (Number.isNaN(t)) return null;
+  return new Date(t + weeks * 7 * 24 * 60 * 60 * 1000).toISOString();
+}
+
+// The next UTC occurrence of `weekday` at `timeUtc` that is at or after
+// `from`. Used to pre-fill a recurring template's first occurrence — e.g.
+// anchor weekday=1 (Monday), timeUtc="18:00" → the coming Monday at 18:00
+// UTC, or the following Monday if today is already past that time.
+export function nextWeekdayAtTimeUtc(
+  weekday: number,
+  timeUtc: string,
+  from = new Date()
+): string | null {
+  if (!isValidWeekday(weekday) || !isValidTimeUtc(timeUtc)) return null;
+  const match = /^(\d{2}):(\d{2})$/.exec(timeUtc);
+  if (!match) return null;
+  const candidate = new Date(
+    Date.UTC(
+      from.getUTCFullYear(),
+      from.getUTCMonth(),
+      from.getUTCDate(),
+      Number(match[1]),
+      Number(match[2]),
+      0,
+      0
+    )
+  );
+  let dayDelta = (weekday - candidate.getUTCDay() + 7) % 7;
+  if (dayDelta === 0 && candidate.getTime() <= from.getTime()) dayDelta = 7;
+  candidate.setUTCDate(candidate.getUTCDate() + dayDelta);
+  return candidate.toISOString();
+}
+
+// Replaces the time-of-day of `dateIso` (keeping its own UTC calendar date)
+// with `timeUtc` ("HH:MM"). Used to derive a match occurrence's squad2 start
+// from its squad1 start, which anchors the week.
+export function withTimeUtc(dateIso: string, timeUtc: string): string | null {
+  if (!isValidTimeUtc(timeUtc)) return null;
+  const d = new Date(dateIso);
+  if (Number.isNaN(d.getTime())) return null;
+  const match = /^(\d{2}):(\d{2})$/.exec(timeUtc);
+  if (!match) return null;
+  return new Date(
+    Date.UTC(
+      d.getUTCFullYear(),
+      d.getUTCMonth(),
+      d.getUTCDate(),
+      Number(match[1]),
+      Number(match[2]),
+      0,
+      0
+    )
+  ).toISOString();
+}
+
 // Numeric field limits shared by API validation + admin form constraints.
 export const DURATION_OPTIONS = [
   { label: "Not set", value: "" },
@@ -86,3 +146,71 @@ export const WEEKDAY_LABELS = [
   "Friday",
   "Saturday",
 ] as const;
+
+// Client-facing shape of an event_templates row — the admin form and the
+// create-event picker both consume this. Narrower than the Drizzle row:
+// drops guildId/createdAt/deletedAt and the generator-only bookkeeping
+// fields (recurrenceLastGeneratedStartAt, recurrenceOccurrencesGenerated),
+// none of which the UI needs.
+export type AdminTemplate = {
+  id: string;
+  templateName: string;
+  eventName: string;
+  description: string | null;
+  kind: "match" | "simple";
+  squad1Name: string;
+  squad2Name: string;
+  maxPlayers: number;
+  maxBackups: number;
+  leadershipSlots: number;
+  durationMinutes: number | null;
+  signupOpensWeekday: number | null;
+  signupOpensTimeUtc: string | null;
+  signupClosesWeekday: number | null;
+  signupClosesTimeUtc: string | null;
+  isRecurring: boolean;
+  recurrenceIntervalWeeks: number | null;
+  recurrenceAnchorWeekday: number | null;
+  recurrenceStartTimeUtc: string | null;
+  recurrenceSquad1TimeUtc: string | null;
+  recurrenceSquad2TimeUtc: string | null;
+  recurrenceEndType: "never" | "after_count" | "until_date" | null;
+  recurrenceCount: number | null;
+  recurrenceUntil: string | null;
+  seriesActive: boolean;
+};
+
+// Narrows a full event_templates row (or anything with at least these
+// fields) down to the AdminTemplate shape sent to the client. Shared by
+// every server page that lists templates for the admin form or the
+// create-event picker, so a new field only needs to be threaded through
+// once.
+export function toAdminTemplate(row: AdminTemplate): AdminTemplate {
+  return {
+    id: row.id,
+    templateName: row.templateName,
+    eventName: row.eventName,
+    description: row.description,
+    kind: row.kind,
+    squad1Name: row.squad1Name,
+    squad2Name: row.squad2Name,
+    maxPlayers: row.maxPlayers,
+    maxBackups: row.maxBackups,
+    leadershipSlots: row.leadershipSlots,
+    durationMinutes: row.durationMinutes,
+    signupOpensWeekday: row.signupOpensWeekday,
+    signupOpensTimeUtc: row.signupOpensTimeUtc,
+    signupClosesWeekday: row.signupClosesWeekday,
+    signupClosesTimeUtc: row.signupClosesTimeUtc,
+    isRecurring: row.isRecurring,
+    recurrenceIntervalWeeks: row.recurrenceIntervalWeeks,
+    recurrenceAnchorWeekday: row.recurrenceAnchorWeekday,
+    recurrenceStartTimeUtc: row.recurrenceStartTimeUtc,
+    recurrenceSquad1TimeUtc: row.recurrenceSquad1TimeUtc,
+    recurrenceSquad2TimeUtc: row.recurrenceSquad2TimeUtc,
+    recurrenceEndType: row.recurrenceEndType,
+    recurrenceCount: row.recurrenceCount,
+    recurrenceUntil: row.recurrenceUntil,
+    seriesActive: row.seriesActive,
+  };
+}

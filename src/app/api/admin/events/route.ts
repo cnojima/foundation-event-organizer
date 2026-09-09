@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { requireGuildAdminApi, resolveAdminGuildId } from "@/lib/rbac";
 import { db } from "@/db";
-import { events } from "@/db/schema";
+import { events, eventTemplates } from "@/db/schema";
+import { and, eq, isNull } from "drizzle-orm";
 import { generateId } from "@/lib/ids";
 import { sendEventNotification } from "@/bot/discord-bot";
 import { appBaseUrlFromRequest } from "@/lib/url";
@@ -24,6 +25,23 @@ export async function POST(req: Request) {
   }
 
   const kind: "match" | "simple" = body.kind === "simple" ? "simple" : "match";
+
+  // Applying a recurring template to create its first occurrence: link the
+  // event back to the template and flip the series live so the bot's poll
+  // loop starts generating subsequent occurrences. Ignored (no error) if
+  // the template isn't found/recurring/in-guild — the event still gets
+  // created as a normal one-off.
+  let seriesTemplate: typeof eventTemplates.$inferSelect | null = null;
+  if (typeof body.seriesTemplateId === "string" && body.seriesTemplateId) {
+    const template = await db.query.eventTemplates.findFirst({
+      where: and(
+        eq(eventTemplates.id, body.seriesTemplateId),
+        eq(eventTemplates.guildId, targetGuildId),
+        isNull(eventTemplates.deletedAt)
+      ),
+    });
+    if (template?.isRecurring) seriesTemplate = template;
+  }
 
   const toIso = (v: unknown): string | null => {
     if (typeof v !== "string" || v === "") return null;
@@ -52,9 +70,21 @@ export async function POST(req: Request) {
     leadershipSlots: body.leadershipSlots || 3,
     metadata: body.metadata ? JSON.stringify(body.metadata) : null,
     createdAt: new Date().toISOString(),
+    seriesTemplateId: seriesTemplate?.id ?? null,
   };
 
   await db.insert(events).values(event);
+
+  if (seriesTemplate) {
+    await db
+      .update(eventTemplates)
+      .set({
+        seriesActive: true,
+        recurrenceLastGeneratedStartAt: event.squad1StartsAt ?? event.gameTime,
+        recurrenceOccurrencesGenerated: 1,
+      })
+      .where(eq(eventTemplates.id, seriesTemplate.id));
+  }
 
   void logAudit({
     guildId: event.guildId,

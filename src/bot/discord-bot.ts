@@ -30,6 +30,7 @@ import {
   findPendingDuels,
   recordSentDuel,
 } from "@/lib/duel-notifications";
+import { generateDueRecurringOccurrences } from "@/lib/recurring-events";
 import { createSignup } from "@/lib/signups";
 import { logAudit, resolveActorDisplay } from "@/lib/audit";
 import {
@@ -474,22 +475,68 @@ async function runOnce(): Promise<PollMetrics> {
     console.error("[bot] findPendingDuels failed:", err);
   }
 
+  // ---- Recurring event generation ----
+  // Keeps each active series' next occurrence materialized once its current
+  // one has passed or been cancelled. Notification is sent here (rather
+  // than inside generateDueRecurringOccurrences) to avoid a circular import
+  // — that module can't import sendEventNotification from this file.
+  let recurringGenerated = 0;
+  let recurringFailed = 0;
+  try {
+    const recurringResults = await generateDueRecurringOccurrences();
+    const appBaseUrl = resolveAppBaseUrl();
+    for (const result of recurringResults) {
+      if (result.outcome === "error") {
+        recurringFailed++;
+        continue;
+      }
+      if (result.outcome !== "generated" || !result.event) continue;
+      const event = result.event;
+      recurringGenerated++;
+      try {
+        await sendEventNotification({
+          guildId: event.guildId,
+          eventId: event.id,
+          eventName: event.name,
+          eventKind: event.kind,
+          action: "created",
+          eventUrl: appBaseUrl ? `${appBaseUrl}/event/${event.id}` : undefined,
+          gameTime: event.gameTime,
+          squad1Name: event.squad1Name,
+          squad2Name: event.squad2Name,
+          squad1StartsAt: event.squad1StartsAt,
+          squad2StartsAt: event.squad2StartsAt,
+        });
+        console.log(
+          `[bot] recurring occurrence generated template=${result.templateId} event=${event.id}`
+        );
+      } catch (err) {
+        console.error(
+          `[bot] recurring notification failed template=${result.templateId} event=${event.id}:`,
+          err
+        );
+      }
+    }
+  } catch (err) {
+    console.error("[bot] generateDueRecurringOccurrences failed:", err);
+  }
+
   const durationMs = Date.now() - startedAt.getTime();
   state.lastPollDurationMs = durationMs;
   state.lastPollPendingCount = pending.length + duelPending;
-  state.lastPollSentCount = sent + duelSent;
-  state.lastPollFailedCount = failed + duelFailed;
+  state.lastPollSentCount = sent + duelSent + recurringGenerated;
+  state.lastPollFailedCount = failed + duelFailed + recurringFailed;
   console.log(
-    `[bot] poll done in ${durationMs}ms — events: pending=${pending.length} sent=${sent} failed=${failed} · duels: pending=${duelPending} sent=${duelSent} failed=${duelFailed}`
+    `[bot] poll done in ${durationMs}ms — events: pending=${pending.length} sent=${sent} failed=${failed} · duels: pending=${duelPending} sent=${duelSent} failed=${duelFailed} · recurring: generated=${recurringGenerated} failed=${recurringFailed}`
   );
   void sendHeartbeat(
     client,
-    `${durationMs}ms · events p=${pending.length} s=${sent} f=${failed} · duels p=${duelPending} s=${duelSent} f=${duelFailed}`
+    `${durationMs}ms · events p=${pending.length} s=${sent} f=${failed} · duels p=${duelPending} s=${duelSent} f=${duelFailed} · recurring g=${recurringGenerated} f=${recurringFailed}`
   );
   return {
     pending: pending.length + duelPending,
-    sent: sent + duelSent,
-    failed: failed + duelFailed,
+    sent: sent + duelSent + recurringGenerated,
+    failed: failed + duelFailed + recurringFailed,
     durationMs,
   };
 }

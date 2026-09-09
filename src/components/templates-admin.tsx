@@ -5,24 +5,9 @@ import { RichTextEditor } from "@/components/rich-text-editor";
 import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 import { DURATION_OPTIONS, WEEKDAY_LABELS } from "@/lib/event-templates-shared";
+import type { AdminTemplate } from "@/lib/event-templates-shared";
 
-export type AdminTemplate = {
-  id: string;
-  templateName: string;
-  eventName: string;
-  description: string | null;
-  kind: "match" | "simple";
-  squad1Name: string;
-  squad2Name: string;
-  maxPlayers: number;
-  maxBackups: number;
-  leadershipSlots: number;
-  durationMinutes: number | null;
-  signupOpensWeekday: number | null;
-  signupOpensTimeUtc: string | null;
-  signupClosesWeekday: number | null;
-  signupClosesTimeUtc: string | null;
-};
+export type { AdminTemplate };
 
 type Mode =
   | { kind: "list" }
@@ -148,6 +133,16 @@ function TemplateRow({
           <p className="mt-0.5 text-xs uppercase tracking-wider text-gray-500 dark:text-gray-400">
             {template.kind}
           </p>
+          {template.isRecurring && (
+            <p className="mt-1 text-xs font-medium text-violet-700 dark:text-violet-300">
+              🔁 Recurring — every{" "}
+              {template.recurrenceIntervalWeeks === 1
+                ? "week"
+                : `${template.recurrenceIntervalWeeks} weeks`}{" "}
+              on {WEEKDAY_LABELS[template.recurrenceAnchorWeekday ?? 0]}
+              {template.seriesActive ? "" : " (not started — apply it to an event to begin)"}
+            </p>
+          )}
           <p className="mt-2 text-sm text-gray-700 dark:text-gray-300">
             Event name: <span className="font-medium">{template.eventName}</span>
           </p>
@@ -244,6 +239,33 @@ function TemplateForm({
   const [durationMinutes, setDurationMinutes] = useState(
     String(existing?.durationMinutes ?? "")
   );
+  const [isRecurring, setIsRecurring] = useState(existing?.isRecurring ?? false);
+  const [recurrenceIntervalWeeks, setRecurrenceIntervalWeeks] = useState(
+    String(existing?.recurrenceIntervalWeeks ?? 1)
+  );
+  const [recurrenceAnchorWeekday, setRecurrenceAnchorWeekday] = useState<string>(
+    existing?.recurrenceAnchorWeekday != null
+      ? String(existing.recurrenceAnchorWeekday)
+      : "1"
+  );
+  const [recurrenceStartTimeUtc, setRecurrenceStartTimeUtc] = useState(
+    existing?.recurrenceStartTimeUtc ?? ""
+  );
+  const [recurrenceSquad1TimeUtc, setRecurrenceSquad1TimeUtc] = useState(
+    existing?.recurrenceSquad1TimeUtc ?? ""
+  );
+  const [recurrenceSquad2TimeUtc, setRecurrenceSquad2TimeUtc] = useState(
+    existing?.recurrenceSquad2TimeUtc ?? ""
+  );
+  const [recurrenceEndType, setRecurrenceEndType] = useState<
+    "never" | "after_count" | "until_date"
+  >(existing?.recurrenceEndType ?? "never");
+  const [recurrenceCount, setRecurrenceCount] = useState(
+    String(existing?.recurrenceCount ?? 12)
+  );
+  const [recurrenceUntil, setRecurrenceUntil] = useState(
+    existing?.recurrenceUntil ? existing.recurrenceUntil.slice(0, 10) : ""
+  );
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -267,6 +289,15 @@ function TemplateForm({
       signupOpensTimeUtc: opensTime || null,
       signupClosesWeekday: closesWeekday === "" ? null : Number(closesWeekday),
       signupClosesTimeUtc: closesTime || null,
+      isRecurring,
+      recurrenceIntervalWeeks: Number(recurrenceIntervalWeeks) || 1,
+      recurrenceAnchorWeekday: Number(recurrenceAnchorWeekday),
+      recurrenceStartTimeUtc: kind === "simple" ? recurrenceStartTimeUtc || null : null,
+      recurrenceSquad1TimeUtc: kind === "match" ? recurrenceSquad1TimeUtc || null : null,
+      recurrenceSquad2TimeUtc: kind === "match" ? recurrenceSquad2TimeUtc || null : null,
+      recurrenceEndType,
+      recurrenceCount: recurrenceEndType === "after_count" ? Number(recurrenceCount) || 1 : null,
+      recurrenceUntil: recurrenceEndType === "until_date" ? recurrenceUntil || null : null,
     };
     const url =
       mode === "create"
@@ -437,6 +468,149 @@ function TemplateForm({
           </div>
         </>
       )}
+
+      <div className="rounded-md border border-violet-200 bg-violet-50/60 p-3 dark:border-violet-900/60 dark:bg-violet-950/30">
+        <label className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100">
+          <input
+            type="checkbox"
+            checked={isRecurring}
+            onChange={(e) => setIsRecurring(e.target.checked)}
+            className="h-4 w-4"
+          />
+          Recurring series
+        </label>
+        <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          Applying this template to create an event starts a weekly (or
+          multi-week) series. A new occurrence is generated automatically
+          once the current one has passed.
+        </p>
+
+        {isRecurring && (
+          <div className="mt-3 space-y-3">
+            <div className="grid gap-3 md:grid-cols-2">
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
+                  Repeat every
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    type="number"
+                    min={1}
+                    max={52}
+                    value={recurrenceIntervalWeeks}
+                    onChange={(e) => setRecurrenceIntervalWeeks(e.target.value)}
+                    className="w-20 border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                  />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">week(s)</span>
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
+                  On
+                </label>
+                <select
+                  value={recurrenceAnchorWeekday}
+                  onChange={(e) => setRecurrenceAnchorWeekday(e.target.value)}
+                  className="w-full border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                >
+                  {WEEKDAY_LABELS.map((name, idx) => (
+                    <option key={idx} value={idx}>
+                      {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {kind === "simple" ? (
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
+                  Start time (UTC)
+                </label>
+                <input
+                  type="time"
+                  value={recurrenceStartTimeUtc}
+                  onChange={(e) => setRecurrenceStartTimeUtc(e.target.value)}
+                  step={60}
+                  className="border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                />
+              </div>
+            ) : (
+              <div className="grid gap-3 md:grid-cols-2">
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
+                    Squad 1 start time (UTC)
+                  </label>
+                  <input
+                    type="time"
+                    value={recurrenceSquad1TimeUtc}
+                    onChange={(e) => setRecurrenceSquad1TimeUtc(e.target.value)}
+                    step={60}
+                    className="border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
+                    Squad 2 start time (UTC)
+                  </label>
+                  <input
+                    type="time"
+                    value={recurrenceSquad2TimeUtc}
+                    onChange={(e) => setRecurrenceSquad2TimeUtc(e.target.value)}
+                    step={60}
+                    className="border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                  />
+                  <FieldHelp>Optional — leave blank if Squad 2 plays at the same time.</FieldHelp>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-medium text-gray-600 mb-1 dark:text-gray-400">
+                Ends
+              </label>
+              <div className="flex flex-wrap items-center gap-3">
+                <select
+                  value={recurrenceEndType}
+                  onChange={(e) =>
+                    setRecurrenceEndType(e.target.value as "never" | "after_count" | "until_date")
+                  }
+                  className="border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                >
+                  <option value="never">Never</option>
+                  <option value="after_count">After N occurrences</option>
+                  <option value="until_date">On a specific date</option>
+                </select>
+                {recurrenceEndType === "after_count" && (
+                  <input
+                    type="number"
+                    min={1}
+                    value={recurrenceCount}
+                    onChange={(e) => setRecurrenceCount(e.target.value)}
+                    className="w-24 border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                  />
+                )}
+                {recurrenceEndType === "until_date" && (
+                  <input
+                    type="date"
+                    value={recurrenceUntil}
+                    onChange={(e) => setRecurrenceUntil(e.target.value)}
+                    className="border rounded px-2 py-1.5 text-sm dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100"
+                  />
+                )}
+              </div>
+            </div>
+
+            {existing?.isRecurring && (
+              <p className="text-xs text-gray-500 dark:text-gray-400">
+                {existing.seriesActive
+                  ? "This series is live — future occurrences keep generating automatically."
+                  : "Not started yet — apply this template on the create-event form to begin the series."}
+              </p>
+            )}
+          </div>
+        )}
+      </div>
 
       {error && <p className="text-sm text-red-600 dark:text-red-300">{error}</p>}
 

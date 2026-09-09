@@ -39,9 +39,15 @@ export async function PATCH(
     return NextResponse.json({ error: parsed.error }, { status: 400 });
   }
 
+  // Turning recurrence off stops generation immediately, independent of
+  // the config fields parseTemplateBody already nulled out.
+  const update = parsed.value.isRecurring
+    ? parsed.value
+    : { ...parsed.value, seriesActive: false };
+
   await db
     .update(eventTemplates)
-    .set(parsed.value)
+    .set(update)
     .where(eq(eventTemplates.id, id));
 
   void logAudit({
