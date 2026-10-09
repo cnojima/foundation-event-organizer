@@ -7,22 +7,20 @@ import { useRouter } from "next/navigation";
 import { FieldHelp } from "@/components/field-help";
 import { DatetimeLocalField } from "@/components/datetime-local-field";
 import type { AdminTemplate } from "@/components/templates-admin";
-import { snapSignupTime, DURATION_OPTIONS } from "@/lib/event-templates-shared";
+import {
+  snapSignupTime,
+  nextWeekdayAtTimeUtc,
+  withTimeUtc,
+  DURATION_OPTIONS,
+} from "@/lib/event-templates-shared";
 
 type EventKind = "match" | "simple";
 
-
 // The next upcoming Saturday at 14:00 UTC. If today is Saturday and 14:00
-// UTC has already passed, returns the following Saturday. Pure UTC math,
-// so the answer is the same regardless of the caller's timezone.
+// UTC has already passed, returns the following Saturday. Fallback default
+// when no template (or a non-recurring one) is selected.
 function nextSaturdayAt14UtcIso(now = new Date()): string {
-  const sat = new Date(
-    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), 14, 0, 0, 0)
-  );
-  let dayDelta = (6 - sat.getUTCDay() + 7) % 7; // 6 = Saturday
-  if (dayDelta === 0 && sat.getTime() <= now.getTime()) dayDelta = 7;
-  sat.setUTCDate(sat.getUTCDate() + dayDelta);
-  return sat.toISOString();
+  return nextWeekdayAtTimeUtc(6, "14:00", now) ?? now.toISOString();
 }
 
 // Pick a template to auto-select on mount: prefer the first match-kind
@@ -31,6 +29,32 @@ function nextSaturdayAt14UtcIso(now = new Date()): string {
 function pickInitialTemplate(templates: AdminTemplate[]): AdminTemplate | null {
   if (templates.length === 0) return null;
   return templates.find((t) => t.kind === "match") ?? templates[0];
+}
+
+// Default start time(s) for a template's next occurrence. Recurring
+// templates snap to their configured anchor weekday + time; everything
+// else falls back to `fallbackUtc` (the generic next-Saturday default).
+function defaultStartTimes(
+  template: AdminTemplate | null,
+  fallbackUtc: string
+): { gameTime: string; squad1: string; squad2: string | null } {
+  if (!template?.isRecurring || template.recurrenceAnchorWeekday == null) {
+    return { gameTime: fallbackUtc, squad1: fallbackUtc, squad2: null };
+  }
+  if (template.kind === "simple") {
+    const t = template.recurrenceStartTimeUtc
+      ? nextWeekdayAtTimeUtc(template.recurrenceAnchorWeekday, template.recurrenceStartTimeUtc)
+      : null;
+    return { gameTime: t ?? fallbackUtc, squad1: t ?? fallbackUtc, squad2: null };
+  }
+  const squad1 = template.recurrenceSquad1TimeUtc
+    ? nextWeekdayAtTimeUtc(template.recurrenceAnchorWeekday, template.recurrenceSquad1TimeUtc)
+    : null;
+  const squad2 =
+    squad1 && template.recurrenceSquad2TimeUtc
+      ? withTimeUtc(squad1, template.recurrenceSquad2TimeUtc)
+      : null;
+  return { gameTime: squad1 ?? fallbackUtc, squad1: squad1 ?? fallbackUtc, squad2 };
 }
 
 export function CreateEventForm({
@@ -56,6 +80,9 @@ export function CreateEventForm({
   const initial = pickInitialTemplate(templates);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>(
     initial?.id ?? ""
+  );
+  const [startTimes, setStartTimes] = useState(() =>
+    defaultStartTimes(initial, defaultStartUtc)
   );
   const [kind, setKind] = useState<EventKind>(initial?.kind ?? "match");
   const [name, setName] = useState(initial?.eventName ?? "");
@@ -103,8 +130,11 @@ export function CreateEventForm({
       snapWindow(t.signupClosesWeekday, t.signupClosesTimeUtc, defaultStartUtc)
     );
     setDurationMinutes(String(t.durationMinutes ?? ""));
+    setStartTimes(defaultStartTimes(t, defaultStartUtc));
     setTemplateVersion((v) => v + 1);
   }
+
+  const selectedTemplate = templates.find((t) => t.id === selectedTemplateId) ?? null;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -118,6 +148,7 @@ export function CreateEventForm({
       durationMinutes: durationMinutes ? Number(durationMinutes) : null,
     };
     if (guildIdOverride) baseBody.guildId = guildIdOverride;
+    if (selectedTemplate?.isRecurring) baseBody.seriesTemplateId = selectedTemplate.id;
     const body =
       kind === "match"
         ? {
@@ -183,6 +214,16 @@ export function CreateEventForm({
             Picking a template fills the form with that preset&apos;s defaults.
             You can still edit any field before creating the event.
           </FieldHelp>
+          {selectedTemplate?.isRecurring && (
+            <p className="mt-2 text-xs font-medium text-violet-700 dark:text-violet-300">
+              🔁 Creating this event starts a recurring series — a new
+              occurrence every{" "}
+              {selectedTemplate.recurrenceIntervalWeeks === 1
+                ? "week"
+                : `${selectedTemplate.recurrenceIntervalWeeks} weeks`}
+              , generated automatically once the current one has passed.
+            </p>
+          )}
         </div>
       )}
 
@@ -224,7 +265,7 @@ export function CreateEventForm({
             <DatetimeLocalField
               key={`gameTime-${templateVersion}`}
               name="gameTime"
-              defaultUtcIso={defaultStartUtc}
+              defaultUtcIso={startTimes.gameTime}
             />
             <FieldHelp>
               When the event starts. Used for the calendar download.
@@ -299,7 +340,7 @@ export function CreateEventForm({
               <DatetimeLocalField
                 key={`squad1StartsAt-${templateVersion}`}
                 name="squad1StartsAt"
-                defaultUtcIso={defaultStartUtc}
+                defaultUtcIso={startTimes.squad1}
               />
               <FieldHelp>
                 When Squad 1 plays. Optional — can be set later.
@@ -320,6 +361,7 @@ export function CreateEventForm({
               <DatetimeLocalField
                 key={`squad2StartsAt-${templateVersion}`}
                 name="squad2StartsAt"
+                defaultUtcIso={startTimes.squad2 ?? undefined}
               />
               <FieldHelp>
                 When Squad 2 plays. Optional — can be set later.

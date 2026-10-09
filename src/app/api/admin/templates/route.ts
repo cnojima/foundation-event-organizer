@@ -106,6 +106,15 @@ type ParsedTemplateBody =
         signupOpensTimeUtc: string | null;
         signupClosesWeekday: number | null;
         signupClosesTimeUtc: string | null;
+        isRecurring: boolean;
+        recurrenceIntervalWeeks: number | null;
+        recurrenceAnchorWeekday: number | null;
+        recurrenceStartTimeUtc: string | null;
+        recurrenceSquad1TimeUtc: string | null;
+        recurrenceSquad2TimeUtc: string | null;
+        recurrenceEndType: "never" | "after_count" | "until_date" | null;
+        recurrenceCount: number | null;
+        recurrenceUntil: string | null;
       };
     }
   | { ok: false; error: string };
@@ -168,6 +177,9 @@ export function parseTemplateBody(body: unknown): ParsedTemplateBody {
   const window = parseSignupWindow(b);
   if (!window.ok) return window;
 
+  const recurrence = parseRecurrence(b, kind);
+  if (!recurrence.ok) return recurrence;
+
   return {
     ok: true,
     value: {
@@ -182,6 +194,113 @@ export function parseTemplateBody(body: unknown): ParsedTemplateBody {
       leadershipSlots,
       durationMinutes,
       ...window.value,
+      ...recurrence.value,
+    },
+  };
+}
+
+// Recurrence config, validated against `kind` since simple events use a
+// single start time and match events use per-squad start times. Returns
+// all-null fields (isRecurring: false) when the admin didn't opt in.
+function parseRecurrence(
+  b: Record<string, unknown>,
+  kind: "match" | "simple"
+):
+  | {
+      ok: true;
+      value: {
+        isRecurring: boolean;
+        recurrenceIntervalWeeks: number | null;
+        recurrenceAnchorWeekday: number | null;
+        recurrenceStartTimeUtc: string | null;
+        recurrenceSquad1TimeUtc: string | null;
+        recurrenceSquad2TimeUtc: string | null;
+        recurrenceEndType: "never" | "after_count" | "until_date" | null;
+        recurrenceCount: number | null;
+        recurrenceUntil: string | null;
+      };
+    }
+  | { ok: false; error: string } {
+  const empty = {
+    isRecurring: false,
+    recurrenceIntervalWeeks: null,
+    recurrenceAnchorWeekday: null,
+    recurrenceStartTimeUtc: null,
+    recurrenceSquad1TimeUtc: null,
+    recurrenceSquad2TimeUtc: null,
+    recurrenceEndType: null,
+    recurrenceCount: null,
+    recurrenceUntil: null,
+  };
+  if (!b.isRecurring) return { ok: true, value: empty };
+
+  const intervalWeeks = clampInt(b.recurrenceIntervalWeeks, 1, 52, 1);
+
+  const anchorRaw = b.recurrenceAnchorWeekday;
+  const anchorWeekday = typeof anchorRaw === "number" ? anchorRaw : Number(anchorRaw);
+  if (!isValidWeekday(anchorWeekday)) {
+    return { ok: false, error: "Recurring series requires a weekday." };
+  }
+
+  let startTimeUtc: string | null = null;
+  let squad1TimeUtc: string | null = null;
+  let squad2TimeUtc: string | null = null;
+  if (kind === "simple") {
+    if (!isValidTimeUtc(b.recurrenceStartTimeUtc)) {
+      return { ok: false, error: "Recurring series requires a start time." };
+    }
+    startTimeUtc = b.recurrenceStartTimeUtc;
+  } else {
+    if (!isValidTimeUtc(b.recurrenceSquad1TimeUtc)) {
+      return { ok: false, error: "Recurring series requires a Squad 1 start time." };
+    }
+    squad1TimeUtc = b.recurrenceSquad1TimeUtc;
+    if (b.recurrenceSquad2TimeUtc != null && b.recurrenceSquad2TimeUtc !== "") {
+      if (!isValidTimeUtc(b.recurrenceSquad2TimeUtc)) {
+        return { ok: false, error: "Squad 2 start time must be HH:MM (24h UTC)." };
+      }
+      squad2TimeUtc = b.recurrenceSquad2TimeUtc;
+    }
+  }
+
+  const endType =
+    b.recurrenceEndType === "after_count"
+      ? "after_count"
+      : b.recurrenceEndType === "until_date"
+        ? "until_date"
+        : "never";
+
+  let recurrenceCount: number | null = null;
+  let recurrenceUntil: string | null = null;
+  if (endType === "after_count") {
+    const n = typeof b.recurrenceCount === "number" ? b.recurrenceCount : Number(b.recurrenceCount);
+    if (!Number.isInteger(n) || n < 1) {
+      return { ok: false, error: "Occurrence count must be at least 1." };
+    }
+    recurrenceCount = n;
+  } else if (endType === "until_date") {
+    if (typeof b.recurrenceUntil !== "string" || b.recurrenceUntil === "") {
+      return { ok: false, error: "An end date is required." };
+    }
+    const d = new Date(b.recurrenceUntil);
+    if (Number.isNaN(d.getTime())) {
+      return { ok: false, error: "End date is invalid." };
+    }
+    recurrenceUntil = d.toISOString();
+  }
+
+  return {
+    ok: true,
+    value: {
+      isRecurring: true,
+      recurrenceIntervalWeeks: intervalWeeks,
+      recurrenceAnchorWeekday: anchorWeekday,
+      recurrenceStartTimeUtc: startTimeUtc,
+      recurrenceSquad1TimeUtc: squad1TimeUtc,
+      recurrenceSquad2TimeUtc: squad2TimeUtc,
+      recurrenceEndType: endType,
+      recurrenceCount,
+      recurrenceUntil,
     },
   };
 }

@@ -3,7 +3,8 @@ import { eventTemplates, guilds } from "@/db/schema";
 import { and, asc, eq, isNull } from "drizzle-orm";
 import { auth } from "@/auth";
 import { requireGuildAdminPage, resolveAdminGuildId } from "@/lib/rbac";
-import { TemplatesAdmin, type AdminTemplate } from "@/components/templates-admin";
+import { TemplatesAdmin } from "@/components/templates-admin";
+import { toAdminTemplate } from "@/lib/event-templates-shared";
 
 export default async function TemplatesPage({
   searchParams,
@@ -35,25 +36,7 @@ export default async function TemplatesPage({
     )
     .orderBy(asc(eventTemplates.templateName));
 
-  // Narrow the raw Drizzle row shape to what the client expects (drop
-  // guildId, createdAt, deletedAt — those aren't surfaced in the UI).
-  const templates: AdminTemplate[] = rows.map((r) => ({
-    id: r.id,
-    templateName: r.templateName,
-    eventName: r.eventName,
-    description: r.description,
-    kind: r.kind,
-    squad1Name: r.squad1Name,
-    squad2Name: r.squad2Name,
-    maxPlayers: r.maxPlayers,
-    maxBackups: r.maxBackups,
-    leadershipSlots: r.leadershipSlots,
-    durationMinutes: r.durationMinutes,
-    signupOpensWeekday: r.signupOpensWeekday,
-    signupOpensTimeUtc: r.signupOpensTimeUtc,
-    signupClosesWeekday: r.signupClosesWeekday,
-    signupClosesTimeUtc: r.signupClosesTimeUtc,
-  }));
+  const templates = rows.map(toAdminTemplate);
 
   return (
     <div className="mx-auto max-w-3xl">

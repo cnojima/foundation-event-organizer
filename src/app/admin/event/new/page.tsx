@@ -5,7 +5,7 @@ import { eventTemplates, guilds } from "@/db/schema";
 import { and, asc, eq, isNull } from "drizzle-orm";
 import { requireGuildAdminPage, resolveAdminGuildId } from "@/lib/rbac";
 import { CreateEventForm } from "@/components/create-event-form";
-import type { AdminTemplate } from "@/components/templates-admin";
+import { toAdminTemplate } from "@/lib/event-templates-shared";
 
 export default async function NewEventPage({
   searchParams,
@@ -43,23 +43,7 @@ export default async function NewEventPage({
       )
     )
     .orderBy(asc(eventTemplates.templateName));
-  const templates: AdminTemplate[] = templateRows.map((r) => ({
-    id: r.id,
-    templateName: r.templateName,
-    eventName: r.eventName,
-    description: r.description,
-    kind: r.kind,
-    squad1Name: r.squad1Name,
-    squad2Name: r.squad2Name,
-    maxPlayers: r.maxPlayers,
-    maxBackups: r.maxBackups,
-    leadershipSlots: r.leadershipSlots,
-    durationMinutes: r.durationMinutes,
-    signupOpensWeekday: r.signupOpensWeekday,
-    signupOpensTimeUtc: r.signupOpensTimeUtc,
-    signupClosesWeekday: r.signupClosesWeekday,
-    signupClosesTimeUtc: r.signupClosesTimeUtc,
-  }));
+  const templates = templateRows.map(toAdminTemplate);
 
   return (
     <main className="max-w-3xl mx-auto p-6">

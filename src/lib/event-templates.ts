@@ -9,6 +9,8 @@ export {
   snapSignupTime,
   isValidWeekday,
   isValidTimeUtc,
+  addWeeksToIso,
+  withTimeUtc,
   TEMPLATE_LIMITS,
   WEEKDAY_LABELS,
 } from "./event-templates-shared";
