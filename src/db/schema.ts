@@ -533,6 +533,7 @@ export const eventNotifications = sqliteTable(
         "day",
         "hour",
         "twenty_min",
+        "five_min",
         "voice_dm",
         "end_thirty_min",
         "end_five_min",

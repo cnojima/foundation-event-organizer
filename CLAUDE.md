@@ -158,7 +158,7 @@ npm run db:migrate
 
 ## Discord bot
 
-Posts `@everyone` reminders 1 day, 1 hour, and 20 minutes before each event's `gameTime`. Runs in-process inside the Next.js server (booted from [instrumentation.ts](instrumentation.ts) → [src/bot/discord-bot.ts](src/bot/discord-bot.ts)). Idempotent via [event_notifications](src/db/schema.ts) PK on `(event_id, kind)`.
+Posts `@everyone` reminders 1 day, 1 hour, 20 minutes, and 5 minutes before each event's `gameTime`. Runs in-process inside the Next.js server (booted from [instrumentation.ts](instrumentation.ts) → [src/bot/discord-bot.ts](src/bot/discord-bot.ts)). Idempotent via [event_notifications](src/db/schema.ts) PK on `(event_id, kind)`.
 
 ### One-time Discord setup
 
@@ -220,7 +220,7 @@ Registered globally on bot startup. Visible in any server the bot is in (global 
 
 ### Notes
 
-- Polls every 5 min. Smallest reminder window is 25 min wide so notifications can't slip.
+- Polls every 1 min. The 5-minute reminder fires on the first poll inside the 0–5 min window (once per event/squad), so it lands somewhere between 5 and 0 minutes before start.
 - The Fly machine has `min_machines_running = 1` and `auto_stop_machines = false` so the gateway socket stays open. The bot also requires `min_machines_running >= 1`; auto-stop would kill it.
 - A failed post (bot kicked, channel deleted, missing perms) is logged but not retried — the `event_notifications` row is reserved before the post attempt to avoid spamming a misconfigured channel.
 - Editing an event's `gameTime` clears its `event_notifications` rows so reminders fire fresh against the new time. Other field edits (signup window, squad sizes) don't clear.

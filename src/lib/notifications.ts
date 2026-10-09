@@ -6,6 +6,7 @@ export type NotificationKind =
   | "day"
   | "hour"
   | "twenty_min"
+  | "five_min"
   | "voice_dm"
   | "end_thirty_min"
   | "end_five_min"
@@ -29,6 +30,7 @@ type ChatKind = Exclude<
 // Windows are exactly equal to their target times: with 1-min polling the
 // notification fires within 1 minute of the named threshold.
 const CHAT_WINDOW_MS: Record<ChatKind, number> = {
+  five_min: 5 * 60 * 1000,
   twenty_min: 20 * 60 * 1000,
   hour: 60 * 60 * 1000,
   day: 24 * 60 * 60 * 1000,
@@ -50,6 +52,7 @@ export function pickEndKind(msUntilEnd: number): EndKind | null {
 
 export function pickKind(msUntilStart: number): ChatKind | null {
   if (msUntilStart <= 0) return null;
+  if (msUntilStart <= CHAT_WINDOW_MS.five_min) return "five_min";
   if (msUntilStart <= CHAT_WINDOW_MS.twenty_min) return "twenty_min";
   if (msUntilStart <= CHAT_WINDOW_MS.hour) return "hour";
   if (msUntilStart <= CHAT_WINDOW_MS.day) return "day";
@@ -442,6 +445,31 @@ export function recordSent(
   }
 }
 
+// Plain-text UTC time, e.g. "Sat, Oct 10, 2:00 PM UTC". Push notifications and
+// message previews don't render Discord <t:...> tokens (they show the raw
+// markup), so every token is paired with this readable fallback.
+export function plainUtcTime(iso: string): string {
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleString("en-US", {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  });
+}
+
+// Readable in notification previews AND localized to the viewer in Discord:
+// "Sat, Oct 10, 2:00 PM UTC (<t:...:F>)".
+export function dualTime(iso: string, style: "F" | "f" = "F"): string {
+  const ms = new Date(iso).getTime();
+  if (Number.isNaN(ms)) return iso;
+  return `${plainUtcTime(iso)} (<t:${Math.floor(ms / 1000)}:${style}>)`;
+}
+
 export function buildMessage(t: NotificationTarget): string {
   if (
     (t.kind === "signup_close_hour" ||
@@ -449,19 +477,16 @@ export function buildMessage(t: NotificationTarget): string {
       t.kind === "signup_close_five_min") &&
     t.signupClosesAt
   ) {
-    const unix = Math.floor(new Date(t.signupClosesAt).getTime() / 1000);
-    return `@everyone Signups for **${t.eventName}** close <t:${unix}:R> — <t:${unix}:F>`;
+    return `@everyone Signups for **${t.eventName}** close ${dualTime(t.signupClosesAt)}`;
   }
   const subject = t.squadLabel
     ? `${t.eventName} — ${t.squadLabel}`
     : t.eventName;
   const isEnd = t.kind === "end_thirty_min" || t.kind === "end_five_min";
   if (isEnd && t.endsAt) {
-    const unix = Math.floor(new Date(t.endsAt).getTime() / 1000);
-    return `@everyone **${subject}** ends <t:${unix}:R> — <t:${unix}:F>`;
+    return `@everyone **${subject}** ends ${dualTime(t.endsAt)}`;
   }
-  const unix = Math.floor(new Date(t.startsAt).getTime() / 1000);
-  return `@everyone **${subject}** starts <t:${unix}:R> — <t:${unix}:F>`;
+  return `@everyone **${subject}** starts ${dualTime(t.startsAt)}`;
 }
 
 function formatTimeUntilEnd(msUntilEnd: number): string {

@@ -20,6 +20,8 @@ import { accounts, events, guildInvites, guilds, signups, users } from "@/db/sch
 import { and, eq, gt, inArray, isNull, or, sql } from "drizzle-orm";
 import {
   buildMessage,
+  dualTime,
+  plainUtcTime,
   buildVoiceDmMessage,
   findPending,
   recordSent,
@@ -1227,7 +1229,7 @@ function buildScrimPost(args: {
       description: `**${args.proposingName}** has challenged **${args.opposingName}** to a scrim.`,
       color: EMBED_COLORS.warning,
       fields: [
-        { name: "🕐 Time", value: `<t:${unix}:F> (<t:${unix}:R>)`, inline: false },
+        { name: "🕐 Time", value: `${dualTime(args.proposedGameTime)} — <t:${unix}:R>`, inline: false },
         { name: "📍 Location", value: args.location, inline: true },
         { name: "🏆 Condition of Win", value: args.winCondition, inline: true },
       ],
@@ -1235,6 +1237,7 @@ function buildScrimPost(args: {
       timestamp: args.proposedGameTime,
     };
     return {
+      content: `⚔️ Scrim proposed: ${args.proposingName} vs ${args.opposingName} — ${plainUtcTime(args.proposedGameTime)}`,
       embeds: [embed],
       components: scrimUrl ? linkButtonRow("Manage Scrimmages", scrimUrl, "🛡️") : [],
     };
@@ -1246,7 +1249,7 @@ function buildScrimPost(args: {
       description: `**${args.opposingName}** accepted **${args.proposingName}**'s scrim challenge.`,
       color: EMBED_COLORS.success,
       fields: [
-        { name: "🕐 Time", value: `<t:${unix}:F> (<t:${unix}:R>)`, inline: false },
+        { name: "🕐 Time", value: `${dualTime(args.proposedGameTime)} — <t:${unix}:R>`, inline: false },
         { name: "📍 Location", value: args.location, inline: true },
         { name: "🏆 Condition of Win", value: args.winCondition, inline: true },
       ],
@@ -1254,6 +1257,7 @@ function buildScrimPost(args: {
       timestamp: args.proposedGameTime,
     };
     return {
+      content: `✅ Scrim accepted: ${args.proposingName} vs ${args.opposingName} — ${plainUtcTime(args.proposedGameTime)}`,
       embeds: [embed],
       components: args.eventSignupUrl
         ? linkButtonRow("Sign up", args.eventSignupUrl, "🔗")
@@ -1267,7 +1271,7 @@ function buildScrimPost(args: {
       description: `The scrim between **${args.proposingName}** and **${args.opposingName}** has been cancelled.`,
       color: EMBED_COLORS.neutral,
       fields: [
-        { name: "Was scheduled for", value: `<t:${unix}:F>`, inline: false },
+        { name: "Was scheduled for", value: dualTime(args.proposedGameTime), inline: false },
       ],
       footer: { text: "Rally Up" },
     };
@@ -1280,7 +1284,7 @@ function buildScrimPost(args: {
     description: `**${args.opposingName}** declined **${args.proposingName}**'s scrim challenge.`,
     color: EMBED_COLORS.neutral,
     fields: [
-      { name: "Was proposed for", value: `<t:${unix}:F>`, inline: false },
+      { name: "Was proposed for", value: dualTime(args.proposedGameTime), inline: false },
     ],
     footer: { text: "Rally Up" },
   };
@@ -1412,7 +1416,7 @@ function buildDuelMessage(
   },
   t: LocalizedTranslator
 ): string {
-  const when = discordTimestamp(args.proposedGameTime, "F");
+  const when = dualTime(args.proposedGameTime);
   const relative = discordTimestamp(args.proposedGameTime, "R");
   const proposer = `**${args.proposingName}**`;
   const opposer = `**${args.opposingName}**`;
@@ -1423,7 +1427,7 @@ function buildDuelMessage(
   if (args.action === "proposed") {
     const lines = [
       t("duel.proposedHeading", { proposer, opposer }),
-      t("duel.timeLine", { when, relative }),
+      t("duel.timeLineNoRelative", { when }),
       t("duel.locationLine", { location: args.location }),
       t("duel.winConditionLine", { winCondition: args.winCondition }),
     ];
@@ -1433,7 +1437,7 @@ function buildDuelMessage(
   if (args.action === "accepted") {
     const lines = [
       t("duel.acceptedHeading", { proposer, opposer }),
-      t("duel.timeLine", { when, relative }),
+      t("duel.timeLineNoRelative", { when }),
       t("duel.locationLine", { location: args.location }),
       t("duel.winConditionLine", { winCondition: args.winCondition }),
     ];
@@ -1457,7 +1461,7 @@ function buildDuelMessage(
   if (args.action === "edited") {
     const lines = [
       t("duel.editedHeading", { proposer, opposer }),
-      t("duel.timeLine", { when, relative }),
+      t("duel.timeLineNoRelative", { when }),
       t("duel.locationLine", { location: args.location }),
       t("duel.winConditionLine", { winCondition: args.winCondition }),
     ];
@@ -1679,16 +1683,13 @@ function buildEventPost(args: EventNotificationInput): ChannelPost {
 
   if (!isCancelled) {
     if (args.gameTime) {
-      const unix = Math.floor(new Date(args.gameTime).getTime() / 1000);
-      lines.push(`⏰ Starts <t:${unix}:R> — <t:${unix}:F>`);
+      lines.push(`⏰ Starts ${dualTime(args.gameTime)}`);
     }
     if (args.squad1StartsAt) {
-      const unix = Math.floor(new Date(args.squad1StartsAt).getTime() / 1000);
-      lines.push(`📍 ${args.squad1Name ?? "Squad 1"}: <t:${unix}:F>`);
+      lines.push(`📍 ${args.squad1Name ?? "Squad 1"}: ${dualTime(args.squad1StartsAt)}`);
     }
     if (args.squad2StartsAt) {
-      const unix = Math.floor(new Date(args.squad2StartsAt).getTime() / 1000);
-      lines.push(`📍 ${args.squad2Name ?? "Squad 2"}: <t:${unix}:F>`);
+      lines.push(`📍 ${args.squad2Name ?? "Squad 2"}: ${dualTime(args.squad2StartsAt)}`);
     }
   }
 
@@ -1960,7 +1961,7 @@ async function handleUpcoming(
       const unix = e.gameTime ? Math.floor(new Date(e.gameTime).getTime() / 1000) : null;
       return {
         name: `${emoji} ${e.name}`,
-        value: unix ? `<t:${unix}:f>` : tbd,
+        value: unix && e.gameTime ? dualTime(e.gameTime, "f") : tbd,
         inline: false,
       };
     }
@@ -1968,15 +1969,15 @@ async function handleUpcoming(
       const unix = e.gameTime ? Math.floor(new Date(e.gameTime).getTime() / 1000) : null;
       return {
         name: `${emoji} ${e.name}`,
-        value: unix ? `<t:${unix}:f>` : tbd,
+        value: unix && e.gameTime ? dualTime(e.gameTime, "f") : tbd,
         inline: false,
       };
     }
     // match
     const s1unix = e.squad1StartsAt ? Math.floor(new Date(e.squad1StartsAt).getTime() / 1000) : null;
     const s2unix = e.squad2StartsAt ? Math.floor(new Date(e.squad2StartsAt).getTime() / 1000) : null;
-    const s1 = s1unix ? `<t:${s1unix}:f>` : tbd;
-    const s2 = s2unix ? `<t:${s2unix}:f>` : tbd;
+    const s1 = s1unix && e.squad1StartsAt ? dualTime(e.squad1StartsAt, "f") : tbd;
+    const s2 = s2unix && e.squad2StartsAt ? dualTime(e.squad2StartsAt, "f") : tbd;
     return {
       name: `${emoji} ${e.name}`,
       value: `${e.squad1Name}: ${s1}\n${e.squad2Name}: ${s2}`,
